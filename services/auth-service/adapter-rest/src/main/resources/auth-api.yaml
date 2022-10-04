@@ -4,24 +4,24 @@ info:
   title: Auth Service API
 
 tags:
-  - name: player
+  - name: auth
 
 paths:
 
-  /player:
+  /auth/sign-up:
     post:
-      summary: Create a player
-      operationId: createPlayer
+      summary: Sign Up
+      operationId: signup
       tags:
-        - player
+        - auth
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreatePlayerRequest"
+              $ref: "#/components/schemas/SignUpRequest"
       responses:
-        "201":
-          description: Player was created
+        "202":
+          description: Sign Up request was accepted
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -40,35 +40,16 @@ components:
 
   schemas:
 
-    CreatePlayerRequest:
+    SignUpRequest:
       type: object
+      required:
+        - username
+        - password
       properties:
-        points:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 700
-          example: 350
-        age:
-          type: integer
-          format: int32
-          minimum: 15
-          maximum: 33
-          example: 21
-        tendency:
+        username:
           type: string
-          example: AGGRESSIVE
-          enum:
-            - AGGRESSIVE
-            - NOT_AGGRESSIVE
-        position:
+        password:
           type: string
-          example: DEFENDER
-          enum:
-            - GOAL_KEEPER
-            - DEFENDER
-            - MIDDLE
-            - FORWARD
 
     Error:
       type: "object"

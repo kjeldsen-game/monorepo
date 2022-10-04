@@ -1,6 +1,7 @@
 package com.kjeldsen.auth.rest.security;
 
-import domain.views.UserView;
+import com.kjeldsen.auth.domain.SignUp;
+import com.kjeldsen.auth.usecases.UserDetailsServiceUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import service.UserService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +33,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     public static final String SCOPE_READ = "read";
     public static final String SCOPE_WRITE = "write";
+    public static final String SCOPE_ALL = "all";
     public static final String AUTHORIZED_GRANT_TYPE_PASSWORD = "password";
     public static final String AUTHORIZED_GRANT_TYPE_REFRESH_TOKEN = "refresh_token";
     public static final String TOKEN_ENHANCE_USER_ID = "uid";
@@ -40,7 +41,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Qualifier("authenticationManagerBean")
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-    private final UserService userService;
+    private final UserDetailsServiceUseCase userDetailsServiceUseCase;
 
     @Value("${security.oauth2.access-token-validity-seconds}")
     private Integer accessTokenValiditySeconds;
@@ -68,17 +69,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             @Override
             public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, final OAuth2Authentication authentication) {
 
-                final UserView userView = (UserView) userService.loadUserByUsername(authentication.getName());
+                final SignUp signUp = (SignUp) userDetailsServiceUseCase.loadUserByUsername(authentication.getName());
 
                 final Map<String, Object> additionalInfo = new HashMap<>();
-                additionalInfo.put(TOKEN_ENHANCE_USER_ID, userView.getId());
+                additionalInfo.put(TOKEN_ENHANCE_USER_ID, signUp.getId());
                 ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
 
                 accessToken = super.enhance(accessToken, authentication);
                 ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(new HashMap<>());
                 return accessToken;
             }
-
 
             @Override
             public OAuth2Authentication extractAuthentication(Map<String, ?> map) {
@@ -111,7 +111,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
             .authenticationManager(authenticationManager)
-            .userDetailsService(userService)
+            .userDetailsService(userDetailsServiceUseCase)
             .tokenStore(tokenStore())
             .tokenEnhancer(accessTokenConverter());
     }
@@ -122,7 +122,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             .inMemory()
             .withClient(clientId)
             .secret(passwordEncoder.encode(clientSecret))
-            .scopes(SCOPE_READ, SCOPE_WRITE)
+            .scopes(SCOPE_READ, SCOPE_WRITE, SCOPE_ALL)
             .authorizedGrantTypes(AUTHORIZED_GRANT_TYPE_PASSWORD, AUTHORIZED_GRANT_TYPE_REFRESH_TOKEN)
             .accessTokenValiditySeconds(accessTokenValiditySeconds)
             .refreshTokenValiditySeconds(refreshTokenValiditySeconds);

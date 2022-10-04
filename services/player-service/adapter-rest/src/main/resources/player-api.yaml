@@ -14,6 +14,11 @@ paths:
       operationId: createPlayer
       tags:
         - player
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePlayerRequest"
       responses:
         "201":
           description: Player was created
@@ -34,6 +39,36 @@ components:
               $ref: "#/components/schemas/Error"
 
   schemas:
+
+    CreatePlayerRequest:
+      type: object
+      properties:
+        points:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 700
+          example: 350
+        age:
+          type: integer
+          format: int32
+          minimum: 15
+          maximum: 33
+          example: 21
+        tendency:
+          type: string
+          example: AGGRESSIVE
+          enum:
+            - AGGRESSIVE
+            - NOT_AGGRESSIVE
+        position:
+          type: string
+          example: DEFENDER
+          enum:
+            - GOAL_KEEPER
+            - DEFENDER
+            - MIDDLE
+            - FORWARD
 
     Error:
       type: "object"

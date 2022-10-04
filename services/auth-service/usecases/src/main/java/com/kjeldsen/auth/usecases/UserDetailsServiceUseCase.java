@@ -1,6 +1,6 @@
 package com.kjeldsen.auth.usecases;
 
-import com.kjeldsen.auth.persistence.repositories.read.UserViewRepository;
+import com.kjeldsen.auth.persistence.SignUpReadRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserDetailsServiceUseCase implements UserDetailsService {
 
-    private final UserViewRepository userViewRepository;
+    private final SignUpReadRepository signUpReadRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userViewRepository.findByUsernameIgnoreCase(username).orElseThrow();
+        return signUpReadRepository.findByUsernameIgnoreCase(username)
+            .orElseThrow(() -> new UsernameNotFoundException(String.format("Username %s not found", username)));
     }
 }

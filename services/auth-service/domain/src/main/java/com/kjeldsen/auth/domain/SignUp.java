@@ -1,4 +1,4 @@
-package com.kjeldsen.auth.domain.events;
+package com.kjeldsen.auth.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

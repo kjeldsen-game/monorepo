@@ -9,4 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>usecases</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>persistence-mongodb</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 </project>

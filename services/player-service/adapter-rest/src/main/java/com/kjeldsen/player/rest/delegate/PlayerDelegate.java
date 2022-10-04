@@ -1,15 +1,17 @@
 package com.kjeldsen.player.rest.delegate;
 
-import com.kjeldsen.player.rest.api.PlayerApi;
+import com.kjeldsen.player.rest.api.PlayerApiDelegate;
+import com.kjeldsen.player.rest.model.CreatePlayerRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 
-public class DefaultPlayerDelegate implements PlayerApi {
+@Component
+public class PlayerDelegate implements PlayerApiDelegate {
 
     @Override
-    ResponseEntity<Void> createPlayer() {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
+    public ResponseEntity<Void> createPlayer(CreatePlayerRequest createPlayerRequest) {
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

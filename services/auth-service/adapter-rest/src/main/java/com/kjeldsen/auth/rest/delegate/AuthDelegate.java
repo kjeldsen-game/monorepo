@@ -1,14 +1,14 @@
 package com.kjeldsen.auth.rest.delegate;
 
+import com.kjeldsen.auth.domain.SignUp;
 import com.kjeldsen.auth.rest.api.AuthApiDelegate;
 import com.kjeldsen.auth.rest.model.SignUpRequest;
 import com.kjeldsen.auth.rest.security.CustomPasswordEncoder;
-import domain.events.SignUpEvent;
+import com.kjeldsen.auth.usecases.SignUpUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import usecases.SignUpUseCase;
 
 @Component
 @RequiredArgsConstructor
@@ -20,14 +20,15 @@ public class AuthDelegate implements AuthApiDelegate {
     @Override
     public ResponseEntity<Void> signup(SignUpRequest signUpRequest) {
 
-        SignUpEvent signUpEvent = SignUpEvent.builder()
+        SignUp signUp = SignUp.builder()
             .username(signUpRequest.getUsername())
             .passwordHash(customPasswordEncoder.encode(signUpRequest.getPassword()))
             .build();
 
-        signUpUseCase.signUp(signUpEvent);
+        signUpUseCase.signUp(signUp);
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
 
 }

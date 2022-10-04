@@ -1,4 +1,4 @@
-package com.unnamedproject.matchengine.dto;
+package com.kjeldsen.matchengine.infra.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

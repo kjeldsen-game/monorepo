@@ -1,4 +1,4 @@
-package com.unnamedproject.matchengine;
+package com.kjeldsen.matchengine.infra;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

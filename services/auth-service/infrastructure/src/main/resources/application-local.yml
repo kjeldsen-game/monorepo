@@ -5,7 +5,7 @@ spring:
 
   application:
     profiles:
-      active: 'dev'
+      active: 'local'
 
   data:
     mongodb:
