@@ -1,0 +1,83 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Players Service API
+
+tags:
+  - name: player
+
+paths:
+
+  /player:
+    post:
+      summary: Create a player
+      operationId: createPlayer
+      tags:
+        - player
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePlayerRequest"
+      responses:
+        "201":
+          description: Player was created
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+components:
+
+  responses:
+
+    DefaultErrorResponse:
+      description: Unexpected error
+      content:
+        "*/*":
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Error"
+
+  schemas:
+
+    CreatePlayerRequest:
+      type: object
+      properties:
+        points:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 700
+          example: 350
+        age:
+          type: integer
+          format: int32
+          minimum: 15
+          maximum: 33
+          example: 21
+        tendency:
+          type: string
+          example: AGGRESSIVE
+          enum:
+            - AGGRESSIVE
+            - NOT_AGGRESSIVE
+        position:
+          type: string
+          example: DEFENDER
+          enum:
+            - GOAL_KEEPER
+            - DEFENDER
+            - MIDDLE
+            - FORWARD
+
+    Error:
+      type: "object"
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

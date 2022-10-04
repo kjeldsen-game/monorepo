@@ -1,0 +1,64 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Auth Service API
+
+tags:
+  - name: auth
+
+paths:
+
+  /auth/sign-up:
+    post:
+      summary: Sign Up
+      operationId: signup
+      tags:
+        - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignUpRequest"
+      responses:
+        "202":
+          description: Sign Up request was accepted
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+components:
+
+  responses:
+
+    DefaultErrorResponse:
+      description: Unexpected error
+      content:
+        "*/*":
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Error"
+
+  schemas:
+
+    SignUpRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+
+    Error:
+      type: "object"
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
