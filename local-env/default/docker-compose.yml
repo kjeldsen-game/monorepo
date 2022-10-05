@@ -27,7 +27,25 @@ services:
       - ${M2_PATH}:/root/.m2
       - ../../services/auth-service:/auth-service
     working_dir: /auth-service
-    command: mvn compile spring-boot:run -f infrastructure -DskipTests=true
+    command: mvn compile spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
+
+  #####################
+  ## Gateway Service ##
+  #####################
+
+  gateway-service:
+    image: maven:3.8.3-openjdk-17
+    ports:
+      - 8080:8080
+    container_name: gateway-service
+    env_file:
+      - ../config/common.env
+      - ../config/gateway-service.env
+    volumes:
+      - ${M2_PATH}:/root/.m2
+      - ../../services/gateway-service:/gateway-service
+    working_dir: /gateway-service
+    command: mvn compile spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
 
   ###########
   ## Kafka ##

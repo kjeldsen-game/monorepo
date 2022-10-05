@@ -1,0 +1,11 @@
+server:
+  port: ${SERVER_PORT}
+
+spring:
+
+  application:
+    profiles:
+      active: 'local'
+
+hosts:
+  auth-service: 'http://${AUTH_SERVICE_HOST}'

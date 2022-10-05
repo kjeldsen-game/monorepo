@@ -6,8 +6,6 @@ server:
 spring:
   application:
     name: auth-service
-    profiles:
-      active: 'local'
   data:
     mongodb:
       host: localhost

@@ -1,0 +1,26 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: gateway-service
+  main:
+    allow-circular-references: true
+
+hosts:
+  auth-service: 'http://localhost:8081'
+
+zuul:
+  sensitive-headers:
+  routes:
+    auth-service:
+      path: /auth-service/**
+      url: ${hosts.auth-service}
+
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-uri: ${hosts.auth-service}/oauth/token_key
