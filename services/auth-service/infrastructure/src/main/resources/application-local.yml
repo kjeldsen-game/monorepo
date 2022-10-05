@@ -2,11 +2,9 @@ server:
   port: ${SERVER_PORT}
 
 spring:
-
   application:
     profiles:
       active: 'local'
-
   data:
     mongodb:
       host: ${DB_HOST}
