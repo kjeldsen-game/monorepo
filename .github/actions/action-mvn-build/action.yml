@@ -14,8 +14,8 @@ runs:
       id: changes
       with:
       filters: |
-        src:
-          - '${{ inputs.path }}/**'
+        src: 
+          - 'services/auth-service/**'
 
     - name: Build
       if: steps.changes.outputs.src == 'true'
