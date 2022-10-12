@@ -10,7 +10,15 @@ runs:
 
   steps:
 
+    - name: Get changed files in the docs folder
+      id: changed-files
+      uses: tj-actions/changed-files@v32
+      with:
+        files: |
+          services/auth-service/**
+
     - name: Build
+      if: steps.changed-files.outputs.any_changed == 'true'
       run: |
         cd ${{ inputs.path }}
         mvn clean install -U

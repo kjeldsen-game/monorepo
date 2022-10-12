@@ -24,24 +24,6 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v32
-
-      - name: List all changed files
-        run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file was changed"
-          done
-
-      - name: Get changed files in the docs folder
-        id: changed-files-specific
-        uses: tj-actions/changed-files@v32
-        with:
-          files: |
-            services/auth-service/**
-
       - uses: ./.github/actions/action-mvn-build
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
         with:
           path: 'services/auth-service'
