@@ -1,10 +1,10 @@
-name: Main Workflow
+name: Services Workflow
 
-run-name: ${{ github.actor }} fired main workflow
+run-name: ${{ github.actor }} fired services workflow
 
 on:
   push:
-    branches: [ main ]
+    paths: 'services/**'
 
 jobs:
 
@@ -20,6 +20,8 @@ jobs:
         with:
           distribution: 'corretto'
           java-version: '17'
+
+      - run: cd services/auth-service
 
       - name: Build
         run: mvn clean install -U
