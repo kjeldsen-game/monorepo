@@ -21,7 +21,13 @@ jobs:
           distribution: 'corretto'
           java-version: '17'
 
-      - run: cd services/auth-service
+      - run: |
+          echo '1'
+          ls
+          echo '2'
+          cd services/auth-service
+          echo '3'
+          ls
 
       - name: Build
         run: mvn clean install -U
