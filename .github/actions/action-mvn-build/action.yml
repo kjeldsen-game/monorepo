@@ -1,0 +1,24 @@
+name: 'Maven Build'
+
+inputs:
+  path:  # path to the project to build
+    required: true
+
+runs:
+
+  using: "composite"
+
+  steps:
+
+    - uses: actions/checkout@v3
+
+    - uses: actions/setup-java@v3
+      with:
+        distribution: 'corretto'
+        java-version: '17'
+        cache: 'maven'
+
+    - name: Build
+      run: |
+        cd ${{ inputs.path }}
+        mvn clean install -U

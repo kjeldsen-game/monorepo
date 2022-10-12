@@ -16,22 +16,6 @@ jobs:
 
     steps:
 
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-java@v3
+      - uses: actions/action-mvn-build
         with:
-          distribution: 'corretto'
-          java-version: '17'
-
-      - run: |
-          echo '1'
-          ls
-          echo '2'
-          cd services/auth-service
-          echo '3'
-          ls
-
-      - name: Build
-        run: |
-          cd services/auth-service
-          mvn clean install -U
+          path: 'services/auth-service'
