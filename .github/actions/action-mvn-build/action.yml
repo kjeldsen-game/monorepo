@@ -15,7 +15,7 @@ runs:
       uses: tj-actions/changed-files@v32
       with:
         files: |
-          services/auth-service/**
+          ${{ inputs.path }}/**
 
     - name: Build
       if: steps.changed-files.outputs.any_changed == 'true'
