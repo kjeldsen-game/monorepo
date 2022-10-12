@@ -3,11 +3,8 @@ name: Services Workflow
 run-name: ${{ github.actor }} fired services workflow
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
   push:
-    paths:
-      - 'services/**'
-      - '.github/workflows/main.yml'
 
 jobs:
 

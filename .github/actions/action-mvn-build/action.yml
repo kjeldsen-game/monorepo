@@ -10,7 +10,15 @@ runs:
 
   steps:
 
+    - uses: dorny/paths-filter@v2
+      id: changes
+      with:
+      filters: |
+        src:
+          - '${{ inputs.path }}/**'
+
     - name: Build
+      if: steps.changes.outputs.src == 'true'
       run: |
         cd ${{ inputs.path }}
         mvn clean install -U
