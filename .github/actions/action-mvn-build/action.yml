@@ -11,7 +11,6 @@ runs:
   steps:
 
     - name: Build
-      if: steps.changes.outputs.src == 'true'
       run: |
         cd ${{ inputs.path }}
         mvn clean install -U
