@@ -16,6 +16,6 @@ jobs:
 
     steps:
 
-      - uses: actions/action-mvn-build
+      - uses: '.github/actions/action-mvn-build'
         with:
           path: 'services/auth-service'
