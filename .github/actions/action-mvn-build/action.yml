@@ -18,6 +18,7 @@ runs:
           services/auth-service/**
 
     - name: Build
+      if: steps.changed-files.outputs.any_changed == 'true'
       run: |
         cd ${{ inputs.path }}
         mvn clean install -U
