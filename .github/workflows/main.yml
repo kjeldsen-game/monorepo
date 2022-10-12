@@ -16,6 +16,14 @@ jobs:
 
     steps:
 
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '17'
+          cache: 'maven'
+
       - uses: ./.github/actions/action-mvn-build
         with:
           path: 'services/auth-service'
