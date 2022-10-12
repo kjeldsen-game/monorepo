@@ -14,3 +14,4 @@ runs:
       run: |
         cd ${{ inputs.path }}
         mvn clean install -U
+      shell: bash
