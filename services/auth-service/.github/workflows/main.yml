@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: Main Workflow
 
 run-name: ${{ github.actor }} fired main workflow
 
