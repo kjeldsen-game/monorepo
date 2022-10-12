@@ -4,7 +4,8 @@ run-name: ${{ github.actor }} fired services workflow
 
 on:
   push:
-    - 'services/**'
+    branches: [ main ] 
+    paths: 'services/**'
 
 jobs:
 
