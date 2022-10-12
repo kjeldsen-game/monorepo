@@ -32,4 +32,6 @@ jobs:
           ls
 
       - name: Build
-        run: mvn clean install -U
+        run: |
+          cd services/auth-service
+          mvn clean install -U
