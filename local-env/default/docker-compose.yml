@@ -16,29 +16,29 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: root
 
   # from code
-  # auth-service:
-  #   image: maven:3.8.3-openjdk-17
-  #   ports:
-  #     - 8081:8081
-  #   container_name: auth-service
-  #   env_file:
-  #     - ../config/common.env
-  #     - ../config/auth-service.env
-  #   volumes:
-  #     - ${M2_PATH}:/root/.m2
-  #     - ../../services/auth-service:/auth-service
-  #   working_dir: /auth-service
-  #   command: mvn compile spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
-
-  # from docker image
   auth-service:
-    image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/auth-service:latest
+    image: maven:3.8.3-openjdk-17
     ports:
       - 8081:8081
     container_name: auth-service
     env_file:
       - ../config/common.env
       - ../config/auth-service.env
+    volumes:
+      - ${M2_PATH}:/root/.m2
+      - ../../services/auth-service:/auth-service
+    working_dir: /auth-service
+    command: mvn compile spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
+
+  # from docker image
+  # auth-service:
+  #   image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/auth-service:latest
+  #   ports:
+  #     - 8081:8081
+  #   container_name: auth-service
+  #   env_file:
+  #     - ../config/common.env
+  #     - ../config/auth-service.env
 
   #####################
   ## Gateway Service ##
