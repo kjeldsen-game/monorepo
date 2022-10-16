@@ -26,4 +26,6 @@ jobs:
         with:
           path: "services/auth-service"
           service-name: "auth-service"
-        secrets: inherit
+          AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
+          AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
