@@ -24,4 +24,4 @@ jobs:
       - uses: ./.github/actions/action-mvn-build
         with:
           path: "services/auth-service"
-          docker-image-name: "auth-service"
+          service-name: "auth-service"

@@ -5,7 +5,7 @@ inputs:
   path: # path to the project to build
     required: true
     description: ""
-  docker-image-name:
+  service-name:
     required: true
     description: ""
 
@@ -29,7 +29,7 @@ runs:
 
     - name: Generate ECR Variables
       run: |
-        echo "ECR_IMAGE_NAME=040156513434.dkr.ecr.eu-west-1.amazonaws.com/${{ inputs.docker-image-name }}:latest" >> $GITHUB_ENV
+        echo "ECR_IMAGE_NAME=040156513434.dkr.ecr.eu-west-1.amazonaws.com/${{ inputs.service-name }}:latest" >> $GITHUB_ENV
       shell: bash
 
     - name: AWS ECR Configure
@@ -46,3 +46,13 @@ runs:
         docker build -t ${{ env.ECR_IMAGE_NAME }} .
         docker push ${{ env.ECR_IMAGE_NAME }}
       shell: bash
+
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_CHANNEL: ci-cd
+        SLACK_COLOR: ${{ job.status }}
+        SLACK_WEBHOOK: https://hooks.slack.com/services/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
+        SLACK_USERNAME: GitHub Actions
+        MSG_MINIMAL: "true"
+        SLACK_MESSAGE: Built ${{ inputs.service-name }}
