@@ -30,6 +30,7 @@ runs:
           ${{ inputs.PATH }}/**
 
     - name: Build
+      id: build
       if: steps.changed-files.outputs.any_changed == 'true'
       run: |
         cd ${{ inputs.PATH }}
@@ -37,13 +38,15 @@ runs:
       shell: bash
 
     - name: Generate ECR Variables
-      if: success()
+      id: ecr_variables
+      if: steps.build.outcome == 'success'
       run: |
         echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.SERVICE_NAME }}:latest" >> $GITHUB_ENV
       shell: bash
 
     - name: AWS ECR Configure
-      if: success()
+      id: ecr_configure
+      if: steps.ecr_variables.outcome == 'success'
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ inputs.AWS_CICD_ACCESS_KEY }}
@@ -51,7 +54,8 @@ runs:
         aws-region: eu-west-1
 
     - name: Build and Push to ECR
-      if: success()
+      id: ecr_push
+      if: steps.ecr_configure.outcome == 'success'
       run: |
         aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ${{ inputs.AWS_ECR_URI }}
         cd ${{ inputs.PATH }}
@@ -60,7 +64,7 @@ runs:
       shell: bash
 
     - name: Slack Notification
-      if: success()
+      if: steps.ecr_push.outcome == 'success'
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_CHANNEL: ci-cd
