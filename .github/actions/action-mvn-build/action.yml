@@ -1,15 +1,18 @@
-name: 'Maven Build'
+name: "Maven Build"
+description: ""
 
 inputs:
-  path:  # path to the project to build
+  path: # path to the project to build
     required: true
+    description: ""
+  docker-image-name:
+    required: true
+    description: ""
 
 runs:
-
   using: "composite"
 
   steps:
-
     - name: Get changed files
       id: changed-files
       uses: tj-actions/changed-files@v32
@@ -18,8 +21,28 @@ runs:
           ${{ inputs.path }}/**
 
     - name: Build
-      if: steps.changed-files.outputs.any_changed == 'true'
+      #if: steps.changed-files.outputs.any_changed == 'true'
       run: |
         cd ${{ inputs.path }}
         mvn clean install -U
+      shell: bash
+
+    - name: Generate ECR Variables
+      run: |
+        echo "ECR_IMAGE_NAME=040156513434.dkr.ecr.eu-west-1.amazonaws.com/${{ inputs.docker-image-name }}:latest" >> $GITHUB_ENV
+      shell: bash
+
+    - name: AWS ECR Configure
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: AKIAQSWMDYSNM2MUAXTA #${{ secrets.AWS_ECR_ACCESS_KEY }}
+        aws-secret-access-key: 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 #${{ secrets.AWS_ECR_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-1
+
+    - name: Build and Push to ECR
+      run: |
+        aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 040156513434.dkr.ecr.eu-west-1.amazonaws.com
+        cd ${{ inputs.path }}
+        docker build -t ${{ env.ECR_IMAGE_NAME }} .
+        docker push ${{ env.ECR_IMAGE_NAME }}
       shell: bash
