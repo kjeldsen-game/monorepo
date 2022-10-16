@@ -21,7 +21,8 @@ jobs:
           java-version: "17"
           cache: "maven"
 
-      - uses: ./.github/actions/action-mvn-build
+      - name: auth-service pipeline
+        uses: ./.github/actions/action-mvn-build
         with:
           path: "services/auth-service"
           service-name: "auth-service"

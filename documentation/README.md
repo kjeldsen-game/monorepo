@@ -22,3 +22,7 @@ The platform will be (for the MVP) using Kafka services to produce/consume event
 ## Local Development environment
 
 In the folder local-env you can find a project that allows developers to replicate the entire platform quite easy. It is based on Docker Compose and will run up all services and databases needed to work. Read the README of the projects for more information.
+
+# AWS 
+- Install aws-cli
+- Login: aws configure

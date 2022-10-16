@@ -15,19 +15,30 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: root
 
+  # from code
+  # auth-service:
+  #   image: maven:3.8.3-openjdk-17
+  #   ports:
+  #     - 8081:8081
+  #   container_name: auth-service
+  #   env_file:
+  #     - ../config/common.env
+  #     - ../config/auth-service.env
+  #   volumes:
+  #     - ${M2_PATH}:/root/.m2
+  #     - ../../services/auth-service:/auth-service
+  #   working_dir: /auth-service
+  #   command: mvn compile spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
+
+  # from docker image
   auth-service:
-    image: maven:3.8.3-openjdk-17
+    image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/auth-service:latest
     ports:
       - 8081:8081
     container_name: auth-service
     env_file:
       - ../config/common.env
       - ../config/auth-service.env
-    volumes:
-      - ${M2_PATH}:/root/.m2
-      - ../../services/auth-service:/auth-service
-    working_dir: /auth-service
-    command: mvn compile spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
 
   #####################
   ## Gateway Service ##
@@ -58,9 +69,9 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
 
-  broker:
+  kafka:
     image: confluentinc/cp-kafka:7.0.1
-    container_name: broker
+    container_name: kafka
     ports:
       # To learn about configuring Kafka for access across networks see
       # https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
@@ -71,7 +82,7 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
