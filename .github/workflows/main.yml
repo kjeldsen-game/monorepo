@@ -26,3 +26,6 @@ jobs:
         with:
           path: "services/auth-service"
           service-name: "auth-service"
+          ecr-uri: ${{ secrets.AWS_ECR_URI }}
+          cicd-accesskey: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          cicd-secretaccesskey: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}

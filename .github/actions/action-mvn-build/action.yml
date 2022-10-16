@@ -8,6 +8,15 @@ inputs:
   service-name:
     required: true
     description: "The name of the service to built"
+  ecr-uri:
+    required: true
+    description: "AWS ECR URI"
+  cicd-accesskey:
+    required: true
+    description: "AWS CI CD user access key"
+  cicd-secretaccesskey:
+    required: true
+    description: "AWS CI CD user secret access key"
 
 runs:
   using: "composite"
@@ -30,21 +39,21 @@ runs:
     - name: Generate ECR Variables
       if: success()
       run: |
-        echo "${{ secrets.AWS_ECR_URI }}/${{ inputs.service-name }}:latest" >> $GITHUB_ENV
+        echo "${{ inputs.ecr-uri }}/${{ inputs.service-name }}:latest" >> $GITHUB_ENV
       shell: bash
 
     - name: AWS ECR Configure
       if: success()
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_CICD_ACCESS_KEY }}
-        aws-secret-access-key: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ inputs.cicd-accesskey }}
+        aws-secret-access-key: ${{ inputs.cicd-secretaccesskey }}
         aws-region: eu-west-1
 
     - name: Build and Push to ECR
       if: success()
       run: |
-        aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_URI }}
+        aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ${{ inputs.ecr-uri }}
         cd ${{ inputs.path }}
         docker build -t ${{ env.ECR_IMAGE_NAME }} .
         docker push ${{ env.ECR_IMAGE_NAME }}
