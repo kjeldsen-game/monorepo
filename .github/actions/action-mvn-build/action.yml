@@ -39,7 +39,7 @@ runs:
     - name: Generate ECR Variables
       if: success()
       run: |
-        echo "${{ inputs.ecr-uri }}/${{ inputs.service-name }}:latest" >> $GITHUB_ENV
+        echo ${{ inputs.ecr-uri }}/${{ inputs.service-name }}:latest >> $GITHUB_ENV
       shell: bash
 
     - name: AWS ECR Configure
