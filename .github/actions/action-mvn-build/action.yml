@@ -74,7 +74,7 @@ runs:
       id: render-container
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: task-definition.json
+        task-definition: deployment/task-definition.json
         container-name: ${{ inputs.SERVICE_NAME }}
         image: ${{ env.ECR_IMAGE_NAME }}
         environment-variables: "LOG_LEVEL=info"
