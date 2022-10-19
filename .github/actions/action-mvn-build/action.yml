@@ -31,37 +31,47 @@ runs:
 
     - name: Build
       id: build
-      if: steps.changed-files.outputs.any_changed == 'true'
+      #if: steps.changed-files.outputs.any_changed == 'true'
       run: |
         cd ${{ inputs.PATH }}
         mvn clean install -U
       shell: bash
 
-    - name: Generate ECR Variables
-      id: ecr_variables
-      if: steps.build.outcome == 'success'
-      run: |
-        echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.SERVICE_NAME }}:latest" >> $GITHUB_ENV
-      shell: bash
+    # - name: Generate ECR Variables
+    #   id: ecr_variables
+    #   if: steps.build.outcome == 'success'
+    #   run: |
+    #     echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.SERVICE_NAME }}:latest" >> $GITHUB_ENV
+    #   shell: bash
 
     - name: AWS ECR Configure
       id: ecr_configure
-      if: steps.ecr_variables.outcome == 'success'
+      if: steps.build.outcome == 'success'
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ inputs.AWS_CICD_ACCESS_KEY }}
         aws-secret-access-key: ${{ inputs.AWS_CICD_SECRET_ACCESS_KEY }}
         aws-region: eu-west-1
 
-    - name: Build and Push to ECR
-      id: ecr_push
+    - name: Login to Amazon ECR
+      id: login_ecr
       if: steps.ecr_configure.outcome == 'success'
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push docker image to Amazon ECR
+      id: ecr_push
+      if: steps.login_ecr.outcome == 'success'
+      env:
+        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        REPOSITORY: ${{ inputs.SERVICE_NAME }}
+        IMAGE_TAG: latest
       run: |
-        aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ${{ inputs.AWS_ECR_URI }}
         cd ${{ inputs.PATH }}
-        docker build -t ${{ env.ECR_IMAGE_NAME }} .
-        docker push ${{ env.ECR_IMAGE_NAME }}
+        docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+        docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
       shell: bash
+
+      # aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ${{ inputs.AWS_ECR_URI }}
 
     - name: Slack Notification
       if: steps.ecr_push.outcome == 'success'
