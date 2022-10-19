@@ -1,0 +1,11 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "",
+            "image": "",
+            "memory": 200,
+            "cpu": 10,
+            "essential": true
+        }
+    ]
+}
