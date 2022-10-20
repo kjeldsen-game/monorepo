@@ -76,7 +76,7 @@ runs:
       env:
         SLACK_CHANNEL: ci-cd
         SLACK_COLOR: ${{ job.status }}
-        SLACK_ICON: s3://github-actions/Octocat.png
+        SLACK_ICON: https://github-actions.s3.eu-west-1.amazonaws.com/Octocat.png
         SLACK_WEBHOOK: https://hooks.slack.com/services/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
         SLACK_USERNAME: GitHub Actions
         SLACK_TITLE: Built ${{ inputs.SERVICE_NAME }}
