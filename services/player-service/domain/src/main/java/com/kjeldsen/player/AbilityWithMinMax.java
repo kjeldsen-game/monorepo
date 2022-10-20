@@ -1,4 +1,4 @@
-package com.kjeldsen.player.rest.delegate;
+package com.kjeldsen.player;
 
 import lombok.RequiredArgsConstructor;
 
@@ -9,7 +9,7 @@ public enum AbilityWithMinMax {
 }
 
 
-SIGNED_UP_USER_DE-past
+/*SIGNED_UP_USER_DE-past
     REQUEST_SIGN_UP_USER_CE-imperative
 
-    200
+    200*/

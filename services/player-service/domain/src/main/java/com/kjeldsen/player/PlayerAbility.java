@@ -1,8 +1,10 @@
-package com.kjeldsen.player.rest.delegate;
+package com.kjeldsen.player;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
+@Getter
 public enum PlayerAbility {
 
     SPEED(50, 100),
@@ -14,7 +16,6 @@ public enum PlayerAbility {
     PlayerAbility with(Integer min, Integer max) {
         this.min = min;
         this.max = max;
+        return this;
     }
-
-
 }
