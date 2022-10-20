@@ -70,23 +70,22 @@ runs:
         docker push ${{ env.ECR_IMAGE_NAME }}
       shell: bash
 
-    - name: Render Amazon ECS task definition
-      id: render-container
-      uses: aws-actions/amazon-ecs-render-task-definition@v1
-      with:
-        task-definition: deployment/task-definition.json
-        container-name: ${{ inputs.SERVICE_NAME }}
-        image: ${{ env.ECR_IMAGE_NAME }}
-        environment-variables: "LOG_LEVEL=info"
+    # - name: Render Amazon ECS task definition
+    #   id: render-container
+    #   uses: aws-actions/amazon-ecs-render-task-definition@v1
+    #   with:
+    #     task-definition: ${{ inputs.PATH }}/task-definition.json
+    #     container-name: ${{ inputs.SERVICE_NAME }}
+    #     image: ${{ env.ECR_IMAGE_NAME }}
+    #     environment-variables: "LOG_LEVEL=info"
 
-    - name: Deploy to Amazon ECS service
-      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-      with:
-        task-definition: ${{ steps.render-container.outputs.task-definition }}
-        service: ${{ inputs.SERVICE_NAME }}
-        cluster: ${{ inputs.AWS_ECS_CLUSTER }}
-        wait-for-service-stability: true
-      # aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ${{ inputs.AWS_ECR_URI }}
+    # - name: Deploy to Amazon ECS service
+    #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+    #   with:
+    #     task-definition: ${{ steps.render-container.outputs.task-definition }}
+    #     service: ${{ inputs.SERVICE_NAME }}
+    #     cluster: ${{ inputs.AWS_ECS_CLUSTER }}
+    #     wait-for-service-stability: true
 
     - name: Slack Notification
       if: steps.ecr_push.outcome == 'success'
