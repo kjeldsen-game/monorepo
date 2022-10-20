@@ -1,8 +1,8 @@
-package com.kjeldsen.player;
+package com.kjeldsen.player.domain;
 
 import org.apache.commons.lang3.Range;
 
-record Age(Integer value){
+record Age(Integer value) {
 
     private static final Integer MIN_AGE = 15;
     private static final Integer MAX_AGE = 33;

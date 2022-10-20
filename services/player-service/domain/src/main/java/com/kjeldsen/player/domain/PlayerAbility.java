@@ -1,4 +1,4 @@
-package com.kjeldsen.player;
+package com.kjeldsen.player.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
