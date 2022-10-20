@@ -20,6 +20,9 @@ inputs:
   AWS_ECS_CLUSTER:
     required: true
     description: "AWS_ECS_CLUSTER"
+  SLACK_CICD_WEBHOOK:
+    required: true
+    description: "SLACK_CICD_WEBHOOK"
 
 runs:
   using: "composite"
@@ -77,7 +80,7 @@ runs:
         SLACK_CHANNEL: ci-cd
         SLACK_COLOR: ${{ job.status }}
         SLACK_ICON: https://github-actions.s3.eu-west-1.amazonaws.com/Octocat.png
-        SLACK_WEBHOOK: https://hooks.slack.com/services/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
+        SLACK_WEBHOOK: ${{ inputs.SLACK_CICD_WEBHOOK }}
         SLACK_USERNAME: GitHub Actions
         SLACK_TITLE: Built ${{ inputs.SERVICE_NAME }}
         SLACK_FOOTER: "8=D"
