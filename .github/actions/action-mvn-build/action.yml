@@ -70,23 +70,6 @@ runs:
         docker push ${{ env.ECR_IMAGE_NAME }}
       shell: bash
 
-    # - name: Render Amazon ECS task definition
-    #   id: render-container
-    #   uses: aws-actions/amazon-ecs-render-task-definition@v1
-    #   with:
-    #     task-definition: ${{ inputs.PATH }}/task-definition.json
-    #     container-name: ${{ inputs.SERVICE_NAME }}
-    #     image: ${{ env.ECR_IMAGE_NAME }}
-    #     environment-variables: "LOG_LEVEL=info"
-
-    # - name: Deploy to Amazon ECS service
-    #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-    #   with:
-    #     task-definition: ${{ steps.render-container.outputs.task-definition }}
-    #     service: ${{ inputs.SERVICE_NAME }}
-    #     cluster: ${{ inputs.AWS_ECS_CLUSTER }}
-    #     wait-for-service-stability: true
-
     - name: Slack Notification
       if: steps.ecr_push.outcome == 'success'
       uses: rtCamp/action-slack-notify@v2
@@ -94,7 +77,7 @@ runs:
         SLACK_CHANNEL: ci-cd
         SLACK_COLOR: ${{ job.status }}
         SLACK_ICON: s3://github-actions/Octocat.png
-        SLACK_WEBHOOK: https://hooks.slack.com/services/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
+        SLACK_WEBHOOK: https://hooks.slack.com/services/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
         SLACK_USERNAME: GitHub Actions
         SLACK_TITLE: Built ${{ inputs.SERVICE_NAME }}
         SLACK_FOOTER: "8=D"
