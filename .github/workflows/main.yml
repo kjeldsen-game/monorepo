@@ -29,5 +29,14 @@ jobs:
           AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
           AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
           AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
-          AWS_ECS_CLUSTER: dev-cluster
+          SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
+
+      - name: gateway-service pipeline
+        uses: ./.github/actions/action-mvn-build
+        with:
+          PATH: "services/gateway-service"
+          SERVICE_NAME: "gateway-service"
+          AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
+          AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
           SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}

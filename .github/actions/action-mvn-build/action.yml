@@ -2,7 +2,7 @@ name: "Maven Build"
 description: "Builds a mvn service"
 
 inputs:
-  PATH: # path to the project to build
+  PATH:
     required: true
     description: "The path of the service to built"
   SERVICE_NAME:
@@ -17,9 +17,6 @@ inputs:
   AWS_CICD_SECRET_ACCESS_KEY:
     required: true
     description: "AWS_CICD_SECRET_ACCESS_KEY"
-  AWS_ECS_CLUSTER:
-    required: true
-    description: "AWS_ECS_CLUSTER"
   SLACK_CICD_WEBHOOK:
     required: true
     description: "SLACK_CICD_WEBHOOK"
@@ -37,7 +34,7 @@ runs:
 
     - name: Build
       id: build
-      #if: steps.changed-files.outputs.any_changed == 'true'
+      if: steps.changed-files.outputs.any_changed == 'true'
       run: |
         cd ${{ inputs.PATH }}
         mvn clean install -U
