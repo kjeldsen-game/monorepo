@@ -1,7 +1,6 @@
 package com.kjeldsen.player.domain;
 
 public enum PlayerTendency {
-    ATTACK,
-    MID,
-    DEFEND
+    AGGRESSIVE,
+    NOT_AGGRESSIVE
 }
