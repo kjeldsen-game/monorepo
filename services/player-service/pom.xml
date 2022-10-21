@@ -7,7 +7,8 @@
         <module>adapter-rest</module>
         <module>infrastructure</module>
         <module>domain</module>
-        <module>usecases</module>
+        <module>application</module>
+        <module>adapter-persistence</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -25,6 +26,7 @@
         <openapi-generator-maven-plugin.version>6.1.0</openapi-generator-maven-plugin.version>
         <springdoc-openapi-maven-plugin.version>1.4</springdoc-openapi-maven-plugin.version>
         <spring-boot-starter-webflux.version>2.7.3</spring-boot-starter-webflux.version>
+        <spring-data-mongodb.version>3.4.3</spring-data-mongodb.version>
         <springdoc-openapi-webflux-ui.version>1.6.11</springdoc-openapi-webflux-ui.version>
         <swagger-core.version>2.2.2</swagger-core.version>
         <springfox-swagger2.version>3.0.0</springfox-swagger2.version>
@@ -74,6 +76,7 @@
     </dependencies>
     <dependencyManagement>
         <dependencies>
+            <!-- Modules -->
             <dependency>
                 <groupId>com.kjeldsen</groupId>
                 <artifactId>adapter-rest</artifactId>
@@ -81,7 +84,12 @@
             </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>usecases</artifactId>
+                <artifactId>adapter-persistence</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>application</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -89,6 +97,7 @@
                 <artifactId>domain</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!-- Third party dependencies -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -98,6 +107,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-webflux</artifactId>
                 <version>${spring-boot-starter-webflux.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-mongodb</artifactId>
+                <version>${spring-data-mongodb.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springdoc</groupId>

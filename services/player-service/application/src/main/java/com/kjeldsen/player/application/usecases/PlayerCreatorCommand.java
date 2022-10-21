@@ -1,4 +1,4 @@
-package com.kjeldsen.player.usecases;
+package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.domain.PlayerAge;
 import com.kjeldsen.player.domain.PlayerPosition;
