@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -19,16 +20,16 @@ public class PlayerReadRepositoryAdapter implements PlayerReadRepository {
 
     @Override
     public Optional<Player> findOneById(PlayerId id) {
-        Optional<PlayerDocument> storedPlayer = playerMongoRepository.findById(id.value());
-        // TODO: map to domain
-        return null;
+        return playerMongoRepository.findById(id.value())
+                .map(PlayerDocument::toDomain);
     }
 
     @Override
     public List<Player> find() {
-        List<PlayerDocument> storedPlayers = playerMongoRepository.findAll();
-        // TODO: map to domain
-        return null;
+        return playerMongoRepository.findAll()
+                .stream()
+                .map(PlayerDocument::toDomain)
+                .collect(Collectors.toList());
     }
 
 }

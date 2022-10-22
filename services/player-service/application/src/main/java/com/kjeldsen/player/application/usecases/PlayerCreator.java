@@ -3,10 +3,10 @@ package com.kjeldsen.player.application.usecases;
 import com.kjeldsen.player.application.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.application.shared.UseCase;
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerAbilities;
-import com.kjeldsen.player.domain.PlayerAbilities.PlayerAbility;
 import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerName;
+import com.kjeldsen.player.domain.PlayerSkills;
+import com.kjeldsen.player.domain.PlayerSkills.PlayerSkill;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,14 +24,14 @@ public class PlayerCreator {
                 .name(PlayerName.generate())
                 .age(command.getAge())
                 .position(command.getPosition())
-                .abilities(PlayerAbilities.of(command.getPosition()))
+                .skills(PlayerSkills.of(command.getPosition()))
                 .build();
 
         for (int i = 0; i < command.getPoints(); i++) {
             int p = 5;
-            PlayerAbility playerAbility = PlayerAbility.GOAL;
+            PlayerSkill playerSkill = PlayerSkill.GOAL;
             // TODO which ability and how many points?
-            player.getAbilities().addAbilityPoints(playerAbility, p);
+            player.getSkills().addAbilityPoints(playerSkill, p);
         }
 
         log.info("Generated player {}", player);

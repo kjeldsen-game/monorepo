@@ -8,4 +8,8 @@ public record PlayerName(String value) {
         Faker faker = new Faker();
         return new PlayerName(faker.name().fullName());
     }
+
+    public static PlayerName of(String value) {
+        return new PlayerName(value);
+    }
 }
