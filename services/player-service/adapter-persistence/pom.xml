@@ -13,6 +13,7 @@
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>domain</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
