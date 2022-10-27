@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class PlayerCreatorCommand {
+public class NewPlayer {
     private PlayerAge age;
     private PlayerPosition position;
     private PlayerTendency playerTendency;

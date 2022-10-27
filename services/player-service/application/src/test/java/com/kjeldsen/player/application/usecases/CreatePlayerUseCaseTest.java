@@ -14,10 +14,10 @@ import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PlayerCreatorTest {
+class CreatePlayerUseCaseTest {
 
     final private PlayerWriteRepository mockedPlayerWriteRepository = Mockito.mock(PlayerWriteRepository.class);
-    final private PlayerCreator playerCreator = new PlayerCreator(mockedPlayerWriteRepository);
+    final private CreatePlayerUseCase createPlayerUseCase = new CreatePlayerUseCase(mockedPlayerWriteRepository);
 
     @Nested
     @DisplayName("Handle should")
@@ -25,14 +25,14 @@ class PlayerCreatorTest {
 
         @Test
         void should_save_generated_player() {
-            PlayerCreatorCommand command = PlayerCreatorCommand.builder()
+            NewPlayer command = NewPlayer.builder()
                     .age(PlayerAge.of(20))
                     .position(PlayerPosition.MIDDLE)
                     .playerTendency(PlayerTendency.AGGRESSIVE)
                     .points(100)
                     .build();
 
-            playerCreator.handle(command);
+            createPlayerUseCase.create(command);
 
             ArgumentCaptor<Player> argumentCaptor = ArgumentCaptor.forClass(Player.class);
             Mockito.verify(mockedPlayerWriteRepository, Mockito.times(1)).save(argumentCaptor.capture());
