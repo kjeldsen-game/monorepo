@@ -6,6 +6,13 @@ server:
 spring:
   application:
     name: player-service
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: admin
+      password: root
+      database: admin
 
 springdoc:
   version: '@springdoc.version@'
