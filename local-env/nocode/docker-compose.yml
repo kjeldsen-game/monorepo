@@ -36,3 +36,16 @@ services:
     env_file:
       - ../config/common.env
       - ../config/gateway-service.env
+
+  ####################
+  ## Player Service ##
+  ####################
+
+  player-service:
+    image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/player-service:latest
+    ports:
+      - 8082:8082
+    container_name: player-service
+    env_file:
+      - ../config/common.env
+      - ../config/player-service.env

@@ -8,22 +8,18 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>infrastructure</artifactId>
+
+    <artifactId>domain</artifactId>
+
     <dependencies>
         <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>adapter-rest</artifactId>
-            <scope>compile</scope>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>adapter-persistence</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <scope>provided</scope>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
         </dependency>
     </dependencies>
+
 </project>

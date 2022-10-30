@@ -1,6 +1,0 @@
-springdoc:
-  version: '@springdoc.version@'
-  api-docs:
-    path: /api-docs
-  swagger-ui:
-    use-root-path: true

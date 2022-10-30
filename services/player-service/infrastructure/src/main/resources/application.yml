@@ -1,0 +1,22 @@
+server:
+  port: 8082
+  error:
+    include-message: always
+
+spring:
+  application:
+    name: player-service
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: admin
+      password: root
+      database: admin
+
+springdoc:
+  version: '@springdoc.version@'
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    use-root-path: true

@@ -8,22 +8,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>infrastructure</artifactId>
+    <artifactId>application</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.kjeldsen</groupId>
-            <artifactId>adapter-rest</artifactId>
+            <artifactId>domain</artifactId>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>adapter-persistence</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
