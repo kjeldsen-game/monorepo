@@ -15,7 +15,6 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: root
 
-  # from code
   auth-service:
     image: maven:3.8.3-openjdk-17
     ports:
@@ -46,6 +45,24 @@ services:
       - ${M2_PATH}:/root/.m2
       - ../../services/gateway-service:/gateway-service
     working_dir: /gateway-service
+    command: mvn compile spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
+
+  ####################
+  ## Player Service ##
+  ####################
+
+  player-service:
+    image: maven:3.8.3-openjdk-17
+    ports:
+      - 8082:8082
+    container_name: player-service
+    env_file:
+      - ../config/common.env
+      - ../config/player-service.env
+    volumes:
+      - ${M2_PATH}:/root/.m2
+      - ../../services/player-service:/player-service
+    working_dir: /player-service
     command: mvn compile spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
 
   ###########
