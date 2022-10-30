@@ -52,7 +52,7 @@
         <spring-boot-starter-tomcat.version>2.7.4</spring-boot-starter-tomcat.version>
     </properties>
     <build>
-        <finalName>myservice</finalName>
+        <finalName>auth-service</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>

@@ -25,7 +25,7 @@
         <spring-security-oauth2-autoconfigure.version>2.6.8</spring-security-oauth2-autoconfigure.version>
     </properties>
     <build>
-        <finalName>myservice</finalName>
+        <finalName>gateway-service</finalName>
     </build>
     <dependencyManagement>
         <dependencies>

@@ -43,7 +43,7 @@
         <snakeyaml.version>1.33</snakeyaml.version>
     </properties>
     <build>
-        <finalName>myservice</finalName>
+        <finalName>player-service</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
