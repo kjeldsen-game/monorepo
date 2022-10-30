@@ -32,6 +32,11 @@ runs:
         files: |
           ${{ inputs.PATH }}/**
 
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: "npm"
+
     - name: Build
       id: build
       if: steps.changed-files.outputs.any_changed == 'true'

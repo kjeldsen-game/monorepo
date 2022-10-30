@@ -32,6 +32,12 @@ runs:
         files: |
           ${{ inputs.PATH }}/**
 
+    - uses: actions/setup-java@v3
+      with:
+        distribution: "corretto"
+        java-version: "17"
+        cache: "maven"
+
     - name: Build
       id: build
       if: steps.changed-files.outputs.any_changed == 'true'
