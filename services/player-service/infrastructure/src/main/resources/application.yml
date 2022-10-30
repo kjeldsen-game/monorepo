@@ -15,7 +15,7 @@ spring:
       database: admin
 
 springdoc:
-  version: '@springdoc.version@'
+  version: "@springdoc.version@"
   api-docs:
     path: /api-docs
   swagger-ui:
