@@ -43,7 +43,8 @@ runs:
       if: steps.changed-files.outputs.any_changed == 'true'
       run: |
         cd ${{ inputs.PATH }}
-        npm run dev
+        npm install next
+        npm run build
       shell: bash
 
     - name: Generate ECR Variables
