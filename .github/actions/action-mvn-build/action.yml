@@ -37,7 +37,7 @@ runs:
       if: steps.changed-files.outputs.any_changed == 'true'
       run: |
         cd ${{ inputs.PATH }}
-        mvn clean install -U
+        mvn clean install -U -DskipTests=true
       shell: bash
 
     - name: Generate ECR Variables
