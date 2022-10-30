@@ -12,11 +12,11 @@ public record PlayerSkills(Map<PlayerSkill, Integer> values) {
     public static PlayerSkills of(PlayerPosition position) {
         //TODO: Apply specific abilities value of a position
         return new PlayerSkills(new HashMap<>(
-                Map.of(PlayerSkill.SPEED, PlayerSkill.SPEED.getMin(),
-                        PlayerSkill.PASSING, PlayerSkill.PASSING.getMin(),
-                        PlayerSkill.SHOOTING, PlayerSkill.SHOOTING.getMin(),
-                        PlayerSkill.TACKLING, PlayerSkill.TACKLING.getMin(),
-                        PlayerSkill.HEADING, PlayerSkill.HEADING.getMin())));
+                Map.of(PlayerSkill.SC, PlayerSkill.SC.getMin(),
+                        PlayerSkill.BC, PlayerSkill.BC.getMin(),
+                        PlayerSkill.PA, PlayerSkill.PA.getMin(),
+                        PlayerSkill.CO, PlayerSkill.CO.getMin(),
+                        PlayerSkill.TA, PlayerSkill.TA.getMin())));
     }
 
     public static PlayerSkills of(Map<PlayerSkill, Integer> values) {
@@ -35,19 +35,26 @@ public record PlayerSkills(Map<PlayerSkill, Integer> values) {
     @Getter
     public enum PlayerSkill {
 
-        SPEED(50, 100),
-        GOAL(50, 100),
-        PASSING(50, 100),
-        SHOOTING(50, 100),
-        TACKLING(50, 100),
-        HEADING(50, 100);
+        SC(50, 100, 1),
+        OP(50, 100, 1),
+        BC(50, 100, 1),
+        PA(50, 100, 1),
+        CO(50, 100, 1),
+        TA(50, 100, 1),
+        DP(50, 100, 1);
 
         private Integer min;
         private Integer max;
+        private Integer tendency;
 
         PlayerSkill with(Integer min, Integer max) {
             this.min = min;
             this.max = max;
+            return this;
+        }
+
+        PlayerSkill withTendency(Integer tendency) {
+            this.tendency = tendency;
             return this;
         }
     }

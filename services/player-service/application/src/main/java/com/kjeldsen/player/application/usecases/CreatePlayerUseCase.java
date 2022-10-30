@@ -29,7 +29,7 @@ public class CreatePlayerUseCase {
 
         for (int i = 0; i < newPlayer.getPoints(); i++) {
             int p = 5;
-            PlayerSkill playerSkill = PlayerSkill.GOAL;
+            PlayerSkill playerSkill = PlayerSkill.OP;
             // TODO which ability and how many points?
             player.getSkills().addAbilityPoints(playerSkill, p);
         }

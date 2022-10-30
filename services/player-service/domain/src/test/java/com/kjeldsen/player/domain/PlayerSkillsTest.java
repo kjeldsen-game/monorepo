@@ -15,8 +15,8 @@ class PlayerSkillsTest {
         @Test
         void increase_the_amount_points_of_a_specified_ability() {
             PlayerSkills abilities = PlayerSkills.of(PlayerPosition.FORWARD);
-            abilities.addAbilityPoints(PlayerSkill.SPEED, 5);
-            assertThat(abilities.getAbilityPoints(PlayerSkill.SPEED)).isEqualTo(55);
+            abilities.addAbilityPoints(PlayerSkill.SC, 5);
+            assertThat(abilities.getAbilityPoints(PlayerSkill.SC)).isEqualTo(55);
         }
     }
 }
