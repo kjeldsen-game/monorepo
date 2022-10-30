@@ -11,12 +11,8 @@ public record PlayerSkills(Map<PlayerSkill, Integer> values) {
 
     public static PlayerSkills of(PlayerPosition position) {
         //TODO: Apply specific abilities value of a position
-        return new PlayerSkills(new HashMap<>(
-                Map.of(PlayerSkill.SC, PlayerSkill.SC.getMin(),
-                        PlayerSkill.BC, PlayerSkill.BC.getMin(),
-                        PlayerSkill.PA, PlayerSkill.PA.getMin(),
-                        PlayerSkill.CO, PlayerSkill.CO.getMin(),
-                        PlayerSkill.TA, PlayerSkill.TA.getMin())));
+        return new PlayerSkills(position.getSkillTendencies().stream()
+            .collect(HashMap::new, (map, skill) -> map.put(skill, skill.getMin()), HashMap::putAll));
     }
 
     public static PlayerSkills of(Map<PlayerSkill, Integer> values) {
