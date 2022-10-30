@@ -49,3 +49,13 @@ services:
     env_file:
       - ../config/common.env
       - ../config/player-service.env
+
+  ###################
+  ## Beta Frontend ##
+  ###################
+
+  beta-frontend:
+    image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/beta-frontend:latest
+    ports:
+      - 3000:3000
+    container_name: beta-frontend

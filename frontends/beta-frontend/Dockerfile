@@ -1,5 +1,5 @@
 FROM node:14.15.1
-ENV NODE_ENV=dev
+ENV NODE_ENV=development
 WORKDIR /app
 COPY ["package.json", "package-lock.json*", "./"]
 RUN npm install --dev
