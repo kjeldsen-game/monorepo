@@ -67,20 +67,18 @@ export const Header: FC = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
-        position="static"
+        position="sticky"
         sx={{
           boxShadow: '0px 0px 0px 0px',
           borderBottom: '4px solid #FF3F84',
+          zIndex: (theme) => theme.zIndex.drawer + 1,
         }}>
         <Toolbar>
-          {/* <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-            <MenuIcon />
-          </IconButton> */}
           <Link href="/">
             <SportsSoccerIcon />
           </Link>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Kjedlsen
+            Kjeldsen
           </Typography>
 
           {status === 'authenticated' && !!data ? (
