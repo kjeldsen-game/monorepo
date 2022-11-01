@@ -2,26 +2,49 @@ package com.kjeldsen.player.domain;
 
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 public record PlayerActualSkills(Map<PlayerSkill, Integer> values) {
 
-    public static PlayerActualSkills of(PlayerPosition position) {
-        //TODO: Apply specific abilities value of a position
-        return new PlayerActualSkills(position.getSkillTendencies().stream()
-            .collect(HashMap::new, (map, skill) -> map.put(skill, 0), HashMap::putAll));
+    public static final int MAX_SKILL_VALUE = 100;
+
+    public static PlayerActualSkills generate(PlayerPosition position, Integer totalPoints) {
+        HashMap<PlayerSkill, Integer> values = position.getTendencies().keySet().stream()
+            .collect(HashMap::new, (map, skill) -> map.put(skill, 0), HashMap::putAll);
+        Set<PlayerSkill> excludedSkills = new HashSet<>();
+
+        for (int i = 0; i < totalPoints; i++) {
+            Optional<PlayerSkill> skill = position.getRandomSkillBasedOnTendency(excludedSkills);
+            // if no skill is found, it means that all skills have reached the max value
+            if (skill.isEmpty()) {
+                break;
+            }
+            values.put(skill.get(), values.get(skill.get()) + 1);
+            if (values.get(skill.get()) == MAX_SKILL_VALUE) {
+                excludedSkills.add(skill.get());
+            }
+        }
+
+        return new PlayerActualSkills(values);
     }
 
     public static PlayerActualSkills of(Map<PlayerSkill, Integer> values) {
         return new PlayerActualSkills(values);
     }
 
-    public void addAbilityPoints(PlayerSkill skill, int points) {
-        values.merge(skill, points, Integer::sum);
+    public void addSkillPoints(PlayerSkill skill, int points) {
+        int normalizedPoints = Math.min(points, MAX_SKILL_VALUE - values.get(skill));
+        values.merge(skill, normalizedPoints, Integer::sum);
     }
 
-    public int getAbilityPoints(PlayerSkill skill) {
+    public int getSkillPoints(PlayerSkill skill) {
         return values.get(skill);
     }
 
+    public int getTotalPoints() {
+        return values.values().stream().mapToInt(Integer::intValue).sum();
+    }
 }

@@ -5,7 +5,6 @@ import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerActualSkills;
 import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerName;
-import com.kjeldsen.player.domain.PlayerSkill;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -24,15 +23,8 @@ public class CreatePlayerUseCase {
             .name(PlayerName.generate())
             .age(newPlayer.getAge())
             .position(newPlayer.getPosition())
-            .actualSkills(PlayerActualSkills.of(newPlayer.getPosition()))
+            .actualSkills(PlayerActualSkills.generate(newPlayer.getPosition(), newPlayer.getPoints()))
             .build();
-
-        for (int i = 0; i < newPlayer.getPoints(); i++) {
-            int p = 5;
-            PlayerSkill playerSkill = PlayerSkill.OFFENSIVE_POSITION;
-            // TODO which ability and how many points?
-            player.getActualSkills().addAbilityPoints(playerSkill, p);
-        }
 
         log.info("Generated player {}", player);
         repository.save(player);
