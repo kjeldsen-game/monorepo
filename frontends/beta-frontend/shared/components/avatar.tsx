@@ -17,16 +17,3 @@ function Avatar() {
 }
 
 export default Avatar
-
-// vs
-
-// import Box from '@mui/material/Box'
-
-// export default function Avatar() {
-//   return (
-//     <Box
-//       sx={{
-//         borderRadius: '50%',
-//       }}></Box>
-//   )
-// }
