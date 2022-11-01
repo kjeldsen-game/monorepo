@@ -10,8 +10,7 @@ import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
 import com.kjeldsen.player.rest.api.PlayerApiController;
 import com.kjeldsen.player.rest.delegate.PlayerDelegate;
 import com.kjeldsen.player.rest.model.CreatePlayerRequest;
-import com.kjeldsen.player.rest.model.CreatePlayerRequest.PositionEnum;
-import com.kjeldsen.player.rest.model.CreatePlayerRequest.TendencyEnum;
+import com.kjeldsen.player.rest.model.PlayerPosition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -57,15 +56,14 @@ class PlayerApiTest {
         @DisplayName("return 201 when a valid request is sent")
         void return_201_status_when_a_valid_request_is_sent() throws Exception {
             CreatePlayerRequest request = new CreatePlayerRequest()
-                    .age(16)
-                    .position(PositionEnum.FORWARD)
-                    .tendency(TendencyEnum.AGGRESSIVE)
-                    .points(700);
+                .age(16)
+                .position(PlayerPosition.FORWARD)
+                .points(700);
 
             mockMvc.perform(post("/player")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(request)))
-                    .andExpect(status().isCreated());
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated());
 
             var player = playerMongoRepository.findBy(Example.of(PlayerDocument.builder().age(16).build()), FetchableFluentQuery::one);
 
