@@ -1,6 +1,5 @@
 package com.kjeldsen.player.domain;
 
-import com.kjeldsen.player.domain.PlayerSkills.PlayerSkill;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -9,29 +8,29 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 public enum PlayerPosition {
-    DEFENDER(Set.of(PlayerSkill.TA.withTendency(5),
-        PlayerSkill.DP.withTendency(5),
+    DEFENDER(Set.of(PlayerSkill.TACKLING.withTendency(5),
+        PlayerSkill.DEFENSE_POSITION.withTendency(5),
         PlayerSkill.CO.withTendency(2),
-        PlayerSkill.SC,
-        PlayerSkill.OP,
-        PlayerSkill.BC,
-        PlayerSkill.PA
+        PlayerSkill.SCORE,
+        PlayerSkill.OFFENSIVE_POSITION,
+        PlayerSkill.BALL_CONTROL,
+        PlayerSkill.PASSING
     )),
-    MIDDLE(Set.of(PlayerSkill.PA.withTendency(4),
-        PlayerSkill.BC.withTendency(3),
-        PlayerSkill.OP.withTendency(3),
+    MIDDLE(Set.of(PlayerSkill.PASSING.withTendency(4),
+        PlayerSkill.BALL_CONTROL.withTendency(3),
+        PlayerSkill.OFFENSIVE_POSITION.withTendency(3),
         PlayerSkill.CO.withTendency(2),
-        PlayerSkill.TA.withTendency(2),
-        PlayerSkill.DP.withTendency(2),
-        PlayerSkill.SC
+        PlayerSkill.TACKLING.withTendency(2),
+        PlayerSkill.DEFENSE_POSITION.withTendency(2),
+        PlayerSkill.SCORE
     )),
-    FORWARD(Set.of(PlayerSkill.SC.withTendency(5),
-        PlayerSkill.OP.withTendency(4),
-        PlayerSkill.BC.withTendency(4),
-        PlayerSkill.PA.withTendency(2),
+    FORWARD(Set.of(PlayerSkill.SCORE.withTendency(5),
+        PlayerSkill.OFFENSIVE_POSITION.withTendency(4),
+        PlayerSkill.BALL_CONTROL.withTendency(4),
+        PlayerSkill.PASSING.withTendency(2),
         PlayerSkill.CO.withTendency(2),
-        PlayerSkill.TA,
-        PlayerSkill.DP
+        PlayerSkill.TACKLING,
+        PlayerSkill.DEFENSE_POSITION
     ));
 
     private final Set<PlayerSkill> skillTendencies;
