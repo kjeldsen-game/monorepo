@@ -25,7 +25,9 @@
         <java.version>17</java.version>
         <openapi-generator-maven-plugin.version>6.1.0</openapi-generator-maven-plugin.version>
         <springdoc-openapi-maven-plugin.version>1.4</springdoc-openapi-maven-plugin.version>
+        <spring-boot-starter.version>2.7.3</spring-boot-starter.version>
         <spring-boot-starter-webflux.version>2.7.3</spring-boot-starter-webflux.version>
+        <spring-boot-starter-tomcat.version>2.7.4</spring-boot-starter-tomcat.version>
         <spring-data-mongodb.version>3.4.3</spring-data-mongodb.version>
         <openapi.version>1.6.11</openapi.version>
         <swagger-core.version>2.2.2</swagger-core.version>
@@ -119,6 +121,16 @@
                 <version>${project.version}</version>
             </dependency>
             <!-- Third party dependencies -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-tomcat</artifactId>
+                <version>${spring-boot-starter-tomcat.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>

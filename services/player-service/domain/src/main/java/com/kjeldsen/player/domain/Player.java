@@ -13,5 +13,5 @@ public class Player {
     private PlayerName name;
     private PlayerAge age;
     private PlayerPosition position;
-    private PlayerSkills skills;
+    private PlayerActualSkills actualSkills;
 }

@@ -4,7 +4,6 @@ import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
 import com.kjeldsen.player.application.usecases.NewPlayer;
 import com.kjeldsen.player.domain.PlayerAge;
 import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerTendency;
 import com.kjeldsen.player.rest.api.PlayerApiDelegate;
 import com.kjeldsen.player.rest.model.CreatePlayerRequest;
 import lombok.AllArgsConstructor;
@@ -21,11 +20,10 @@ public class PlayerDelegate implements PlayerApiDelegate {
     @Override
     public ResponseEntity<Void> createPlayer(CreatePlayerRequest createPlayerRequest) {
         NewPlayer command = NewPlayer.builder()
-                .age(PlayerAge.of(createPlayerRequest.getAge()))
-                .position(PlayerPosition.valueOf(createPlayerRequest.getPosition().name()))
-                .playerTendency(PlayerTendency.valueOf(createPlayerRequest.getTendency().name()))
-                .points(createPlayerRequest.getPoints())
-                .build();
+            .age(PlayerAge.of(createPlayerRequest.getAge()))
+            .position(PlayerPosition.valueOf(createPlayerRequest.getPosition().name()))
+            .points(createPlayerRequest.getPoints())
+            .build();
         createPlayerUseCase.create(command);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
