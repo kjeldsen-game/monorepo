@@ -27,6 +27,29 @@ paths:
     get:
       summary: Get all players
       operationId: getAllPlayers
+      parameters:
+        - name: position
+          in: query
+          description: Position of the player
+          required: false
+          schema:
+            $ref: "#/components/schemas/PlayerPosition"
+        - name: size
+          in: query
+          description: Number of players to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: page
+          in: query
+          description: Page number of the players to return
+          required: false
+          schema:
+            default: 0
+            type: integer
+            format: int32
       tags:
         - player
       responses:
@@ -37,7 +60,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Player"
+                  $ref: "#/components/schemas/PlayerResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -121,24 +144,22 @@ components:
           maximum: 1000
           example: 10
 
-    Player:
+    PlayerResponse:
       type: object
       properties:
         id:
           type: string
           format: uuid
           example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
-        points:
-          type: integer
-          format: int32
-          minimum: 1
-          example: 200
         age:
           type: integer
           format: int32
           minimum: 15
           maximum: 33
           example: 21
+        name:
+          type: string
+          example: John Doe
         position:
           $ref: "#/components/schemas/PlayerPosition"
         actualSkills:

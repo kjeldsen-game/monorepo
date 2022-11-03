@@ -62,4 +62,8 @@ public enum PlayerPosition {
             ? Optional.empty()
             : Optional.of(distributedSkills.get(RandomUtils.nextInt(0, distributedSkills.size())));
     }
+
+    public static PlayerPosition random() {
+        return values()[RandomUtils.nextInt(0, values().length)];
+    }
 }

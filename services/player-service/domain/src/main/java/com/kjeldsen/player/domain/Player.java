@@ -9,6 +9,17 @@ import lombok.ToString;
 @ToString
 public class Player {
 
+    public static Player generate(int totalPoints) {
+        PlayerPosition position = PlayerPosition.random();
+        return Player.builder()
+            .id(PlayerId.generate())
+            .name(PlayerName.generate())
+            .age(PlayerAge.generate())
+            .position(position)
+            .actualSkills(PlayerActualSkills.generate(position, totalPoints))
+            .build();
+    }
+
     private PlayerId id;
     private PlayerName name;
     private PlayerAge age;
