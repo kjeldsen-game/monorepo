@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Typography } from '@mui/material'
 
-const Home: NextPage = () => {
+const Training: NextPage = () => {
   return (
     <>
       <Head>
@@ -11,11 +11,11 @@ const Home: NextPage = () => {
       </Head>
       <>
         <Typography variant="h1" component="h1">
-          Welcome to Kjeldsen
+          This is the training page
         </Typography>
       </>
     </>
   )
 }
 
-export default Home
+export default Training
