@@ -9,10 +9,11 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
   const { pathname } = useRouter()
   const items: Item[] = [
     { name: 'Dashboard', icon: 'inbox', to: '/dashboard', selected: pathname === '/dashboard' },
-    { name: 'Team', icon: 'mail', to: '/team', selected: pathname === '/team' },
-    { name: 'Training', icon: 'inbox', to: '/training', hasDivider: false, selected: pathname === '/training' },
-    { name: 'Generate Player', icon: 'mail', to: '/', selected: pathname === '/' },
-    { name: 'Generate Match', icon: 'inbox', to: '/', selected: pathname === '/' },
+    { name: 'TempPlayerView', icon: 'mail', to: '/player', selected: pathname === '/player' },
+    { name: 'Team', icon: 'inbox', to: '/team', selected: pathname === '/team' },
+    // { name: 'Training', icon: 'mail', to: '/training', hasDivider: false, selected: pathname === '/training' },
+    // { name: 'Generate Player', icon: 'inbox', to: '/', selected: pathname === '/' },
+    // { name: 'Generate Match', icon: 'mail', to: '/', selected: pathname === '/' },
   ]
   return (
     <>
