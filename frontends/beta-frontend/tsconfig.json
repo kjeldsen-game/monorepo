@@ -41,7 +41,10 @@
       ],
       "@/config/*": [
         "config/*"
-      ]
+      ],
+      "@/data/*": [
+        "data/*"
+      ],
     }
   },
   "include": [

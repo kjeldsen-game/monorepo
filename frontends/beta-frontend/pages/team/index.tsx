@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Box, Typography } from '@mui/material'
-import PlayerGrid from './playerGrid'
-import Avatar from '@/shared/components/avatar'
+import Grid from '@/shared/components/Grid'
+import Avatar from '@/shared/components/Avatar'
 import Image from 'next/image'
 
 const Team: NextPage = () => {
@@ -32,7 +32,7 @@ const Team: NextPage = () => {
               <Image src="/img/placeholderFormation.png" alt="Formation" width="100%" height="120px" object-fit="contain" />
             </Box>
           </Box>
-          <PlayerGrid />
+          <Grid />
         </Box>
       </>
     </>
