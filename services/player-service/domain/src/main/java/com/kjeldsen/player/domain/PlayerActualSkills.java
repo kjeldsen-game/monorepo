@@ -11,13 +11,13 @@ public record PlayerActualSkills(Map<PlayerSkill, Integer> values) {
 
     public static final int MAX_SKILL_VALUE = 100;
 
-    public static PlayerActualSkills generate(PlayerPosition position, Integer totalPoints) {
-        HashMap<PlayerSkill, Integer> values = position.getTendencies().keySet().stream()
+    public static PlayerActualSkills generate(PlayerPositionTendency positionTendencies, Integer totalPoints) {
+        HashMap<PlayerSkill, Integer> values = positionTendencies.getTendencies().keySet().stream()
             .collect(HashMap::new, (map, skill) -> map.put(skill, 0), HashMap::putAll);
         Set<PlayerSkill> excludedSkills = new HashSet<>();
 
         for (int i = 0; i < totalPoints; i++) {
-            Optional<PlayerSkill> skill = position.getRandomSkillBasedOnTendency(excludedSkills);
+            Optional<PlayerSkill> skill = positionTendencies.getRandomSkillBasedOnTendency(excludedSkills);
             // if no skill is found, it means that all skills have reached the max value
             if (skill.isEmpty()) {
                 break;

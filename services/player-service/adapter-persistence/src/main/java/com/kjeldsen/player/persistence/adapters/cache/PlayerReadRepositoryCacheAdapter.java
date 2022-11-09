@@ -5,7 +5,7 @@ import com.kjeldsen.player.application.usecases.FindPlayersQuery;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.persistence.cache.PlayerInMemoryCacheStore;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import java.util.function.Predicate;
 
 @ConditionalOnProperty(name = "service.persistence.adapter", havingValue = "cache", matchIfMissing = true)
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PlayerReadRepositoryCacheAdapter implements PlayerReadRepository {
 
     private final PlayerInMemoryCacheStore playerStore;

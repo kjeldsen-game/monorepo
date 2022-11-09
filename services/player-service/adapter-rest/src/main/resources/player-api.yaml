@@ -8,7 +8,7 @@ tags:
 
 paths:
 
-  /player:
+  /players:
     post:
       summary: Create a player
       operationId: createPlayer
@@ -18,7 +18,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreatePlayerRequest"
+              $ref: "#/components/requestBodies/CreatePlayerRequest"
       responses:
         "201":
           description: Player was created
@@ -33,7 +33,7 @@ paths:
           description: Position of the player
           required: false
           schema:
-            $ref: "#/components/schemas/PlayerPosition"
+            $ref: "#/components/schemas/PlayerPositionParam"
         - name: size
           in: query
           description: Number of players to return
@@ -60,11 +60,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/PlayerResponse"
+                  $ref: "#/components/responses/PlayerResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-  /player/generate:
+  /players/generate:
     post:
       summary: Generate a number of players
       operationId: generatePlayer
@@ -74,16 +74,119 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/GeneratePlayersRequest"
+              $ref: "#/components/requestBodies/GeneratePlayersRequest"
       responses:
         "201":
           description: Players were generated
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
+  /player-position-tendencies:
+    get:
+      summary: Get all player position tendencies
+      operationId: getAllPlayerPositionTendencies
+      tags:
+        - player-position-tendency
+      responses:
+        "200":
+          description: Player position tendencies were retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/responses/PlayerPositionTendencyResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /player-position-tendencies/{position}:
+    get:
+      summary: Get the tendency of a position
+      operationId: getPlayerPositionTendency
+      parameters:
+        - name: position
+          in: path
+          description: Position of the player
+          required: true
+          schema:
+            $ref: "#/components/schemas/PlayerPositionParam"
+      tags:
+        - player-position-tendency
+      responses:
+        "200":
+          description: Player position tendency was retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/PlayerPositionTendencyResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+    patch:
+      summary: Update the tendency of a position
+      operationId: updatePlayerPositionTendency
+      parameters:
+        - name: position
+          in: path
+          description: Position of the player
+          required: true
+          schema:
+            $ref: "#/components/schemas/PlayerPositionParam"
+      tags:
+        - player-position-tendency
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/UpdatePlayerPositionTendencyRequest"
+      responses:
+        "200":
+          description: Player position tendency was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/PlayerPositionTendencyResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
 components:
 
+  requestBodies:
+    CreatePlayerRequest:
+      description: Create player request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreatePlayerRequest"
+
+    GeneratePlayersRequest:
+      description: Generate players request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GeneratePlayersRequest"
+
+    UpdatePlayerPositionTendencyRequest:
+      description: Update player position tendency request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdatePlayerPositionTendencyRequest"
+
   responses:
+
+    PlayerResponse:
+      description: Player response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PlayerResponse"
+
+    PlayerPositionTendencyResponse:
+      description: Player position tendency response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PlayerPositionTendencyResponse"
 
     DefaultErrorResponse:
       description: Unexpected error
@@ -96,7 +199,7 @@ components:
 
   schemas:
 
-    PlayerSkill:
+    PlayerSkillParam:
       type: string
       enum:
         - SCORE
@@ -107,14 +210,13 @@ components:
         - TACKLING
         - DEFENSE_POSITION
 
-    PlayerPosition:
+    PlayerPositionParam:
       type: string
       enum:
-        - GOALKEEPER
         - DEFENDER
         - MIDDLE
         - FORWARD
-      example: GOALKEEPER
+      example: FORWARD
 
     CreatePlayerRequest:
       type: object
@@ -132,7 +234,7 @@ components:
           maximum: 33
           example: 21
         position:
-          $ref: "#/components/schemas/PlayerPosition"
+          $ref: "#/components/schemas/PlayerPositionParam"
 
     GeneratePlayersRequest:
       type: object
@@ -143,6 +245,20 @@ components:
           minimum: 1
           maximum: 1000
           example: 10
+
+    UpdatePlayerPositionTendencyRequest:
+      type: object
+      example: { "SCORE": 5 }
+      additionalProperties:
+        type: string
+        properties:
+          code:
+            $ref: "#/components/schemas/PlayerSkillParam"
+          text:
+            type: integer
+            format: int32
+            minimum: 0
+            example: 5
 
     PlayerResponse:
       type: object
@@ -161,7 +277,7 @@ components:
           type: string
           example: John Doe
         position:
-          $ref: "#/components/schemas/PlayerPosition"
+          $ref: "#/components/schemas/PlayerPositionParam"
         actualSkills:
           type: object
           example: { "SCORE": 50 }
@@ -169,13 +285,34 @@ components:
             type: string
             properties:
               code:
-                $ref: "#/components/schemas/PlayerSkill"
+                $ref: "#/components/schemas/PlayerSkillParam"
               text:
                 type: integer
                 format: int32
                 minimum: 0
                 maximum: 100
                 example: 50
+
+    PlayerPositionTendencyResponse:
+      type: object
+      properties:
+        position:
+          $ref: "#/components/schemas/PlayerPositionParam"
+        tendencies:
+          type: object
+          example: { "SCORE": 5 }
+          additionalProperties:
+            type: string
+            properties:
+              code:
+                $ref: "#/components/schemas/PlayerSkillParam"
+              text:
+                type: integer
+                format: int32
+                minimum: 0
+                example: 5
+        default:
+          type: boolean
 
     Error:
       type: "object"

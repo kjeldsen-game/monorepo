@@ -3,18 +3,21 @@ package integration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kjeldsen.player.PlayerServiceApplication;
 import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
-import com.kjeldsen.player.application.usecases.FindPlayersUseCase;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
 import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.persistence.adapters.cache.PlayerReadRepositoryCacheAdapter;
 import com.kjeldsen.player.persistence.adapters.cache.PlayerWriteRepositoryCacheAdapter;
+import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyReadRepositoryMongoAdapter;
+import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyWriteRepositoryMongoAdapter;
 import com.kjeldsen.player.persistence.cache.PlayerInMemoryCacheStore;
-import com.kjeldsen.player.rest.api.PlayerApiController;
-import com.kjeldsen.player.rest.delegate.PlayerDelegate;
+import com.kjeldsen.player.rest.api.PlayersApiController;
+import com.kjeldsen.player.rest.delegate.PlayersDelegate;
 import com.kjeldsen.player.rest.model.CreatePlayerRequest;
 import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
-import com.kjeldsen.player.rest.model.PlayerPosition;
+import com.kjeldsen.player.rest.model.PlayerPositionParam;
 import com.kjeldsen.player.rest.model.PlayerResponse;
+import common.AbstractIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -24,6 +27,7 @@ import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataM
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -40,17 +44,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureDataMongo
-@WebMvcTest(controllers = PlayerApiController.class)
-@ContextConfiguration(classes = {Application.class})
-@Import({PlayerDelegate.class,
+@ActiveProfiles("test")
+@WebMvcTest(controllers = PlayersApiController.class)
+@ContextConfiguration(classes = {PlayerServiceApplication.class})
+@Import({PlayersDelegate.class,
     CreatePlayerUseCase.class,
     GeneratePlayersUseCase.class,
-    FindPlayersUseCase.class,
     PlayerWriteRepositoryCacheAdapter.class,
     PlayerReadRepositoryCacheAdapter.class,
+    PlayerPositionTendencyReadRepositoryMongoAdapter.class,
+    PlayerPositionTendencyWriteRepositoryMongoAdapter.class,
     PlayerInMemoryCacheStore.class})
-class PlayerApiTest {
-
+class PlayerApiTest extends AbstractIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -66,17 +71,17 @@ class PlayerApiTest {
     }
 
     @Nested
-    @DisplayName("HTTP POST to /player should")
+    @DisplayName("HTTP POST to /players should")
     class HttpPostToPlayerShould {
         @Test
         @DisplayName("return 201 when a valid request is sent")
         void return_201_status_when_a_valid_request_is_sent() throws Exception {
             CreatePlayerRequest request = new CreatePlayerRequest()
                 .age(16)
-                .position(PlayerPosition.FORWARD)
+                .position(PlayerPositionParam.FORWARD)
                 .points(700);
 
-            mockMvc.perform(post("/player")
+            mockMvc.perform(post("/players")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
@@ -90,7 +95,7 @@ class PlayerApiTest {
     }
 
     @Nested
-    @DisplayName("HTTP POST to /player/generate should")
+    @DisplayName("HTTP POST to /players/generate should")
     class HttpPostToPlayerGenerateShould {
         @Test
         @DisplayName("return 201 when a valid request is sent")
@@ -98,7 +103,7 @@ class PlayerApiTest {
             GeneratePlayersRequest request = new GeneratePlayersRequest()
                 .numberOfPlayers(10);
 
-            mockMvc.perform(post("/player/generate")
+            mockMvc.perform(post("/players/generate")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
@@ -110,13 +115,14 @@ class PlayerApiTest {
     }
 
     @Nested
-    @DisplayName("HTTP GET to /player should")
+    @DisplayName("HTTP GET to /players should")
     class HttpGetToPlayerShould {
         @Test
         @DisplayName("return a page of players")
         public void return_a_page_of_players() throws Exception {
             IntStream.range(0, 100)
-                .mapToObj(i -> Player.generate(200))
+                .mapToObj(i -> PlayerPositionTendency.getDefault(com.kjeldsen.player.domain.PlayerPosition.random()))
+                .map(positionTendencies -> Player.generate(positionTendencies, 200))
                 .forEach(player -> playerStore.put(player.getId().value(), player));
 
             List<PlayerResponse> expected = playerStore.getAll().stream()
@@ -127,14 +133,14 @@ class PlayerApiTest {
                         .id(UUID.fromString(player.getId().value()))
                         .name(player.getName().value())
                         .age(player.getAge().value())
-                        .position(PlayerPosition.fromValue(player.getPosition().name()))
+                        .position(PlayerPositionParam.fromValue(player.getPosition().name()))
                         .actualSkills(player.getActualSkills().values().entrySet().stream()
                             .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString()))
                         ))
                 .toList()
                 .subList(0, 10);
 
-            mockMvc.perform(get("/player")
+            mockMvc.perform(get("/players")
                     .queryParam("page", "0")
                     .queryParam("size", "10")
                     .queryParam("position", "FORWARD"))

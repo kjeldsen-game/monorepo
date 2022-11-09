@@ -6,7 +6,7 @@ import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.persistence.mongo.documents.PlayerDocument;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @ConditionalOnProperty(name = "service.persistence.adapter", havingValue = "db")
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
 
     private final PlayerMongoRepository playerMongoRepository;

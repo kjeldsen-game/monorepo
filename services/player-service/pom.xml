@@ -43,6 +43,7 @@
         <apache.commons-collections4.version>4.4</apache.commons-collections4.version>
         <javafaker.version>1.0.2</javafaker.version>
         <assertj-core.version>3.23.1</assertj-core.version>
+        <testcontainers-bom.version>1.17.6</testcontainers-bom.version>
         <snakeyaml.version>1.33</snakeyaml.version>
         <security-lib.version>0.0.1-SNAPSHOT</security-lib.version>
         <jaxb.version>2.3.1</jaxb.version>
@@ -224,6 +225,13 @@
                 <artifactId>assertj-core</artifactId>
                 <version>${assertj-core.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
