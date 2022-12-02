@@ -2,18 +2,22 @@ version: '3'
 
 services:
 
-  ##################
-  ## Auth Service ##
-  ##################
+  ##############
+  ## Local DB ##
+  ##############
 
-  auth-service-mongodb:
+  local-mongodb:
     image: mongo:5.0
-    container_name: auth-service-mongodb
+    container_name: local-mongodb
     ports:
       - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: root
+
+  ##################
+  ## Auth Service ##
+  ##################
 
   auth-service:
     image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/auth-service:latest
