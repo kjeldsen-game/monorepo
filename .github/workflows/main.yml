@@ -5,6 +5,8 @@ run-name: ${{ github.actor }} fired services workflow
 on:
   workflow_dispatch:
   push:
+    branches:    
+      - main
 
 jobs:
   main-workflow:
