@@ -54,7 +54,7 @@ runs:
       id: ecr_variables
       if: |
         steps.build.outcome == 'success' && 
-        ${{ inputs.DOCKER_IMAGE_GENERATION }} == 'true'
+        '${{ inputs.DOCKER_IMAGE_GENERATION }}' == 'true'
       run: |
         echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.SERVICE_NAME }}:latest" >> $GITHUB_ENV
       shell: bash
