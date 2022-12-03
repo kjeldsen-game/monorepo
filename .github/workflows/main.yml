@@ -1,6 +1,6 @@
-name: Services Workflow
+name: Main Workflow
 
-run-name: ${{ github.actor }} fired services workflow
+run-name: ${{ github.actor }} fired main workflow
 
 on:
   workflow_dispatch:

@@ -87,5 +87,5 @@ runs:
         SLACK_WEBHOOK: ${{ inputs.SLACK_CICD_WEBHOOK }}
         SLACK_USERNAME: GitHub Actions
         SLACK_TITLE: Built ${{ inputs.FE_NAME }}
-        SLACK_FOOTER: "CI up to ECR successfully finished"
+        SLACK_FOOTER: "CI successfully finished"
         MSG_MINIMAL: actions url, commit
