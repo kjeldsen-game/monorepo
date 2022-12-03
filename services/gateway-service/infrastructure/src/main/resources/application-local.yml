@@ -9,3 +9,4 @@ spring:
 
 hosts:
   auth-service: 'http://${AUTH_SERVICE_HOST}'
+  player-service: 'http://${PLAYER_SERVICE_HOST}'

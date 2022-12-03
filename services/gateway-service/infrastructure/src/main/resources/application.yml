@@ -11,6 +11,7 @@ spring:
 
 hosts:
   auth-service: 'http://localhost:8081'
+  player-service: 'http://localhost:8082'
 
 zuul:
   sensitive-headers:
@@ -18,6 +19,9 @@ zuul:
     auth-service:
       path: /auth-service/**
       url: ${hosts.auth-service}
+    player-service:
+      path: /player-service/**
+      url: ${hosts.player-service}
 
 security:
   oauth2:

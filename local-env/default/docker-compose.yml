@@ -2,18 +2,28 @@ version: '3'
 
 services:
 
-  ##################
-  ## Auth Service ##
-  ##################
+  ##############
+  ## Local DB ##
+  ##############
 
-  auth-service-mongodb:
+  local-mongodb:
     image: mongo:5.0
-    container_name: auth-service-mongodb
+    container_name: local-mongodb
     ports:
       - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: root
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  ##################
+  ## Auth Service ##
+  ##################
 
   auth-service:
     image: maven:3.8.3-openjdk-17
@@ -27,7 +37,20 @@ services:
       - ${M2_PATH}:/root/.m2
       - ../../services/auth-service:/auth-service
     working_dir: /auth-service
-    command: mvn compile spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
+    depends_on:
+      local-mongodb:
+        condition: service_healthy
+    command:
+      - /bin/sh
+      - -c
+      - |
+        mvn clean package
+        mvn spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
+    healthcheck:
+      test: "curl --fail --silent localhost:8081/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
 
   #####################
   ## Gateway Service ##
@@ -45,7 +68,20 @@ services:
       - ${M2_PATH}:/root/.m2
       - ../../services/gateway-service:/gateway-service
     working_dir: /gateway-service
-    command: mvn compile spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
+    depends_on:
+      auth-service:
+        condition: service_healthy
+    command:
+      - /bin/sh
+      - -c
+      - |
+        mvn clean package
+        mvn spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
 
   ####################
   ## Player Service ##
@@ -63,7 +99,20 @@ services:
       - ${M2_PATH}:/root/.m2
       - ../../services/player-service:/player-service
     working_dir: /player-service
-    command: mvn compile spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
+    depends_on:
+      gateway-service:
+        condition: service_healthy
+    command:
+      - /bin/sh
+      - -c
+      - |
+        mvn clean package
+        mvn spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
+    healthcheck:
+      test: "curl --fail --silent localhost:8082/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
 
   ###########
   ## Kafka ##
