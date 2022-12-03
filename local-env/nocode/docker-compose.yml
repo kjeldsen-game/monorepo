@@ -14,6 +14,12 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: root
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
 
   ##################
   ## Auth Service ##
@@ -27,6 +33,14 @@ services:
     env_file:
       - ../config/common.env
       - ../config/auth-service.env
+    depends_on:
+      local-mongodb:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8081/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
 
   #####################
   ## Gateway Service ##
@@ -40,6 +54,14 @@ services:
     env_file:
       - ../config/common.env
       - ../config/gateway-service.env
+    depends_on:
+      auth-service:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
 
   ####################
   ## Player Service ##
@@ -53,7 +75,15 @@ services:
     env_file:
       - ../config/common.env
       - ../config/player-service.env
-
+    depends_on:
+      gateway-service:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8082/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+              
   ###################
   ## Beta Frontend ##
   ###################

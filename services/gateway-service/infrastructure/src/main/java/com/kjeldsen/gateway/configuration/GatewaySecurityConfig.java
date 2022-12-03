@@ -12,7 +12,8 @@ public class GatewaySecurityConfig extends ResourceServerConfigurerAdapter {
     private static final String[] AUTH_WHITELIST = {
         "/auth-service/auth/sign-up",
         "/auth-service/oauth/token",
-        "/auth-service/oauth/check_token"
+        "/auth-service/oauth/check_token",
+        "/actuator/health"
     };
 
     @Override
