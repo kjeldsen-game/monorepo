@@ -1,0 +1,68 @@
+name: Merge Request Workflow
+
+run-name: ${{ github.actor }} fired merge request workflow
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  main-workflow:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      ##############
+      ## SERVICES ##
+      ##############
+
+      - name: auth-service pipeline
+        uses: ./.github/actions/action-mvn-build
+        with:
+          PATH: "services/auth-service"
+          SERVICE_NAME: "auth-service"
+          AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
+          AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
+          SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
+          DOCKER_IMAGE_GENERATION: "false"
+
+      - name: gateway-service pipeline
+        uses: ./.github/actions/action-mvn-build
+        with:
+          PATH: "services/gateway-service"
+          SERVICE_NAME: "gateway-service"
+          AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
+          AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
+          SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
+          DOCKER_IMAGE_GENERATION: "false"
+
+      - name: player-service pipeline
+        uses: ./.github/actions/action-mvn-build
+        with:
+          PATH: "services/player-service"
+          SERVICE_NAME: "player-service"
+          AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
+          AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
+          SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
+          DOCKER_IMAGE_GENERATION: "false"
+
+      #########
+      ## FEs ##
+      #########
+
+      - name: beta-frontend pipeline
+        uses: ./.github/actions/action-npm-build
+        with:
+          PATH: "frontends/beta-frontend"
+          FE_NAME: "beta-frontend"
+          AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
+          AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
+          SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
+          DOCKER_IMAGE_GENERATION: "false"
