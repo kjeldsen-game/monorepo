@@ -52,7 +52,9 @@ runs:
 
     - name: Generate ECR Variables
       id: ecr_variables
-      if: steps.build.outcome == 'success' && ${{ inputs.DOCKER_IMAGE_GENERATION }} == 'true'
+      if: |
+        steps.build.outcome == 'success' && 
+        ${{ inputs.DOCKER_IMAGE_GENERATION }} == 'true'
       run: |
         echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.SERVICE_NAME }}:latest" >> $GITHUB_ENV
       shell: bash
@@ -81,7 +83,9 @@ runs:
       shell: bash
 
     - name: Slack Notification
-      if: steps.ecr_push.outcome == 'success' || (${{ inputs.DOCKER_IMAGE_GENERATION }} == 'false' && steps.build.outcome == 'success')
+      if: |
+        steps.ecr_push.outcome == 'success' || 
+        (${{ inputs.DOCKER_IMAGE_GENERATION }} == 'false' && steps.build.outcome == 'success')
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_CHANNEL: ci-cd
