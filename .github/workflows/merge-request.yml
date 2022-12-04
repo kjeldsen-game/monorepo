@@ -1,15 +1,13 @@
-name: Main Workflow
+name: Merge Request Workflow
 
-run-name: ${{ github.actor }} fired main workflow
+run-name: ${{ github.actor }} fired merge request workflow
 
 on:
   workflow_dispatch:
-  push:
-    branches:    
-      - main
+  pull_request:
 
 jobs:
-  main-workflow:
+  merge-request-workflow:
     runs-on: ubuntu-20.04
 
     steps:
@@ -30,6 +28,7 @@ jobs:
           AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
           AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
           SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
+          DOCKER_IMAGE_GENERATION: "false"
 
       - name: gateway-service pipeline
         uses: ./.github/actions/action-mvn-build
@@ -40,6 +39,7 @@ jobs:
           AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
           AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
           SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
+          DOCKER_IMAGE_GENERATION: "false"
 
       - name: player-service pipeline
         uses: ./.github/actions/action-mvn-build
@@ -50,6 +50,7 @@ jobs:
           AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
           AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
           SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
+          DOCKER_IMAGE_GENERATION: "false"
 
       #########
       ## FEs ##
@@ -64,3 +65,4 @@ jobs:
           AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
           AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
           SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
+          DOCKER_IMAGE_GENERATION: "false"
