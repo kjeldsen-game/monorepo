@@ -20,6 +20,10 @@ inputs:
   SLACK_CICD_WEBHOOK:
     required: true
     description: "SLACK_CICD_WEBHOOK"
+  DOCKER_IMAGE_GENERATION:
+    required: false
+    description: "DOCKER_IMAGE_GENERATION"
+    default: "true"
 
 runs:
   using: "composite"
@@ -49,14 +53,14 @@ runs:
 
     - name: Generate ECR Variables
       id: ecr_variables
-      if: steps.build.outcome == 'success'
+      if: ${{ inputs.DOCKER_IMAGE_GENERATION  == 'true' }}
       run: |
         echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.FE_NAME }}:latest" >> $GITHUB_ENV
       shell: bash
 
     - name: AWS ECR Configure
       id: ecr_configure
-      if: steps.build.outcome == 'success'
+      if: steps.ecr_variables.outcome == 'success'
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ inputs.AWS_CICD_ACCESS_KEY }}
@@ -78,8 +82,10 @@ runs:
       shell: bash
 
     - name: Slack Notification
-      if: steps.ecr_push.outcome == 'success'
       uses: rtCamp/action-slack-notify@v2
+      if: |
+        (steps.build.outcome == 'success' && ${{ inputs.DOCKER_IMAGE_GENERATION  == 'false' }}) ||
+        (steps.ecr_push.outcome == 'success' && ${{ inputs.DOCKER_IMAGE_GENERATION  == 'true' }})
       env:
         SLACK_CHANNEL: ci-cd
         SLACK_COLOR: ${{ job.status }}

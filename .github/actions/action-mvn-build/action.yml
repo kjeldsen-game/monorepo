@@ -82,6 +82,9 @@ runs:
 
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
+      if: |
+        (steps.build.outcome == 'success' && ${{ inputs.DOCKER_IMAGE_GENERATION  == 'false' }}) ||
+        (steps.ecr_push.outcome == 'success' && ${{ inputs.DOCKER_IMAGE_GENERATION  == 'true' }})
       env:
         SLACK_CHANNEL: ci-cd
         SLACK_COLOR: ${{ job.status }}
