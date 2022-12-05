@@ -1,0 +1,1 @@
+https://docs.aws.amazon.com/codeartifact/latest/ug/maven-mvn.html
