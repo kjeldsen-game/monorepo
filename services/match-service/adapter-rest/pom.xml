@@ -26,8 +26,8 @@
                             </inputSpec>
                             <addCompileSourceRoot>true</addCompileSourceRoot>
                             <generatorName>spring</generatorName>
-                            <apiPackage>com.unnamedproject.matchengine.rest.api</apiPackage>
-                            <modelPackage>com.unnamedproject.matchengine.rest.model</modelPackage>
+                            <apiPackage>com.kjeldsen.match.rest.api</apiPackage>
+                            <modelPackage>com.kjeldsen.match.rest.model</modelPackage>
                             <configOptions>
                                 <delegatePattern>true</delegatePattern>
                             </configOptions>

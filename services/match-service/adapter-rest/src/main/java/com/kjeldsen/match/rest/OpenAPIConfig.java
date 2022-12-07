@@ -1,4 +1,4 @@
-package com.kjeldsen.matchengine.rest;
+package com.kjeldsen.match.rest;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
