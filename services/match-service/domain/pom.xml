@@ -3,14 +3,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.unnamedproject85</groupId>
+        <groupId>com.kjeldsen</groupId>
         <version>0.0.1-SNAPSHOT</version>
-        <artifactId>match-service-parent</artifactId>
+        <artifactId>match-service</artifactId>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>match-service-domain</artifactId>
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-    </properties>
+    <artifactId>domain</artifactId>
 </project>
