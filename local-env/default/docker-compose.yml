@@ -114,6 +114,37 @@ services:
       timeout: 5s
       retries: 5
 
+  ###################
+  ## Match Service ##
+  ###################
+
+  match-service:
+    image: maven:3.8.3-openjdk-17
+    ports:
+      - 8083:8083
+    container_name: match-service
+    env_file:
+      - ../config/common.env
+      - ../config/match-service.env
+    volumes:
+      - ${M2_PATH}:/root/.m2
+      - ../../services/match-service:/match-service
+    working_dir: /match-service
+    depends_on:
+      gateway-service:
+        condition: service_healthy
+    command:
+      - /bin/sh
+      - -c
+      - |
+        mvn clean package
+        mvn spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
+    healthcheck:
+      test: "curl --fail --silent localhost:8083/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+
   ###########
   ## Kafka ##
   ###########

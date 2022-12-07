@@ -83,6 +83,27 @@ services:
       interval: 20s
       timeout: 5s
       retries: 5
+
+  ###################
+  ## Match Service ##
+  ###################
+
+  match-service:
+    image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/match-service:latest
+    ports:
+      - 8083:8083
+    container_name: match-service
+    env_file:
+      - ../config/common.env
+      - ../config/match-service.env
+    depends_on:
+      gateway-service:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8083/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5              
               
   ###################
   ## Beta Frontend ##
