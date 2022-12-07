@@ -53,7 +53,8 @@ runs:
     - name: Generate ECR Variables
       id: ecr_variables
       if: |
-        (steps.build.outcome != 'skipped' && ${{ inputs.DOCKER_IMAGE_GENERATION  == 'true' }})
+        ${{ steps.build.outcome != 'skipped' }} && 
+        ${{ inputs.DOCKER_IMAGE_GENERATION  == 'true' }})
       run: |
         echo "jodeeerrrrrr ${{steps.build.outcome}}"
         echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.SERVICE_NAME }}:latest" >> $GITHUB_ENV
