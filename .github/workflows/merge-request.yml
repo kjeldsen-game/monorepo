@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # we need this to ignore the project if no changes. If not, will always detect changes in all the services
 
       ##############
       ## SERVICES ##
