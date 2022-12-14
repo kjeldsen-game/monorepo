@@ -24,6 +24,10 @@ inputs:
     required: false
     description: "DOCKER_IMAGE_GENERATION"
     default: "true"
+  MVN_DEPLOY:
+    required: false
+    description: "MVN_DEPLOY"
+    default: "false"
 
 runs:
   using: "composite"
@@ -50,27 +54,39 @@ runs:
         mvn clean install -U
       shell: bash
 
-    - name: Generate ECR Variables
-      id: ecr_variables
-      if: |
-        steps.build.outcome != 'skipped' && 
-        inputs.DOCKER_IMAGE_GENERATION  == 'true'
-      run: |
-        echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.SERVICE_NAME }}:latest" >> $GITHUB_ENV
-      shell: bash
-
-    - name: AWS ECR Configure
+    - name: AWS Configure
       id: ecr_configure
-      if: steps.ecr_variables.outcome == 'success'
+      if: |
+        steps.changed-files.outputs.any_changed == 'true' &&
+        (inputs.MVN_DEPLOY  == 'true' || inputs.DOCKER_IMAGE_GENERATION  == 'true')
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ inputs.AWS_CICD_ACCESS_KEY }}
         aws-secret-access-key: ${{ inputs.AWS_CICD_SECRET_ACCESS_KEY }}
         aws-region: eu-west-1
 
+    - name: Deploy
+      id: deploy
+      if: |
+        steps.ecr_configure.outcome == 'success' && 
+        inputs.MVN_DEPLOY  == 'true'
+      run: |
+        export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 040156513434 --region eu-west-1 --query authorizationToken --output text`
+        mvn deploy
+      shell: bash
+
+    - name: Generate ECR Variables
+      id: ecr_variables
+      if: |
+        steps.ecr_configure.outcome == 'success' && 
+        inputs.DOCKER_IMAGE_GENERATION  == 'true'
+      run: |
+        echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.SERVICE_NAME }}:latest" >> $GITHUB_ENV
+      shell: bash
+
     - name: Login to Amazon ECR
       id: login_ecr
-      if: steps.ecr_configure.outcome == 'success'
+      if: steps.ecr_variables.outcome == 'success'
       uses: aws-actions/amazon-ecr-login@v1
 
     - name: Build, tag, and push docker image to Amazon ECR
@@ -85,8 +101,9 @@ runs:
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
       if: |
-        (steps.build.outcome == 'success' && inputs.DOCKER_IMAGE_GENERATION  == 'false') ||
-        (steps.ecr_push.outcome == 'success' && inputs.DOCKER_IMAGE_GENERATION  == 'true')
+        (steps.build.outcome == 'success' && inputs.DOCKER_IMAGE_GENERATION  == 'false' && inputs.MVN_DEPLOY  == 'false') ||
+        (steps.ecr_push.outcome == 'success' && inputs.DOCKER_IMAGE_GENERATION  == 'true') ||
+        (steps.deploy.outcome == 'success' && inputs.MVN_DEPLOY  == 'true')
       env:
         SLACK_CHANNEL: ci-cd
         SLACK_COLOR: ${{ job.status }}
