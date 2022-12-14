@@ -2,3 +2,4 @@ export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domai
 
 mvn deploy
 
+ 
