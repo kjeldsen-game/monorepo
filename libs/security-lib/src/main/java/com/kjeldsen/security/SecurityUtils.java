@@ -1,6 +1,5 @@
-package com.kjeldsen.auth.shared;
+package com.kjeldsen.security;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.exceptions.UnauthorizedUserException;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.Optional;
 
-@Slf4j
 @Component
 public class SecurityUtils {
 
