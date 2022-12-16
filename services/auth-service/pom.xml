@@ -36,7 +36,6 @@
         <swagger-core.version>2.2.2</swagger-core.version>
         <springfox-swagger2.version>3.0.0</springfox-swagger2.version>
         <jackson-databind-nullable.version>0.2.3</jackson-databind-nullable.version>
-        <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
         <spring-boot-test.version>2.7.3</spring-boot-test.version>
         <testng.version>7.6.1</testng.version>
@@ -225,11 +224,6 @@
                 <groupId>org.openapitools</groupId>
                 <artifactId>jackson-databind-nullable</artifactId>
                 <version>${jackson-databind-nullable.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>${javax.servlet-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>javax.annotation</groupId>

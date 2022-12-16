@@ -44,6 +44,8 @@
         <assertj-core.version>3.23.1</assertj-core.version>
         <snakeyaml.version>1.33</snakeyaml.version>
         <security-lib.version>0.0.1-SNAPSHOT</security-lib.version>
+        <jaxb.version>2.3.1</jaxb.version>
+        <jaxb-core.version>2.3.0.1</jaxb-core.version>
     </properties>
     <build>
         <finalName>player-service</finalName>
@@ -237,6 +239,21 @@
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
                 <version>${snakeyaml.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-core</artifactId>
+                <version>${jaxb-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-impl</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>${jaxb.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

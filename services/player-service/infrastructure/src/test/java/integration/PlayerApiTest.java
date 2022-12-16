@@ -1,7 +1,7 @@
 package integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kjeldsen.player.Application;
+import com.kjeldsen.player.PlayerServiceApplication;
 import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
 import com.kjeldsen.player.persistence.adapters.PlayerReadRepositoryAdapter;
 import com.kjeldsen.player.persistence.adapters.PlayerWriteRepositoryAdapter;
@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureDataMongo
 @WebMvcTest(controllers = PlayerApiController.class)
-@ContextConfiguration(classes = {Application.class})
+@ContextConfiguration(classes = {PlayerServiceApplication.class})
 @Import({PlayerDelegate.class, CreatePlayerUseCase.class, PlayerReadRepositoryAdapter.class, PlayerWriteRepositoryAdapter.class})
 class PlayerApiTest {
 

@@ -3,11 +3,11 @@ package com.kjeldsen.player;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class Application {
+@SpringBootApplication(scanBasePackages = "com.kjeldsen")
+public class PlayerServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(PlayerServiceApplication.class, args);
     }
 
 }

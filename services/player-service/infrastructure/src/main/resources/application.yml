@@ -20,3 +20,4 @@ springdoc:
     path: /api-docs
   swagger-ui:
     use-root-path: true
+  show-actuator: true
