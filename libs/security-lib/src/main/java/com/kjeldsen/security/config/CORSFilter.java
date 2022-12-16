@@ -1,4 +1,4 @@
-package com.kjeldsen.auth.rest.security;
+package com.kjeldsen.security.config;
 
 import org.springframework.stereotype.Component;
 
@@ -30,9 +30,7 @@ public class CORSFilter implements Filter {
     }
 
     @Override
-
     public void init(FilterConfig filterConfig) {
-
     }
 
 }

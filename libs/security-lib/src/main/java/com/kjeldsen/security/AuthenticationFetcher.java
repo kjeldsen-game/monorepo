@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Component
-public class SecurityUtils {
+public class AuthenticationFetcher {
 
     public static final String TOKEN_ENHANCE_USER_ID = "uid";
 
