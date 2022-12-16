@@ -59,6 +59,7 @@ runs:
       id: build
       if: steps.changed-files.outputs.any_changed == 'true'
       run: |
+        export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 040156513434 --region eu-west-1 --query authorizationToken --output text`
         cd ${{ inputs.PATH }}
         mvn clean install -U
       shell: bash
@@ -69,7 +70,6 @@ runs:
         steps.ecr_configure.outcome == 'success' && 
         inputs.MVN_DEPLOY  == 'true'
       run: |
-        export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 040156513434 --region eu-west-1 --query authorizationToken --output text`
         cd ${{ inputs.PATH }}
         mvn deploy
       shell: bash
