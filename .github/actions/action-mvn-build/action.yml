@@ -46,6 +46,15 @@ runs:
         java-version: "17"
         cache: "maven"
 
+    - name: AWS Configure
+      id: ecr_configure
+      if: steps.changed-files.outputs.any_changed == 'true'
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ inputs.AWS_CICD_ACCESS_KEY }}
+        aws-secret-access-key: ${{ inputs.AWS_CICD_SECRET_ACCESS_KEY }}
+        aws-region: eu-west-1
+
     - name: Build
       id: build
       if: steps.changed-files.outputs.any_changed == 'true'
@@ -53,17 +62,6 @@ runs:
         cd ${{ inputs.PATH }}
         mvn clean install -U
       shell: bash
-
-    - name: AWS Configure
-      id: ecr_configure
-      if: |
-        steps.changed-files.outputs.any_changed == 'true' &&
-        (inputs.MVN_DEPLOY  == 'true' || inputs.DOCKER_IMAGE_GENERATION  == 'true')
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ inputs.AWS_CICD_ACCESS_KEY }}
-        aws-secret-access-key: ${{ inputs.AWS_CICD_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-1
 
     - name: Deploy
       id: deploy
