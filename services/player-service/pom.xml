@@ -43,6 +43,7 @@
         <javafaker.version>1.0.2</javafaker.version>
         <assertj-core.version>3.23.1</assertj-core.version>
         <snakeyaml.version>1.33</snakeyaml.version>
+        <security-lib.version>0.0.1-SNAPSHOT</security-lib.version>
     </properties>
     <build>
         <finalName>player-service</finalName>
@@ -62,6 +63,11 @@
         </pluginManagement>
     </build>
     <dependencies>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>security-lib</artifactId>
+            <version>${security-lib.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
