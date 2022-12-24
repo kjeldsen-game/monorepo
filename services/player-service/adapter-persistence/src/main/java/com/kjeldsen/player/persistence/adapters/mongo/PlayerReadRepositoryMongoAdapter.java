@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @ConditionalOnProperty(name = "service.persistence.adapter", havingValue = "db")
 @Component
@@ -39,6 +38,6 @@ public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
 
         return playerMongoRepository.findAll(playerDocumentExample, pageable).stream()
             .map(PlayerDocument::toDomain)
-            .collect(Collectors.toList());
+            .toList();
     }
 }

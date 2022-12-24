@@ -31,10 +31,13 @@ public class PlayerReadRepositoryCacheAdapter implements PlayerReadRepository {
     @Override
     public List<Player> find(FindPlayersQuery query) {
         Pageable pageable = Pageable.ofSize(query.getSize()).withPage(query.getPage());
-        Predicate<Player> filter =
-            player -> query.getPosition() == null || player.getPosition() == query.getPosition();
+        Predicate<Player> filter = positionMatchingOrNorPresent(query);
         Comparator<Player> defaultSort = Comparator.comparing(player -> player.getId().value());
 
         return playerStore.find(filter, pageable, defaultSort).getContent();
+    }
+
+    private static Predicate<Player> positionMatchingOrNorPresent(FindPlayersQuery query) {
+        return player -> query.getPosition() == null || player.getPosition() == query.getPosition();
     }
 }
