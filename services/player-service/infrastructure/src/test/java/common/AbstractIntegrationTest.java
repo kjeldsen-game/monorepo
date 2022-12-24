@@ -6,7 +6,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 public abstract class AbstractIntegrationTest {
 
-    public static final MongoDBContainer mongoDbContainer = new MongoDBContainer("mongo:5.0");
+    static final MongoDBContainer mongoDbContainer = new MongoDBContainer("mongo:5.0");
 
     static {
         mongoDbContainer.start();
