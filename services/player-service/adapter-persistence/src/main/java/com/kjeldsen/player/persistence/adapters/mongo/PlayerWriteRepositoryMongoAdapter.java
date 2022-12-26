@@ -1,15 +1,17 @@
-package com.kjeldsen.player.persistence.adapters;
+package com.kjeldsen.player.persistence.adapters.mongo;
 
 import com.kjeldsen.player.application.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.persistence.mongo.documents.PlayerDocument;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
+@ConditionalOnProperty(name = "service.persistence.adapter", havingValue = "db")
 @Component
-@AllArgsConstructor
-public class PlayerWriteRepositoryAdapter implements PlayerWriteRepository {
+@RequiredArgsConstructor
+public class PlayerWriteRepositoryMongoAdapter implements PlayerWriteRepository {
 
     final private PlayerMongoRepository playerMongoRepository;
 

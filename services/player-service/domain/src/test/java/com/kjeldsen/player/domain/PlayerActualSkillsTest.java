@@ -17,8 +17,7 @@ class PlayerActualSkillsTest {
         @Test
         @DisplayName("create an instance with the given total points distributed in the actual skills of the given position")
         public void create_an_instance_with_the_given_total_points_distributed_in_the_actual_skills_of_the_given_position() {
-            PlayerPosition position = PlayerPosition.FORWARD;
-            PlayerActualSkills actual = PlayerActualSkills.generate(position, 200);
+            PlayerActualSkills actual = PlayerActualSkills.generate(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES, 200);
             assertThat(actual.getTotalPoints()).isEqualTo(200);
         }
     }

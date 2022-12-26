@@ -8,16 +8,20 @@ import com.kjeldsen.player.domain.PlayerName;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerSkill;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Builder
-@Data
+@Getter
+@Setter
 @Document(collection = "Players")
+@TypeAlias("Player")
 public class PlayerDocument {
 
     public static PlayerDocument from(Player player) {
