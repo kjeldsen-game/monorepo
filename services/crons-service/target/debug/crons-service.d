@@ -1,1 +1,0 @@
-/Users/ivangonzalez/Documents/unnamed-project/repositories/monorepo/services/crons-service/target/debug/crons-service: /Users/ivangonzalez/Documents/unnamed-project/repositories/monorepo/services/crons-service/src/main.rs
