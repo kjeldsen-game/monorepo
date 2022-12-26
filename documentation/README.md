@@ -1,6 +1,6 @@
 # Kjeldsen
 
-The Kjeldsen platform has been develop with the idea of micro-services. Each identified entity will have it's own services and database to perform all actions related with the entity data.
+The Kjeldsen platform has been develop with the idea of micro-services. Each identified business entity will have it's own services and database to perform all actions related with the entity data.
 
 # Tech
 
@@ -15,9 +15,12 @@ We are using an Event-Sourcing architecture for following key points:
 ## CQRS
 The structure of the proyect follows a CQRS pattern
 
+## Hexagonal Architecture
+The structure of the proyect follows a hexagonal architecture where domain defines the entities and the business logic and adapters connect to any external piece.
+
 ## Events
 
-The platform will be (for the MVP) using Kafka services to produce/consume events.
+The platform will be using Kafka services to produce/consume events.
 
 ## Local Development environment
 

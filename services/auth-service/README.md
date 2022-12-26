@@ -1,8 +1,14 @@
-http://localhost:8081/swagger-ui/index.html
+# Auth Service
 
-mvn spring-boot:run -f infrastructure
+## MVN commands
 
-docker build -t 040156513434.dkr.ecr.eu-west-1.amazonaws.com/auth-service
+- `mvn spring-boot:run -f infrastructure`
 
-docker push 040156513434.dkr.ecr.eu-west-1.amazonaws.com/auth-service:latest
+## Docker commands
 
+- `docker build -t 040156513434.dkr.ecr.eu-west-1.amazonaws.com/auth-service`
+- `docker push 040156513434.dkr.ecr.eu-west-1.amazonaws.com/auth-service:latest`
+
+## Open API
+
+- http://localhost:8081/swagger-ui/index.html
