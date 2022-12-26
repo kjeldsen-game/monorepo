@@ -1,0 +1,1 @@
+/Users/ivangonzalez/Documents/unnamed-project/repositories/monorepo/services/notifications-service/target/debug/notifications-service: /Users/ivangonzalez/Documents/unnamed-project/repositories/monorepo/services/notifications-service/src/main.rs
