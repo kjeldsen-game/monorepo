@@ -1,7 +1,0 @@
-server:
-  port: ${SERVER_PORT}
-
-spring:
-  application:
-    profiles:
-      active: 'local'
