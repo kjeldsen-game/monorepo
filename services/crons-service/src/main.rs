@@ -1,25 +1,42 @@
-use std::time::Duration;
-
 use kafka::error::Error as KafkaError;
 use kafka::producer::{Producer, Record, RequiredAcks};
 use kafka::consumer::{Consumer, FetchOffset, GroupOffsetStorage};
+use tokio::time::{self, Duration};
 
-fn main() {
+#[tokio::main]
+async fn main() {
     env_logger::init();
 
     let broker = "localhost:9092";
     let topic = "my-topic";
-    let group = "my-group".to_owned();
+    let group = "my-group";
 
     let data = "hello, kafka";
 
-    if let Err(e) = produce_message(data, topic, vec![broker.to_owned()]) {
-        println!("Failed producing messages: {}", e);
+
+    let mut interval = time::interval(Duration::from_secs(5));
+
+    loop { 
+        interval.tick().await;
+        tokio::spawn(async { on_cron().await; });
+        if let Err(e) = produce_message(data,
+            topic,
+            vec![broker.to_owned()]) {
+            println!("Failed producing messages: {}", e);
+        }
+
+        if let Err(e) = consume_messages(group.to_string(),
+            topic.to_string(),
+            vec![broker.to_owned()]) {
+            println!("Failed consuming messages: {}", e);
+        }
+
     }
 
-    if let Err(e) = consume_messages(group, topic.to_string(), vec![broker.to_owned()]) {
-        println!("Failed consuming messages: {}", e);
-    }
+}
+
+async fn on_cron() {
+    println!("It's time!");
 }
 
 fn produce_message<'a, 'b>(
