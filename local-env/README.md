@@ -15,6 +15,12 @@ This repository is a quick way of having a development environment ready to work
 Login to ECR to download Docker images
 - `aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 040156513434.dkr.ecr.eu-west-1.amazonaws.com`
 
+Update Docker images to latest version
+- `docker compose pull`
+
+Run up the entire platform
+- `docker compose up -d`
+
 ---
 
 ## AWS Code Artifact
