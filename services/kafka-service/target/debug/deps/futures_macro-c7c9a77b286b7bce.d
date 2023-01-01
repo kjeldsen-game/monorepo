@@ -1,0 +1,9 @@
+/Users/ivangonzalez/Documents/unnamed-project/repositories/monorepo/services/kafka-service/target/debug/deps/libfutures_macro-c7c9a77b286b7bce.dylib: /Users/ivangonzalez/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-macro-0.3.25/src/lib.rs /Users/ivangonzalez/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-macro-0.3.25/src/executor.rs /Users/ivangonzalez/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-macro-0.3.25/src/join.rs /Users/ivangonzalez/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-macro-0.3.25/src/select.rs /Users/ivangonzalez/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-macro-0.3.25/src/stream_select.rs
+
+/Users/ivangonzalez/Documents/unnamed-project/repositories/monorepo/services/kafka-service/target/debug/deps/futures_macro-c7c9a77b286b7bce.d: /Users/ivangonzalez/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-macro-0.3.25/src/lib.rs /Users/ivangonzalez/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-macro-0.3.25/src/executor.rs /Users/ivangonzalez/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-macro-0.3.25/src/join.rs /Users/ivangonzalez/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-macro-0.3.25/src/select.rs /Users/ivangonzalez/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-macro-0.3.25/src/stream_select.rs
+
+/Users/ivangonzalez/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-macro-0.3.25/src/lib.rs:
+/Users/ivangonzalez/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-macro-0.3.25/src/executor.rs:
+/Users/ivangonzalez/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-macro-0.3.25/src/join.rs:
+/Users/ivangonzalez/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-macro-0.3.25/src/select.rs:
+/Users/ivangonzalez/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-macro-0.3.25/src/stream_select.rs:

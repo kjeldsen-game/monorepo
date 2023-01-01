@@ -1,0 +1,16 @@
+Building and linking librdkafka statically
+Running command: "cp -a librdkafka/. /Users/ivangonzalez/Documents/unnamed-project/repositories/monorepo/services/kafka-service/target/debug/build/rdkafka-sys-d8e168e33f341107/out" in dir: .
+Running command: "/Users/ivangonzalez/Documents/unnamed-project/repositories/monorepo/services/kafka-service/target/debug/build/rdkafka-sys-d8e168e33f341107/out/configure --disable-ssl --disable-gssapi --disable-curl --disable-zstd --disable-lz4-ext" in dir: /Users/ivangonzalez/Documents/unnamed-project/repositories/monorepo/services/kafka-service/target/debug/build/rdkafka-sys-d8e168e33f341107/out
+Running command: "make libs" in dir: /Users/ivangonzalez/Documents/unnamed-project/repositories/monorepo/services/kafka-service/target/debug/build/rdkafka-sys-d8e168e33f341107/out
+rdbuf.c:908:16: warning: variable 'remains' set but not used [-Wunused-but-set-variable]
+        size_t remains = size;
+               ^
+rdmap.c:482:13: warning: variable 'fails' set but not used [-Wunused-but-set-variable]
+        int fails = 0;
+            ^
+1 warning generated.
+snappy.c:1440:9: warning: variable 'written' set but not used [-Wunused-but-set-variable]
+        size_t written = 0;
+               ^
+1 warning generated.
+1 warning generated.

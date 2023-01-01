@@ -1,0 +1,1 @@
+/Users/ivangonzalez/Documents/unnamed-project/repositories/monorepo/services/kafka-service/target/debug/kafka-service: /Users/ivangonzalez/Documents/unnamed-project/repositories/monorepo/services/kafka-service/src/main.rs
