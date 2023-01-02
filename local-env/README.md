@@ -18,9 +18,6 @@ Login to ECR to download Docker images
 Update Docker images to latest version
 - `docker compose pull`
 
-Run up the entire platform
-- `docker compose up -d`
-
 ---
 
 ## AWS Code Artifact
@@ -37,3 +34,8 @@ Create topic
 
 List topics
 - `docker exec kafka  kafka-topics --list --bootstrap-server localhost:9092`
+
+## Hands-on
+
+Run up the entire platform
+- `docker compose up -d`
