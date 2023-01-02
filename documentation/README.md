@@ -18,7 +18,7 @@ The structure of the proyect follows a CQRS pattern
 ## Hexagonal Architecture
 The structure of the proyect follows a hexagonal architecture where domain defines the entities and the business logic and adapters connect to any external piece.
 
-## Events
+## Kafka
 
 The platform will be using Kafka services to produce/consume events.
 
