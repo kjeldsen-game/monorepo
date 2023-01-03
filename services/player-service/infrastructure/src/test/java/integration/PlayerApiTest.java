@@ -38,9 +38,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureDataMongo
@@ -98,15 +100,16 @@ class PlayerApiTest extends AbstractIntegrationTest {
     @DisplayName("HTTP POST to /players/generate should")
     class HttpPostToPlayerGenerateShould {
         @Test
-        @DisplayName("return 201 when a valid request is sent")
-        public void return_201_when_a_valid_request_is_sent() throws Exception {
+        @DisplayName("return 201 and the list of created players when a valid request is sent")
+        public void return_201_and_the_list_of_created_players_when_a_valid_request_is_sent() throws Exception {
             GeneratePlayersRequest request = new GeneratePlayersRequest()
                 .numberOfPlayers(10);
 
             mockMvc.perform(post("/players/generate")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.*", hasSize(10)));
 
             var numbersOfPlayersCreated = playerStore.size();
 

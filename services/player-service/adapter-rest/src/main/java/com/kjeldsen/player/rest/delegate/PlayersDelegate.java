@@ -42,9 +42,10 @@ public class PlayersDelegate implements PlayersApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> generatePlayer(GeneratePlayersRequest generatePlayersRequest) {
-        generatePlayersUseCase.generate(generatePlayersRequest.getNumberOfPlayers());
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<List<PlayerResponse>> generatePlayer(GeneratePlayersRequest generatePlayersRequest) {
+        List<Player> players = generatePlayersUseCase.generate(generatePlayersRequest.getNumberOfPlayers());
+        List<PlayerResponse> response = players.stream().map(this::mapToResponse).toList();
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @Override
@@ -55,15 +56,17 @@ public class PlayersDelegate implements PlayersApiDelegate {
             .page(page)
             .build();
         List<Player> players = playerReadRepository.find(query);
-        List<PlayerResponse> response = players.stream()
-            .map(player -> new PlayerResponse()
-                .id(UUID.fromString(player.getId().value()))
-                .name(player.getName().value())
-                .age(player.getAge().value())
-                .position(PlayerPositionParam.valueOf(player.getPosition().name()))
-                .actualSkills(player.getActualSkills().values().entrySet().stream()
-                    .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())))
-            ).toList();
+        List<PlayerResponse> response = players.stream().map(this::mapToResponse).toList();
         return ResponseEntity.ok(response);
+    }
+
+    private PlayerResponse mapToResponse(Player player) {
+        return new PlayerResponse()
+            .id(UUID.fromString(player.getId().value()))
+            .name(player.getName().value())
+            .age(player.getAge().value())
+            .position(PlayerPositionParam.valueOf(player.getPosition().name()))
+            .actualSkills(player.getActualSkills().values().entrySet().stream()
+                .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())));
     }
 }
