@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-@ConditionalOnProperty(name = "service.persistence.adapter", havingValue = "cache", matchIfMissing = true)
+@ConditionalOnProperty(name = "player.persistence.adapter", havingValue = "cache", matchIfMissing = true)
 @Component
 @RequiredArgsConstructor
 public class PlayerReadRepositoryCacheAdapter implements PlayerReadRepository {

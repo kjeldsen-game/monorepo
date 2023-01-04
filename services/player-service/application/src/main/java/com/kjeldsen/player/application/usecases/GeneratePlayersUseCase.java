@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 @Slf4j
@@ -18,14 +19,15 @@ public class GeneratePlayersUseCase {
     private final PlayerWriteRepository playerWriteRepository;
     private final PlayerPositionTendencyReadRepository playerPositionTendencyReadRepository;
 
-    public void generate(int numberOfPlayers) {
+    public List<Player> generate(int numberOfPlayers) {
         log.info("Generating {} players", numberOfPlayers);
-        IntStream.range(0, numberOfPlayers)
+        return IntStream.range(0, numberOfPlayers)
             .mapToObj(i -> playerPositionTendencyReadRepository.get(PlayerPosition.random()))
             .map(positionTendencies -> Player.generate(positionTendencies, 200))
-            .forEach(player -> {
-                playerWriteRepository.save(player);
-                log.info("Generated player {}", player);
-            });
+            .map(player -> {
+                Player generatedPlayer = playerWriteRepository.save(player);
+                log.info("Generated player {}", generatedPlayer);
+                return generatedPlayer;
+            }).toList();
     }
 }
