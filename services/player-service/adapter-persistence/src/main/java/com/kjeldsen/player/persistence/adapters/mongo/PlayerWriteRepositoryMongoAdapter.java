@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-@ConditionalOnProperty(name = "service.persistence.adapter", havingValue = "db")
+@ConditionalOnProperty(name = "player.persistence.adapter", havingValue = "db")
 @Component
 @RequiredArgsConstructor
 public class PlayerWriteRepositoryMongoAdapter implements PlayerWriteRepository {

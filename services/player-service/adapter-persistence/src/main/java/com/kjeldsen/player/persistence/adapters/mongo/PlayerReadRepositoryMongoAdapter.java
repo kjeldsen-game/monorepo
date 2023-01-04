@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
-@ConditionalOnProperty(name = "service.persistence.adapter", havingValue = "db")
+@ConditionalOnProperty(name = "player.persistence.adapter", havingValue = "db")
 @Component
 @RequiredArgsConstructor
 public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {

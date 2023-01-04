@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-@ConditionalOnProperty(name = "service.persistence.adapter", havingValue = "cache", matchIfMissing = true)
+@ConditionalOnProperty(name = "player.persistence.adapter", havingValue = "cache", matchIfMissing = true)
 @Component
 public class PlayerInMemoryCacheStore extends InMemoryCacheStore<String, Player> {
 
