@@ -6,6 +6,7 @@ This repository is a quick way of having a development environment ready to work
 
 ## AWS 
 - Install aws-cli
+    - https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html
 - Login: aws configure
 
 ---
@@ -23,7 +24,8 @@ Update Docker images to latest version
 ## AWS Code Artifact
 
 Login to Code Artifact to publish/download libraries
-- `export CODEARTIFACT_AUTH_TOKEN='aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 040156513434 --region eu-west-1 --query authorizationToken --output text'`
+- `export CODEARTIFACT_AUTH_TOKEN='aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 040156513434 --region eu-west-1 --query authorizationToken --output text'` (Mac)
+- `export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 040156513434 --region eu-west-1 --query authorizationToken --output text)` (Windows - Git Bash) 
 
 ---
 
