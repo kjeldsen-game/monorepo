@@ -1,14 +1,10 @@
+use super::{producer, consumer};
 
-use super::consumer;
-use super::producer;
-
-
-pub fn test() {
-    start_kafka();
+pub fn init() {
+    start_heartbeat_event();
 }
 
-
-fn start_kafka() {
+fn start_heartbeat_event() {
     let broker = "localhost:9092";
     let topic = "my-topic";
     let group = "my-group";

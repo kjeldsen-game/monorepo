@@ -121,13 +121,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{gateway_service_host}}/{{player_service_path}}/player",
+							"raw": "{{gateway_service_host}}/{{player_service_path}}/players",
 							"host": [
 								"{{gateway_service_host}}"
 							],
 							"path": [
 								"{{player_service_path}}",
-								"player"
+								"players"
 							]
 						}
 					},

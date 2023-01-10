@@ -12,5 +12,5 @@ pub async fn start_crons() {
 }
 
 async fn on_cron() {
-    crate::adapter_kafka::main::test();
+    crate::adapter_kafka::heartbeat_event::init();
 }
