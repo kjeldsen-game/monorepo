@@ -106,7 +106,7 @@ services:
       - /bin/sh
       - -c
       - |
-        mvn clean package
+        mvn clean package -DskipTests=true
         mvn spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
     healthcheck:
       test: "curl --fail --silent localhost:8082/actuator/health | grep UP || exit 1"
@@ -137,7 +137,7 @@ services:
       - /bin/sh
       - -c
       - |
-        mvn clean package
+        mvn clean package -DskipTests=true
         mvn spring-boot:run -f infrastructure -Dspring-boot.run.profiles=local -DskipTests=true
     healthcheck:
       test: "curl --fail --silent localhost:8083/actuator/health | grep UP || exit 1"
