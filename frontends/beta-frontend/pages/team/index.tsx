@@ -4,14 +4,15 @@ import { Box } from '@mui/material'
 import Grid from '@/shared/components/Grid/Grid'
 import { GridColDef } from '@mui/x-data-grid'
 import useSWR from 'swr'
-import { SampleTeam } from 'data/SampleTeam'
+import { SampleTeam } from '@/data/SampleTeam'
+import { PlayerStats } from '@/data/SamplePlayer'
 import TeamDetails from '@/shared/components/TeamDetails'
 import PlayerTactics from '@/shared/components/PlayerTactics'
 import TeamTactics from '@/shared/components/TeamTactics'
 import fetcher from '@/libs/fetcher'
 
 const Team: NextPage = () => {
-  const { data, isLoading } = useSWR('/players', fetcher)
+  const { data, isLoading } = useSWR<PlayerStats[]>('/players', fetcher)
 
   const columns: GridColDef[] = [
     {
@@ -46,7 +47,7 @@ const Team: NextPage = () => {
           <PlayerTactics />
           <TeamTactics />
         </Box>
-        {isLoading ? <span>Loading</span> : <Grid rows={data || []} columns={columns} />}
+        {isLoading ? <span>Loading...</span> : <Grid rows={data || []} columns={columns} />}
       </Box>
     </>
   )
