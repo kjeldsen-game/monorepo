@@ -173,3 +173,16 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+  kafka-service:
+    image: rust:1.65.0
+    container_name: kafka-service
+    env_file:
+      - ../config/kafka-service.env
+    volumes:
+      - ${CARGO_PATH}/registry:/usr/local/cargo/registry
+      - ../../services/kafka-service:/kafka-service
+    working_dir: /kafka-service
+    depends_on:
+      - kafka
+    command: cargo run
