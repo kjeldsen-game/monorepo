@@ -37,6 +37,7 @@ runs:
           ${{ inputs.PATH }}/**
 
     - uses: actions/setup-node@v3
+      if: steps.changed-files.outputs.any_changed == 'true'
       with:
         node-version: 16
         cache: "npm"

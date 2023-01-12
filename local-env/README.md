@@ -39,7 +39,7 @@ List topics
 
 ## Hands-on
 
-Created the needed environment variables 
+Create the needed environment variables 
 - M2_PATH
 - CARGO_PATH
 

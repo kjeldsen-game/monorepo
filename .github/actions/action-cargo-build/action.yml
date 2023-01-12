@@ -37,6 +37,7 @@ runs:
           ${{ inputs.PATH }}/**
 
     - uses: ATiltedTree/setup-rust@v1
+      if: steps.changed-files.outputs.any_changed == 'true'
       with:
         rust-version: stable
 
