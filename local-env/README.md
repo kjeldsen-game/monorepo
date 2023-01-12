@@ -39,5 +39,9 @@ List topics
 
 ## Hands-on
 
+Created the needed environment variables 
+- M2_PATH
+- CARGO_PATH
+
 Run up the entire platform
 - `docker compose up -d`
