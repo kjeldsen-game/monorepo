@@ -14,7 +14,10 @@ use rskafka::client::ClientBuilder;
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
+    println!("Started Kafka Service");
+
     dotenv().ok(); // Load environment variables
+    println!("Loaded environment variables");
 
     let kafka_connection = env::var("KAFKA_HOST_AND_PORT").unwrap().to_string();
     let topics_file_path = env::var("TOPICS_FILE_PATH").unwrap().to_string();
@@ -24,15 +27,26 @@ async fn main() -> Result<(), Error> {
         .await
         .unwrap();
 
-    let controller_client: ControllerClient = rs_kafka_client.controller_client().unwrap();
+    let controller_client = match rs_kafka_client.controller_client() {
+        Ok(controller) => controller,
+        Err(error) => panic!("Problem creating controller client: {:?}", error),
+    };
 
     let mut kafka_client = KafkaClient::new(vec![kafka_connection.to_owned()]);
+
+    println!("Connected to Kafka");
 
     let json_file = fs::read_to_string(topics_file_path).unwrap();
     let topic_file: TopicFile = serde_json::from_str(&json_file).unwrap();
 
+    println!("Topics file readed");
+
     for topic in topic_file.topics {
-        kafka_client.load_metadata_all().unwrap();
+        match kafka_client.load_metadata_all() {
+            Ok(_) => println!("Metadata readed successfully"),
+            Err(error) => panic!("Problem loading metadata: {:?}", error),
+        };
+
         let current_topics = kafka_client.topics();
         let mut current_topic_names: TopicNames = current_topics.names();
         update_topic(&controller_client, &mut current_topic_names, &topic).await;
@@ -47,16 +61,15 @@ async fn update_topic<'a>(
     topic: &'a Topic,
 ) {
     if _current_topic_names.find(|topic_name| topic_name.eq(&topic.name)) == None {
-        println!("Topic {} to be created...", topic);
         create_topic(&controller_client, &topic).await;
-        println!("Topic {} created...", topic);
     } else {
         println!("Topic {} already exists, ignored.", topic);
     }
 }
 
 async fn create_topic<'a>(controller_client: &'a ControllerClient, topic: &'a Topic) {
-    controller_client
+    println!("Topic {} to be created...", topic);
+    match controller_client
         .create_topic(
             &topic.name,
             topic.num_partitions,
@@ -64,7 +77,14 @@ async fn create_topic<'a>(controller_client: &'a ControllerClient, topic: &'a To
             topic.timeout_ms,
         )
         .await
-        .unwrap();
+    {
+        Ok(()) => {
+            println!("Topic {} created...", topic);
+        }
+        Err(err) => {
+            println!("Topic {} error creating {}", topic, err);
+        }
+    };
 }
 
 #[derive(Serialize, Deserialize, Debug)]

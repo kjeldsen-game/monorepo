@@ -165,6 +165,12 @@ services:
       - "9092:9092"
     depends_on:
       - zookeeper
+    healthcheck:
+      test: nc -z localhost 9092 || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 10
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
@@ -184,5 +190,6 @@ services:
       - ../../services/kafka-service:/kafka-service
     working_dir: /kafka-service
     depends_on:
-      - kafka
+      kafka:
+        condition: service_healthy
     command: cargo run
