@@ -181,7 +181,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
 
   kafka-service:
-    image: rust:1.65.0
+    image: rust:1.65
     container_name: kafka-service
     env_file:
       - ../config/kafka-service.env

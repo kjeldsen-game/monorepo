@@ -7,9 +7,7 @@ edition = "2021"
 
 [dependencies]
 tokio = { version = "1", features = ["full"] }
-kafka = "0.9.0"
 rdkafka = "0.29.0"
-rskafka_wasi = "0.3.0"
 dotenv = "0.15.0"
 serde = { version = "1.0.126", features = ["derive"] }
 serde_json = "1.0.64"
