@@ -1,6 +1,5 @@
 package com.kjeldsen.match.domain;
 
-public enum PlayType {
-    INITIAL,
-    NORMAL
+public enum PlayAction {
+    PASS
 }

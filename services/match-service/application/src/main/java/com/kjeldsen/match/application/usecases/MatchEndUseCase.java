@@ -9,7 +9,8 @@ import java.time.Instant;
 public class MatchEndUseCase {
 
     public void endMatch(String matchId) {
-        // TODO log which team is ended
+        // TODO add validation if the match didn't start it can not be finished
+        // TODO log which match is ended
         MatchEndedEvent.builder()
             .eventId("adsd")
             .date(Instant.now())
