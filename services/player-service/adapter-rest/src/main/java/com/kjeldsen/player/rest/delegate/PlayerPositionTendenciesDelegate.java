@@ -1,11 +1,11 @@
 package com.kjeldsen.player.rest.delegate;
 
-import com.kjeldsen.player.application.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.application.usecases.UpdatePlayerPositionTendencyUseCase;
 import com.kjeldsen.player.application.usecases.UpdatePlayerTendencies;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.PlayerSkill;
+import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.rest.api.PlayerPositionTendenciesApiDelegate;
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponse;
 import lombok.RequiredArgsConstructor;

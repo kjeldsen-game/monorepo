@@ -1,11 +1,11 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.player.application.repositories.PlayerPositionTendencyReadRepository;
-import com.kjeldsen.player.application.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerAge;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
+import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,8 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CreatePlayerUseCaseTest {
 
     final private PlayerWriteRepository mockedPlayerWriteRepository = Mockito.mock(PlayerWriteRepository.class);
-    final private PlayerPositionTendencyReadRepository mockedPlayerPositionTendencyReadRepository = Mockito.mock(PlayerPositionTendencyReadRepository.class);
-    final private CreatePlayerUseCase createPlayerUseCase = new CreatePlayerUseCase(mockedPlayerWriteRepository, mockedPlayerPositionTendencyReadRepository);
+    final private PlayerPositionTendencyReadRepository mockedPlayerPositionTendencyReadRepository = Mockito.mock(
+        PlayerPositionTendencyReadRepository.class);
+    final private CreatePlayerUseCase createPlayerUseCase = new CreatePlayerUseCase(mockedPlayerWriteRepository,
+        mockedPlayerPositionTendencyReadRepository);
 
     @Test
     @DisplayName("create a player with the given age, position and total points distributed in the actual skills")

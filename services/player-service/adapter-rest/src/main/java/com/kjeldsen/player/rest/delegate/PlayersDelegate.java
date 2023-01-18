@@ -1,13 +1,13 @@
 package com.kjeldsen.player.rest.delegate;
 
-import com.kjeldsen.player.application.repositories.PlayerReadRepository;
 import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
-import com.kjeldsen.player.application.usecases.FindPlayersQuery;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
 import com.kjeldsen.player.application.usecases.NewPlayer;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerAge;
 import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
+import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.rest.api.PlayersApiDelegate;
 import com.kjeldsen.player.rest.model.CreatePlayerRequest;
 import com.kjeldsen.player.rest.model.GeneratePlayersRequest;

@@ -15,7 +15,7 @@ import com.kjeldsen.player.rest.api.PlayersApiController;
 import com.kjeldsen.player.rest.delegate.PlayersDelegate;
 import com.kjeldsen.player.rest.model.CreatePlayerRequest;
 import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
-import com.kjeldsen.player.rest.model.PlayerPositionParam;
+import com.kjeldsen.player.rest.model.PlayerPosition;
 import com.kjeldsen.player.rest.model.PlayerResponse;
 import common.AbstractIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
@@ -82,7 +82,7 @@ class PlayerApiTest extends AbstractIntegrationTest {
         void return_201_status_when_a_valid_request_is_sent() throws Exception {
             CreatePlayerRequest request = new CreatePlayerRequest()
                 .age(16)
-                .position(PlayerPositionParam.FORWARD)
+                .position(PlayerPosition.FORWARD)
                 .points(700);
 
             mockMvc.perform(post("/players")
@@ -138,7 +138,7 @@ class PlayerApiTest extends AbstractIntegrationTest {
                         .id(UUID.fromString(player.getId().value()))
                         .name(player.getName().value())
                         .age(player.getAge().value())
-                        .position(PlayerPositionParam.fromValue(player.getPosition().name()))
+                        .position(PlayerPosition.fromValue(player.getPosition().name()))
                         .actualSkills(player.getActualSkills().values().entrySet().stream()
                             .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString()))
                         ))
@@ -154,6 +154,5 @@ class PlayerApiTest extends AbstractIntegrationTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(expected)));
         }
     }
-
 
 }

@@ -1,4 +1,4 @@
-package com.kjeldsen.player.domain.events;
+package com.kjeldsen.player.persistence.events;
 
 import java.util.UUID;
 

@@ -1,12 +1,12 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.player.application.repositories.PlayerPositionTendencyReadRepository;
-import com.kjeldsen.player.application.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerActualSkills;
 import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerName;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
+import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

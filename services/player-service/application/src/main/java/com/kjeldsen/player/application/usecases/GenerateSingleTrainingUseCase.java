@@ -2,8 +2,8 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.events.EventId;
-import com.kjeldsen.player.domain.events.PlayerTrainedEvent;
+import com.kjeldsen.player.persistence.events.EventId;
+import com.kjeldsen.player.persistence.events.PlayerTrainedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

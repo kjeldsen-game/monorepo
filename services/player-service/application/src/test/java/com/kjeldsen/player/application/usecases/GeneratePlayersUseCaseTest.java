@@ -1,10 +1,10 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.player.application.repositories.PlayerPositionTendencyReadRepository;
-import com.kjeldsen.player.application.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
+import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -17,8 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GeneratePlayersUseCaseTest {
 
     private final PlayerWriteRepository mockedPlayerWriteRepository = Mockito.mock(PlayerWriteRepository.class);
-    final private PlayerPositionTendencyReadRepository mockedPlayerPositionTendencyReadRepository = Mockito.mock(PlayerPositionTendencyReadRepository.class);
-    private final GeneratePlayersUseCase generatePlayersUseCase = new GeneratePlayersUseCase(mockedPlayerWriteRepository, mockedPlayerPositionTendencyReadRepository);
+    final private PlayerPositionTendencyReadRepository mockedPlayerPositionTendencyReadRepository = Mockito.mock(
+        PlayerPositionTendencyReadRepository.class);
+    private final GeneratePlayersUseCase generatePlayersUseCase = new GeneratePlayersUseCase(mockedPlayerWriteRepository,
+        mockedPlayerPositionTendencyReadRepository);
 
     @Test
     @DisplayName("create N players randomly in the given age range, position and total points distributed in the actual skills")

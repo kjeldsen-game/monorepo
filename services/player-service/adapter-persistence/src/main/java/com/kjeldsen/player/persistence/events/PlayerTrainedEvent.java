@@ -1,4 +1,4 @@
-package com.kjeldsen.player.domain.events;
+package com.kjeldsen.player.persistence.events;
 
 import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;

@@ -3,7 +3,6 @@ package integration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kjeldsen.player.PlayerServiceApplication;
 import com.kjeldsen.player.application.usecases.UpdatePlayerPositionTendencyUseCase;
-import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyReadRepositoryMongoAdapter;
@@ -12,9 +11,8 @@ import com.kjeldsen.player.persistence.mongo.documents.PlayerPositionTendencyDoc
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerPositionTendencyMongoRepository;
 import com.kjeldsen.player.rest.api.PlayerPositionTendenciesApiController;
 import com.kjeldsen.player.rest.delegate.PlayerPositionTendenciesDelegate;
-import com.kjeldsen.player.rest.model.PlayerPositionParam;
+import com.kjeldsen.player.rest.model.PlayerPosition;
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponse;
-import com.kjeldsen.player.rest.model.PlayerSkillParam;
 import common.AbstractIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -71,26 +69,26 @@ public class PlayerPositionTendencyApiTest extends AbstractIntegrationTest {
         @DisplayName("return a list of default and stored player position tendencies")
         public void return_a_list_player_position_tendencies() throws Exception {
             PlayerPositionTendencyDocument storedPlayerPositionTendency = PlayerPositionTendencyDocument.builder()
-                .position(PlayerPosition.FORWARD)
+                .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
                 .tendencies(Map.of(PlayerSkill.SCORE, 5))
                 .build();
             playerPositionTendencyStore.save(storedPlayerPositionTendency);
 
             List<PlayerPositionTendencyResponse> expected = List.of(
                 new PlayerPositionTendencyResponse()
-                    .position(PlayerPositionParam.FORWARD)
+                    .position(PlayerPosition.FORWARD)
                     .tendencies(storedPlayerPositionTendency.getTendencies()
                         .entrySet().stream()
                         .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())))
                     ._default(false),
                 new PlayerPositionTendencyResponse()
-                    .position(PlayerPositionParam.DEFENDER)
+                    .position(PlayerPosition.DEFENDER)
                     .tendencies(PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES.getTendencies()
                         .entrySet().stream()
                         .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())))
                     ._default(true),
                 new PlayerPositionTendencyResponse()
-                    .position(PlayerPositionParam.MIDDLE)
+                    .position(PlayerPosition.MIDDLE)
                     .tendencies(PlayerPositionTendency.DEFAULT_MIDDLE_TENDENCIES.getTendencies()
                         .entrySet().stream()
                         .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())))
@@ -111,7 +109,7 @@ public class PlayerPositionTendencyApiTest extends AbstractIntegrationTest {
         @DisplayName("return a default player position tendency of a given position when no player position tendency exists in storage")
         public void return_a_default_player_position_tendency_of_a_given_position_when_no_player_position_tendency_exists_in_storage() throws Exception {
             PlayerPositionTendencyResponse expected = new PlayerPositionTendencyResponse()
-                .position(PlayerPositionParam.DEFENDER)
+                .position(PlayerPosition.DEFENDER)
                 .tendencies(PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES.getTendencies()
                     .entrySet().stream()
                     .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())))
@@ -127,13 +125,13 @@ public class PlayerPositionTendencyApiTest extends AbstractIntegrationTest {
         @DisplayName("return a stored player position tendency of a given position when player position tendency exists in storage")
         public void return_a_stored_player_position_tendency_of_a_given_position_when_player_position_tendency_exists_in_storage() throws Exception {
             PlayerPositionTendencyDocument storedPlayerPositionTendency = PlayerPositionTendencyDocument.builder()
-                .position(PlayerPosition.FORWARD)
+                .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
                 .tendencies(Map.of(PlayerSkill.SCORE, 5))
                 .build();
             playerPositionTendencyStore.save(storedPlayerPositionTendency);
 
             PlayerPositionTendencyResponse expected = new PlayerPositionTendencyResponse()
-                .position(PlayerPositionParam.FORWARD)
+                .position(PlayerPosition.FORWARD)
                 .tendencies(storedPlayerPositionTendency.getTendencies()
                     .entrySet().stream()
                     .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())))
@@ -153,11 +151,11 @@ public class PlayerPositionTendencyApiTest extends AbstractIntegrationTest {
         @DisplayName("return an updated player position tendency of a given position")
         public void return_an_updated_player_position_tendency_of_a_given_position() throws Exception {
 
-            Map<PlayerSkillParam, String> request = Map.of(PlayerSkillParam.SCORE, "5");
+            Map<PlayerSkill, String> request = Map.of(PlayerSkill.SCORE, "5");
 
             PlayerPositionTendencyResponse expected = new PlayerPositionTendencyResponse()
-                .position(PlayerPositionParam.FORWARD)
-                .tendencies(Map.of(PlayerSkillParam.SCORE.name(), "5"))
+                .position(PlayerPosition.FORWARD)
+                .tendencies(Map.of(PlayerSkill.SCORE.name(), "5"))
                 ._default(false);
 
             mockMvc.perform(patch("/player-position-tendencies/FORWARD")
