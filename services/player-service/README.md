@@ -1,3 +1,4 @@
-# Player Service
+# Player Service
 
-:D
+run the project
+`mvn spring-boot:run`
