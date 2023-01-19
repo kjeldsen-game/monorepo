@@ -39,8 +39,8 @@
       "@/libs/*": [
         "libs/*"
       ],
-      "@/config/*": [
-        "config/*"
+      "@/config": [
+        "config"
       ],
       "@/data/*": [
         "data/*"

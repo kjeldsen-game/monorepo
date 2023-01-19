@@ -10,6 +10,7 @@ import { Session } from 'next-auth'
 import { createEmotionCache } from '@/libs/emotion/cache'
 import { theme } from '@/libs/material/theme'
 import { Layout } from '@/shared/layout'
+import { SWRConfig } from 'swr'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -30,23 +31,23 @@ interface MyExtendedPageProps {
 const defaultGetLayout = (page: ReactElement) => <Layout>{page}</Layout>
 
 export default function MyApp({
-                                Component,
-                                emotionCache = clientSideEmotionCache,
-                                pageProps: { session, ...pageProps }
-                              }: MyAppProps<MyExtendedPageProps>) {
+  Component,
+  emotionCache = clientSideEmotionCache,
+  pageProps: { session, ...pageProps },
+}: MyAppProps<MyExtendedPageProps>) {
   const getLayout = Component.getLayout ?? defaultGetLayout
 
   return (
     <SessionProvider session={session}>
       <CacheProvider value={emotionCache}>
         <Head>
-          <meta name='viewport' content='initial-scale=1, width=device-width' />
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
           <title>Kjeldsen</title>
         </Head>
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          {getLayout(<Component {...pageProps} />)}
+          <SWRConfig>{getLayout(<Component {...pageProps} />)}</SWRConfig>
         </ThemeProvider>
       </CacheProvider>
     </SessionProvider>
