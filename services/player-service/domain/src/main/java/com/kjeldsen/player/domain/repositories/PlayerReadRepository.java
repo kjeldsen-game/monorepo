@@ -1,6 +1,5 @@
-package com.kjeldsen.player.application.repositories;
+package com.kjeldsen.player.domain.repositories;
 
-import com.kjeldsen.player.application.usecases.FindPlayersQuery;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerId;
 

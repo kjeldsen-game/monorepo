@@ -1,4 +1,6 @@
-# Player Service
+## Player Service
 
-run the project
-`mvn spring-boot:run`
+Commands:
+
+- Build the project `mvn clean install`
+- Run the project with default profile `mvn spring-boot:run -f infrastructure` 

@@ -5,6 +5,8 @@ info:
 
 tags:
   - name: players
+  - name: player-position-tendencies
+  - name: training
 
 paths:
 
@@ -33,7 +35,7 @@ paths:
           description: Position of the player
           required: false
           schema:
-            $ref: "#/components/schemas/PlayerPositionParam"
+            $ref: "#/components/schemas/PlayerPosition"
         - name: size
           in: query
           description: Number of players to return
@@ -115,7 +117,7 @@ paths:
           description: Position of the player
           required: true
           schema:
-            $ref: "#/components/schemas/PlayerPositionParam"
+            $ref: "#/components/schemas/PlayerPosition"
       tags:
         - player-position-tendencies
       responses:
@@ -136,7 +138,7 @@ paths:
           description: Position of the player
           required: true
           schema:
-            $ref: "#/components/schemas/PlayerPositionParam"
+            $ref: "#/components/schemas/PlayerPosition"
       tags:
         - player-position-tendencies
       requestBody:
@@ -154,9 +156,27 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
+  /training:
+    post:
+      summary: Register a new training
+      operationId: registerTraining
+      tags:
+        - training
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/RegisterTrainingRequest"
+      responses:
+        "201":
+          description: Training was registered
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
 components:
 
   requestBodies:
+
     CreatePlayerRequest:
       description: Create player request
       content:
@@ -177,6 +197,13 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/UpdatePlayerPositionTendencyRequest"
+
+    RegisterTrainingRequest:
+      description: Register a training request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RegisterTrainingRequest"
 
   responses:
 
@@ -205,7 +232,7 @@ components:
 
   schemas:
 
-    PlayerSkillParam:
+    PlayerSkill:
       type: string
       enum:
         - SCORE
@@ -216,7 +243,7 @@ components:
         - TACKLING
         - DEFENSE_POSITION
 
-    PlayerPositionParam:
+    PlayerPosition:
       type: string
       enum:
         - DEFENDER
@@ -240,7 +267,7 @@ components:
           maximum: 33
           example: 21
         position:
-          $ref: "#/components/schemas/PlayerPositionParam"
+          $ref: "#/components/schemas/PlayerPosition"
 
     GeneratePlayersRequest:
       type: object
@@ -259,7 +286,7 @@ components:
         type: string
         properties:
           code:
-            $ref: "#/components/schemas/PlayerSkillParam"
+            $ref: "#/components/schemas/PlayerSkill"
           text:
             type: integer
             format: int32
@@ -283,7 +310,7 @@ components:
           type: string
           example: John Doe
         position:
-          $ref: "#/components/schemas/PlayerPositionParam"
+          $ref: "#/components/schemas/PlayerPosition"
         actualSkills:
           type: object
           example: { "SCORE": 50 }
@@ -291,7 +318,7 @@ components:
             type: string
             properties:
               code:
-                $ref: "#/components/schemas/PlayerSkillParam"
+                $ref: "#/components/schemas/PlayerSkill"
               text:
                 type: integer
                 format: int32
@@ -303,7 +330,7 @@ components:
       type: object
       properties:
         position:
-          $ref: "#/components/schemas/PlayerPositionParam"
+          $ref: "#/components/schemas/PlayerPosition"
         tendencies:
           type: object
           example: { "SCORE": 5 }
@@ -311,7 +338,7 @@ components:
             type: string
             properties:
               code:
-                $ref: "#/components/schemas/PlayerSkillParam"
+                $ref: "#/components/schemas/PlayerSkill"
               text:
                 type: integer
                 format: int32
@@ -319,6 +346,24 @@ components:
                 example: 5
         default:
           type: boolean
+
+    RegisterTrainingRequest:
+      type: object
+      properties:
+        playerId:
+          type: string
+          example: player1
+        days:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 1000
+          example: 350
+        skills:
+          type: array
+          example: [ PASSING, SCORE ]
+          items:
+            $ref: "#/components/schemas/PlayerSkill"
 
     Error:
       type: "object"

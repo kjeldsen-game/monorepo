@@ -1,9 +1,9 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
-import com.kjeldsen.player.application.repositories.PlayerPositionTendencyWriteRepository;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.PlayerSkill;
+import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyWriteRepository;
 import com.kjeldsen.player.persistence.common.AbstractMongoDbTest;
 import com.kjeldsen.player.persistence.mongo.documents.PlayerPositionTendencyDocument;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerPositionTendencyMongoRepository;

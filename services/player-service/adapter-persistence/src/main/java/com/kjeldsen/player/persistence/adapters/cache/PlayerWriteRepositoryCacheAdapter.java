@@ -1,7 +1,7 @@
 package com.kjeldsen.player.persistence.adapters.cache;
 
-import com.kjeldsen.player.application.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.persistence.cache.PlayerInMemoryCacheStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

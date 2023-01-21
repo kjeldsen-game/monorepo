@@ -48,7 +48,8 @@ public class PlayerPositionTendency {
         ))
         .build();
 
-    public static final List<PlayerPositionTendency> DEFAULT_TENDENCIES = List.of(DEFAULT_DEFENDER_TENDENCIES, DEFAULT_MIDDLE_TENDENCIES, DEFAULT_FORWARD_TENDENCIES);
+    public static final List<PlayerPositionTendency> DEFAULT_TENDENCIES = List.of(DEFAULT_DEFENDER_TENDENCIES, DEFAULT_MIDDLE_TENDENCIES,
+        DEFAULT_FORWARD_TENDENCIES);
 
     public static PlayerPositionTendency getDefault(PlayerPosition position) {
         return switch (position) {

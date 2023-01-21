@@ -1,9 +1,9 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
-import com.kjeldsen.player.application.repositories.PlayerReadRepository;
-import com.kjeldsen.player.application.usecases.FindPlayersQuery;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerId;
+import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
+import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.persistence.mongo.documents.PlayerDocument;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
 import lombok.RequiredArgsConstructor;
