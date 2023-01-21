@@ -1,4 +1,4 @@
-package com.kjeldsen.match.domain.aggregate;
+package com.kjeldsen.match.domain.type;
 
 public enum PitchArea {
     ONE,

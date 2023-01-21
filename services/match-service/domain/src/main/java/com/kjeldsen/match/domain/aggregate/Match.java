@@ -1,8 +1,10 @@
 package com.kjeldsen.match.domain.aggregate;
 
+import com.kjeldsen.match.domain.id.MatchId;
+import com.kjeldsen.match.domain.type.ModifierWrapper;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.util.CollectionUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.List;
 
@@ -10,11 +12,9 @@ import java.util.List;
 @Getter
 public class Match {
 
-    private String matchId;
-    private List<Play> plays;
-
-    public boolean isInitialPlay() {
-        return CollectionUtils.isEmpty(plays);
-    }
+    private MatchId matchId;
+    private ImmutablePair<Team, Team> teams;
+    private List<Opportunity> opportunities;
+    private List<ModifierWrapper> modifiers;
 
 }

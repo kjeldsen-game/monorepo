@@ -1,34 +1,30 @@
 package com.kjeldsen.match.application.usecases;
 
-import com.kjeldsen.match.domain.aggregate.Team;
-import com.kjeldsen.match.domain.events.MatchStartedEvent;
-import org.apache.commons.lang3.tuple.ImmutablePair;
+import com.kjeldsen.match.domain.event.EventId;
+import com.kjeldsen.match.domain.event.MatchStartedEvent;
+import com.kjeldsen.match.domain.id.MatchId;
+import com.kjeldsen.match.domain.provider.InstantProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.util.List;
-
+@Slf4j
 @Service
 public class MatchStartUseCase {
 
-    public void startMatch(ImmutablePair<Team, Team> teams) {
+    public void startMatch(MatchId matchId) {
 
-        // TODO log which teams are playing
-        // TODO add validation for both teams
+        log.info("Starting match {}", matchId);
+
+        // TODO add validation if the match does not exists it can not be started
+
         MatchStartedEvent.builder()
-            .eventId("adsd")
-            .date(Instant.now())
-            .matchId("UUID")
-            .teamIds(List.of(getAttackingTeamId(teams), getDefendingTeamId(teams)))
+            .eventId(EventId.generate())
+            .date(InstantProvider.now())
+            .matchId(MatchId.generate())
             .build();
-    }
 
-    private String getAttackingTeamId(ImmutablePair<Team, Team> teams) {
-        return teams.getLeft().getId();
-    }
 
-    private String getDefendingTeamId(ImmutablePair<Team, Team> teams) {
-        return teams.getRight().getId();
+        // TODO after saving the match started - call engine to generate plays
     }
 
 }
