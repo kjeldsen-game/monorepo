@@ -1,7 +1,7 @@
 package com.kjeldsen.match.application.usecases;
 
-import com.kjeldsen.match.domain.event.EventId;
 import com.kjeldsen.match.domain.event.MatchStartedEvent;
+import com.kjeldsen.match.domain.id.EventId;
 import com.kjeldsen.match.domain.id.MatchId;
 import com.kjeldsen.match.domain.provider.InstantProvider;
 import lombok.extern.slf4j.Slf4j;

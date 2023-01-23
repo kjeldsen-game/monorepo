@@ -1,6 +1,6 @@
 package com.kjeldsen.match.domain.type;
 
-public enum TeamModifier {
+public enum TeamModifier implements Modifier {
 
     MOTIVATION,
 

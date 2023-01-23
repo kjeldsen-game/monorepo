@@ -1,6 +1,4 @@
-package com.kjeldsen.match.domain.event;
-
-import com.kjeldsen.match.domain.id.Id;
+package com.kjeldsen.match.domain.id;
 
 public final class EventId extends Id<EventId> {
 
