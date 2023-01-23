@@ -1,8 +1,8 @@
 package com.kjeldsen.match.application.usecases;
 
 import com.kjeldsen.match.domain.aggregate.Team;
-import com.kjeldsen.match.domain.event.EventId;
 import com.kjeldsen.match.domain.event.MatchCreatedEvent;
+import com.kjeldsen.match.domain.id.EventId;
 import com.kjeldsen.match.domain.id.MatchId;
 import com.kjeldsen.match.domain.id.TeamId;
 import com.kjeldsen.match.domain.provider.InstantProvider;

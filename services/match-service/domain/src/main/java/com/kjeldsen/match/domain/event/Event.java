@@ -1,5 +1,6 @@
 package com.kjeldsen.match.domain.event;
 
+import com.kjeldsen.match.domain.id.EventId;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
