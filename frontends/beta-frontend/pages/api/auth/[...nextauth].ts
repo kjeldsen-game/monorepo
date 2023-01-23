@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { AUTH_CLIENT_ID, AUTH_CLIENT_SECRET, JWT_SECRET, NODE_ENV } from '@/config'
-import fetcher from '@/libs/fetcher'
+import fetcherFactory from '@/libs/fetcher'
 
 export default NextAuth({
   providers: [
@@ -23,7 +23,7 @@ export default NextAuth({
           client_id: AUTH_CLIENT_ID,
           client_secret: AUTH_CLIENT_SECRET,
         }
-
+        const fetcher = fetcherFactory()
         const token = await fetcher('/oauth/token', {
           method: 'POST',
           data: payload,
