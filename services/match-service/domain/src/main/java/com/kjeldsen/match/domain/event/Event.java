@@ -11,6 +11,6 @@ import java.time.Instant;
 public abstract class Event {
 
     private EventId eventId;
-    private Instant date;
+    private Instant eventDate;
 
 }

@@ -19,7 +19,7 @@ public class MatchStartUseCase {
 
         MatchStartedEvent.builder()
             .eventId(EventId.generate())
-            .date(InstantProvider.now())
+            .eventDate(InstantProvider.now())
             .matchId(MatchId.generate())
             .build();
 
