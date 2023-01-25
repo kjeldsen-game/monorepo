@@ -25,7 +25,7 @@ public class OpportunityStartUseCase {
         // TODO engine opportunity generate
         OpportunityStartedEvent.builder()
             .eventId(EventId.generate())
-            .date(InstantProvider.now())
+            .eventDate(InstantProvider.now())
             .opportunityId(opportunityId)
             .matchId(matchId)
             .build();

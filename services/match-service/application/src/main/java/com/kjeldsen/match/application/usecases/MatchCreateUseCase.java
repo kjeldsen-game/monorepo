@@ -26,7 +26,7 @@ public class MatchCreateUseCase {
         // TODO add validation for both teams
         MatchCreatedEvent.builder()
             .eventId(EventId.generate())
-            .date(InstantProvider.now())
+            .eventDate(InstantProvider.now())
             .matchId(MatchId.generate())
             .teamIds(List.of(attackingTeamId, defendingTeamId))
             .build();
