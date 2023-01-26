@@ -28,6 +28,7 @@ export default NextAuth({
           method: 'POST',
           data: payload,
         })
+        console.log('authentication success', token)
         // Returning token to set in session
         return { token }
       },

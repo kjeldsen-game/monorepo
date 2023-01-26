@@ -13,8 +13,19 @@ import fetcherFactory from '@/libs/fetcher'
 import { useSession } from 'next-auth/react'
 
 const Team: NextPage = () => {
+  const payload = {
+    username: 'Carlos2',
+    password: '123456',
+    grant_type: 'password',
+    client_id: 'client-id',
+    client_secret: 'client-secret',
+  }
   const { data: session } = useSession()
+  console.log(session)
   const { data, isLoading } = useSWR<PlayerStats[]>('/players', fetcherFactory({ token: session?.user as unknown as string }))
+  const fetcher = fetcherFactory()
+  const { data: token } = useSWR<PlayerStats[]>('/oauth/token', (url) => fetcher(url, { data: payload, method: 'POST' }))
+  console.log(token)
 
   const columns: GridColDef[] = [
     {
