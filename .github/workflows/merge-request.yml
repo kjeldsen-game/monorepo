@@ -89,6 +89,17 @@ jobs:
           SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
           DOCKER_IMAGE_GENERATION: "false"
 
+      - name: notifications-service pipeline
+        uses: ./.github/actions/action-cargo-build
+        with:
+          PATH: "services/notifications-service"
+          SERVICE_NAME: "notifications-service"
+          AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
+          AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
+          SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
+          DOCKER_IMAGE_GENERATION: "false"
+
       #########
       ## FEs ##
       #########
