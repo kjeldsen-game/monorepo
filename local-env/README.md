@@ -37,6 +37,12 @@ Create topic
 List topics
 - `docker exec kafka  kafka-topics --list --bootstrap-server localhost:9092`
 
+Send message to a topic (active sending mode, you can send multiple)
+- `docker exec -it kafka kafka-console-producer --bootstrap-server localhost:9092 --topic my-topic`
+
+Consume messages from a topic (active receiving mode, you can receive multiple)
+- `docker exec kafka kafka-console-consumer --bootstrap-server localhost:9092 --topic my-topic --from-beginning`
+
 ## Hands-on
 
 Create the needed environment variables 
