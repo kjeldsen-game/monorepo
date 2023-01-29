@@ -13,7 +13,6 @@
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>domain</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -32,22 +31,6 @@
             <groupId>org.testcontainers</groupId>
             <artifactId>mongodb</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>domain</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>domain</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>domain</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>domain</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -13,12 +13,10 @@
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>adapter-rest</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>adapter-persistence</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
