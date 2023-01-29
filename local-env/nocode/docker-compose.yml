@@ -154,7 +154,7 @@ services:
     image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/kafka-service:latest
     container_name: kafka-service
     env_file:
-      - ../config/kafka-service.env
+      - ../../config/kafka-service.env
     depends_on:
       kafka:
         condition: service_healthy
