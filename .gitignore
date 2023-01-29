@@ -6,3 +6,7 @@
 .DS_Store
 
 .vscode
+
+local-env/default/volume
+local-env/nocode/volume
+local-env/aws/volume
