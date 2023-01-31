@@ -1,11 +1,14 @@
 use dotenv::dotenv;
 use kafka::consumer::{Consumer, FetchOffset, MessageSets};
 use std::env;
+use std::fmt::Error;
 use std::{thread, time};
 
+mod aws_ses;
 mod signup_event;
 
-fn main() {
+#[tokio::main]
+async fn main() -> Result<(), Error> {
     println!("Started Notifications Service");
 
     dotenv().ok(); // Load environment variables
@@ -13,18 +16,20 @@ fn main() {
 
     let kafka_connection = env::var("KAFKA_HOST_AND_PORT").unwrap().to_string();
 
-    start_consuming_events(kafka_connection);
+    start_consuming_events(kafka_connection).await;
+
+    Ok(())
 }
 
-fn start_consuming_events(kafka_connection: String) {
-    consume_signup_event(kafka_connection);
+async fn start_consuming_events(kafka_connection: String) {
+    consume_signup_event(kafka_connection).await;
     // add new events to consume here
 }
 
-fn consume_signup_event(kafka_connection: String) {
+async fn consume_signup_event(kafka_connection: String) {
     let topic_signup_event = env::var("TOPIC_SIGNUP_EVENT").unwrap().to_string();
     let mut consumer = build_consumer(kafka_connection, topic_signup_event);
-    consume_event(&mut consumer);
+    consume_event(&mut consumer).await;
 }
 
 fn build_consumer(kafka_connection: String, topic_name: String) -> Consumer {
@@ -35,7 +40,7 @@ fn build_consumer(kafka_connection: String, topic_name: String) -> Consumer {
         .unwrap()
 }
 
-fn consume_event(consumer: &mut Consumer) {
+async fn consume_event(consumer: &mut Consumer) {
     loop {
         println!(
             "Polling messages for consumer with partitions {:?}",
@@ -57,5 +62,7 @@ fn consume_event(consumer: &mut Consumer) {
         consumer.commit_consumed().expect("Commiting consumed");
 
         thread::sleep(time::Duration::from_millis(10000));
+
+        aws_ses::send_email_from_template().await;
     }
 }
