@@ -27,8 +27,10 @@ async fn start_consuming_events(kafka_connection: String) {
 }
 
 async fn consume_signup_event(kafka_connection: String) {
-    let topic_signup_event = env::var("TOPIC_SIGNUP_EVENT").unwrap().to_string();
-    let mut consumer = build_consumer(kafka_connection, topic_signup_event);
+    let topic_notifications_email_template = env::var("TOPIC_NOTIFICATIONS_EMAIL_TEMPLATE")
+        .unwrap()
+        .to_string();
+    let mut consumer = build_consumer(kafka_connection, topic_notifications_email_template);
     consume_event(&mut consumer).await;
 }
 
