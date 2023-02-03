@@ -20,6 +20,7 @@ import java.util.stream.IntStream;
 public class GenerateSingleTrainingUseCase {
 
     private static final int FIRST_DAY_OF_TRAINING = 0;
+
     private final PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository;
 
     public void generate(PlayerId playerId, List<PlayerSkill> skills, Integer days) {
