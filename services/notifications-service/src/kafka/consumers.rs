@@ -2,9 +2,9 @@ use kafka::consumer::{Consumer, FetchOffset, MessageSets};
 use std::env;
 use std::{thread, time};
 
-use crate::signup_event;
+use super::signup_event::SignupEvent;
 
-pub async fn start_consuming_events() {
+pub async fn init() {
     let kafka_connection = env::var("KAFKA_HOST_AND_PORT").unwrap().to_string();
 
     consume_signup_event(kafka_connection).await;
@@ -40,7 +40,7 @@ async fn consume_event(consumer: &mut Consumer) {
             println!("iter 1");
 
             for m in ms.messages() {
-                signup_event::SignupEvent::process_kafka_message(&m);
+                SignupEvent::process_kafka_message(&m);
             }
             consumer
                 .consume_messageset(ms)

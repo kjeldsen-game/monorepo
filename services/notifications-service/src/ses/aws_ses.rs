@@ -6,8 +6,8 @@ use aws_sdk_ses::Client;
 
 use std::fs;
 
-use crate::aws_ses_client;
-use crate::ses_template;
+use super::aws_ses_client;
+use super::ses_template;
 
 pub async fn upload_templates() {
     let client = aws_ses_client::new().await;
