@@ -1,11 +1,8 @@
 use dotenv::dotenv;
 use std::fmt::Error;
 
-mod aws_ses;
-mod aws_ses_client;
 mod kafka;
-mod ses_template;
-mod signup_event;
+mod ses;
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
@@ -14,8 +11,8 @@ async fn main() -> Result<(), Error> {
     dotenv().ok(); // Load environment variables
     println!("Loaded environment variables");
 
-    aws_ses::upload_templates().await;
-    kafka::start_consuming_events().await;
+    ses::aws_ses::upload_templates().await;
+    kafka::consumers::init().await;
 
     Ok(())
 }
