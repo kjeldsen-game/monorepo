@@ -11,7 +11,7 @@ async fn main() -> Result<(), Error> {
     dotenv().ok(); // Load environment variables
     println!("Loaded environment variables");
 
-    ses::aws_ses::upload_templates().await;
+    ses::processor::upload_templates().await;
     kafka::consumers::init().await;
 
     Ok(())
