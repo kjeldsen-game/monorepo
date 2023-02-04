@@ -1,0 +1,6 @@
+{
+    "name": "signup_template",
+    "subject": "Welcome to Kjeldsen",
+    "text": "Welcome to Kjeldsen",
+    "html": "<p>Welcome to Kjeldsen</p>"
+}
