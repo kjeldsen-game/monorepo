@@ -1,4 +1,4 @@
-pub mod aws_ses;
+pub mod processor;
 
-mod aws_ses_client;
-mod ses_template;
+mod client;
+mod template;

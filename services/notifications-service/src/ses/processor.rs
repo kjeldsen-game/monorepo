@@ -6,11 +6,11 @@ use aws_sdk_ses::Client;
 
 use std::fs;
 
-use super::aws_ses_client;
-use super::ses_template;
+use super::client;
+use super::template;
 
 pub async fn upload_templates() {
-    let client = aws_ses_client::new().await;
+    let client = client::new().await;
     process_templates(client).await;
 }
 
@@ -19,13 +19,13 @@ async fn process_templates(client: Client) {
 
     for dir in templates_dir {
         let template_file = fs::read_to_string(dir.unwrap().path()).unwrap();
-        let ses_template: ses_template::SESTemplate = serde_json::from_str(&template_file).unwrap();
+        let ses_template: template::SESTemplate = serde_json::from_str(&template_file).unwrap();
 
         create_or_update_template(&client, ses_template).await;
     }
 }
 
-async fn create_or_update_template(client: &Client, ses_template: ses_template::SESTemplate) {
+async fn create_or_update_template(client: &Client, ses_template: template::SESTemplate) {
     let template = Template::builder()
         .template_name(ses_template.name)
         .subject_part(ses_template.subject)
