@@ -4,6 +4,8 @@ use std::{thread, time};
 
 use super::signup_event::SignupEvent;
 
+use crate::ses::template_email;
+
 pub async fn init() {
     let kafka_connection = env::var("KAFKA_HOST_AND_PORT").unwrap().to_string();
 
@@ -40,7 +42,10 @@ async fn consume_event(consumer: &mut Consumer) {
             println!("iter 1");
 
             for m in ms.messages() {
-                SignupEvent::process_kafka_message(&m);
+                let new_event = SignupEvent::from(m);
+                println!("new wevent received {:?}", new_event);
+                let sent_email = template_email::send_email().await;
+                println!("sent_email {:?}", sent_email);
             }
             consumer
                 .consume_messageset(ms)

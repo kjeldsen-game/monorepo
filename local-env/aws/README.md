@@ -16,4 +16,4 @@ Usefull commands when working with SES *(--endpoint-url only needed if working l
 
 - `aws --endpoint-url http://localhost:4566 ses create-configuration-set --configuration-set '{"Name":"DEV_Configuration_Set"}'`
 
-- `aws --endpoint-url=http://localhost:4566 ses verify-email-identity --email-address source@testing.com`
+- `aws --endpoint-url=http://localhost:4566 ses verify-email-identity --email-address source@test.com`

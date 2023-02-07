@@ -8,7 +8,7 @@ pub struct SignupEvent {
 }
 
 impl SignupEvent {
-    pub fn process_kafka_message(m: &Message) {
+    pub fn from(m: &Message) -> SignupEvent {
         let kafka_message_as_string: String = match std::str::from_utf8(&m.value) {
             Ok(str) => str.to_string(),
             Err(error) => panic!("Problem converting kafka message to string: {}", error),
@@ -22,6 +22,6 @@ impl SignupEvent {
             ),
         };
 
-        println!("Received event {:?}", event);
+        event
     }
 }
