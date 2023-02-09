@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+
+  ##################
+  ## Auth Service ##
+  ##################
+
+  auth-service:
+    image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/auth-service:latest
+
+  #####################
+  ## Gateway Service ##
+  #####################
+
+  gateway-service:
+    image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/gateway-service:latest
+
+  ####################
+  ## Player Service ##
+  ####################
+
+  player-service:
+    image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/player-service:latest
+
+  ###################
+  ## Match Service ##
+  ###################
+
+  match-service:
+    image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/match-service:latest
+
+  ###################
+  ## Beta Frontend ##
+  ###################
+
+  beta-frontend:
+    image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/beta-frontend:latest
+    ports:
+      - 3000:3000
+    container_name: beta-frontend
+
+  ###########
+  ## Kafka ##
+  ###########
+
+  kafka-service:
+    image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/kafka-service:latest

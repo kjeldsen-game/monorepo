@@ -27,14 +27,14 @@ services:
 
   auth-service:
     build:
-      context: ../../services/auth-service
+      context: ./services/auth-service
       dockerfile: ./Dockerfile
     ports:
       - 8081:8081
     container_name: auth-service
     env_file:
-      - ../config/common.env
-      - ../config/auth-service.env
+      - ./config/common.env
+      - ./config/auth-service.env
     depends_on:
       local-mongodb:
         condition: service_healthy
@@ -45,14 +45,14 @@ services:
 
   gateway-service:
     build:
-      context: ../../services/gateway-service
+      context: ./services/gateway-service
       dockerfile: ./Dockerfile
     ports:
       - 8080:8080
     container_name: gateway-service
     env_file:
-      - ../config/common.env
-      - ../config/gateway-service.env
+      - ./config/common.env
+      - ./config/gateway-service.env
     depends_on:
       auth-service:
         condition: service_healthy
@@ -63,14 +63,14 @@ services:
 
   player-service:
     build:
-      context: ../../services/player-service
+      context: ./services/player-service
       dockerfile: ./Dockerfile
     ports:
       - 8082:8082
     container_name: player-service
     env_file:
-      - ../config/common.env
-      - ../config/player-service.env
+      - ./config/common.env
+      - ./config/player-service.env
     depends_on:
       gateway-service:
         condition: service_healthy
@@ -81,14 +81,14 @@ services:
 
   match-service:
     build:
-      context: ../../services/auth-service
+      context: ./services/auth-service
       dockerfile: ./Dockerfile
     ports:
       - 8083:8083
     container_name: match-service
     env_file:
-      - ../config/common.env
-      - ../config/match-service.env
+      - ./config/common.env
+      - ./config/match-service.env
     depends_on:
       gateway-service:
         condition: service_healthy
@@ -132,10 +132,10 @@ services:
     image: rust:1.65
     container_name: kafka-service
     env_file:
-      - ../config/kafka-service.env
+      - ./config/kafka-service.env
     volumes:
       - ${CARGO_PATH}/registry:/usr/local/cargo/registry
-      - ../../services/kafka-service:/kafka-service
+      - ./services/kafka-service:/kafka-service
     working_dir: /kafka-service
     depends_on:
       kafka:
