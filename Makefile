@@ -7,18 +7,6 @@ DOCKER_SERVICES := local-mongodb auth-service gateway-service player-service
 MAVEN_PROJECTS := $(shell find ./services -type f -mindepth 2 -maxdepth 2 -name "pom.xml" -exec dirname {} \; | xargs -I {} basename {})
 
 
-# Output colors
-NORMAL := \033[0m
-CYAN   := \033[36m
-YELLOW := \033[33m
-BLUE   := \033[34m
-RED    := \033[31m
-
-M2_PATH := $(shell echo $$M2_PATH)/settings.xml
-
-# Detect docker executable and when called inside container
-DOCKER_EXEC := "$(shell which docker docker.exe | head -n1)"
-
 # Code artifact token
 CODEARTIFACT_AUTH_TOKEN := $(shell aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 040156513434 --region eu-west-1 --query authorizationToken --output text)
 
@@ -52,6 +40,11 @@ up: backend frontend ## Start the application locally
 down: ## Stop all local backend services
 	@docker-compose -f ./docker-compose.yml down -t0
 
+.PHONY: frontend
+frontend: ## Start frontend services
+	@echo "\n\n${MSG_SEPARATOR}\n\n 🚀 Starting up the FRONTEND.\n\n${MSG_SEPARATOR}\n\n"
+	@cd ./frontends/beta-frontend && npm install && npm run dev
+
 .PHONY: backend
 backend: build ## Start backend services
 	@echo "\n\n${MSG_SEPARATOR}\n\n 🚀 Starting up the BACKEND.\n\n${MSG_SEPARATOR}\n\n"
@@ -59,11 +52,6 @@ backend: build ## Start backend services
 	@echo "\n\n${MSG_SEPARATOR}\n\n 🟢 Now BACKEND is started locally.\n\n"
 	@echo "Go to http://localhost:8080/actuator/health. Expect to see {\"status\",\"up\"}.\n\n"
 	@echo "Go to http://localhost:8080/swagger-ui. To see the documentation API.\n\n${MSG_SEPARATOR}\n\n"
-
-.PHONY: frontend
-frontend: ## Start frontend services
-	@echo "\n\n${MSG_SEPARATOR}\n\n 🚀 Starting up the FRONTEND.\n\n${MSG_SEPARATOR}\n\n"
-	@cd ./frontends/beta-frontend && npm install && npm run dev
 
 .PHONY: build
 build: ## Build all backend services
