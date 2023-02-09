@@ -43,37 +43,36 @@ help: ## Show command list
 	@echo
 
 ######################################################################
-########################   BASIC    #################################
+########################    LOCAL    #################################
 ######################################################################
 .PHONY: up
-up: backend frontend ## Start the application
-	@echo "\n\n${MSG_SEPARATOR}\n\n Now 🤘 APPLICATION is started.\n\n${MSG_SEPARATOR}\n\n"
+up: backend frontend ## Start the application locally
 
 .PHONY: down
-down: ## Stop all backend services
-	docker-compose -f ./docker-compose.yml down -t0
-
-.PHONY: build
-build: ## Build all backend services
-	echo "\n\n${MSG_SEPARATOR}\n\n Building 🤘 BACKEND.\n\n${MSG_SEPARATOR}\n\n"
-	$(MAKE) .build-maven-projects
+down: ## Stop all local backend services
+	@docker-compose -f ./docker-compose.yml down -t0
 
 .PHONY: backend
 backend: build ## Start backend services
-	@echo "\n\n${MSG_SEPARATOR}\n\n Starting up the 🤘 BACKEND.\n\n${MSG_SEPARATOR}\n\n"
+	@echo "\n\n${MSG_SEPARATOR}\n\n 🚀 Starting up the BACKEND.\n\n${MSG_SEPARATOR}\n\n"
 	@docker compose -f ./docker-compose.yml up --build -t0 -d $(DOCKER_SERVICES)
-	@echo "\n\n${MSG_SEPARATOR}\n\n Now 🤘 BACKEND is started.\n\n"
+	@echo "\n\n${MSG_SEPARATOR}\n\n 🟢 Now BACKEND is started locally.\n\n"
 	@echo "Go to http://localhost:8080/actuator/health. Expect to see {\"status\",\"up\"}.\n\n"
 	@echo "Go to http://localhost:8080/swagger-ui. To see the documentation API.\n\n${MSG_SEPARATOR}\n\n"
 
 .PHONY: frontend
 frontend: ## Start frontend services
-	@echo "\n\n${MSG_SEPARATOR}\n\n Starting up the 🤘 FRONTEND.\n\n${MSG_SEPARATOR}\n\n"
+	@echo "\n\n${MSG_SEPARATOR}\n\n 🚀 Starting up the FRONTEND.\n\n${MSG_SEPARATOR}\n\n"
 	@cd ./frontends/beta-frontend && npm install && npm run dev
+
+.PHONY: build
+build: ## Build all backend services
+	@echo "\n\n${MSG_SEPARATOR}\n\n 📦 Building BACKEND.\n\n${MSG_SEPARATOR}\n\n"
+	$(MAKE) .build-maven-projects
 
 .PHONY: .build-maven-projects
 .build-maven-projects: ## Build all maven based services
-	export CODEARTIFACT_AUTH_TOKEN
+	@export CODEARTIFACT_AUTH_TOKEN
 	for service in $(MAVEN_PROJECTS); do \
 		echo "${MSG_IDENT}Building $$service"; \
 		if [ -f ./services/$$service/.mvn/settings.xml ]; then \
@@ -82,3 +81,18 @@ frontend: ## Start frontend services
 			mvn -f ./services/$$service/pom.xml clean package -DskipTests; \
 		fi; \
 	done;
+
+######################################################################
+########################   NOCODE    #################################
+######################################################################
+.PHONY: up-nocode
+up-nocode: ## Start the NOCODE environment
+	@echo "\n\n${MSG_SEPARATOR}\n\n 🚀 Starting up the NOCODE environment.\n\n${MSG_SEPARATOR}\n\n"
+	@docker compose -f ./docker-compose.yml -f ./docker-compose.override.nocode.yml up --build -t0 -d $(DOCKER_SERVICES) 
+	@echo "\n\n${MSG_SEPARATOR}\n\n 🟢 Now NOCODE environment is started.\n\n"
+
+.PHONY: down-nocode
+down-nocode: ## Stop all local backend services
+	@echo "\n\n${MSG_SEPARATOR}\n\n 🔴 Stopping the NOCODE environment.\n\n${MSG_SEPARATOR}\n\n"
+	@docker-compose -f ./docker-compose.yml -f ./docker-compose.override.nocode.yml down -t0
+	@echo "\n\n${MSG_SEPARATOR}\n\n 💥 NOCODE environment was removed.\n\n${MSG_SEPARATOR}\n\n"
