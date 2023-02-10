@@ -1,9 +1,3 @@
-# Localstack
-
-We are using Localstack to have a local development environment emulating AWS Cloud services. For more information, access https://github.com/localstack/localstack
-
-You need to run aws configure to set the env variables needed to work. You can set any values, SDK when working on local will look for the configuration to have a valid format but it won't try a real authentication.
-
 ## SES
 
 Amazon Simple Email Service (Amazon SES) is flexible, and scalable email service that enables developers to send mail from within any application.
