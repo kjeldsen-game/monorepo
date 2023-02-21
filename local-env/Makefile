@@ -16,7 +16,10 @@ BUILD_KAFKA_SERVICE = cd $(KAFKA_SERVICE_PATH) && make
 NOTIFICATIONS_SERVICE_PATH = ../services/notifications-service
 BUILD_NOTIFICATIONS_SERVICE = cd $(NOTIFICATIONS_SERVICE_PATH) && make
 
-all: build_auth_service build_gateway_service build_player_service build_match_service build_kafka_service build_notifications_service
+BETA_FRONTEND_PATH = ../frontends/beta-frontend
+BUILD_BETA_FRONTEND = cd $(BETA_FRONTEND_PATH) && make
+
+all: build_auth_service build_gateway_service build_player_service build_match_service build_kafka_service build_notifications_service build_beta_frontend
 
 build_auth_service:
 	$(BUILD_AUTH_SERVICE)
@@ -35,3 +38,6 @@ build_kafka_service:
 
 build_notifications_service:
 	$(BUILD_NOTIFICATIONS_SERVICE)
+
+build_beta_frontend:
+	$(BUILD_BETA_FRONTEND)
