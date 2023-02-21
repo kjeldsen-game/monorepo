@@ -24,6 +24,7 @@
         <spring-security-oauth2.version>2.3.8.RELEASE</spring-security-oauth2.version>
         <spring-security-oauth2-autoconfigure.version>2.6.8</spring-security-oauth2-autoconfigure.version>
         <spring-cloud-starter-bootstrap.version>3.0.1</spring-cloud-starter-bootstrap.version>
+        <security-lib.version>0.0.1-SNAPSHOT</security-lib.version>
     </properties>
     <build>
         <finalName>gateway-service</finalName>
@@ -60,6 +61,11 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>security-lib</artifactId>
+            <version>${security-lib.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
