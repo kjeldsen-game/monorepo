@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PointsGenerator {
 
-    public static int generateRise(int currentDay) {
+    public static int generatePointsRise(int currentDay) {
 
         double randomProbabilityRise = RandomGenerator.random();
         float probability = 1 / 14;
-        double probabilityRaise = probability * currentDay; // Sumatorio de la prob diaria por el numero de dias que lleva
+        double probabilityRaise = probability * currentDay;
         int risePoints = 0;
 
         if (randomProbabilityRise <= probabilityRaise) {
@@ -22,7 +22,7 @@ public class PointsGenerator {
 
     public static int generatePoints() {
 
-        double randomProbabilityPoints = RandomGenerator.random() * 100;// Generacion de numero random entre 0-100
+        double randomProbabilityPoints = RandomGenerator.random() * 100;
 
         if (randomProbabilityPoints <= 35) {
             return 1;

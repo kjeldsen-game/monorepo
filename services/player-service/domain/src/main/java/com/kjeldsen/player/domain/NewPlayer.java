@@ -1,7 +1,5 @@
-package com.kjeldsen.player.application.usecases;
+package com.kjeldsen.player.domain;
 
-import com.kjeldsen.player.domain.PlayerAge;
-import com.kjeldsen.player.domain.PlayerPosition;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,9 +1,6 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerAge;
-import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerPositionTendency;
+import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import org.apache.commons.lang3.StringUtils;
