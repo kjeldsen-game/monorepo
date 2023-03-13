@@ -3,7 +3,8 @@ import { Box, Button, Card, CardContent, CardHeader, TextField } from '@mui/mate
 import { Controller, useForm } from 'react-hook-form'
 import { CenterContainer } from '@/shared/layout'
 import { NextPageWithLayout } from '@/pages/_app'
-import { API_GATEWAY_ENDPOINT } from '@/config/config'
+import { API_GATEWAY_ENDPOINT } from '@/config'
+import factory from '@/libs/fetcher'
 
 interface SignUpFormValues {
   username: string
@@ -30,18 +31,11 @@ const SignUpPage: NextPageWithLayout = () => {
             rowGap: '1rem',
           }}
           onSubmit={handleSubmit(async ({ username, password }) => {
-            const response = await fetch(`${API_GATEWAY_ENDPOINT}/auth-service/auth/sign-up`, {
+            const fetcher = factory()
+            await fetcher('/auth-service/auth/sign-up', {
               method: 'POST',
-              body: JSON.stringify({ username, password }),
-              headers: {
-                'Content-Type': 'application/json',
-              },
+              data: { username, password },
             })
-            if (response.ok) {
-              console.info('Account created successfully', response.json())
-            } else {
-              console.error('There was an error with the creation of the account')
-            }
           })}>
           <Controller
             name="username"
