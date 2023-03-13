@@ -87,7 +87,7 @@ const SignInPage: NextPageWithLayout = () => {
             </div>
           </form>
           <Link href="/signup" passHref>
-            <MuiLink>Create an account</MuiLink>
+            Create an account
           </Link>
         </CardContent>
       </Card>
