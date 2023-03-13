@@ -1,9 +1,9 @@
 import React from 'react'
-import {Box, Button, Card, CardContent, CardHeader, TextField} from '@mui/material'
-import {Controller, useForm} from 'react-hook-form'
-import {CenterContainer} from '@/shared/layout'
-import {NextPageWithLayout} from '@/pages/_app'
-import {AUTH_ENDPOINT} from '@/config/config'
+import { Box, Button, Card, CardContent, CardHeader, TextField } from '@mui/material'
+import { Controller, useForm } from 'react-hook-form'
+import { CenterContainer } from '@/shared/layout'
+import { NextPageWithLayout } from '@/pages/_app'
+import { API_GATEWAY_ENDPOINT } from '@/config/config'
 
 interface SignUpFormValues {
   username: string
@@ -30,7 +30,7 @@ const SignUpPage: NextPageWithLayout = () => {
             rowGap: '1rem',
           }}
           onSubmit={handleSubmit(async ({ username, password }) => {
-              const response = await fetch(`${AUTH_ENDPOINT}/auth/sign-up`, {
+            const response = await fetch(`${API_GATEWAY_ENDPOINT}/auth-service/auth/sign-up`, {
               method: 'POST',
               body: JSON.stringify({ username, password }),
               headers: {
