@@ -31,12 +31,12 @@ export const sampleRows = [
 ]
 
 export const sampleColumns = [
-  { field: 'col1', headerName: '' },
-  { field: 'col2', headerName: 'GP' },
-  { field: 'col3', headerName: 'Gls' },
-  { field: 'col4', headerName: 'As' },
-  { field: 'col5', headerName: 'Ta' },
-  { field: 'col6', headerName: 'Crd' },
-  { field: 'col7', headerName: 'MoM' },
-  { field: 'col8', headerName: 'Rating' },
+  { field: 'col1', headerName: '', width: 110 },
+  { field: 'col2', headerName: 'GP', flex: 1 },
+  { field: 'col3', headerName: 'Gls', flex: 1 },
+  { field: 'col4', headerName: 'As', flex: 1 },
+  { field: 'col5', headerName: 'Ta', flex: 1 },
+  { field: 'col6', headerName: 'Crd', flex: 1 },
+  { field: 'col7', headerName: 'MoM', flex: 1 },
+  { field: 'col8', headerName: 'Rating', flex: 1 },
 ]
