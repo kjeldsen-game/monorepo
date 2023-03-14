@@ -3,7 +3,8 @@ import { Box, Button, Card, CardContent, CardHeader, TextField } from '@mui/mate
 import { Controller, useForm } from 'react-hook-form'
 import { CenterContainer } from '@/shared/layout'
 import { NextPageWithLayout } from '@/pages/_app'
-import fetcherFactory from '@/libs/fetcher'
+import { API_GATEWAY_ENDPOINT } from '@/config'
+import factory from '@/libs/fetcher'
 
 interface SignUpFormValues {
   username: string
@@ -30,8 +31,8 @@ const SignUpPage: NextPageWithLayout = () => {
             rowGap: '1rem',
           }}
           onSubmit={handleSubmit(async ({ username, password }) => {
-            const fetcher = fetcherFactory()
-            await fetcher(`/auth-service/auth/sign-up`, {
+            const fetcher = factory()
+            await fetcher('/auth-service/auth/sign-up', {
               method: 'POST',
               data: { username, password },
             })
