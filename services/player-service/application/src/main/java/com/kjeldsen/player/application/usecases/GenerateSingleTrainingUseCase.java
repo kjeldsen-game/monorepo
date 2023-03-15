@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Range;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -33,10 +34,12 @@ public class GenerateSingleTrainingUseCase {
     public void generate(PlayerId playerId, List<PlayerSkill> skills, Integer days) {
         log.info("Generating training");
 
-        if (checkIfDaysIsValid(days) && checkNotNullOrEmpty(skills)) {
-            IntStream.range(FIRST_DAY_OF_TRAINING, days)
-                .forEach(currentDay -> skills.forEach(skill -> generateAndStoreEvent(playerId, skill, currentDay)));
-        }
+        validateDays(days);
+        validateSkills(skills);
+
+        IntStream.range(FIRST_DAY_OF_TRAINING, days)
+            .forEach(currentDay -> skills.forEach(skill -> generateAndStoreEvent(playerId, skill, currentDay)));
+
     }
 
     private void generateAndStoreEvent(PlayerId playerId, PlayerSkill playerSkill, int currentDay) {
@@ -54,27 +57,25 @@ public class GenerateSingleTrainingUseCase {
         Player foundPlayer = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
         int skillPoints = foundPlayer.getActualSkills().getSkillPoints(PlayerSkill.CO);
 
-        // get al repository CQRS
+        // get al repository CQRS JI
         // leo desde mongo cuantos puntos de skill tiene el jugador y luego desde
         // el evento comprobar que al sumarse los puntos no llegue al tope y si
         // es así, que no este disponible a subir.
+        //
+
     }
 
-    public boolean checkIfDaysIsValid(Integer days) {
+    public void validateDays(Integer days) {
 
         if (!RANGE_OF_DAYS.contains(days)) {
             throw new IllegalArgumentException("Days must be between 1 and 1000");
-        } else {
-            return true;
         }
     }
 
-    public boolean checkNotNullOrEmpty(List<PlayerSkill> skills) {
+    public void validateSkills(List<PlayerSkill> skills) {
 
-        if (skills == null || skills.isEmpty()) {
+        if (CollectionUtils.isEmpty(skills)) {
             throw new IllegalArgumentException("Skills cannot be null or empty");
-        } else {
-            return true;
         }
     }
 
