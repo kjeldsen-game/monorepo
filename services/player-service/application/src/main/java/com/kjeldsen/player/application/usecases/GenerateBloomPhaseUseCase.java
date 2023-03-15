@@ -1,11 +1,9 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.events.EventId;
-import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
-import com.kjeldsen.player.domain.provider.InstantProvider;
+import com.kjeldsen.player.domain.PlayerId;
+import com.kjeldsen.player.domain.events.PlayerBloomEvent;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
-import com.kjeldsen.player.domain.repositories.PlayerTrainingEventWriteRepository;
+import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -15,23 +13,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class GenerateBloomPhaseUseCase {
     private final PlayerReadRepository playerReadRepository;
-    private final PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository;
+    private final PlayerTrainingBloomEventWriteRepository playerTrainingBloomEventWriteRepository;
 
-    public void generate(int bloomYears, int bloomSpeed, int bloomStart, Player player) {
+    public void generate(int bloomYears, int bloomSpeed, int bloomStart, PlayerId playerId) {
         log.info("Generating bloom phase");
-        generateAndStoreEventOfBloomPhase(bloomYears, bloomSpeed, bloomStart, player);
+        playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
+
+        generateAndStoreEventOfBloomPhase(bloomYears, bloomSpeed, bloomStart, playerId);
     }
 
-    private void generateAndStoreEventOfBloomPhase(int bloomYears, int bloomSpeed, int bloomStart, Player player) {
-        PlayerTrainingEvent playerTrainingEvent = PlayerTrainingEvent.builder()
-            .eventId(EventId.generate())
-            .eventDate(InstantProvider.now())
-            .playerId(player.getId())
-            .bloom()
-            .decline()
+    private void generateAndStoreEventOfBloomPhase(int bloomYears, int bloomSpeed, int bloomStart, PlayerId playerId) {
+        PlayerBloomEvent playerBloomEvent = PlayerBloomEvent.builder()
+            .playerId(playerId)
+            .yearsOn(bloomYears)
+            .bloomSpeedIncreaser(bloomSpeed)
+            .bloomStartAge(bloomStart)
             .build();
-        playerTrainingEventWriteRepository.save(playerTrainingEvent);
+        playerTrainingBloomEventWriteRepository.save(playerBloomEvent);
     }
-
 
 }

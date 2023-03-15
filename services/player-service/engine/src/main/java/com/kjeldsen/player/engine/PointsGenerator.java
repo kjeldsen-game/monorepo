@@ -7,9 +7,12 @@ import lombok.NoArgsConstructor;
 public class PointsGenerator {
 
     public static int generatePointsRise(int currentDay) {
-
-        double randomProbabilityRise = RandomGenerator.random();
         float probability = 1 / 14;
+        return generatePointsRise(currentDay, probability);
+    }
+
+    public static int generatePointsRise(int currentDay, float probability) {
+        double randomProbabilityRise = RandomGenerator.random();
         double probabilityRaise = probability * currentDay;
         int risePoints = 0;
 

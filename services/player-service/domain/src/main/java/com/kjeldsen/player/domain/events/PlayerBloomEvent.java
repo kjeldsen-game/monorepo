@@ -1,14 +1,16 @@
-package com.kjeldsen.player.domain;
+package com.kjeldsen.player.domain.events;
 
+import com.kjeldsen.player.domain.PlayerId;
 import lombok.Builder;
 import lombok.Data;
 import org.apache.commons.lang3.Range;
 
 @Builder
 @Data
-public class PlayerBloom {
-    private boolean bloom;
-    private int bloomYearsOn;
+public class PlayerBloomEvent {
+
+    private PlayerId playerId;
+    private int yearsOn;
     private int bloomStartAge;
     private int bloomSpeedIncreaser;
 
@@ -16,14 +18,14 @@ public class PlayerBloom {
     private static final Integer MAX_BLOOM_AGE = 30;
     private static final Range<Integer> RANGE_OF_BLOOM_AGE = Range.between(MIN_BLOOM_AGE, MAX_BLOOM_AGE);
 
-    public static PlayerBloom of(int bloomYearsOn) {
+    public static PlayerBloomEvent of(int bloomYearsOn) {
 
         if (!RANGE_OF_BLOOM_AGE.contains(bloomYearsOn)) {
             throw new IllegalArgumentException("Bloom years on must be between 0 and 10");
         }
 
-        return PlayerBloom.builder()
-            .bloomYearsOn(bloomYearsOn)
+        return PlayerBloomEvent.builder()
+            .yearsOn(bloomYearsOn)
             .build();
     }
 

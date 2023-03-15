@@ -4,9 +4,11 @@ import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.EventId;
+import com.kjeldsen.player.domain.events.PlayerBloomEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingEventWriteRepository;
 import com.kjeldsen.player.engine.PointsGenerator;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @Slf4j
@@ -30,6 +33,7 @@ public class GenerateSingleTrainingUseCase {
 
     private final PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository;
     private final PlayerReadRepository playerReadRepository;
+    private final PlayerTrainingBloomEventReadRepository playerTrainingBloomEventReadRepository;
 
     public void generate(PlayerId playerId, List<PlayerSkill> skills, Integer days) {
         log.info("Generating training");
@@ -37,19 +41,30 @@ public class GenerateSingleTrainingUseCase {
         validateDays(days);
         validateSkills(skills);
 
-        IntStream.range(FIRST_DAY_OF_TRAINING, days)
-            .forEach(currentDay -> skills.forEach(skill -> generateAndStoreEvent(playerId, skill, currentDay)));
+        Player player = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
 
+        IntStream.range(FIRST_DAY_OF_TRAINING, days)
+            .forEach(currentDay -> skills.forEach(skill -> generateAndStoreEvent(player, skill, currentDay)));
     }
 
-    private void generateAndStoreEvent(PlayerId playerId, PlayerSkill playerSkill, int currentDay) {
+    private void generateAndStoreEvent(Player player, PlayerSkill playerSkill, int currentDay) {
+
+        Optional<PlayerBloomEvent> playerBloomEvent = playerTrainingBloomEventReadRepository.findOneByPlayerId(player.getId());
+
         PlayerTrainingEvent playerTrainingEvent = PlayerTrainingEvent.builder()
             .eventId(EventId.generate())
             .eventDate(InstantProvider.now())
-            .playerId(playerId)
+            .playerId(player.getId())
             .skill(playerSkill)
-            .points(PointsGenerator.generatePointsRise(currentDay))
             .build();
+
+        if (playerBloomEvent.isPresent() && player.isBloomActive(playerBloomEvent.get())) {
+            playerTrainingEvent.setBloom(playerBloomEvent.get());
+            playerTrainingEvent.setPoints(PointsGenerator.generatePointsRise(currentDay, playerBloomEvent.get().getBloomSpeedIncreaser()));
+        } else {
+            playerTrainingEvent.setPoints(PointsGenerator.generatePointsRise(currentDay));
+        }
+
         playerTrainingEventWriteRepository.save(playerTrainingEvent);
     }
 
@@ -66,14 +81,12 @@ public class GenerateSingleTrainingUseCase {
     }
 
     public void validateDays(Integer days) {
-
         if (!RANGE_OF_DAYS.contains(days)) {
             throw new IllegalArgumentException("Days must be between 1 and 1000");
         }
     }
 
     public void validateSkills(List<PlayerSkill> skills) {
-
         if (CollectionUtils.isEmpty(skills)) {
             throw new IllegalArgumentException("Skills cannot be null or empty");
         }
