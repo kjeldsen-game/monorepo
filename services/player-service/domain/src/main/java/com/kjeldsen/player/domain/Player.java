@@ -1,6 +1,7 @@
 package com.kjeldsen.player.domain;
 
 import com.kjeldsen.player.domain.events.PlayerBloomEvent;
+import com.kjeldsen.player.domain.events.PlayerDeclineEvent;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
@@ -30,6 +31,12 @@ public class Player {
     public boolean isBloomActive(PlayerBloomEvent playerBloomEvent) {
         int initialRange = playerBloomEvent.getBloomStartAge();
         int endRange = initialRange + playerBloomEvent.getYearsOn();
+        return Range.between(initialRange, endRange).contains(age.value());
+    }
+
+    public boolean isDeclineActive(PlayerDeclineEvent playerDeclineEvent) {
+        int initialRange = playerDeclineEvent.getDeclineStartAge();
+        int endRange = initialRange + playerDeclineEvent.getYearsOn();
         return Range.between(initialRange, endRange).contains(age.value());
     }
 

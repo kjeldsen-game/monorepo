@@ -5,10 +5,12 @@ import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.EventId;
 import com.kjeldsen.player.domain.events.PlayerBloomEvent;
+import com.kjeldsen.player.domain.events.PlayerDeclineEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingEventWriteRepository;
 import com.kjeldsen.player.engine.PointsGenerator;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +36,7 @@ public class GenerateSingleTrainingUseCase {
     private final PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository;
     private final PlayerReadRepository playerReadRepository;
     private final PlayerTrainingBloomEventReadRepository playerTrainingBloomEventReadRepository;
+    private final PlayerTrainingDeclineEventReadRepository playerTrainingDeclineEventReadRepository;
 
     public void generate(PlayerId playerId, List<PlayerSkill> skills, Integer days) {
         log.info("Generating training");
@@ -50,6 +53,7 @@ public class GenerateSingleTrainingUseCase {
     private void generateAndStoreEvent(Player player, PlayerSkill playerSkill, int currentDay) {
 
         Optional<PlayerBloomEvent> playerBloomEvent = playerTrainingBloomEventReadRepository.findOneByPlayerId(player.getId());
+        Optional<PlayerDeclineEvent> playerDeclineEvent = playerTrainingDeclineEventReadRepository.findOneByPlayerId(player.getId());
 
         PlayerTrainingEvent playerTrainingEvent = PlayerTrainingEvent.builder()
             .eventId(EventId.generate())
@@ -58,14 +62,27 @@ public class GenerateSingleTrainingUseCase {
             .skill(playerSkill)
             .build();
 
-        if (playerBloomEvent.isPresent() && player.isBloomActive(playerBloomEvent.get())) {
-            playerTrainingEvent.setBloom(playerBloomEvent.get());
-            playerTrainingEvent.setPoints(PointsGenerator.generatePointsRise(currentDay, playerBloomEvent.get().getBloomSpeedIncreaser()));
+        if (playerBloomEvent.isPresent() && player.isBloomActive(playerBloomEvent.get()) || playerDeclineEvent.isPresent() && player.isDeclineActive(playerDeclineEvent.get())) {
+
+            whenBloomIsOn(playerTrainingEvent, playerBloomEvent, currentDay);
+            whenDeclineIsOn(playerTrainingEvent, playerDeclineEvent, currentDay);
+
         } else {
             playerTrainingEvent.setPoints(PointsGenerator.generatePointsRise(currentDay));
         }
 
         playerTrainingEventWriteRepository.save(playerTrainingEvent);
+    }
+
+    private void whenBloomIsOn(PlayerTrainingEvent playerTrainingEvent, Optional<PlayerBloomEvent> playerBloomEvent, int currentDay) {
+        playerTrainingEvent.setBloom(playerBloomEvent.get());
+        playerTrainingEvent.setPoints(PointsGenerator.generatePointsRise(currentDay, playerBloomEvent.get().getBloomSpeedIncreaser()));
+
+    }
+
+    private void whenDeclineIsOn(PlayerTrainingEvent playerTrainingEvent, Optional<PlayerDeclineEvent> playerDeclineEvent, int currentDay) {
+        playerTrainingEvent.setDecline(playerDeclineEvent.get());
+        playerTrainingEvent.setPoints(PointsGenerator.generatePointsRise(currentDay, playerDeclineEvent.get().getDeclineSpeed()));
     }
 
     private void checkPointsMax(PlayerId playerId) {
