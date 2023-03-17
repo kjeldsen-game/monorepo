@@ -12,6 +12,8 @@ spring:
       username: ${DB_USERNAME}
       password: ${DB_PASSWORD}
       database: ${DB_DATABASE}
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
 
 player:
   persistence:

@@ -14,6 +14,10 @@ spring:
       password: root
       database: admin
       auto-index-creation: true
+  kafka:
+    bootstrap-servers: http://localhost:9092
+    linger-ms: 10
+    group-id: player-service
 
 springdoc:
   version: "@springdoc.version@"
@@ -22,6 +26,10 @@ springdoc:
   swagger-ui:
     use-root-path: true
   show-actuator: true
+
+kafka:
+  topics:
+    auth-signup: AuthSignup
 
 player:
   persistence:
