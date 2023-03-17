@@ -5,6 +5,8 @@ import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.EventId;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingEventWriteRepository;
 import com.kjeldsen.player.engine.PointsGenerator;
 import org.assertj.core.api.Assertions;
@@ -25,8 +27,14 @@ import static org.mockito.Mockito.verify;
 class GenerateSingleTrainingUseCaseTest {
 
     final private PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository = Mockito.mock(PlayerTrainingEventWriteRepository.class);
-    private PlayerReadRepository playerReadRepository;
-    final private GenerateSingleTrainingUseCase generateSingleTrainingUseCase = new GenerateSingleTrainingUseCase(playerTrainingEventWriteRepository, playerReadRepository);
+    final private PlayerReadRepository playerReadRepository = Mockito.mock(PlayerReadRepository.class);
+    final private PlayerTrainingBloomEventReadRepository playerTrainingBloomEventReadRepository = Mockito.mock(
+        PlayerTrainingBloomEventReadRepository.class);
+    final private PlayerTrainingDeclineEventReadRepository playerTrainingDeclineEventReadRepository = Mockito.mock(
+        PlayerTrainingDeclineEventReadRepository.class);
+
+    final private GenerateSingleTrainingUseCase generateSingleTrainingUseCase = new GenerateSingleTrainingUseCase(playerTrainingEventWriteRepository,
+        playerReadRepository, playerTrainingBloomEventReadRepository, playerTrainingDeclineEventReadRepository);
 
     @Test
     @DisplayName("create a event where generate a training")
@@ -88,7 +96,8 @@ class GenerateSingleTrainingUseCaseTest {
         List<PlayerSkill> skills = List.of();
 
         // Act & Asserts
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> generateSingleTrainingUseCase.validateSkills(skills)).isInstanceOf(IllegalArgumentException.class).hasMessage("Skills cannot be null or empty");
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> generateSingleTrainingUseCase.validateSkills(skills)).isInstanceOf(
+            IllegalArgumentException.class).hasMessage("Skills cannot be null or empty");
     }
 
 
@@ -100,6 +109,7 @@ class GenerateSingleTrainingUseCaseTest {
         Integer days = 0;
 
         // Act & Asserts
-        Assertions.assertThatThrownBy(() -> generateSingleTrainingUseCase.validateDays(days)).isInstanceOf(IllegalArgumentException.class).hasMessage("Days must be between 1 and 1000");
+        Assertions.assertThatThrownBy(() -> generateSingleTrainingUseCase.validateDays(days)).isInstanceOf(IllegalArgumentException.class).hasMessage(
+            "Days must be between 1 and 1000");
     }
 }

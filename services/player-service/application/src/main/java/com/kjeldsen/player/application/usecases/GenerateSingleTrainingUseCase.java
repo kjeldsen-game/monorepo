@@ -33,10 +33,10 @@ public class GenerateSingleTrainingUseCase {
     private static final Integer MAX_DAY = 1000;
     private static final Range<Integer> RANGE_OF_DAYS = Range.between(MIN_DAY, MAX_DAY);
 
-    private final PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository;
-    private final PlayerReadRepository playerReadRepository;
-    private final PlayerTrainingBloomEventReadRepository playerTrainingBloomEventReadRepository;
-    private final PlayerTrainingDeclineEventReadRepository playerTrainingDeclineEventReadRepository;
+    private PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository;
+    private PlayerReadRepository playerReadRepository;
+    private PlayerTrainingBloomEventReadRepository playerTrainingBloomEventReadRepository;
+    private PlayerTrainingDeclineEventReadRepository playerTrainingDeclineEventReadRepository;
 
     public void generate(PlayerId playerId, List<PlayerSkill> skills, Integer days) {
         log.info("Generating training");
@@ -62,7 +62,8 @@ public class GenerateSingleTrainingUseCase {
             .skill(playerSkill)
             .build();
 
-        if (playerBloomEvent.isPresent() && player.isBloomActive(playerBloomEvent.get()) || playerDeclineEvent.isPresent() && player.isDeclineActive(playerDeclineEvent.get())) {
+        if (playerBloomEvent.isPresent() && player.isBloomActive(playerBloomEvent.get()) || playerDeclineEvent.isPresent() && player.isDeclineActive(
+            playerDeclineEvent.get())) {
 
             whenBloomIsOn(playerTrainingEvent, playerBloomEvent, currentDay);
             whenDeclineIsOn(playerTrainingEvent, playerDeclineEvent, currentDay);

@@ -173,6 +173,23 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
+  /training-bloom:
+    post:
+      summary: Register a new bloom phase
+      operationId: registerBloomPhase
+      tags:
+        - training
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/RegisterBloomPhaseRequest"
+      responses:
+        "201":
+          description: Bloom phase was registered
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
 components:
 
   requestBodies:
@@ -204,6 +221,13 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/RegisterTrainingRequest"
+
+    RegisterBloomPhaseRequest:
+      description: Register a bloom phase request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RegisterBloomPhaseRequest"
 
   responses:
 
@@ -364,6 +388,31 @@ components:
           example: [ PASSING, SCORE ]
           items:
             $ref: "#/components/schemas/PlayerSkill"
+
+    RegisterBloomPhaseRequest:
+      type: object
+      properties:
+        playerId:
+          type: string
+          example: player1
+        yearsOn:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 10
+          example: 3
+        bloomStartAge:
+          type: integer
+          format: int32
+          minimum: 15
+          maximum: 30
+          example: 18
+        bloomIncreasingSpeed:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 1000
+          example: 350
 
     Error:
       type: "object"
