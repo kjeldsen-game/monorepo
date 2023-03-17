@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+
+  ################
+  ## Localstack ##
+  ################
+
+  localstack:
+    container_name: localstack
+    image: localstack/localstack
+    ports:
+      - 4566:4566
+    environment:
+      - DEBUG=${DEBUG-}
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DEBUG=1
+      - AWS_DEFAULT_REGION=eu-west-1
+      - SERVICES=ses
+    volumes:
+      - localstackdata:/tmp/localstack
+
+volumes:
+  localstackdata:

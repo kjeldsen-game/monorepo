@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+
+  notifications-service:
+    # image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/notifications-service:latest
+    build:
+      context: ../services/notifications-service
+      dockerfile: ./Dockerfile
+    container_name: notifications-service
+    env_file:
+      - ./config/notifications-service.env

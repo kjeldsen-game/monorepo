@@ -1,8 +1,8 @@
 package com.kjeldsen.match.domain.type;
 
-public class ModifierWrapper {
+public class ModifierWrapper<T extends Modifier> {
 
-    private MatchModifier matchModifier;
+    private T modifier;
     private String modifierName;
     private String opriginalValuei;
     private String finalValue;

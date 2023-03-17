@@ -1,25 +1,18 @@
-use kafka::consumer::{Consumer, FetchOffset, GroupOffsetStorage};
+use dotenv::dotenv;
+use std::fmt::Error;
 
-fn main() {
+mod kafka;
+mod ses;
 
-    let mut consumer =
-       Consumer::from_hosts(vec!("localhost:9092".to_owned()))
-        .with_topic_partitions("my-topic".to_owned(), &[0, 1])
-        .with_fallback_offset(FetchOffset::Earliest)
-        .with_group("my-group".to_owned())
-        .with_offset_storage(GroupOffsetStorage::Kafka)
-        .create()
-        .unwrap();
+#[tokio::main]
+async fn main() -> Result<(), Error> {
+    println!("Started Notifications Service");
 
-    loop {
-        for ms in consumer.poll().unwrap().iter() {
-            for m in ms.messages() {
-                println!("Ok message {:?}", m);
-            }
-            consumer.consume_messageset(ms);
-        }
-        consumer.commit_consumed().unwrap();
-    }  
+    dotenv().ok(); // Load environment variables
+    println!("Loaded environment variables");
 
+    ses::template_processor::upload_templates().await;
+    kafka::consumers::init().await;
+
+    Ok(())
 }
-

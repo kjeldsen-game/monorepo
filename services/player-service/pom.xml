@@ -10,6 +10,7 @@
         <module>application</module>
         <module>adapter-persistence</module>
         <module>engine</module>
+        <module>adapter-kafka</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -127,6 +128,11 @@
             <dependency>
                 <groupId>com.kjeldsen</groupId>
                 <artifactId>domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>adapter-kafka</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

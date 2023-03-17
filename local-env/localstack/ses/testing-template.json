@@ -1,0 +1,7 @@
+{
+    "Template": {
+        "TemplateName": "TestingTemplate",
+        "SubjectPart": "Subject of the email",
+        "HtmlPart": "<p>html</p><p>{{var}}</p>"
+    }
+}

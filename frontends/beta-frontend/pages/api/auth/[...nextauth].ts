@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { AUTH_ENDPOINT, AUTH_CLIENT_ID, AUTH_CLIENT_SECRET } from '@/config/config'
+import { API_GATEWAY_ENDPOINT, AUTH_CLIENT_ID, AUTH_CLIENT_SECRET } from '@/config'
+import factory from '@/libs/fetcher'
 
 export default NextAuth({
   providers: [
@@ -23,18 +24,18 @@ export default NextAuth({
           client_secret: AUTH_CLIENT_SECRET,
         })
 
-        const res = await fetch(`${AUTH_ENDPOINT}/oauth/token`, {
+        const fetcher = factory()
+        const res = await fetcher('/auth-service/oauth/token', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: payload,
+          data: payload.toString(),
         })
 
-        const data = await res.json()
         // Returning token to set in session
         return {
-          token: data,
+          token: res,
         }
       },
     }),

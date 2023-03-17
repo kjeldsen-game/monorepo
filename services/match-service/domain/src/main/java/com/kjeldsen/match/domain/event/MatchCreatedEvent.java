@@ -2,6 +2,8 @@ package com.kjeldsen.match.domain.event;
 
 import com.kjeldsen.match.domain.id.MatchId;
 import com.kjeldsen.match.domain.id.TeamId;
+import com.kjeldsen.match.domain.type.MatchModifier;
+import com.kjeldsen.match.domain.type.ModifierWrapper;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
@@ -13,5 +15,6 @@ public class MatchCreatedEvent extends Event {
 
     private MatchId matchId;
     private List<TeamId> teamIds;
+    private List<ModifierWrapper<MatchModifier>> modifiers;
 
 }

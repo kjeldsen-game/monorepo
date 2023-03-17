@@ -22,6 +22,9 @@ https://git-scm.com/download/win
 > **IMPORTANT**  We installed git bash too.  
 ## Docker
 https://www.docker.com/
+## Mermaid
+> https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid
+
 
 - For every installation, we need to follow the instructions in ich site.
 When we have everything, we just have to follow the README on local-env. 
