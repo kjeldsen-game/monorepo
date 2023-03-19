@@ -6,8 +6,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { NextPageWithLayout } from '@/pages/_app'
 import { CenterContainer } from '@/shared/layout'
-import useSWR from 'swr'
 import factory from '@/libs/fetcher'
+import useSWR from 'swr'
 
 interface SignInFormValues {
   username: string
@@ -19,23 +19,6 @@ const SignInPage: NextPageWithLayout = () => {
     mode: 'onBlur',
     reValidateMode: 'onChange',
   })
-
-  const fetcher = factory()
-  const { mutate } = useSWR('/auth-service/oauth/token', fetcher)
-
-  const onSubmit = async (data: SignInFormValues) => {
-    try {
-      await signIn('credentials', {
-        redirect: false,
-        username: data.username,
-        password: data.password,
-        callbackUrl: '/',
-      })
-      mutate() // Update the session using SWR after logging in
-    } catch (error) {
-      console.error(error)
-    }
-  }
 
   return (
     <>
@@ -53,7 +36,14 @@ const SignInPage: NextPageWithLayout = () => {
               justifyContent: 'center',
               rowGap: '1rem',
             }}
-            onSubmit={handleSubmit(onSubmit)}>
+            onSubmit={handleSubmit(async (data) => {
+              await signIn('credentials', {
+                redirect: true,
+                username: data.username,
+                password: data.password,
+                callbackUrl: '/',
+              })
+            })}>
             <Controller
               name="username"
               control={control}
