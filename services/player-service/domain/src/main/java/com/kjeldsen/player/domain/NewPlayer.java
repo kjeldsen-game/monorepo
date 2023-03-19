@@ -9,4 +9,6 @@ public class NewPlayer {
     private PlayerAge age;
     private PlayerPosition position;
     private int points;
+
+    private TeamId teamId;
 }

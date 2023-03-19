@@ -50,6 +50,7 @@
         <spring-data-commons.version>2.7.3</spring-data-commons.version>
         <spring-boot-starter-tomcat.version>2.7.4</spring-boot-starter-tomcat.version>
         <security-lib.version>0.0.1-SNAPSHOT</security-lib.version>
+        <event-lib.version>0.0.1-SNAPSHOT</event-lib.version>
         <spring-kafka.version>2.9.6</spring-kafka.version>
     </properties>
     <build>
@@ -74,6 +75,11 @@
             <groupId>com.kjeldsen</groupId>
             <artifactId>security-lib</artifactId>
             <version>${security-lib.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>event-lib</artifactId>
+            <version>${event-lib.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

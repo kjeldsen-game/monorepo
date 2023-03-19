@@ -1,10 +1,10 @@
 package com.kjeldsen.player.application.usecases;
 
+import com.kjeldsen.events.EventId;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerActualSkills;
 import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.events.EventId;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventReadRepository;
@@ -26,7 +26,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class GenerateTrainingUseCaseTest {
 
@@ -57,7 +58,7 @@ class GenerateTrainingUseCaseTest {
         try (
             MockedStatic<EventId> eventIdMockedStatic = Mockito.mockStatic(EventId.class);
             MockedStatic<Instant> instantMockedStatic = Mockito.mockStatic(Instant.class);
-            MockedStatic<PointsGenerator> pointsGeneratorMockedStatic = Mockito.mockStatic(PointsGenerator.class);
+            MockedStatic<PointsGenerator> pointsGeneratorMockedStatic = Mockito.mockStatic(PointsGenerator.class)
         ) {
             eventIdMockedStatic.when(EventId::generate).thenReturn(eventId1).thenReturn(eventId2);
             instantMockedStatic.when(Instant::now).thenReturn(now1).thenReturn(now2);

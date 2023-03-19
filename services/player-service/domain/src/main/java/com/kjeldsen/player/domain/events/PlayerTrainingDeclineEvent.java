@@ -1,9 +1,9 @@
 package com.kjeldsen.player.domain.events;
 
+import com.kjeldsen.events.Event;
 import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.Range;
@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @SuperBuilder
-@NoArgsConstructor
 @Document(collection = "PlayerTrainingDeclineEvents")
 @TypeAlias("PlayerTrainingDeclineEvent")
 public class PlayerTrainingDeclineEvent extends Event {

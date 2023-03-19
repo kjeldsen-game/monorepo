@@ -2,7 +2,11 @@ package com.kjeldsen.player.rest.delegate;
 
 import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
-import com.kjeldsen.player.domain.*;
+import com.kjeldsen.player.domain.NewPlayer;
+import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.PlayerAge;
+import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.domain.TeamId;
 import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.rest.api.PlayerApiDelegate;
@@ -31,6 +35,7 @@ public class PlayersDelegate implements PlayerApiDelegate {
             .age(PlayerAge.of(createPlayerRequest.getAge()))
             .position(PlayerPosition.valueOf(createPlayerRequest.getPosition().name()))
             .points(createPlayerRequest.getPoints())
+            .teamId(TeamId.of("NOTEAM"))
             .build();
         createPlayerUseCase.create(newPlayer);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -38,7 +43,7 @@ public class PlayersDelegate implements PlayerApiDelegate {
 
     @Override
     public ResponseEntity<List<PlayerResponse>> generatePlayer(GeneratePlayersRequest generatePlayersRequest) {
-        List<Player> players = generatePlayersUseCase.generate(generatePlayersRequest.getNumberOfPlayers());
+        List<Player> players = generatePlayersUseCase.generate(generatePlayersRequest.getNumberOfPlayers(), TeamId.of("NOTEAM"));
         List<PlayerResponse> response = players.stream().map(PlayerMapper.INSTANCE::map).toList();
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -54,12 +59,4 @@ public class PlayersDelegate implements PlayerApiDelegate {
         List<PlayerResponse> response = players.stream().map(PlayerMapper.INSTANCE::map).toList();
         return ResponseEntity.ok(response);
     }
-
-    @Override
-    public ResponseEntity<PlayerResponse> getPlayerById(String playerId) {
-        Player player = playerReadRepository.findOneById(PlayerId.of(playerId))
-            .orElseThrow(() -> new RuntimeException("Player not found"));
-        return ResponseEntity.ok(PlayerMapper.INSTANCE.map(player));
-    }
-
 }

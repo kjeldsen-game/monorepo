@@ -1,6 +1,6 @@
 package com.kjeldsen.player.persistence.mongo.repositories;
 
-import com.kjeldsen.player.domain.events.EventId;
+import com.kjeldsen.events.EventId;
 import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

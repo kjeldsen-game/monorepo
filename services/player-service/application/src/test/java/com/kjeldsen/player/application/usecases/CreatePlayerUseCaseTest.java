@@ -1,6 +1,11 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.player.domain.*;
+import com.kjeldsen.player.domain.NewPlayer;
+import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.PlayerAge;
+import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.domain.PlayerPositionTendency;
+import com.kjeldsen.player.domain.TeamId;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -10,6 +15,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class CreatePlayerUseCaseTest {
 
@@ -22,24 +29,28 @@ class CreatePlayerUseCaseTest {
     @Test
     @DisplayName("create a player with the given age, position and total points distributed in the actual skills")
     void create_a_player_with_the_given_age_position_and_total_points_distributed_in_the_actual_skills() {
+        TeamId teamId = TeamId.of("teamId");
         NewPlayer newPlayer = NewPlayer.builder()
             .age(PlayerAge.of(20))
             .position(PlayerPosition.MIDDLE)
             .points(200)
+            .teamId(teamId)
             .build();
-        Mockito.when(mockedPlayerPositionTendencyReadRepository.get(Mockito.eq(PlayerPosition.MIDDLE)))
+        when(mockedPlayerPositionTendencyReadRepository.get(Mockito.eq(PlayerPosition.MIDDLE)))
             .thenReturn(PlayerPositionTendency.DEFAULT_MIDDLE_TENDENCIES);
 
         createPlayerUseCase.create(newPlayer);
 
         ArgumentCaptor<Player> argumentCaptor = ArgumentCaptor.forClass(Player.class);
-        Mockito.verify(mockedPlayerWriteRepository, Mockito.times(1)).save(argumentCaptor.capture());
+        verify(mockedPlayerWriteRepository, Mockito.times(1))
+            .save(argumentCaptor.capture());
 
         Player playerToSave = argumentCaptor.getValue();
         assertThat(playerToSave)
             .matches(player -> player.getAge().equals(PlayerAge.of(20))
                 && player.getPosition().equals(PlayerPosition.MIDDLE)
                 && StringUtils.isNotBlank(player.getName().value())
+                && player.getTeamId().equals(teamId)
                 && player.getActualSkills().getTotalPoints() == 200);
     }
 }

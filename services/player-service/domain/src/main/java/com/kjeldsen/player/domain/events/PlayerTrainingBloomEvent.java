@@ -1,9 +1,8 @@
 package com.kjeldsen.player.domain.events;
 
+import com.kjeldsen.events.Event;
 import com.kjeldsen.player.domain.PlayerId;
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.Range;
@@ -13,7 +12,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @SuperBuilder
-@NoArgsConstructor
 @Document(collection = "PlayerTrainingBloomEvents")
 @TypeAlias("PlayerTrainingBloomEvent")
 public class PlayerTrainingBloomEvent extends Event {

@@ -1,9 +1,9 @@
 package com.kjeldsen.player.application.usecases;
 
+import com.kjeldsen.events.EventId;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.events.EventId;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
@@ -12,10 +12,7 @@ import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.engine.PointsGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.Range;
 import org.springframework.stereotype.Component;
-
-import java.util.stream.IntStream;
 
 import static com.kjeldsen.player.engine.PointsGenerator.generateDecreasePoints;
 
@@ -35,14 +32,14 @@ public class GenerateSingleDeclineTrainingUseCase {
 
         Player player = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
 
-     return generateAndStoreEvent(player, skill, currentDay, declineSpeed);
+        return generateAndStoreEvent(player, skill, currentDay, declineSpeed);
     }
 
     private PlayerTrainingDeclineEvent generateAndStoreEvent(Player player, PlayerSkill playerSkill, Integer currentDay, Integer declineSpeed) {
 
         PlayerTrainingDeclineEvent playerTrainingDeclineEvent = PlayerTrainingDeclineEvent.builder()
-            .eventId(EventId.generate())
-            .eventDate(InstantProvider.now())
+            .id(EventId.generate())
+            .occurredAt(InstantProvider.now())
             .playerId(player.getId())
             .skill(playerSkill)
             .currentDay(currentDay)
