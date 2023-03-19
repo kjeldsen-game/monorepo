@@ -2,9 +2,7 @@ package com.kjeldsen.player.rest.mapper;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerActualSkills;
-import com.kjeldsen.player.domain.PlayerAge;
 import com.kjeldsen.player.domain.PlayerId;
-import com.kjeldsen.player.domain.PlayerName;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.rest.model.PlayerResponse;
 import org.mapstruct.Mapper;
@@ -18,14 +16,14 @@ import java.util.stream.Collectors;
 @Mapper
 public interface PlayerMapper {
 
-    PlayerMapper INSTANCE = Mappers.getMapper( PlayerMapper.class );
+    PlayerMapper INSTANCE = Mappers.getMapper(PlayerMapper.class);
 
     @Mapping(target = "age", source = "age.value")
     @Mapping(target = "name", expression = "java(mapName(player))")
     PlayerResponse map(Player player);
 
     default String map(PlayerId playerId) {
-        return playerId.toString();
+        return playerId.value();
     }
 
     default String mapName(Player player) {

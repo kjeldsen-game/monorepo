@@ -6,6 +6,7 @@ import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
+import com.kjeldsen.player.domain.TeamId;
 import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
@@ -37,7 +38,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -81,7 +81,7 @@ class PlayerApiTest extends AbstractIntegrationTest {
     }
 
     @Nested
-    @DisplayName("HTTP POST to /players should")
+    @DisplayName("HTTP POST to /player should")
     class HttpPostToPlayerShould {
         @Test
         @DisplayName("return 201 when a valid request is sent")
@@ -91,7 +91,7 @@ class PlayerApiTest extends AbstractIntegrationTest {
                 .position(PlayerPosition.FORWARD)
                 .points(700);
 
-            mockMvc.perform(post("/players")
+            mockMvc.perform(post("/player")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
@@ -105,7 +105,7 @@ class PlayerApiTest extends AbstractIntegrationTest {
     }
 
     @Nested
-    @DisplayName("HTTP POST to /players/generate should")
+    @DisplayName("HTTP POST to /player/generate should")
     class HttpPostToPlayerGenerateShould {
         @Test
         @DisplayName("return 201 and the list of created players when a valid request is sent")
@@ -113,7 +113,7 @@ class PlayerApiTest extends AbstractIntegrationTest {
             GeneratePlayersRequest request = new GeneratePlayersRequest()
                 .numberOfPlayers(10);
 
-            mockMvc.perform(post("/players/generate")
+            mockMvc.perform(post("/player/generate")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
@@ -126,14 +126,14 @@ class PlayerApiTest extends AbstractIntegrationTest {
     }
 
     @Nested
-    @DisplayName("HTTP GET to /players should")
+    @DisplayName("HTTP GET to /player should")
     class HttpGetToPlayerShould {
         @Test
         @DisplayName("return a page of players")
         void return_a_page_of_players() throws Exception {
             IntStream.range(0, 100)
                 .mapToObj(i -> PlayerPositionTendency.getDefault(com.kjeldsen.player.domain.PlayerPosition.random()))
-                .map(positionTendencies -> Player.generate(positionTendencies, 200))
+                .map(positionTendencies -> Player.generate(TeamId.generate(), positionTendencies, 200))
                 .forEach(player -> playerWriteRepository.save(player));
 
             List<PlayerResponse> expected = playerReadRepository.find(findPlayersQuery(com.kjeldsen.player.domain.PlayerPosition.FORWARD))
@@ -152,7 +152,7 @@ class PlayerApiTest extends AbstractIntegrationTest {
                 .toList()
                 .subList(0, 10);
 
-            mockMvc.perform(get("/players")
+            mockMvc.perform(get("/player")
                     .queryParam("page", "0")
                     .queryParam("size", "10")
                     .queryParam("position", "FORWARD"))

@@ -25,14 +25,16 @@ public class Player {
     private PlayerAge age;
     private PlayerPosition position;
     private PlayerActualSkills actualSkills;
+    private TeamId teamId;
 
-    public static Player generate(PlayerPositionTendency positionTendencies, int totalPoints) {
+    public static Player generate(TeamId teamId, PlayerPositionTendency positionTendencies, int totalPoints) {
         return Player.builder()
             .id(PlayerId.generate())
             .name(PlayerName.generate())
             .age(PlayerAge.generate())
             .position(positionTendencies.getPosition())
             .actualSkills(PlayerActualSkills.generate(positionTendencies, totalPoints))
+            .teamId(teamId)
             .build();
     }
 

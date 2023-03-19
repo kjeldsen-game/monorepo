@@ -1,9 +1,9 @@
 package com.kjeldsen.player.application.usecases;
 
+import com.kjeldsen.events.EventId;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.events.EventId;
 import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
@@ -48,8 +48,8 @@ public class GenerateTrainingUseCase {
     private PlayerTrainingEvent generateAndStoreEvent(Player player, PlayerSkill playerSkill, Integer currentDay) {
 
         PlayerTrainingEvent playerTrainingEvent = PlayerTrainingEvent.builder()
-            .eventId(EventId.generate())
-            .eventDate(InstantProvider.now())
+            .id(EventId.generate())
+            .occurredAt(InstantProvider.now())
             .playerId(player.getId())
             .skill(playerSkill)
             .currentDay(currentDay)

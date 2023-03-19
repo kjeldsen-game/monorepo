@@ -2,6 +2,7 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.domain.TeamId;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +20,11 @@ public class GeneratePlayersUseCase {
     private final PlayerWriteRepository playerWriteRepository;
     private final PlayerPositionTendencyReadRepository playerPositionTendencyReadRepository;
 
-    public List<Player> generate(int numberOfPlayers) {
+    public List<Player> generate(int numberOfPlayers, TeamId teamId) {
         log.info("Generating {} players", numberOfPlayers);
         return IntStream.range(0, numberOfPlayers)
             .mapToObj(i -> playerPositionTendencyReadRepository.get(PlayerPosition.random()))
-            .map(positionTendencies -> Player.generate(positionTendencies, 200))
+            .map(positionTendencies -> Player.generate(teamId, positionTendencies, 200))
             .map(player -> {
                 Player generatedPlayer = playerWriteRepository.save(player);
                 log.info("Generated player {}", generatedPlayer);

@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PlayerMapperTest {
 
     @Test
-     void mapPlayerToPlayerResponse() {
+    void mapPlayerToPlayerResponse() {
 
         PlayerId playerId = PlayerId.generate();
         PlayerAge playerAge = PlayerAge.of(20);
@@ -39,7 +39,7 @@ class PlayerMapperTest {
 
         PlayerResponse playerResponse = PlayerMapper.INSTANCE.map(player);
 
-        assertEquals(playerId.toString(), playerResponse.getId());
+        assertEquals(playerId.value(), playerResponse.getId());
         assertEquals("10", playerResponse.getActualSkills().get("SCORE"));
         // TODO add remaining testing
     }

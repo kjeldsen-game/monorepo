@@ -1,7 +1,7 @@
 package com.kjeldsen.player.application.usecases;
 
+import com.kjeldsen.events.EventId;
 import com.kjeldsen.player.domain.PlayerId;
-import com.kjeldsen.player.domain.events.EventId;
 import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
@@ -26,8 +26,8 @@ public class GenerateBloomPhaseUseCase {
 
     private void generateAndStoreEventOfBloomPhase(int bloomYears, int bloomSpeed, int bloomStart, PlayerId playerId) {
         PlayerTrainingBloomEvent playerTrainingBloomEvent = PlayerTrainingBloomEvent.builder()
-            .eventId(EventId.generate())
-            .eventDate(InstantProvider.now())
+            .id(EventId.generate())
+            .occurredAt(InstantProvider.now())
             .playerId(playerId)
             .yearsOn(bloomYears)
             .bloomSpeed(bloomSpeed)
