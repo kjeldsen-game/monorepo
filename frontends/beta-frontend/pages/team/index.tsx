@@ -3,51 +3,14 @@ import Head from 'next/head'
 import { Box } from '@mui/material'
 import Grid from '@/shared/components/Grid/Grid'
 import { GridColDef } from '@mui/x-data-grid'
-import useSWR from 'swr'
 import { SampleTeam } from '@/data/SampleTeam'
-import { PlayerStats } from '@/data/SamplePlayer'
 import TeamDetails from '@/shared/components/TeamDetails'
 import PlayerTactics from '@/shared/components/PlayerTactics'
 import TeamTactics from '@/shared/components/TeamTactics'
-import fetcherFactory from '@/libs/fetcher'
-import { useSession } from 'next-auth/react'
+import { players, samplePlayer } from '@/data/SamplePlayer'
+import { sampleColumns, sampleRows } from '@/shared/components/Grid/PlayerGrid'
 
 const Team: NextPage = () => {
-  const payload = {
-    username: 'Carlos2',
-    password: '123456',
-    grant_type: 'password',
-    client_id: 'client-id',
-    client_secret: 'client-secret',
-  }
-  const { data: session } = useSession()
-  console.log(session)
-  const { data, isLoading } = useSWR<PlayerStats[]>('/players', fetcherFactory({ token: session?.user as unknown as string }))
-  const fetcher = fetcherFactory()
-  const { data: token } = useSWR<PlayerStats[]>('/oauth/token', (url) => fetcher(url, { data: payload, method: 'POST' }))
-  console.log(token)
-
-  const columns: GridColDef[] = [
-    {
-      field: 'name',
-      headerName: 'Name',
-      type: 'string',
-      sortable: true,
-    },
-    {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
-      sortable: true,
-    },
-    {
-      field: 'position',
-      headerName: 'Position',
-      type: 'string',
-      sortable: true,
-    },
-  ]
-
   return (
     <>
       <Head>
@@ -60,7 +23,7 @@ const Team: NextPage = () => {
           <PlayerTactics />
           <TeamTactics />
         </Box>
-        {isLoading ? <span>Loading...</span> : <Grid rows={data || []} columns={columns} />}
+        <Grid rows={players} columns={sampleColumns} />
       </Box>
     </>
   )
