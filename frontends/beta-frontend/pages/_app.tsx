@@ -10,7 +10,6 @@ import { Session } from 'next-auth'
 import { createEmotionCache } from '@/libs/emotion/cache'
 import { theme } from '@/libs/material/theme'
 import { Layout } from '@/shared/layout'
-import { SWRConfig } from 'swr'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -47,7 +46,7 @@ export default function MyApp({
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <SWRConfig>{getLayout(<Component {...pageProps} />)}</SWRConfig>
+          {getLayout(<Component {...pageProps} />)}
         </ThemeProvider>
       </CacheProvider>
     </SessionProvider>

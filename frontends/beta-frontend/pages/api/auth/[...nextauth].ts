@@ -16,7 +16,7 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const payload = {
+        const payload = new URLSearchParams({
           username: credentials?.username || '',
           password: credentials?.password || '',
           grant_type: 'password',
@@ -37,18 +37,10 @@ export default NextAuth({
         return {
           token: res,
         }
-        const fetcher = fetcherFactory()
-        const token = await fetcher('/oauth/token', {
-          method: 'POST',
-          data: payload,
-        })
-        console.log('authentication success', token)
-        // Returning token to set in session
-        return { token }
       },
     }),
   ],
-  secret: JWT_SECRET,
+  secret: process.env.JWT_SECRET,
   pages: {
     signIn: '/signin',
   },
@@ -69,5 +61,5 @@ export default NextAuth({
     logo: '/logo.png', // Absolute URL to image
   },
   // Enable debug messages in the console if you are having problems
-  debug: NODE_ENV === 'development',
+  debug: process.env.NODE_ENV === 'development',
 })
