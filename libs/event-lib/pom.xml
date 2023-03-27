@@ -13,6 +13,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <lombok.version>1.18.24</lombok.version>
     </properties>
 
     <distributionManagement>
@@ -22,6 +23,15 @@
             <url>https://kjeldsen-040156513434.d.codeartifact.eu-west-1.amazonaws.com/maven/mvn-snapshots/</url>
         </repository>
     </distributionManagement>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <finalName>event-lib</finalName>
