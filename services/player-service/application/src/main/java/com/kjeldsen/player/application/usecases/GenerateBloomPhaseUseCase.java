@@ -1,7 +1,7 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.domain.PlayerId;
-import com.kjeldsen.player.domain.events.PlayerBloomEvent;
+import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventWriteRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +23,13 @@ public class GenerateBloomPhaseUseCase {
     }
 
     private void generateAndStoreEventOfBloomPhase(int bloomYears, int bloomSpeed, int bloomStart, PlayerId playerId) {
-        PlayerBloomEvent playerBloomEvent = PlayerBloomEvent.builder()
+        PlayerTrainingBloomEvent playerTrainingBloomEvent = PlayerTrainingBloomEvent.builder()
             .playerId(playerId)
             .yearsOn(bloomYears)
             .bloomSpeed(bloomSpeed)
             .bloomStartAge(bloomStart)
             .build();
-        playerTrainingBloomEventWriteRepository.save(playerBloomEvent);
+        playerTrainingBloomEventWriteRepository.save(playerTrainingBloomEvent);
     }
 
 }

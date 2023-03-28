@@ -156,12 +156,14 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-  /training:
+  /training/{playerId}:
     post:
       summary: Register a new training
       operationId: registerTraining
       tags:
         - training
+      parameters:
+        - $ref: '#/components/parameters/PlayerIdPathParameter'
       requestBody:
         content:
           application/json:
@@ -172,13 +174,31 @@ paths:
           description: Training was registered
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
+    get:
+      summary: Get historical training of a player
+      operationId: getHistoricalTraining
+      tags:
+        - training
+      parameters:
+        - $ref: '#/components/parameters/PlayerIdPathParameter'
+      responses:
+        "200":
+          description: Training historical returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlayerHistoricalTrainingResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
 
-  /training-bloom:
+  /training/{playerId}/bloom:
     post:
       summary: Register a new bloom phase
       operationId: registerBloomPhase
       tags:
         - training
+      parameters:
+        - $ref: '#/components/parameters/PlayerIdPathParameter'
       requestBody:
         content:
           application/json:
@@ -190,12 +210,14 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-  /training-decline:
+  /training/{playerId}/decline:
     post:
       summary: Register a new decline phase
       operationId: registerDeclinePhase
       tags:
         - training
+      parameters:
+        - $ref: '#/components/parameters/PlayerIdPathParameter'
       requestBody:
         content:
           application/json:
@@ -208,6 +230,15 @@ paths:
           $ref: "#/components/responses/DefaultErrorResponse"
 
 components:
+
+  parameters:
+    PlayerIdPathParameter:
+      name: playerId
+      in: path
+      description: Id of the player
+      required: true
+      schema:
+        type: string
 
   requestBodies:
 
@@ -268,6 +299,13 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/PlayerPositionTendencyResponse"
+
+    PlayerHistoricalTrainingResponse:
+      description: Player historical training response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PlayerHistoricalTrainingResponse"
 
     DefaultErrorResponse:
       description: Unexpected error
@@ -374,38 +412,23 @@ components:
                 maximum: 100
                 example: 50
 
+    PlayerHistoricalTrainingResponse:
+      type: object
+      properties:
+        playerId:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        trainings:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerTrainingResponse"
+
     PlayerTrainingResponse:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
-        age:
+        points:
           type: integer
           format: int32
-          minimum: 15
-          maximum: 33
-          example: 21
-        name:
-          type: string
-          example: John Doe
-        position:
-          $ref: "#/components/schemas/PlayerPosition"
-        actualSkills:
-          type: object
-          example: { "SCORE": 50 }
-          additionalProperties:
-            type: string
-            properties:
-              code:
-                $ref: "#/components/schemas/PlayerSkill"
-              text:
-                type: integer
-                format: int32
-                minimum: 0
-                maximum: 100
-                example: 50
 
     PlayerPositionTendencyResponse:
       type: object
@@ -431,9 +454,6 @@ components:
     RegisterTrainingRequest:
       type: object
       properties:
-        playerId:
-          type: string
-          example: player1
         days:
           type: integer
           format: int32
@@ -449,9 +469,6 @@ components:
     RegisterBloomPhaseRequest:
       type: object
       properties:
-        playerId:
-          type: string
-          example: player1
         yearsOn:
           type: integer
           format: int32
@@ -474,9 +491,6 @@ components:
     RegisterDeclinePhaseRequest:
       type: object
       properties:
-        playerId:
-          type: string
-          example: player1
         yearsOn:
           type: integer
           format: int32

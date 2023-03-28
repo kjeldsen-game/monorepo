@@ -1,15 +1,19 @@
 package com.kjeldsen.player.domain;
 
-import com.kjeldsen.player.domain.events.PlayerBloomEvent;
-import com.kjeldsen.player.domain.events.PlayerDeclineEvent;
+import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
+import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 import org.apache.commons.lang3.Range;
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Builder
 @ToString
+@Document(collection = "Players")
+@TypeAlias("Player")
 public class Player {
 
     public static Player generate(PlayerPositionTendency positionTendencies, int totalPoints) {
@@ -28,15 +32,15 @@ public class Player {
     private PlayerPosition position;
     private PlayerActualSkills actualSkills;
 
-    public boolean isBloomActive(PlayerBloomEvent playerBloomEvent) {
-        int initialRange = playerBloomEvent.getBloomStartAge();
-        int endRange = initialRange + playerBloomEvent.getYearsOn();
+    public boolean isBloomActive(PlayerTrainingBloomEvent playerTrainingBloomEvent) {
+        int initialRange = playerTrainingBloomEvent.getBloomStartAge();
+        int endRange = initialRange + playerTrainingBloomEvent.getYearsOn();
         return Range.between(initialRange, endRange).contains(age.value());
     }
 
-    public boolean isDeclineActive(PlayerDeclineEvent playerDeclineEvent) {
-        int initialRange = playerDeclineEvent.getDeclineStartAge();
-        int endRange = initialRange + playerDeclineEvent.getYearsOn();
+    public boolean isDeclineActive(PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
+        int initialRange = playerTrainingDeclineEvent.getDeclineStartAge();
+        int endRange = initialRange + playerTrainingDeclineEvent.getYearsOn();
         return Range.between(initialRange, endRange).contains(age.value());
     }
 

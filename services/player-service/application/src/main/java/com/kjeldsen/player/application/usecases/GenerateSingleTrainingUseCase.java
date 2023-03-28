@@ -4,8 +4,8 @@ import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.EventId;
-import com.kjeldsen.player.domain.events.PlayerBloomEvent;
-import com.kjeldsen.player.domain.events.PlayerDeclineEvent;
+import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
+import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
@@ -61,12 +61,12 @@ public class GenerateSingleTrainingUseCase {
             .pointsBeforeTraining(player.getActualSkillPoints(playerSkill))
             .build();
 
-        Optional<PlayerBloomEvent> playerBloomEvent = playerTrainingBloomEventReadRepository.findOneByPlayerId(player.getId());
+        Optional<PlayerTrainingBloomEvent> playerBloomEvent = playerTrainingBloomEventReadRepository.findOneByPlayerId(player.getId());
 
         playerBloomEvent
             .ifPresent(bloomEvent -> handleBloomEvent(player, playerTrainingEvent, bloomEvent));
 
-        Optional<PlayerDeclineEvent> playerDeclineEvent = playerTrainingDeclineEventReadRepository.findOneByPlayerId(player.getId());
+        Optional<PlayerTrainingDeclineEvent> playerDeclineEvent = playerTrainingDeclineEventReadRepository.findOneByPlayerId(player.getId());
 
         playerDeclineEvent
             .ifPresent(declineEvent -> handleDeclineEvent(player, playerTrainingEvent, declineEvent));
@@ -82,23 +82,25 @@ public class GenerateSingleTrainingUseCase {
 
     }
 
-    private void handleBloomEvent(Player player, PlayerTrainingEvent playerTrainingEvent, PlayerBloomEvent playerBloomEvent) {
-        if (!player.isBloomActive(playerBloomEvent)) {
+    private void handleBloomEvent(Player player, PlayerTrainingEvent playerTrainingEvent, PlayerTrainingBloomEvent playerTrainingBloomEvent) {
+        if (!player.isBloomActive(playerTrainingBloomEvent)) {
             return;
         }
-        Integer points = PointsGenerator.generatePoints(playerBloomEvent.getBloomSpeed(), PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay()));
+        Integer points = PointsGenerator.generatePoints(playerTrainingBloomEvent.getBloomSpeed(),
+            PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay()));
         player.addSkillPoints(playerTrainingEvent.getSkill(), points);
-        playerTrainingEvent.setBloom(playerBloomEvent);
+        playerTrainingEvent.setBloom(playerTrainingBloomEvent);
         playerTrainingEvent.setPoints(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
     }
 
-    private void handleDeclineEvent(Player player, PlayerTrainingEvent playerTrainingEvent, PlayerDeclineEvent playerDeclineEvent) {
-        if (!player.isDeclineActive(playerDeclineEvent)) {
+    private void handleDeclineEvent(Player player, PlayerTrainingEvent playerTrainingEvent, PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
+        if (!player.isDeclineActive(playerTrainingDeclineEvent)) {
             return;
         }
-        Integer points = PointsGenerator.generatePoints(playerDeclineEvent.getDeclineSpeed(), PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay()));
+        Integer points = PointsGenerator.generatePoints(playerTrainingDeclineEvent.getDeclineSpeed(),
+            PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay()));
         player.subtractSkillPoints(playerTrainingEvent.getSkill(), points);
-        playerTrainingEvent.setDecline(playerDeclineEvent);
+        playerTrainingEvent.setDecline(playerTrainingDeclineEvent);
         playerTrainingEvent.setPoints(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
     }
 

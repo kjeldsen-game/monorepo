@@ -1,13 +1,17 @@
 package com.kjeldsen.player.domain.events;
 
 import com.kjeldsen.player.domain.PlayerId;
-import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.Range;
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Builder
+@SuperBuilder
 @Data
-public class PlayerDeclineEvent {
+@Document(collection = "PlayerTrainingDeclineEvents")
+@TypeAlias("PlayerTrainingDeclineEvent")
+public class PlayerTrainingDeclineEvent extends Event {
 
     private PlayerId playerId;
     private int yearsOn;
@@ -26,7 +30,7 @@ public class PlayerDeclineEvent {
     private static final Integer MAX_SPEED = 100;
     private static final Range<Integer> RANGE_OF_SPEED = Range.between(MIN_SPEED, MAX_SPEED);
 
-    public static PlayerDeclineEvent of(int YearsOn, int declineStartAge, int declineSpeed, PlayerId playerId) {
+    public static PlayerTrainingDeclineEvent of(int YearsOn, int declineStartAge, int declineSpeed, PlayerId playerId) {
 
         if (!RANGE_OF_DECLINE_PHASE_ON.contains(YearsOn)) {
             throw new IllegalArgumentException("Decline years on must be between 0 and 10");
@@ -40,7 +44,7 @@ public class PlayerDeclineEvent {
             throw new IllegalArgumentException("Decline speed must be between 0-1000");
         }
 
-        return PlayerDeclineEvent.builder()
+        return PlayerTrainingDeclineEvent.builder()
             .playerId(playerId)
             .yearsOn(YearsOn)
             .declineStartAge(declineStartAge)

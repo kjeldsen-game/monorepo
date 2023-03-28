@@ -1,22 +1,19 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
-import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
-import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventWriteRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerTrainingDeclineEventMongoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 @RequiredArgsConstructor
-public class PlayerTrainingDeclineEventReadRepositoryMongoAdapter implements PlayerTrainingDeclineEventReadRepository {
+public class PlayerTrainingDeclineEventWriteRepositoryMongoAdapter implements PlayerTrainingDeclineEventWriteRepository {
 
     private final PlayerTrainingDeclineEventMongoRepository playerTrainingDeclineEventMongoRepository;
 
     @Override
-    public Optional<PlayerTrainingDeclineEvent> findOneByPlayerId(PlayerId id) {
-        return playerTrainingDeclineEventMongoRepository.findById(id.value());
+    public PlayerTrainingDeclineEvent save(PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
+        return playerTrainingDeclineEventMongoRepository.save(playerTrainingDeclineEvent);
     }
 }

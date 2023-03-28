@@ -5,7 +5,6 @@ import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.persistence.common.AbstractMongoDbTest;
-import com.kjeldsen.player.persistence.mongo.documents.PlayerPositionTendencyDocument;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerPositionTendencyMongoRepository;
 import lombok.val;
 import org.junit.jupiter.api.BeforeEach;

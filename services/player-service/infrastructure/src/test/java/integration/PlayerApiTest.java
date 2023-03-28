@@ -6,11 +6,14 @@ import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
-import com.kjeldsen.player.persistence.adapters.cache.PlayerReadRepositoryCacheAdapter;
-import com.kjeldsen.player.persistence.adapters.cache.PlayerWriteRepositoryCacheAdapter;
+import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
+import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyReadRepositoryMongoAdapter;
 import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyWriteRepositoryMongoAdapter;
-import com.kjeldsen.player.persistence.cache.PlayerInMemoryCacheStore;
+import com.kjeldsen.player.persistence.adapters.mongo.PlayerReadRepositoryMongoAdapter;
+import com.kjeldsen.player.persistence.adapters.mongo.PlayerWriteRepositoryMongoAdapter;
+import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
 import com.kjeldsen.player.rest.api.PlayersApiController;
 import com.kjeldsen.player.rest.delegate.PlayersDelegate;
 import com.kjeldsen.player.rest.model.CreatePlayerRequest;
@@ -54,11 +57,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import({PlayersDelegate.class,
     CreatePlayerUseCase.class,
     GeneratePlayersUseCase.class,
-    PlayerWriteRepositoryCacheAdapter.class,
-    PlayerReadRepositoryCacheAdapter.class,
+    PlayerWriteRepositoryMongoAdapter.class,
+    PlayerReadRepositoryMongoAdapter.class,
     PlayerPositionTendencyReadRepositoryMongoAdapter.class,
-    PlayerPositionTendencyWriteRepositoryMongoAdapter.class,
-    PlayerInMemoryCacheStore.class})
+    PlayerPositionTendencyWriteRepositoryMongoAdapter.class})
 class PlayerApiTest extends AbstractIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
@@ -67,11 +69,15 @@ class PlayerApiTest extends AbstractIntegrationTest {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private PlayerInMemoryCacheStore playerStore;
+    private PlayerReadRepository playerReadRepository;
+    @Autowired
+    private PlayerWriteRepository playerWriteRepository;
+    @Autowired
+    private PlayerMongoRepository playerMongoRepository;
 
     @BeforeEach
     void setUp() {
-        playerStore.clear();
+        playerMongoRepository.deleteAll();
     }
 
     @Nested
@@ -90,7 +96,7 @@ class PlayerApiTest extends AbstractIntegrationTest {
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
 
-            var players = playerStore.getAll();
+            var players = playerReadRepository.find(findPlayersQuery(com.kjeldsen.player.domain.PlayerPosition.FORWARD));
 
             assertThat(players).hasSize(1);
             assertThat(players.get(0).getAge().value()).isEqualTo(16);
@@ -103,7 +109,7 @@ class PlayerApiTest extends AbstractIntegrationTest {
     class HttpPostToPlayerGenerateShould {
         @Test
         @DisplayName("return 201 and the list of created players when a valid request is sent")
-        public void return_201_and_the_list_of_created_players_when_a_valid_request_is_sent() throws Exception {
+        void return_201_and_the_list_of_created_players_when_a_valid_request_is_sent() throws Exception {
             GeneratePlayersRequest request = new GeneratePlayersRequest()
                 .numberOfPlayers(10);
 
@@ -113,9 +119,9 @@ class PlayerApiTest extends AbstractIntegrationTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.*", hasSize(10)));
 
-            var numbersOfPlayersCreated = playerStore.size();
+            var numbersOfPlayersCreated = playerReadRepository.find(findPlayersQuery(null));
 
-            assertThat(numbersOfPlayersCreated).isEqualTo(10);
+            assertThat(numbersOfPlayersCreated).hasSize(10);
         }
     }
 
@@ -124,13 +130,14 @@ class PlayerApiTest extends AbstractIntegrationTest {
     class HttpGetToPlayerShould {
         @Test
         @DisplayName("return a page of players")
-        public void return_a_page_of_players() throws Exception {
+        void return_a_page_of_players() throws Exception {
             IntStream.range(0, 100)
                 .mapToObj(i -> PlayerPositionTendency.getDefault(com.kjeldsen.player.domain.PlayerPosition.random()))
                 .map(positionTendencies -> Player.generate(positionTendencies, 200))
-                .forEach(player -> playerStore.put(player.getId().value(), player));
+                .forEach(player -> playerWriteRepository.save(player));
 
-            List<PlayerResponse> expected = playerStore.getAll().stream()
+            List<PlayerResponse> expected = playerReadRepository.find(findPlayersQuery(com.kjeldsen.player.domain.PlayerPosition.FORWARD))
+                .stream()
                 .sorted(Comparator.comparing(o -> o.getId().value()))
                 .filter(player -> player.getPosition().name().equals("FORWARD"))
                 .map(player ->
@@ -153,6 +160,14 @@ class PlayerApiTest extends AbstractIntegrationTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(expected)));
         }
+    }
+
+    private FindPlayersQuery findPlayersQuery(com.kjeldsen.player.domain.PlayerPosition position) {
+        return FindPlayersQuery.builder()
+            .page(0)
+            .size(10)
+            .position(position)
+            .build();
     }
 
 }

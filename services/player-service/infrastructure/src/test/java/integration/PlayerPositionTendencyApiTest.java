@@ -7,7 +7,6 @@ import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyReadRepositoryMongoAdapter;
 import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyWriteRepositoryMongoAdapter;
-import com.kjeldsen.player.persistence.mongo.documents.PlayerPositionTendencyDocument;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerPositionTendencyMongoRepository;
 import com.kjeldsen.player.rest.api.PlayerPositionTendenciesApiController;
 import com.kjeldsen.player.rest.delegate.PlayerPositionTendenciesDelegate;

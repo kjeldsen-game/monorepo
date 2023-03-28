@@ -1,7 +1,7 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
 import com.kjeldsen.player.domain.PlayerId;
-import com.kjeldsen.player.domain.events.PlayerBloomEvent;
+import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventReadRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerTrainingBloomEventMongoRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ public class PlayerTrainingBloomEventReadRepositoryMongoAdapter implements Playe
     private final PlayerTrainingBloomEventMongoRepository playerTrainingBloomEventMongoRepository;
 
     @Override
-    public Optional<PlayerBloomEvent> findOneByPlayerId(PlayerId id) {
+    public Optional<PlayerTrainingBloomEvent> findOneByPlayerId(PlayerId id) {
         return playerTrainingBloomEventMongoRepository.findById(id.value());
     }
 }

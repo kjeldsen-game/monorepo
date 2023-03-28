@@ -1,7 +1,7 @@
 package com.kjeldsen.player.domain.repositories;
 
-import com.kjeldsen.player.domain.events.PlayerDeclineEvent;
+import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 
 public interface PlayerTrainingDeclineEventWriteRepository {
-    PlayerDeclineEvent save(PlayerDeclineEvent playerDeclineEvent);
+    PlayerTrainingDeclineEvent save(PlayerTrainingDeclineEvent playerTrainingDeclineEvent);
 }

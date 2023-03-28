@@ -5,7 +5,6 @@ import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyWriteRepository;
 import com.kjeldsen.player.persistence.common.AbstractMongoDbTest;
-import com.kjeldsen.player.persistence.mongo.documents.PlayerPositionTendencyDocument;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerPositionTendencyMongoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -52,7 +51,7 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceTest extends Abstrac
 
             playerPositionTendencyWriteRepository.save(forwardTendencies);
 
-            Optional<PlayerPositionTendencyDocument> actual = playerPositionTendencyMongoRepository.findByPosition(PlayerPosition.FORWARD);
+            Optional<PlayerPositionTendency> actual = playerPositionTendencyMongoRepository.findByPosition(PlayerPosition.FORWARD);
 
             assertThat(actual.isPresent()).isTrue();
             assertThat(actual.get().getTendencies().get(PlayerSkill.SCORE)).isEqualTo(5);
@@ -61,7 +60,7 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceTest extends Abstrac
         @Test
         @DisplayName("update an existed player position tendency when there is existed one for provided position")
         public void update_an_existed_player_position_tendency_when_there_is_existed_one_for_provided_position() {
-            PlayerPositionTendencyDocument forwardTendencyDocument = PlayerPositionTendencyDocument.builder()
+            PlayerPositionTendency forwardTendencyDocument = PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
                 .tendencies(Map.of(PlayerSkill.SCORE, 5))
                 .build();
@@ -74,7 +73,7 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceTest extends Abstrac
 
             playerPositionTendencyWriteRepository.save(forwardTendencies);
 
-            Optional<PlayerPositionTendencyDocument> actual = playerPositionTendencyMongoRepository.findByPosition(PlayerPosition.FORWARD);
+            Optional<PlayerPositionTendency> actual = playerPositionTendencyMongoRepository.findByPosition(PlayerPosition.FORWARD);
 
             assertThat(actual.isPresent()).isTrue();
             assertThat(actual.get().getTendencies().get(PlayerSkill.SCORE)).isEqualTo(10);

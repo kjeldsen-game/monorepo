@@ -3,6 +3,8 @@ package com.kjeldsen.player.domain;
 import lombok.Builder;
 import lombok.Data;
 import org.apache.commons.lang3.RandomUtils;
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.stream.IntStream;
 
 @Builder
 @Data
+@Document(collection = "PlayerPositionTendencies")
+@TypeAlias("PlayerPositionTendency")
 public class PlayerPositionTendency {
     public static final PlayerPositionTendency DEFAULT_DEFENDER_TENDENCIES = PlayerPositionTendency.builder()
         .position(PlayerPosition.DEFENDER)
@@ -59,6 +63,7 @@ public class PlayerPositionTendency {
         };
     }
 
+    private String id;
     private PlayerPosition position;
     private Map<PlayerSkill, Integer> tendencies;
 
