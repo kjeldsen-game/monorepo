@@ -26,7 +26,7 @@ public class GenerateBloomPhaseUseCase {
         PlayerBloomEvent playerBloomEvent = PlayerBloomEvent.builder()
             .playerId(playerId)
             .yearsOn(bloomYears)
-            .bloomSpeedIncreaser(bloomSpeed)
+            .bloomSpeed(bloomSpeed)
             .bloomStartAge(bloomStart)
             .build();
         playerTrainingBloomEventWriteRepository.save(playerBloomEvent);

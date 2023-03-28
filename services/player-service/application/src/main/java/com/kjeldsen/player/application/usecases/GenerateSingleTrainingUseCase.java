@@ -33,10 +33,10 @@ public class GenerateSingleTrainingUseCase {
     private static final Integer MAX_DAY = 1000;
     private static final Range<Integer> RANGE_OF_DAYS = Range.between(MIN_DAY, MAX_DAY);
 
-    private PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository;
-    private PlayerReadRepository playerReadRepository;
-    private PlayerTrainingBloomEventReadRepository playerTrainingBloomEventReadRepository;
-    private PlayerTrainingDeclineEventReadRepository playerTrainingDeclineEventReadRepository;
+    private final PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository;
+    private final PlayerReadRepository playerReadRepository;
+    private final PlayerTrainingBloomEventReadRepository playerTrainingBloomEventReadRepository;
+    private final PlayerTrainingDeclineEventReadRepository playerTrainingDeclineEventReadRepository;
 
     public void generate(PlayerId playerId, List<PlayerSkill> skills, Integer days) {
         log.info("Generating training");
@@ -50,52 +50,56 @@ public class GenerateSingleTrainingUseCase {
             .forEach(currentDay -> skills.forEach(skill -> generateAndStoreEvent(player, skill, currentDay)));
     }
 
-    private void generateAndStoreEvent(Player player, PlayerSkill playerSkill, int currentDay) {
-
-        Optional<PlayerBloomEvent> playerBloomEvent = playerTrainingBloomEventReadRepository.findOneByPlayerId(player.getId());
-        Optional<PlayerDeclineEvent> playerDeclineEvent = playerTrainingDeclineEventReadRepository.findOneByPlayerId(player.getId());
+    private void generateAndStoreEvent(Player player, PlayerSkill playerSkill, Integer currentDay) {
 
         PlayerTrainingEvent playerTrainingEvent = PlayerTrainingEvent.builder()
             .eventId(EventId.generate())
             .eventDate(InstantProvider.now())
             .playerId(player.getId())
             .skill(playerSkill)
+            .currentDay(currentDay)
+            .pointsBeforeTraining(player.getActualSkillPoints(playerSkill))
             .build();
 
-        if (playerBloomEvent.isPresent() && player.isBloomActive(playerBloomEvent.get()) || playerDeclineEvent.isPresent() && player.isDeclineActive(
-            playerDeclineEvent.get())) {
+        Optional<PlayerBloomEvent> playerBloomEvent = playerTrainingBloomEventReadRepository.findOneByPlayerId(player.getId());
 
-            whenBloomIsOn(playerTrainingEvent, playerBloomEvent, currentDay);
-            whenDeclineIsOn(playerTrainingEvent, playerDeclineEvent, currentDay);
+        playerBloomEvent
+            .ifPresent(bloomEvent -> handleBloomEvent(player, playerTrainingEvent, bloomEvent));
 
-        } else {
-            playerTrainingEvent.setPoints(PointsGenerator.generatePointsRise(currentDay));
+        Optional<PlayerDeclineEvent> playerDeclineEvent = playerTrainingDeclineEventReadRepository.findOneByPlayerId(player.getId());
+
+        playerDeclineEvent
+            .ifPresent(declineEvent -> handleDeclineEvent(player, playerTrainingEvent, declineEvent));
+
+        if (playerBloomEvent.isEmpty() && playerDeclineEvent.isEmpty()) {
+            Integer points = PointsGenerator.generatePointsRise(currentDay);
+            player.addSkillPoints(playerSkill, points);
+            playerTrainingEvent.setPoints(points);
         }
 
+        playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
         playerTrainingEventWriteRepository.save(playerTrainingEvent);
-    }
-
-    private void whenBloomIsOn(PlayerTrainingEvent playerTrainingEvent, Optional<PlayerBloomEvent> playerBloomEvent, int currentDay) {
-        playerTrainingEvent.setBloom(playerBloomEvent.get());
-        playerTrainingEvent.setPoints(PointsGenerator.generatePointsRise(currentDay, playerBloomEvent.get().getBloomSpeedIncreaser()));
 
     }
 
-    private void whenDeclineIsOn(PlayerTrainingEvent playerTrainingEvent, Optional<PlayerDeclineEvent> playerDeclineEvent, int currentDay) {
-        playerTrainingEvent.setDecline(playerDeclineEvent.get());
-        playerTrainingEvent.setPoints(PointsGenerator.generatePointsRise(currentDay, playerDeclineEvent.get().getDeclineSpeed()));
+    private void handleBloomEvent(Player player, PlayerTrainingEvent playerTrainingEvent, PlayerBloomEvent playerBloomEvent) {
+        if (!player.isBloomActive(playerBloomEvent)) {
+            return;
+        }
+        Integer points = PointsGenerator.generatePoints(playerBloomEvent.getBloomSpeed(), PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay()));
+        player.addSkillPoints(playerTrainingEvent.getSkill(), points);
+        playerTrainingEvent.setBloom(playerBloomEvent);
+        playerTrainingEvent.setPoints(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
     }
 
-    private void checkPointsMax(PlayerId playerId) {
-        Player foundPlayer = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
-        int skillPoints = foundPlayer.getActualSkills().getSkillPoints(PlayerSkill.CO);
-
-        // get al repository CQRS JI
-        // leo desde mongo cuantos puntos de skill tiene el jugador y luego desde
-        // el evento comprobar que al sumarse los puntos no llegue al tope y si
-        // es así, que no este disponible a subir.
-        //
-
+    private void handleDeclineEvent(Player player, PlayerTrainingEvent playerTrainingEvent, PlayerDeclineEvent playerDeclineEvent) {
+        if (!player.isDeclineActive(playerDeclineEvent)) {
+            return;
+        }
+        Integer points = PointsGenerator.generatePoints(playerDeclineEvent.getDeclineSpeed(), PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay()));
+        player.subtractSkillPoints(playerTrainingEvent.getSkill(), points);
+        playerTrainingEvent.setDecline(playerDeclineEvent);
+        playerTrainingEvent.setPoints(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
     }
 
     public void validateDays(Integer days) {

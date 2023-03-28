@@ -40,4 +40,17 @@ public class Player {
         return Range.between(initialRange, endRange).contains(age.value());
     }
 
+    public Integer getActualSkillPoints(PlayerSkill skill) {
+        return actualSkills.getSkillPoints(skill);
+    }
+
+    public void addSkillPoints(PlayerSkill skill, Integer points) {
+        Integer actual = getActualSkillPoints(skill);
+        actualSkills.addSkillPoints(skill, actual + points);
+    }
+
+    public void subtractSkillPoints(PlayerSkill skill, Integer points) {
+        Integer actual = getActualSkillPoints(skill);
+        actualSkills.addSkillPoints(skill, actual - points);
+    }
 }

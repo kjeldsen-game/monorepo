@@ -190,6 +190,23 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
+  /training-decline:
+    post:
+      summary: Register a new decline phase
+      operationId: registerDeclinePhase
+      tags:
+        - training
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/RegisterDeclinePhaseRequest"
+      responses:
+        "201":
+          description: Decline phase was registered
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
 components:
 
   requestBodies:
@@ -228,6 +245,13 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/RegisterBloomPhaseRequest"
+
+    RegisterDeclinePhaseRequest:
+      description: Register a decline phase request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RegisterDeclinePhaseRequest"
 
   responses:
 
@@ -350,6 +374,39 @@ components:
                 maximum: 100
                 example: 50
 
+    PlayerTrainingResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        age:
+          type: integer
+          format: int32
+          minimum: 15
+          maximum: 33
+          example: 21
+        name:
+          type: string
+          example: John Doe
+        position:
+          $ref: "#/components/schemas/PlayerPosition"
+        actualSkills:
+          type: object
+          example: { "SCORE": 50 }
+          additionalProperties:
+            type: string
+            properties:
+              code:
+                $ref: "#/components/schemas/PlayerSkill"
+              text:
+                type: integer
+                format: int32
+                minimum: 0
+                maximum: 100
+                example: 50
+
     PlayerPositionTendencyResponse:
       type: object
       properties:
@@ -407,7 +464,32 @@ components:
           minimum: 15
           maximum: 30
           example: 18
-        bloomIncreasingSpeed:
+        bloomSpeed:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 1000
+          example: 350
+
+    RegisterDeclinePhaseRequest:
+      type: object
+      properties:
+        playerId:
+          type: string
+          example: player1
+        yearsOn:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 10
+          example: 3
+        declineStartAge:
+          type: integer
+          format: int32
+          minimum: 15
+          maximum: 30
+          example: 18
+        declineSpeed:
           type: integer
           format: int32
           minimum: 1

@@ -33,7 +33,7 @@ kafka:
 
 player:
   persistence:
-    adapter: cache # Change to 'mongodb' to use MongoDB
+    adapter: cache # Change to 'db' to use MongoDB
     cache:
       ttl: 60000 # in milliseconds
       size: 1000

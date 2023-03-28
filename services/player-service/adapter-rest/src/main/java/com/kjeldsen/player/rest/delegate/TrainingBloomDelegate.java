@@ -19,7 +19,7 @@ public class TrainingBloomDelegate implements TrainingBloomApiDelegate {
     public ResponseEntity<Void> registerBloomPhase(RegisterBloomPhaseRequest registerBloomPhaseRequest) {
 
         generateBloomPhaseUseCase.generate(registerBloomPhaseRequest.getYearsOn(),
-            registerBloomPhaseRequest.getBloomIncreasingSpeed(),
+            registerBloomPhaseRequest.getBloomSpeed(),
             registerBloomPhaseRequest.getBloomStartAge(),
             PlayerId.of(registerBloomPhaseRequest.getPlayerId()));
 

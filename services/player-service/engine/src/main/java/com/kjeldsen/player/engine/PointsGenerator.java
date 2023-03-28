@@ -6,14 +6,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PointsGenerator {
 
+//    public static int
+//    generatePointsRise(int currentDay) {
+//
+//        return generatePointsRise(currentDay, probability);
+//    }
+
     public static int generatePointsRise(int currentDay) {
         float probability = 1 / 14;
-        return generatePointsRise(currentDay, probability);
-    }
-
-    public static int generatePointsRise(int currentDay, float probability) {
         double randomProbabilityRise = RandomGenerator.random();
+
         double probabilityRaise = probability * currentDay;
+
         int risePoints = 0;
 
         if (randomProbabilityRise <= probabilityRaise) {
@@ -21,6 +25,11 @@ public class PointsGenerator {
         }
 
         return risePoints;
+    }
+
+    public static int generatePoints(float probability, int points) {
+
+        return (int) (probability * points) / 100;
     }
 
     public static int generatePoints() {
@@ -39,5 +48,4 @@ public class PointsGenerator {
             return 5;
         }
     }
-
 }
