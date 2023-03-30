@@ -20,7 +20,7 @@ public class GetHistoricalTrainingUseCase {
 
     public List<PlayerTrainingEvent> get(PlayerId playerId) {
 
-        playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
+        playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException(String.format("Player not found with ID %s", playerId)));
 
         return playerTrainingEventReadRepository.findAllByPlayerId(playerId);
     }

@@ -79,7 +79,6 @@ public class GenerateSingleTrainingUseCase {
 
         playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
         playerTrainingEventWriteRepository.save(playerTrainingEvent);
-
     }
 
     private void handleBloomEvent(Player player, PlayerTrainingEvent playerTrainingEvent, PlayerTrainingBloomEvent playerTrainingBloomEvent) {

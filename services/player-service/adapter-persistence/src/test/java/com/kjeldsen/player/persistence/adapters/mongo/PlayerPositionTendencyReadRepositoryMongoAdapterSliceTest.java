@@ -43,15 +43,15 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceTest extends Abstract
 
         @Test
         @DisplayName("return default tendency for provided position when there is not persisted one")
-        public void return_default_tendency_for_provided_position_when_no_exist_in_database() {
+        void return_default_tendency_for_provided_position_when_no_exist_in_database() {
             PlayerPositionTendency actual = playerPositionTendencyReadRepository.get(PlayerPosition.FORWARD);
             assertThat(actual).isEqualTo(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES);
         }
 
         @Test
         @DisplayName("return default tendency for provided position when there is not persisted one")
-        public void return_stored_tendency_for_provided_position_when_exist_in_database() {
-            playerPositionTendencyMongoRepository.save(PlayerPositionTendencyDocument.builder()
+        void return_stored_tendency_for_provided_position_when_exist_in_database() {
+            PlayerPositionTendency storedPlayerPositionTendency = playerPositionTendencyMongoRepository.save(PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
                 .tendencies(Map.of(PlayerSkill.SCORE, 1))
                 .build());
@@ -59,6 +59,7 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceTest extends Abstract
             PlayerPositionTendency actual = playerPositionTendencyReadRepository.get(PlayerPosition.FORWARD);
 
             assertThat(actual).isEqualTo(PlayerPositionTendency.builder()
+                .id(storedPlayerPositionTendency.getId())
                 .position(PlayerPosition.FORWARD)
                 .tendencies(Map.of(PlayerSkill.SCORE, 1))
                 .build());
@@ -70,8 +71,8 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceTest extends Abstract
     class FindShould {
         @Test
         @DisplayName("return player position tendencies for all positions mainly the stored one or default one")
-        public void return_player_position_tendencies_for_all_positions_mainly_the_stored_one_or_default_one() {
-            PlayerPositionTendencyDocument storedPlayerPositionTendency = PlayerPositionTendencyDocument.builder()
+        void return_player_position_tendencies_for_all_positions_mainly_the_stored_one_or_default_one() {
+            PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
                 .tendencies(Map.of(PlayerSkill.SCORE, 1))
                 .build();
@@ -80,7 +81,7 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceTest extends Abstract
             val actual = playerPositionTendencyReadRepository.find();
 
             assertThat(actual).hasSize(3);
-            assertThat(actual).contains(storedPlayerPositionTendency.toDomain(),
+            assertThat(actual).contains(storedPlayerPositionTendency,
                 PlayerPositionTendency.DEFAULT_MIDDLE_TENDENCIES,
                 PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES);
         }

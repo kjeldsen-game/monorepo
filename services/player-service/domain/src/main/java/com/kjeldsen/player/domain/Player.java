@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 import org.apache.commons.lang3.Range;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,6 +17,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @TypeAlias("Player")
 public class Player {
 
+    @Id
+    private PlayerId id;
+    private PlayerName name;
+    private PlayerAge age;
+    private PlayerPosition position;
+    private PlayerActualSkills actualSkills;
+
     public static Player generate(PlayerPositionTendency positionTendencies, int totalPoints) {
         return Player.builder()
             .id(PlayerId.generate())
@@ -25,12 +33,6 @@ public class Player {
             .actualSkills(PlayerActualSkills.generate(positionTendencies, totalPoints))
             .build();
     }
-
-    private PlayerId id;
-    private PlayerName name;
-    private PlayerAge age;
-    private PlayerPosition position;
-    private PlayerActualSkills actualSkills;
 
     public boolean isBloomActive(PlayerTrainingBloomEvent playerTrainingBloomEvent) {
         int initialRange = playerTrainingBloomEvent.getBloomStartAge();
@@ -57,4 +59,5 @@ public class Player {
         Integer actual = getActualSkillPoints(skill);
         actualSkills.addSkillPoints(skill, actual - points);
     }
+
 }

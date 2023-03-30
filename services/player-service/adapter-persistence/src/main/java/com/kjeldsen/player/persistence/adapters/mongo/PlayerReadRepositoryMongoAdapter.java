@@ -22,7 +22,7 @@ public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
 
     @Override
     public Optional<Player> findOneById(PlayerId id) {
-        return playerMongoRepository.findById(id.value());
+        return playerMongoRepository.findById(id);
     }
 
     @Override

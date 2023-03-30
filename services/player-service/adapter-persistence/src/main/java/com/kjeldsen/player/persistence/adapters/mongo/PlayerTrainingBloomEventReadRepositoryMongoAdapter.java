@@ -17,6 +17,6 @@ public class PlayerTrainingBloomEventReadRepositoryMongoAdapter implements Playe
 
     @Override
     public Optional<PlayerTrainingBloomEvent> findOneByPlayerId(PlayerId id) {
-        return playerTrainingBloomEventMongoRepository.findById(id.value());
+        return playerTrainingBloomEventMongoRepository.findOneByPlayerId(id);
     }
 }

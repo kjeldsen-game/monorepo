@@ -17,6 +17,6 @@ public class PlayerTrainingDeclineEventReadRepositoryMongoAdapter implements Pla
 
     @Override
     public Optional<PlayerTrainingDeclineEvent> findOneByPlayerId(PlayerId id) {
-        return playerTrainingDeclineEventMongoRepository.findById(id.value());
+        return playerTrainingDeclineEventMongoRepository.findOneByPlayerId(id);
     }
 }
