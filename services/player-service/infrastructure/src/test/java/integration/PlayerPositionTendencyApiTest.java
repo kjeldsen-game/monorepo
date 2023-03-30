@@ -7,7 +7,6 @@ import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyReadRepositoryMongoAdapter;
 import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyWriteRepositoryMongoAdapter;
-import com.kjeldsen.player.persistence.mongo.documents.PlayerPositionTendencyDocument;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerPositionTendencyMongoRepository;
 import com.kjeldsen.player.rest.api.PlayerPositionTendenciesApiController;
 import com.kjeldsen.player.rest.delegate.PlayerPositionTendenciesDelegate;
@@ -68,7 +67,7 @@ public class PlayerPositionTendencyApiTest extends AbstractIntegrationTest {
         @Test
         @DisplayName("return a list of default and stored player position tendencies")
         public void return_a_list_player_position_tendencies() throws Exception {
-            PlayerPositionTendencyDocument storedPlayerPositionTendency = PlayerPositionTendencyDocument.builder()
+            PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
                 .tendencies(Map.of(PlayerSkill.SCORE, 5))
                 .build();
@@ -124,7 +123,7 @@ public class PlayerPositionTendencyApiTest extends AbstractIntegrationTest {
         @Test
         @DisplayName("return a stored player position tendency of a given position when player position tendency exists in storage")
         public void return_a_stored_player_position_tendency_of_a_given_position_when_player_position_tendency_exists_in_storage() throws Exception {
-            PlayerPositionTendencyDocument storedPlayerPositionTendency = PlayerPositionTendencyDocument.builder()
+            PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
                 .tendencies(Map.of(PlayerSkill.SCORE, 5))
                 .build();

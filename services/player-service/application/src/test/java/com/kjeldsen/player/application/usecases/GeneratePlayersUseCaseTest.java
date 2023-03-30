@@ -24,7 +24,7 @@ class GeneratePlayersUseCaseTest {
 
     @Test
     @DisplayName("create N players randomly in the given age range, position and total points distributed in the actual skills")
-    public void create_n_players_randomly_in_the_given_age_range_position_and_total_points_distributed_in_the_actual_skills() {
+    void create_n_players_randomly_in_the_given_age_range_position_and_total_points_distributed_in_the_actual_skills() {
         Mockito.when(mockedPlayerPositionTendencyReadRepository.get(Mockito.any(PlayerPosition.class)))
             .thenReturn(PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES,
                 PlayerPositionTendency.DEFAULT_MIDDLE_TENDENCIES,

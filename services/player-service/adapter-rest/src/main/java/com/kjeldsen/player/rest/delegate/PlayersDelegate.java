@@ -2,7 +2,7 @@ package com.kjeldsen.player.rest.delegate;
 
 import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
-import com.kjeldsen.player.application.usecases.NewPlayer;
+import com.kjeldsen.player.domain.NewPlayer;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerAge;
 import com.kjeldsen.player.domain.PlayerPosition;

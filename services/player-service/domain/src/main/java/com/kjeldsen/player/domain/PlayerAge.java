@@ -14,9 +14,11 @@ public record PlayerAge(Integer value) {
     }
 
     public static PlayerAge of(int age) {
+
         if (!RANGE_OF_AGE.contains(age)) {
             throw new IllegalArgumentException("Age must be between 15 and 33");
         }
+
         return new PlayerAge(age);
     }
 
