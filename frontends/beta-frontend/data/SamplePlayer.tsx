@@ -1,8 +1,14 @@
-import { GridValueGetterParams } from '@mui/x-data-grid'
+import { GridCellParams, GridValueGetterParams } from '@mui/x-data-grid'
+import { useState } from 'react'
+import React from 'react'
+import { Select, MenuItem, FormControl, SelectChangeEvent, InputLabel, NativeSelect } from '@mui/material'
+import PlayerTactics from '@/shared/components/PlayerTactics'
 
 export type Position = 'DEFENDER' | 'MIDDLE' | 'FORWARD' | 'GOALKEEPER'
 
 export type Skill = 'DEFENSE_POSITION' | 'BALL_CONTROL' | 'SCORE' | 'PASSING' | 'OFFENSIVE_POSITION' | 'TACKLING' | 'CO'
+
+export type Status = 'HEALTHY' | 'UNHEALTHY' | 'INJURY'
 
 export type Stats = {
   [skill in Skill]: number
@@ -13,6 +19,7 @@ export interface PlayerStats {
   age: number
   name: string
   position: Position
+  status: string
   stats: Stats
 }
 
@@ -21,32 +28,103 @@ function getPlayerStats(params: GridValueGetterParams, skill: Skill) {
 }
 
 export const samplePlayerColumn = [
-  { field: 'name', headerName: 'Name', width: 130 },
-  { field: 'age', headerName: 'Age', flex: 1 },
+  { field: 'status', headerName: 'Health', minWidth: 70, flex: 1 },
+  { field: 'name', headerName: 'Name', minWidth: 130, flex: 1 },
+  { field: 'age', headerName: 'Age', minWidth: 70, flex: 1 },
   { field: 'position', headerName: 'Position' },
   {
     field: 'DEFENSE_POSITION',
     headerName: 'Defense Position',
+    minWidth: 70,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.DEFENSE_POSITION,
   },
-  { field: 'BALL_CONTROL', headerName: 'Ball Control', valueGetter: (params: GridValueGetterParams) => params.row.stats.BALL_CONTROL },
-  { field: 'SCORE', headerName: 'Score', flex: 1, valueGetter: (params: GridValueGetterParams) => params.row.stats.SCORE },
-  { field: 'PASSING', headerName: 'Passing', flex: 1, valueGetter: (params: GridValueGetterParams) => params.row.stats.PASSING },
+  {
+    field: 'BALL_CONTROL',
+    headerName: 'Ball Control',
+    minWidth: 70,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.BALL_CONTROL,
+  },
+  { field: 'SCORE', headerName: 'Score', minWidth: 70, flex: 1, valueGetter: (params: GridValueGetterParams) => params.row.stats.SCORE },
+  { field: 'PASSING', headerName: 'Passing', minWidth: 70, flex: 1, valueGetter: (params: GridValueGetterParams) => params.row.stats.PASSING },
   {
     field: 'OFFENSIVE_POSITION',
     headerName: 'Offensive Position',
+    minWidth: 70,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.OFFENSIVE_POSITION,
   },
-  { field: 'TACKLING', headerName: 'Tackling', flex: 1, valueGetter: (params: GridValueGetterParams) => params.row.stats.TACKLING },
-  { field: 'CO', headerName: 'CO', flex: 1, valueGetter: (params: GridValueGetterParams) => params.row.stats.CO },
+  { field: 'TACKLING', headerName: 'Tackling', minWidth: 70, flex: 1, valueGetter: (params: GridValueGetterParams) => params.row.stats.TACKLING },
+  { field: 'CO', headerName: 'CO', minWidth: 70, flex: 1, valueGetter: (params: GridValueGetterParams) => params.row.stats.CO },
+  {
+    field: 'playerOrder1',
+    headerName: 'PO1',
+    renderCell: (params: GridCellParams) => <PlayerOrderSelect />,
+    minWidth: 70,
+    flex: 1,
+  },
+  {
+    field: 'playerOrder2',
+    headerName: 'PO2',
+    renderCell: (params: GridCellParams) => <PlayerOrderSelect />,
+    minWidth: 70,
+    flex: 1,
+  },
+  {
+    field: 'playerOrder3',
+    headerName: 'PO3',
+    renderCell: (params: GridCellParams) => <PlayerOrderSelect />,
+    minWidth: 70,
+    flex: 1,
+  },
+  {
+    field: 'playerOrder4',
+    headerName: 'PO4',
+    renderCell: (params: GridCellParams) => <PlayerOrderSelect />,
+    minWidth: 70,
+    flex: 1,
+  },
+  {
+    field: 'playerOrder5',
+    headerName: 'PO5',
+    renderCell: (params: GridCellParams) => <PlayerOrderSelect />,
+    minWidth: 70,
+    flex: 1,
+  },
 ]
+
+export function PlayerOrderSelect() {
+  const [playerOrder, setPlayerOrder] = React.useState('')
+
+  const handleChangePlayerOrder = (event: SelectChangeEvent) => {
+    setPlayerOrder(event.target.value as string)
+  }
+
+  return (
+    <FormControl sx={{ minWidth: 70, marginTop: '16px' }} size="small">
+      <InputLabel id="po1-select-label">PO</InputLabel>
+      <Select
+        labelId="po1-select-label"
+        id="playerOrder1-select"
+        value={playerOrder}
+        label="PO1"
+        autoWidth
+        onChange={handleChangePlayerOrder}
+        sx={{ marginBottom: '1rem' }}>
+        <MenuItem value={'playerOrder1'}>PO1</MenuItem>
+        <MenuItem value={'playerOrder2'}>PO2</MenuItem>
+        <MenuItem value={'playerOrder3'}>PO3</MenuItem>
+      </Select>
+    </FormControl>
+  )
+}
 
 export const samplePlayer: PlayerStats = {
   id: 'player-10',
   age: 32,
   name: 'Devin Gibson',
+  status: 'HEALTHY',
   position: 'DEFENDER',
   stats: {
     DEFENSE_POSITION: 77,
@@ -65,6 +143,7 @@ export const players: PlayerStats[] = [
     id: 'player-1',
     age: 25,
     name: 'John Doe',
+    status: 'HEALTHY',
     position: 'FORWARD',
     stats: {
       DEFENSE_POSITION: 25,
@@ -80,6 +159,7 @@ export const players: PlayerStats[] = [
     id: 'player-2',
     age: 27,
     name: 'Jane Smith',
+    status: 'HEALTHY',
     position: 'MIDDLE',
     stats: {
       DEFENSE_POSITION: 50,
@@ -95,6 +175,7 @@ export const players: PlayerStats[] = [
     id: 'player-3',
     age: 29,
     name: 'Alex Johnson',
+    status: 'HEALTHY',
     position: 'DEFENDER',
     stats: {
       DEFENSE_POSITION: 90,
@@ -110,6 +191,7 @@ export const players: PlayerStats[] = [
     id: 'player-4',
     age: 30,
     name: 'David Lee',
+    status: 'HEALTHY',
     position: 'MIDDLE',
     stats: {
       DEFENSE_POSITION: 40,
@@ -125,6 +207,7 @@ export const players: PlayerStats[] = [
     id: 'player-5',
     age: 26,
     name: 'Sarah Brown',
+    status: 'HEALTHY',
     position: 'DEFENDER',
     stats: {
       DEFENSE_POSITION: 80,
@@ -140,6 +223,7 @@ export const players: PlayerStats[] = [
     id: 'player-6',
     age: 24,
     name: 'Chris Davis',
+    status: 'HEALTHY',
     position: 'GOALKEEPER',
     stats: {
       DEFENSE_POSITION: 95,
@@ -155,6 +239,7 @@ export const players: PlayerStats[] = [
     id: 'player-7',
     age: 28,
     name: 'Emily Wilson',
+    status: 'HEALTHY',
     position: 'MIDDLE',
     stats: {
       DEFENSE_POSITION: 30,
@@ -170,6 +255,7 @@ export const players: PlayerStats[] = [
     id: 'player-8',
     age: 29,
     name: 'Jason Williams',
+    status: 'HEALTHY',
     position: 'MIDDLE',
     stats: {
       DEFENSE_POSITION: 10,
@@ -185,6 +271,7 @@ export const players: PlayerStats[] = [
     id: 'player-9',
     age: 26,
     name: 'Ryan Johnson',
+    status: 'HEALTHY',
     position: 'FORWARD',
     stats: {
       DEFENSE_POSITION: 6,
