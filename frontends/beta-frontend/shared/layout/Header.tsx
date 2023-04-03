@@ -67,10 +67,11 @@ export const Header: FC = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
-        position="sticky"
+        position="fixed"
         sx={{
           boxShadow: '0px 0px 0px 0px',
           borderBottom: '4px solid #FF3F84',
+          // height: SportsSoccerIcon.length * 4,
           zIndex: (theme) => theme.zIndex.drawer + 1,
         }}>
         <Toolbar>

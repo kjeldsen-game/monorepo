@@ -4,7 +4,7 @@ import React from 'react'
 import { Select, MenuItem, FormControl, SelectChangeEvent, InputLabel, NativeSelect } from '@mui/material'
 import PlayerTactics from '@/shared/components/PlayerTactics'
 
-export type Position = 'DEFENDER' | 'MIDDLE' | 'FORWARD' | 'GOALKEEPER'
+export type Position = 'DEF' | 'MID' | 'FW' | 'GK'
 
 export type Skill = 'DEFENSE_POSITION' | 'BALL_CONTROL' | 'SCORE' | 'PASSING' | 'OFFENSIVE_POSITION' | 'TACKLING' | 'CO'
 
@@ -173,7 +173,7 @@ export const samplePlayer: PlayerStats = {
   age: 32,
   name: 'Devin Gibson',
   status: 'H',
-  position: 'DEFENDER',
+  position: 'DEF',
   stats: {
     DEFENSE_POSITION: 77,
     BALL_CONTROL: 12,
@@ -192,7 +192,7 @@ export const players: PlayerStats[] = [
     age: 25,
     name: 'John Doe',
     status: 'H',
-    position: 'FORWARD',
+    position: 'FW',
     stats: {
       DEFENSE_POSITION: 25,
       BALL_CONTROL: 40,
@@ -208,7 +208,7 @@ export const players: PlayerStats[] = [
     age: 27,
     name: 'Jane Smith',
     status: 'H',
-    position: 'MIDDLE',
+    position: 'MID',
     stats: {
       DEFENSE_POSITION: 50,
       BALL_CONTROL: 80,
@@ -224,7 +224,7 @@ export const players: PlayerStats[] = [
     age: 29,
     name: 'Alex Johnson',
     status: 'H',
-    position: 'DEFENDER',
+    position: 'DEF',
     stats: {
       DEFENSE_POSITION: 90,
       BALL_CONTROL: 20,
@@ -240,7 +240,7 @@ export const players: PlayerStats[] = [
     age: 30,
     name: 'David Lee',
     status: 'H',
-    position: 'MIDDLE',
+    position: 'MID',
     stats: {
       DEFENSE_POSITION: 40,
       BALL_CONTROL: 70,
@@ -256,7 +256,7 @@ export const players: PlayerStats[] = [
     age: 26,
     name: 'Sarah Brown',
     status: 'H',
-    position: 'DEFENDER',
+    position: 'DEF',
     stats: {
       DEFENSE_POSITION: 80,
       BALL_CONTROL: 30,
@@ -272,7 +272,7 @@ export const players: PlayerStats[] = [
     age: 24,
     name: 'Chris Davis',
     status: 'H',
-    position: 'GOALKEEPER',
+    position: 'GK',
     stats: {
       DEFENSE_POSITION: 95,
       BALL_CONTROL: 10,
@@ -288,7 +288,7 @@ export const players: PlayerStats[] = [
     age: 28,
     name: 'Emily Wilson',
     status: 'H',
-    position: 'MIDDLE',
+    position: 'MID',
     stats: {
       DEFENSE_POSITION: 30,
       BALL_CONTROL: 90,
@@ -304,7 +304,7 @@ export const players: PlayerStats[] = [
     age: 29,
     name: 'Jason Williams',
     status: 'H',
-    position: 'MIDDLE',
+    position: 'MID',
     stats: {
       DEFENSE_POSITION: 10,
       BALL_CONTROL: 85,
@@ -320,7 +320,7 @@ export const players: PlayerStats[] = [
     age: 26,
     name: 'Ryan Johnson',
     status: 'H',
-    position: 'FORWARD',
+    position: 'FW',
     stats: {
       DEFENSE_POSITION: 6,
       BALL_CONTROL: 70,
