@@ -2,6 +2,7 @@ import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
 import Avatar from '@/shared/components/Avatar'
 import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation'
+import ElderlyIcon from '@mui/icons-material/Elderly'
 import { FC } from 'react'
 import { PlayerStats } from '@/data/SamplePlayer'
 
@@ -60,7 +61,10 @@ export const PlayerDetails: FC<PlayerDetailsProps> = ({ player }) => (
           {player.position}
         </Typography>
       </Box>
-      <Typography variant="body1">{player.age}</Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <ElderlyIcon sx={{ fontSize: 'large', color: 'black', marginRight: '4px' }} />
+        <Typography variant="body1">{player.age}</Typography>
+      </Box>
     </Box>
     <Box sx={{ marginLeft: '2rem' }}>
       <Typography variant="body1" component="p" sx={playerStatsStyle3}>
