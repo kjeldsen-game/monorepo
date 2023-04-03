@@ -37,8 +37,7 @@ const Player: NextPage = () => {
         <Grid rows={sampleRows} columns={sampleColumns} />
         <Typography sx={{ marginBottom: '1rem', marginTop: '2rem', borderBottom: '1px solid' }}>Previous Season</Typography>
         <Grid rows={sampleRows} columns={sampleColumns} />
-        <Typography sx={{ marginBottom: '1rem', marginTop: '2rem', borderBottom: '1px solid' }}>This Season</Typography>
-
+        <Typography sx={{ marginBottom: '1rem', marginTop: '2rem', borderBottom: '1px solid' }}>Aggregate</Typography>
         <Grid rows={sampleRows} columns={sampleColumns} />
       </Box>
     </>

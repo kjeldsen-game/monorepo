@@ -181,7 +181,7 @@ export const samplePlayer: PlayerStats = {
     PASSING: 14,
     OFFENSIVE_POSITION: 11,
     TACKLING: 60,
-    CO: 19,
+    CO: 40,
   },
 }
 

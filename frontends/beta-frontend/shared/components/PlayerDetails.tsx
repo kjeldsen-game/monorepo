@@ -6,7 +6,27 @@ import { FC } from 'react'
 import { PlayerStats } from '@/data/SamplePlayer'
 
 const playerStatsStyle = {
-  background: 'linear-gradient(90deg, #29B6F6 0%, #1C97CE 100%);',
+  background: 'linear-gradient(90deg, #29B6F6 0%, #1C97CE 100%)',
+  borderRadius: '4px',
+  color: 'white',
+  width: '170px',
+  height: '28px',
+  margin: '2px 0',
+  paddingLeft: '1rem',
+}
+
+const playerStatsStyle2 = {
+  background: 'linear-gradient(90deg, #F68B29 0%, #C56D1C 100%)',
+  borderRadius: '4px',
+  color: 'white',
+  width: '170px',
+  height: '28px',
+  margin: '2px 0',
+  paddingLeft: '1rem',
+}
+
+const playerStatsStyle3 = {
+  background: 'linear-gradient(90deg, #62D160 0%, #429F40 100%)',
   borderRadius: '4px',
   color: 'white',
   width: '170px',
@@ -43,13 +63,13 @@ export const PlayerDetails: FC<PlayerDetailsProps> = ({ player }) => (
       <Typography variant="body1">{player.age}</Typography>
     </Box>
     <Box sx={{ marginLeft: '2rem' }}>
-      <Typography variant="body1" component="p" sx={playerStatsStyle}>
+      <Typography variant="body1" component="p" sx={playerStatsStyle3}>
         {player.stats.DEFENSE_POSITION} - Defense
       </Typography>
-      <Typography variant="body1" component="p" sx={playerStatsStyle}>
+      <Typography variant="body1" component="p" sx={playerStatsStyle2}>
         {player.stats.BALL_CONTROL} - BallControl
       </Typography>
-      <Typography variant="body1" component="p" sx={playerStatsStyle}>
+      <Typography variant="body1" component="p" sx={playerStatsStyle2}>
         {player.stats.SCORE} - Score
       </Typography>
     </Box>
@@ -57,13 +77,13 @@ export const PlayerDetails: FC<PlayerDetailsProps> = ({ player }) => (
       sx={{
         marginLeft: '2rem',
       }}>
-      <Typography variant="body1" component="p" sx={playerStatsStyle}>
+      <Typography variant="body1" component="p" sx={playerStatsStyle3}>
         {player.stats.TACKLING} - Tackling
       </Typography>
       <Typography variant="body1" component="p" sx={playerStatsStyle}>
         {player.stats.CO} - CO
       </Typography>
-      <Typography variant="body1" component="p" sx={playerStatsStyle}>
+      <Typography variant="body1" component="p" sx={playerStatsStyle2}>
         {player.stats.PASSING} - Passing
       </Typography>
     </Box>

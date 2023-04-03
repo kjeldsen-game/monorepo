@@ -10,7 +10,7 @@ type GridProps<T> = {
 
 function Grid<T>({ rows, columns, onRowClick }: GridProps<T>) {
   return (
-    <Box sx={{ minWidth: '1200px' }}>
+    <Box>
       <DataGrid autoHeight={true} rows={rows} columns={columns} hideFooter={true} onRowClick={onRowClick} />
     </Box>
   )
