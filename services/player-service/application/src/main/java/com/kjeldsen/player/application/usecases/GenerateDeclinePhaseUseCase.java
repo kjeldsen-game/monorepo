@@ -1,7 +1,9 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.domain.PlayerId;
+import com.kjeldsen.player.domain.events.EventId;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
+import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventWriteRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,8 @@ public class GenerateDeclinePhaseUseCase {
 
     private void generateAndStoreEventOfDeclinePhase(int declineYears, int declineSpeed, int declineStart, PlayerId playerId) {
         PlayerTrainingDeclineEvent playerTrainingDeclineEvent = PlayerTrainingDeclineEvent.builder()
+            .eventId(EventId.generate())
+            .eventDate(InstantProvider.now())
             .playerId(playerId)
             .yearsOn(declineYears)
             .declineSpeed(declineSpeed)

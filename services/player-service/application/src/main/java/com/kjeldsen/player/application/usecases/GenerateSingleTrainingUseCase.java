@@ -28,7 +28,7 @@ import java.util.stream.IntStream;
 @Component
 public class GenerateSingleTrainingUseCase {
 
-    private static final int FIRST_DAY_OF_TRAINING = 0;
+    private static final int FIRST_DAY_OF_TRAINING = 1;
     private static final Integer MIN_DAY = 1;
     private static final Integer MAX_DAY = 1000;
     private static final Range<Integer> RANGE_OF_DAYS = Range.between(MIN_DAY, MAX_DAY);
@@ -46,7 +46,7 @@ public class GenerateSingleTrainingUseCase {
 
         Player player = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
 
-        IntStream.range(FIRST_DAY_OF_TRAINING, days)
+        IntStream.rangeClosed(FIRST_DAY_OF_TRAINING, days)
             .forEach(currentDay -> skills.forEach(skill -> generateAndStoreEvent(player, skill, currentDay)));
     }
 
