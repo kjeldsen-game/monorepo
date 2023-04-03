@@ -35,10 +35,10 @@ public class PointsGenerator {
     }
 
     public static int generatePoints(float probability, int points) {
-
         return (int) (probability * points) / 100;
     }
 
+    // TODO Dali 50% for decline generatePoints -> generatePointsBloom and create generatePointsDecline
     public static int generatePoints() {
 
         double randomProbabilityPoints = RandomGenerator.random() * 100;
