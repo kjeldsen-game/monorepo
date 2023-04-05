@@ -17,19 +17,18 @@ public class GenerateDeclinePhaseUseCase {
     private final PlayerReadRepository playerReadRepository;
     private final PlayerTrainingDeclineEventWriteRepository playerTrainingDeclineEventWriteRepository;
 
-    public void generate(int declineYears, int declineSpeed, int declineStart, PlayerId playerId) {
+    public void generate(int declineSpeed, int declineStart, PlayerId playerId) {
         log.info("Generating decline phase");
         playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
 
-        generateAndStoreEventOfDeclinePhase(declineYears, declineSpeed, declineStart, playerId);
+        generateAndStoreEventOfDeclinePhase(declineSpeed, declineStart, playerId);
     }
 
-    private void generateAndStoreEventOfDeclinePhase(int declineYears, int declineSpeed, int declineStart, PlayerId playerId) {
+    private void generateAndStoreEventOfDeclinePhase(int declineSpeed, int declineStart, PlayerId playerId) {
         PlayerTrainingDeclineEvent playerTrainingDeclineEvent = PlayerTrainingDeclineEvent.builder()
             .eventId(EventId.generate())
             .eventDate(InstantProvider.now())
             .playerId(playerId)
-            .yearsOn(declineYears)
             .declineSpeed(declineSpeed)
             .declineStartAge(declineStart)
             .build();

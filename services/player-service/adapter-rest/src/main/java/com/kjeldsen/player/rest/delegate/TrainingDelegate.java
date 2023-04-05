@@ -7,12 +7,7 @@ import com.kjeldsen.player.application.usecases.GetHistoricalTrainingUseCase;
 import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.rest.api.TrainingApiDelegate;
-import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
-import com.kjeldsen.player.rest.model.PlayerSkill;
-import com.kjeldsen.player.rest.model.PlayerTrainingResponse;
-import com.kjeldsen.player.rest.model.RegisterBloomPhaseRequest;
-import com.kjeldsen.player.rest.model.RegisterDeclinePhaseRequest;
-import com.kjeldsen.player.rest.model.RegisterTrainingRequest;
+import com.kjeldsen.player.rest.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +53,7 @@ public class TrainingDelegate implements TrainingApiDelegate {
     @Override
     public ResponseEntity<Void> registerDeclinePhase(String playerId, RegisterDeclinePhaseRequest registerDeclinePhaseRequest) {
 
-        generateDeclinePhaseUseCase.generate(registerDeclinePhaseRequest.getYearsOn(),
+        generateDeclinePhaseUseCase.generate(
             registerDeclinePhaseRequest.getDeclineSpeed(),
             registerDeclinePhaseRequest.getDeclineStartAge(),
             PlayerId.of(playerId));

@@ -509,12 +509,6 @@ components:
     RegisterDeclinePhaseRequest:
       type: object
       properties:
-        yearsOn:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 10
-          example: 3
         declineStartAge:
           type: integer
           format: int32

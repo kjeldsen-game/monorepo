@@ -10,35 +10,29 @@ public class PointsGenerator {
         double probability = probabilityRiseBasedOnCurrentDay(currentDay);
         double randomProbabilityRise = RandomGenerator.random();
         return randomProbabilityRise <= probability ?
-            generatePoints() :
-            0;
+            generatePoints() : 0;
     }
 
     public static double probabilityRiseBasedOnCurrentDay(int currentDay) {
-       return  switch (currentDay) {
-           case 1 -> 7.14;
-           case 2 -> 14.29;
-           case 3 -> 21.43;
-           case 4 -> 100; // TODO update followings :D
-           case 5 -> 100;
-           case 6 -> 100;
-           case 7 -> 100;
-           case 8 -> 100;
-           case 9 -> 100;
-           case 10 -> 100;
-           case 11 -> 100;
-           case 12 -> 100;
-           case 13 -> 100;
-           case 14-> 100;
-           default -> throw new IllegalStateException("Unexpected value: " + currentDay);
-       };
+        return switch (currentDay) {
+            case 1 -> 7.14;
+            case 2 -> 14.29;
+            case 3 -> 21.43;
+            case 4 -> 28.57;
+            case 5 -> 35.71;
+            case 6 -> 42.86;
+            case 7 -> 50;
+            case 8 -> 57.14;
+            case 9 -> 64.29;
+            case 10 -> 71.43;
+            case 11 -> 78.57;
+            case 12 -> 85.71;
+            case 13 -> 92.86;
+            case 14 -> 100;
+            default -> throw new IllegalStateException("Unexpected value (from 1 - 14 days): " + currentDay);
+        };
     }
 
-    public static int generatePoints(float probability, int points) {
-        return (int) (probability * points) / 100;
-    }
-
-    // TODO Dali 50% for decline generatePoints -> generatePointsBloom and create generatePointsDecline
     public static int generatePoints() {
 
         double randomProbabilityPoints = RandomGenerator.random() * 100;
@@ -55,4 +49,10 @@ public class PointsGenerator {
             return 5;
         }
     }
+
+    public static int generatePointsBloom(float probability, int points) {
+        return (int) (probability * points) / 100;
+    }
+
+    // TODO Dali 50% for decline generatePoints -> generatePointsBloom and create generatePointsDecline
 }

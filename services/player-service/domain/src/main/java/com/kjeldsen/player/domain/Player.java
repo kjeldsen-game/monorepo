@@ -3,14 +3,16 @@ package com.kjeldsen.player.domain;
 import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.lang3.Range;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Data
+@Getter
+@Setter
 @Builder
 @ToString
 @Document(collection = "Players")
@@ -41,9 +43,7 @@ public class Player {
     }
 
     public boolean isDeclineActive(PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
-        int initialRange = playerTrainingDeclineEvent.getDeclineStartAge();
-        int endRange = initialRange + playerTrainingDeclineEvent.getYearsOn();
-        return Range.between(initialRange, endRange).contains(age.value());
+        return age.value() >= playerTrainingDeclineEvent.getDeclineStartAge();
     }
 
     public Integer getActualSkillPoints(PlayerSkill skill) {
@@ -51,8 +51,7 @@ public class Player {
     }
 
     public void addSkillPoints(PlayerSkill skill, Integer points) {
-        Integer actual = getActualSkillPoints(skill);
-        actualSkills.addSkillPoints(skill, actual + points);
+        actualSkills.addSkillPoints(skill, points);
     }
 
     public void subtractSkillPoints(PlayerSkill skill, Integer points) {

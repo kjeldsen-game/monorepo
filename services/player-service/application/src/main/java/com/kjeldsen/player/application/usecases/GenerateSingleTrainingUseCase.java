@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+import static com.kjeldsen.player.engine.PointsGenerator.generatePointsBloom;
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -75,9 +77,9 @@ public class GenerateSingleTrainingUseCase {
             Integer points = PointsGenerator.generatePointsRise(currentDay);
             player.addSkillPoints(playerSkill, points);
             playerTrainingEvent.setPoints(points);
+            playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
         }
-
-        playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
+        
         playerTrainingEventWriteRepository.save(playerTrainingEvent);
     }
 
@@ -85,22 +87,26 @@ public class GenerateSingleTrainingUseCase {
         if (!player.isBloomActive(playerTrainingBloomEvent)) {
             return;
         }
-        Integer points = PointsGenerator.generatePoints(playerTrainingBloomEvent.getBloomSpeed(),
-            PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay()));
-        player.addSkillPoints(playerTrainingEvent.getSkill(), points);
+
+        Integer points = PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay());
+        Integer pointsToRise = generatePointsBloom(playerTrainingBloomEvent.getBloomSpeed(), points);
+        player.addSkillPoints(playerTrainingEvent.getSkill(), pointsToRise);
         playerTrainingEvent.setBloom(playerTrainingBloomEvent);
-        playerTrainingEvent.setPoints(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
+        playerTrainingEvent.setPoints(points);
+
     }
 
     private void handleDeclineEvent(Player player, PlayerTrainingEvent playerTrainingEvent, PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
         if (!player.isDeclineActive(playerTrainingDeclineEvent)) {
             return;
         }
-        Integer points = PointsGenerator.generatePoints(playerTrainingDeclineEvent.getDeclineSpeed(),
-            PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay()));
-        player.subtractSkillPoints(playerTrainingEvent.getSkill(), points);
-        playerTrainingEvent.setDecline(playerTrainingDeclineEvent);
-        playerTrainingEvent.setPoints(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
+
+
+//        Integer points = PointsGenerator.generatePoints(playerTrainingDeclineEvent.getDeclineSpeed(),
+//            PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay()));
+//        player.subtractSkillPoints(playerTrainingEvent.getSkill(), points);
+//        playerTrainingEvent.setDecline(playerTrainingDeclineEvent);
+//        playerTrainingEvent.setPoints(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
     }
 
     public void validateDays(Integer days) {
