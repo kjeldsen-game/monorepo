@@ -79,7 +79,7 @@ public class GenerateSingleTrainingUseCase {
             playerTrainingEvent.setPoints(points);
             playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
         }
-        
+
         playerTrainingEventWriteRepository.save(playerTrainingEvent);
     }
 
@@ -89,10 +89,14 @@ public class GenerateSingleTrainingUseCase {
         }
 
         Integer points = PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay());
-        Integer pointsToRise = generatePointsBloom(playerTrainingBloomEvent.getBloomSpeed(), points);
+        player.addSkillPoints(playerTrainingEvent.getSkill(), points);
+
+        Integer pointsToRise = generatePointsBloom(playerTrainingBloomEvent.getBloomSpeed(), player.getActualSkillPoints(playerTrainingEvent.getSkill()));
         player.addSkillPoints(playerTrainingEvent.getSkill(), pointsToRise);
+        
         playerTrainingEvent.setBloom(playerTrainingBloomEvent);
         playerTrainingEvent.setPoints(points);
+        playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
 
     }
 
