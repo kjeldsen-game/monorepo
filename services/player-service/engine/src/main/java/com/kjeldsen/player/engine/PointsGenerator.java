@@ -8,9 +8,13 @@ public class PointsGenerator {
 
     public static int generatePointsRise(int currentDay) {
         double probability = probabilityRiseBasedOnCurrentDay(currentDay);
-        double randomProbabilityRise = RandomGenerator.random();
-        return randomProbabilityRise <= probability ?
-            generatePoints() : 0;
+        double randomProbabilityRise = RandomGenerator.random() * 100;
+
+        if (randomProbabilityRise <= probability) {
+            return generatePoints();
+        } else {
+            return 0;
+        }
     }
 
     public static double probabilityRiseBasedOnCurrentDay(int currentDay) {
@@ -53,6 +57,9 @@ public class PointsGenerator {
     public static int generatePointsBloom(float probability, int points) {
         return (int) ((probability * points) / 100);
     }
-
+    
+    public static int generateDecreasePoints(float probability, int points) {
+        return (int) ((probability * points) / 100);
+    }
     // TODO Dali 50% for decline generatePoints -> generatePointsBloom and create generatePointsDecline
 }

@@ -56,7 +56,7 @@ public class Player {
 
     public void subtractSkillPoints(PlayerSkill skill, Integer points) {
         Integer actual = getActualSkillPoints(skill);
-        actualSkills.addSkillPoints(skill, actual - points);
+        actualSkills.addSkillPoints(skill, -points);
     }
 
 }

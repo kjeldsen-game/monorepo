@@ -1,6 +1,7 @@
 package com.kjeldsen.player.domain.events;
 
 import com.kjeldsen.player.domain.PlayerId;
+import com.kjeldsen.player.domain.PlayerSkill;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,22 +19,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class PlayerTrainingDeclineEvent extends Event {
 
     private PlayerId playerId;
-    private int declineStartAge;
-    private int declineSpeed;
+    private Integer declineStartAge;
+    private Integer declineSpeed;
+    private PlayerSkill skill;
+    private Integer pointsToSubtract;
+    private Integer pointsBeforeTraining;
+    private Integer pointsAfterTraining;
+    private Integer currentDay;
 
     private static final Integer MIN_DECLINE_AGE = 15;
     private static final Integer MAX_DECLINE_AGE = 33;
     private static final Range<Integer> RANGE_OF_DECLINE_AGE = Range.between(MIN_DECLINE_AGE, MAX_DECLINE_AGE);
-
-    private static final Integer MIN_DECLINE_PHASE_ON = 1;
-    private static final Integer MAX_DECLINE_PHASE_ON = 10;
-    private static final Range<Integer> RANGE_OF_DECLINE_PHASE_ON = Range.between(MIN_DECLINE_PHASE_ON, MAX_DECLINE_PHASE_ON);
-
     private static final Integer MIN_SPEED = 0;
     private static final Integer MAX_SPEED = 100;
     private static final Range<Integer> RANGE_OF_SPEED = Range.between(MIN_SPEED, MAX_SPEED);
 
-    public static PlayerTrainingDeclineEvent of(int declineStartAge, int declineSpeed, PlayerId playerId) {
+    public static PlayerTrainingDeclineEvent of(Integer declineStartAge, Integer declineSpeed, PlayerId playerId, PlayerSkill skill, Integer pointsToSubtract, Integer pointsBeforeTraining, Integer pointsAfterTraining, Integer currentDay) {
 
 
         if (!RANGE_OF_DECLINE_AGE.contains(declineStartAge)) {
@@ -48,7 +49,13 @@ public class PlayerTrainingDeclineEvent extends Event {
             .playerId(playerId)
             .declineStartAge(declineStartAge)
             .declineSpeed(declineSpeed)
+            .skill(skill)
+            .pointsToSubtract(pointsToSubtract)
+            .pointsBeforeTraining(pointsBeforeTraining)
+            .pointsAfterTraining(pointsAfterTraining)
+            .currentDay(currentDay)
             .build();
+
     }
 
 
