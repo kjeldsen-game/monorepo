@@ -9,20 +9,22 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Set;
+
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
-@Document(collection = "PlayerTrainingEvents")
-@TypeAlias("PlayerTrainingEvent")
-public class PlayerTrainingEvent extends Event {
+@Document(collection = "PlayerTrainingScheduledEvent")
+@TypeAlias("PlayerTrainingScheduledEvent")
+public class PlayerTrainingScheduledEvent extends Event {
 
     private PlayerId playerId;
-    private PlayerSkill skill;
-    private PlayerTrainingBloomEvent bloom;
-    private Integer points;
-    private Integer pointsBeforeTraining;
-    private Integer pointsAfterTraining;
-    private Integer currentDay;
+    private Set<PlayerSkill> skills;
+    private Integer trainingDays;
+    private Instant startDate;
+    private Instant endDate;
 
 }

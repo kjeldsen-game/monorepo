@@ -2,7 +2,7 @@ package com.kjeldsen.player.rest.delegate;
 
 import com.kjeldsen.player.application.usecases.GenerateBloomPhaseUseCase;
 import com.kjeldsen.player.application.usecases.GenerateDeclinePhaseUseCase;
-import com.kjeldsen.player.application.usecases.GenerateSingleTrainingUseCase;
+import com.kjeldsen.player.application.usecases.GenerateTrainingUseCase;
 import com.kjeldsen.player.application.usecases.GetHistoricalTrainingUseCase;
 import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
@@ -19,7 +19,7 @@ import java.util.List;
 @Component
 public class TrainingDelegate implements TrainingApiDelegate {
 
-    private final GenerateSingleTrainingUseCase generateSingleTrainingUseCase;
+    private final GenerateTrainingUseCase generateTrainingUseCase;
     private final GetHistoricalTrainingUseCase getHistoricalTrainingUseCase;
     private final GenerateBloomPhaseUseCase generateBloomPhaseUseCase;
     private final GenerateDeclinePhaseUseCase generateDeclinePhaseUseCase;
@@ -36,18 +36,6 @@ public class TrainingDelegate implements TrainingApiDelegate {
             .playerId(playerId)
             .trainings(trainings);
         return ResponseEntity.ok(playerHistoricalTrainingResponse);
-    }
-
-    @Override
-    public ResponseEntity<Void> registerTraining(String playerId, RegisterTrainingRequest registerTrainingRequest) {
-        generateSingleTrainingUseCase.generate(
-            PlayerId.of(playerId),
-            registerTrainingRequest.getSkills()
-                .stream()
-                .map(this::playerSkill2DomainPlayerSkill)
-                .toList(),
-            registerTrainingRequest.getDays());
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @Override
@@ -70,10 +58,6 @@ public class TrainingDelegate implements TrainingApiDelegate {
             PlayerId.of(playerId));
 
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    private com.kjeldsen.player.domain.PlayerSkill playerSkill2DomainPlayerSkill(PlayerSkill playerSkill) {
-        return com.kjeldsen.player.domain.PlayerSkill.valueOf(playerSkill.name());
     }
 
     private PlayerTrainingResponse playerTrainingEvent2PlayerTrainingResponse(PlayerTrainingEvent playerTrainingEvent) {
