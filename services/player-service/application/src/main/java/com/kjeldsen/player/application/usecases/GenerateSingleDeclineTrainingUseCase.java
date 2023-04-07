@@ -5,7 +5,6 @@ import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.EventId;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
-import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventWriteRepository;
@@ -14,10 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Range;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
-import java.util.List;
 import java.util.stream.IntStream;
+
+import static com.kjeldsen.player.engine.PointsGenerator.generateDecreasePoints;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -56,10 +55,9 @@ public class GenerateSingleDeclineTrainingUseCase {
             .build();
 
         Integer points = PointsGenerator.generatePointsRise(currentDay);
-        player.addSkillPoints(playerSkill, points);
+        player.subtractSkillPoints(playerSkill, generateDecreasePoints(playerTrainingDeclineEvent.getDeclineSpeed(), points));
         playerTrainingDeclineEvent.setPointsToSubtract(points);
         playerTrainingDeclineEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
-
         playerTrainingDeclineEventWriteRepository.save(playerTrainingDeclineEvent);
     }
 
@@ -69,37 +67,9 @@ public class GenerateSingleDeclineTrainingUseCase {
         return allSkills[random];
     }
 
-    private void handleDeclineEvent(Player player, PlayerTrainingEvent playerTrainingEvent, PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
-        if (!player.isDeclineActive(playerTrainingDeclineEvent)) {
-            return;
-        }
-
-        Integer points = PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay());
-        player.addSkillPoints(playerTrainingEvent.getSkill(), points);
-//
-//        Integer pointsToRise = generatePointsBloom(playerTrainingBloomEvent.getBloomSpeed(), points);
-//        player.addSkillPoints(playerTrainingEvent.getSkill(), pointsToRise);
-//        playerTrainingEvent.setBloom(playerTrainingBloomEvent);
-//        playerTrainingEvent.setPoints(points);
-//        playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
-
-//        Integer points = PointsGenerator.generatePoints(playerTrainingDeclineEvent.getDeclineSpeed(),
-//            PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay()));
-//        player.subtractSkillPoints(playerTrainingEvent.getSkill(), points);
-//        playerTrainingEvent.setDecline(playerTrainingDeclineEvent);
-//        playerTrainingEvent.setPoints(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
-    }
-
     public void validateDays(Integer days) {
         if (!RANGE_OF_DAYS.contains(days)) {
             throw new IllegalArgumentException("Days must be between 1 and 1000");
         }
     }
-
-    public void validateSkills(List<PlayerSkill> skills) {
-        if (CollectionUtils.isEmpty(skills)) {
-            throw new IllegalArgumentException("Skills cannot be null or empty");
-        }
-    }
-
 }

@@ -57,7 +57,7 @@ public class PointsGenerator {
     public static int generatePointsBloom(float probability, int points) {
         return (int) ((probability * points) / 100);
     }
-    
+
     public static int generateDecreasePoints(float probability, int points) {
         return (int) ((probability * points) / 100);
     }

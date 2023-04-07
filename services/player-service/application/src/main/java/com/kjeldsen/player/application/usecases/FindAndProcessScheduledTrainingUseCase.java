@@ -1,6 +1,7 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
+import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventReadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 @Component
 public class FindAndProcessScheduledTrainingUseCase {
+    private final PlayerTrainingDeclineEventReadRepository playerTrainingDeclineEventReadRepository;
 
     private final PlayerTrainingScheduledEventReadRepository playerTrainingScheduledEventReadRepository;
     private final GenerateTrainingUseCase generateTrainingUseCase;
@@ -37,12 +39,11 @@ public class FindAndProcessScheduledTrainingUseCase {
                             playerTrainingEventsForTheDay.add(trainingEvent);
                         });
 
-                        if(playerTrainingEventsForTheDay
+                        if (playerTrainingEventsForTheDay
                             .stream()
                             .anyMatch(trainingEvent -> trainingEvent.getPointsAfterTraining() > trainingEvent.getPointsBeforeTraining())) {
                             currentDay.set(1);
-                        }
-                        else {
+                        } else {
                             currentDay.getAndIncrement();
                         }
 

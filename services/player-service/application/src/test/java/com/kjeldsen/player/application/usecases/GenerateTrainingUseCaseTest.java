@@ -9,6 +9,7 @@ import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingEventWriteRepository;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.engine.PointsGenerator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -25,19 +26,18 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class GenerateTrainingUseCaseTest {
 
     final private PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository = Mockito.mock(PlayerTrainingEventWriteRepository.class);
     final private PlayerReadRepository playerReadRepository = Mockito.mock(PlayerReadRepository.class);
+    final private PlayerWriteRepository playerWriteRepository = Mockito.mock(PlayerWriteRepository.class);
     final private PlayerTrainingBloomEventReadRepository playerTrainingBloomEventReadRepository = Mockito.mock(
         PlayerTrainingBloomEventReadRepository.class);
 
     final private GenerateTrainingUseCase generateTrainingUseCase = new GenerateTrainingUseCase(playerTrainingEventWriteRepository,
-        playerReadRepository, playerTrainingBloomEventReadRepository);
+        playerReadRepository, playerWriteRepository, playerTrainingBloomEventReadRepository);
 
     @Test
     @DisplayName("create a event where generate a training")
