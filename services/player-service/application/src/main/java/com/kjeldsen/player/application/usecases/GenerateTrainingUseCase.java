@@ -10,6 +10,7 @@ import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingEventWriteRepository;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.engine.PointsGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ public class GenerateTrainingUseCase {
 
     private final PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository;
     private final PlayerReadRepository playerReadRepository;
+    private final PlayerWriteRepository playerWriteRepository;
     private final PlayerTrainingBloomEventReadRepository playerTrainingBloomEventReadRepository;
 
     public PlayerTrainingEvent generate(PlayerId playerId, PlayerSkill skill, Integer currentDay) {
@@ -64,6 +66,7 @@ public class GenerateTrainingUseCase {
             player.addSkillPoints(playerSkill, points);
             playerTrainingEvent.setPoints(points);
             playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
+            playerWriteRepository.save(player);
         }
 
         return playerTrainingEventWriteRepository.save(playerTrainingEvent);

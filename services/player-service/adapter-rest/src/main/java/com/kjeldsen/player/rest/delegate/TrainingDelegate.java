@@ -60,9 +60,18 @@ public class TrainingDelegate implements TrainingApiDelegate {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    private PlayerSkill playerSkill2DomainPlayerSkill(com.kjeldsen.player.domain.PlayerSkill playerSkill) {
+        return PlayerSkill.valueOf(playerSkill.name());
+    }
+
     private PlayerTrainingResponse playerTrainingEvent2PlayerTrainingResponse(PlayerTrainingEvent playerTrainingEvent) {
         return new PlayerTrainingResponse()
-            .points(playerTrainingEvent.getPoints());
+            .currentDay(playerTrainingEvent.getCurrentDay())
+            .playerId(playerTrainingEvent.getPlayerId().toString())
+            .skill(playerSkill2DomainPlayerSkill(playerTrainingEvent.getSkill()))
+            .points(playerTrainingEvent.getPoints())
+            .pointsBeforeTraining(playerTrainingEvent.getPointsBeforeTraining())
+            .pointsAfterTraining(playerTrainingEvent.getPointsAfterTraining());
     }
 
 }
