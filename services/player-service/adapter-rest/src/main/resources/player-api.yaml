@@ -601,6 +601,22 @@ components:
           maximum: 1000
           example: 350
 
+    RegisterRightDeclinePhaseRequest:
+      type: object
+      properties:
+        declineStartAge:
+          type: integer
+          format: int32
+          minimum: 15
+          maximum: 30
+          example: 18
+        declineSpeed:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 1000
+          example: 350
+
     Error:
       type: "object"
       required:

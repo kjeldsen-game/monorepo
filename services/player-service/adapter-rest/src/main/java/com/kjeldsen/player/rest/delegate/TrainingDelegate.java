@@ -1,10 +1,8 @@
 package com.kjeldsen.player.rest.delegate;
 
-import com.kjeldsen.player.application.usecases.GenerateBloomPhaseUseCase;
-import com.kjeldsen.player.application.usecases.GenerateDeclinePhaseUseCase;
-import com.kjeldsen.player.application.usecases.GenerateTrainingUseCase;
-import com.kjeldsen.player.application.usecases.GetHistoricalTrainingUseCase;
+import com.kjeldsen.player.application.usecases.*;
 import com.kjeldsen.player.domain.PlayerId;
+import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.rest.api.TrainingApiDelegate;
 import com.kjeldsen.player.rest.model.*;
@@ -23,6 +21,7 @@ public class TrainingDelegate implements TrainingApiDelegate {
     private final GetHistoricalTrainingUseCase getHistoricalTrainingUseCase;
     private final GenerateBloomPhaseUseCase generateBloomPhaseUseCase;
     private final GenerateDeclinePhaseUseCase generateDeclinePhaseUseCase;
+    private final GenerateSingleDeclineTrainingUseCase generateSingleDeclineTrainingUseCase;
 
     @Override
     public ResponseEntity<PlayerHistoricalTrainingResponse> getHistoricalTraining(String playerId) {
@@ -74,4 +73,26 @@ public class TrainingDelegate implements TrainingApiDelegate {
             .pointsAfterTraining(playerTrainingEvent.getPointsAfterTraining());
     }
 
+    @Override
+    public ResponseEntity<PlayerDeclineRightPhaseResponse> registerPlayerDeclineRightPhase(
+        String playerId,
+        RegisterRightDeclinePhaseRequest registerPlayerDeclineRightPhaseRequest) {
+
+        generateSingleDeclineTrainingUseCase.generate(
+            registerPlayerDeclineRightPhaseRequest.getDeclineSpeed(),
+            registerPlayerDeclineRightPhaseRequest.getDeclineStartAge());
+
+        return ResponseEntity.ok(new PlayerDeclineRightPhaseResponse());
+
+    }
+
+    private PlayerDeclineRightPhaseResponse playerDeclineRightPhase2PlayerDeclineRightPhaseResponse(PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
+        return new PlayerDeclineRightPhaseResponse()
+            .currentDay(playerTrainingDeclineEvent.getCurrentDay())
+            .playerId(playerTrainingDeclineEvent.getPlayerId().toString())
+            .skill(playerSkill2DomainPlayerSkill(playerTrainingDeclineEvent.getSkill()))
+            .pointsToSubtract(playerTrainingDeclineEvent.getPointsToSubtract())
+            .pointsBeforeTraining(playerTrainingDeclineEvent.getPointsBeforeTraining())
+            .pointsAfterTraining(playerTrainingDeclineEvent.getPointsAfterTraining());
+    }
 }
