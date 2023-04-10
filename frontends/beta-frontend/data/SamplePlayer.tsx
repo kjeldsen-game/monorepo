@@ -2,6 +2,9 @@ import { GridCellParams, GridValueGetterParams } from '@mui/x-data-grid'
 import React from 'react'
 import { Select, MenuItem, FormControl, SelectChangeEvent, InputLabel, NativeSelect } from '@mui/material'
 
+import { css } from '@emotion/react'
+import { BorderRight, BorderRightOutlined } from '@mui/icons-material'
+
 export type Position = 'DEF' | 'MID' | 'FW' | 'GK'
 
 export type Skill = 'DEFENSE_POSITION' | 'BALL_CONTROL' | 'SCORE' | 'PASSING' | 'OFFENSIVE_POSITION' | 'TACKLING' | 'CO'
@@ -34,6 +37,7 @@ export const samplePlayerColumn = [
     align: 'center',
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.BALL_CONTROL,
+    cellClassName: BorderRightOutlined,
   },
   {
     field: 'BALL_CONTROL',
