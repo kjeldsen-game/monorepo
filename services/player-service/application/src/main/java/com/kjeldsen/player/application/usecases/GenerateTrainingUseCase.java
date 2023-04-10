@@ -5,52 +5,47 @@ import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.EventId;
 import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
-import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventReadRepository;
-import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingEventWriteRepository;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.engine.PointsGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Range;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.IntStream;
+
+import static com.kjeldsen.player.engine.PointsGenerator.generatePointsBloom;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class GenerateSingleTrainingUseCase {
+public class GenerateTrainingUseCase {
 
-    private static final int FIRST_DAY_OF_TRAINING = 0;
     private static final Integer MIN_DAY = 1;
     private static final Integer MAX_DAY = 1000;
     private static final Range<Integer> RANGE_OF_DAYS = Range.between(MIN_DAY, MAX_DAY);
 
     private final PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository;
     private final PlayerReadRepository playerReadRepository;
+    private final PlayerWriteRepository playerWriteRepository;
     private final PlayerTrainingBloomEventReadRepository playerTrainingBloomEventReadRepository;
-    private final PlayerTrainingDeclineEventReadRepository playerTrainingDeclineEventReadRepository;
 
-    public void generate(PlayerId playerId, List<PlayerSkill> skills, Integer days) {
+    public PlayerTrainingEvent generate(PlayerId playerId, PlayerSkill skill, Integer currentDay) {
         log.info("Generating training");
 
-        validateDays(days);
-        validateSkills(skills);
+        validateDays(currentDay);
 
         Player player = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
 
-        IntStream.range(FIRST_DAY_OF_TRAINING, days)
-            .forEach(currentDay -> skills.forEach(skill -> generateAndStoreEvent(player, skill, currentDay)));
+        return generateAndStoreEvent(player, skill, currentDay);
     }
 
-    private void generateAndStoreEvent(Player player, PlayerSkill playerSkill, Integer currentDay) {
+    private PlayerTrainingEvent generateAndStoreEvent(Player player, PlayerSkill playerSkill, Integer currentDay) {
 
         PlayerTrainingEvent playerTrainingEvent = PlayerTrainingEvent.builder()
             .eventId(EventId.generate())
@@ -66,52 +61,36 @@ public class GenerateSingleTrainingUseCase {
         playerBloomEvent
             .ifPresent(bloomEvent -> handleBloomEvent(player, playerTrainingEvent, bloomEvent));
 
-        Optional<PlayerTrainingDeclineEvent> playerDeclineEvent = playerTrainingDeclineEventReadRepository.findOneByPlayerId(player.getId());
-
-        playerDeclineEvent
-            .ifPresent(declineEvent -> handleDeclineEvent(player, playerTrainingEvent, declineEvent));
-
-        if (playerBloomEvent.isEmpty() && playerDeclineEvent.isEmpty()) {
+        if (playerBloomEvent.isEmpty()) {
             Integer points = PointsGenerator.generatePointsRise(currentDay);
             player.addSkillPoints(playerSkill, points);
             playerTrainingEvent.setPoints(points);
+            playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
+            playerWriteRepository.save(player);
         }
 
-        playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
-        playerTrainingEventWriteRepository.save(playerTrainingEvent);
+        return playerTrainingEventWriteRepository.save(playerTrainingEvent);
     }
 
     private void handleBloomEvent(Player player, PlayerTrainingEvent playerTrainingEvent, PlayerTrainingBloomEvent playerTrainingBloomEvent) {
         if (!player.isBloomActive(playerTrainingBloomEvent)) {
             return;
         }
-        Integer points = PointsGenerator.generatePoints(playerTrainingBloomEvent.getBloomSpeed(),
-            PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay()));
-        player.addSkillPoints(playerTrainingEvent.getSkill(), points);
-        playerTrainingEvent.setBloom(playerTrainingBloomEvent);
-        playerTrainingEvent.setPoints(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
-    }
 
-    private void handleDeclineEvent(Player player, PlayerTrainingEvent playerTrainingEvent, PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
-        if (!player.isDeclineActive(playerTrainingDeclineEvent)) {
-            return;
-        }
-        Integer points = PointsGenerator.generatePoints(playerTrainingDeclineEvent.getDeclineSpeed(),
-            PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay()));
-        player.subtractSkillPoints(playerTrainingEvent.getSkill(), points);
-        playerTrainingEvent.setDecline(playerTrainingDeclineEvent);
-        playerTrainingEvent.setPoints(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
+        Integer points = PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay());
+        player.addSkillPoints(playerTrainingEvent.getSkill(), points);
+
+        Integer pointsToRise = generatePointsBloom(playerTrainingBloomEvent.getBloomSpeed(), points);
+        player.addSkillPoints(playerTrainingEvent.getSkill(), pointsToRise);
+        playerTrainingEvent.setBloom(playerTrainingBloomEvent);
+        playerTrainingEvent.setPoints(points);
+        playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
+
     }
 
     public void validateDays(Integer days) {
         if (!RANGE_OF_DAYS.contains(days)) {
             throw new IllegalArgumentException("Days must be between 1 and 1000");
-        }
-    }
-
-    public void validateSkills(List<PlayerSkill> skills) {
-        if (CollectionUtils.isEmpty(skills)) {
-            throw new IllegalArgumentException("Skills cannot be null or empty");
         }
     }
 

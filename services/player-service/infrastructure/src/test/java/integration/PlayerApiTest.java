@@ -14,7 +14,7 @@ import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyWrit
 import com.kjeldsen.player.persistence.adapters.mongo.PlayerReadRepositoryMongoAdapter;
 import com.kjeldsen.player.persistence.adapters.mongo.PlayerWriteRepositoryMongoAdapter;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
-import com.kjeldsen.player.rest.api.PlayersApiController;
+import com.kjeldsen.player.rest.api.PlayerApiController;
 import com.kjeldsen.player.rest.delegate.PlayersDelegate;
 import com.kjeldsen.player.rest.model.CreatePlayerRequest;
 import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
@@ -52,7 +52,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureDataMongo
 @AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
-@WebMvcTest(controllers = PlayersApiController.class)
+@WebMvcTest(controllers = PlayerApiController.class)
 @ContextConfiguration(classes = {PlayerServiceApplication.class})
 @Import({PlayersDelegate.class,
     CreatePlayerUseCase.class,

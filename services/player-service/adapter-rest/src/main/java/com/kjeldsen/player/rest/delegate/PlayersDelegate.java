@@ -2,13 +2,10 @@ package com.kjeldsen.player.rest.delegate;
 
 import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
-import com.kjeldsen.player.domain.NewPlayer;
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerAge;
-import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
-import com.kjeldsen.player.rest.api.PlayersApiDelegate;
+import com.kjeldsen.player.rest.api.PlayerApiDelegate;
 import com.kjeldsen.player.rest.model.CreatePlayerRequest;
 import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
 import com.kjeldsen.player.rest.model.PlayerResponse;
@@ -23,7 +20,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
-public class PlayersDelegate implements PlayersApiDelegate {
+public class PlayersDelegate implements PlayerApiDelegate {
 
     private final CreatePlayerUseCase createPlayerUseCase;
     private final GeneratePlayersUseCase generatePlayersUseCase;
@@ -57,6 +54,13 @@ public class PlayersDelegate implements PlayersApiDelegate {
         List<Player> players = playerReadRepository.find(query);
         List<PlayerResponse> response = players.stream().map(this::mapToResponse).toList();
         return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<PlayerResponse> getPlayerById(String playerId) {
+        Player player = playerReadRepository.findOneById(PlayerId.of(playerId))
+            .orElseThrow(() -> new RuntimeException("Player not found"));
+        return ResponseEntity.ok(mapToResponse(player));
     }
 
     private PlayerResponse mapToResponse(Player player) {
