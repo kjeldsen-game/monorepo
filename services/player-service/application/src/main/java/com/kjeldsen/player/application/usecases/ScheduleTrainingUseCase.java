@@ -12,13 +12,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Range;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.Set;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -32,18 +28,17 @@ public class ScheduleTrainingUseCase {
     private final PlayerTrainingScheduledEventWriteRepository playerTrainingScheduledEventWriteRepository;
     private final PlayerReadRepository playerReadRepository;
 
-    public void generate(PlayerId playerId, Set<PlayerSkill> skills, Integer trainingDays) {
+    public void generate(PlayerId playerId, PlayerSkill skill, Integer trainingDays) {
         log.info("Generating training");
 
         validateDays(trainingDays);
-        validateSkills(skills);
 
         Player player = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
 
-        generateAndStoreEvent(player, skills, trainingDays);
+        generateAndStoreEvent(player, skill, trainingDays);
     }
 
-    private void generateAndStoreEvent(Player player, Set<PlayerSkill> skills, Integer trainingDays) {
+    private void generateAndStoreEvent(Player player, PlayerSkill skill, Integer trainingDays) {
 
         final Instant now = InstantProvider.now();
 
@@ -51,7 +46,7 @@ public class ScheduleTrainingUseCase {
             .eventId(EventId.generate())
             .eventDate(InstantProvider.now())
             .playerId(player.getId())
-            .skills(skills)
+            .skill(skill)
             .trainingDays(trainingDays)
             .startDate(now.truncatedTo(ChronoUnit.DAYS))
             .endDate(now.plus(trainingDays, ChronoUnit.DAYS).truncatedTo(ChronoUnit.DAYS))
@@ -63,12 +58,6 @@ public class ScheduleTrainingUseCase {
     public void validateDays(Integer days) {
         if (!RANGE_OF_DAYS.contains(days)) {
             throw new IllegalArgumentException("Days must be between 1 and 1000");
-        }
-    }
-
-    public void validateSkills(Set<PlayerSkill> skills) {
-        if (CollectionUtils.isEmpty(skills)) {
-            throw new IllegalArgumentException("Skills cannot be null or empty");
         }
     }
 

@@ -8,6 +8,7 @@ import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventWriteRepository;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.engine.PointsGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,27 +24,21 @@ import static com.kjeldsen.player.engine.PointsGenerator.generateDecreasePoints;
 @Component
 public class GenerateSingleDeclineTrainingUseCase {
 
-    private static final int FIRST_DAY_OF_TRAINING = 1;
-    private static final Integer MIN_DAY = 1;
-    private static final Integer MAX_DAY = 1000;
-    private static final Range<Integer> RANGE_OF_DAYS = Range.between(MIN_DAY, MAX_DAY);
-
     private final PlayerTrainingDeclineEventWriteRepository playerTrainingDeclineEventWriteRepository;
     private final PlayerReadRepository playerReadRepository;
+    private final PlayerWriteRepository playerWriteRepository;
 
-    public void generate(PlayerId playerId, Integer days) {
+    public PlayerTrainingDeclineEvent generate(PlayerId playerId, Integer currentDay, Integer declineSpeed) {
         log.info("Generating a decline phase");
 
-        validateDays(days);
         PlayerSkill skill = randomSkillProvider();
 
         Player player = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
 
-        IntStream.rangeClosed(FIRST_DAY_OF_TRAINING, days)
-            .forEach(currentDay -> generateAndStoreEvent(player, skill, currentDay));
+     return generateAndStoreEvent(player, skill, currentDay, declineSpeed);
     }
 
-    private void generateAndStoreEvent(Player player, PlayerSkill playerSkill, Integer currentDay) {
+    private PlayerTrainingDeclineEvent generateAndStoreEvent(Player player, PlayerSkill playerSkill, Integer currentDay, Integer declineSpeed) {
 
         PlayerTrainingDeclineEvent playerTrainingDeclineEvent = PlayerTrainingDeclineEvent.builder()
             .eventId(EventId.generate())
@@ -51,14 +46,19 @@ public class GenerateSingleDeclineTrainingUseCase {
             .playerId(player.getId())
             .skill(playerSkill)
             .currentDay(currentDay)
+            .declineSpeed(declineSpeed)
             .pointsBeforeTraining(player.getActualSkillPoints(playerSkill))
             .build();
 
         Integer points = PointsGenerator.generatePointsRise(currentDay);
-        player.subtractSkillPoints(playerSkill, generateDecreasePoints(playerTrainingDeclineEvent.getDeclineSpeed(), points));
+        player.subtractSkillPoints(playerSkill, generateDecreasePoints(declineSpeed, points));
         playerTrainingDeclineEvent.setPointsToSubtract(points);
         playerTrainingDeclineEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
-        playerTrainingDeclineEventWriteRepository.save(playerTrainingDeclineEvent);
+
+        playerTrainingDeclineEvent = playerTrainingDeclineEventWriteRepository.save(playerTrainingDeclineEvent);
+        playerWriteRepository.save(player);
+
+        return playerTrainingDeclineEvent;
     }
 
     private PlayerSkill randomSkillProvider() {
@@ -67,9 +67,4 @@ public class GenerateSingleDeclineTrainingUseCase {
         return allSkills[random];
     }
 
-    public void validateDays(Integer days) {
-        if (!RANGE_OF_DAYS.contains(days)) {
-            throw new IllegalArgumentException("Days must be between 1 and 1000");
-        }
-    }
 }

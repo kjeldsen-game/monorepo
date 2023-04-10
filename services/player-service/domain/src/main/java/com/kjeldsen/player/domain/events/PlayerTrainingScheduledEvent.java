@@ -22,7 +22,7 @@ import java.util.Set;
 public class PlayerTrainingScheduledEvent extends Event {
 
     private PlayerId playerId;
-    private Set<PlayerSkill> skills; // TODO scheduled individual by skills - so API can send multiple skills to train for simplicity but BE generated per each
+    private PlayerSkill skill;
     private Integer trainingDays;
     private Instant startDate;
     private Instant endDate;

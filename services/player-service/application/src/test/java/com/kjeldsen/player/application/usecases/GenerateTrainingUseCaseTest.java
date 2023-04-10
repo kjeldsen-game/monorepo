@@ -43,7 +43,6 @@ class GenerateTrainingUseCaseTest {
     @DisplayName("create a event where generate a training")
     void generate() {
 
-
         EventId eventId1 = EventId.generate();
         EventId eventId2 = EventId.generate();
         Instant now1 = Instant.now();
@@ -53,7 +52,7 @@ class GenerateTrainingUseCaseTest {
 
         when(playerReadRepository.findOneById(playerId)).thenReturn(Optional.of(getPlayer(playerId)));
 
-        Integer days = 2;
+        Integer days = 1;
 
         try (
             MockedStatic<EventId> eventIdMockedStatic = Mockito.mockStatic(EventId.class);
@@ -67,26 +66,20 @@ class GenerateTrainingUseCaseTest {
 
             generateTrainingUseCase.generate(playerId, PlayerSkill.SCORE, days);
 
-            eventIdMockedStatic.verify(EventId::generate, times(4));
-            instantMockedStatic.verify(Instant::now, times(4));
+            eventIdMockedStatic.verify(EventId::generate);
+            instantMockedStatic.verify(Instant::now);
             eventIdMockedStatic.verifyNoMoreInteractions();
             instantMockedStatic.verifyNoMoreInteractions();
 
             ArgumentCaptor<PlayerTrainingEvent> argumentCaptor = ArgumentCaptor.forClass(PlayerTrainingEvent.class);
-            verify(playerTrainingEventWriteRepository, times(4)).save(argumentCaptor.capture());
+            verify(playerTrainingEventWriteRepository).save(argumentCaptor.capture());
 
             List<PlayerTrainingEvent> playerTrainingEvents = argumentCaptor.getAllValues();
 
-            assertEquals(4, playerTrainingEvents.size());
+            assertEquals(1, playerTrainingEvents.size());
 
             assertEquals(PlayerSkill.SCORE, playerTrainingEvents.get(0).getSkill());
-            assertEquals(5, playerTrainingEvents.get(0).getPoints());
-            assertEquals(PlayerSkill.CO, playerTrainingEvents.get(1).getSkill());
-            assertEquals(5, playerTrainingEvents.get(1).getPoints());
-            assertEquals(PlayerSkill.SCORE, playerTrainingEvents.get(2).getSkill());
-            assertEquals(3, playerTrainingEvents.get(2).getPoints());
-            assertEquals(PlayerSkill.CO, playerTrainingEvents.get(3).getSkill());
-            assertEquals(3, playerTrainingEvents.get(3).getPoints());
+            assertEquals(3, playerTrainingEvents.get(0).getPoints());
 
             assertThat(playerTrainingEvents).allMatch(player -> player.getPlayerId().equals(playerId));
 

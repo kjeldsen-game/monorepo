@@ -31,23 +31,13 @@ public class FindAndProcessScheduledTrainingUseCase {
                 IntStream.rangeClosed(1, scheduledTraining.getTrainingDays())
                     .forEach(day -> {
 
-                        List<PlayerTrainingEvent> playerTrainingEventsForTheDay = new ArrayList<>();
+                        PlayerTrainingEvent trainingEvent = generateTrainingUseCase.generate(scheduledTraining.getPlayerId(), scheduledTraining.getSkill(),
+                            currentDay.getAndIncrement());
+                        playerTrainingEvents.add(trainingEvent);
 
-                        scheduledTraining.getSkills().forEach(skill -> {
-                            PlayerTrainingEvent trainingEvent = generateTrainingUseCase.generate(scheduledTraining.getPlayerId(), skill,
-                                currentDay.get());
-                            playerTrainingEventsForTheDay.add(trainingEvent);
-                        });
-
-                        if (playerTrainingEventsForTheDay
-                            .stream()
-                            .anyMatch(trainingEvent -> trainingEvent.getPointsAfterTraining() > trainingEvent.getPointsBeforeTraining())) {
+                        if (trainingEvent.getPointsAfterTraining() > trainingEvent.getPointsBeforeTraining()) {
                             currentDay.set(1);
-                        } else {
-                            currentDay.getAndIncrement();
                         }
-
-                        playerTrainingEvents.addAll(playerTrainingEventsForTheDay);
                     });
             });
 

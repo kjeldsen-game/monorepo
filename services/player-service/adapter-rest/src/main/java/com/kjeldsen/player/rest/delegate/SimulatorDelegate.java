@@ -1,21 +1,28 @@
 package com.kjeldsen.player.rest.delegate;
 
 import com.kjeldsen.player.application.usecases.FindAndProcessScheduledTrainingUseCase;
+import com.kjeldsen.player.application.usecases.GenerateSingleDeclineTrainingUseCase;
 import com.kjeldsen.player.application.usecases.ScheduleTrainingUseCase;
 import com.kjeldsen.player.domain.PlayerId;
+import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.rest.api.SimulatorApiDelegate;
+import com.kjeldsen.player.rest.model.PlayerDeclineResponse;
 import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
 import com.kjeldsen.player.rest.model.PlayerSkill;
 import com.kjeldsen.player.rest.model.PlayerTrainingResponse;
+import com.kjeldsen.player.rest.model.RegisterSimulatedDeclineRequest;
 import com.kjeldsen.player.rest.model.RegisterSimulatedScheduledTrainingRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @RequiredArgsConstructor
 @Component
@@ -23,20 +30,19 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
 
     private final ScheduleTrainingUseCase scheduleTrainingUseCase;
     private final FindAndProcessScheduledTrainingUseCase findAndProcessScheduledTrainingUseCase;
+    private final GenerateSingleDeclineTrainingUseCase generateSingleDeclineTrainingUseCase;
 
     @Override
     public ResponseEntity<PlayerHistoricalTrainingResponse> registerSimulatedScheduledTraining(
         String playerId,
         RegisterSimulatedScheduledTrainingRequest registerSimulatedScheduledTrainingRequest) {
 
-        scheduleTrainingUseCase.generate(
-            PlayerId.of(playerId),
-            registerSimulatedScheduledTrainingRequest.getSkills()
-                .stream()
-                .map(this::playerSkill2DomainPlayerSkill)
-                .collect(Collectors.toSet()),
-            registerSimulatedScheduledTrainingRequest.getDays()
-        );
+        registerSimulatedScheduledTrainingRequest.getSkills()
+                .forEach(playerSkill -> scheduleTrainingUseCase.generate(
+                    PlayerId.of(playerId),
+                    this.playerSkill2DomainPlayerSkill(playerSkill),
+                    registerSimulatedScheduledTrainingRequest.getDays()
+                ));
 
         List<PlayerTrainingEvent> trainings =  findAndProcessScheduledTrainingUseCase.findAndProcess(InstantProvider.nowAsLocalDate())
             .stream()
@@ -48,6 +54,41 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
             .trainings(trainings.stream()
                 .map(this::playerTrainingEvent2PlayerTrainingResponse)
                 .toList()));
+    }
+
+    @Override
+    public ResponseEntity<List<PlayerDeclineResponse>> registerSimulatedDecline(String playerId,
+        RegisterSimulatedDeclineRequest registerSimulatedDeclineRequest) {
+
+        List<PlayerDeclineResponse> declineEvents = new ArrayList<>();
+
+        final AtomicInteger currentDayForDecline = new AtomicInteger(registerSimulatedDeclineRequest.getDaysToDecline());
+        IntStream.rangeClosed(1, registerSimulatedDeclineRequest.getDaysToDecline())
+            .forEach(i -> {
+                PlayerTrainingDeclineEvent declineEvent = generateSingleDeclineTrainingUseCase.generate(
+                    PlayerId.of(playerId),
+                    currentDayForDecline.getAndIncrement(),
+                    registerSimulatedDeclineRequest.getDeclineSpeed());
+
+                declineEvents.add(playerTrainingDeclineEventToPlayerDeclineResponse(declineEvent));
+
+                if(declineEvent.getPointsToSubtract() > 0){
+                    currentDayForDecline.set(1);
+                }
+            });
+
+        return ResponseEntity.ok(declineEvents);
+    }
+
+    private PlayerDeclineResponse playerTrainingDeclineEventToPlayerDeclineResponse(
+        PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
+        return new PlayerDeclineResponse()
+            .currentDay(playerTrainingDeclineEvent.getCurrentDay())
+            .playerId(playerTrainingDeclineEvent.getPlayerId().toString())
+            .skill(playerSkill2DomainPlayerSkill(playerTrainingDeclineEvent.getSkill()))
+            .pointsToSubtract(playerTrainingDeclineEvent.getPointsToSubtract())
+            .pointsBeforeTraining(playerTrainingDeclineEvent.getPointsBeforeTraining())
+            .pointsAfterTraining(playerTrainingDeclineEvent.getPointsAfterTraining());
     }
 
     private com.kjeldsen.player.domain.PlayerSkill playerSkill2DomainPlayerSkill(PlayerSkill playerSkill) {
