@@ -1,8 +1,6 @@
 import { GridCellParams, GridValueGetterParams } from '@mui/x-data-grid'
-import { useState } from 'react'
 import React from 'react'
 import { Select, MenuItem, FormControl, SelectChangeEvent, InputLabel, NativeSelect } from '@mui/material'
-import PlayerTactics from '@/shared/components/PlayerTactics'
 
 export type Position = 'DEF' | 'MID' | 'FW' | 'GK'
 
@@ -23,10 +21,6 @@ export interface PlayerStats {
   stats: Stats
 }
 
-function getPlayerStats(params: GridValueGetterParams, skill: Skill) {
-  return params.row.stats.skill
-}
-
 export const samplePlayerColumn = [
   { field: 'status', headerName: 'Health', headerAlign: 'center', align: 'center', minWidth: 70, flex: 1 },
   { field: 'name', headerName: 'Name', headerAlign: 'center', align: 'center', minWidth: 130, flex: 1 },
@@ -39,7 +33,7 @@ export const samplePlayerColumn = [
     headerAlign: 'center',
     align: 'center',
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.DEFENSE_POSITION,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.BALL_CONTROL,
   },
   {
     field: 'BALL_CONTROL',
@@ -52,7 +46,7 @@ export const samplePlayerColumn = [
   },
   {
     field: 'SCORE',
-    headerName: 'Score',
+    headerName: 'SC',
     headerAlign: 'center',
     align: 'center',
     minWidth: 50,
@@ -61,7 +55,7 @@ export const samplePlayerColumn = [
   },
   {
     field: 'PASSING',
-    headerName: 'Passing',
+    headerName: 'PA',
     headerAlign: 'center',
     align: 'center',
     minWidth: 50,
@@ -79,7 +73,7 @@ export const samplePlayerColumn = [
   },
   {
     field: 'TACKLING',
-    headerName: 'Tackling',
+    headerName: 'TA',
     headerAlign: 'center',
     align: 'center',
     minWidth: 50,
@@ -89,6 +83,69 @@ export const samplePlayerColumn = [
   {
     field: 'CO',
     headerName: 'CO',
+    headerAlign: 'center',
+    align: 'center',
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+  },
+  {
+    field: 'GP',
+    headerName: 'GP',
+    headerAlign: 'center',
+    align: 'center',
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+  },
+  {
+    field: 'GOALS',
+    headerName: 'GLs',
+    headerAlign: 'center',
+    align: 'center',
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+  },
+  {
+    field: 'ASSISTS',
+    headerName: 'As',
+    headerAlign: 'center',
+    align: 'center',
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+  },
+  {
+    field: 'TAKEDOWNS',
+    headerName: 'Ta',
+    headerAlign: 'center',
+    align: 'center',
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+  },
+  {
+    field: 'CRD',
+    headerName: 'Crd',
+    headerAlign: 'center',
+    align: 'center',
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+  },
+  {
+    field: 'MOM',
+    headerName: 'MoM',
+    headerAlign: 'center',
+    align: 'center',
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+  },
+  {
+    field: 'RATING',
+    headerName: 'Rating',
     headerAlign: 'center',
     align: 'center',
     minWidth: 50,
@@ -160,9 +217,9 @@ export function PlayerOrderSelect() {
         autoWidth
         onChange={handleChangePlayerOrder}
         sx={{ marginBottom: '1rem' }}>
-        <MenuItem value={'playerOrder1'}>PO1</MenuItem>
-        <MenuItem value={'playerOrder2'}>PO2</MenuItem>
-        <MenuItem value={'playerOrder3'}>PO3</MenuItem>
+        <MenuItem value={'playerOrder1'}>playerOrder1</MenuItem>
+        <MenuItem value={'playerOrder2'}>playerOrder2</MenuItem>
+        <MenuItem value={'playerOrder3'}>playerOrder3</MenuItem>
       </Select>
     </FormControl>
   )
