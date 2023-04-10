@@ -6,6 +6,7 @@ import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.rest.api.PlayerApiDelegate;
+import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.model.CreatePlayerRequest;
 import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
 import com.kjeldsen.player.rest.model.PlayerResponse;
@@ -40,7 +41,7 @@ public class PlayersDelegate implements PlayerApiDelegate {
     @Override
     public ResponseEntity<List<PlayerResponse>> generatePlayer(GeneratePlayersRequest generatePlayersRequest) {
         List<Player> players = generatePlayersUseCase.generate(generatePlayersRequest.getNumberOfPlayers());
-        List<PlayerResponse> response = players.stream().map(this::mapToResponse).toList();
+        List<PlayerResponse> response = players.stream().map(PlayerMapper.INSTANCE::map).toList();
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -65,7 +66,7 @@ public class PlayersDelegate implements PlayerApiDelegate {
 
     private PlayerResponse mapToResponse(Player player) {
         return new PlayerResponse()
-            .id(UUID.fromString(player.getId().value()))
+            .id(player.getId().value())
             .name(player.getName().value())
             .age(player.getAge().value())
             .position(com.kjeldsen.player.rest.model.PlayerPosition.valueOf(player.getPosition().name()))
