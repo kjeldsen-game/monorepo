@@ -1,9 +1,7 @@
 import { GridCellParams, GridValueGetterParams } from '@mui/x-data-grid'
 import React from 'react'
 import { Select, MenuItem, FormControl, SelectChangeEvent, InputLabel, NativeSelect } from '@mui/material'
-
-import { css } from '@emotion/react'
-import { BorderRight, BorderRightOutlined } from '@mui/icons-material'
+import { GridAlignment } from '@mui/x-data-grid'
 
 export type Position = 'DEF' | 'MID' | 'FW' | 'GK'
 
@@ -25,25 +23,24 @@ export interface PlayerStats {
 }
 
 export const samplePlayerColumn = [
-  { field: 'status', headerName: 'Health', headerAlign: 'center', align: 'center', minWidth: 70, flex: 1 },
-  { field: 'name', headerName: 'Name', headerAlign: 'center', align: 'center', minWidth: 130, flex: 1 },
-  { field: 'age', headerName: 'Age', headerAlign: 'center', align: 'center', minWidth: 70, flex: 1 },
-  { field: 'position', headerName: 'Position', headerAlign: 'center', align: 'center', minWidth: 70, flex: 1 },
+  { field: 'status', headerName: 'Health', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
+  { field: 'name', headerName: 'Name', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 130, flex: 1 },
+  { field: 'age', headerName: 'Age', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
+  { field: 'position', headerName: 'Position', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
   {
     field: 'DEFENSE_POSITION',
     headerName: 'DP',
     minWidth: 50,
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.BALL_CONTROL,
-    cellClassName: BorderRightOutlined,
   },
   {
     field: 'BALL_CONTROL',
     headerName: 'BC',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.BALL_CONTROL,
@@ -51,8 +48,8 @@ export const samplePlayerColumn = [
   {
     field: 'SCORE',
     headerName: 'SC',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.SCORE,
@@ -60,8 +57,8 @@ export const samplePlayerColumn = [
   {
     field: 'PASSING',
     headerName: 'PA',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.PASSING,
@@ -69,8 +66,8 @@ export const samplePlayerColumn = [
   {
     field: 'OFFENSIVE_POSITION',
     headerName: 'OP',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.OFFENSIVE_POSITION,
@@ -78,8 +75,8 @@ export const samplePlayerColumn = [
   {
     field: 'TACKLING',
     headerName: 'TA',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.TACKLING,
@@ -87,8 +84,8 @@ export const samplePlayerColumn = [
   {
     field: 'CO',
     headerName: 'CO',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
@@ -96,8 +93,8 @@ export const samplePlayerColumn = [
   {
     field: 'GP',
     headerName: 'GP',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
@@ -105,8 +102,8 @@ export const samplePlayerColumn = [
   {
     field: 'GOALS',
     headerName: 'GLs',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
@@ -114,8 +111,8 @@ export const samplePlayerColumn = [
   {
     field: 'ASSISTS',
     headerName: 'As',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
@@ -123,8 +120,8 @@ export const samplePlayerColumn = [
   {
     field: 'TAKEDOWNS',
     headerName: 'Ta',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
@@ -132,8 +129,8 @@ export const samplePlayerColumn = [
   {
     field: 'CRD',
     headerName: 'Crd',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
@@ -141,8 +138,8 @@ export const samplePlayerColumn = [
   {
     field: 'MOM',
     headerName: 'MoM',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
@@ -150,8 +147,8 @@ export const samplePlayerColumn = [
   {
     field: 'RATING',
     headerName: 'Rating',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
@@ -159,8 +156,8 @@ export const samplePlayerColumn = [
   {
     field: 'playerOrder1',
     headerName: 'PO1',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     renderCell: (params: GridCellParams) => <PlayerOrderSelect />,
     minWidth: 70,
     flex: 1,
@@ -168,8 +165,8 @@ export const samplePlayerColumn = [
   {
     field: 'playerOrder2',
     headerName: 'PO2',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     renderCell: (params: GridCellParams) => <PlayerOrderSelect />,
     minWidth: 70,
     flex: 1,
@@ -177,8 +174,8 @@ export const samplePlayerColumn = [
   {
     field: 'playerOrder3',
     headerName: 'PO3',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     renderCell: (params: GridCellParams) => <PlayerOrderSelect />,
     minWidth: 70,
     flex: 1,
@@ -186,8 +183,8 @@ export const samplePlayerColumn = [
   {
     field: 'playerOrder4',
     headerName: 'PO4',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     renderCell: (params: GridCellParams) => <PlayerOrderSelect />,
     minWidth: 70,
     flex: 1,
@@ -195,8 +192,8 @@ export const samplePlayerColumn = [
   {
     field: 'playerOrder5',
     headerName: 'PO5',
-    headerAlign: 'center',
-    align: 'center',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
     renderCell: (params: GridCellParams) => <PlayerOrderSelect />,
     minWidth: 70,
     flex: 1,
