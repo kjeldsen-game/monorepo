@@ -16,8 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -64,13 +62,4 @@ public class PlayersDelegate implements PlayerApiDelegate {
         return ResponseEntity.ok(PlayerMapper.INSTANCE.map(player));
     }
 
-    private PlayerResponse mapToResponse(Player player) {
-        return new PlayerResponse()
-            .id(player.getId().value())
-            .name(player.getName().value())
-            .age(player.getAge().value())
-            .position(com.kjeldsen.player.rest.model.PlayerPosition.valueOf(player.getPosition().name()))
-            .actualSkills(player.getActualSkills().values().entrySet().stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())));
-    }
 }
