@@ -62,7 +62,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
 
         List<PlayerDeclineResponse> declineEvents = new ArrayList<>();
 
-        final AtomicInteger currentDayForDecline = new AtomicInteger(registerSimulatedDeclineRequest.getDaysToDecline());
+        final AtomicInteger currentDayForDecline = new AtomicInteger(1);
         IntStream.rangeClosed(1, registerSimulatedDeclineRequest.getDaysToDecline())
             .forEach(i -> {
                 PlayerTrainingDeclineEvent declineEvent = generateSingleDeclineTrainingUseCase.generate(
