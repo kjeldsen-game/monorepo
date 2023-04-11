@@ -30,12 +30,4 @@ public class CreatePlayerUseCase {
         playerWriteRepository.save(player);
     }
 
-    // FIXME throw NullPointerException: getEnclosingMethod() is null
-    // TODO replace this by annotation to get free login
-    private void log() {
-        log.info("Calling {}#{}",
-            this.getClass().getSimpleName(),
-            this.getClass().getEnclosingMethod().getName());
-    }
-
 }

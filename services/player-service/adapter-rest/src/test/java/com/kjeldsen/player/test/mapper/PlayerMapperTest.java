@@ -39,7 +39,7 @@ class PlayerMapperTest {
 
         PlayerResponse playerResponse = PlayerMapper.INSTANCE.map(player);
 
-        assertEquals(playerId.toString(), playerResponse.getId().toString());
+        assertEquals(playerId.toString(), playerResponse.getId());
         assertEquals("10", playerResponse.getActualSkills().get("SCORE"));
         // TODO add remaining testing
     }

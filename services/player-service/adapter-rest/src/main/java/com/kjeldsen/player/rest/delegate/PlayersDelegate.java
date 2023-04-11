@@ -53,7 +53,7 @@ public class PlayersDelegate implements PlayerApiDelegate {
             .page(page)
             .build();
         List<Player> players = playerReadRepository.find(query);
-        List<PlayerResponse> response = players.stream().map(this::mapToResponse).toList();
+        List<PlayerResponse> response = players.stream().map(PlayerMapper.INSTANCE::map).toList();
         return ResponseEntity.ok(response);
     }
 
@@ -61,7 +61,7 @@ public class PlayersDelegate implements PlayerApiDelegate {
     public ResponseEntity<PlayerResponse> getPlayerById(String playerId) {
         Player player = playerReadRepository.findOneById(PlayerId.of(playerId))
             .orElseThrow(() -> new RuntimeException("Player not found"));
-        return ResponseEntity.ok(mapToResponse(player));
+        return ResponseEntity.ok(PlayerMapper.INSTANCE.map(player));
     }
 
     private PlayerResponse mapToResponse(Player player) {

@@ -61,5 +61,5 @@ public class PointsGenerator {
     public static int generateDecreasePoints(float probability, int points) {
         return (int) ((probability * points) / 100);
     }
-    // TODO Dali 50% for decline generatePoints -> generatePointsBloom and create generatePointsDecline
+
 }
