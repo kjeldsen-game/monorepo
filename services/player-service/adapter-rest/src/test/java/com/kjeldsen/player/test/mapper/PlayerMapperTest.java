@@ -1,12 +1,6 @@
 package com.kjeldsen.player.test.mapper;
 
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerActualSkills;
-import com.kjeldsen.player.domain.PlayerAge;
-import com.kjeldsen.player.domain.PlayerId;
-import com.kjeldsen.player.domain.PlayerName;
-import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerSkill;
+import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.model.PlayerResponse;
 import org.junit.jupiter.api.Test;
@@ -18,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PlayerMapperTest {
 
     @Test
-     void mapPlayerToPlayerResponse() {
+    void mapPlayerToPlayerResponse() {
 
         PlayerId playerId = PlayerId.generate();
         PlayerAge playerAge = PlayerAge.of(20);
@@ -41,7 +35,10 @@ class PlayerMapperTest {
 
         assertEquals(playerId.toString(), playerResponse.getId());
         assertEquals("10", playerResponse.getActualSkills().get("SCORE"));
-        // TODO add remaining testing
+        assertEquals(playerName.value(), playerResponse.getName());
+        assertEquals(playerAge.value(), playerResponse.getAge());
+        assertEquals(PlayerPosition.FORWARD.toString(), playerResponse.getPosition().toString());
+        assertEquals(2, playerResponse.getActualSkills().size());
     }
 
 }
