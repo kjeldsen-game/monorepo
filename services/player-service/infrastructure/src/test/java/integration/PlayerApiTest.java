@@ -142,7 +142,7 @@ class PlayerApiTest extends AbstractIntegrationTest {
                 .filter(player -> player.getPosition().name().equals("FORWARD"))
                 .map(player ->
                     new PlayerResponse()
-                        .id(UUID.fromString(player.getId().value()))
+                        .id(player.getId().value())
                         .name(player.getName().value())
                         .age(player.getAge().value())
                         .position(PlayerPosition.fromValue(player.getPosition().name()))
