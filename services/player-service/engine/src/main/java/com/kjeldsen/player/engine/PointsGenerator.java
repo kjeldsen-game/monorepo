@@ -19,19 +19,19 @@ public class PointsGenerator {
 
     public static double probabilityRiseBasedOnCurrentDay(int currentDay) {
         return switch (currentDay) {
-            case 1 -> 7.14;
-            case 2 -> 14.29;
-            case 3 -> 21.43;
-            case 4 -> 28.57;
-            case 5 -> 35.71;
-            case 6 -> 42.86;
-            case 7 -> 50;
-            case 8 -> 57.14;
-            case 9 -> 64.29;
-            case 10 -> 71.43;
-            case 11 -> 78.57;
-            case 12 -> 85.71;
-            case 13 -> 92.86;
+            case 1 -> 2.03;
+            case 2 -> 2.73;
+            case 3 -> 3.69;
+            case 4 -> 4.98;
+            case 5 -> 6.73;
+            case 6 -> 9.08;
+            case 7 -> 12.26;
+            case 8 -> 16.55;
+            case 9 -> 22.34;
+            case 10 -> 30.16;
+            case 11 -> 40.72;
+            case 12 -> 54.97;
+            case 13 -> 74.20;
             case 14 -> 100;
             default -> throw new IllegalStateException("Unexpected value (from 1 - 14 days): " + currentDay);
         };

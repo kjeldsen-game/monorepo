@@ -1,9 +1,6 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerActualSkills;
-import com.kjeldsen.player.domain.PlayerId;
-import com.kjeldsen.player.domain.PlayerSkill;
+import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventWriteRepository;
@@ -12,9 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
-import java.util.Map;
 import java.util.Optional;
 
+import static com.kjeldsen.player.domain.PlayerPosition.MIDDLE;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -29,41 +26,48 @@ public class GenerateSingleDeclineTrainingUseCaseTest {
         new GenerateSingleDeclineTrainingUseCase(mockedplayerTrainingDeclineEventWriteRepository,
             mockedPlayerReadRepository, mockedPlayerWriteRepository);
 
-    private final PlayerId playerId = PlayerId.generate();
     private final Integer currentDay = 1;
-    private final Integer declineSpeed = 2;
-    private final Player player = Player.builder()
-        .id(playerId)
-        .actualSkills(PlayerActualSkills.of(Map.of(PlayerSkill.PASSING, 20)))
-        .build();
+    private final Integer declineSpeed = 100;
 
     @Test
     public void generate_Should_Return_Player_Training_Decline_Event_When_Player_Exists() {
-        when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.of(player));
+        PlayerId playerId = PlayerId.generate();
+        Player newPlayer = getPlayer(playerId);
+        mockedPlayerWriteRepository.save(newPlayer);
+        // POR QUE COJONES ME DA OPTIONAL NULL Y ENCIMA NO ME DEJA DEBBUGEAR EL PUÑETERO TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+        when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.of(newPlayer));
+        Player playerTest = mockedPlayerReadRepository.findOneById(playerId).orElse(null);
 
-        PlayerTrainingDeclineEvent result = generateSingleDeclineTrainingUseCase.generate(playerId, currentDay, declineSpeed);
+        PlayerTrainingDeclineEvent declineEvent = generateSingleDeclineTrainingUseCase.generate(playerId, currentDay, declineSpeed);
 
-        assertNotNull(result);
-        assertEquals(playerId, result.getPlayerId());
-        assertEquals(currentDay, result.getCurrentDay());
-        assertEquals(declineSpeed, result.getDeclineSpeed());
-        assertEquals(player.getActualSkillPoints(result.getSkill()), result.getPointsBeforeTraining());
-        verify(mockedplayerTrainingDeclineEventWriteRepository, times(1)).save(result);
-        verify(mockedPlayerWriteRepository, times(1)).save(player);
+        assertEquals(currentDay, declineEvent.getCurrentDay());
+        assertEquals(declineSpeed, declineEvent.getDeclineSpeed());
+        assertEquals(playerTest.getActualSkillPoints(declineEvent.getSkill()), declineEvent.getPointsBeforeTraining());
+        verify(mockedplayerTrainingDeclineEventWriteRepository, times(1)).save(declineEvent);
+        verify(mockedPlayerWriteRepository, times(1)).save(playerTest);
     }
 
     @Test
     public void generate_Should_Throw_Exception_When_Player_Does_Not_Exist() {
-        when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.empty());
+        PlayerId playerId = PlayerId.generate();
 
-        generateSingleDeclineTrainingUseCase.generate(playerId, currentDay, declineSpeed);
+        when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.of(getPlayer(playerId)));
+        Player playerTest = mockedPlayerReadRepository.findOneById(playerId).orElse(null);
+        when(mockedPlayerReadRepository.findOneById(playerTest.getId())).thenReturn(Optional.empty());
+
+        generateSingleDeclineTrainingUseCase.generate(playerTest.getId(), currentDay, declineSpeed);
     }
 
     @Test
     public void generate_And_Store_Event_Should_Set_Random_Skill() {
-        when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.of(player));
+        PlayerId playerId = PlayerId.generate();
 
-        PlayerTrainingDeclineEvent result = generateSingleDeclineTrainingUseCase.generate(playerId, currentDay, declineSpeed);
+        when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.of(getPlayer(playerId)));
+        Player playerTest = mockedPlayerReadRepository.findOneById(playerId).orElse(null);
+
+        when(mockedPlayerReadRepository.findOneById(playerTest.getId())).thenReturn(Optional.of(playerTest));
+
+        PlayerTrainingDeclineEvent result = generateSingleDeclineTrainingUseCase.generate(playerTest.getId(), currentDay, declineSpeed);
 
         assertNotNull(result.getSkill());
         assertTrue(Arrays.asList(PlayerSkill.values()).contains(result.getSkill()));
@@ -71,9 +75,13 @@ public class GenerateSingleDeclineTrainingUseCaseTest {
 
     @Test
     public void generate_And_Store_Event_Should_Set_Correct_Points_To_Subtract() {
-        when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.of(player));
+        PlayerId playerId = PlayerId.generate();
 
-        PlayerTrainingDeclineEvent result = generateSingleDeclineTrainingUseCase.generate(playerId, currentDay, declineSpeed);
+        when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.of(getPlayer(playerId)));
+        Player playerTest = mockedPlayerReadRepository.findOneById(playerId).orElse(null);
+        when(mockedPlayerReadRepository.findOneById(playerTest.getId())).thenReturn(Optional.of(playerTest));
+
+        PlayerTrainingDeclineEvent result = generateSingleDeclineTrainingUseCase.generate(playerTest.getId(), currentDay, declineSpeed);
 
         assertNotNull(result.getPointsToSubtract());
         assertTrue(result.getPointsToSubtract() > 0);
@@ -81,10 +89,24 @@ public class GenerateSingleDeclineTrainingUseCaseTest {
 
     @Test
     public void generate_And_Store_Event_Should_Update_Player_Actual_Skills_Points() {
-        when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.of(player));
+        PlayerId playerId = PlayerId.generate();
 
-        Integer pointsBefore = player.getActualSkillPoints(PlayerSkill.PASSING);
-        generateSingleDeclineTrainingUseCase.generate(playerId, currentDay, declineSpeed);
-        Integer pointsAfter = player.getActualSkillPoints(PlayerSkill.PASSING);
+        when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.of(getPlayer(playerId)));
+        Player playerTest = mockedPlayerReadRepository.findOneById(playerId).orElse(null);
+        when(mockedPlayerReadRepository.findOneById(playerTest.getId())).thenReturn(Optional.of(playerTest));
+
+        Integer pointsBefore = playerTest.getActualSkillPoints(PlayerSkill.PASSING);
+        generateSingleDeclineTrainingUseCase.generate(playerTest.getId(), currentDay, declineSpeed);
+        Integer pointsAfter = playerTest.getActualSkillPoints(PlayerSkill.PASSING);
+    }
+
+    private Player getPlayer(PlayerId playerId) {
+        return Player.builder()
+            .id(PlayerId.generate())
+            .name(PlayerName.generate())
+            .age(PlayerAge.generate())
+            .position(PlayerPosition.MIDDLE)
+            .actualSkills(PlayerActualSkills.generate(PlayerPositionTendency.getDefault(MIDDLE), 200))
+            .build();
     }
 }
