@@ -52,6 +52,7 @@
         <security-lib.version>0.0.1-SNAPSHOT</security-lib.version>
         <event-lib.version>0.0.1-SNAPSHOT</event-lib.version>
         <spring-kafka.version>2.9.6</spring-kafka.version>
+        <assertj-core.version>3.23.1</assertj-core.version>
     </properties>
     <build>
         <finalName>auth-service</finalName>
@@ -127,6 +128,11 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -262,6 +268,11 @@
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
                 <version>${junit-jupiter-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj-core.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.security</groupId>
