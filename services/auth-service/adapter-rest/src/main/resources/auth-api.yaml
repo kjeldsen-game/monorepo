@@ -45,10 +45,13 @@ components:
       required:
         - username
         - password
+        - teamName
       properties:
         username:
           type: string
         password:
+          type: string
+        teamName:
           type: string
 
     Error:
