@@ -18,6 +18,7 @@ paths:
       tags:
         - player
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -92,6 +93,7 @@ paths:
       tags:
         - player
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -161,6 +163,7 @@ paths:
           schema:
             $ref: "#/components/schemas/PlayerPosition"
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -202,6 +205,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/PlayerIdPathParameter'
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -221,6 +225,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/PlayerIdPathParameter'
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -244,6 +249,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/PlayerIdPathParameter'
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -400,15 +406,10 @@ components:
       type: object
       example: { "SCORE": 5 }
       additionalProperties:
-        type: string
+        type: integer
         properties:
           code:
             $ref: "#/components/schemas/PlayerSkill"
-          text:
-            type: integer
-            format: int32
-            minimum: 0
-            example: 5
 
     PlayerResponse:
       type: object
@@ -504,15 +505,10 @@ components:
           type: object
           example: { "SCORE": 5 }
           additionalProperties:
-            type: string
+            type: integer
             properties:
               code:
                 $ref: "#/components/schemas/PlayerSkill"
-              text:
-                type: integer
-                format: int32
-                minimum: 0
-                example: 5
         default:
           type: boolean
 
