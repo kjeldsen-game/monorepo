@@ -2,7 +2,6 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.events.EventId;
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
@@ -35,7 +34,7 @@ public class GenerateTrainingUseCase {
     private final PlayerWriteRepository playerWriteRepository;
     private final PlayerTrainingBloomEventReadRepository playerTrainingBloomEventReadRepository;
 
-    public PlayerTrainingEvent generate(PlayerId playerId, PlayerSkill skill, Integer currentDay) {
+    public PlayerTrainingEvent generate(Player.PlayerId playerId, PlayerSkill skill, Integer currentDay) {
         log.info("Generating training");
 
         validateDays(currentDay);

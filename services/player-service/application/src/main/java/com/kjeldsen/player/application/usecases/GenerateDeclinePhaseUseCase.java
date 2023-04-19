@@ -1,7 +1,7 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.events.EventId;
-import com.kjeldsen.player.domain.PlayerId;
+import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
@@ -17,14 +17,14 @@ public class GenerateDeclinePhaseUseCase {
     private final PlayerReadRepository playerReadRepository;
     private final PlayerTrainingDeclineEventWriteRepository playerTrainingDeclineEventWriteRepository;
 
-    public void generate(int declineSpeed, int declineStart, PlayerId playerId) {
+    public void generate(int declineSpeed, int declineStart, Player.PlayerId playerId) {
         log.info("Generating decline phase");
         playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
 
         generateAndStoreEventOfDeclinePhase(declineSpeed, declineStart, playerId);
     }
 
-    private void generateAndStoreEventOfDeclinePhase(int declineSpeed, int declineStart, PlayerId playerId) {
+    private void generateAndStoreEventOfDeclinePhase(int declineSpeed, int declineStart, Player.PlayerId playerId) {
         PlayerTrainingDeclineEvent playerTrainingDeclineEvent = PlayerTrainingDeclineEvent.builder()
             .id(EventId.generate())
             .occurredAt(InstantProvider.now())

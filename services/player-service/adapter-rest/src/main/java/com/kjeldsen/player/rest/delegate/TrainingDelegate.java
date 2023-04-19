@@ -1,10 +1,14 @@
 package com.kjeldsen.player.rest.delegate;
 
-import com.kjeldsen.player.application.usecases.*;
-import com.kjeldsen.player.domain.PlayerId;
+import com.kjeldsen.player.application.usecases.GenerateBloomPhaseUseCase;
+import com.kjeldsen.player.application.usecases.GetHistoricalTrainingUseCase;
+import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.rest.api.TrainingApiDelegate;
-import com.kjeldsen.player.rest.model.*;
+import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
+import com.kjeldsen.player.rest.model.PlayerSkill;
+import com.kjeldsen.player.rest.model.PlayerTrainingResponse;
+import com.kjeldsen.player.rest.model.RegisterBloomPhaseRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +26,7 @@ public class TrainingDelegate implements TrainingApiDelegate {
     @Override
     public ResponseEntity<PlayerHistoricalTrainingResponse> getHistoricalTraining(String playerId) {
 
-        List<PlayerTrainingResponse> trainings = getHistoricalTrainingUseCase.get(PlayerId.of(playerId))
+        List<PlayerTrainingResponse> trainings = getHistoricalTrainingUseCase.get(Player.PlayerId.of(playerId))
             .stream()
             .map(this::playerTrainingEvent2PlayerTrainingResponse)
             .toList();
@@ -39,7 +43,7 @@ public class TrainingDelegate implements TrainingApiDelegate {
         generateBloomPhaseUseCase.generate(registerBloomPhaseRequest.getYearsOn(),
             registerBloomPhaseRequest.getBloomSpeed(),
             registerBloomPhaseRequest.getBloomStartAge(),
-            PlayerId.of(playerId));
+            Player.PlayerId.of(playerId));
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

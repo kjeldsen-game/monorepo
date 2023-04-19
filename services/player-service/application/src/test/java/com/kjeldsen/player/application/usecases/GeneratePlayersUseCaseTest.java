@@ -3,7 +3,7 @@ package com.kjeldsen.player.application.usecases;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
-import com.kjeldsen.player.domain.TeamId;
+import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -14,11 +14,8 @@ import org.mockito.ArgumentCaptor;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.*;
 
 class GeneratePlayersUseCaseTest {
 
@@ -30,8 +27,8 @@ class GeneratePlayersUseCaseTest {
 
     @Test
     @DisplayName("create N players randomly in the given age range, position and total points distributed in the actual skills")
-    public void create_n_players_randomly_in_the_given_age_range_position_and_total_points_distributed_in_the_actual_skills() {
-        TeamId teamId = TeamId.of("teamId");
+    void create_n_players_randomly_in_the_given_age_range_position_and_total_points_distributed_in_the_actual_skills() {
+        Team.TeamId teamId = Team.TeamId.of("teamId");
         when(mockedPlayerPositionTendencyReadRepository.get(any(PlayerPosition.class)))
             .thenReturn(PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES,
                 PlayerPositionTendency.DEFAULT_MIDDLE_TENDENCIES,
@@ -45,11 +42,12 @@ class GeneratePlayersUseCaseTest {
 
         List<Player> playersToSave = argumentCaptor.getAllValues();
 
+        assertFalse(playersToSave.isEmpty());
         assertThat(playersToSave).allMatch(player ->
-            player.getAge().value() >= 15
-                && player.getAge().value() <= 33
-                && StringUtils.isNotBlank(player.getName().value())
+            player.getAge() >= 15
+                && player.getAge() <= 33
+                && StringUtils.isNotBlank(player.getName())
                 && player.getTeamId().equals(teamId)
-                && player.getActualSkills().getTotalPoints() == 200);
+                && player.getActualSkills().values().stream().mapToInt(Integer::intValue).sum() == 200);
     }
 }

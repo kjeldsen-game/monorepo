@@ -1,8 +1,6 @@
 package com.kjeldsen.player.persistence.mongo.documents;
 
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.TeamId;
-import com.kjeldsen.player.domain.TeamName;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +18,7 @@ public class TeamDocument {
     public static TeamDocument from(Team team, String userId) {
         return TeamDocument.builder()
             .id(team.getId().value())
-            .name(team.getName().value())
+            .name(team.getName())
             .userId(userId)
             .build();
     }
@@ -30,10 +28,4 @@ public class TeamDocument {
     private String name;
     private String userId;
 
-    public Team toDomain() {
-        return Team.builder()
-            .id(TeamId.of(id))
-            .name(TeamName.of(name))
-            .build();
-    }
 }

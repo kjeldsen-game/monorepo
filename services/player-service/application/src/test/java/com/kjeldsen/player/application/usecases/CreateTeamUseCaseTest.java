@@ -2,7 +2,8 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
-import com.kjeldsen.player.domain.TeamId;
+import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.provider.PlayerProvider;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class CreateTeamUseCaseTest {
+class CreateTeamUseCaseTest {
 
     private final TeamWriteRepository mockedTeamWriteRepository = Mockito.mock(TeamWriteRepository.class);
     private final GeneratePlayersUseCase mockedGeneratePlayersUseCase = Mockito.mock(GeneratePlayersUseCase.class);
@@ -27,11 +28,11 @@ public class CreateTeamUseCaseTest {
 
     @Test
     @DisplayName("should create new team with generated players")
-    public void should_create_new_team_with_generated_players() {
+    void should_create_new_team_with_generated_players() {
         String teamName = "Team Name";
         int numberOfPlayers = 1;
         String userId = UUID.randomUUID().toString();
-        Player player = Player.generate(TeamId.generate(), PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES, 200);
+        Player player = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES, 200);
 
         when(mockedGeneratePlayersUseCase.generate(anyInt(), any()))
             .thenReturn(List.of(player));
@@ -41,7 +42,7 @@ public class CreateTeamUseCaseTest {
         verify(mockedTeamWriteRepository)
             .save(
                 argThat(team -> !Objects.isNull(team.getId())
-                    && team.getName().value().equals(teamName)
+                    && team.getName().equals(teamName)
                     && team.getPlayers().size() == 1
                     && team.getPlayers().get(0).equals(player)),
                 eq(userId)

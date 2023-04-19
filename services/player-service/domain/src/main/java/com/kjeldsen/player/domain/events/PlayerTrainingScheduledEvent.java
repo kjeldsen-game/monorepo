@@ -1,7 +1,7 @@
 package com.kjeldsen.player.domain.events;
 
 import com.kjeldsen.events.Event;
-import com.kjeldsen.player.domain.PlayerId;
+import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +18,7 @@ import java.time.Instant;
 @TypeAlias("PlayerTrainingScheduledEvent")
 public class PlayerTrainingScheduledEvent extends Event {
 
-    private PlayerId playerId;
+    private Player.PlayerId playerId;
     private PlayerSkill skill;
     private Integer trainingDays;
     private Instant startDate;

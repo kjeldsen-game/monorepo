@@ -1,7 +1,6 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
@@ -21,7 +20,7 @@ public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
     private final PlayerMongoRepository playerMongoRepository;
 
     @Override
-    public Optional<Player> findOneById(PlayerId id) {
+    public Optional<Player> findOneById(Player.PlayerId id) {
         return playerMongoRepository.findById(id);
     }
 

@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kjeldsen.player.PlayerServiceApplication;
 import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
-import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
-import com.kjeldsen.player.domain.TeamId;
+import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.provider.PlayerProvider;
 import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
@@ -62,12 +62,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     PlayerPositionTendencyReadRepositoryMongoAdapter.class,
     PlayerPositionTendencyWriteRepositoryMongoAdapter.class})
 class PlayerApiTest extends AbstractIntegrationTest {
+
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
-
     @Autowired
     private PlayerReadRepository playerReadRepository;
     @Autowired
@@ -99,7 +98,7 @@ class PlayerApiTest extends AbstractIntegrationTest {
             var players = playerReadRepository.find(findPlayersQuery(com.kjeldsen.player.domain.PlayerPosition.FORWARD));
 
             assertThat(players).hasSize(1);
-            assertThat(players.get(0).getAge().value()).isEqualTo(16);
+            assertThat(players.get(0).getAge()).isEqualTo(16);
             assertThat(players.get(0).getPosition().name()).isEqualTo("FORWARD");
         }
     }
@@ -132,8 +131,8 @@ class PlayerApiTest extends AbstractIntegrationTest {
         @DisplayName("return a page of players")
         void return_a_page_of_players() throws Exception {
             IntStream.range(0, 100)
-                .mapToObj(i -> PlayerPositionTendency.getDefault(com.kjeldsen.player.domain.PlayerPosition.random()))
-                .map(positionTendencies -> Player.generate(TeamId.generate(), positionTendencies, 200))
+                .mapToObj(i -> PlayerPositionTendency.getDefault(PlayerProvider.position()))
+                .map(positionTendencies -> PlayerProvider.generate(Team.TeamId.generate(), positionTendencies, 200))
                 .forEach(player -> playerWriteRepository.save(player));
 
             List<PlayerResponse> expected = playerReadRepository.find(findPlayersQuery(com.kjeldsen.player.domain.PlayerPosition.FORWARD))
@@ -143,10 +142,10 @@ class PlayerApiTest extends AbstractIntegrationTest {
                 .map(player ->
                     new PlayerResponse()
                         .id(player.getId().value())
-                        .name(player.getName().value())
-                        .age(player.getAge().value())
+                        .name(player.getName())
+                        .age(player.getAge())
                         .position(PlayerPosition.fromValue(player.getPosition().name()))
-                        .actualSkills(player.getActualSkills().values().entrySet().stream()
+                        .actualSkills(player.getActualSkills().entrySet().stream()
                             .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString()))
                         ))
                 .toList()

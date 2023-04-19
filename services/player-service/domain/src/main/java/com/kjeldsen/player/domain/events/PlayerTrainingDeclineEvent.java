@@ -1,7 +1,7 @@
 package com.kjeldsen.player.domain.events;
 
 import com.kjeldsen.events.Event;
-import com.kjeldsen.player.domain.PlayerId;
+import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @TypeAlias("PlayerTrainingDeclineEvent")
 public class PlayerTrainingDeclineEvent extends Event {
 
-    private PlayerId playerId;
+    private Player.PlayerId playerId;
     private Integer declineStartAge;
     private Integer declineSpeed;
     private PlayerSkill skill;
@@ -33,7 +33,8 @@ public class PlayerTrainingDeclineEvent extends Event {
     private static final Integer MAX_SPEED = 100;
     private static final Range<Integer> RANGE_OF_SPEED = Range.between(MIN_SPEED, MAX_SPEED);
 
-    public static PlayerTrainingDeclineEvent of(Integer declineStartAge, Integer declineSpeed, PlayerId playerId, PlayerSkill skill, Integer pointsToSubtract, Integer pointsBeforeTraining, Integer pointsAfterTraining, Integer currentDay) {
+    public static PlayerTrainingDeclineEvent of(Integer declineStartAge, Integer declineSpeed, Player.PlayerId playerId, PlayerSkill skill,
+        Integer pointsToSubtract, Integer pointsBeforeTraining, Integer pointsAfterTraining, Integer currentDay) {
 
 
         if (!RANGE_OF_DECLINE_AGE.contains(declineStartAge)) {

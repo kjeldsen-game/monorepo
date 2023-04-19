@@ -2,8 +2,6 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.events.EventId;
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerActualSkills;
-import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
@@ -49,7 +47,7 @@ class GenerateTrainingUseCaseTest {
         Instant now1 = Instant.now();
         Instant now2 = Instant.now();
 
-        PlayerId playerId = PlayerId.generate();
+        Player.PlayerId playerId = Player.PlayerId.generate();
 
         when(playerReadRepository.findOneById(playerId)).thenReturn(Optional.of(getPlayer(playerId)));
 
@@ -100,12 +98,12 @@ class GenerateTrainingUseCaseTest {
             "Days must be between 1 and 1000");
     }
 
-    private Player getPlayer(PlayerId playerId) {
+    private Player getPlayer(Player.PlayerId playerId) {
         return Player.builder()
             .id(playerId)
-            .actualSkills(PlayerActualSkills.of(new HashMap<>(Map.of(
+            .actualSkills(new HashMap<>(Map.of(
                 PlayerSkill.SCORE, 5,
-                PlayerSkill.CO, 3))))
+                PlayerSkill.CO, 3)))
             .build();
     }
 }

@@ -1,6 +1,6 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
-import com.kjeldsen.player.domain.PlayerId;
+import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventReadRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerTrainingDeclineEventMongoRepository;
@@ -16,7 +16,7 @@ public class PlayerTrainingDeclineEventReadRepositoryMongoAdapter implements Pla
     private final PlayerTrainingDeclineEventMongoRepository playerTrainingDeclineEventMongoRepository;
 
     @Override
-    public Optional<PlayerTrainingDeclineEvent> findOneByPlayerId(PlayerId id) {
+    public Optional<PlayerTrainingDeclineEvent> findOneByPlayerId(Player.PlayerId id) {
         return playerTrainingDeclineEventMongoRepository.findOneByPlayerId(id);
     }
 }

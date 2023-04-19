@@ -1,14 +1,16 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.player.domain.NewPlayer;
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerActualSkills;
-import com.kjeldsen.player.domain.PlayerId;
-import com.kjeldsen.player.domain.PlayerName;
+import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
+import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.provider.PlayerProvider;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -24,16 +26,26 @@ public class CreatePlayerUseCase {
         log.info("Creating player {}", newPlayer);
         PlayerPositionTendency positionTendencies = playerPositionTendencyReadRepository.get(newPlayer.getPosition());
         Player player = Player.builder()
-            .id(PlayerId.generate())
-            .name(PlayerName.generate())
+            .id(Player.PlayerId.generate())
+            .name(PlayerProvider.name())
             .age(newPlayer.getAge())
             .position(newPlayer.getPosition())
-            .actualSkills(PlayerActualSkills
-                .generate(positionTendencies, newPlayer.getPoints()))
+            .actualSkills(PlayerProvider.skillsBasedOnTendency(positionTendencies, newPlayer.getPoints()))
             .teamId(newPlayer.getTeamId())
             .build();
 
         log.info("Generated player {}", player);
         playerWriteRepository.save(player);
     }
+
+    @Builder
+    @Getter
+    @Setter
+    public static class NewPlayer {
+        private Integer age;
+        private PlayerPosition position;
+        private int points;
+        private Team.TeamId teamId;
+    }
+
 }

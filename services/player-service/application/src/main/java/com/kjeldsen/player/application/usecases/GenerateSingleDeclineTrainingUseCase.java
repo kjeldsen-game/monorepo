@@ -2,7 +2,6 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.events.EventId;
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
@@ -25,7 +24,7 @@ public class GenerateSingleDeclineTrainingUseCase {
     private final PlayerReadRepository playerReadRepository;
     private final PlayerWriteRepository playerWriteRepository;
 
-    public PlayerTrainingDeclineEvent generate(PlayerId playerId, Integer currentDay, Integer declineSpeed) {
+    public PlayerTrainingDeclineEvent generate(Player.PlayerId playerId, Integer currentDay, Integer declineSpeed) {
         log.info("Generating a decline phase");
 
         PlayerSkill skill = randomSkillProvider();
@@ -47,7 +46,7 @@ public class GenerateSingleDeclineTrainingUseCase {
             .pointsBeforeTraining(player.getActualSkillPoints(playerSkill))
             .build();
 
-        Integer points = PointsGenerator.generatePointsRise(currentDay);
+        int points = PointsGenerator.generatePointsRise(currentDay);
         player.subtractSkillPoints(playerSkill, generateDecreasePoints(declineSpeed, points));
         playerTrainingDeclineEvent.setPointsToSubtract(points);
         playerTrainingDeclineEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
