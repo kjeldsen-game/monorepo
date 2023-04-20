@@ -1,5 +1,6 @@
 package com.kjeldsen.player.domain;
 
+import com.kjeldsen.player.domain.events.PlayerCreationEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import lombok.Builder;
@@ -33,6 +34,16 @@ public class Player {
     private Map<PlayerSkill, Integer> actualSkills;
     private Team.TeamId teamId;
 
+    public static Player creation(PlayerCreationEvent playerCreationEvent) {
+        return Player.builder()
+            .id(playerCreationEvent.getPlayerId())
+            .name(playerCreationEvent.getName())
+            .age(playerCreationEvent.getAge())
+            .position(playerCreationEvent.getPosition())
+            .actualSkills(playerCreationEvent.getInitialSkills())
+            .teamId(playerCreationEvent.getTeamId())
+            .build();
+    }
 
     public boolean isBloomActive(PlayerTrainingBloomEvent playerTrainingBloomEvent) {
         int initialRange = playerTrainingBloomEvent.getBloomStartAge();
