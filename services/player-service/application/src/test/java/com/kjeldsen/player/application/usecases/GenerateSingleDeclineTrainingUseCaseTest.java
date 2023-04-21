@@ -34,7 +34,7 @@ public class GenerateSingleDeclineTrainingUseCaseTest {
         PlayerId playerId = PlayerId.generate();
         Player newPlayer = getPlayer(playerId);
         mockedPlayerWriteRepository.save(newPlayer);
-        // POR QUE COJONES ME DA OPTIONAL NULL Y ENCIMA NO ME DEJA DEBBUGEAR EL PUÑETERO TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+        // POR QUE COJONES ME DA OPTIONAL NULL Y ENCIMA NO ME DEJA DEBBUGEAR EL PUÑETERO TEST
         when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.of(newPlayer));
         Player playerTest = mockedPlayerReadRepository.findOneById(playerId).orElse(null);
 
@@ -53,9 +53,11 @@ public class GenerateSingleDeclineTrainingUseCaseTest {
 
         when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.of(getPlayer(playerId)));
         Player playerTest = mockedPlayerReadRepository.findOneById(playerId).orElse(null);
-        when(mockedPlayerReadRepository.findOneById(playerTest.getId())).thenReturn(Optional.empty());
 
         generateSingleDeclineTrainingUseCase.generate(playerTest.getId(), currentDay, declineSpeed);
+        assertThrows(RuntimeException.class, () -> {
+            generateSingleDeclineTrainingUseCase.generate(playerTest.getId(), currentDay, declineSpeed);
+        });
     }
 
     @Test
