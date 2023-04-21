@@ -54,4 +54,13 @@ public class PlayersDelegate implements PlayerApiDelegate {
         List<PlayerResponse> response = players.stream().map(PlayerMapper.INSTANCE::map).toList();
         return ResponseEntity.ok(response);
     }
+
+    @Override
+    public ResponseEntity<PlayerResponse> getPlayerById(String playerId) {
+        Player player = playerReadRepository.findOneById(Player.PlayerId.of(playerId))
+            .orElseThrow();
+        PlayerResponse response = PlayerMapper.INSTANCE.map(player);
+        return ResponseEntity.ok(response);
+    }
+
 }

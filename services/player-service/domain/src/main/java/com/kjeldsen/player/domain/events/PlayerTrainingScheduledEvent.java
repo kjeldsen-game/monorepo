@@ -4,6 +4,7 @@ import com.kjeldsen.events.Event;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.TypeAlias;
@@ -16,6 +17,7 @@ import java.time.Instant;
 @SuperBuilder
 @Document(collection = "PlayerTrainingScheduledEvent")
 @TypeAlias("PlayerTrainingScheduledEvent")
+@NoArgsConstructor
 public class PlayerTrainingScheduledEvent extends Event {
 
     private Player.PlayerId playerId;
