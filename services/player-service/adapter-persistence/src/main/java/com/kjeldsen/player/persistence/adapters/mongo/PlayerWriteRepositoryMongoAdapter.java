@@ -17,3 +17,4 @@ public class PlayerWriteRepositoryMongoAdapter implements PlayerWriteRepository 
         return playerMongoRepository.save(player);
     }
 }
+

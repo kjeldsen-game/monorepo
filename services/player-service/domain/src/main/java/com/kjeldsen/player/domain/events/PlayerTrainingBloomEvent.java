@@ -1,9 +1,8 @@
 package com.kjeldsen.player.domain.events;
 
-import com.kjeldsen.player.domain.PlayerId;
-import lombok.Data;
+import com.kjeldsen.events.Event;
+import com.kjeldsen.player.domain.Player;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.Range;
@@ -13,12 +12,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @SuperBuilder
-@NoArgsConstructor
 @Document(collection = "PlayerTrainingBloomEvents")
 @TypeAlias("PlayerTrainingBloomEvent")
 public class PlayerTrainingBloomEvent extends Event {
 
-    private PlayerId playerId;
+    private Player.PlayerId playerId;
     private int yearsOn;
     private int bloomStartAge;
     private int bloomSpeed;
@@ -35,7 +33,7 @@ public class PlayerTrainingBloomEvent extends Event {
     private static final Integer MAX_SPEED = 1000;
     private static final Range<Integer> RANGE_OF_SPEED = Range.between(MIN_SPEED, MAX_SPEED);
 
-    public static PlayerTrainingBloomEvent of(int bloomYearsOn, int bloomStartAge, PlayerId playerId, int bloomSpeed) {
+    public static PlayerTrainingBloomEvent of(int bloomYearsOn, int bloomStartAge, Player.PlayerId playerId, int bloomSpeed) {
 
         if (!RANGE_OF_BLOOM_PHASE_ON.contains(bloomYearsOn)) {
             throw new IllegalArgumentException("Bloom years on must be between 0 and 10");

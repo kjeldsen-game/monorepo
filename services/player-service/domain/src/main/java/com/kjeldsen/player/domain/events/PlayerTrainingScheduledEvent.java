@@ -1,6 +1,7 @@
 package com.kjeldsen.player.domain.events;
 
-import com.kjeldsen.player.domain.PlayerId;
+import com.kjeldsen.events.Event;
+import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,18 +11,16 @@ import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Set;
 
 @Getter
 @Setter
-@SuperBuilder(toBuilder = true)
-@NoArgsConstructor
+@SuperBuilder
 @Document(collection = "PlayerTrainingScheduledEvent")
 @TypeAlias("PlayerTrainingScheduledEvent")
+@NoArgsConstructor
 public class PlayerTrainingScheduledEvent extends Event {
 
-    private PlayerId playerId;
+    private Player.PlayerId playerId;
     private PlayerSkill skill;
     private Integer trainingDays;
     private Instant startDate;

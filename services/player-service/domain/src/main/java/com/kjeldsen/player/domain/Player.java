@@ -1,5 +1,6 @@
 package com.kjeldsen.player.domain;
 
+import com.kjeldsen.player.domain.events.PlayerCreationEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import lombok.Builder;
@@ -11,6 +12,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Map;
+import java.util.UUID;
+
 @Getter
 @Setter
 @Builder
@@ -19,44 +23,58 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @TypeAlias("Player")
 public class Player {
 
+    public static final int MAX_SKILL_VALUE = 100;
+    public static final int MIN_SKILL_VALUE = 0;
+
     @Id
     private PlayerId id;
-    private PlayerName name;
-    private PlayerAge age;
+    private String name;
+    private Integer age;
     private PlayerPosition position;
-    private PlayerActualSkills actualSkills;
+    private Map<PlayerSkill, Integer> actualSkills;
+    private Team.TeamId teamId;
 
-    public static Player generate(PlayerPositionTendency positionTendencies, int totalPoints) {
+    public static Player creation(PlayerCreationEvent playerCreationEvent) {
         return Player.builder()
-            .id(PlayerId.generate())
-            .name(PlayerName.generate())
-            .age(PlayerAge.generate())
-            .position(positionTendencies.getPosition())
-            .actualSkills(PlayerActualSkills.generate(positionTendencies, totalPoints))
+            .id(playerCreationEvent.getPlayerId())
+            .name(playerCreationEvent.getName())
+            .age(playerCreationEvent.getAge())
+            .position(playerCreationEvent.getPosition())
+            .actualSkills(playerCreationEvent.getInitialSkills())
+            .teamId(playerCreationEvent.getTeamId())
             .build();
     }
 
     public boolean isBloomActive(PlayerTrainingBloomEvent playerTrainingBloomEvent) {
         int initialRange = playerTrainingBloomEvent.getBloomStartAge();
         int endRange = initialRange + playerTrainingBloomEvent.getYearsOn();
-        return Range.between(initialRange, endRange).contains(age.value());
+        return Range.between(initialRange, endRange).contains(age);
     }
 
     public boolean isDeclineActive(PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
-        return age.value() >= playerTrainingDeclineEvent.getDeclineStartAge();
+        return age >= playerTrainingDeclineEvent.getDeclineStartAge();
     }
 
     public Integer getActualSkillPoints(PlayerSkill skill) {
-        return actualSkills.getSkillPoints(skill);
+        return actualSkills.get(skill);
     }
 
     public void addSkillPoints(PlayerSkill skill, Integer points) {
-        actualSkills.addSkillPoints(skill, points);
+        actualSkills.put(skill, Math.min(MAX_SKILL_VALUE, getActualSkillPoints(skill) + points));
     }
 
     public void subtractSkillPoints(PlayerSkill skill, Integer points) {
-        Integer actual = getActualSkillPoints(skill);
-        actualSkills.addSkillPoints(skill, -points);
+        actualSkills.put(skill, Math.max(MIN_SKILL_VALUE, getActualSkillPoints(skill) - points));
+    }
+
+    public record PlayerId(String value) {
+        public static com.kjeldsen.player.domain.Player.PlayerId generate() {
+            return new com.kjeldsen.player.domain.Player.PlayerId(UUID.randomUUID().toString());
+        }
+
+        public static com.kjeldsen.player.domain.Player.PlayerId of(String value) {
+            return new com.kjeldsen.player.domain.Player.PlayerId(value);
+        }
     }
 
 }

@@ -78,19 +78,19 @@ public class PlayerPositionTendencyApiTest extends AbstractIntegrationTest {
                     .position(PlayerPosition.FORWARD)
                     .tendencies(storedPlayerPositionTendency.getTendencies()
                         .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())))
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
                     ._default(false),
                 new PlayerPositionTendencyResponse()
                     .position(PlayerPosition.DEFENDER)
                     .tendencies(PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES.getTendencies()
                         .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())))
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
                     ._default(true),
                 new PlayerPositionTendencyResponse()
                     .position(PlayerPosition.MIDDLE)
                     .tendencies(PlayerPositionTendency.DEFAULT_MIDDLE_TENDENCIES.getTendencies()
                         .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())))
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
                     ._default(true)
             );
 
@@ -111,7 +111,7 @@ public class PlayerPositionTendencyApiTest extends AbstractIntegrationTest {
                 .position(PlayerPosition.DEFENDER)
                 .tendencies(PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES.getTendencies()
                     .entrySet().stream()
-                    .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())))
+                    .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
                 ._default(PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES.isDefault());
 
             mockMvc.perform(get("/player-position-tendencies/DEFENDER"))
@@ -133,7 +133,7 @@ public class PlayerPositionTendencyApiTest extends AbstractIntegrationTest {
                 .position(PlayerPosition.FORWARD)
                 .tendencies(storedPlayerPositionTendency.getTendencies()
                     .entrySet().stream()
-                    .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())))
+                    .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
                 ._default(false);
 
             mockMvc.perform(get("/player-position-tendencies/FORWARD"))
@@ -150,11 +150,11 @@ public class PlayerPositionTendencyApiTest extends AbstractIntegrationTest {
         @DisplayName("return an updated player position tendency of a given position")
         public void return_an_updated_player_position_tendency_of_a_given_position() throws Exception {
 
-            Map<PlayerSkill, String> request = Map.of(PlayerSkill.SCORE, "5");
+            Map<PlayerSkill, Integer> request = Map.of(PlayerSkill.SCORE, 5);
 
             PlayerPositionTendencyResponse expected = new PlayerPositionTendencyResponse()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE.name(), "5"))
+                .tendencies(Map.of(PlayerSkill.SCORE.name(), 5))
                 ._default(false);
 
             mockMvc.perform(patch("/player-position-tendencies/FORWARD")

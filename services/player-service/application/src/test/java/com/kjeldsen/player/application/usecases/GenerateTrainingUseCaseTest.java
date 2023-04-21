@@ -1,10 +1,8 @@
 package com.kjeldsen.player.application.usecases;
 
+import com.kjeldsen.events.EventId;
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerActualSkills;
-import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.events.EventId;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventReadRepository;
@@ -26,7 +24,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class GenerateTrainingUseCaseTest {
 
@@ -48,7 +47,7 @@ class GenerateTrainingUseCaseTest {
         Instant now1 = Instant.now();
         Instant now2 = Instant.now();
 
-        PlayerId playerId = PlayerId.generate();
+        Player.PlayerId playerId = Player.PlayerId.generate();
 
         when(playerReadRepository.findOneById(playerId)).thenReturn(Optional.of(getPlayer(playerId)));
 
@@ -57,7 +56,7 @@ class GenerateTrainingUseCaseTest {
         try (
             MockedStatic<EventId> eventIdMockedStatic = Mockito.mockStatic(EventId.class);
             MockedStatic<Instant> instantMockedStatic = Mockito.mockStatic(Instant.class);
-            MockedStatic<PointsGenerator> pointsGeneratorMockedStatic = Mockito.mockStatic(PointsGenerator.class);
+            MockedStatic<PointsGenerator> pointsGeneratorMockedStatic = Mockito.mockStatic(PointsGenerator.class)
         ) {
             eventIdMockedStatic.when(EventId::generate).thenReturn(eventId1).thenReturn(eventId2);
             instantMockedStatic.when(Instant::now).thenReturn(now1).thenReturn(now2);
@@ -99,12 +98,12 @@ class GenerateTrainingUseCaseTest {
             "Days must be between 1 and 1000");
     }
 
-    private Player getPlayer(PlayerId playerId) {
+    private Player getPlayer(Player.PlayerId playerId) {
         return Player.builder()
             .id(playerId)
-            .actualSkills(PlayerActualSkills.of(new HashMap<>(Map.of(
+            .actualSkills(new HashMap<>(Map.of(
                 PlayerSkill.SCORE, 5,
-                PlayerSkill.CO, 3))))
+                PlayerSkill.CO, 3)))
             .build();
     }
 }

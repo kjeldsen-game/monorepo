@@ -1,6 +1,6 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
-import com.kjeldsen.player.domain.PlayerId;
+import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingEventReadRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerTrainingEventMongoRepository;
@@ -16,7 +16,7 @@ public class PlayerTrainingEventReadRepositoryMongoAdapter implements PlayerTrai
     private final PlayerTrainingEventMongoRepository playerTrainingEventMongoRepository;
 
     @Override
-    public List<PlayerTrainingEvent> findAllByPlayerId(PlayerId playerId) {
+    public List<PlayerTrainingEvent> findAllByPlayerId(Player.PlayerId playerId) {
         return playerTrainingEventMongoRepository.findAllByPlayerId(playerId);
     }
 }

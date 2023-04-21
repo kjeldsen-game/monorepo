@@ -1,9 +1,8 @@
 package com.kjeldsen.player.application.usecases;
 
+import com.kjeldsen.events.EventId;
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerId;
 import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.events.EventId;
 import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
@@ -28,7 +27,7 @@ public class ScheduleTrainingUseCase {
     private final PlayerTrainingScheduledEventWriteRepository playerTrainingScheduledEventWriteRepository;
     private final PlayerReadRepository playerReadRepository;
 
-    public void generate(PlayerId playerId, PlayerSkill skill, Integer trainingDays) {
+    public void generate(Player.PlayerId playerId, PlayerSkill skill, Integer trainingDays) {
         log.info("Generating training");
 
         validateDays(trainingDays);
@@ -43,8 +42,8 @@ public class ScheduleTrainingUseCase {
         final Instant now = InstantProvider.now();
 
         PlayerTrainingScheduledEvent playerTrainingScheduledEvent = PlayerTrainingScheduledEvent.builder()
-            .eventId(EventId.generate())
-            .eventDate(InstantProvider.now())
+            .id(EventId.generate())
+            .occurredAt(InstantProvider.now())
             .playerId(player.getId())
             .skill(skill)
             .trainingDays(trainingDays)

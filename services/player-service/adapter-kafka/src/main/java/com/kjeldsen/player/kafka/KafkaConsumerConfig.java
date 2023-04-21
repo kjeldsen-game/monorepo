@@ -1,6 +1,6 @@
 package com.kjeldsen.player.kafka;
 
-import com.kjeldsen.player.kafka.events.SignUp;
+import com.kjeldsen.player.kafka.events.UserSignedUpEvent;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -26,17 +26,17 @@ public class KafkaConsumerConfig {
     private final KafkaProperties kafkaProperties;
 
     @Bean
-    public ConsumerFactory<String, SignUp> signUpKafkaConsumerFactory() {
+    public ConsumerFactory<String, UserSignedUpEvent> signUpKafkaConsumerFactory() {
         Map<String, Object> consumerProperties = consumerProperties();
         return new DefaultKafkaConsumerFactory<>(
             consumerProperties,
             new StringDeserializer(),
-            new JsonDeserializer<>(SignUp.class, false));
+            new JsonDeserializer<>(UserSignedUpEvent.class, false));
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, SignUp>> signUpKafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, SignUp> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, UserSignedUpEvent>> signUpKafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, UserSignedUpEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(signUpKafkaConsumerFactory());
         return factory;
     }

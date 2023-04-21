@@ -1,6 +1,7 @@
 package com.kjeldsen.auth.kafka.producers;
 
 import com.kjeldsen.auth.domain.SignUp;
+import com.kjeldsen.auth.kafka.events.UserSignedUpEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,11 +16,12 @@ public class AuthSignUpProducer {
     @Value("${kafka.topics.auth-signup}")
     private String signUpTopic;
 
-    private final KafkaTemplate<String, SignUp> authSignUpEventKafkaTemplate;
+    private final KafkaTemplate<String, UserSignedUpEvent> authSignUpEventKafkaTemplate;
 
     public void send(SignUp signUp) {
-        log.info("Sending auth-signup event to Kafka: {}", signUp);
-        authSignUpEventKafkaTemplate.send(signUpTopic, signUp);
+        UserSignedUpEvent event = UserSignedUpEvent.from(signUp);
+        log.info("Sending signup event to Kafka: {}", event);
+        authSignUpEventKafkaTemplate.send(signUpTopic, event);
     }
 
 }

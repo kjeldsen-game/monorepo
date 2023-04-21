@@ -3,7 +3,7 @@ package com.kjeldsen.player.rest.delegate;
 import com.kjeldsen.player.application.usecases.FindAndProcessScheduledTrainingUseCase;
 import com.kjeldsen.player.application.usecases.GenerateSingleDeclineTrainingUseCase;
 import com.kjeldsen.player.application.usecases.ScheduleTrainingUseCase;
-import com.kjeldsen.player.domain.PlayerId;
+import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
@@ -21,7 +21,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @RequiredArgsConstructor
@@ -38,15 +37,15 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         RegisterSimulatedScheduledTrainingRequest registerSimulatedScheduledTrainingRequest) {
 
         registerSimulatedScheduledTrainingRequest.getSkills()
-                .forEach(playerSkill -> scheduleTrainingUseCase.generate(
-                    PlayerId.of(playerId),
-                    this.playerSkill2DomainPlayerSkill(playerSkill),
-                    registerSimulatedScheduledTrainingRequest.getDays()
-                ));
+            .forEach(playerSkill -> scheduleTrainingUseCase.generate(
+                Player.PlayerId.of(playerId),
+                this.playerSkill2DomainPlayerSkill(playerSkill),
+                registerSimulatedScheduledTrainingRequest.getDays()
+            ));
 
-        List<PlayerTrainingEvent> trainings =  findAndProcessScheduledTrainingUseCase.findAndProcess(InstantProvider.nowAsLocalDate())
+        List<PlayerTrainingEvent> trainings = findAndProcessScheduledTrainingUseCase.findAndProcess(InstantProvider.nowAsLocalDate())
             .stream()
-            .filter(playerTrainingEvent -> playerTrainingEvent.getPlayerId().equals(PlayerId.of(playerId)))
+            .filter(playerTrainingEvent -> playerTrainingEvent.getPlayerId().equals(Player.PlayerId.of(playerId)))
             .toList();
 
         return ResponseEntity.ok(new PlayerHistoricalTrainingResponse()
@@ -66,13 +65,13 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         IntStream.rangeClosed(1, registerSimulatedDeclineRequest.getDaysToDecline())
             .forEach(i -> {
                 PlayerTrainingDeclineEvent declineEvent = generateSingleDeclineTrainingUseCase.generate(
-                    PlayerId.of(playerId),
+                    Player.PlayerId.of(playerId),
                     currentDayForDecline.getAndIncrement(),
                     registerSimulatedDeclineRequest.getDeclineSpeed());
 
                 declineEvents.add(playerTrainingDeclineEventToPlayerDeclineResponse(declineEvent));
 
-                if(declineEvent.getPointsToSubtract() > 0){
+                if (declineEvent.getPointsToSubtract() > 0) {
                     currentDayForDecline.set(1);
                 }
             });
