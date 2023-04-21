@@ -2,6 +2,7 @@ package integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kjeldsen.player.PlayerServiceApplication;
+import com.kjeldsen.player.application.publisher.PlayerPublisher;
 import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
@@ -10,6 +11,7 @@ import com.kjeldsen.player.domain.provider.PlayerProvider;
 import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
+import com.kjeldsen.player.persistence.adapters.mongo.PlayerCreationEventWriteRepositoryMongoAdapter;
 import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyReadRepositoryMongoAdapter;
 import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyWriteRepositoryMongoAdapter;
 import com.kjeldsen.player.persistence.adapters.mongo.PlayerReadRepositoryMongoAdapter;
@@ -60,7 +62,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     PlayerWriteRepositoryMongoAdapter.class,
     PlayerReadRepositoryMongoAdapter.class,
     PlayerPositionTendencyReadRepositoryMongoAdapter.class,
-    PlayerPositionTendencyWriteRepositoryMongoAdapter.class})
+    PlayerPositionTendencyWriteRepositoryMongoAdapter.class,
+    PlayerCreationEventWriteRepositoryMongoAdapter.class,
+    PlayerPublisher.class})
 class PlayerApiTest extends AbstractIntegrationTest {
 
     @Autowired
