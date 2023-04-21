@@ -42,7 +42,7 @@ public class CreatePlayerUseCase {
             .teamId(newPlayer.getTeamId())
             .build();
 
-        playerCreationEvent = playerCreationEventWriteRepository.save(playerCreationEvent);
+        playerCreationEventWriteRepository.save(playerCreationEvent);
 
         playerPublisher.saveAndPublish(Player.creation(playerCreationEvent));
     }
