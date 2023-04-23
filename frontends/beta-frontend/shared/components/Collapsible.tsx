@@ -26,7 +26,7 @@ const marginRight = css`
 `
 
 const content = css`
-  transition: all 2s ease-in-out;
+  transition: height 2s ease-in-out;
 `
 
 const Collapsible: React.FC<IProps> = ({ open, children, title }) => {
@@ -43,7 +43,7 @@ const Collapsible: React.FC<IProps> = ({ open, children, title }) => {
           <Typography variant="h6" css={marginRight}>
             {title}
           </Typography>
-          <button type="button" className="btn" onClick={handleFilterOpening}>
+          <button type="button" onClick={handleFilterOpening}>
             {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </button>
         </div>
