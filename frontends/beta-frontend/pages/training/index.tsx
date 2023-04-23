@@ -19,6 +19,8 @@ const Training: NextPage = () => {
           <Collapsible title="Yesterday -1 Training Report">children</Collapsible>
           <Collapsible title="Yesterday -2 Training Report">children</Collapsible>
           <Collapsible title="Yesterday -3 Training Report">children</Collapsible>
+          <Collapsible title="Yesterday -4 Training Report">children</Collapsible>
+          <Collapsible title="Yesterday -5 Training Report">children</Collapsible>
         </Box>
       </>
     </>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { css } from '@emotion/react'
@@ -26,8 +26,7 @@ const marginRight = css`
 `
 
 const content = css`
-  transition: all 1s ease-in-out;
-  background-color: #f1f1f1;
+  transition: all 2s ease-in-out;
 `
 
 const Collapsible: React.FC<IProps> = ({ open, children, title }) => {
@@ -44,7 +43,6 @@ const Collapsible: React.FC<IProps> = ({ open, children, title }) => {
           <Typography variant="h6" css={marginRight}>
             {title}
           </Typography>
-          {/* <h6 className="font-weight-bold">{title}</h6> */}
           <button type="button" className="btn" onClick={handleFilterOpening}>
             {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </button>
