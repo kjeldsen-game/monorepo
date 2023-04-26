@@ -2,7 +2,7 @@ package com.kjeldsen.match.domain.event;
 
 import com.kjeldsen.match.domain.id.MatchId;
 import com.kjeldsen.match.domain.type.MatchModifier;
-import com.kjeldsen.match.domain.type.ModifierWrapper;
+import com.kjeldsen.match.domain.type.ModifierMetaInfo;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
@@ -13,6 +13,6 @@ import java.util.List;
 public class MatchStartedEvent extends Event {
 
     private MatchId matchId;
-    private List<ModifierWrapper<MatchModifier>> modifiers;
+    private List<ModifierMetaInfo<MatchModifier>> modifiers;
 
 }
