@@ -36,7 +36,10 @@ class PlayerMapperTest {
 
         assertEquals(playerId.value(), playerResponse.getId());
         assertEquals("10", playerResponse.getActualSkills().get("SCORE"));
-        // TODO add remaining testing
+        assertEquals(player.getName(), playerResponse.getName());
+        assertEquals(player.getAge(), playerResponse.getAge());
+        assertEquals(PlayerPosition.FORWARD.toString(), playerResponse.getPosition().toString());
+        assertEquals(2, playerResponse.getActualSkills().size());
     }
 
 }
