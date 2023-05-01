@@ -3,18 +3,24 @@ package com.kjeldsen.player.application.usecases;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
+import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.provider.PlayerProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventWriteRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
+import java.util.Optional;
+
 import static com.kjeldsen.player.domain.PlayerPosition.MIDDLE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 
 public class GenerateSingleDeclineTrainingUseCaseTest {
@@ -39,6 +45,41 @@ public class GenerateSingleDeclineTrainingUseCaseTest {
         assertThrows(RuntimeException.class, () -> generateSingleDeclineTrainingUseCaseMock.generate(playerIdMock, currentDay, declineSpeed));
     }
 
+    @Test
+    @DisplayName("Generate should call generateAndStoreEventOfDeclinePhase and save to repository.")
+    void generate_should_call_generateAndStoreEventOfSingleDeclinePhase_and_save_to_repository() {
+
+        //Args
+        Integer declineSpeed = 50;
+        Integer currentDay = 4;
+
+        Player.PlayerId playerId = Player.PlayerId.generate();
+        Player playerTest = getPlayer(playerId);
+
+        when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.of(playerTest));
+
+        // Act
+        generateSingleDeclineTrainingUseCaseMock.generate(playerTest.getId(), currentDay, declineSpeed);
+
+        // Assert
+        ArgumentCaptor<PlayerTrainingDeclineEvent> argumentCaptor = ArgumentCaptor.forClass(PlayerTrainingDeclineEvent.class);
+        verify(mockedPlayerTrainingDeclineEventWriteRepository, Mockito.times(1))
+            .save(argumentCaptor.capture());
+
+        PlayerTrainingDeclineEvent playerTrainingDeclineEvent = argumentCaptor.getValue();
+
+        assertEquals(playerId, playerTrainingDeclineEvent.getPlayerId());
+        assertEquals(declineSpeed, playerTrainingDeclineEvent.getDeclineSpeed());
+
+        assertThat(playerTrainingDeclineEvent)
+            .matches(player -> player.getPlayerId().equals(playerTest.getId())
+                && player.getSkill().equals(any())
+                && player.getPointsBeforeTraining().equals(anyInt())
+                && player.getPointsAfterTraining().equals(anyInt()));
+
+        verify(mockedPlayerReadRepository, times(1)).findOneById(playerId);
+        verify(mockedPlayerTrainingDeclineEventWriteRepository, times(1)).save(any());
+    }
 
     private Player getPlayer(Player.PlayerId playerId) {
         return Player.builder()

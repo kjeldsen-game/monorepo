@@ -44,7 +44,7 @@ class GenerateDeclinePhaseUseCaseTest {
     @DisplayName("Generate should call generateAndStoreEventOfDeclinePhase and save to repository.")
     void generate_should_call_generateAndStoreEventOfDeclinePhase_and_save_to_repository() {
 
-        //Args
+        //Arrange
         Integer declineStartAge = 17;
         Integer declineSpeed = 56;
 

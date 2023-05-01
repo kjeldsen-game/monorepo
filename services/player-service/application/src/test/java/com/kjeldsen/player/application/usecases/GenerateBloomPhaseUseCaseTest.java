@@ -30,6 +30,7 @@ class GenerateBloomPhaseUseCaseTest {
     @Test
     @DisplayName("Generate inside GenerateBloomPhaseUseCasePhase should throw if player not found.")
     void generate_should_throw_exception_if_player_not_found() {
+
         // Arrange
         int bloomYears = 1;
         int bloomSpeed = 1;
@@ -45,6 +46,7 @@ class GenerateBloomPhaseUseCaseTest {
     @Test
     @DisplayName("Generate should call generateAndStoreEventOfBloomPhase and save to repository.")
     void generate_should_call_generateAndStoreEventOfBloomPhase_and_save_to_repository() {
+
         // Arrange
         int bloomYearsOn = 3;
         int bloomSpeed = 100;
