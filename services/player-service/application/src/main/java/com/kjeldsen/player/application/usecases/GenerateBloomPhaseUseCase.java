@@ -35,5 +35,4 @@ public class GenerateBloomPhaseUseCase {
             .build();
         playerTrainingBloomEventWriteRepository.save(playerTrainingBloomEvent);
     }
-
 }
