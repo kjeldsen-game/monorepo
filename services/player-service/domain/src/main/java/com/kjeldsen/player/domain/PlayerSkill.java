@@ -9,3 +9,4 @@ public enum PlayerSkill {
     TACKLING,
     DEFENSE_POSITION
 }
+

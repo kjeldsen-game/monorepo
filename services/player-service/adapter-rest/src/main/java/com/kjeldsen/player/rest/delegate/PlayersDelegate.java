@@ -2,13 +2,14 @@ package com.kjeldsen.player.rest.delegate;
 
 import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
-import com.kjeldsen.player.application.usecases.NewPlayer;
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerAge;
 import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
-import com.kjeldsen.player.rest.api.PlayersApiDelegate;
+import com.kjeldsen.player.rest.api.PlayerApiDelegate;
+import com.kjeldsen.player.rest.mapper.CreatePlayerMapper;
+import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.model.CreatePlayerRequest;
 import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
 import com.kjeldsen.player.rest.model.PlayerResponse;
@@ -18,12 +19,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
-public class PlayersDelegate implements PlayersApiDelegate {
+public class PlayersDelegate implements PlayerApiDelegate {
 
     private final CreatePlayerUseCase createPlayerUseCase;
     private final GeneratePlayersUseCase generatePlayersUseCase;
@@ -31,19 +30,16 @@ public class PlayersDelegate implements PlayersApiDelegate {
 
     @Override
     public ResponseEntity<Void> createPlayer(CreatePlayerRequest createPlayerRequest) {
-        NewPlayer newPlayer = NewPlayer.builder()
-            .age(PlayerAge.of(createPlayerRequest.getAge()))
-            .position(PlayerPosition.valueOf(createPlayerRequest.getPosition().name()))
-            .points(createPlayerRequest.getPoints())
-            .build();
+        CreatePlayerUseCase.NewPlayer newPlayer = CreatePlayerMapper.INSTANCE.map(createPlayerRequest);
+        newPlayer.setTeamId(Team.TeamId.of("NOTEAM")); // TODO change to receive team id in api?
         createPlayerUseCase.create(newPlayer);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<List<PlayerResponse>> generatePlayer(GeneratePlayersRequest generatePlayersRequest) {
-        List<Player> players = generatePlayersUseCase.generate(generatePlayersRequest.getNumberOfPlayers());
-        List<PlayerResponse> response = players.stream().map(this::mapToResponse).toList();
+        List<Player> players = generatePlayersUseCase.generate(generatePlayersRequest.getNumberOfPlayers(), Team.TeamId.of("NOTEAM"));
+        List<PlayerResponse> response = players.stream().map(PlayerMapper.INSTANCE::map).toList();
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -55,17 +51,16 @@ public class PlayersDelegate implements PlayersApiDelegate {
             .page(page)
             .build();
         List<Player> players = playerReadRepository.find(query);
-        List<PlayerResponse> response = players.stream().map(this::mapToResponse).toList();
+        List<PlayerResponse> response = players.stream().map(PlayerMapper.INSTANCE::map).toList();
         return ResponseEntity.ok(response);
     }
 
-    private PlayerResponse mapToResponse(Player player) {
-        return new PlayerResponse()
-            .id(UUID.fromString(player.getId().value()))
-            .name(player.getName().value())
-            .age(player.getAge().value())
-            .position(com.kjeldsen.player.rest.model.PlayerPosition.valueOf(player.getPosition().name()))
-            .actualSkills(player.getActualSkills().values().entrySet().stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())));
+    @Override
+    public ResponseEntity<PlayerResponse> getPlayerById(String playerId) {
+        Player player = playerReadRepository.findOneById(Player.PlayerId.of(playerId))
+            .orElseThrow();
+        PlayerResponse response = PlayerMapper.INSTANCE.map(player);
+        return ResponseEntity.ok(response);
     }
+
 }

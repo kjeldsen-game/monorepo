@@ -30,11 +30,3 @@ springdoc:
 kafka:
   topics:
     auth-signup: AuthSignup
-
-player:
-  persistence:
-    adapter: cache # Change to 'mongodb' to use MongoDB
-    cache:
-      ttl: 60000 # in milliseconds
-      size: 1000
-      cleanup-interval: 1000 # in milliseconds

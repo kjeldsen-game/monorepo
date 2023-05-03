@@ -29,6 +29,8 @@ public class SignUp implements UserDetails {
     private String username;
     private String passwordHash;
 
+    private String teamName;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(DEFAULT_ROLE));
