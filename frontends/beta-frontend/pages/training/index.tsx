@@ -1,8 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { Typography } from '@mui/material'
 import Collapsible from '@/shared/components/Collapsible'
 import Box from '@mui/material/Box'
+import Grid from '@/shared/components/Grid/Grid'
+import { players, samplePlayerColumn } from '@/data/SamplePlayer'
 
 const Training: NextPage = () => {
   return (
@@ -14,7 +15,9 @@ const Training: NextPage = () => {
       <>
         <Box>
           <Collapsible open title="Yesterday's Training Report">
-            children
+            <Box minWidth={'900px'} maxHeight={'300px'} minHeight={'300px'}>
+              <Grid rows={players} columns={samplePlayerColumn} />
+            </Box>
           </Collapsible>
           <Collapsible title="Yesterday -1 Training Report">children</Collapsible>
           <Collapsible title="Yesterday -2 Training Report">children</Collapsible>
