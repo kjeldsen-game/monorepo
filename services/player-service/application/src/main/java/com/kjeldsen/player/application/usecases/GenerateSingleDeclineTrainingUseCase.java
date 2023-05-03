@@ -4,16 +4,15 @@ import com.kjeldsen.events.EventId;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
+import com.kjeldsen.player.domain.generator.PointsGenerator;
 import com.kjeldsen.player.domain.provider.InstantProvider;
+import com.kjeldsen.player.domain.provider.PlayerProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventWriteRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
-import com.kjeldsen.player.engine.PointsGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import static com.kjeldsen.player.engine.PointsGenerator.generateDecreasePoints;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,14 +26,17 @@ public class GenerateSingleDeclineTrainingUseCase {
     public PlayerTrainingDeclineEvent generate(Player.PlayerId playerId, Integer currentDay, Integer declineSpeed) {
         log.info("Generating a decline phase");
 
-        PlayerSkill skill = randomSkillProvider();
+        PlayerSkill skill = PlayerProvider.randomSkill();
 
-        Player player = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
+        Player player = playerReadRepository.findOneById(playerId)
+            .orElseThrow(() -> new RuntimeException("Player not found."));
 
         return generateAndStoreEvent(player, skill, currentDay, declineSpeed);
     }
 
     private PlayerTrainingDeclineEvent generateAndStoreEvent(Player player, PlayerSkill playerSkill, Integer currentDay, Integer declineSpeed) {
+
+        int points = PointsGenerator.generatePointsRise(currentDay);
 
         PlayerTrainingDeclineEvent playerTrainingDeclineEvent = PlayerTrainingDeclineEvent.builder()
             .id(EventId.generate())
@@ -43,24 +45,17 @@ public class GenerateSingleDeclineTrainingUseCase {
             .skill(playerSkill)
             .currentDay(currentDay)
             .declineSpeed(declineSpeed)
+            .pointsToSubtract(points)
             .pointsBeforeTraining(player.getActualSkillPoints(playerSkill))
             .build();
 
-        int points = PointsGenerator.generatePointsRise(currentDay);
-        player.subtractSkillPoints(playerSkill, generateDecreasePoints(declineSpeed, points));
-        playerTrainingDeclineEvent.setPointsToSubtract(points);
+        player.addDeclinePhase(playerTrainingDeclineEvent);
         playerTrainingDeclineEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
 
         playerTrainingDeclineEvent = playerTrainingDeclineEventWriteRepository.save(playerTrainingDeclineEvent);
         playerWriteRepository.save(player);
 
         return playerTrainingDeclineEvent;
-    }
-
-    private PlayerSkill randomSkillProvider() {
-        PlayerSkill[] allSkills = PlayerSkill.values();
-        int random = (int) (Math.random() * allSkills.length);
-        return allSkills[random];
     }
 
 }

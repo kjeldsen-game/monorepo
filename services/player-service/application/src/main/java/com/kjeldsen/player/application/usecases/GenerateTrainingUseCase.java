@@ -5,12 +5,12 @@ import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
+import com.kjeldsen.player.domain.generator.PointsGenerator;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingEventWriteRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
-import com.kjeldsen.player.engine.PointsGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Range;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-import static com.kjeldsen.player.engine.PointsGenerator.generatePointsBloom;
+import static com.kjeldsen.player.domain.generator.PointsGenerator.generatePointsBloom;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -58,7 +58,7 @@ public class GenerateTrainingUseCase {
         Optional<PlayerTrainingBloomEvent> playerBloomEvent = playerTrainingBloomEventReadRepository.findOneByPlayerId(player.getId());
 
         playerBloomEvent
-            .ifPresent(bloomEvent -> handleBloomEvent(player, playerTrainingEvent, bloomEvent));
+            .ifPresent(bloomEvent -> handleBloomEvent(player, playerTrainingEvent));
 
         if (playerBloomEvent.isEmpty()) {
             Integer points = PointsGenerator.generatePointsRise(currentDay);
@@ -71,20 +71,19 @@ public class GenerateTrainingUseCase {
         return playerTrainingEventWriteRepository.save(playerTrainingEvent);
     }
 
-    private void handleBloomEvent(Player player, PlayerTrainingEvent playerTrainingEvent, PlayerTrainingBloomEvent playerTrainingBloomEvent) {
-        if (!player.isBloomActive(playerTrainingBloomEvent)) {
+    private void handleBloomEvent(Player player, PlayerTrainingEvent playerTrainingEvent) {
+        if (!player.isBloomActive()) {
             return;
         }
 
         Integer points = PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay());
         player.addSkillPoints(playerTrainingEvent.getSkill(), points);
 
-        Integer pointsToRise = generatePointsBloom(playerTrainingBloomEvent.getBloomSpeed(), points);
+        Integer pointsToRise = generatePointsBloom(player.getBloom().getBloomSpeed(), points);
         player.addSkillPoints(playerTrainingEvent.getSkill(), pointsToRise);
-        playerTrainingEvent.setBloom(playerTrainingBloomEvent);
+        playerTrainingEvent.setBloom(player.getBloom());
         playerTrainingEvent.setPoints(points);
         playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
-
     }
 
     public void validateDays(Integer days) {

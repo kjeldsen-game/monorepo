@@ -9,7 +9,6 @@
         <module>domain</module>
         <module>application</module>
         <module>adapter-persistence</module>
-        <module>engine</module>
         <module>adapter-kafka</module>
     </modules>
     <parent>
