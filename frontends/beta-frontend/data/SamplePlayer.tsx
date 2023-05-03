@@ -1,7 +1,7 @@
 import { GridCellParams, GridValueGetterParams } from '@mui/x-data-grid'
-import React from 'react'
-import { Select, MenuItem, FormControl, SelectChangeEvent, InputLabel, NativeSelect } from '@mui/material'
 import { GridAlignment } from '@mui/x-data-grid'
+import { PlayerOrderSelect } from '@/shared/components/PlayerOrderSelect'
+import { css } from '@emotion/react'
 
 export type Position = 'DEF' | 'MID' | 'FW' | 'GK'
 
@@ -26,7 +26,14 @@ export const samplePlayerColumn = [
   { field: 'status', headerName: 'Health', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
   { field: 'name', headerName: 'Name', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 130, flex: 1 },
   { field: 'age', headerName: 'Age', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
-  { field: 'position', headerName: 'Position', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
+  {
+    field: 'position',
+    headerName: 'Position',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 70,
+    flex: 1,
+  },
   {
     field: 'DEFENSE_POSITION',
     headerName: 'DP',
@@ -199,32 +206,6 @@ export const samplePlayerColumn = [
     flex: 1,
   },
 ]
-
-export function PlayerOrderSelect() {
-  const [playerOrder, setPlayerOrder] = React.useState('')
-
-  const handleChangePlayerOrder = (event: SelectChangeEvent) => {
-    setPlayerOrder(event.target.value as string)
-  }
-
-  return (
-    <FormControl sx={{ minWidth: 70, marginTop: '16px' }} size="small">
-      <InputLabel id="po1-select-label">PO</InputLabel>
-      <Select
-        labelId="po1-select-label"
-        id="playerOrder1-select"
-        value={playerOrder}
-        label="PO1"
-        autoWidth
-        onChange={handleChangePlayerOrder}
-        sx={{ marginBottom: '1rem' }}>
-        <MenuItem value={'playerOrder1'}>playerOrder1</MenuItem>
-        <MenuItem value={'playerOrder2'}>playerOrder2</MenuItem>
-        <MenuItem value={'playerOrder3'}>playerOrder3</MenuItem>
-      </Select>
-    </FormControl>
-  )
-}
 
 export const samplePlayer: PlayerStats = {
   id: 'player-10',

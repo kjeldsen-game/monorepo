@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { DataGrid, GridCallbackDetails, GridColDef, GridRowParams, MuiEvent } from '@mui/x-data-grid'
 import Box from '@mui/material/Box'
 
