@@ -1,22 +1,218 @@
-export type Position = 'DEFENDER' | 'MIDDLE' | 'FORWARD'
+import { GridCellParams, GridValueGetterParams } from '@mui/x-data-grid'
+import { GridAlignment } from '@mui/x-data-grid'
+import { PlayerOrderSelect } from '@/shared/components/PlayerOrderSelect'
+import { css } from '@emotion/react'
+
+export type Position = 'DEF' | 'MID' | 'FW' | 'GK'
 
 export type Skill = 'DEFENSE_POSITION' | 'BALL_CONTROL' | 'SCORE' | 'PASSING' | 'OFFENSIVE_POSITION' | 'TACKLING' | 'CO'
+
+export type Status = 'HEALTHY' | 'UNHEALTHY' | 'INJURY'
 
 export type Stats = {
   [skill in Skill]: number
 }
 
 export interface PlayerStats {
+  id: string
   age: number
   name: string
   position: Position
+  status: string
   stats: Stats
 }
 
+export const samplePlayerColumn = [
+  { field: 'status', headerName: 'Health', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
+  { field: 'name', headerName: 'Name', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 130, flex: 1 },
+  { field: 'age', headerName: 'Age', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
+  {
+    field: 'position',
+    headerName: 'Position',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 70,
+    flex: 1,
+  },
+  {
+    field: 'DEFENSE_POSITION',
+    headerName: 'DP',
+    minWidth: 50,
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.BALL_CONTROL,
+  },
+  {
+    field: 'BALL_CONTROL',
+    headerName: 'BC',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.BALL_CONTROL,
+  },
+  {
+    field: 'SCORE',
+    headerName: 'SC',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.SCORE,
+  },
+  {
+    field: 'PASSING',
+    headerName: 'PA',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.PASSING,
+  },
+  {
+    field: 'OFFENSIVE_POSITION',
+    headerName: 'OP',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.OFFENSIVE_POSITION,
+  },
+  {
+    field: 'TACKLING',
+    headerName: 'TA',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.TACKLING,
+  },
+  {
+    field: 'CO',
+    headerName: 'CO',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+  },
+  {
+    field: 'GP',
+    headerName: 'GP',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+  },
+  {
+    field: 'GOALS',
+    headerName: 'GLs',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+  },
+  {
+    field: 'ASSISTS',
+    headerName: 'As',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+  },
+  {
+    field: 'TAKEDOWNS',
+    headerName: 'Ta',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+  },
+  {
+    field: 'CRD',
+    headerName: 'Crd',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+  },
+  {
+    field: 'MOM',
+    headerName: 'MoM',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+  },
+  {
+    field: 'RATING',
+    headerName: 'Rating',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 50,
+    flex: 1,
+    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+  },
+  {
+    field: 'playerOrder1',
+    headerName: 'PO1',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    renderCell: (params: GridCellParams) => <PlayerOrderSelect />,
+    minWidth: 70,
+    flex: 1,
+  },
+  {
+    field: 'playerOrder2',
+    headerName: 'PO2',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    renderCell: (params: GridCellParams) => <PlayerOrderSelect />,
+    minWidth: 70,
+    flex: 1,
+  },
+  {
+    field: 'playerOrder3',
+    headerName: 'PO3',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    renderCell: (params: GridCellParams) => <PlayerOrderSelect />,
+    minWidth: 70,
+    flex: 1,
+  },
+  {
+    field: 'playerOrder4',
+    headerName: 'PO4',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    renderCell: (params: GridCellParams) => <PlayerOrderSelect />,
+    minWidth: 70,
+    flex: 1,
+  },
+  {
+    field: 'playerOrder5',
+    headerName: 'PO5',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    renderCell: (params: GridCellParams) => <PlayerOrderSelect />,
+    minWidth: 70,
+    flex: 1,
+  },
+]
+
 export const samplePlayer: PlayerStats = {
+  id: 'player-10',
   age: 32,
   name: 'Devin Gibson',
-  position: 'DEFENDER',
+  status: 'H',
+  position: 'DEF',
   stats: {
     DEFENSE_POSITION: 77,
     BALL_CONTROL: 12,
@@ -24,6 +220,154 @@ export const samplePlayer: PlayerStats = {
     PASSING: 14,
     OFFENSIVE_POSITION: 11,
     TACKLING: 60,
-    CO: 19
-  }
+    CO: 40,
+  },
 }
+
+export const players: PlayerStats[] = [
+  samplePlayer,
+  {
+    id: 'player-1',
+    age: 25,
+    name: 'John Doe',
+    status: 'H',
+    position: 'FW',
+    stats: {
+      DEFENSE_POSITION: 25,
+      BALL_CONTROL: 40,
+      SCORE: 8,
+      PASSING: 30,
+      OFFENSIVE_POSITION: 90,
+      TACKLING: 10,
+      CO: 12,
+    },
+  },
+  {
+    id: 'player-2',
+    age: 27,
+    name: 'Jane Smith',
+    status: 'H',
+    position: 'MID',
+    stats: {
+      DEFENSE_POSITION: 50,
+      BALL_CONTROL: 80,
+      SCORE: 3,
+      PASSING: 90,
+      OFFENSIVE_POSITION: 70,
+      TACKLING: 70,
+      CO: 30,
+    },
+  },
+  {
+    id: 'player-3',
+    age: 29,
+    name: 'Alex Johnson',
+    status: 'H',
+    position: 'DEF',
+    stats: {
+      DEFENSE_POSITION: 90,
+      BALL_CONTROL: 20,
+      SCORE: 0,
+      PASSING: 20,
+      OFFENSIVE_POSITION: 10,
+      TACKLING: 90,
+      CO: 45,
+    },
+  },
+  {
+    id: 'player-4',
+    age: 30,
+    name: 'David Lee',
+    status: 'H',
+    position: 'MID',
+    stats: {
+      DEFENSE_POSITION: 40,
+      BALL_CONTROL: 70,
+      SCORE: 5,
+      PASSING: 80,
+      OFFENSIVE_POSITION: 80,
+      TACKLING: 60,
+      CO: 25,
+    },
+  },
+  {
+    id: 'player-5',
+    age: 26,
+    name: 'Sarah Brown',
+    status: 'H',
+    position: 'DEF',
+    stats: {
+      DEFENSE_POSITION: 80,
+      BALL_CONTROL: 30,
+      SCORE: 0,
+      PASSING: 40,
+      OFFENSIVE_POSITION: 20,
+      TACKLING: 80,
+      CO: 35,
+    },
+  },
+  {
+    id: 'player-6',
+    age: 24,
+    name: 'Chris Davis',
+    status: 'H',
+    position: 'GK',
+    stats: {
+      DEFENSE_POSITION: 95,
+      BALL_CONTROL: 10,
+      SCORE: 0,
+      PASSING: 10,
+      OFFENSIVE_POSITION: 5,
+      TACKLING: 10,
+      CO: 80,
+    },
+  },
+  {
+    id: 'player-7',
+    age: 28,
+    name: 'Emily Wilson',
+    status: 'H',
+    position: 'MID',
+    stats: {
+      DEFENSE_POSITION: 30,
+      BALL_CONTROL: 90,
+      SCORE: 4,
+      PASSING: 85,
+      OFFENSIVE_POSITION: 60,
+      TACKLING: 50,
+      CO: 20,
+    },
+  },
+  {
+    id: 'player-8',
+    age: 29,
+    name: 'Jason Williams',
+    status: 'H',
+    position: 'MID',
+    stats: {
+      DEFENSE_POSITION: 10,
+      BALL_CONTROL: 85,
+      SCORE: 6,
+      PASSING: 89,
+      OFFENSIVE_POSITION: 64,
+      TACKLING: 25,
+      CO: 18,
+    },
+  },
+  {
+    id: 'player-9',
+    age: 26,
+    name: 'Ryan Johnson',
+    status: 'H',
+    position: 'FW',
+    stats: {
+      DEFENSE_POSITION: 6,
+      BALL_CONTROL: 70,
+      SCORE: 28,
+      PASSING: 20,
+      OFFENSIVE_POSITION: 96,
+      TACKLING: 12,
+      CO: 8,
+    },
+  },
+]
