@@ -4,19 +4,21 @@ info:
   title: Players Service API
 
 tags:
-  - name: players
+  - name: player
   - name: player-position-tendencies
   - name: training
+  - name: simulator
 
 paths:
 
-  /players:
+  /player:
     post:
       summary: Create a player
       operationId: createPlayer
       tags:
-        - players
+        - player
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -53,7 +55,7 @@ paths:
             type: integer
             format: int32
       tags:
-        - players
+        - player
       responses:
         "200":
           description: Players were retrieved
@@ -66,13 +68,32 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-  /players/generate:
+  /player/{playerId}:
+    get:
+      summary: Retrieves a player
+      operationId: getPlayerById
+      tags:
+        - player
+      parameters:
+        - $ref: '#/components/parameters/PlayerIdPathParameter'
+      responses:
+        "200":
+          description: Returns the player
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/PlayerResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /player/generate:
     post:
       summary: Generate a number of players
       operationId: generatePlayer
       tags:
-        - players
+        - player
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -132,6 +153,8 @@ paths:
     patch:
       summary: Update the tendency of a position
       operationId: updatePlayerPositionTendency
+      tags:
+        - player-position-tendencies
       parameters:
         - name: position
           in: path
@@ -139,9 +162,8 @@ paths:
           required: true
           schema:
             $ref: "#/components/schemas/PlayerPosition"
-      tags:
-        - player-position-tendencies
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -156,24 +178,104 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-  /training:
-    post:
-      summary: Register a new training
-      operationId: registerTraining
+  /training/{playerId}:
+    get:
+      summary: Get historical training of a player
+      operationId: getHistoricalTraining
       tags:
         - training
+      parameters:
+        - $ref: '#/components/parameters/PlayerIdPathParameter'
+      responses:
+        "200":
+          description: Training historical returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlayerHistoricalTrainingResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /training/{playerId}/bloom:
+    post:
+      summary: Register a new bloom phase
+      operationId: registerBloomPhase
+      tags:
+        - training
+      parameters:
+        - $ref: '#/components/parameters/PlayerIdPathParameter'
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/requestBodies/RegisterTrainingRequest"
+              $ref: "#/components/requestBodies/RegisterBloomPhaseRequest"
       responses:
         "201":
-          description: Training was registered
+          description: Bloom phase was registered
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/training/{playerId}:
+    post:
+      summary: Register a simulated scheduled training
+      operationId: registerSimulatedScheduledTraining
+      tags:
+        - simulator
+      parameters:
+        - $ref: '#/components/parameters/PlayerIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/RegisterSimulatedScheduledTrainingRequest"
+      responses:
+        "200":
+          description: Simulated training was scheduled
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlayerHistoricalTrainingResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/decline/{playerId}:
+    post:
+      summary: Register a simulated decline
+      operationId: registerSimulatedDecline
+      tags:
+        - simulator
+      parameters:
+        - $ref: '#/components/parameters/PlayerIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/RegisterSimulatedDeclineRequest"
+      responses:
+        "200":
+          description: Decline phase simulated
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlayerDeclineResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
 components:
+
+  parameters:
+    PlayerIdPathParameter:
+      name: playerId
+      in: path
+      description: Id of the player
+      required: true
+      schema:
+        type: string
 
   requestBodies:
 
@@ -198,12 +300,26 @@ components:
           schema:
             $ref: "#/components/schemas/UpdatePlayerPositionTendencyRequest"
 
-    RegisterTrainingRequest:
-      description: Register a training request
+    RegisterSimulatedScheduledTrainingRequest:
+      description: Register a simulated scheduled training request
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/RegisterTrainingRequest"
+            $ref: "#/components/schemas/RegisterSimulatedScheduledTrainingRequest"
+
+    RegisterBloomPhaseRequest:
+      description: Register a bloom phase request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RegisterBloomPhaseRequest"
+
+    RegisterSimulatedDeclineRequest:
+      description: Register a simulated decline
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RegisterSimulatedDeclineRequest"
 
   responses:
 
@@ -220,6 +336,13 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/PlayerPositionTendencyResponse"
+
+    PlayerHistoricalTrainingResponse:
+      description: Player historical training response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/PlayerHistoricalTrainingResponse"
 
     DefaultErrorResponse:
       description: Unexpected error
@@ -259,7 +382,7 @@ components:
           format: int32
           minimum: 1
           maximum: 700
-          example: 350
+          example: 5
         age:
           type: integer
           format: int32
@@ -283,22 +406,16 @@ components:
       type: object
       example: { "SCORE": 5 }
       additionalProperties:
-        type: string
+        type: integer
         properties:
           code:
             $ref: "#/components/schemas/PlayerSkill"
-          text:
-            type: integer
-            format: int32
-            minimum: 0
-            example: 5
 
     PlayerResponse:
       type: object
       properties:
         id:
           type: string
-          format: uuid
           example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
         age:
           type: integer
@@ -326,6 +443,59 @@ components:
                 maximum: 100
                 example: 50
 
+    PlayerHistoricalTrainingResponse:
+      type: object
+      properties:
+        playerId:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        trainings:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerTrainingResponse"
+
+    PlayerTrainingResponse:
+      type: object
+      properties:
+        playerId:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        skill:
+          $ref: "#/components/schemas/PlayerSkill"
+        points:
+          type: integer
+          format: int32
+        pointsBeforeTraining:
+          type: integer
+          format: int32
+        pointsAfterTraining:
+          type: integer
+          format: int32
+        currentDay:
+          type: integer
+          format: int32
+
+    PlayerDeclineResponse:
+      type: object
+      properties:
+        playerId:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        skill:
+          $ref: "#/components/schemas/PlayerSkill"
+        pointsToSubtract:
+          type: integer
+          format: int32
+        pointsBeforeTraining:
+          type: integer
+          format: int32
+        pointsAfterTraining:
+          type: integer
+          format: int32
+        currentDay:
+          type: integer
+          format: int32
+
     PlayerPositionTendencyResponse:
       type: object
       properties:
@@ -335,35 +505,81 @@ components:
           type: object
           example: { "SCORE": 5 }
           additionalProperties:
-            type: string
+            type: integer
             properties:
               code:
                 $ref: "#/components/schemas/PlayerSkill"
-              text:
-                type: integer
-                format: int32
-                minimum: 0
-                example: 5
         default:
           type: boolean
 
-    RegisterTrainingRequest:
+    RegisterSimulatedScheduledTrainingRequest:
       type: object
       properties:
-        playerId:
-          type: string
-          example: player1
         days:
           type: integer
           format: int32
           minimum: 1
           maximum: 1000
-          example: 350
+          example: 2
         skills:
           type: array
           example: [ PASSING, SCORE ]
           items:
             $ref: "#/components/schemas/PlayerSkill"
+
+    RegisterBloomPhaseRequest:
+      type: object
+      properties:
+        yearsOn:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 10
+          example: 3
+        bloomStartAge:
+          type: integer
+          format: int32
+          minimum: 15
+          maximum: 30
+          example: 18
+        bloomSpeed:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 1000
+          example: 350
+
+    RegisterSimulatedDeclineRequest:
+      type: object
+      properties:
+        daysToDecline:
+          type: integer
+          format: int32
+          minimum: 15
+          maximum: 30
+          example: 18
+        declineSpeed:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 1000
+          example: 350
+
+    RegisterRightDeclinePhaseRequest:
+      type: object
+      properties:
+        declineStartAge:
+          type: integer
+          format: int32
+          minimum: 15
+          maximum: 30
+          example: 18
+        declineSpeed:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 1000
+          example: 350
 
     Error:
       type: "object"

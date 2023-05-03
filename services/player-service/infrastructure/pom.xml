@@ -10,16 +10,21 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>infrastructure</artifactId>
     <dependencies>
+        <!-- Modules -->
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>adapter-rest</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>adapter-persistence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>adapter-kafka</artifactId>
             <scope>compile</scope>
         </dependency>
+        <!-- Others -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>

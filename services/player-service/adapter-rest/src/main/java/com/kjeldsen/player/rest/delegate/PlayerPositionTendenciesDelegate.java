@@ -29,7 +29,7 @@ public class PlayerPositionTendenciesDelegate implements PlayerPositionTendencie
             .map(playerPositionTendency -> new PlayerPositionTendencyResponse()
                 .position(com.kjeldsen.player.rest.model.PlayerPosition.valueOf(playerPositionTendency.getPosition().name()))
                 .tendencies(playerPositionTendency.getTendencies().entrySet().stream()
-                    .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())))
+                    .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
                 ._default(playerPositionTendency.isDefault())
             )
             .toList();
@@ -43,23 +43,23 @@ public class PlayerPositionTendenciesDelegate implements PlayerPositionTendencie
         PlayerPositionTendencyResponse response = new PlayerPositionTendencyResponse()
             .position(com.kjeldsen.player.rest.model.PlayerPosition.valueOf(playerPositionTendency.getPosition().name()))
             .tendencies(playerPositionTendency.getTendencies().entrySet().stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())))
+                .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
             ._default(playerPositionTendency.isDefault());
         return ResponseEntity.ok(response);
     }
 
     @Override
     public ResponseEntity<PlayerPositionTendencyResponse> updatePlayerPositionTendency(com.kjeldsen.player.rest.model.PlayerPosition position,
-        Map<String, String> requestBody) {
+                                                                                       Map<String, Integer> requestBody) {
         PlayerPositionTendency updatedPlayerPositionTendency = updatePlayerPositionTendencyUseCase.update(UpdatePlayerTendencies.builder()
             .position(PlayerPosition.valueOf(position.name()))
             .tendencies(requestBody.entrySet().stream().collect(
-                Collectors.toMap(entry -> PlayerSkill.valueOf(entry.getKey()), entry -> Integer.parseInt(entry.getValue()))))
+                Collectors.toMap(entry -> PlayerSkill.valueOf(entry.getKey()), Map.Entry::getValue)))
             .build());
         PlayerPositionTendencyResponse response = new PlayerPositionTendencyResponse()
             .position(com.kjeldsen.player.rest.model.PlayerPosition.valueOf(updatedPlayerPositionTendency.getPosition().name()))
             .tendencies(updatedPlayerPositionTendency.getTendencies().entrySet().stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString())))
+                .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
             ._default(updatedPlayerPositionTendency.isDefault());
         return ResponseEntity.ok(response);
     }

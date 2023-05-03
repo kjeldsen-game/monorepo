@@ -12,11 +12,6 @@ spring:
       username: ${DB_USERNAME}
       password: ${DB_PASSWORD}
       database: ${DB_DATABASE}
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
 
-player:
-  persistence:
-    adapter: ${PLAYER_PERSISTENCE_ADAPTER}
-    cache:
-      ttl: ${PLAYER_PERSISTENCE_CACHE_TTL}
-      size: ${PLAYER_PERSISTENCE_CACHE_SIZE}
-      cleanup-interval: ${PLAYER_PERSISTENCE_CLEANUP_CACHE_INTERVAL}

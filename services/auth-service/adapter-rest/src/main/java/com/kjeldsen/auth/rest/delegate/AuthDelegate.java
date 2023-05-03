@@ -21,9 +21,10 @@ public class AuthDelegate implements AuthApiDelegate {
     public ResponseEntity<Void> signup(SignUpRequest signUpRequest) {
 
         SignUp signUp = SignUp.builder()
-            .username(signUpRequest.getUsername())
-            .passwordHash(customPasswordEncoder.encode(signUpRequest.getPassword()))
-            .build();
+                .username(signUpRequest.getUsername())
+                .passwordHash(customPasswordEncoder.encode(signUpRequest.getPassword()))
+                .teamName(signUpRequest.getTeamName())
+                .build();
 
         signUpUseCase.signUp(signUp);
 

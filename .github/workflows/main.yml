@@ -32,6 +32,17 @@ jobs:
           DOCKER_IMAGE_GENERATION: "false"
           MVN_DEPLOY: "true"
 
+      - name: event-lib pipeline
+        uses: ./.github/actions/action-mvn-build
+        with:
+          PATH: "libs/event-lib"
+          SERVICE_NAME: "event-lib"
+          AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
+          SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
+          DOCKER_IMAGE_GENERATION: "false"
+          MVN_DEPLOY: "true"
+
       ##############
       ## SERVICES ##
       ##############
