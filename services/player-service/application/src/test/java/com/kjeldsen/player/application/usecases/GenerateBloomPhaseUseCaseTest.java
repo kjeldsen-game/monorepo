@@ -1,31 +1,41 @@
 package com.kjeldsen.player.application.usecases;
 
+import com.kjeldsen.events.EventId;
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
-import com.kjeldsen.player.domain.provider.PlayerProvider;
+import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventWriteRepository;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import java.time.Instant;
 import java.util.Optional;
 
-import static com.kjeldsen.player.domain.PlayerPosition.MIDDLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class GenerateBloomPhaseUseCaseTest {
 
+    private static final int BLOOM_YEARS_ON = 3;
+    private static final int BLOOM_SPEED = 100;
+    private static final int BLOOM_START_AGE = 23;
+    private static final Player.PlayerId PLAYER_ID = mock(Player.PlayerId.class);
+    private static final EventId EVENT_ID = EventId.from("event-id");
+    private static final Instant NOW = Instant.now();
+
     private final PlayerReadRepository mockedPlayerReadRepository = Mockito.mock(PlayerReadRepository.class);
+    private final PlayerWriteRepository mockedPlayerWriteRepository = Mockito.mock(PlayerWriteRepository.class);
+    private final PlayerTrainingBloomEventWriteRepository mockedPlayerTrainingBloomEventWriteRepository = Mockito.mock(
+        PlayerTrainingBloomEventWriteRepository.class);
 
-    private final PlayerTrainingBloomEventWriteRepository mockedPlayerTrainingBloomEventWriteRepository = Mockito.mock(PlayerTrainingBloomEventWriteRepository.class);
-
-    private final GenerateBloomPhaseUseCase generateBloomPhaseUseCase = new GenerateBloomPhaseUseCase(mockedPlayerReadRepository, mockedPlayerTrainingBloomEventWriteRepository);
+    private final GenerateBloomPhaseUseCase generateBloomPhaseUseCase = new GenerateBloomPhaseUseCase(mockedPlayerReadRepository,
+        mockedPlayerWriteRepository, mockedPlayerTrainingBloomEventWriteRepository);
 
     @Test
     @DisplayName("Generate inside GenerateBloomPhaseUseCasePhase should throw if player not found.")
@@ -47,41 +57,46 @@ class GenerateBloomPhaseUseCaseTest {
     @DisplayName("Generate should call generateAndStoreEventOfBloomPhase and save to repository.")
     void generate_should_call_generateAndStoreEventOfBloomPhase_and_save_to_repository() {
 
-        // Arrange
-        int bloomYearsOn = 3;
-        int bloomSpeed = 100;
-        int bloomStartAge = 23;
-        Player.PlayerId playerId = Player.PlayerId.generate();
+        Player playerMock = mock(Player.class);
+        PlayerTrainingBloomEvent playerTrainingBloomEventMock = mock(PlayerTrainingBloomEvent.class);
 
-        Player playerTest = getPlayer(playerId);
+        when(mockedPlayerReadRepository.findOneById(PLAYER_ID)).thenReturn(Optional.of(playerMock));
+        when(mockedPlayerTrainingBloomEventWriteRepository.save(any())).thenReturn(playerTrainingBloomEventMock);
 
-        when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.ofNullable(playerTest));
+        try (
+            MockedStatic<EventId> eventIdMockedStatic = Mockito.mockStatic(EventId.class);
+            MockedStatic<InstantProvider> instantMockedStatic = Mockito.mockStatic(InstantProvider.class);
+        ) {
+            eventIdMockedStatic.when(EventId::generate).thenReturn(EVENT_ID);
+            instantMockedStatic.when(InstantProvider::now).thenReturn(NOW);
 
-        // Act
-        generateBloomPhaseUseCase.generate(bloomYearsOn, bloomSpeed, bloomStartAge, playerId);
+            // Act
+            generateBloomPhaseUseCase.generate(BLOOM_YEARS_ON, BLOOM_SPEED, BLOOM_START_AGE, PLAYER_ID);
+
+            eventIdMockedStatic.verify(EventId::generate);
+            eventIdMockedStatic.verifyNoMoreInteractions();
+            instantMockedStatic.verify(InstantProvider::now);
+            instantMockedStatic.verifyNoMoreInteractions();
+        }
 
         // Assert
         ArgumentCaptor<PlayerTrainingBloomEvent> argumentCaptor = ArgumentCaptor.forClass(PlayerTrainingBloomEvent.class);
-        verify(mockedPlayerTrainingBloomEventWriteRepository, Mockito.times(1))
-            .save(argumentCaptor.capture());
+        verify(mockedPlayerTrainingBloomEventWriteRepository).save(argumentCaptor.capture());
 
         PlayerTrainingBloomEvent playerTrainingBloomEvent = argumentCaptor.getValue();
 
-        assertEquals(playerId, playerTrainingBloomEvent.getPlayerId());
-        assertEquals(bloomYearsOn, playerTrainingBloomEvent.getYearsOn());
-        assertEquals(bloomStartAge, playerTrainingBloomEvent.getBloomStartAge());
-        assertEquals(bloomSpeed, playerTrainingBloomEvent.getBloomSpeed());
-        verify(mockedPlayerReadRepository, times(1)).findOneById(playerId);
-        verify(mockedPlayerTrainingBloomEventWriteRepository, times(1)).save(any());
+        assertEquals(PLAYER_ID, playerTrainingBloomEvent.getPlayerId());
+        assertEquals(BLOOM_YEARS_ON, playerTrainingBloomEvent.getYearsOn());
+        assertEquals(BLOOM_START_AGE, playerTrainingBloomEvent.getBloomStartAge());
+        assertEquals(BLOOM_SPEED, playerTrainingBloomEvent.getBloomSpeed());
+        assertEquals(EVENT_ID, playerTrainingBloomEvent.getId());
+        assertEquals(NOW, playerTrainingBloomEvent.getOccurredAt());
+
+        verify(playerMock).addBloomPhase(playerTrainingBloomEventMock);
+        verify(mockedPlayerReadRepository).findOneById(PLAYER_ID);
+        verify(mockedPlayerTrainingBloomEventWriteRepository).save(any());
+        verify(mockedPlayerWriteRepository).save(playerMock);
+        verifyNoMoreInteractions(playerMock, mockedPlayerReadRepository, mockedPlayerTrainingBloomEventWriteRepository);
     }
 
-    private Player getPlayer(Player.PlayerId playerId) {
-        return Player.builder()
-            .id(playerId)
-            .name(PlayerProvider.name())
-            .age(PlayerProvider.age())
-            .position(PlayerPosition.MIDDLE)
-            .actualSkills(PlayerProvider.skillsBasedOnTendency(PlayerPositionTendency.getDefault(MIDDLE), 200))
-            .build();
-    }
 }

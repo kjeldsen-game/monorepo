@@ -20,15 +20,17 @@ public class GenerateBloomPhaseUseCase {
     private final PlayerWriteRepository playerWriteRepository;
     private final PlayerTrainingBloomEventWriteRepository playerTrainingBloomEventWriteRepository;
 
-    public void generate(int bloomYears, int bloomSpeed, int bloomStart, Player.PlayerId playerId) {
+    public void generate(Integer bloomYears, Integer bloomSpeed, Integer bloomStart, Player.PlayerId playerId) {
         log.info("Generating bloom phase");
-        Player player = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
+        Player player = playerReadRepository.findOneById(playerId)
+            .orElseThrow(() -> new RuntimeException("Player not found."));
         PlayerTrainingBloomEvent bloomEvent = generateAndStoreEventOfBloomPhase(bloomYears, bloomSpeed, bloomStart, playerId);
         player.addBloomPhase(bloomEvent);
         playerWriteRepository.save(player);
     }
 
-    private PlayerTrainingBloomEvent generateAndStoreEventOfBloomPhase(int bloomYears, int bloomSpeed, int bloomStart, Player.PlayerId playerId) {
+    private PlayerTrainingBloomEvent generateAndStoreEventOfBloomPhase(Integer bloomYears, Integer bloomSpeed, Integer bloomStart,
+        Player.PlayerId playerId) {
         PlayerTrainingBloomEvent playerTrainingBloomEvent = PlayerTrainingBloomEvent.builder()
             .id(EventId.generate())
             .occurredAt(InstantProvider.now())
