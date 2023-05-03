@@ -26,6 +26,7 @@ public class PlayerTrainingDeclineEvent extends Event {
     private Integer pointsAfterTraining;
     private Integer currentDay;
 
+    // TODO Mudo after doing validation all this code above should be deleted
     private static final Integer MIN_DECLINE_AGE = 15;
     private static final Integer MAX_DECLINE_AGE = 33;
     private static final Range<Integer> RANGE_OF_DECLINE_AGE = Range.between(MIN_DECLINE_AGE, MAX_DECLINE_AGE);
@@ -35,7 +36,6 @@ public class PlayerTrainingDeclineEvent extends Event {
 
     public static PlayerTrainingDeclineEvent of(Integer declineStartAge, Integer declineSpeed, Player.PlayerId playerId, PlayerSkill skill,
         Integer pointsToSubtract, Integer pointsBeforeTraining, Integer pointsAfterTraining, Integer currentDay) {
-
 
         if (!RANGE_OF_DECLINE_AGE.contains(declineStartAge)) {
             throw new IllegalArgumentException("Decline start age must be between 15 and 33");

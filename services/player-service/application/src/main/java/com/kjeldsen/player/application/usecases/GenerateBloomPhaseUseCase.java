@@ -6,6 +6,7 @@ import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventWriteRepository;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,17 +15,20 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class GenerateBloomPhaseUseCase {
+
     private final PlayerReadRepository playerReadRepository;
+    private final PlayerWriteRepository playerWriteRepository;
     private final PlayerTrainingBloomEventWriteRepository playerTrainingBloomEventWriteRepository;
 
     public void generate(int bloomYears, int bloomSpeed, int bloomStart, Player.PlayerId playerId) {
         log.info("Generating bloom phase");
-        playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
-
-        generateAndStoreEventOfBloomPhase(bloomYears, bloomSpeed, bloomStart, playerId);
+        Player player = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
+        PlayerTrainingBloomEvent bloomEvent = generateAndStoreEventOfBloomPhase(bloomYears, bloomSpeed, bloomStart, playerId);
+        player.addBloomPhase(bloomEvent);
+        playerWriteRepository.save(player);
     }
 
-    private void generateAndStoreEventOfBloomPhase(int bloomYears, int bloomSpeed, int bloomStart, Player.PlayerId playerId) {
+    private PlayerTrainingBloomEvent generateAndStoreEventOfBloomPhase(int bloomYears, int bloomSpeed, int bloomStart, Player.PlayerId playerId) {
         PlayerTrainingBloomEvent playerTrainingBloomEvent = PlayerTrainingBloomEvent.builder()
             .id(EventId.generate())
             .occurredAt(InstantProvider.now())
@@ -33,6 +37,6 @@ public class GenerateBloomPhaseUseCase {
             .bloomSpeed(bloomSpeed)
             .bloomStartAge(bloomStart)
             .build();
-        playerTrainingBloomEventWriteRepository.save(playerTrainingBloomEvent);
+        return playerTrainingBloomEventWriteRepository.save(playerTrainingBloomEvent);
     }
 }

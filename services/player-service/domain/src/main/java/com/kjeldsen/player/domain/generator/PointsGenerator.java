@@ -1,4 +1,4 @@
-package com.kjeldsen.player.engine;
+package com.kjeldsen.player.domain.generator;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

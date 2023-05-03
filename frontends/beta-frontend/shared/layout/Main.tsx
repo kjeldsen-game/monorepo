@@ -3,7 +3,7 @@ import { Box } from '@mui/material'
 
 export const Main: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <Box p={3} display="flex" component="main">
+    <Box p={3} display="flex" component="main" marginTop={'69px'}>
       {children}
     </Box>
   )

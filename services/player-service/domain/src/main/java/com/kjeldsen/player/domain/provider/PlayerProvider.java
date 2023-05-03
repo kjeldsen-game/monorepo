@@ -60,6 +60,12 @@ public class PlayerProvider {
         return values;
     }
 
+    public static PlayerSkill randomSkill() {
+        PlayerSkill[] allSkills = PlayerSkill.values();
+        int random = (int) (Math.random() * allSkills.length);
+        return allSkills[random];
+    }
+
     public static Player generate(Team.TeamId teamId, PlayerPositionTendency positionTendencies, int totalPoints) {
         return Player.builder()
             .id(Player.PlayerId.generate())
