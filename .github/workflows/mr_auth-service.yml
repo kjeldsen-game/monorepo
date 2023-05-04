@@ -1,10 +1,12 @@
-name: Merge Request Workflow
+name: mr_auth-service.yml
 
 run-name: ${{ github.actor }} fired merge request workflow
 
 on:
   workflow_dispatch:
   pull_request:
+    paths:
+      - "services/auth-service/**"
 
 jobs:
   merge-request-workflow:
