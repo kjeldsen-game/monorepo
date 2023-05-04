@@ -62,6 +62,7 @@ runs:
         inputs.MVN_DEPLOY  == 'true'
       run: |
         cd ${{ inputs.PATH }}
+        echo $CODEARTIFACT_AUTH_TOKEN
         mvn deploy
       shell: bash
 
