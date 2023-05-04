@@ -29,21 +29,12 @@ runs:
   using: "composite"
 
   steps:
-    - name: Get changed files
-      id: changed-files
-      uses: tj-actions/changed-files@v32
-      with:
-        files: |
-          ${{ inputs.PATH }}/**
-
     - uses: ATiltedTree/setup-rust@v1
-      if: steps.changed-files.outputs.any_changed == 'true'
       with:
         rust-version: stable
 
     - name: AWS Configure
       id: ecr_configure
-      if: steps.changed-files.outputs.any_changed == 'true'
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ inputs.AWS_CICD_ACCESS_KEY }}
@@ -52,7 +43,6 @@ runs:
 
     - name: Build
       id: build
-      if: steps.changed-files.outputs.any_changed == 'true'
       run: |
         cd ${{ inputs.PATH }}
         cargo check
