@@ -48,7 +48,7 @@ runs:
         aws-region: eu-west-1
 
     - name: Set CODEARTIFACT_AUTH_TOKEN
-      id: build
+      id: set_codeartifact_auth_token
       run: |
         echo "CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 040156513434 --region eu-west-1 --query authorizationToken --output text)" >> $GITHUB_ENV
       shell: bash
