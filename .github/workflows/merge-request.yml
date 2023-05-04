@@ -4,7 +4,7 @@ run-name: ${{ github.actor }} fired merge request workflow
 
 on:
   workflow_dispatch:
-  pull_request:
+  #pull_request:
 
 jobs:
   merge-request-workflow:
@@ -29,7 +29,7 @@ jobs:
           SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
           DOCKER_IMAGE_GENERATION: "false"
           MVN_DEPLOY: "true"
-      
+
       - name: event-lib pipeline
         uses: ./.github/actions/action-mvn-build
         with:
