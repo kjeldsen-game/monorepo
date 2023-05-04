@@ -47,10 +47,15 @@ runs:
         aws-secret-access-key: ${{ inputs.AWS_CICD_SECRET_ACCESS_KEY }}
         aws-region: eu-west-1
 
+    - name: Set CODEARTIFACT_AUTH_TOKEN
+      id: build
+      run: |
+        echo "CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 040156513434 --region eu-west-1 --query authorizationToken --output text)" >> $GITHUB_ENV
+      shell: bash
+
     - name: Build
       id: build
       run: |
-        export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 040156513434 --region eu-west-1 --query authorizationToken --output text`
         cd ${{ inputs.PATH }}
         mvn clean install -U
       shell: bash
@@ -62,8 +67,6 @@ runs:
         inputs.MVN_DEPLOY  == 'true'
       run: |
         cd ${{ inputs.PATH }}
-        echo hola
-        echo $CODEARTIFACT_AUTH_TOKEN
         mvn deploy
       shell: bash
 
