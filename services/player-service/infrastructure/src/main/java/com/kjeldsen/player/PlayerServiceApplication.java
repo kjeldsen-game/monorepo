@@ -16,7 +16,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
         ReactiveManagementWebSecurityAutoConfiguration.class
     })
 public class PlayerServiceApplication {
-
+    
     public static void main(String[] args) {
         SpringApplication.run(PlayerServiceApplication.class, args);
     }
