@@ -1,0 +1,29 @@
+name: mr_notifications-service.yml
+
+run-name: ${{ github.actor }} fired merge request workflow
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "services/notifications-service/**"
+
+jobs:
+  merge-request-workflow:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # we need this to ignore the project if no changes. If not, will always detect changes in all the services
+
+      - name: notifications-service pipeline
+        uses: ./.github/actions/action-cargo-build
+        with:
+          PATH: "services/notifications-service"
+          SERVICE_NAME: "notifications-service"
+          AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
+          AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
+          SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
+          DOCKER_IMAGE_GENERATION: "false"

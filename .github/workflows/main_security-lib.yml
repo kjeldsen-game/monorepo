@@ -1,0 +1,31 @@
+name: main_security-lib.yml
+
+run-name: ${{ github.actor }} fired main workflow
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "libs/security-lib/**"
+
+jobs:
+  main-workflow:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # we need this to ignore the project if no changes. If not, will always detect changes in all the services
+
+      - name: security-lib pipeline
+        uses: ./.github/actions/action-mvn-build
+        with:
+          PATH: "libs/security-lib"
+          SERVICE_NAME: "security-lib"
+          AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
+          SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
+          DOCKER_IMAGE_GENERATION: "false"
+          MVN_DEPLOY: "true"
