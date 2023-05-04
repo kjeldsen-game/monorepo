@@ -1,0 +1,30 @@
+name: main_match-service.yml
+
+run-name: ${{ github.actor }} fired main workflow
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "services/match-service/**"
+
+jobs:
+  main-workflow:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # we need this to ignore the project if no changes. If not, will always detect changes in all the services
+
+      - name: match-service pipeline
+        uses: ./.github/actions/action-mvn-build
+        with:
+          PATH: "services/match-service"
+          SERVICE_NAME: "match-service"
+          AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
+          AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
+          SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}

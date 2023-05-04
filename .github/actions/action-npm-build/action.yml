@@ -29,15 +29,7 @@ runs:
   using: "composite"
 
   steps:
-    - name: Get changed files
-      id: changed-files
-      uses: tj-actions/changed-files@v32
-      with:
-        files: |
-          ${{ inputs.PATH }}/**
-
     - uses: actions/setup-node@v3
-      if: steps.changed-files.outputs.any_changed == 'true'
       with:
         node-version: 16
         cache: "npm"
@@ -45,7 +37,6 @@ runs:
 
     - name: Build
       id: build
-      if: steps.changed-files.outputs.any_changed == 'true'
       run: |
         cd ${{ inputs.PATH }}
         npm install next
