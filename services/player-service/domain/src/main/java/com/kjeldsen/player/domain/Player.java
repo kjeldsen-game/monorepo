@@ -14,6 +14,7 @@ import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import static com.kjeldsen.player.domain.exception.BusinessValidationException.throwIfNot;
@@ -63,6 +64,9 @@ public class Player {
     }
 
     public boolean isBloomActive() {
+        if (Objects.isNull(bloom)) {
+            return false;
+        }
         int initialRange = bloom.getBloomStartAge();
         int endRange = initialRange + bloom.getYearsOn();
         return Range.between(initialRange, endRange).contains(age);
