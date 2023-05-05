@@ -1,6 +1,6 @@
 package com.kjeldsen.player.kafka;
 
-import com.kjeldsen.player.kafka.events.UserSignedUpEvent;
+import com.kjeldsen.player.kafka.events.body.UserSignedUpEvent;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

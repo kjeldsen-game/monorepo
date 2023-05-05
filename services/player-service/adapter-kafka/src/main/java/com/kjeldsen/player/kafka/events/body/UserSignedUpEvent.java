@@ -1,6 +1,6 @@
-package com.kjeldsen.player.kafka.events;
+package com.kjeldsen.player.kafka.events.body;
 
-import com.kjeldsen.events.Event;
+import com.kjeldsen.events.domain.Event;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserSignedUpEvent extends Event {
-    private String userId;
 
+    private String userId;
     private String teamName;
+
 }

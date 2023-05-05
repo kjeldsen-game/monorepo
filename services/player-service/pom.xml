@@ -23,6 +23,10 @@
     <name>player-service</name>
     <description>Demo project for Spring Boot</description>
     <properties>
+        <!-- LIBS -->
+        <security-lib.version>0.0.1-SNAPSHOT</security-lib.version>
+        <event-lib.version>0.0.1-SNAPSHOT</event-lib.version>
+        <!-- Others -->
         <java.version>17</java.version>
         <openapi-generator-maven-plugin.version>6.1.0</openapi-generator-maven-plugin.version>
         <springdoc-openapi-maven-plugin.version>1.4</springdoc-openapi-maven-plugin.version>
@@ -48,9 +52,7 @@
         <jaxb.version>2.3.1</jaxb.version>
         <jaxb-core.version>2.3.0.1</jaxb-core.version>
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
-        <security-lib.version>0.0.1-SNAPSHOT</security-lib.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <event-lib.version>0.0.1-SNAPSHOT</event-lib.version>
     </properties>
     <build>
         <finalName>player-service</finalName>
@@ -78,12 +80,10 @@
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>security-lib</artifactId>
-            <version>${security-lib.version}</version>
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>event-lib</artifactId>
-            <version>${event-lib.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -146,6 +146,17 @@
                 <groupId>com.kjeldsen</groupId>
                 <artifactId>adapter-kafka</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <!-- LIBS -->
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>security-lib</artifactId>
+                <version>${security-lib.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>event-lib</artifactId>
+                <version>${event-lib.version}</version>
             </dependency>
             <!-- Third party dependencies -->
             <dependency>

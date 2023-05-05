@@ -1,6 +1,6 @@
 package com.kjeldsen.player.domain.events;
 
-import com.kjeldsen.events.Event;
+import com.kjeldsen.events.domain.Event;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import lombok.Getter;
@@ -35,7 +35,7 @@ public class PlayerTrainingDeclineEvent extends Event {
     private static final Range<Integer> RANGE_OF_SPEED = Range.between(MIN_SPEED, MAX_SPEED);
 
     public static PlayerTrainingDeclineEvent of(Integer declineStartAge, Integer declineSpeed, Player.PlayerId playerId, PlayerSkill skill,
-        Integer pointsToSubtract, Integer pointsBeforeTraining, Integer pointsAfterTraining, Integer currentDay) {
+                                                Integer pointsToSubtract, Integer pointsBeforeTraining, Integer pointsAfterTraining, Integer currentDay) {
 
         if (!RANGE_OF_DECLINE_AGE.contains(declineStartAge)) {
             throw new IllegalArgumentException("Decline start age must be between 15 and 33");
