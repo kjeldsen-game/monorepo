@@ -39,7 +39,7 @@ class GenerateTrainingUseCaseTest {
         playerReadRepository, playerWriteRepository, playerTrainingBloomEventReadRepository);
 
     @Test
-    @DisplayName("create a event where generate a training")
+    @DisplayName("create an event where generate a training")
     void generate() {
 
         EventId eventId1 = EventId.generate();
