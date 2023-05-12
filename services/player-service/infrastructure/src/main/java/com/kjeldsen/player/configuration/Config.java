@@ -1,4 +1,4 @@
-package com.kjeldsen.player.config;
+package com.kjeldsen.player.configuration;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;

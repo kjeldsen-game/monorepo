@@ -1,30 +1,18 @@
-package integration;
+package com.kjeldsen.player.integration.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kjeldsen.player.PlayerServiceApplication;
-import com.kjeldsen.player.application.usecases.UpdatePlayerPositionTendencyUseCase;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyReadRepositoryMongoAdapter;
-import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyWriteRepositoryMongoAdapter;
+import com.kjeldsen.player.integration.AbstractIT;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerPositionTendencyMongoRepository;
-import com.kjeldsen.player.rest.api.PlayerPositionTendenciesApiController;
-import com.kjeldsen.player.rest.delegate.PlayerPositionTendenciesDelegate;
 import com.kjeldsen.player.rest.model.PlayerPosition;
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponse;
-import common.AbstractIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -36,16 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureDataMongo
-@AutoConfigureMockMvc(addFilters = false)
-@ActiveProfiles("test")
-@WebMvcTest(controllers = PlayerPositionTendenciesApiController.class)
-@ContextConfiguration(classes = {PlayerServiceApplication.class})
-@Import({PlayerPositionTendenciesDelegate.class,
-    UpdatePlayerPositionTendencyUseCase.class,
-    PlayerPositionTendencyReadRepositoryMongoAdapter.class,
-    PlayerPositionTendencyWriteRepositoryMongoAdapter.class})
-public class PlayerPositionTendencyApiTest extends AbstractIntegrationTest {
+public class PlayerPositionTendencyApiIT extends AbstractIT {
 
     @Autowired
     private MockMvc mockMvc;

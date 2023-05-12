@@ -1,42 +1,23 @@
-package integration;
+package com.kjeldsen.player.integration.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kjeldsen.player.PlayerServiceApplication;
-import com.kjeldsen.player.application.publisher.PlayerPublisher;
-import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
-import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.provider.PlayerProvider;
 import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
-import com.kjeldsen.player.persistence.adapters.mongo.PlayerCreationEventWriteRepositoryMongoAdapter;
-import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyReadRepositoryMongoAdapter;
-import com.kjeldsen.player.persistence.adapters.mongo.PlayerPositionTendencyWriteRepositoryMongoAdapter;
-import com.kjeldsen.player.persistence.adapters.mongo.PlayerReadRepositoryMongoAdapter;
-import com.kjeldsen.player.persistence.adapters.mongo.PlayerWriteRepositoryMongoAdapter;
+import com.kjeldsen.player.integration.AbstractIT;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
-import com.kjeldsen.player.rest.api.PlayerApiController;
-import com.kjeldsen.player.rest.delegate.PlayersDelegate;
 import com.kjeldsen.player.rest.model.CreatePlayerRequest;
 import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
 import com.kjeldsen.player.rest.model.PlayerPosition;
 import com.kjeldsen.player.rest.model.PlayerResponse;
-import common.AbstractIntegrationTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Comparator;
 import java.util.List;
@@ -47,30 +28,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@AutoConfigureDataMongo
-@AutoConfigureMockMvc(addFilters = false)
-@ActiveProfiles("test")
-@WebMvcTest(controllers = PlayerApiController.class)
-@ContextConfiguration(classes = {PlayerServiceApplication.class})
-@Import({PlayersDelegate.class,
-    CreatePlayerUseCase.class,
-    GeneratePlayersUseCase.class,
-    PlayerWriteRepositoryMongoAdapter.class,
-    PlayerReadRepositoryMongoAdapter.class,
-    PlayerPositionTendencyReadRepositoryMongoAdapter.class,
-    PlayerPositionTendencyWriteRepositoryMongoAdapter.class,
-    PlayerCreationEventWriteRepositoryMongoAdapter.class,
-    PlayerPublisher.class})
-class PlayerApiTest extends AbstractIntegrationTest {
+class PlayerApiIT extends AbstractIT {
 
-    @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
     @Autowired
     private PlayerReadRepository playerReadRepository;
     @Autowired
