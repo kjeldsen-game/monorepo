@@ -24,13 +24,13 @@ jobs:
         uses: ./.github/actions/action-mvn-version
         id: service-version
         with:
-          PATH: ${{ inputs.RELEASE }}
+          PATH: services/${{ inputs.SERVICE_NAME }}
           RELEASE: ${{ inputs.RELEASE }}
 
       - name: service pipeline
         uses: ./.github/actions/action-mvn-build
         with:
-          SERVICE_NAME: services/${{ inputs.SERVICE_NAME }}
+          SERVICE_NAME: ${{ inputs.SERVICE_NAME }}
           SERVICE_VERSION: ${{ steps.service-version.outputs.version }}
           AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
           AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
