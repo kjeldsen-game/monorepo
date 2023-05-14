@@ -1,6 +1,11 @@
 name: "Maven Version"
 description: "Gets next MVN version of a service"
 
+inputs:
+  PATH:
+    required: true
+    description: "The path of the service to get the version from"
+
 runs:
   using: "composite"
 
