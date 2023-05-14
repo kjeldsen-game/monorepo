@@ -5,7 +5,7 @@ inputs:
   PATH:
     required: true
     description: "The path of the fe to built"
-  FE_NAME:
+  NAME:
     required: true
     description: "The name of the fe to built"
   AWS_ECR_URI:
@@ -20,6 +20,9 @@ inputs:
   SLACK_CICD_WEBHOOK:
     required: true
     description: "SLACK_CICD_WEBHOOK"
+  SLACK_NOTIFICATION:
+    description: "Activates Slack Notification"
+    default: "true"
   DOCKER_IMAGE_GENERATION:
     required: false
     description: "DOCKER_IMAGE_GENERATION"
@@ -49,7 +52,7 @@ runs:
         steps.build.outcome != 'skipped' && 
         inputs.DOCKER_IMAGE_GENERATION  == 'true'
       run: |
-        echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.FE_NAME }}:latest" >> $GITHUB_ENV
+        echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.NAME }}:latest" >> $GITHUB_ENV
       shell: bash
 
     - name: AWS ECR Configure
@@ -77,15 +80,13 @@ runs:
 
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
-      if: |
-        (steps.build.outcome == 'success' && inputs.DOCKER_IMAGE_GENERATION  == 'false') ||
-        (steps.ecr_push.outcome == 'success' && inputs.DOCKER_IMAGE_GENERATION  == 'true')
+      if: inputs.SLACK_NOTIFICATION  == 'true'
       env:
         SLACK_CHANNEL: ci-cd
         SLACK_COLOR: ${{ job.status }}
         SLACK_ICON: https://github-actions.s3.eu-west-1.amazonaws.com/Octocat.png
         SLACK_WEBHOOK: ${{ inputs.SLACK_CICD_WEBHOOK }}
         SLACK_USERNAME: GitHub Actions
-        SLACK_TITLE: Built ${{ inputs.FE_NAME }}
+        SLACK_TITLE: Built ${{ inputs.NAME }}
         SLACK_FOOTER: "CI successfully finished"
         MSG_MINIMAL: actions url, commit
