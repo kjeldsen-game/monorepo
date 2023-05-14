@@ -76,10 +76,8 @@ runs:
       if: |
         steps.ecr_configure.outcome == 'success' && 
         inputs.DOCKER_IMAGE_GENERATION  == 'true'
-      with:
-        AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
       run: |
-        echo "ECR_IMAGE_NAME=$AWS_ECR_URI/${{ inputs.SERVICE_NAME }}:${{ inputs.SERVICE_VERSION }}" >> $GITHUB_ENV
+        echo "ECR_IMAGE_NAME=${{ secrets.AWS_ECR_URI }}/${{ inputs.SERVICE_NAME }}:${{ inputs.SERVICE_VERSION }}" >> $GITHUB_ENV
       shell: bash
 
     - name: Login to Amazon ECR
