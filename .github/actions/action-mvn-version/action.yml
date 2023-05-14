@@ -28,4 +28,5 @@ runs:
         else
           echo "version=latest" >> $GITHUB_OUTPUT
         fi
+        echo "version=latest" >> $GITHUB_OUTPUT
       shell: bash
