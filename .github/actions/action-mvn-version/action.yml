@@ -5,6 +5,9 @@ inputs:
   PATH:
     required: true
     description: "The path of the service to get the version from"
+  RELEASE:
+    required: true
+    description: "Indicates if it is a release"
 
 runs:
   using: "composite"
@@ -20,5 +23,9 @@ runs:
       id: version-generation
       run: |
         cd ${{ inputs.PATH }}
-        echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
+        if [ ${{ inputs.RELEASE }} = "true" ]; then
+          echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
+        else
+          echo "version=latest" >> $GITHUB_OUTPUT
+        fi
       shell: bash

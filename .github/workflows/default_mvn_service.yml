@@ -4,6 +4,9 @@ on:
       SERVICE_NAME:
         required: true
         type: string
+      RELEASE:
+        type: string
+        default: "false"
 
 jobs:
   main-workflow:
@@ -14,10 +17,18 @@ jobs:
         with:
           fetch-depth: 0 # we need this to ignore the project if no changes. If not, will always detect changes in all the services
 
+      - name: service version
+        uses: ./.github/actions/action-mvn-version
+        id: service-version
+        with:
+          PATH: ${{ inputs.RELEASE }}
+          RELEASE: ${{ inputs.RELEASE }}
+
       - name: service pipeline
         uses: ./.github/actions/action-mvn-build
         with:
-          SERVICE_NAME: ${{ inputs.SERVICE_NAME }}
+          SERVICE_NAME: services/${{ inputs.SERVICE_NAME }}
+          SERVICE_VERSION: ${{ steps.service-version.outputs.version }}
           AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
           AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
           AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
