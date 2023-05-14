@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # we need this to ignore the project if no changes. If not, will always detect changes in all the services
+          fetch-depth: 0
 
       - name: service version
         uses: ./.github/actions/action-mvn-version
@@ -26,6 +26,11 @@ jobs:
         with:
           PATH: services/${{ inputs.SERVICE_NAME }}
           RELEASE: ${{ inputs.RELEASE }}
+
+
+      - name: asdasd
+        run: echo ${{ steps.service-version.outputs.version }}
+        shell: bash
 
       - name: service pipeline
         uses: ./.github/actions/action-mvn-build

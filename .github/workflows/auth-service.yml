@@ -1,4 +1,4 @@
-name: main_auth-service.yml
+name: auth-service.yml
 
 run-name: ${{ github.actor }} fired main workflow
 

@@ -5,30 +5,30 @@ inputs:
   SERVICE_NAME:
     required: true
     description: "The name of the service to built"
+  SERVICE_VERSION:
+    required: false
+    description: "The version of the version to publish"
+    default: "latest"
   AWS_ECR_URI:
     required: true
-    description: "AWS_ECR_URI"
+    description: "AWS ECR service URI"
   AWS_CICD_ACCESS_KEY:
     required: true
-    description: "AWS_CICD_ACCESS_KEY"
+    description: "AWS ECR service access key"
   AWS_CICD_SECRET_ACCESS_KEY:
     required: true
-    description: "AWS_CICD_SECRET_ACCESS_KEY"
+    description: "AWS ECR service secret access key"
   SLACK_CICD_WEBHOOK:
     required: true
-    description: "SLACK_CICD_WEBHOOK"
+    description: "Slack CI/CD channel webhook"
   DOCKER_IMAGE_GENERATION:
     required: false
-    description: "DOCKER_IMAGE_GENERATION"
+    description: "Indicates if the Docker image should be generated and published to AWS ECR"
     default: "true"
   MVN_DEPLOY:
     required: false
-    description: "MVN_DEPLOY"
+    description: "Indicates if the Maven artifact should be publish to AWS Code Artifact"
     default: "false"
-  SERVICE_VERSION:
-    required: false
-    description: "SERVICE_VERSION"
-    default: "latest"
 
 runs:
   using: "composite"

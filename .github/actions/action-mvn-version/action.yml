@@ -23,7 +23,7 @@ runs:
       id: version-generation
       run: |
         cd ${{ inputs.PATH }}
-        if [ ${{ inputs.RELEASE }} = "true" ]; then
+        if [[ ${{ inputs.RELEASE }} == true ]]; then
           echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
         else
           echo "version=latest" >> $GITHUB_OUTPUT
