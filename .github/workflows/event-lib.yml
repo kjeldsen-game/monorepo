@@ -20,7 +20,6 @@ jobs:
     secrets: inherit
     with:
       LIB_NAME: "event-lib"
-      DOCKER_IMAGE_GENERATION: "false"
 
   push-main-job:
     uses: ./.github/workflows/default_mvn_lib.yml
