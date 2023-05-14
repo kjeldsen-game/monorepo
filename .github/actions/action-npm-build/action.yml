@@ -55,7 +55,7 @@ runs:
     - name: AWS ECR Configure
       id: ecr_configure
       if: steps.ecr_variables.outcome == 'success'
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ inputs.AWS_CICD_ACCESS_KEY }}
         aws-secret-access-key: ${{ inputs.AWS_CICD_SECRET_ACCESS_KEY }}
