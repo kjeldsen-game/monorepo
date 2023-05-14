@@ -50,7 +50,7 @@ runs:
     - name: Build
       id: build
       run: |
-        cd ${{ inputs.PATH }}
+        cd ${{ inputs.PATH }}/${{ inputs.NAME }}
         cargo check
       shell: bash
 
@@ -72,7 +72,7 @@ runs:
       id: ecr_push
       if: steps.login_ecr.outcome == 'success'
       run: |
-        cd ${{ inputs.PATH }}
+        cd ${{ inputs.PATH }}/${{ inputs.NAME }}
         docker build -t ${{ env.ECR_IMAGE_NAME }} .
         docker push ${{ env.ECR_IMAGE_NAME }}
       shell: bash
