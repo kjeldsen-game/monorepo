@@ -35,3 +35,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Local env vars
 Copy the file .env.local.example to a file with the name .env.local and add there the env vars you would like to use. As an example you can check in the local-env the beta-frontend.env file.
+
