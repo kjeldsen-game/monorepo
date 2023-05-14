@@ -1,0 +1,35 @@
+name: main_auth-service.yml
+
+run-name: ${{ github.actor }} fired main workflow
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "services/auth-service/**"
+
+jobs:
+  main-workflow:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # we need this to ignore the project if no changes. If not, will always detect changes in all the services
+
+      - name: auth-service version
+        uses: ./.github/actions/action-mvn-version
+        id: service-version
+
+      - name: auth-service pipeline
+        uses: ./.github/actions/action-mvn-build
+        with:
+          PATH: "services/auth-service"
+          SERVICE_NAME: "auth-service"
+          SERVICE_VERSION: ${{ steps.service-version.outputs.version }}
+          AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
+          AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
+          SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}

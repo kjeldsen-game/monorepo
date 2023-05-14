@@ -1,0 +1,19 @@
+name: "Maven Version"
+description: "Gets next MVN version of a service"
+
+runs:
+  using: "composite"
+
+  steps:
+    - uses: actions/setup-java@v3
+      with:
+        distribution: "corretto"
+        java-version: "17"
+        cache: "maven"
+
+    - name: Version generation
+      id: version-generation
+      run: |
+        cd ${{ inputs.PATH }}
+        echo "::set-output name=version::$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
+      shell: bash
