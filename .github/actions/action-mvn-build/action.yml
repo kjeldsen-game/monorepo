@@ -8,9 +8,6 @@ inputs:
   SERVICE_NAME:
     required: true
     description: "The name of the service to built"
-  AWS_ECR_URI:
-    required: true
-    description: "AWS_ECR_URI"
   AWS_CICD_ACCESS_KEY:
     required: true
     description: "AWS_CICD_ACCESS_KEY"
@@ -79,7 +76,7 @@ runs:
       if: |
         steps.ecr_configure.outcome == 'success' && 
         inputs.DOCKER_IMAGE_GENERATION  == 'true'
-      env:
+      with:
         AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
       run: |
         echo "ECR_IMAGE_NAME=$AWS_ECR_URI/${{ inputs.SERVICE_NAME }}:${{ inputs.SERVICE_VERSION }}" >> $GITHUB_ENV
