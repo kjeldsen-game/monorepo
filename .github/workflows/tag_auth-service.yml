@@ -1,6 +1,6 @@
-name: main_auth-service.yml
+name: tag_auth-service.yml
 
-run-name: ${{ github.actor }} fired main workflow
+run-name: ${{ github.actor }} fired tag workflow
 
 on:
   workflow_dispatch:
