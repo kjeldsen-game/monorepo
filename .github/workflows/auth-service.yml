@@ -1,7 +1,5 @@
 name: auth-service.yml
 
-run-name: ${{ github.actor }} fired main workflow
-
 on:
   pull_request:
     paths:
