@@ -22,21 +22,21 @@ jobs:
 
       - name: service version
         uses: ./.github/actions/action-mvn-version
-        id: service-version
+        id: service_version
         with:
           PATH: services/${{ inputs.SERVICE_NAME }}
           RELEASE: ${{ inputs.RELEASE }}
 
 
       - name: asdasd
-        run: echo ${{ steps.service-version.outputs.version }}
+        run: echo ${{ steps.service_version.outputs.version }}
         shell: bash
 
       - name: service pipeline
         uses: ./.github/actions/action-mvn-build
         with:
           SERVICE_NAME: ${{ inputs.SERVICE_NAME }}
-          SERVICE_VERSION: ${{ steps.service-version.outputs.version }}
+          SERVICE_VERSION: ${{ steps.service_version.outputs.VERSION }}
           AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
           AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
           AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
