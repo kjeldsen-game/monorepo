@@ -2,9 +2,6 @@ name: "Maven Build"
 description: "Builds a mvn service"
 
 inputs:
-  PATH:
-    required: true
-    description: "The path of the service to built"
   SERVICE_NAME:
     required: true
     description: "The name of the service to built"
@@ -57,7 +54,7 @@ runs:
     - name: Build
       id: build
       run: |
-        cd ${{ inputs.PATH }}
+        cd services/${{ inputs.SERVICE_NAME }}
         mvn clean install -U
       shell: bash
 
@@ -67,7 +64,7 @@ runs:
         steps.ecr_configure.outcome == 'success' && 
         inputs.MVN_DEPLOY  == 'true'
       run: |
-        cd ${{ inputs.PATH }}
+        cd services/${{ inputs.SERVICE_NAME }}
         mvn deploy -Dmaven.deploy.version=${{ inputs.SERVICE_VERSION }}
       shell: bash
 
@@ -89,7 +86,7 @@ runs:
       id: ecr_push
       if: steps.login_ecr.outcome == 'success'
       run: |
-        cd ${{ inputs.PATH }}
+        cd services/${{ inputs.SERVICE_NAME }}
         docker build -t ${{ env.ECR_IMAGE_NAME }} .
         docker push ${{ env.ECR_IMAGE_NAME }}
       shell: bash

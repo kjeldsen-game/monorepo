@@ -1,0 +1,28 @@
+on:
+  workflow_call:
+    inputs:
+      SERVICE_PATH:
+        required: true
+        type: string
+      SERVICE_NAME:
+        required: true
+        type: string
+
+jobs:
+  main-workflow:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # we need this to ignore the project if no changes. If not, will always detect changes in all the services
+
+      - name: service pipeline
+        uses: ./.github/actions/action-mvn-build
+        with:
+          PATH: ${{ inputs.SERVICE_PATH }}
+          SERVICE_NAME: ${{ inputs.SERVICE_NAME }}
+          AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
+          AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
+          SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
