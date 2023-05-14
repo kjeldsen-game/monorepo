@@ -20,23 +20,27 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: service version
-        uses: ./.github/actions/action-mvn-version
-        id: service_version
-        with:
-          PATH: services/${{ inputs.SERVICE_NAME }}
-          RELEASE: ${{ inputs.RELEASE }}
+      - name: Version generation
+        id: version-generation
+        run: |
+          cd services/${{ inputs.SERVICE_NAME }}
+          if [[ ${{ inputs.RELEASE }} == true ]]; then
+            echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+          else
+            echo "VERSION=latest" >> $GITHUB_ENV
+          fi
+        shell: bash
 
 
       - name: asdasd
-        run: echo ${{ steps.service_version.outputs.version }}
+        run: echo ${{ env.VERSION }}
         shell: bash
 
       - name: service pipeline
         uses: ./.github/actions/action-mvn-build
         with:
           SERVICE_NAME: ${{ inputs.SERVICE_NAME }}
-          SERVICE_VERSION: ${{ steps.service_version.outputs.VERSION }}
+          SERVICE_VERSION: ${{ env.VERSION }}
           AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
           AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
           AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
