@@ -5,8 +5,8 @@ run-name: ${{ github.actor }} fired main workflow
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*.*.*'
     paths:
       - "services/auth-service/**"
 
