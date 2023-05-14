@@ -1,0 +1,47 @@
+on:
+  workflow_call:
+    inputs:
+      SERVICE_NAME:
+        required: true
+        type: string
+      DOCKER_IMAGE_GENERATION:
+        type: string
+        default: "true"
+      RELEASE:
+        type: string
+        default: "false"
+      SLACK_NOTIFICATION:
+        type: string
+        default: "false"
+
+jobs:
+  main-workflow:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Version generation
+        run: |
+          cd services/${{ inputs.SERVICE_NAME }}
+          if [[ ${{ inputs.RELEASE }} == true ]]; then
+            echo "VERSION=$(cargo pkgid | cut -d '#' -f 2)" >> $GITHUB_ENV
+          else
+            echo "VERSION=latest" >> $GITHUB_ENV
+          fi
+        shell: bash
+
+      - name: service pipeline
+        uses: ./.github/actions/action-cargo-build
+        with:
+          PATH: services
+          NAME: ${{ inputs.SERVICE_NAME }}
+          VERSION: ${{ env.VERSION }}
+          SLACK_NOTIFICATION: ${{ inputs.SLACK_NOTIFICATION }}
+          AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
+          AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
+          SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}
+          DOCKER_IMAGE_GENERATION: ${{ inputs.DOCKER_IMAGE_GENERATION }}
