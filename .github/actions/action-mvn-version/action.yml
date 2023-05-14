@@ -25,8 +25,9 @@ runs:
         cd ${{ inputs.PATH }}
         if [[ ${{ inputs.RELEASE }} == true ]]; then
           echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
+          echo "hi"
         else
           echo "version=latest" >> $GITHUB_OUTPUT
+          echo "goodbye"
         fi
-        echo "version=latest" >> $GITHUB_OUTPUT
       shell: bash
