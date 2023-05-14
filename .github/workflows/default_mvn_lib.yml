@@ -1,12 +1,9 @@
 on:
   workflow_call:
     inputs:
-      SERVICE_NAME:
+      LIB_NAME:
         required: true
         type: string
-      DOCKER_IMAGE_GENERATION:
-        type: string
-        default: "true"
       RELEASE:
         type: string
         default: "false"
@@ -25,7 +22,7 @@ jobs:
 
       - name: Version generation
         run: |
-          cd services/${{ inputs.SERVICE_NAME }}
+          cd libs/${{ inputs.LIB_NAME }}
           if [[ ${{ inputs.RELEASE }} == true ]]; then
             echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
           else
@@ -33,14 +30,13 @@ jobs:
           fi
         shell: bash
 
-      - name: service pipeline
+      - name: lib pipeline
         uses: ./.github/actions/action-mvn-build
         with:
-          PATH: services
-          NAME: ${{ inputs.SERVICE_NAME }}
+          PATH: libs
+          NAME: ${{ inputs.LIB_NAME }}
           VERSION: ${{ env.VERSION }}
           SLACK_NOTIFICATION: ${{ inputs.SLACK_NOTIFICATION }}
           AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
           AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
           AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
-          SLACK_CICD_WEBHOOK: ${{ secrets.SLACK_CICD_WEBHOOK }}

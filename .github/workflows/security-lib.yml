@@ -1,0 +1,38 @@
+name: security-lib.yml
+
+on:
+  pull_request:
+    paths:
+      - "libs/security-lib/**"
+  push:
+    tags:
+      - 'v*.*.*'
+    branches:
+      - main
+    paths:
+      - "libs/security-lib/**"
+
+jobs:
+
+  merge-request-job:
+    uses: ./.github/workflows/default_mvn_lib.yml
+    if: github.event_name == 'pull_request'
+    secrets: inherit
+    with:
+      LIB_NAME: "security-lib"
+      DOCKER_IMAGE_GENERATION: "false"
+
+  push-main-job:
+    uses: ./.github/workflows/default_mvn_lib.yml
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    secrets: inherit
+    with:
+      LIB_NAME: "security-lib"
+       
+  tag-job:
+    uses: ./.github/workflows/default_mvn_lib.yml
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    secrets: inherit
+    with:
+      LIB_NAME: "security-lib"
+      RELEASE: "true"
