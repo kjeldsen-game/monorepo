@@ -4,6 +4,9 @@ on:
       SERVICE_NAME:
         required: true
         type: string
+      DOCKER_IMAGE_GENERATION:
+        type: string
+        default: "true"
       RELEASE:
         type: string
         default: "false"
