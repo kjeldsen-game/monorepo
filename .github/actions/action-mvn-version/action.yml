@@ -15,5 +15,5 @@ runs:
       id: version-generation
       run: |
         cd ${{ inputs.PATH }}
-        echo "::set-output name=version::$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
+        run: echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
       shell: bash
