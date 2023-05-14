@@ -33,7 +33,7 @@ jobs:
           fi
         shell: bash
 
-      - name: service pipeline
+      - name: frontend pipeline
         uses: ./.github/actions/action-npm-build
         with:
           PATH: frontends

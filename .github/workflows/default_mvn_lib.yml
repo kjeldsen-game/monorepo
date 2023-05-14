@@ -24,7 +24,7 @@ jobs:
         run: |
           cd libs/${{ inputs.LIB_NAME }}
           if [[ ${{ inputs.RELEASE }} == true ]]; then
-            echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+            echo "VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
           else
             echo "VERSION=latest" >> $GITHUB_ENV
           fi
