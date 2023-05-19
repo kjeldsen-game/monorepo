@@ -20,8 +20,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: Version generation
         id: get_tag_version
@@ -34,7 +32,7 @@ jobs:
         with:
           PATH: services
           NAME: ${{ inputs.SERVICE_NAME }}
-          VERSION_NUMBER: ${{ steps.get_tag_version.outputs.version }}
+          VERSION: ${{ steps.get_tag_version.outputs.version }}
           SLACK_NOTIFICATION: ${{ inputs.SLACK_NOTIFICATION }}
           AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
           AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
