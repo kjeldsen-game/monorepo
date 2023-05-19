@@ -15,7 +15,7 @@ on:
         default: "false"
 
 jobs:
-  main-workflow:
+  default-mvn-workflow:
     runs-on: ubuntu-20.04
 
     steps:
