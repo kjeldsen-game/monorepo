@@ -1,10 +1,16 @@
 name: "Tag version"
 description: "Returns the version of the git tag"
 
+outputs:
+  version:
+    description: "Git tag version"
+    value: ${{ steps.version_step.outputs.version }}
+
 runs:
   using: "composite"
 
   steps:
     - name: Version generation
-      run: echo "VERSION=5" >> $GITHUB_OUTPUT
+      id: version_step
+      run: echo "version=5" >> $GITHUB_OUTPUT
       shell: bash

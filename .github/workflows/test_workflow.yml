@@ -15,4 +15,4 @@ jobs:
           uses: ./.github/actions/action-tag-version
           
         - name: check output
-          run: echo ${{ steps.get_tag_version.outputs.VERSION }}
+          run: echo ${{ steps.get_tag_version.outputs.version }}
