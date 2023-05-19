@@ -8,7 +8,7 @@ inputs:
   NAME:
     required: true
     description: "The name of the item to built"
-  VERSION:
+  VERSION_NUMBER:
     required: true
     description: "The version of the item to publish"
   AWS_ECR_URI:
@@ -70,7 +70,7 @@ runs:
         inputs.MVN_DEPLOY  == 'true'
       run: |
         cd ${{ inputs.PATH }}/${{ inputs.NAME }}
-        mvn deploy -Dmaven.deploy.version=${{ inputs.VERSION }}
+        mvn deploy -Dmaven.deploy.version=${{ inputs.VERSION_NUMBER }}
       shell: bash
 
     - name: Generate ECR Variables
@@ -79,7 +79,7 @@ runs:
         steps.ecr_configure.outcome == 'success' && 
         inputs.DOCKER_IMAGE_GENERATION  == 'true'
       run: |
-        echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.NAME }}:${{ inputs.VERSION }}" >> $GITHUB_ENV
+        echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.NAME }}:${{ inputs.VERSION_NUMBER }}" >> $GITHUB_ENV
       shell: bash
 
     - name: Login to Amazon ECR
