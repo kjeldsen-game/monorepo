@@ -1,6 +1,11 @@
 name: "Tag version"
 description: "Returns the version of the git tag"
 
+inputs:
+  RELEASE:
+    description: If not release, default version is latest
+    default: "false"
+
 outputs:
   version:
     description: "Git tag version"
@@ -11,6 +16,10 @@ runs:
 
   steps:
     - name: Version generation
-      id: version_step
-      run: echo "version=5" >> $GITHUB_OUTPUT
+      run: |
+        if [[ ${{ inputs.RELEASE }} == true ]]; then
+          echo "VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+        else
+          echo "VERSION=latest" >> $GITHUB_ENV
+        fi
       shell: bash

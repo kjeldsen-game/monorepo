@@ -24,21 +24,17 @@ jobs:
           fetch-depth: 0
 
       - name: Version generation
-        run: |
-          cd services/${{ inputs.SERVICE_NAME }}
-          if [[ ${{ inputs.RELEASE }} == true ]]; then
-            echo "VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-          else
-            echo "VERSION=latest" >> $GITHUB_ENV
-          fi
-        shell: bash
-
+        id: get_tag_version
+        uses: ./.github/actions/action-tag-version
+        with:
+          RELEASE: ${{ inputs.RELEASE }}
+          
       - name: service pipeline
         uses: ./.github/actions/action-cargo-build
         with:
           PATH: services
           NAME: ${{ inputs.SERVICE_NAME }}
-          VERSION: ${{ env.VERSION }}
+          VERSION: ${{ steps.get_tag_version.outputs.version }}
           SLACK_NOTIFICATION: ${{ inputs.SLACK_NOTIFICATION }}
           AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
           AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
