@@ -1,0 +1,10 @@
+name: "Tag version"
+description: "Returns the version of the git tag"
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Version generation
+      run: echo "VERSION=5" >> $GITHUB_OUTPUT
+      shell: bash
