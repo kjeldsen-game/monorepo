@@ -7,6 +7,7 @@ import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.rest.api.PlayerPositionTendenciesApiDelegate;
+import com.kjeldsen.player.rest.mapper.PlayerPositionTendencyMapper;
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +27,7 @@ public class PlayerPositionTendenciesDelegate implements PlayerPositionTendencie
     public ResponseEntity<List<PlayerPositionTendencyResponse>> getAllPlayerPositionTendencies() {
         List<PlayerPositionTendencyResponse> response = playerPositionTendencyReadRepository.find()
             .stream()
-            .map(playerPositionTendency -> new PlayerPositionTendencyResponse()
-                .position(com.kjeldsen.player.rest.model.PlayerPosition.valueOf(playerPositionTendency.getPosition().name()))
-                .tendencies(playerPositionTendency.getTendencies().entrySet().stream()
-                    .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
-                ._default(playerPositionTendency.isDefault())
-            )
-            .toList();
-
+            .map(PlayerPositionTendencyMapper.INSTANCE::map).toList();
         return ResponseEntity.ok(response);
     }
 
