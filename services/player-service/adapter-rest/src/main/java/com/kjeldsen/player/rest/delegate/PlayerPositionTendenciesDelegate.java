@@ -46,11 +46,8 @@ public class PlayerPositionTendenciesDelegate implements PlayerPositionTendencie
             .tendencies(requestBody.entrySet().stream().collect(
                 Collectors.toMap(entry -> PlayerSkill.valueOf(entry.getKey()), Map.Entry::getValue)))
             .build());
-        PlayerPositionTendencyResponse response = new PlayerPositionTendencyResponse()
-            .position(com.kjeldsen.player.rest.model.PlayerPosition.valueOf(updatedPlayerPositionTendency.getPosition().name()))
-            .tendencies(updatedPlayerPositionTendency.getTendencies().entrySet().stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
-            ._default(updatedPlayerPositionTendency.isDefault());
+        PlayerPositionTendencyResponse response = PlayerPositionTendencyMapper.INSTANCE.map(updatedPlayerPositionTendency);
+        ;
         return ResponseEntity.ok(response);
     }
 }
