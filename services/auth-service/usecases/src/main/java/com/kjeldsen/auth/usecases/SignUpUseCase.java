@@ -19,15 +19,15 @@ public class SignUpUseCase {
 
     // TODO Miguel this should be transactional. Add integration test that makes sure of the rollback in db if kafka message fails
     public void signUp(SignUp signUp) throws ResponseStatusException {
-        throwIfFound(signUp);
+        throwConflictIfFound(signUp);
         signUpWriteRepository.save(signUp);
         authSignUpProducer.send(signUp);
     }
 
-    private void throwIfFound(SignUp signUp) {
+    private void throwConflictIfFound(SignUp signUp) {
         signUpReadRepository.findByUsernameIgnoreCase(signUp.getUsername())
-            .ifPresent(conflictingSignUp -> {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("Username %s already in use", conflictingSignUp.getUsername()));
-            });
+                .ifPresent(conflictingSignUp -> {
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("Username %s already in use", conflictingSignUp.getUsername()));
+                });
     }
 }

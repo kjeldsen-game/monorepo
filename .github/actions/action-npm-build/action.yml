@@ -5,7 +5,7 @@ inputs:
   PATH:
     required: true
     description: "The path of the fe to built"
-  FE_NAME:
+  NAME:
     required: true
     description: "The name of the fe to built"
   AWS_ECR_URI:
@@ -20,6 +20,9 @@ inputs:
   SLACK_CICD_WEBHOOK:
     required: true
     description: "SLACK_CICD_WEBHOOK"
+  SLACK_NOTIFICATION:
+    description: "Activates Slack Notification"
+    default: "true"
   DOCKER_IMAGE_GENERATION:
     required: false
     description: "DOCKER_IMAGE_GENERATION"
@@ -29,25 +32,16 @@ runs:
   using: "composite"
 
   steps:
-    - name: Get changed files
-      id: changed-files
-      uses: tj-actions/changed-files@v32
-      with:
-        files: |
-          ${{ inputs.PATH }}/**
-
     - uses: actions/setup-node@v3
-      if: steps.changed-files.outputs.any_changed == 'true'
       with:
         node-version: 16
         cache: "npm"
-        cache-dependency-path: ${{ inputs.PATH }}/package-lock.json
+        cache-dependency-path: ${{ inputs.PATH }}/${{ inputs.NAME }}/package-lock.json
 
     - name: Build
       id: build
-      if: steps.changed-files.outputs.any_changed == 'true'
       run: |
-        cd ${{ inputs.PATH }}
+        cd ${{ inputs.PATH }}/${{ inputs.NAME }}
         npm install next
         npm run build
       shell: bash
@@ -58,13 +52,13 @@ runs:
         steps.build.outcome != 'skipped' && 
         inputs.DOCKER_IMAGE_GENERATION  == 'true'
       run: |
-        echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.FE_NAME }}:latest" >> $GITHUB_ENV
+        echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.NAME }}:${{ env.VERSION }}" >> $GITHUB_ENV
       shell: bash
 
     - name: AWS ECR Configure
       id: ecr_configure
       if: steps.ecr_variables.outcome == 'success'
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ inputs.AWS_CICD_ACCESS_KEY }}
         aws-secret-access-key: ${{ inputs.AWS_CICD_SECRET_ACCESS_KEY }}
@@ -79,22 +73,20 @@ runs:
       id: ecr_push
       if: steps.login_ecr.outcome == 'success'
       run: |
-        cd ${{ inputs.PATH }}
+        cd ${{ inputs.PATH }}/${{ inputs.NAME }}
         docker build -t ${{ env.ECR_IMAGE_NAME }} .
         docker push ${{ env.ECR_IMAGE_NAME }}
       shell: bash
 
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
-      if: |
-        (steps.build.outcome == 'success' && inputs.DOCKER_IMAGE_GENERATION  == 'false') ||
-        (steps.ecr_push.outcome == 'success' && inputs.DOCKER_IMAGE_GENERATION  == 'true')
+      if: inputs.SLACK_NOTIFICATION  == 'true'
       env:
         SLACK_CHANNEL: ci-cd
         SLACK_COLOR: ${{ job.status }}
         SLACK_ICON: https://github-actions.s3.eu-west-1.amazonaws.com/Octocat.png
         SLACK_WEBHOOK: ${{ inputs.SLACK_CICD_WEBHOOK }}
         SLACK_USERNAME: GitHub Actions
-        SLACK_TITLE: Built ${{ inputs.FE_NAME }}
+        SLACK_TITLE: Built ${{ inputs.NAME }}
         SLACK_FOOTER: "CI successfully finished"
         MSG_MINIMAL: actions url, commit

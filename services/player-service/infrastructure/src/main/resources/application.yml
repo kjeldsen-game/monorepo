@@ -16,8 +16,8 @@ spring:
       auto-index-creation: true
   kafka:
     bootstrap-servers: http://localhost:9092
-    linger-ms: 10
-    group-id: player-service
+    consumer:
+      group-id: ${spring.application.name}
 
 springdoc:
   version: "@springdoc.version@"

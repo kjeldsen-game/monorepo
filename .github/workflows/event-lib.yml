@@ -1,0 +1,28 @@
+name: event-lib.yml
+
+on:
+  pull_request:
+    paths:
+      - "libs/event-lib/**"
+  push:
+    branches:
+      - main
+    paths:
+      - "libs/event-lib/**"
+
+jobs:
+
+  merge-request-job:
+    uses: ./.github/workflows/default_mvn_lib.yml
+    if: github.event_name == 'pull_request'
+    secrets: inherit
+    with:
+      LIB_NAME: "event-lib"
+
+  push-main-job:
+    uses: ./.github/workflows/default_mvn_lib.yml
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    secrets: inherit
+    with:
+      LIB_NAME: "event-lib"
+       

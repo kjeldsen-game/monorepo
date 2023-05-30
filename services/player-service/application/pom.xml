@@ -21,11 +21,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>engine</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
             <scope>test</scope>

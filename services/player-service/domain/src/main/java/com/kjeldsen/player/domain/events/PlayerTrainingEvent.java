@@ -1,6 +1,6 @@
 package com.kjeldsen.player.domain.events;
 
-import com.kjeldsen.events.Event;
+import com.kjeldsen.events.domain.Event;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import lombok.Getter;

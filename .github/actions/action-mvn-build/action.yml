@@ -4,44 +4,36 @@ description: "Builds a mvn service"
 inputs:
   PATH:
     required: true
-    description: "The path of the service to built"
-  SERVICE_NAME:
+    description: "The path of the item to built"
+  NAME:
     required: true
-    description: "The name of the service to built"
+    description: "The name of the item to built"
   AWS_ECR_URI:
     required: true
-    description: "AWS_ECR_URI"
+    description: "AWS ECR service URI"
   AWS_CICD_ACCESS_KEY:
     required: true
-    description: "AWS_CICD_ACCESS_KEY"
+    description: "AWS ECR service access key"
   AWS_CICD_SECRET_ACCESS_KEY:
     required: true
-    description: "AWS_CICD_SECRET_ACCESS_KEY"
+    description: "AWS ECR service secret access key"
   SLACK_CICD_WEBHOOK:
-    required: true
-    description: "SLACK_CICD_WEBHOOK"
+    description: "Slack CI/CD channel webhook"
+  SLACK_NOTIFICATION:
+    description: "Activates Slack Notification"
+    default: "true"
   DOCKER_IMAGE_GENERATION:
-    required: false
-    description: "DOCKER_IMAGE_GENERATION"
+    description: "Indicates if the Docker image should be generated and published to AWS ECR"
     default: "true"
   MVN_DEPLOY:
-    required: false
-    description: "MVN_DEPLOY"
+    description: "Indicates if the Maven artifact should be publish to AWS Code Artifact"
     default: "false"
 
 runs:
   using: "composite"
 
   steps:
-    - name: Get changed files
-      id: changed-files
-      uses: tj-actions/changed-files@v32
-      with:
-        files: |
-          ${{ inputs.PATH }}/**
-
     - uses: actions/setup-java@v3
-      if: steps.changed-files.outputs.any_changed == 'true'
       with:
         distribution: "corretto"
         java-version: "17"
@@ -49,19 +41,22 @@ runs:
 
     - name: AWS Configure
       id: ecr_configure
-      if: steps.changed-files.outputs.any_changed == 'true'
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ inputs.AWS_CICD_ACCESS_KEY }}
         aws-secret-access-key: ${{ inputs.AWS_CICD_SECRET_ACCESS_KEY }}
         aws-region: eu-west-1
 
+    - name: Set CODEARTIFACT_AUTH_TOKEN
+      id: set_codeartifact_auth_token
+      run: |
+        echo "CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 040156513434 --region eu-west-1 --query authorizationToken --output text)" >> $GITHUB_ENV
+      shell: bash
+
     - name: Build
       id: build
-      if: steps.changed-files.outputs.any_changed == 'true'
       run: |
-        export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 040156513434 --region eu-west-1 --query authorizationToken --output text`
-        cd ${{ inputs.PATH }}
+        cd ${{ inputs.PATH }}/${{ inputs.NAME }}
         mvn clean install -U
       shell: bash
 
@@ -71,8 +66,8 @@ runs:
         steps.ecr_configure.outcome == 'success' && 
         inputs.MVN_DEPLOY  == 'true'
       run: |
-        cd ${{ inputs.PATH }}
-        mvn deploy
+        cd ${{ inputs.PATH }}/${{ inputs.NAME }}
+        mvn deploy -Dmaven.deploy.version=${{ env.VERSION }}
       shell: bash
 
     - name: Generate ECR Variables
@@ -81,7 +76,7 @@ runs:
         steps.ecr_configure.outcome == 'success' && 
         inputs.DOCKER_IMAGE_GENERATION  == 'true'
       run: |
-        echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.SERVICE_NAME }}:latest" >> $GITHUB_ENV
+        echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.NAME }}:${{ env.VERSION }}" >> $GITHUB_ENV
       shell: bash
 
     - name: Login to Amazon ECR
@@ -93,23 +88,20 @@ runs:
       id: ecr_push
       if: steps.login_ecr.outcome == 'success'
       run: |
-        cd ${{ inputs.PATH }}
+        cd ${{ inputs.PATH }}/${{ inputs.NAME }}
         docker build -t ${{ env.ECR_IMAGE_NAME }} .
         docker push ${{ env.ECR_IMAGE_NAME }}
       shell: bash
 
     - name: Slack Notification
       uses: rtCamp/action-slack-notify@v2
-      if: |
-        (steps.build.outcome == 'success' && inputs.DOCKER_IMAGE_GENERATION  == 'false' && inputs.MVN_DEPLOY  == 'false') ||
-        (steps.ecr_push.outcome == 'success' && inputs.DOCKER_IMAGE_GENERATION  == 'true') ||
-        (steps.deploy.outcome == 'success' && inputs.MVN_DEPLOY  == 'true')
+      if: inputs.SLACK_NOTIFICATION  == 'true'
       env:
         SLACK_CHANNEL: ci-cd
         SLACK_COLOR: ${{ job.status }}
         SLACK_ICON: https://github-actions.s3.eu-west-1.amazonaws.com/Octocat.png
         SLACK_WEBHOOK: ${{ inputs.SLACK_CICD_WEBHOOK }}
         SLACK_USERNAME: GitHub Actions
-        SLACK_TITLE: Built ${{ inputs.SERVICE_NAME }}
+        SLACK_TITLE: Built ${{ inputs.NAME }}
         SLACK_FOOTER: "CI successfully finished"
         MSG_MINIMAL: actions url, commit

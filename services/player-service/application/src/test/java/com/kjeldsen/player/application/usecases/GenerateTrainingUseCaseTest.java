@@ -1,20 +1,20 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.events.EventId;
+import com.kjeldsen.events.domain.EventId;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.generator.PointsGenerator;
+import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
-import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingEventWriteRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -24,19 +24,21 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class GenerateTrainingUseCaseTest {
 
-    final private PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository = Mockito.mock(PlayerTrainingEventWriteRepository.class);
-    final private PlayerReadRepository playerReadRepository = Mockito.mock(PlayerReadRepository.class);
-    final private PlayerWriteRepository playerWriteRepository = Mockito.mock(PlayerWriteRepository.class);
-    final private PlayerTrainingBloomEventReadRepository playerTrainingBloomEventReadRepository = Mockito.mock(
-        PlayerTrainingBloomEventReadRepository.class);
-
-    final private GenerateTrainingUseCase generateTrainingUseCase = new GenerateTrainingUseCase(playerTrainingEventWriteRepository,
-        playerReadRepository, playerWriteRepository, playerTrainingBloomEventReadRepository);
+    @Mock
+    private PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository;
+    @Mock
+    private PlayerReadRepository playerReadRepository;
+    @Mock
+    private PlayerWriteRepository playerWriteRepository;
+    @InjectMocks
+    private GenerateTrainingUseCase generateTrainingUseCase;
 
     @Test
     @DisplayName("create an event where generate a training")
@@ -55,18 +57,18 @@ class GenerateTrainingUseCaseTest {
 
         try (
             MockedStatic<EventId> eventIdMockedStatic = Mockito.mockStatic(EventId.class);
-            MockedStatic<Instant> instantMockedStatic = Mockito.mockStatic(Instant.class);
+            MockedStatic<InstantProvider> instantMockedStatic = Mockito.mockStatic(InstantProvider.class);
             MockedStatic<PointsGenerator> pointsGeneratorMockedStatic = Mockito.mockStatic(PointsGenerator.class)
         ) {
             eventIdMockedStatic.when(EventId::generate).thenReturn(eventId1).thenReturn(eventId2);
-            instantMockedStatic.when(Instant::now).thenReturn(now1).thenReturn(now2);
+            instantMockedStatic.when(InstantProvider::now).thenReturn(now1).thenReturn(now2);
             pointsGeneratorMockedStatic.when(() -> PointsGenerator.generatePointsRise(0)).thenReturn(5);
             pointsGeneratorMockedStatic.when(() -> PointsGenerator.generatePointsRise(1)).thenReturn(3);
 
             generateTrainingUseCase.generate(playerId, PlayerSkill.SCORE, days);
 
             eventIdMockedStatic.verify(EventId::generate);
-            instantMockedStatic.verify(Instant::now);
+            instantMockedStatic.verify(InstantProvider::now);
             eventIdMockedStatic.verifyNoMoreInteractions();
             instantMockedStatic.verifyNoMoreInteractions();
 
@@ -82,7 +84,8 @@ class GenerateTrainingUseCaseTest {
 
             assertThat(playerTrainingEvents).allMatch(player -> player.getPlayerId().equals(playerId));
 
-            Mockito.verifyNoMoreInteractions(playerTrainingEventWriteRepository);
+            verify(playerWriteRepository).save(any());
+            Mockito.verifyNoMoreInteractions(playerTrainingEventWriteRepository, playerWriteRepository);
         }
     }
 

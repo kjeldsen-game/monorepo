@@ -14,12 +14,11 @@ import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import static com.kjeldsen.player.domain.exception.BusinessValidationException.throwIfNot;
-import static com.kjeldsen.player.domain.exception.ErrorCodes.BLOOM_PLAYER_AGE_INVALID_RANGE;
-import static com.kjeldsen.player.domain.exception.ErrorCodes.BLOOM_SPEED_INVALID_RANGE;
-import static com.kjeldsen.player.domain.exception.ErrorCodes.BLOOM_YEARS_ON_INVALID_RANGE;
+import static com.kjeldsen.player.domain.exception.ErrorCodes.*;
 
 @Getter
 @Setter
@@ -38,6 +37,10 @@ public class Player {
     public static final Integer MAX_BLOOM_YEARS_ON = 10;
     private static final Integer MIN_BLOOM_SPEED = 0;
     private static final Integer MAX_BLOOM_SPEED = 1000;
+    private static final Integer MIN_DECLINE_PLAYER_AGE = 15;
+    private static final Integer MAX_DECLINE_PLAYER_AGE = 33;
+    private static final Integer MIN_DECLINE_SPEED = 0;
+    private static final Integer MAX_DECLINE_SPEED = 1000;
 
     @Id
     private PlayerId id;
@@ -61,6 +64,9 @@ public class Player {
     }
 
     public boolean isBloomActive() {
+        if (Objects.isNull(bloom)) {
+            return false;
+        }
         int initialRange = bloom.getBloomStartAge();
         int endRange = initialRange + bloom.getYearsOn();
         return Range.between(initialRange, endRange).contains(age);
@@ -76,12 +82,9 @@ public class Player {
         this.bloom = playerTrainingBloomEvent;
     }
 
-    public boolean isDeclineActive(PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
-        return age >= playerTrainingDeclineEvent.getDeclineStartAge();
-    }
-
     public void addDeclinePhase(PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
-        // TODO Mudo validations from PlayerTrainingDeclineEvent.java
+        throwIfNot(Range.between(MIN_DECLINE_PLAYER_AGE, MAX_DECLINE_PLAYER_AGE).contains(age), DECLINE_PLAYER_AGE_INVALID_RANGE);
+        throwIfNot(Range.between(MIN_DECLINE_SPEED, MAX_DECLINE_SPEED).contains(playerTrainingDeclineEvent.getDeclineSpeed()), DECLINE_SPEED_INVALID_RANGE);
 
         final int decreasePoints = PointsGenerator.generateDecreasePoints(
             playerTrainingDeclineEvent.getDeclineSpeed(),

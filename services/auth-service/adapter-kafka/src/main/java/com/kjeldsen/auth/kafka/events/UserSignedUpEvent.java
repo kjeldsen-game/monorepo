@@ -1,14 +1,16 @@
 package com.kjeldsen.auth.kafka.events;
 
 import com.kjeldsen.auth.domain.SignUp;
-import com.kjeldsen.events.Event;
-import com.kjeldsen.events.EventId;
+import com.kjeldsen.events.domain.Event;
+import com.kjeldsen.events.domain.EventId;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.Instant;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder
 @Getter
