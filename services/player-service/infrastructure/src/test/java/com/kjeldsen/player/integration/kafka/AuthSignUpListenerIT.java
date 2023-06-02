@@ -27,5 +27,34 @@ public class AuthSignUpListenerIT extends KafkaAbstractIT<AuthKafkaEventType, Us
         assertDoesNotThrow(() -> sendEvent(TOPIC, kafkaEventWrapper));
     }
 
+    @Test
+    void shouldTeamsIsSavingInDatabase() {
+        UserSignedUpEvent userSignedUpEvent = UserSignedUpEvent.builder()
+            .id(EventId.generate())
+            .build();
+
+        KafkaEventWrapper<AuthKafkaEventType, UserSignedUpEvent> kafkaEventWrapper =
+            KafkaEventWrapper.<AuthKafkaEventType, UserSignedUpEvent>builder()
+                .eventType(AuthKafkaEventType.USER_SIGNED_UP)
+                .eventBody(userSignedUpEvent)
+                .build();
+
+        assertDoesNotThrow(() -> sendEvent(TOPIC, kafkaEventWrapper));
+    }
+
+    @Test
+    void shouldPlayerIsSavingInDatabase() {
+        UserSignedUpEvent userSignedUpEvent = UserSignedUpEvent.builder()
+            .id(EventId.generate())
+            .build();
+
+        KafkaEventWrapper<AuthKafkaEventType, UserSignedUpEvent> kafkaEventWrapper =
+            KafkaEventWrapper.<AuthKafkaEventType, UserSignedUpEvent>builder()
+                .eventType(AuthKafkaEventType.USER_SIGNED_UP)
+                .eventBody(userSignedUpEvent)
+                .build();
+
+        assertDoesNotThrow(() -> sendEvent(TOPIC, kafkaEventWrapper));
+    }
 }
 
