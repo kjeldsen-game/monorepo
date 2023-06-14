@@ -15,15 +15,35 @@ const Training: NextPage = () => {
       <>
         <Box>
           <Collapsible open title="Yesterday's Training Report">
-            <Box minWidth={'900px'} maxHeight={'300px'} minHeight={'300px'}>
+            <Box>
               <Grid rows={players} columns={samplePlayerColumn} />
             </Box>
           </Collapsible>
-          <Collapsible title="Yesterday -1 Training Report">children</Collapsible>
-          <Collapsible title="Yesterday -2 Training Report">children</Collapsible>
-          <Collapsible title="Yesterday -3 Training Report">children</Collapsible>
-          <Collapsible title="Yesterday -4 Training Report">children</Collapsible>
-          <Collapsible title="Yesterday -5 Training Report">children</Collapsible>
+          <Collapsible title="Yesterday -1 Training Report">
+            <Box>
+              <Grid rows={players} columns={samplePlayerColumn} />
+            </Box>
+          </Collapsible>
+          <Collapsible title="Yesterday -2 Training Report">
+            <Box>
+              <Grid rows={players} columns={samplePlayerColumn} />
+            </Box>
+          </Collapsible>
+          <Collapsible title="Yesterday -3 Training Report">
+            <Box>
+              <Grid rows={players} columns={samplePlayerColumn} />
+            </Box>
+          </Collapsible>
+          <Collapsible title="Yesterday -4 Training Report">
+            <Box>
+              <Grid rows={players} columns={samplePlayerColumn} />
+            </Box>
+          </Collapsible>
+          <Collapsible title="Yesterday -5 Training Report">
+            <Box>
+              <Grid rows={players} columns={samplePlayerColumn} />
+            </Box>
+          </Collapsible>
         </Box>
       </>
     </>

@@ -16,6 +16,7 @@ const card = css`
   margin-bottom: 1rem;
   padding: 1rem;
 `
+
 const cardHeader = css`
   display: flex;
   justify-content: space-between;
@@ -27,6 +28,10 @@ const marginRight = css`
 
 const content = css`
   transition: height 2s ease-in-out;
+`
+
+const cardOpen = css`
+  min-width: 900px;
 `
 
 const Collapsible: React.FC<IProps> = ({ open, children, title }) => {
@@ -49,7 +54,7 @@ const Collapsible: React.FC<IProps> = ({ open, children, title }) => {
         </div>
 
         <div css={content}>
-          <div>{isOpen && <div>{children}</div>}</div>
+          <div>{isOpen && <div css={cardOpen}>{children}</div>}</div>
         </div>
       </div>
     </>
