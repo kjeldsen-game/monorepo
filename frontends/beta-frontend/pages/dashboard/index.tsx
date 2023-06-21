@@ -11,7 +11,7 @@ const Home: NextPage = () => {
       </Head>
       <>
         <Typography variant="h1" component="h1">
-          This is the dashboard
+          Dashboard
         </Typography>
       </>
     </>

@@ -13,6 +13,9 @@ export interface PlayerStats {
   age: number
   name: string
   position: Position
+  cs: string
+  dv: string
+  pb: string
   status: string
   stats: Stats
 }
@@ -23,6 +26,9 @@ export const samplePlayer: PlayerStats = {
   name: 'Devin Gibson',
   status: 'H',
   position: 'DEF',
+  cs: 'SC/BC',
+  dv: '17 > 18',
+  pb: '50%',
   stats: {
     DEFENSE_POSITION: 77,
     BALL_CONTROL: 12,
@@ -42,6 +48,9 @@ export const players: PlayerStats[] = [
     name: 'John Doe',
     status: 'H',
     position: 'FW',
+    cs: 'SC/BC',
+    dv: '17 > 18',
+    pb: '50%',
     stats: {
       DEFENSE_POSITION: 25,
       BALL_CONTROL: 40,
@@ -58,6 +67,9 @@ export const players: PlayerStats[] = [
     name: 'Jane Smith',
     status: 'H',
     position: 'MID',
+    cs: 'SC/BC',
+    dv: '17 > 18',
+    pb: '50%',
     stats: {
       DEFENSE_POSITION: 50,
       BALL_CONTROL: 80,
@@ -74,6 +86,9 @@ export const players: PlayerStats[] = [
     name: 'Alex Johnson',
     status: 'H',
     position: 'DEF',
+    cs: 'SC/BC',
+    dv: '17 > 18',
+    pb: '50%',
     stats: {
       DEFENSE_POSITION: 90,
       BALL_CONTROL: 20,
@@ -90,6 +105,9 @@ export const players: PlayerStats[] = [
     name: 'David Lee',
     status: 'H',
     position: 'MID',
+    cs: 'SC/BC',
+    dv: '17 > 18',
+    pb: '50%',
     stats: {
       DEFENSE_POSITION: 40,
       BALL_CONTROL: 70,
@@ -98,86 +116,6 @@ export const players: PlayerStats[] = [
       OFFENSIVE_POSITION: 80,
       TACKLING: 60,
       CO: 25,
-    },
-  },
-  {
-    id: 'player-5',
-    age: 26,
-    name: 'Sarah Brown',
-    status: 'H',
-    position: 'DEF',
-    stats: {
-      DEFENSE_POSITION: 80,
-      BALL_CONTROL: 30,
-      SCORE: 0,
-      PASSING: 40,
-      OFFENSIVE_POSITION: 20,
-      TACKLING: 80,
-      CO: 35,
-    },
-  },
-  {
-    id: 'player-6',
-    age: 24,
-    name: 'Chris Davis',
-    status: 'H',
-    position: 'GK',
-    stats: {
-      DEFENSE_POSITION: 95,
-      BALL_CONTROL: 10,
-      SCORE: 0,
-      PASSING: 10,
-      OFFENSIVE_POSITION: 5,
-      TACKLING: 10,
-      CO: 80,
-    },
-  },
-  {
-    id: 'player-7',
-    age: 28,
-    name: 'Emily Wilson',
-    status: 'H',
-    position: 'MID',
-    stats: {
-      DEFENSE_POSITION: 30,
-      BALL_CONTROL: 90,
-      SCORE: 4,
-      PASSING: 85,
-      OFFENSIVE_POSITION: 60,
-      TACKLING: 50,
-      CO: 20,
-    },
-  },
-  {
-    id: 'player-8',
-    age: 29,
-    name: 'Jason Williams',
-    status: 'H',
-    position: 'MID',
-    stats: {
-      DEFENSE_POSITION: 10,
-      BALL_CONTROL: 85,
-      SCORE: 6,
-      PASSING: 89,
-      OFFENSIVE_POSITION: 64,
-      TACKLING: 25,
-      CO: 18,
-    },
-  },
-  {
-    id: 'player-9',
-    age: 26,
-    name: 'Ryan Johnson',
-    status: 'H',
-    position: 'FW',
-    stats: {
-      DEFENSE_POSITION: 6,
-      BALL_CONTROL: 70,
-      SCORE: 28,
-      PASSING: 20,
-      OFFENSIVE_POSITION: 96,
-      TACKLING: 12,
-      CO: 8,
     },
   },
 ]
