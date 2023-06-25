@@ -139,6 +139,17 @@ class PlayerApiIT extends AbstractIT {
 
             Player mudoExpected = playerReadRepository.findOneById(mudo.getId()).orElse(null);
 
+/*
+               Puede ser que tengamos que convertir nuestro MudoExpected en una repsuesta de tipo Player.
+                new PlayerResponse()
+                .id(player.getId().value())
+                .name(player.getName())
+                .age(player.getAge())
+                .position(PlayerPosition.fromValue(player.getPosition().name()))
+                .actualSkills(player.getActualSkills().entrySet().stream()
+                    .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString()))
+                ))*/
+
             mockMvc.perform(get("/player/{playerId}", mudoId)
                     .contentType(MediaType.APPLICATION_JSON)
                     .queryParam("playerId", mudoId))
