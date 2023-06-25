@@ -1,11 +1,12 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.events.EventId;
+import com.kjeldsen.events.domain.EventId;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventWriteRepository;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -28,9 +29,10 @@ class GenerateDeclinePhaseUseCaseTest {
     private static final Instant NOW = Instant.now();
 
     private final PlayerReadRepository mockedPlayerReadRepository = Mockito.mock(PlayerReadRepository.class);
+    private final PlayerWriteRepository mockedPlayerWriteRepository = Mockito.mock(PlayerWriteRepository.class);
     private final PlayerTrainingDeclineEventWriteRepository mockedPlayerTrainingDeclineEventWriteRepository = Mockito.mock(PlayerTrainingDeclineEventWriteRepository.class);
 
-    private final GenerateDeclinePhaseUseCase generateDeclinePhaseUseCase = new GenerateDeclinePhaseUseCase(mockedPlayerReadRepository, mockedPlayerTrainingDeclineEventWriteRepository);
+    private final GenerateSingleDeclineTrainingUseCase generateDeclinePhaseUseCase = new GenerateSingleDeclineTrainingUseCase(mockedPlayerTrainingDeclineEventWriteRepository, mockedPlayerReadRepository, mockedPlayerWriteRepository);
 
     @Test
     @DisplayName("Generate should throw if player not found.")
@@ -41,7 +43,7 @@ class GenerateDeclinePhaseUseCaseTest {
         when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(RuntimeException.class, () -> generateDeclinePhaseUseCase.generate(DECLINE_SPEED, DECLINE_START_AGE, PLAYER_ID));
+        assertThrows(RuntimeException.class, () -> generateDeclinePhaseUseCase.generate(PLAYER_ID, DECLINE_SPEED, DECLINE_START_AGE));
     }
 
     @Test
@@ -63,7 +65,7 @@ class GenerateDeclinePhaseUseCaseTest {
             instantMockedStatic.when(InstantProvider::now).thenReturn(NOW);
 
             // Act
-            generateDeclinePhaseUseCase.generate(DECLINE_SPEED, DECLINE_START_AGE, PLAYER_ID);
+            generateDeclinePhaseUseCase.generate(PLAYER_ID, DECLINE_START_AGE, DECLINE_SPEED);
 
             eventIdMockedStatic.verify(EventId::generate);
             eventIdMockedStatic.verifyNoMoreInteractions();

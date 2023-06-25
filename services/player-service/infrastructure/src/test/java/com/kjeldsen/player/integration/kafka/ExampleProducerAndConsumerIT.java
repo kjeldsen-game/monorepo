@@ -17,9 +17,13 @@ public class ExampleProducerAndConsumerIT extends KafkaAbstractIT<AuthKafkaEvent
 
     @Test
     void exampleProduceAndConsume() {
+
+        // Crear el userSignedUpEvent con su ID.
         UserSignedUpEvent userSignedUpEvent = UserSignedUpEvent.builder()
             .id(EventId.generate())
             .build();
+
+        // En el wrapper viene --> <Auth (USER_SIGNED_UP) y EVENTO (idUser + Team(?))> como BODY EVENTO USER y como TIPO el de AUTH
 
         KafkaEventWrapper<AuthKafkaEventType, UserSignedUpEvent> kafkaEventWrapper =
             KafkaEventWrapper.<AuthKafkaEventType, UserSignedUpEvent>builder()
@@ -27,17 +31,24 @@ public class ExampleProducerAndConsumerIT extends KafkaAbstractIT<AuthKafkaEvent
                 .eventBody(userSignedUpEvent)
                 .build();
 
+        // Envia al topico el Wrapper;
+
         sendEvent(TOPIC, kafkaEventWrapper);
 
+        // Lista de un Registro(segun X tópico -> wrappers)
         List<ConsumerRecord<String, KafkaEventWrapper<AuthKafkaEventType, UserSignedUpEvent>>> events = getEvents(TOPIC);
 
+        // kafkaEvent --> evento entero
         KafkaEventWrapper<AuthKafkaEventType, UserSignedUpEvent> kafkaEvent = events.get(0).value();
+        // kafkaEventType --> SOLO TIPO evento
         AuthKafkaEventType kafkaEventType = convert(kafkaEvent.getEventType(), AuthKafkaEventType.class);
+        // kafkaEventBody --> SOLO Cuerpo evento (contiene user id + team)
         UserSignedUpEvent kafkaEventBody = convert(kafkaEvent.getEventBody(), UserSignedUpEvent.class);
 
         assertEquals(AuthKafkaEventType.USER_SIGNED_UP, kafkaEventType);
         assertEquals(userSignedUpEvent.getId(), kafkaEventBody.getId());
-    }
+        assertEquals(userSignedUpEvent.getTeamName(), kafkaEventBody.getTeamName());
 
+    }
 }
 

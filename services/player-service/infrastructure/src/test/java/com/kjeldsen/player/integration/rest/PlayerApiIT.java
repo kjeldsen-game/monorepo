@@ -1,5 +1,6 @@
 package com.kjeldsen.player.integration.rest;
 
+import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.provider.PlayerProvider;
@@ -123,6 +124,27 @@ class PlayerApiIT extends AbstractIT {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+        }
+    }
+
+    @Nested
+    @DisplayName("HTTP GET to /player/{playerId} should")
+    class HttpGetToPlayerWithSpecificPlayerIdShould {
+        @Test
+        @DisplayName("return 201 and the specific player when a valid request is sent")
+        void return_201_and_the_specific_player_when_a_valid_request_is_sent() throws Exception {
+            Player mudo = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES, 200);
+            playerWriteRepository.save(mudo);
+            String mudoId = mudo.getId().value();
+
+            Player mudoExpected = playerReadRepository.findOneById(mudo.getId()).orElse(null);
+
+            mockMvc.perform(get("/player/{playerId}", mudoId)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .queryParam("playerId", mudoId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(objectMapper.writeValueAsString(mudoExpected)));
         }
     }
 

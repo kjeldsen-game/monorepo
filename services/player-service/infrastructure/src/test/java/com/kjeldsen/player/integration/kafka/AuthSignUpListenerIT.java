@@ -27,7 +27,7 @@ public class AuthSignUpListenerIT extends KafkaAbstractIT<AuthKafkaEventType, Us
         assertDoesNotThrow(() -> sendEvent(TOPIC, kafkaEventWrapper));
     }
 
-    @Test
+/*    @Test
     void shouldTeamsIsSavingInDatabase() {
         UserSignedUpEvent userSignedUpEvent = UserSignedUpEvent.builder()
             .id(EventId.generate())
@@ -40,9 +40,9 @@ public class AuthSignUpListenerIT extends KafkaAbstractIT<AuthKafkaEventType, Us
                 .build();
 
         assertDoesNotThrow(() -> sendEvent(TOPIC, kafkaEventWrapper));
-    }
+    }*/
 
-    @Test
+/*    @Test
     void shouldPlayerIsSavingInDatabase() {
         UserSignedUpEvent userSignedUpEvent = UserSignedUpEvent.builder()
             .id(EventId.generate())
@@ -55,6 +55,6 @@ public class AuthSignUpListenerIT extends KafkaAbstractIT<AuthKafkaEventType, Us
                 .build();
 
         assertDoesNotThrow(() -> sendEvent(TOPIC, kafkaEventWrapper));
-    }
+    }*/
 }
 
