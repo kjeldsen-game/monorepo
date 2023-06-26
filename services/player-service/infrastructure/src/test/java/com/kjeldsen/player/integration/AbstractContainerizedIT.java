@@ -1,10 +1,8 @@
 package com.kjeldsen.player.integration;
 
 import org.testcontainers.containers.MongoDBContainer;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
-@Testcontainers
 public interface AbstractContainerizedIT {
 
     String MONGO_VERSION = "mongo:5.0";

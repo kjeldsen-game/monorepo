@@ -1,4 +1,4 @@
-package com.kjeldsen.player.integration.rest;
+package com.kjeldsen.player.integration.player;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
@@ -29,7 +29,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class PlayerApiIT extends AbstractIT {
 
@@ -131,31 +133,24 @@ class PlayerApiIT extends AbstractIT {
     @DisplayName("HTTP GET to /player/{playerId} should")
     class HttpGetToPlayerWithSpecificPlayerIdShould {
         @Test
-        @DisplayName("return 201 and the specific player when a valid request is sent")
-        void return_201_and_the_specific_player_when_a_valid_request_is_sent() throws Exception {
+        @DisplayName("return 200 and the specific player when a valid playerId is sent")
+        void return_200_and_the_specific_player_when_a_valid_request_is_sent() throws Exception {
             Player mudo = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES, 200);
-            playerWriteRepository.save(mudo);
-            String mudoId = mudo.getId().value();
+            mudo = playerWriteRepository.save(mudo);
 
-            Player mudoExpected = playerReadRepository.findOneById(mudo.getId()).orElse(null);
-
-/*
-               Puede ser que tengamos que convertir nuestro MudoExpected en una repsuesta de tipo Player.
-                new PlayerResponse()
-                .id(player.getId().value())
-                .name(player.getName())
-                .age(player.getAge())
-                .position(PlayerPosition.fromValue(player.getPosition().name()))
-                .actualSkills(player.getActualSkills().entrySet().stream()
+            PlayerResponse response = new PlayerResponse()
+                .id(mudo.getId().value())
+                .name(mudo.getName())
+                .age(mudo.getAge())
+                .position(PlayerPosition.fromValue(mudo.getPosition().name()))
+                .actualSkills(mudo.getActualSkills().entrySet().stream()
                     .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString()))
-                ))*/
+                );
 
-            mockMvc.perform(get("/player/{playerId}", mudoId)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .queryParam("playerId", mudoId))
+            mockMvc.perform(get("/player/{playerId}", mudo.getId().value()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(objectMapper.writeValueAsString(mudoExpected)));
+                .andExpect(content().json(objectMapper.writeValueAsString(response)));
         }
     }
 
