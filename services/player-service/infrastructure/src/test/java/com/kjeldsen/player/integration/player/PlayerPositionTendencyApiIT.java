@@ -1,4 +1,4 @@
-package com.kjeldsen.player.integration.rest;
+package com.kjeldsen.player.integration.player;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kjeldsen.player.domain.PlayerPositionTendency;

@@ -1,7 +1,8 @@
-package com.kjeldsen.player.integration.kafka;
+package com.kjeldsen.player.integration.signUp;
 
 import com.kjeldsen.events.domain.EventId;
 import com.kjeldsen.events.kafka.KafkaEventWrapper;
+import com.kjeldsen.player.integration.KafkaAbstractIT;
 import com.kjeldsen.player.kafka.events.AuthKafkaEventType;
 import com.kjeldsen.player.kafka.events.body.UserSignedUpEvent;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

@@ -14,6 +14,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @ActiveProfiles({"test", "test-it"})
 @AutoConfigureMockMvc(addFilters = false)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@WithEmbeddedKafka
 public abstract class AbstractIT implements AbstractContainerizedIT {
 
     @Autowired

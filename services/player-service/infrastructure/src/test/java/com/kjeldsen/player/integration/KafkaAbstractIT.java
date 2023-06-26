@@ -1,8 +1,6 @@
-package com.kjeldsen.player.integration.kafka;
+package com.kjeldsen.player.integration;
 
 import com.kjeldsen.events.kafka.KafkaEventWrapper;
-import com.kjeldsen.player.integration.AbstractIT;
-import com.kjeldsen.player.integration.WithEmbeddedKafka;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.junit.jupiter.api.AfterEach;
@@ -16,7 +14,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
-@WithEmbeddedKafka
 public abstract class KafkaAbstractIT<T, V> extends AbstractIT {
 
     private static final Duration DEFAULT_POLL_DURATION = Duration.ofSeconds(5);
