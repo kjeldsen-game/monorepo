@@ -3,7 +3,6 @@ package com.kjeldsen.player.domain.events;
 import com.kjeldsen.events.domain.Event;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +18,6 @@ import java.time.Instant;
 @Document(collection = "PlayerTrainingScheduledEvent")
 @TypeAlias("PlayerTrainingScheduledEvent")
 @NoArgsConstructor
-@AllArgsConstructor
 public class PlayerTrainingScheduledEvent extends Event {
 
     private Player.PlayerId playerId;
