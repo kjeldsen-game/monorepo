@@ -8,12 +8,7 @@ import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.rest.api.SimulatorApiDelegate;
-import com.kjeldsen.player.rest.model.PlayerDeclineResponse;
-import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
-import com.kjeldsen.player.rest.model.PlayerSkill;
-import com.kjeldsen.player.rest.model.PlayerTrainingResponse;
-import com.kjeldsen.player.rest.model.RegisterSimulatedDeclineRequest;
-import com.kjeldsen.player.rest.model.RegisterSimulatedScheduledTrainingRequest;
+import com.kjeldsen.player.rest.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -57,7 +52,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
 
     @Override
     public ResponseEntity<List<PlayerDeclineResponse>> registerSimulatedDecline(String playerId,
-        RegisterSimulatedDeclineRequest registerSimulatedDeclineRequest) {
+                                                                                RegisterSimulatedDeclineRequest registerSimulatedDeclineRequest) {
 
         List<PlayerDeclineResponse> declineEvents = new ArrayList<>();
 
@@ -79,6 +74,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         return ResponseEntity.ok(declineEvents);
     }
 
+    //TODO MUDO IDEM COMO ABAJO
     private PlayerDeclineResponse playerTrainingDeclineEventToPlayerDeclineResponse(
         PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
         return new PlayerDeclineResponse()
@@ -90,6 +86,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
             .pointsAfterTraining(playerTrainingDeclineEvent.getPointsAfterTraining());
     }
 
+    //TODO MUDO IDEM COMO ABAJO
     private com.kjeldsen.player.domain.PlayerSkill playerSkill2DomainPlayerSkill(PlayerSkill playerSkill) {
         return com.kjeldsen.player.domain.PlayerSkill.valueOf(playerSkill.name());
     }
@@ -98,10 +95,11 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         return PlayerSkill.valueOf(playerSkill.name());
     }
 
+    //TODO Mudo convertir esto a un Mapper
     private PlayerTrainingResponse playerTrainingEvent2PlayerTrainingResponse(PlayerTrainingEvent playerTrainingEvent) {
         return new PlayerTrainingResponse()
             .currentDay(playerTrainingEvent.getCurrentDay())
-            .playerId(playerTrainingEvent.getPlayerId().toString())
+            .playerId(playerTrainingEvent.getPlayerId().value())
             .skill(playerSkill2DomainPlayerSkill(playerTrainingEvent.getSkill()))
             .points(playerTrainingEvent.getPoints())
             .pointsBeforeTraining(playerTrainingEvent.getPointsBeforeTraining())

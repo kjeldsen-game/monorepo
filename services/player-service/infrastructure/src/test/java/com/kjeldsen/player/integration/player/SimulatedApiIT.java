@@ -1,9 +1,10 @@
 package com.kjeldsen.player.integration.player;
 
-import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
+import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.integration.AbstractIT;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
+import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
 import com.kjeldsen.player.rest.model.PlayerSkill;
 import com.kjeldsen.player.rest.model.RegisterSimulatedScheduledTrainingRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,14 +12,19 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 public class SimulatedApiIT extends AbstractIT {
-    @Autowired
-    private PlayerReadRepository playerReadRepository;
     @Autowired
     private PlayerWriteRepository playerWriteRepository;
     @Autowired
@@ -40,21 +46,48 @@ public class SimulatedApiIT extends AbstractIT {
             skillList.add(PlayerSkill.CO);
             skillList.add(PlayerSkill.SCORE);
 
-            RegisterSimulatedScheduledTrainingRequest registerSimulatedScheduledTrainingRequest1 = new RegisterSimulatedScheduledTrainingRequest()
-                .days(4)
+            RegisterSimulatedScheduledTrainingRequest request = new RegisterSimulatedScheduledTrainingRequest()
+                .days(2)
                 .skills(skillList);
 
+            String playerId = "playerId1";
 
-//
-//            mockMvc.perform(post("/player/generate")
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .content(objectMapper.writeValueAsString(request)))
-//                .andExpect(status().isCreated())
-//                .andExpect(jsonPath("$.*", hasSize(10)));
+            playerWriteRepository.save(Player.builder()
+                .id(Player.PlayerId.of(playerId))
+                .actualSkills(Map.of(
+                    com.kjeldsen.player.domain.PlayerSkill.CO, 1,
+                    com.kjeldsen.player.domain.PlayerSkill.SCORE, 2
+                ))
+                .build());
 
-//            var numbersOfPlayersCreated = playerReadRepository.find(findPlayersQuery(null));
+            MvcResult mvcResult = mockMvc.perform(post("/simulator/training/" + playerId)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andReturn();
 
-//            assertThat(numbersOfPlayersCreated).hasSize(10);
+            PlayerHistoricalTrainingResponse playerHistoricalTrainingResponse1 = objectMapper
+                .readValue(mvcResult.getResponse().getContentAsString(), PlayerHistoricalTrainingResponse.class);
+
+            assertThat(playerHistoricalTrainingResponse1.getPlayerId()).isEqualTo(playerId);
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().size()).isEqualTo(4);
+
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(0).getPlayerId()).isEqualTo(playerId);
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(0).getCurrentDay()).isEqualTo(1);
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(0).getSkill()).isEqualTo(PlayerSkill.CO);
+
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(1).getPlayerId()).isEqualTo(playerId);
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(1).getCurrentDay()).isEqualTo(2);
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(1).getSkill()).isEqualTo(PlayerSkill.CO);
+
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(2).getPlayerId()).isEqualTo(playerId);
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(2).getCurrentDay()).isEqualTo(1);
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(2).getSkill()).isEqualTo(PlayerSkill.SCORE);
+
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(3).getPlayerId()).isEqualTo(playerId);
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(3).getCurrentDay()).isEqualTo(2);
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(3).getSkill()).isEqualTo(PlayerSkill.SCORE);
+
         }
     }
 }
