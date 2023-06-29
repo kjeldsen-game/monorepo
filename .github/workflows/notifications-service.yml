@@ -4,13 +4,13 @@ on:
   pull_request:
     paths:
       - "services/notifications-service/**"
-  push:
-    tags:
-      - 'v*.*.*'
-    branches:
-      - main
-    paths:
-      - "services/notifications-service/**"
+  #push:
+  #  tags:
+  #    - 'v*.*.*'
+  #  branches:
+  #    - main
+  #  paths:
+  #    - "services/notifications-service/**"
 
 jobs:
 

@@ -4,13 +4,13 @@ on:
   pull_request:
     paths:
       - "services/kafka-service/**"
-  push:
-    tags:
-      - 'v*.*.*'
-    branches:
-      - main
-    paths:
-      - "services/kafka-service/**"
+  #push:
+  #  tags:
+  #    - 'v*.*.*'
+  #  branches:
+  #    - main
+  #  paths:
+  #    - "services/kafka-service/**"
 
 jobs:
 

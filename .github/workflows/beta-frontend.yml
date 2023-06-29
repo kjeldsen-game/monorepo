@@ -4,13 +4,13 @@ on:
   pull_request:
     paths:
       - "frontends/beta-frontend/**"
-  push:
-    tags:
-      - 'v*.*.*'
-    branches:
-      - main
-    paths:
-      - "frontends/beta-frontend/**"
+  #push:
+  #  tags:
+  #    - 'v*.*.*'
+  #  branches:
+  #    - main
+  #  paths:
+  #    - "frontends/beta-frontend/**"
 
 jobs:
 
