@@ -48,7 +48,7 @@ public class TrainingApiIT extends AbstractIT {
                 .id(Player.PlayerId.of(playerId))
                 .build());
 
-            mockMvc.perform(post("/training/" + playerId + "/bloom")
+            mockMvc.perform(post("/training/{playerId}/bloom", playerId)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -56,10 +56,10 @@ public class TrainingApiIT extends AbstractIT {
 
             var mudo = playerReadRepository.findOneById(Player.PlayerId.of(playerId));
 
-
-            assertThat(mudo.get().getBloom().getPlayerId()).isEqualTo(mudo);
+            assertThat(mudo.get().getBloom().getPlayerId()).isEqualTo(playerId);
             assertThat(mudo.get().getBloom().getBloomSpeed()).isEqualTo(100);
             assertThat(mudo.get().getBloom().getBloomStartAge()).isEqualTo(18);
+            assertThat(mudo.get().getBloom().getYearsOn()).isEqualTo(3);
         }
     }
 }
