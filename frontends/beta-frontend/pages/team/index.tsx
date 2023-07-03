@@ -2,13 +2,12 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Box } from '@mui/material'
 import Grid from '@/shared/components/Grid/Grid'
-import { GridColDef } from '@mui/x-data-grid'
 import { SampleTeam } from '@/data/SampleTeam'
 import TeamDetails from '@/shared/components/TeamDetails'
 import PlayerTactics from '@/shared/components/PlayerTactics'
 import TeamTactics from '@/shared/components/TeamTactics'
-import { players, samplePlayer, samplePlayerColumn } from '@/data/SamplePlayer'
-import { sampleColumns, sampleRows } from '@/shared/components/Grid/PlayerGrid'
+import { players } from '@/data/SamplePlayer'
+import { samplePlayerColumn } from '@/data/samplePlayerColumn'
 
 const Team: NextPage = () => {
   return (
