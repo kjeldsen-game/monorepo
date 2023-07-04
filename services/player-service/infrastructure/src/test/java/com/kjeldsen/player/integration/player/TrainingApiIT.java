@@ -38,9 +38,9 @@ public class TrainingApiIT extends AbstractIT {
         @DisplayName("return 201 /training/{playerId}/bloom register a new bloom phase")
         void return_201_status_when_a_valid_bloom_request_is_sent() throws Exception {
             RegisterBloomPhaseRequest request = new RegisterBloomPhaseRequest()
-                .yearsOn(5)
+                .yearsOn(3)
                 .bloomStartAge(18)
-                .bloomSpeed(100);
+                .bloomSpeed(350);
 
             String playerId = "playerId1";
 
