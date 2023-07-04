@@ -54,7 +54,7 @@ public class ScheduleTrainingUseCase {
         playerTrainingScheduledEventWriteRepository.save(playerTrainingScheduledEvent);
     }
 
-    public void validateDays(Integer days) {
+    private void validateDays(Integer days) {
         if (!RANGE_OF_DAYS.contains(days)) {
             throw new IllegalArgumentException("Days must be between 1 and 1000");
         }
