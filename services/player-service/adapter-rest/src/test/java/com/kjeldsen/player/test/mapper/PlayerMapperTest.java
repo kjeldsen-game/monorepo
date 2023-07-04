@@ -42,4 +42,6 @@ class PlayerMapperTest {
         assertEquals(2, playerResponse.getActualSkills().size());
     }
 
+    // TODO update this tests to test only default methods of the mapper interface. Do for all mappers.
+
 }

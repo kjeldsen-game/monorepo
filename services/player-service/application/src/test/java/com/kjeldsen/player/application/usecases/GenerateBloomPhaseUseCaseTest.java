@@ -94,7 +94,6 @@ class GenerateBloomPhaseUseCaseTest {
 
         verify(playerMock).addBloomPhase(playerTrainingBloomEventMock);
         verify(mockedPlayerReadRepository).findOneById(PLAYER_ID);
-        verify(mockedPlayerTrainingBloomEventWriteRepository).save(any());
         verify(mockedPlayerWriteRepository).save(playerMock);
         verifyNoMoreInteractions(playerMock, mockedPlayerReadRepository, mockedPlayerTrainingBloomEventWriteRepository);
     }

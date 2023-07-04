@@ -4,9 +4,9 @@ import com.kjeldsen.player.application.usecases.UpdatePlayerPositionTendencyUseC
 import com.kjeldsen.player.application.usecases.UpdatePlayerTendencies;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
-import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.rest.api.PlayerPositionTendenciesApiDelegate;
+import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.mapper.PlayerPositionTendencyMapper;
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponse;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +15,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
 public class PlayerPositionTendenciesDelegate implements PlayerPositionTendenciesApiDelegate {
+
     private final UpdatePlayerPositionTendencyUseCase updatePlayerPositionTendencyUseCase;
     private final PlayerPositionTendencyReadRepository playerPositionTendencyReadRepository;
 
@@ -27,7 +27,8 @@ public class PlayerPositionTendenciesDelegate implements PlayerPositionTendencie
     public ResponseEntity<List<PlayerPositionTendencyResponse>> getAllPlayerPositionTendencies() {
         List<PlayerPositionTendencyResponse> response = playerPositionTendencyReadRepository.find()
             .stream()
-            .map(PlayerPositionTendencyMapper.INSTANCE::map).toList();
+            .map(PlayerPositionTendencyMapper.INSTANCE::map)
+            .toList();
         return ResponseEntity.ok(response);
     }
 
@@ -40,14 +41,15 @@ public class PlayerPositionTendenciesDelegate implements PlayerPositionTendencie
 
     @Override
     public ResponseEntity<PlayerPositionTendencyResponse> updatePlayerPositionTendency(com.kjeldsen.player.rest.model.PlayerPosition position,
-                                                                                       Map<String, Integer> requestBody) {
-        PlayerPositionTendency updatedPlayerPositionTendency = updatePlayerPositionTendencyUseCase.update(UpdatePlayerTendencies.builder()
-            .position(PlayerPosition.valueOf(position.name()))
-            .tendencies(requestBody.entrySet().stream().collect(
-                Collectors.toMap(entry -> PlayerSkill.valueOf(entry.getKey()), Map.Entry::getValue)))
-            .build());
+        Map<String, Integer> tendencies) {
+
+        PlayerPositionTendency updatedPlayerPositionTendency = updatePlayerPositionTendencyUseCase.update(
+            UpdatePlayerTendencies.builder()
+                .position(PlayerMapper.INSTANCE.map(position))
+                .tendencies(PlayerPositionTendencyMapper.INSTANCE.map(tendencies))
+                .build());
+
         PlayerPositionTendencyResponse response = PlayerPositionTendencyMapper.INSTANCE.map(updatedPlayerPositionTendency);
-        ;
         return ResponseEntity.ok(response);
     }
 }
