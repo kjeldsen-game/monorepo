@@ -46,20 +46,21 @@ public class TrainingApiIT extends AbstractIT {
 
             playerWriteRepository.save(Player.builder()
                 .id(Player.PlayerId.of(playerId))
+                .age(18)
                 .build());
 
             mockMvc.perform(post("/training/{playerId}/bloom", playerId)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andReturn();
 
-            var mudo = playerReadRepository.findOneById(Player.PlayerId.of(playerId));
+            Player mudo = playerReadRepository.findOneById(Player.PlayerId.of(playerId)).orElseThrow();
 
-            assertThat(mudo.get().getBloom().getPlayerId()).isEqualTo(playerId);
-            assertThat(mudo.get().getBloom().getBloomSpeed()).isEqualTo(100);
-            assertThat(mudo.get().getBloom().getBloomStartAge()).isEqualTo(18);
-            assertThat(mudo.get().getBloom().getYearsOn()).isEqualTo(3);
+            assertThat(mudo.getBloom().getPlayerId().value()).isEqualTo(playerId);
+            assertThat(mudo.getBloom().getBloomSpeed()).isEqualTo(350);
+            assertThat(mudo.getBloom().getBloomStartAge()).isEqualTo(18);
+            assertThat(mudo.getBloom().getYearsOn()).isEqualTo(3);
         }
     }
 }
