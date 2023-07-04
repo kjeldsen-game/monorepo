@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 
 class GenerateDeclinePhaseUseCaseTest {
 
-    private static final Integer DECLINE_START_AGE = 17;
+    private static final Integer CURRENT_DAY = 7;
     private static final Integer DECLINE_SPEED = 56;
     private static final Player.PlayerId PLAYER_ID = mock(Player.PlayerId.class);
     private static final EventId EVENT_ID = EventId.from("event-id");
@@ -43,7 +43,7 @@ class GenerateDeclinePhaseUseCaseTest {
         when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(RuntimeException.class, () -> generateDeclinePhaseUseCase.generate(PLAYER_ID, DECLINE_SPEED, DECLINE_START_AGE));
+        assertThrows(RuntimeException.class, () -> generateDeclinePhaseUseCase.generate(PLAYER_ID, CURRENT_DAY, DECLINE_SPEED));
     }
 
     @Test
@@ -54,6 +54,7 @@ class GenerateDeclinePhaseUseCaseTest {
         Player playerMock = mock(Player.class);
         PlayerTrainingDeclineEvent playerTrainingDeclineEventMock = mock(PlayerTrainingDeclineEvent.class);
 
+        when(playerMock.getId()).thenReturn(PLAYER_ID);
         when(mockedPlayerReadRepository.findOneById(PLAYER_ID)).thenReturn(Optional.of(playerMock));
         when(mockedPlayerTrainingDeclineEventWriteRepository.save(any())).thenReturn(playerTrainingDeclineEventMock);
 
@@ -65,7 +66,7 @@ class GenerateDeclinePhaseUseCaseTest {
             instantMockedStatic.when(InstantProvider::now).thenReturn(NOW);
 
             // Act
-            generateDeclinePhaseUseCase.generate(PLAYER_ID, DECLINE_START_AGE, DECLINE_SPEED);
+            generateDeclinePhaseUseCase.generate(PLAYER_ID, CURRENT_DAY, DECLINE_SPEED);
 
             eventIdMockedStatic.verify(EventId::generate);
             eventIdMockedStatic.verifyNoMoreInteractions();
@@ -85,10 +86,12 @@ class GenerateDeclinePhaseUseCaseTest {
 
         verify(mockedPlayerReadRepository).findOneById(PLAYER_ID);
         verify(mockedPlayerTrainingDeclineEventWriteRepository).save(playerTrainingDeclineEvent);
+        verify(playerMock).getId();
+        verify(playerMock, times(2)).getActualSkillPoints(any());
+        verify(playerMock).addDeclinePhase(any());
         verifyNoMoreInteractions(playerMock, mockedPlayerReadRepository, mockedPlayerTrainingDeclineEventWriteRepository);
 
         assertEquals(PLAYER_ID, playerTrainingDeclineEvent.getPlayerId());
-        assertEquals(DECLINE_START_AGE, playerTrainingDeclineEvent.getDeclineStartAge());
         assertEquals(DECLINE_SPEED, playerTrainingDeclineEvent.getDeclineSpeed());
         verify(mockedPlayerReadRepository).findOneById(PLAYER_ID);
         verify(mockedPlayerTrainingDeclineEventWriteRepository).save(any());
