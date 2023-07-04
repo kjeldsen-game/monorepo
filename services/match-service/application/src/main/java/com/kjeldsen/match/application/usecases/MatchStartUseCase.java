@@ -24,7 +24,7 @@ public class MatchStartUseCase {
             .build();
 
 
-        // TODO after saving the match started - call engine to generate plays
+        // TODO after saving the match started - call engine to generate oportunities
     }
 
 }

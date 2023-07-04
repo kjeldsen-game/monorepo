@@ -1,26 +1,24 @@
 package com.kjeldsen.match.domain.event;
 
+import com.kjeldsen.match.domain.aggregate.Player;
 import com.kjeldsen.match.domain.id.DuelId;
-import com.kjeldsen.match.domain.id.PlayId;
-import com.kjeldsen.match.domain.id.PlayerId;
-import com.kjeldsen.match.domain.id.TeamId;
 import com.kjeldsen.match.domain.type.DuelModifier;
-import com.kjeldsen.match.domain.type.ModifierWrapper;
+import com.kjeldsen.match.domain.type.DuelType;
+import com.kjeldsen.match.domain.type.ModifierMetaInfo;
 import com.kjeldsen.match.domain.type.PitchArea;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @SuperBuilder
+@Getter
 public class DuelStartedEvent extends Event {
 
     private DuelId duelId;
-    private PlayId playId;
-    private TeamId attackingTeamId;
-    private PlayerId attackingPlayerId;
-    private TeamId defendingTeamId;
-    private PlayerId defendingPlayerId;
+    private Player attacker;
+    private Player defender;
     private PitchArea pitchArea;
-    private List<ModifierWrapper<DuelModifier>> modifiers;
-
+    private DuelType duelType;
+    private List<ModifierMetaInfo<DuelModifier>> modifiers;
 }
