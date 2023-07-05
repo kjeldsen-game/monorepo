@@ -18,6 +18,7 @@ public interface PlayerMapper {
         return PlayerPosition.valueOf(position.name());
     }
 
+    //TODO testing de este mapper por el default, no se testea en IT
     default PlayerSkill map(String playerSkill) {
         return PlayerSkill.valueOf(playerSkill);
     }

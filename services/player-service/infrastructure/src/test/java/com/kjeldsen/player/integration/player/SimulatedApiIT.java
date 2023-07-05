@@ -1,12 +1,12 @@
 package com.kjeldsen.player.integration.player;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.provider.PlayerProvider;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.integration.AbstractIT;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
-import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
-import com.kjeldsen.player.rest.model.PlayerSkill;
-import com.kjeldsen.player.rest.model.RegisterSimulatedScheduledTrainingRequest;
+import com.kjeldsen.player.rest.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -87,6 +87,35 @@ public class SimulatedApiIT extends AbstractIT {
             assertThat(playerHistoricalTrainingResponse1.getTrainings().get(3).getPlayerId()).isEqualTo(playerId);
             assertThat(playerHistoricalTrainingResponse1.getTrainings().get(3).getCurrentDay()).isEqualTo(2);
             assertThat(playerHistoricalTrainingResponse1.getTrainings().get(3).getSkill()).isEqualTo(PlayerSkill.SCORE);
+
+        }
+    }
+
+    @Nested
+    @DisplayName("HTTP POST to /simulator/decline/{playerId} should")
+    class HttpPostToSimulatorDeclineTrainingShould {
+        @Test
+        @DisplayName("return 200 and the list of the registered simulated decline trainings")
+        void return_200_and_the_list_of_the_registered_simulated_decline_scheduled_trainings() throws Exception {
+
+            RegisterSimulatedDeclineRequest request = new RegisterSimulatedDeclineRequest()
+                .daysToDecline(15)
+                .declineSpeed(100);
+
+            Player player = playerWriteRepository.save(PlayerProvider.generateDefault());
+
+
+            MvcResult mvcResult = mockMvc.perform(post("/simulator/decline/" + player.getId().value())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+            List<PlayerDeclineResponse> playerDeclineResponsesList = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<>() {
+            });
+
+
+            assertThat(playerDeclineResponsesList.get(0).getPlayerId()).isEqualTo(player.getId().toString());
 
         }
     }
