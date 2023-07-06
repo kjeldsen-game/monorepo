@@ -114,8 +114,8 @@ public class SimulatedApiIT extends AbstractIT {
             List<PlayerDeclineResponse> playerDeclineResponsesList = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<>() {
             });
 
-
             assertThat(playerDeclineResponsesList.get(0).getPlayerId()).isEqualTo(player.getId().toString());
+            assertThat(playerDeclineResponsesList.size()).isEqualTo(15);
 
         }
     }
