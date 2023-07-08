@@ -8,8 +8,10 @@ import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.rest.api.SimulatorApiDelegate;
+import com.kjeldsen.player.rest.mapper.PlayerTrainingResponseMapper;
 import com.kjeldsen.player.rest.model.*;
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.factory.Mappers;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -97,13 +99,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
 
     //TODO Mudo convertir esto a un Mapper
     private PlayerTrainingResponse playerTrainingEvent2PlayerTrainingResponse(PlayerTrainingEvent playerTrainingEvent) {
-        return new PlayerTrainingResponse()
-            .currentDay(playerTrainingEvent.getCurrentDay())
-            .playerId(playerTrainingEvent.getPlayerId().value())
-            .skill(playerSkill2DomainPlayerSkill(playerTrainingEvent.getSkill()))
-            .points(playerTrainingEvent.getPoints())
-            .pointsBeforeTraining(playerTrainingEvent.getPointsBeforeTraining())
-            .pointsAfterTraining(playerTrainingEvent.getPointsAfterTraining());
+        return Mappers.getMapper(PlayerTrainingResponseMapper.class).convertPlayerTrainingEventToPlayerTrainingResponse(playerTrainingEvent);
     }
 
 }
