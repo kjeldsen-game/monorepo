@@ -8,7 +8,11 @@ import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.rest.api.SimulatorApiDelegate;
+<<<<<<< HEAD
 import com.kjeldsen.player.rest.mapper.PlayerTrainingResponseMapper;
+=======
+import com.kjeldsen.player.rest.mapper.PlayerDeclineMapper;
+>>>>>>> 73d5220c542108a7ba7125566158b297b314f214
 import com.kjeldsen.player.rest.model.*;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
@@ -66,7 +70,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
                     currentDayForDecline.getAndIncrement(),
                     registerSimulatedDeclineRequest.getDeclineSpeed());
 
-                declineEvents.add(playerTrainingDeclineEventToPlayerDeclineResponse(declineEvent));
+                declineEvents.add(PlayerDeclineMapper.INSTANCE.map(declineEvent));
 
                 if (declineEvent.getPointsToSubtract() > 0) {
                     currentDayForDecline.set(1);
