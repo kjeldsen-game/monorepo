@@ -4,7 +4,7 @@ export type Skill = 'DEFENSE_POSITION' | 'BALL_CONTROL' | 'SCORE' | 'PASSING' | 
 
 export type Status = 'HEALTHY' | 'UNHEALTHY' | 'INJURY'
 
-export type Stats = {
+export type actualSkills = {
   [skill in Skill]: number
 }
 
@@ -14,7 +14,7 @@ export interface PlayerStats {
   name: string
   position: Position
   status: string
-  stats: Stats
+  actualSkills: actualSkills
 }
 
 export const samplePlayer: PlayerStats = {
@@ -23,7 +23,7 @@ export const samplePlayer: PlayerStats = {
   name: 'Devin Gibson',
   status: 'H',
   position: 'DEF',
-  stats: {
+  actualSkills: {
     DEFENSE_POSITION: 77,
     BALL_CONTROL: 12,
     SCORE: 10,
@@ -42,7 +42,7 @@ export const players: PlayerStats[] = [
     name: 'John Doe',
     status: 'H',
     position: 'FW',
-    stats: {
+    actualSkills: {
       DEFENSE_POSITION: 25,
       BALL_CONTROL: 40,
       SCORE: 8,
@@ -58,7 +58,7 @@ export const players: PlayerStats[] = [
     name: 'Jane Smith',
     status: 'H',
     position: 'MID',
-    stats: {
+    actualSkills: {
       DEFENSE_POSITION: 50,
       BALL_CONTROL: 80,
       SCORE: 3,
@@ -74,7 +74,7 @@ export const players: PlayerStats[] = [
     name: 'Alex Johnson',
     status: 'H',
     position: 'DEF',
-    stats: {
+    actualSkills: {
       DEFENSE_POSITION: 90,
       BALL_CONTROL: 20,
       SCORE: 0,
@@ -90,7 +90,7 @@ export const players: PlayerStats[] = [
     name: 'David Lee',
     status: 'H',
     position: 'MID',
-    stats: {
+    actualSkills: {
       DEFENSE_POSITION: 40,
       BALL_CONTROL: 70,
       SCORE: 5,
@@ -106,7 +106,7 @@ export const players: PlayerStats[] = [
     name: 'Sarah Brown',
     status: 'H',
     position: 'DEF',
-    stats: {
+    actualSkills: {
       DEFENSE_POSITION: 80,
       BALL_CONTROL: 30,
       SCORE: 0,
@@ -122,7 +122,7 @@ export const players: PlayerStats[] = [
     name: 'Chris Davis',
     status: 'H',
     position: 'GK',
-    stats: {
+    actualSkills: {
       DEFENSE_POSITION: 95,
       BALL_CONTROL: 10,
       SCORE: 0,
@@ -138,7 +138,7 @@ export const players: PlayerStats[] = [
     name: 'Emily Wilson',
     status: 'H',
     position: 'MID',
-    stats: {
+    actualSkills: {
       DEFENSE_POSITION: 30,
       BALL_CONTROL: 90,
       SCORE: 4,
@@ -154,7 +154,7 @@ export const players: PlayerStats[] = [
     name: 'Jason Williams',
     status: 'H',
     position: 'MID',
-    stats: {
+    actualSkills: {
       DEFENSE_POSITION: 10,
       BALL_CONTROL: 85,
       SCORE: 6,
@@ -170,7 +170,7 @@ export const players: PlayerStats[] = [
     name: 'Ryan Johnson',
     status: 'H',
     position: 'FW',
-    stats: {
+    actualSkills: {
       DEFENSE_POSITION: 6,
       BALL_CONTROL: 70,
       SCORE: 28,

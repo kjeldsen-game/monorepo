@@ -21,7 +21,7 @@ export const samplePlayerColumn = [
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.BALL_CONTROL,
+    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.DEFENSE_POSITION,
   },
   {
     field: 'BALL_CONTROL',
@@ -30,7 +30,7 @@ export const samplePlayerColumn = [
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.BALL_CONTROL,
+    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.BALL_CONTROL,
   },
   {
     field: 'SCORE',
@@ -39,7 +39,7 @@ export const samplePlayerColumn = [
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.SCORE,
+    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.SCORE,
   },
   {
     field: 'PASSING',
@@ -48,7 +48,7 @@ export const samplePlayerColumn = [
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.PASSING,
+    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.PASSING,
   },
   {
     field: 'OFFENSIVE_POSITION',
@@ -57,7 +57,7 @@ export const samplePlayerColumn = [
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.OFFENSIVE_POSITION,
+    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.OFFENSIVE_POSITION,
   },
   {
     field: 'TACKLING',
@@ -66,7 +66,7 @@ export const samplePlayerColumn = [
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.TACKLING,
+    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.TACKLING,
   },
   {
     field: 'CO',
@@ -75,7 +75,7 @@ export const samplePlayerColumn = [
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.CO,
   },
   {
     field: 'GP',
@@ -84,7 +84,7 @@ export const samplePlayerColumn = [
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.CO,
   },
   {
     field: 'GOALS',
@@ -93,7 +93,7 @@ export const samplePlayerColumn = [
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.CO,
   },
   {
     field: 'ASSISTS',
@@ -102,7 +102,7 @@ export const samplePlayerColumn = [
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.CO,
   },
   {
     field: 'TAKEDOWNS',
@@ -111,7 +111,7 @@ export const samplePlayerColumn = [
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.CO,
   },
   {
     field: 'CRD',
@@ -120,7 +120,7 @@ export const samplePlayerColumn = [
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.CO,
   },
   {
     field: 'MOM',
@@ -129,7 +129,7 @@ export const samplePlayerColumn = [
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.CO,
   },
   {
     field: 'RATING',
@@ -138,7 +138,7 @@ export const samplePlayerColumn = [
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.stats.CO,
+    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.CO,
   },
   {
     field: 'playerOrder1',
