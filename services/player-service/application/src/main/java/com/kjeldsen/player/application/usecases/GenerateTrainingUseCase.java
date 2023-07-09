@@ -50,12 +50,13 @@ public class GenerateTrainingUseCase {
             .pointsBeforeTraining(player.getActualSkillPoints(playerSkill))
             .build();
 
-        // TODO Ivan review this usecase and it's tests
-        
         if (player.isBloomActive()) {
             handleBloomEvent(player, playerTrainingEvent);
         } else {
+            // TODO 72-add-potentials-to-the-player I think PointsGenerator.generatePointsRise should receive the player current points and
+            //  potential and based on both calculate the points rise
             Integer points = PointsGenerator.generatePointsRise(currentDay);
+            // TODO 72-add-potentials-to-the-player player.addSkillPoints should now not only set actual skill points but probably potential as well
             player.addSkillPoints(playerSkill, points);
             playerTrainingEvent.setPoints(points);
             playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
