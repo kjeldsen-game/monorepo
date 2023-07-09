@@ -8,10 +8,15 @@ import { samplePlayer } from '@/data/SamplePlayer'
 import useSWR from 'swr'
 
 const Player: NextPage = () => {
-  const { data, error, isLoading } = useSWR('/api/user/123', fetcher)
+  const fetcher = (url: string) => fetch(url).then((res) => res.json())
+
+  // const { data, error, isLoading } = useSWR('https://official-joke-api.appspot.com/random_joke', fetcher)
+  const { data, error, isLoading } = useSWR('http://localhost:8082/player', fetcher)
 
   if (error) return <div>failed to load</div>
   if (isLoading) return <div>loading...</div>
+
+  data.forEach((element: any) => console.log(element))
 
   return (
     <>
@@ -40,7 +45,7 @@ const Player: NextPage = () => {
         </Box>
 
         <Typography sx={{ marginBottom: '1rem', borderBottom: '1px solid' }}>Current Season</Typography>
-        <Grid rows={sampleRows} columns={sampleColumns} />
+        <Grid rows={data} columns={sampleColumns} />
         <Typography sx={{ marginBottom: '1rem', marginTop: '2rem', borderBottom: '1px solid' }}>Previous Season</Typography>
         <Grid rows={sampleRows} columns={sampleColumns} />
         <Typography sx={{ marginBottom: '1rem', marginTop: '2rem', borderBottom: '1px solid' }}>Aggregate</Typography>
