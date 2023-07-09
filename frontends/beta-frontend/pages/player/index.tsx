@@ -5,8 +5,14 @@ import Grid from '@/shared/components/Grid/Grid'
 import { sampleRows, sampleColumns } from '@/shared/components/Grid/PlayerGrid'
 import PlayerDetails from '@/shared/components/PlayerDetails'
 import { samplePlayer } from '@/data/SamplePlayer'
+import useSWR from 'swr'
 
 const Player: NextPage = () => {
+  const { data, error, isLoading } = useSWR('/api/user/123', fetcher)
+
+  if (error) return <div>failed to load</div>
+  if (isLoading) return <div>loading...</div>
+
   return (
     <>
       <Head>
