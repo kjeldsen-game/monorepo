@@ -1,5 +1,6 @@
 package com.kjeldsen.player.kafka.listener;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kjeldsen.events.kafka.KafkaEventWrapper;
 import com.kjeldsen.player.application.usecases.CreateTeamUseCase;
@@ -23,8 +24,9 @@ public class AuthSignUpListener {
         groupId = "${spring.kafka.consumer.group-id}",
         containerFactory = "signUpKafkaListenerContainerFactory")
     public void signUpKafkaListener(KafkaEventWrapper<AuthKafkaEventType, UserSignedUpEvent> eventWrapper) {
-        log.info("Received event from Kafka: {}", eventWrapper);
-        UserSignedUpEvent userSignedUpEvent = objectMapper.convertValue(eventWrapper.getEventBody(), UserSignedUpEvent.class);
+        log.info("Received event from Kafka: {}", eventWrapper.getId());
+        UserSignedUpEvent userSignedUpEvent = objectMapper.convertValue(eventWrapper.getEventBody(), new TypeReference<>() {
+        });
         createTeamUseCase.create(userSignedUpEvent.getTeamName(), 15, userSignedUpEvent.getUserId());
     }
 
