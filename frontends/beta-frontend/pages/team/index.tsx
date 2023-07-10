@@ -13,7 +13,6 @@ import useSWR from 'swr'
 const Team: NextPage = () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-  // const { data, error, isLoading } = useSWR('https://official-joke-api.appspot.com/random_joke', fetcher)
   const { data, error, isLoading } = useSWR('http://localhost:8082/player', fetcher)
 
   if (error) return <div>failed to load</div>
@@ -33,9 +32,9 @@ const Team: NextPage = () => {
           <PlayerTactics />
           <TeamTactics />
         </Box>
-        <Box sx={{ minWidth: '1200px' }}>
+        {/* <Box sx={{ minWidth: '1200px' }}>
           <Grid rows={players} columns={samplePlayerColumn} />
-        </Box>
+        </Box> */}
         <Box sx={{ minWidth: '1200px' }}>
           <Grid rows={data} columns={samplePlayerColumn} />
         </Box>
