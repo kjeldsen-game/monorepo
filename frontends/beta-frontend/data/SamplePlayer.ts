@@ -4,7 +4,7 @@ export type Skill = 'DEFENSE_POSITION' | 'BALL_CONTROL' | 'SCORE' | 'PASSING' | 
 
 export type Status = 'HEALTHY' | 'UNHEALTHY' | 'INJURY'
 
-export type actualSkills = {
+export type ActualSkills = {
   [skill in Skill]: number
 }
 
@@ -14,7 +14,7 @@ export interface PlayerStats {
   name: string
   position: Position
   status: string
-  actualSkills: actualSkills
+  actualSkills: ActualSkills
 }
 
 export const samplePlayer: PlayerStats = {
