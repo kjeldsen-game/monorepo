@@ -68,13 +68,13 @@ export const PlayerDetails: FC<PlayerDetailsProps> = ({ player }) => (
     </Box>
     <Box sx={{ marginLeft: '2rem' }}>
       <Typography variant="body1" component="p" sx={playerStatsStyle3}>
-        {player.stats.DEFENSE_POSITION} - Defense
+        {player.actualSkills.DEFENSE_POSITION} - Defense
       </Typography>
       <Typography variant="body1" component="p" sx={playerStatsStyle2}>
-        {player.stats.BALL_CONTROL} - BallControl
+        {player.actualSkills.BALL_CONTROL} - BallControl
       </Typography>
       <Typography variant="body1" component="p" sx={playerStatsStyle2}>
-        {player.stats.SCORE} - Score
+        {player.actualSkills.SCORE} - Score
       </Typography>
     </Box>
     <Box
@@ -82,13 +82,13 @@ export const PlayerDetails: FC<PlayerDetailsProps> = ({ player }) => (
         marginLeft: '2rem',
       }}>
       <Typography variant="body1" component="p" sx={playerStatsStyle3}>
-        {player.stats.TACKLING} - Tackling
+        {player.actualSkills.TACKLING} - Tackling
       </Typography>
       <Typography variant="body1" component="p" sx={playerStatsStyle}>
-        {player.stats.CO} - CO
+        {player.actualSkills.CO} - CO
       </Typography>
       <Typography variant="body1" component="p" sx={playerStatsStyle2}>
-        {player.stats.PASSING} - Passing
+        {player.actualSkills.PASSING} - Passing
       </Typography>
     </Box>
   </Box>
