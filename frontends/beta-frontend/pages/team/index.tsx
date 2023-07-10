@@ -32,9 +32,6 @@ const Team: NextPage = () => {
           <PlayerTactics />
           <TeamTactics />
         </Box>
-        {/* <Box sx={{ minWidth: '1200px' }}>
-          <Grid rows={players} columns={samplePlayerColumn} />
-        </Box> */}
         <Box sx={{ minWidth: '1200px' }}>
           <Grid rows={data} columns={samplePlayerColumn} />
         </Box>
