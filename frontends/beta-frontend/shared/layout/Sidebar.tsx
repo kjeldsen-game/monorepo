@@ -22,6 +22,7 @@ export interface Item {
   icon: 'inbox' | 'mail'
   hasDivider?: boolean
   selected: boolean
+  order: number
 }
 
 interface SidebarProps {
@@ -52,7 +53,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
             {props.items.map((item) => (
               <>
                 <ListItem
-                  key={item.name}
+                  key={item.order}
                   disablePadding
                   sx={{
                     backgroundColor: item.selected ? 'white' : 'inherit',
@@ -65,8 +66,8 @@ export const Sidebar: FC<SidebarProps> = (props) => {
                       <ListItemText primary={item.name} />
                     </ListItemButton>
                   </Link>
+                  {item.hasDivider ? <Divider /> : <></>}
                 </ListItem>
-                {item.hasDivider ? <Divider /> : <></>}
               </>
             ))}
           </List>

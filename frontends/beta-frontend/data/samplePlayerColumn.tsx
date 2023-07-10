@@ -3,7 +3,7 @@ import { GridAlignment } from '@mui/x-data-grid'
 import { PlayerOrderSelect } from '@/shared/components/PlayerOrderSelect'
 
 export const samplePlayerColumn = [
-  { field: 'status', headerName: 'Health', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
+  // { field: 'status', headerName: 'Health', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
   { field: 'name', headerName: 'Name', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 130, flex: 1 },
   { field: 'age', headerName: 'Age', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
   {
