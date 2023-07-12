@@ -8,10 +8,10 @@ import { useRouter } from 'next/router'
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
   const { pathname } = useRouter()
   const items: Item[] = [
-    { order: 1, name: 'Dashboard', icon: 'inbox', to: '/dashboard', selected: pathname === '/dashboard' },
-    { order: 2, name: 'TempPlayerView', icon: 'mail', to: '/player', selected: pathname === '/player' },
-    { order: 3, name: 'Team', icon: 'inbox', to: '/team', selected: pathname === '/team' },
-    { order: 4, name: 'Training', icon: 'mail', to: '/training', hasDivider: false, selected: pathname === '/training' },
+    { name: 'Dashboard', icon: 'inbox', to: '/dashboard', selected: pathname === '/dashboard' },
+    { name: 'TempPlayerView', icon: 'mail', to: '/player', selected: pathname === '/player' },
+    { name: 'Team', icon: 'inbox', to: '/team', selected: pathname === '/team' },
+    { name: 'Training', icon: 'mail', to: '/training', hasDivider: false, selected: pathname === '/training' },
     // { name: 'Generate Player', icon: 'inbox', to: '/', selected: pathname === '/' },
     // { name: 'Generate Match', icon: 'mail', to: '/', selected: pathname === '/' },
   ]

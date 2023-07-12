@@ -22,7 +22,6 @@ export interface Item {
   icon: 'inbox' | 'mail'
   hasDivider?: boolean
   selected: boolean
-  order: number
 }
 
 interface SidebarProps {
@@ -52,7 +51,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
           <List>
             {props.items.map((item) => (
               <ListItem
-                key={item.order}
+                key={item.name}
                 disablePadding
                 sx={{
                   backgroundColor: item.selected ? 'white' : 'inherit',
