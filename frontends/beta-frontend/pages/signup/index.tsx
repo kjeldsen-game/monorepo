@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { CenterContainer } from '@/shared/layout'
 import { NextPageWithLayout } from '@/pages/_app'
 import { API_GATEWAY_ENDPOINT } from '@/config'
-import { fetcher } from '@/libs/fetcher'
+import factory from '@/libs/fetcher'
 
 interface SignUpFormValues {
   username: string
@@ -31,9 +31,11 @@ const SignUpPage: NextPageWithLayout = () => {
             rowGap: '1rem',
           }}
           onSubmit={handleSubmit(async ({ username, password }) => {
-            // const usernames = JSON.stringify(username)
-            // const passwords = JSON.stringify(password)
-            // fetch('http://localhost:8081/auth/sign-up', { method: 'POST', body: { username, password } })
+            const fetcher = factory()
+            await fetcher('/auth-service/auth/sign-up', {
+              method: 'POST',
+              data: { username, password },
+            })
           })}>
           <Controller
             name="username"
