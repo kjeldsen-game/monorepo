@@ -9,16 +9,18 @@ import TeamTactics from '@/shared/components/TeamTactics'
 import { players } from '@/data/SamplePlayer'
 import { samplePlayerColumn } from '@/data/samplePlayerColumn'
 import useSWR from 'swr'
+import { MinimizeSharp } from '@mui/icons-material'
 
 const Team: NextPage = () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-  const { data, error, isLoading } = useSWR('http://localhost:8082/player', fetcher)
+  const { data, error, isLoading } = useSWR('http://localhost:8082/player?size=40&page=0', fetcher)
 
   if (error) return <div>failed to load</div>
   if (isLoading) return <div>loading...</div>
 
-  data.forEach((element: any) => console.log(element))
+  console.log(data)
+  // data.forEach((element: any) => console.log(element))
 
   return (
     <>
@@ -32,7 +34,7 @@ const Team: NextPage = () => {
           <PlayerTactics />
           <TeamTactics />
         </Box>
-        <Box sx={{ minWidth: '1200px' }}>
+        <Box sx={{ minWidth: '80vw' }}>
           <Grid rows={data} columns={samplePlayerColumn} />
         </Box>
       </Box>
