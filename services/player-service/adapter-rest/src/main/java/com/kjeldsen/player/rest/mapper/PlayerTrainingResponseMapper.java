@@ -1,17 +1,21 @@
 package com.kjeldsen.player.rest.mapper;
 
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
+import com.kjeldsen.player.rest.model.PlayerSkill;
 import com.kjeldsen.player.rest.model.PlayerTrainingResponse;
-import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(uses = {IdMapper.class})
 public interface PlayerTrainingResponseMapper {
 
-    @Mapping(target = "bloom", ignore = true)
-    PlayerTrainingEvent convertPlayerTrainingResponseToPlayerTrainingEvent(PlayerTrainingResponse playerTrainingResponse);
+    PlayerTrainingResponseMapper INSTANCE = Mappers.getMapper(PlayerTrainingResponseMapper.class);
 
-    @InheritInverseConfiguration
-    PlayerTrainingResponse convertPlayerTrainingEventToPlayerTrainingResponse(PlayerTrainingEvent playerTrainingEvent);
+    PlayerTrainingResponse fromPlayerTrainingEvent(PlayerTrainingEvent playerTrainingEvent);
+
+    default PlayerSkill fromPlayerSkillDomain(com.kjeldsen.player.domain.PlayerSkill playerSkillDomain) {
+        return PlayerSkill.valueOf(playerSkillDomain.name());
+    }
+
+
 }

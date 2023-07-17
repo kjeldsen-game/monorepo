@@ -12,15 +12,15 @@ public interface PlayerMapper {
 
     PlayerMapper INSTANCE = Mappers.getMapper(PlayerMapper.class);
 
-    PlayerResponse map(Player player);
+    PlayerResponse playerPositionMap(Player player);
 
-    default PlayerPosition map(com.kjeldsen.player.rest.model.PlayerPosition position) {
+    default PlayerPosition playerPositionMap(com.kjeldsen.player.rest.model.PlayerPosition position) {
         return PlayerPosition.valueOf(position.name());
     }
 
-    //TODO testing de este mapper por el default, no se testea en IT
-    default PlayerSkill map(String playerSkill) {
+    default PlayerSkill playerSkillMap(String playerSkill) {
         return PlayerSkill.valueOf(playerSkill);
     }
+
 
 }

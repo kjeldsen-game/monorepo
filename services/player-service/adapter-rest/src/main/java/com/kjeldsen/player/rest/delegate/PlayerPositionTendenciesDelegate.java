@@ -41,11 +41,11 @@ public class PlayerPositionTendenciesDelegate implements PlayerPositionTendencie
 
     @Override
     public ResponseEntity<PlayerPositionTendencyResponse> updatePlayerPositionTendency(com.kjeldsen.player.rest.model.PlayerPosition position,
-        Map<String, Integer> tendencies) {
+                                                                                       Map<String, Integer> tendencies) {
 
         PlayerPositionTendency updatedPlayerPositionTendency = updatePlayerPositionTendencyUseCase.update(
             UpdatePlayerTendencies.builder()
-                .position(PlayerMapper.INSTANCE.map(position))
+                .position(PlayerMapper.INSTANCE.playerPositionMap(position))
                 .tendencies(PlayerPositionTendencyMapper.INSTANCE.map(tendencies))
                 .build());
 

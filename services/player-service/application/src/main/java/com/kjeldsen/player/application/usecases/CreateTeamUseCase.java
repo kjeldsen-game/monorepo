@@ -27,8 +27,8 @@ public class CreateTeamUseCase {
             .name(teamName)
             .players(players)
             .build();
-// TODO apart from saving the team aggreagate/projection, we need to store a created_team_event. Then Team domain object should have a method like
-//  create(created_team_event) and based on the event it populates itlsef. Then you save it with the repo
+// TODO apart from saving the team aggregate/projection, we need to store a created_team_event. Then Team domain object should have a method like
+//  create(created_team_event) and based on the event it populates itself. Then you save it with the repo
 
         // TODO notification for the user to know that his team as been created
         teamWriteRepository.save(team, userId);
