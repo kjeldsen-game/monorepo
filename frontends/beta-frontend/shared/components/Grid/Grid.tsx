@@ -1,16 +1,21 @@
-import { DataGrid, GridCallbackDetails, GridColDef, GridRowParams, MuiEvent } from '@mui/x-data-grid'
+import { DataGrid, GridCallbackDetails, GridColDef, GridEventListener, GridRowParams, MuiEvent } from '@mui/x-data-grid'
 import Box from '@mui/material/Box'
 
 type GridProps<T> = {
   rows: T[]
   columns: GridColDef[]
-  onRowClick?: (params: GridRowParams, event: MuiEvent, details: GridCallbackDetails) => void
+  // handleRowClick?: (params: GridRowParams, event: MuiEvent, details: GridCallbackDetails) => void
 }
 
-function Grid<T>({ rows, columns, onRowClick }: GridProps<T>) {
+const handleRowClick: GridEventListener<'rowClick'> = (params) => {
+  // setMessage(`Movie "${params.row.title}" clicked`)
+  console.log(params)
+}
+
+function Grid<T>({ rows, columns }: GridProps<T>) {
   return (
     <Box>
-      <DataGrid autoHeight={true} rows={rows} columns={columns} hideFooter={true} onRowClick={onRowClick} />
+      <DataGrid autoHeight={true} rows={rows} columns={columns} hideFooter={true} onRowClick={handleRowClick} />
     </Box>
   )
 }
