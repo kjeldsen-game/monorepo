@@ -5,6 +5,7 @@ import { CenterContainer } from '@/shared/layout'
 import { NextPageWithLayout } from '@/pages/_app'
 import { API_GATEWAY_ENDPOINT } from '@/config'
 import factory from '@/libs/fetcher'
+import { signIn } from 'next-auth/react'
 
 interface SignUpFormValues {
   username: string
@@ -31,11 +32,24 @@ const SignUpPage: NextPageWithLayout = () => {
             rowGap: '1rem',
           }}
           onSubmit={handleSubmit(async ({ username, password }) => {
-            const fetcher = factory()
-            await fetcher('/auth-service/auth/sign-up', {
+            const response = await fetch(`${API_GATEWAY_ENDPOINT}/auth-service/auth/sign-up`, {
               method: 'POST',
-              data: { username, password },
+              body: JSON.stringify({ username, password }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
             })
+            if (response.ok) {
+              console.info('Account created successfully')
+              await signIn('credentials', {
+                redirect: true,
+                username: username,
+                password: password,
+                callbackUrl: '/',
+              })
+            } else {
+              console.error('There was an error with the creation of the account')
+            }
           })}>
           <Controller
             name="username"

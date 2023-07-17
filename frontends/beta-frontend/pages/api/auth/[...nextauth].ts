@@ -24,18 +24,19 @@ export default NextAuth({
           client_secret: AUTH_CLIENT_SECRET,
         })
 
-        const fetcher = factory()
-        const res = await fetcher('/auth-service/oauth/token', {
+        const res = await fetch(`${API_GATEWAY_ENDPOINT}/auth-service/oauth/token`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
-          data: payload.toString(),
+          body: payload.toString(),
         })
+
+        const data = await res.json()
 
         // Returning token to set in session
         return {
-          token: res,
+          token: data,
         }
       },
     }),
