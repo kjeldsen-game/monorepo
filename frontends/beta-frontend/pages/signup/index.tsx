@@ -1,11 +1,12 @@
 import React from 'react'
-import { Box, Button, Card, CardContent, CardHeader, TextField } from '@mui/material'
+import { Box, Button, Card, CardContent, CardHeader, TextField, Typography } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import { CenterContainer } from '@/shared/layout'
 import { NextPageWithLayout } from '@/pages/_app'
 import { API_GATEWAY_ENDPOINT } from '@/config'
 import factory from '@/libs/fetcher'
 import { signIn } from 'next-auth/react'
+import { apiSignup } from 'config/apiConnections'
 
 interface SignUpFormValues {
   username: string
@@ -32,24 +33,7 @@ const SignUpPage: NextPageWithLayout = () => {
             rowGap: '1rem',
           }}
           onSubmit={handleSubmit(async ({ username, password }) => {
-            const response = await fetch(`${API_GATEWAY_ENDPOINT}/auth-service/auth/sign-up`, {
-              method: 'POST',
-              body: JSON.stringify({ username, password }),
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            })
-            if (response.ok) {
-              console.info('Account created successfully')
-              await signIn('credentials', {
-                redirect: true,
-                username: username,
-                password: password,
-                callbackUrl: '/',
-              })
-            } else {
-              console.error('There was an error with the creation of the account')
-            }
+            apiSignup(username, password)
           })}>
           <Controller
             name="username"
@@ -115,6 +99,7 @@ const SignUpPage: NextPageWithLayout = () => {
             <Button type="submit" variant="contained" color="primary">
               Sign Up
             </Button>
+            <Typography id="errorContainer" css={{ color: 'red', marginTop: '1rem' }}></Typography>
           </div>
         </form>
       </CardContent>

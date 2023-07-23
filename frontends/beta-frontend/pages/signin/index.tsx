@@ -6,6 +6,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { NextPageWithLayout } from '@/pages/_app'
 import { CenterContainer } from '@/shared/layout'
+import { apiSignIn } from 'config/apiConnections'
 
 interface SignInFormValues {
   username: string
@@ -34,13 +35,8 @@ const SignInPage: NextPageWithLayout = () => {
               justifyContent: 'center',
               rowGap: '1rem',
             }}
-            onSubmit={handleSubmit(async (data) => {
-              await signIn('credentials', {
-                redirect: true,
-                username: data.username,
-                password: data.password,
-                callbackUrl: '/',
-              })
+            onSubmit={handleSubmit(async (username, password) => {
+              apiSignIn(username, password)
             })}>
             <Controller
               name="username"
