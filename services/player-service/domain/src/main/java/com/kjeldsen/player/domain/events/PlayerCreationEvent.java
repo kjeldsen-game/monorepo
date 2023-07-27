@@ -1,10 +1,7 @@
 package com.kjeldsen.player.domain.events;
 
 import com.kjeldsen.events.domain.Event;
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
@@ -25,7 +22,7 @@ public class PlayerCreationEvent extends Event {
     private Integer age;
     private PlayerPosition position;
     // TODO 72-add-potentials-to-the-player change Integer for a wrapper object to save moved current points and potential points
-    private Map<PlayerSkill, Integer> initialSkills;
+    private Map<PlayerSkill, PlayerSkillPoints> initialSkills;
     private Team.TeamId teamId;
 
 }

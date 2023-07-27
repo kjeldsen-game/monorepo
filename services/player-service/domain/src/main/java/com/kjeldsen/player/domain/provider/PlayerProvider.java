@@ -1,21 +1,13 @@
 package com.kjeldsen.player.domain.provider;
 
 import com.github.javafaker.Faker;
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerPositionTendency;
-import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.Range;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -51,6 +43,7 @@ public class PlayerProvider {
             if (skill.isEmpty()) {
                 return;
             }
+
             // TODO 72-add-potentials-to-the-player add the current points within the wrapper here
             values.put(skill.get(), values.get(skill.get()) + 1);
             if (values.get(skill.get()) == MAX_SKILL_VALUE) {
