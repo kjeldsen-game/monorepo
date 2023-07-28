@@ -43,6 +43,7 @@ export function apiGetPlayers() {
   if (error) return <div>failed to load</div>
   if (isLoading) return <div>loading...</div>
 
+  console.log(typeof data)
   console.log(data)
   // data.forEach((element: any) => console.log(element))
 
