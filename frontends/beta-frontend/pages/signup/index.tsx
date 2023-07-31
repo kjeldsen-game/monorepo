@@ -3,10 +3,7 @@ import { Box, Button, Card, CardContent, CardHeader, TextField, Typography } fro
 import { Controller, useForm } from 'react-hook-form'
 import { CenterContainer } from '@/shared/layout'
 import { NextPageWithLayout } from '@/pages/_app'
-import { API_GATEWAY_ENDPOINT } from '@/config'
-import factory from '@/libs/fetcher'
-import { signIn } from 'next-auth/react'
-import { apiSignup } from 'config/apiConnections'
+import { apiSignup } from '../api/auth/signup'
 
 interface SignUpFormValues {
   username: string

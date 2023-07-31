@@ -6,14 +6,11 @@ import { SampleTeam } from '@/data/SampleTeam'
 import TeamDetails from '@/shared/components/TeamDetails'
 import PlayerTactics from '@/shared/components/PlayerTactics'
 import TeamTactics from '@/shared/components/TeamTactics'
-import { players } from '@/data/SamplePlayer'
 import { samplePlayerColumn } from '@/data/samplePlayerColumn'
-import useSWR from 'swr'
-import { fetcher } from '@/libs/fetcher'
-import { apiGetPlayers } from 'config/apiConnections'
+import { getPlayers } from '../api/players/players'
 
 const Team: NextPage = () => {
-  const data = apiGetPlayers()
+  const data = getPlayers()
 
   return (
     <>

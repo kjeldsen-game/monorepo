@@ -6,7 +6,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { NextPageWithLayout } from '@/pages/_app'
 import { CenterContainer } from '@/shared/layout'
-import { apiSignIn } from 'config/apiConnections'
+import { apiSignIn } from '../api/auth/signup'
 
 interface SignInFormValues {
   username: string
