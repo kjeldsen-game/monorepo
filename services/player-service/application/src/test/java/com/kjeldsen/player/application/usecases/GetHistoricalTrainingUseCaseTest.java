@@ -13,8 +13,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class GetHistoricalTrainingUseCaseTest {
 
@@ -26,9 +25,12 @@ public class GetHistoricalTrainingUseCaseTest {
     public void should_generate_runtimeException_if_player_not_found() {
         Player.PlayerId playerId = new Player.PlayerId("fulano");
         when(mockPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.empty());
-        assertThrows(RuntimeException.class, () -> {
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             getHistoricalTrainingUseCase.get(playerId);
         });
+        assertEquals(String.format("Player not found with ID %s", playerId), exception.getMessage());
+        verify(mockPlayerReadRepository).findOneById(playerId);
+        verifyNoMoreInteractions(mockPlayerReadRepository);
     }
 
     @Test
@@ -40,6 +42,8 @@ public class GetHistoricalTrainingUseCaseTest {
         when(mockPlayerTrainingEventReadRepository.findAllByPlayerId(playerId)).thenReturn(trainingEvents);
         List<PlayerTrainingEvent> result = getHistoricalTrainingUseCase.get(playerId);
         assertEquals(trainingEvents, result);
+        verify(mockPlayerReadRepository).findOneById(playerId);
+        verify(mockPlayerTrainingEventReadRepository).findAllByPlayerId(playerId);
+        verifyNoMoreInteractions(mockPlayerReadRepository, mockPlayerTrainingEventReadRepository);
     }
-
 }

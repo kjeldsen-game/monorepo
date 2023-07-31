@@ -9,8 +9,12 @@ import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.rest.api.SimulatorApiDelegate;
 import com.kjeldsen.player.rest.mapper.PlayerDeclineResponseMapper;
+import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.mapper.PlayerTrainingResponseMapper;
-import com.kjeldsen.player.rest.model.*;
+import com.kjeldsen.player.rest.model.PlayerDeclineResponse;
+import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
+import com.kjeldsen.player.rest.model.RegisterSimulatedDeclineRequest;
+import com.kjeldsen.player.rest.model.RegisterSimulatedScheduledTrainingRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -36,7 +40,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         registerSimulatedScheduledTrainingRequest.getSkills()
             .forEach(playerSkill -> scheduleTrainingUseCase.generate(
                 Player.PlayerId.of(playerId),
-                this.playerSkill2DomainPlayerSkill(playerSkill),
+                PlayerMapper.INSTANCE.map(playerSkill),
                 registerSimulatedScheduledTrainingRequest.getDays()
             ));
 
@@ -74,9 +78,5 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
             });
 
         return ResponseEntity.ok(declineEvents);
-    }
-
-    private com.kjeldsen.player.domain.PlayerSkill playerSkill2DomainPlayerSkill(PlayerSkill playerSkill) {
-        return com.kjeldsen.player.domain.PlayerSkill.valueOf(playerSkill.name());
     }
 }

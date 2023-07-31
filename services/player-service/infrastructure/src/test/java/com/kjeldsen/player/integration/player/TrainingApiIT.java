@@ -55,12 +55,12 @@ public class TrainingApiIT extends AbstractIT {
                 .andExpect(status().isCreated())
                 .andReturn();
 
-            Player mudo = playerReadRepository.findOneById(Player.PlayerId.of(playerId)).orElseThrow();
+            Player player = playerReadRepository.findOneById(Player.PlayerId.of(playerId)).orElseThrow();
 
-            assertThat(mudo.getBloom().getPlayerId().value()).isEqualTo(playerId);
-            assertThat(mudo.getBloom().getBloomSpeed()).isEqualTo(350);
-            assertThat(mudo.getBloom().getBloomStartAge()).isEqualTo(18);
-            assertThat(mudo.getBloom().getYearsOn()).isEqualTo(3);
+            assertThat(player.getBloom().getPlayerId().value()).isEqualTo(playerId);
+            assertThat(player.getBloom().getBloomSpeed()).isEqualTo(350);
+            assertThat(player.getBloom().getBloomStartAge()).isEqualTo(18);
+            assertThat(player.getBloom().getYearsOn()).isEqualTo(3);
         }
     }
 }

@@ -50,7 +50,9 @@ class GenerateBloomPhaseUseCaseTest {
         when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(RuntimeException.class, () -> generateBloomPhaseUseCase.generate(bloomYears, bloomSpeed, bloomStart, playerId));
+        RuntimeException exception = assertThrows(RuntimeException.class, () ->
+            generateBloomPhaseUseCase.generate(bloomYears, bloomSpeed, bloomStart, playerId));
+        assertEquals("Player not found.", exception.getMessage());
     }
 
     @Test

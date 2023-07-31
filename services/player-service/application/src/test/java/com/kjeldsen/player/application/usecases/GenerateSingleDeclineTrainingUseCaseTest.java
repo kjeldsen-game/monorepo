@@ -2,18 +2,24 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.events.domain.EventId;
 import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
+import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventWriteRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import java.time.Instant;
+import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 
 public class GenerateSingleDeclineTrainingUseCaseTest {
@@ -36,53 +42,54 @@ public class GenerateSingleDeclineTrainingUseCaseTest {
         when(mockedPlayerReadRepository.findOneById(null).isEmpty());
 
         // Act & Assert
-        assertThrows(RuntimeException.class, () -> generateSingleDeclineTrainingUseCaseMock.generate(PLAYER_ID, CURRENT_DAY, DECLINE_SPEED));
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> generateSingleDeclineTrainingUseCaseMock.generate(PLAYER_ID, CURRENT_DAY, DECLINE_SPEED));
+        assertEquals("Player not found.", exception.getMessage());
     }
 
-//    @Test
-//    @DisplayName("Generate should call generateAndStoreEventOfDeclinePhase and save to repository.")
-//    void generate_should_call_generateAndStoreEventOfSingleDeclinePhase_and_save_to_repository() {
-//
-//        Player playerMock = mock(Player.class);
-//        PlayerTrainingDeclineEvent playerTrainingDeclineEventMock = Mockito.mock(PlayerTrainingDeclineEvent.class);
-//
-//        when(mockedPlayerReadRepository.findOneById(PLAYER_ID)).thenReturn(Optional.of(playerMock));
-//        when(mockedPlayerTrainingDeclineEventWriteRepository.save(any())).thenReturn(playerTrainingDeclineEventMock);
-//
-//        try (
-//            MockedStatic<EventId> eventIdMockedStatic = Mockito.mockStatic(EventId.class);
-//            MockedStatic<InstantProvider> instantMockedStatic = Mockito.mockStatic(InstantProvider.class);
-//        ) {
-//            eventIdMockedStatic.when(EventId::generate).thenReturn(EVENT_ID);
-//            instantMockedStatic.when(InstantProvider::now).thenReturn(NOW);
-//
-//            // Act
-//            generateSingleDeclineTrainingUseCaseMock.generate(PLAYER_ID, CURRENT_DAY, DECLINE_SPEED);
-//
-//            eventIdMockedStatic.verify(EventId::generate);
-//            eventIdMockedStatic.verifyNoMoreInteractions();
-//            instantMockedStatic.verify(InstantProvider::now);
-//            instantMockedStatic.verifyNoMoreInteractions();
-//        }
-//
-//        // Assert
-//        ArgumentCaptor<PlayerTrainingDeclineEvent> argumentCaptor = ArgumentCaptor.forClass(PlayerTrainingDeclineEvent.class);
-//        verify(mockedPlayerTrainingDeclineEventWriteRepository)
-//            .save(argumentCaptor.capture());
-//
-//        PlayerTrainingDeclineEvent playerTrainingDeclineEvent = argumentCaptor.getValue();
-//
-//        assertEquals(PLAYER_ID, playerTrainingDeclineEvent.getPlayerId());
-//        assertEquals(DECLINE_SPEED, playerTrainingDeclineEvent.getDeclineSpeed());
-//        assertEquals(CURRENT_DAY, playerTrainingDeclineEvent.getCurrentDay());
-//        assertEquals(EVENT_ID, playerTrainingDeclineEvent.getId());
-//        assertEquals(NOW, playerTrainingDeclineEvent.getOccurredAt());
-//        verify(mockedPlayerReadRepository).findOneById(PLAYER_ID);
-//
-//        verify(playerMock).addDeclinePhase(playerTrainingDeclineEventMock);
-//        verify(mockedPlayerReadRepository).findOneById(PLAYER_ID);
-//        verify(mockedPlayerTrainingDeclineEventWriteRepository).save(any());
-//        verify(mockedPlayerWriteRepository).save(playerMock);
-//        verifyNoMoreInteractions(playerMock, mockedPlayerReadRepository, mockedPlayerTrainingDeclineEventWriteRepository);
-//    }
+    @Test
+    @DisplayName("Generate should call generateAndStoreEventOfDeclinePhase and save to repository.")
+    void generate_should_call_generateAndStoreEventOfSingleDeclinePhase_and_save_to_repository() {
+
+        Player playerMock = mock(Player.class);
+        PlayerTrainingDeclineEvent playerTrainingDeclineEventMock = Mockito.mock(PlayerTrainingDeclineEvent.class);
+
+        when(mockedPlayerReadRepository.findOneById(PLAYER_ID)).thenReturn(Optional.of(playerMock));
+        when(mockedPlayerTrainingDeclineEventWriteRepository.save(any())).thenReturn(playerTrainingDeclineEventMock);
+
+        try (
+            MockedStatic<EventId> eventIdMockedStatic = Mockito.mockStatic(EventId.class);
+            MockedStatic<InstantProvider> instantMockedStatic = Mockito.mockStatic(InstantProvider.class);
+        ) {
+            eventIdMockedStatic.when(EventId::generate).thenReturn(EVENT_ID);
+            instantMockedStatic.when(InstantProvider::now).thenReturn(NOW);
+
+            // Act
+            generateSingleDeclineTrainingUseCaseMock.generate(PLAYER_ID, CURRENT_DAY, DECLINE_SPEED);
+
+            eventIdMockedStatic.verify(EventId::generate);
+            eventIdMockedStatic.verifyNoMoreInteractions();
+            instantMockedStatic.verify(InstantProvider::now);
+            instantMockedStatic.verifyNoMoreInteractions();
+        }
+
+        // Assert
+        ArgumentCaptor<PlayerTrainingDeclineEvent> argumentCaptor = ArgumentCaptor.forClass(PlayerTrainingDeclineEvent.class);
+        verify(mockedPlayerTrainingDeclineEventWriteRepository)
+            .save(argumentCaptor.capture());
+
+        PlayerTrainingDeclineEvent playerTrainingDeclineEvent = argumentCaptor.getValue();
+
+        assertEquals(PLAYER_ID, playerTrainingDeclineEvent.getPlayerId());
+        assertEquals(DECLINE_SPEED, playerTrainingDeclineEvent.getDeclineSpeed());
+        assertEquals(CURRENT_DAY, playerTrainingDeclineEvent.getCurrentDay());
+        assertEquals(EVENT_ID, playerTrainingDeclineEvent.getId());
+        assertEquals(NOW, playerTrainingDeclineEvent.getOccurredAt());
+        verify(mockedPlayerReadRepository).findOneById(PLAYER_ID);
+
+        verify(playerMock).addDeclinePhase(playerTrainingDeclineEventMock);
+        verify(mockedPlayerReadRepository).findOneById(PLAYER_ID);
+        verify(mockedPlayerTrainingDeclineEventWriteRepository).save(any());
+        verify(mockedPlayerWriteRepository).save(playerMock);
+        verifyNoMoreInteractions(playerMock, mockedPlayerReadRepository, mockedPlayerTrainingDeclineEventWriteRepository);
+    }
 }

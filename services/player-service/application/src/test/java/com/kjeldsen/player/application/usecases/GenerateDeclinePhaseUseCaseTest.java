@@ -48,7 +48,8 @@ class GenerateDeclinePhaseUseCaseTest {
         when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(RuntimeException.class, () -> generateDeclinePhaseUseCase.generate(PLAYER_ID, CURRENT_DAY, DECLINE_SPEED));
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> generateDeclinePhaseUseCase.generate(PLAYER_ID, CURRENT_DAY, DECLINE_SPEED));
+        assertEquals("Player not found.", exception.getMessage());
     }
 
     @Test
