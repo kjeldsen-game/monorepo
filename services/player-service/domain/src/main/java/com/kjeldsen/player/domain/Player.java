@@ -47,6 +47,7 @@ public class Player {
     private String name;
     private Integer age;
     private PlayerPosition position;
+    // TODO 72-add-potentials-to-the-player change Integer for a wrapper object to save moved current points and potential points
     private Map<PlayerSkill, Integer> actualSkills;
     private Team.TeamId teamId;
     private PlayerTrainingBloomEvent bloom;
@@ -84,7 +85,8 @@ public class Player {
 
     public void addDeclinePhase(PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
         throwIfNot(Range.between(MIN_DECLINE_PLAYER_AGE, MAX_DECLINE_PLAYER_AGE).contains(age), DECLINE_PLAYER_AGE_INVALID_RANGE);
-        throwIfNot(Range.between(MIN_DECLINE_SPEED, MAX_DECLINE_SPEED).contains(playerTrainingDeclineEvent.getDeclineSpeed()), DECLINE_SPEED_INVALID_RANGE);
+        throwIfNot(Range.between(MIN_DECLINE_SPEED, MAX_DECLINE_SPEED).contains(playerTrainingDeclineEvent.getDeclineSpeed()),
+            DECLINE_SPEED_INVALID_RANGE);
 
         final int decreasePoints = PointsGenerator.generateDecreasePoints(
             playerTrainingDeclineEvent.getDeclineSpeed(),
@@ -98,6 +100,7 @@ public class Player {
         return actualSkills.get(skill);
     }
 
+    // TODO 72-add-potentials-to-the-player this logic has to change
     public void addSkillPoints(PlayerSkill skill, Integer points) {
         actualSkills.put(skill, Math.min(MAX_SKILL_VALUE, getActualSkillPoints(skill) + points));
     }
