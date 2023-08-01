@@ -13,7 +13,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @ToString
 @Document(collection = "PlayerSkillPoints")
 @TypeAlias("PlayerSkillPoints")
-public class PlayerSkillPoints {
+
+public class PlayerSkillPoints extends Player {
+    private String id;
     private Integer actualPoints;
     private Integer potencialPoints;
 
