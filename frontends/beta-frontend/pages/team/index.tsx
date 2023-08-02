@@ -6,10 +6,20 @@ import { SampleTeam } from '@/data/SampleTeam'
 import TeamDetails from '@/shared/components/TeamDetails'
 import PlayerTactics from '@/shared/components/PlayerTactics'
 import TeamTactics from '@/shared/components/TeamTactics'
-import { players } from '@/data/SamplePlayer'
 import { samplePlayerColumn } from '@/data/samplePlayerColumn'
+// import { getPlayers } from '../api/players/players'
+import useSWR from "swr";
+import { connectorAPI } from "@/libs/fetcher";
 
 const Team: NextPage = () => {
+  const { data, error, isLoading } = useSWR('/player?size=40&page=0', connectorAPI)
+  if (error) return <div>failed to load</div>
+  if (isLoading) return <div>loading...</div>
+
+  // console.log(typeof data)
+  // console.log(data)
+  // data.forEach((element: any) => console.log(element))
+
   return (
     <>
       <Head>
@@ -22,8 +32,8 @@ const Team: NextPage = () => {
           <PlayerTactics />
           <TeamTactics />
         </Box>
-        <Box sx={{ minWidth: '1200px' }}>
-          <Grid rows={players} columns={samplePlayerColumn} />
+        <Box sx={{ minWidth: '80vw' }}>
+          <Grid rows={data} columns={samplePlayerColumn} />
         </Box>
       </Box>
     </>

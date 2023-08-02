@@ -1,10 +1,9 @@
 import React from 'react'
-import { Box, Button, Card, CardContent, CardHeader, TextField } from '@mui/material'
+import { Box, Button, Card, CardContent, CardHeader, TextField, Typography } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import { CenterContainer } from '@/shared/layout'
 import { NextPageWithLayout } from '@/pages/_app'
-import { API_GATEWAY_ENDPOINT } from '@/config'
-import factory from '@/libs/fetcher'
+import { apiSignup } from '../api/auth/signup'
 
 interface SignUpFormValues {
   username: string
@@ -31,11 +30,7 @@ const SignUpPage: NextPageWithLayout = () => {
             rowGap: '1rem',
           }}
           onSubmit={handleSubmit(async ({ username, password }) => {
-            const fetcher = factory()
-            await fetcher('/auth-service/auth/sign-up', {
-              method: 'POST',
-              data: { username, password },
-            })
+            apiSignup(username, password)
           })}>
           <Controller
             name="username"
@@ -101,6 +96,7 @@ const SignUpPage: NextPageWithLayout = () => {
             <Button type="submit" variant="contained" color="primary">
               Sign Up
             </Button>
+            <Typography id="errorContainer" css={{ color: 'red', marginTop: '1rem' }}></Typography>
           </div>
         </form>
       </CardContent>

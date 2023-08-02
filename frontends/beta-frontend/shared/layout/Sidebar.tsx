@@ -14,7 +14,7 @@ import MailIcon from '@mui/icons-material/Mail'
 import Link from 'next/link'
 import { GpsFixed } from '@mui/icons-material'
 
-const drawerWidth = 240
+const drawerWidth = '15vw'
 
 export interface Item {
   name: string
@@ -50,24 +50,22 @@ export const Sidebar: FC<SidebarProps> = (props) => {
           }}>
           <List>
             {props.items.map((item) => (
-              <>
-                <ListItem
-                  key={item.name}
-                  disablePadding
-                  sx={{
-                    backgroundColor: item.selected ? 'white' : 'inherit',
-                    borderLeft: item.selected ? '16px solid #FF3F84' : 'inherit',
-                    boxShadow: '0 2px white',
-                  }}>
-                  <Link href={item.to}>
-                    <ListItemButton>
-                      <ListItemIcon>{providedIcons[item.icon]}</ListItemIcon>
-                      <ListItemText primary={item.name} />
-                    </ListItemButton>
-                  </Link>
-                </ListItem>
+              <ListItem
+                key={item.name}
+                disablePadding
+                sx={{
+                  backgroundColor: item.selected ? 'white' : 'inherit',
+                  borderLeft: item.selected ? '16px solid #FF3F84' : 'inherit',
+                  boxShadow: '0 2px white',
+                }}>
+                <Link href={item.to}>
+                  <ListItemButton>
+                    <ListItemIcon>{providedIcons[item.icon]}</ListItemIcon>
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                </Link>
                 {item.hasDivider ? <Divider /> : <></>}
-              </>
+              </ListItem>
             ))}
           </List>
         </Box>
