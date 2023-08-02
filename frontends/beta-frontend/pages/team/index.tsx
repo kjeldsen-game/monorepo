@@ -9,10 +9,10 @@ import TeamTactics from '@/shared/components/TeamTactics'
 import { samplePlayerColumn } from '@/data/samplePlayerColumn'
 // import { getPlayers } from '../api/players/players'
 import useSWR from "swr";
-import { fetcher } from "@/libs/fetcher";
+import { connectorAPI } from "@/libs/fetcher";
 
 const Team: NextPage = () => {
-  const { data, error, isLoading } = useSWR('http://localhost:8082/player?size=40&page=0', fetcher)
+  const { data, error, isLoading } = useSWR('/player?size=40&page=0', connectorAPI)
   if (error) return <div>failed to load</div>
   if (isLoading) return <div>loading...</div>
 

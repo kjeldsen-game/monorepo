@@ -1,4 +1,5 @@
 import { API_GATEWAY_ENDPOINT } from '@/config'
+import { stringify } from 'querystring'
 
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 
@@ -33,9 +34,9 @@ export default function factory(c?: FetcherConfig) {
   return fetcher
 }
 
-//create connector function to connect REST API with fetch with error handling
+//create Auth Connector function to connect REST API with fetch with error handling
 export const connector = async (url: string, method: string, body?: any) => {
-  const response = await fetch(`${API_GATEWAY_ENDPOINT}${url}`, {
+  const response = await fetch(`${url}`, {
     method: method,
     headers: {
       "Content-Type": "application/json",
@@ -51,4 +52,10 @@ export const connector = async (url: string, method: string, body?: any) => {
   }
 };
 
-export const fetcher = (url: string) => fetch(url).then((res) => res.json())
+export const connectorAuth = (url: string, method: string, body?: any) => {
+  return connector(`${API_GATEWAY_ENDPOINT}${url}`, method, body )
+}
+
+export const connectorAPI = (url: string, method: string, body?: any) => {
+  return connector(`http://localhost:8082${url}`, method, body )
+}
