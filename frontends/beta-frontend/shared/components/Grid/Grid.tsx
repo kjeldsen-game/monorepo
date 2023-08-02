@@ -1,5 +1,6 @@
 import { DataGrid, GridCallbackDetails, GridColDef, GridEventListener, GridRowParams, MuiEvent } from '@mui/x-data-grid'
 import Box from '@mui/material/Box'
+import Link from 'next/link'
 
 type GridProps<T> = {
   rows: T[]
@@ -8,8 +9,10 @@ type GridProps<T> = {
 }
 
 const handleRowClick: GridEventListener<'rowClick'> = (params) => {
-  // setMessage(`Movie "${params.row.title}" clicked`)
+  <Link href={`/players/${params.row.id}`}></Link>
+
   console.log(params)
+  console.log(params.row.id)
 }
 
 function Grid<T>({ rows, columns }: GridProps<T>) {
