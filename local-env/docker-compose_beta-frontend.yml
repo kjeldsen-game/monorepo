@@ -17,3 +17,28 @@ services:
     env_file:
       - ./config/common.env
       - ./config/beta-frontend.env
+
+  #####################
+  ## Gateway Service ##
+  #####################
+
+  gateway-service:
+    # image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/gateway-service:latest
+    build:
+      context: ../services/gateway-service
+      dockerfile: ./Dockerfile
+    ports:
+      - 8080:8080
+    container_name: gateway-service
+    env_file:
+      - ./config/common.env
+      - ./config/gateway-service.env
+    depends_on:
+      auth-service:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8080/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      
