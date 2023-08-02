@@ -8,10 +8,11 @@ import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.rest.api.SimulatorApiDelegate;
+import com.kjeldsen.player.rest.mapper.PlayerDeclineResponseMapper;
+import com.kjeldsen.player.rest.mapper.PlayerMapper;
+import com.kjeldsen.player.rest.mapper.PlayerTrainingResponseMapper;
 import com.kjeldsen.player.rest.model.PlayerDeclineResponse;
 import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
-import com.kjeldsen.player.rest.model.PlayerSkill;
-import com.kjeldsen.player.rest.model.PlayerTrainingResponse;
 import com.kjeldsen.player.rest.model.RegisterSimulatedDeclineRequest;
 import com.kjeldsen.player.rest.model.RegisterSimulatedScheduledTrainingRequest;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         registerSimulatedScheduledTrainingRequest.getSkills()
             .forEach(playerSkill -> scheduleTrainingUseCase.generate(
                 Player.PlayerId.of(playerId),
-                this.playerSkill2DomainPlayerSkill(playerSkill),
+                PlayerMapper.INSTANCE.map(playerSkill),
                 registerSimulatedScheduledTrainingRequest.getDays()
             ));
 
@@ -51,13 +52,13 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         return ResponseEntity.ok(new PlayerHistoricalTrainingResponse()
             .playerId(playerId)
             .trainings(trainings.stream()
-                .map(this::playerTrainingEvent2PlayerTrainingResponse)
+                .map(PlayerTrainingResponseMapper.INSTANCE::fromPlayerTrainingEvent)
                 .toList()));
     }
 
     @Override
     public ResponseEntity<List<PlayerDeclineResponse>> registerSimulatedDecline(String playerId,
-        RegisterSimulatedDeclineRequest registerSimulatedDeclineRequest) {
+                                                                                RegisterSimulatedDeclineRequest registerSimulatedDeclineRequest) {
 
         List<PlayerDeclineResponse> declineEvents = new ArrayList<>();
 
@@ -69,7 +70,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
                     currentDayForDecline.getAndIncrement(),
                     registerSimulatedDeclineRequest.getDeclineSpeed());
 
-                declineEvents.add(playerTrainingDeclineEventToPlayerDeclineResponse(declineEvent));
+                declineEvents.add(PlayerDeclineResponseMapper.INSTANCE.map(declineEvent));
 
                 if (declineEvent.getPointsToSubtract() > 0) {
                     currentDayForDecline.set(1);
@@ -78,34 +79,4 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
 
         return ResponseEntity.ok(declineEvents);
     }
-
-    private PlayerDeclineResponse playerTrainingDeclineEventToPlayerDeclineResponse(
-        PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
-        return new PlayerDeclineResponse()
-            .currentDay(playerTrainingDeclineEvent.getCurrentDay())
-            .playerId(playerTrainingDeclineEvent.getPlayerId().toString())
-            .skill(playerSkill2DomainPlayerSkill(playerTrainingDeclineEvent.getSkill()))
-            .pointsToSubtract(playerTrainingDeclineEvent.getPointsToSubtract())
-            .pointsBeforeTraining(playerTrainingDeclineEvent.getPointsBeforeTraining())
-            .pointsAfterTraining(playerTrainingDeclineEvent.getPointsAfterTraining());
-    }
-
-    private com.kjeldsen.player.domain.PlayerSkill playerSkill2DomainPlayerSkill(PlayerSkill playerSkill) {
-        return com.kjeldsen.player.domain.PlayerSkill.valueOf(playerSkill.name());
-    }
-
-    private PlayerSkill playerSkill2DomainPlayerSkill(com.kjeldsen.player.domain.PlayerSkill playerSkill) {
-        return PlayerSkill.valueOf(playerSkill.name());
-    }
-
-    private PlayerTrainingResponse playerTrainingEvent2PlayerTrainingResponse(PlayerTrainingEvent playerTrainingEvent) {
-        return new PlayerTrainingResponse()
-            .currentDay(playerTrainingEvent.getCurrentDay())
-            .playerId(playerTrainingEvent.getPlayerId().toString())
-            .skill(playerSkill2DomainPlayerSkill(playerTrainingEvent.getSkill()))
-            .points(playerTrainingEvent.getPoints())
-            .pointsBeforeTraining(playerTrainingEvent.getPointsBeforeTraining())
-            .pointsAfterTraining(playerTrainingEvent.getPointsAfterTraining());
-    }
-
 }

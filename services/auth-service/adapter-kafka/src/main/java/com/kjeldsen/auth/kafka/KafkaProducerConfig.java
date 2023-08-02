@@ -1,7 +1,8 @@
 package com.kjeldsen.auth.kafka;
 
-import com.kjeldsen.auth.domain.SignUp;
+import com.kjeldsen.auth.kafka.events.AuthKafkaEventType;
 import com.kjeldsen.auth.kafka.events.UserSignedUpEvent;
+import com.kjeldsen.events.kafka.KafkaEventWrapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -25,13 +26,13 @@ public class KafkaProducerConfig {
     private final KafkaProperties kafkaProperties;
 
     @Bean
-    public KafkaTemplate<String, UserSignedUpEvent> authSignUpEventKafkaTemplate(
-        ProducerFactory<String, UserSignedUpEvent> authSignUpEventProducerFactory) {
+    public KafkaTemplate<String, KafkaEventWrapper<AuthKafkaEventType, UserSignedUpEvent>> authSignUpEventKafkaTemplate(
+        ProducerFactory<String, KafkaEventWrapper<AuthKafkaEventType, UserSignedUpEvent>> authSignUpEventProducerFactory) {
         return new KafkaTemplate<>(authSignUpEventProducerFactory);
     }
 
     @Bean
-    public ProducerFactory<String, UserSignedUpEvent> authSignUpEventProducerFactory() {
+    public ProducerFactory<String, KafkaEventWrapper<AuthKafkaEventType, UserSignedUpEvent>> authSignUpEventProducerFactory() {
         return new DefaultKafkaProducerFactory<>(producerProperties());
     }
 

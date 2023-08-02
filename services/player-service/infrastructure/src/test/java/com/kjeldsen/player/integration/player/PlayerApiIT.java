@@ -146,7 +146,7 @@ class PlayerApiIT extends AbstractIT {
                 .actualSkills(mudo.getActualSkills().entrySet().stream()
                     .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString()))
                 );
-            
+
             mockMvc.perform(get("/player/{playerId}", mudo.getId().value()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

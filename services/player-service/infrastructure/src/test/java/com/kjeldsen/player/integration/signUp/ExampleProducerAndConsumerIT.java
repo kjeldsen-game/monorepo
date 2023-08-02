@@ -18,6 +18,7 @@ public class ExampleProducerAndConsumerIT extends KafkaAbstractIT<AuthKafkaEvent
 
     @Test
     void exampleProduceAndConsume() {
+
         UserSignedUpEvent userSignedUpEvent = UserSignedUpEvent.builder()
             .id(EventId.generate())
             .build();
@@ -38,7 +39,8 @@ public class ExampleProducerAndConsumerIT extends KafkaAbstractIT<AuthKafkaEvent
 
         assertEquals(AuthKafkaEventType.USER_SIGNED_UP, kafkaEventType);
         assertEquals(userSignedUpEvent.getId(), kafkaEventBody.getId());
-    }
+        assertEquals(userSignedUpEvent.getTeamName(), kafkaEventBody.getTeamName());
 
+    }
 }
 

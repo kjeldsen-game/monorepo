@@ -51,11 +51,14 @@ public class PlayerProvider {
             if (skill.isEmpty()) {
                 return;
             }
+            // TODO 72-add-potentials-to-the-player add the current points within the wrapper here
             values.put(skill.get(), values.get(skill.get()) + 1);
             if (values.get(skill.get()) == MAX_SKILL_VALUE) {
                 excludedSkills.add(skill.get());
             }
         });
+
+        // TODO 72-add-potentials-to-the-player add the potential to the player here
 
         return values;
     }
@@ -75,6 +78,10 @@ public class PlayerProvider {
             .actualSkills(skillsBasedOnTendency(positionTendencies, totalPoints))
             .teamId(teamId)
             .build();
+    }
+
+    public static Player generateDefault() {
+        return generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES, 200);
     }
 
     public static PlayerPosition position() {
