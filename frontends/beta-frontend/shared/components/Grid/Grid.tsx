@@ -12,10 +12,10 @@ function Grid<T>({ rows, columns }: GridProps<T>) {
   const router = useRouter()
 
   const handleRowClick: GridEventListener<'rowClick'> = (params) => {
-    router.push(`/player/${params.row.id}`)
+    router.push({pathname: `/player/${params.row.id}`, query: params.row})
 
-    console.log(params)
-    console.log(params.row.id)
+    // console.log(params)
+    console.log(params.row)
   }
 
   return (
