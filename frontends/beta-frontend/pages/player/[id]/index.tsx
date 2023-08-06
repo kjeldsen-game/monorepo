@@ -14,7 +14,6 @@ const Player: NextPage = () => {
   const player = router.query;
   console.log(player)
 
-
   return (
     <>
       <Head>
