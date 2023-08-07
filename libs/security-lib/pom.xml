@@ -14,6 +14,8 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <spring-security-oauth2.version>2.3.8.RELEASE</spring-security-oauth2.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
+        <spring-security-jwt.version>1.1.1.RELEASE</spring-security-jwt.version>
+        <spring-boot-starter-json.version>3.1.2</spring-boot-starter-json.version>
     </properties>
     <distributionManagement>
         <repository>
@@ -27,6 +29,16 @@
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
             <version>${spring-security-oauth2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-jwt</artifactId>
+            <version>${spring-security-jwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-json</artifactId>
+            <version>${spring-boot-starter-json.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>

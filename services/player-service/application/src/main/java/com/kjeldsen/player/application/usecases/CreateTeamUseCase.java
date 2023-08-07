@@ -18,19 +18,20 @@ public class CreateTeamUseCase {
     private final TeamWriteRepository teamWriteRepository;
 
     public void create(String teamName, Integer numberOfPlayers, String userId) {
-        log.info("Creating team {} with {} players", teamName, numberOfPlayers);
+        log.info("Creating team {} with {} players for user {}", teamName, numberOfPlayers, userId);
 
         Team.TeamId newTeamId = Team.TeamId.generate();
         List<Player> players = generatePlayersUseCase.generate(numberOfPlayers, newTeamId);
         Team team = Team.builder()
             .id(newTeamId)
+            .userId(userId)
             .name(teamName)
             .players(players)
             .build();
-// TODO apart from saving the team aggregate/projection, we need to store a created_team_event. Then Team domain object should have a method like
-//  create(created_team_event) and based on the event it populates itself. Then you save it with the repo
-
+        // TODO apart from saving the team aggregate/projection, we need to store a created_team_event. Then Team domain object should have a
+        //  method like
+        //  create(created_team_event) and based on the event it populates itself. Then you save it with the repo
         // TODO notification for the user to know that his team as been created
-        teamWriteRepository.save(team, userId);
+        teamWriteRepository.save(team);
     }
 }

@@ -16,7 +16,6 @@ import java.util.UUID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -42,10 +41,10 @@ class CreateTeamUseCaseTest {
         verify(mockedTeamWriteRepository)
             .save(
                 argThat(team -> !Objects.isNull(team.getId())
+                    && team.getUserId().equals(userId)
                     && team.getName().equals(teamName)
                     && team.getPlayers().size() == 1
-                    && team.getPlayers().get(0).equals(player)),
-                eq(userId)
+                    && team.getPlayers().get(0).equals(player))
             );
     }
 }

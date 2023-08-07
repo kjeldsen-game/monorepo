@@ -12,12 +12,10 @@
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>adapter-rest</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>adapter-mongodb</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
