@@ -4,12 +4,29 @@ info:
   title: Players Service API
 
 tags:
+  - name: team
   - name: player
   - name: player-position-tendencies
   - name: training
   - name: simulator
 
 paths:
+
+  /team:
+    get:
+      summary: Retrieves the team associated to the logged user
+      operationId: getTeam
+      tags:
+        - team
+      responses:
+        "200":
+          description: Returns the team
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/TeamResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
 
   /player:
     post:
@@ -269,6 +286,7 @@ paths:
 components:
 
   parameters:
+
     PlayerIdPathParameter:
       name: playerId
       in: path
@@ -329,6 +347,13 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/PlayerResponse"
+
+    TeamResponse:
+      description: Team response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TeamResponse"
 
     PlayerPositionTendencyResponse:
       description: Player position tendency response
@@ -410,6 +435,16 @@ components:
         properties:
           code:
             $ref: "#/components/schemas/PlayerSkill"
+
+    TeamResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        name:
+          type: string
+          example: John Doe's Team
 
     PlayerResponse:
       type: object

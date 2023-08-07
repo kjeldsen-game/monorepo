@@ -1,9 +1,12 @@
 package com.kjeldsen.player.persistence.mongo.repositories;
 
-import com.kjeldsen.player.persistence.mongo.documents.TeamDocument;
+import com.kjeldsen.player.domain.Team;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface TeamMongoRepository extends MongoRepository<TeamDocument, String> {
+public interface TeamMongoRepository extends MongoRepository<Team, String> {
+    Optional<Team> findOneByUserId(String id);
 }

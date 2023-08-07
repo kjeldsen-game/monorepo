@@ -30,3 +30,12 @@ springdoc:
 kafka:
   topics:
     auth-signup: AuthSignup
+
+hosts:
+  auth-service:
+    url: 'http://localhost:8081'
+
+security:
+  oauth2:
+    client-id: client_id
+    client-secret: client_secret

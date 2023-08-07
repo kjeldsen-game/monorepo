@@ -16,6 +16,9 @@ import org.springframework.context.annotation.Configuration;
     ),
     servers = {
         @Server(url = "http://localhost:8082")
+    },
+    security = {
+        @io.swagger.v3.oas.annotations.security.SecurityRequirement(name = "bearerAuth")
     }
 )
 @SecurityScheme(
