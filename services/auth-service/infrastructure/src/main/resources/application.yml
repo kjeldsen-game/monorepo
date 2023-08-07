@@ -29,6 +29,10 @@ kafka:
   topics:
     auth-signup: AuthSignup
 
+hosts:
+  auth-service:
+    url: 'http://localhost:8081'
+
 security:
   oauth2:
     access-token-validity-seconds: 86400  # 1 day
