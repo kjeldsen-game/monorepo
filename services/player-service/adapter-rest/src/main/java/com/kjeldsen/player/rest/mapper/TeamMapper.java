@@ -10,7 +10,6 @@ public interface TeamMapper {
 
     TeamMapper INSTANCE = Mappers.getMapper(TeamMapper.class);
 
-    // @BeanMapping(ignoreUnmappedSourceProperties = "players")
     TeamResponse map(Team team);
 
 }

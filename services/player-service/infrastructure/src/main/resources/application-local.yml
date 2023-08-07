@@ -15,3 +15,6 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
 
+hosts:
+  auth-service:
+    url: 'http://${AUTH_SERVICE_HOST}'
