@@ -39,7 +39,7 @@ public class PlayersDelegate implements PlayerApiDelegate {
     @Override
     public ResponseEntity<List<PlayerResponse>> generatePlayer(GeneratePlayersRequest generatePlayersRequest) {
         List<Player> players = generatePlayersUseCase.generate(generatePlayersRequest.getNumberOfPlayers(), Team.TeamId.of("NOTEAM"));
-        List<PlayerResponse> response = players.stream().map(PlayerMapper.INSTANCE::playerPositionMap).toList();
+        List<PlayerResponse> response = players.stream().map(PlayerMapper.INSTANCE::map).toList();
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -51,7 +51,7 @@ public class PlayersDelegate implements PlayerApiDelegate {
             .page(page)
             .build();
         List<Player> players = playerReadRepository.find(query);
-        List<PlayerResponse> response = players.stream().map(PlayerMapper.INSTANCE::playerPositionMap).toList();
+        List<PlayerResponse> response = players.stream().map(PlayerMapper.INSTANCE::map).toList();
         return ResponseEntity.ok(response);
     }
 
@@ -59,7 +59,7 @@ public class PlayersDelegate implements PlayerApiDelegate {
     public ResponseEntity<PlayerResponse> getPlayerById(String playerId) {
         Player player = playerReadRepository.findOneById(Player.PlayerId.of(playerId))
             .orElseThrow();
-        PlayerResponse response = PlayerMapper.INSTANCE.playerPositionMap(player);
+        PlayerResponse response = PlayerMapper.INSTANCE.map(player);
         return ResponseEntity.ok(response);
     }
 

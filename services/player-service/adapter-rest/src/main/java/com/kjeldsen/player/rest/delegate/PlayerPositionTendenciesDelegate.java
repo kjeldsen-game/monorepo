@@ -45,7 +45,7 @@ public class PlayerPositionTendenciesDelegate implements PlayerPositionTendencie
 
         PlayerPositionTendency updatedPlayerPositionTendency = updatePlayerPositionTendencyUseCase.update(
             UpdatePlayerTendencies.builder()
-                .position(PlayerMapper.INSTANCE.playerPositionMap(position))
+                .position(PlayerMapper.INSTANCE.map(position))
                 .tendencies(PlayerPositionTendencyMapper.INSTANCE.map(tendencies))
                 .build());
 
