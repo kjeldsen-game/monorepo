@@ -19,7 +19,8 @@ public class TeamDelegate implements TeamApiDelegate {
 
     @Override
     public ResponseEntity<TeamResponse> getTeam() {
-        final Team team = getTeamUseCase.get(authenticationFetcher.getLoggedUserID());
+        String loggedUserID = authenticationFetcher.getLoggedUserID();
+        final Team team = getTeamUseCase.get(loggedUserID);
         return ResponseEntity.ok(TeamMapper.INSTANCE.map(team));
     }
 
