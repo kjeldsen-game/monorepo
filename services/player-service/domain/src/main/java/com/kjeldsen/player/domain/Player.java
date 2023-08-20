@@ -104,16 +104,19 @@ public class Player {
     }
 
     // TODO 72-add-potentials-to-the-player this logic has to change
-    public void addSkillsActualPoints(PlayerSkill skill, Integer actualPoints, Integer potencialPoints) {
-        PlayerSkillPoints playerSkillPoints = PlayerSkillPoints.builder()
-            .actualPoints(actualPoints)
-            .potencialPoints(potencialPoints)
-            .build();
-        actualSkills.put(skill, Math.min(MAX_SKILL_VALUE, (playerSkillPoints.getActualPoints() + actualPoints)));
+    public void addSkillsActualPoints(PlayerSkill skill, Integer actualPoints) {
+        PlayerSkillPoints skillPoints = actualSkills.get(skill);
+        skillPoints.setActualPoints(Math.min(MAX_SKILL_VALUE, actualPoints));
+    }
+
+    public void addSkillsPotencialPoints(PlayerSkill skill, Integer potencialPoints) {
+        PlayerSkillPoints skillPoints = actualSkills.get(skill);
+        skillPoints.setPotencialPoints(Math.min(MAX_SKILL_VALUE, potencialPoints));
     }
 
     private void subtractSkillPoints(PlayerSkill skill, Integer points) {
-        actualSkills.put(skill, Math.max(MIN_SKILL_VALUE, getActualSkillPoints(skill) - points));
+        PlayerSkillPoints skillPoints = actualSkills.get(skill);
+        skillPoints.setActualPoints(Math.max(MIN_SKILL_VALUE, getActualSkillPoints(skill) - points));
     }
 
     public record PlayerId(String value) {

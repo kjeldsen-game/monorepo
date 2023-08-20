@@ -57,7 +57,7 @@ public class GenerateTrainingUseCase {
             //  potential and based on both calculate the points rise
             Integer actualPoints = PointsGenerator.generatePointsRise(currentDay);
             // TODO 72-add-potentials-to-the-player player.addSkillPoints should now not only set actual skill points but probably potential as well
-            player.addSkillsActualPoints(playerSkill, actualPoints, potencialPoints);
+            player.addSkillsActualPoints(playerSkill, actualPoints);
             playerTrainingEvent.setPoints(actualPoints);
             playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
         }
