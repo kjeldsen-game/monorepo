@@ -2,6 +2,7 @@ package com.kjeldsen.player.domain.provider;
 
 import com.github.javafaker.Faker;
 import com.kjeldsen.player.domain.*;
+import com.kjeldsen.player.domain.generator.PointsGenerator;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
@@ -27,13 +28,16 @@ public class PlayerProvider {
         return RandomUtils.nextInt(RANGE_OF_AGE.getMinimum(), RANGE_OF_AGE.getMaximum());
     }
 
-    public static Map<PlayerSkill, Integer> skillsBasedOnTendency(PlayerPositionTendency positionTendencies, Integer totalPoints) {
+    public static Map<PlayerSkill, PlayerSkillPoints> skillsBasedOnTendency(PlayerPositionTendency positionTendencies, Integer totalPoints) {
 
-        HashMap<PlayerSkill, Integer> values = positionTendencies
+        HashMap<PlayerSkill, PlayerSkillPoints> skillPointsMap = positionTendencies
             .getTendencies()
             .keySet()
             .stream()
-            .collect(HashMap::new, (map, skill) -> map.put(skill, 0), HashMap::putAll);
+            .collect(HashMap::new, (map, skill) -> map.put(skill, PlayerSkillPoints.builder()
+                .actualPoints(0)
+                .potencialPoints(0)
+                .build()), HashMap::putAll);
 
         Set<PlayerSkill> excludedSkills = new HashSet<>();
 
@@ -45,15 +49,17 @@ public class PlayerProvider {
             }
 
             // TODO 72-add-potentials-to-the-player add the current points within the wrapper here
-            values.put(skill.get(), values.get(skill.get()) + 1);
-            if (values.get(skill.get()) == MAX_SKILL_VALUE) {
+            PlayerSkillPoints values = skillPointsMap.get(skill.get());
+            values.setActualPoints(values.getActualPoints() + 1);
+            values.setPotencialPoints(PointsGenerator.generatePotencialPoints(values.getActualPoints()));
+            if (values.getActualPoints() == MAX_SKILL_VALUE) {
                 excludedSkills.add(skill.get());
             }
         });
 
         // TODO 72-add-potentials-to-the-player add the potential to the player here
 
-        return values;
+        return skillPointsMap;
     }
 
     public static PlayerSkill randomSkill() {

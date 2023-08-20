@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Range;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 import static com.kjeldsen.player.domain.generator.PointsGenerator.generatePointsBloom;
 
 @Slf4j
@@ -54,10 +56,20 @@ public class GenerateTrainingUseCase {
             handleBloomEvent(player, playerTrainingEvent);
         } else {
             // TODO 72-add-potentials-to-the-player I think PointsGenerator.generatePointsRise should receive the player current points and
-            //  potential and based on both calculate the points rise
+            //  potential and based on both calculate the points rise.
+
             Integer actualPoints = PointsGenerator.generatePointsRise(currentDay);
+
+            // OVERTRAINING
+            //Integer potencialPoints = PointsGenerator.generatePotencialPoints(actualPoints);
             // TODO 72-add-potentials-to-the-player player.addSkillPoints should now not only set actual skill points but probably potential as well
             player.addSkillsActualPoints(playerSkill, actualPoints);
+
+            // OVERTRAINING
+            //if (Optional.ofNullable(player.getActualSkills().get(playerSkill).getPotencialPoints()).isEmpty()){
+            //    player.addSkillsPotencialPoints(playerSkill, potencialPoints);
+            //}
+
             playerTrainingEvent.setPoints(actualPoints);
             playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
         }
