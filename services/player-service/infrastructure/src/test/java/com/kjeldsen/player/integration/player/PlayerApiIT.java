@@ -100,7 +100,7 @@ class PlayerApiIT extends AbstractIT {
         void return_a_page_of_players() throws Exception {
             IntStream.range(0, 100)
                 .mapToObj(i -> PlayerPositionTendency.getDefault(PlayerProvider.position()))
-                .map(positionTendencies -> PlayerProvider.generate(Team.TeamId.generate(), positionTendencies, 200))
+                .map(positionTendencies -> PlayerProviderTestData.generate(Team.TeamId.generate(), positionTendencies, 200))
                 .forEach(player -> playerWriteRepository.save(player));
 
             List<PlayerResponse> expected = playerReadRepository.find(findPlayersQuery(com.kjeldsen.player.domain.PlayerPosition.FORWARD))
@@ -135,7 +135,7 @@ class PlayerApiIT extends AbstractIT {
         @Test
         @DisplayName("return 200 and the specific player when a valid playerId is sent")
         void return_200_and_the_specific_player_when_a_valid_request_is_sent() throws Exception {
-            Player mudo = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES, 200);
+            Player mudo = PlayerProviderTestData.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES, 200);
             mudo = playerWriteRepository.save(mudo);
 
             PlayerResponse response = new PlayerResponse()

@@ -49,7 +49,7 @@ public class Player {
     private PlayerPosition position;
     // TODO 72-add-potentials-to-the-player change Integer for a wrapper object to save moved current points and potential points
     // Refactorizar esto. Las actualSkills son el conjunto de los skillPoints y los potencialPoints
-    private Map<PlayerSkill, PlayerSkillPoints> actualSkills;
+    private Map<PlayerSkill, PlayerSkills> actualSkills;
     private Team.TeamId teamId;
     private PlayerTrainingBloomEvent bloom;
     private PlayerTrainingDeclineEvent decline;
@@ -100,23 +100,18 @@ public class Player {
     // No habría que setear el skillPoints a los puntos del tendencies?? esta mapeado
 
     public Integer getActualSkillPoints(PlayerSkill skill) {
-        return actualSkills.get(skill).getActualPoints();
+        return actualSkills.get(skill).getActual();
     }
 
     // TODO 72-add-potentials-to-the-player this logic has to change
     public void addSkillsActualPoints(PlayerSkill skill, Integer actualPoints) {
-        PlayerSkillPoints skillPoints = actualSkills.get(skill);
-        skillPoints.setActualPoints(Math.min(MAX_SKILL_VALUE, actualPoints));
-    }
-
-    public void addSkillsPotencialPoints(PlayerSkill skill, Integer potencialPoints) {
-        PlayerSkillPoints skillPoints = actualSkills.get(skill);
-        skillPoints.setPotencialPoints(Math.min(MAX_SKILL_VALUE, potencialPoints));
+        PlayerSkills skillPoints = actualSkills.get(skill);
+        skillPoints.setActual(Math.min(MAX_SKILL_VALUE, actualPoints));
     }
 
     private void subtractSkillPoints(PlayerSkill skill, Integer points) {
-        PlayerSkillPoints skillPoints = actualSkills.get(skill);
-        skillPoints.setActualPoints(Math.max(MIN_SKILL_VALUE, getActualSkillPoints(skill) - points));
+        PlayerSkills skillPoints = actualSkills.get(skill);
+        skillPoints.setActual(Math.max(MIN_SKILL_VALUE, getActualSkillPoints(skill) - points));
     }
 
     public record PlayerId(String value) {

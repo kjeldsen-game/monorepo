@@ -2,7 +2,6 @@ package com.kjeldsen.player.domain.provider;
 
 import com.github.javafaker.Faker;
 import com.kjeldsen.player.domain.*;
-import com.kjeldsen.player.domain.generator.PointsGenerator;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
@@ -28,15 +27,15 @@ public class PlayerProvider {
         return RandomUtils.nextInt(RANGE_OF_AGE.getMinimum(), RANGE_OF_AGE.getMaximum());
     }
 
-    public static Map<PlayerSkill, PlayerSkillPoints> skillsBasedOnTendency(PlayerPositionTendency positionTendencies, Integer totalPoints) {
+    public static Map<PlayerSkill, PlayerSkills> skillsBasedOnTendency(PlayerPositionTendency positionTendencies, Integer totalPoints) {
 
-        HashMap<PlayerSkill, PlayerSkillPoints> skillPointsMap = positionTendencies
+        HashMap<PlayerSkill, PlayerSkills> skillPointsMap = positionTendencies
             .getTendencies()
             .keySet()
             .stream()
-            .collect(HashMap::new, (map, skill) -> map.put(skill, PlayerSkillPoints.builder()
-                .actualPoints(0)
-                .potencialPoints(0)
+            .collect(HashMap::new, (map, skill) -> map.put(skill, PlayerSkills.builder()
+                .actual(0)
+                .potential(0)
                 .build()), HashMap::putAll);
 
         Set<PlayerSkill> excludedSkills = new HashSet<>();
@@ -49,14 +48,16 @@ public class PlayerProvider {
             }
 
             // TODO 72-add-potentials-to-the-player add the current points within the wrapper here
-            PlayerSkillPoints values = skillPointsMap.get(skill.get());
-            values.setActualPoints(values.getActualPoints() + 1);
-            values.setPotencialPoints(PointsGenerator.generatePotencialPoints(values.getActualPoints()));
-            if (values.getActualPoints() == MAX_SKILL_VALUE) {
+            PlayerSkills values = skillPointsMap.get(skill.get());
+            values.increaseActualPoints(1);
+
+            if (values.getActual() == MAX_SKILL_VALUE) {
                 excludedSkills.add(skill.get());
             }
+            skillPointsMap.put(skill.get(), values);
         });
 
+        skillPointsMap.values().forEach(PlayerSkills::initializePotentialPoints);
         // TODO 72-add-potentials-to-the-player add the potential to the player here
 
         return skillPointsMap;
@@ -66,21 +67,6 @@ public class PlayerProvider {
         PlayerSkill[] allSkills = PlayerSkill.values();
         int random = (int) (Math.random() * allSkills.length);
         return allSkills[random];
-    }
-
-    public static Player generate(Team.TeamId teamId, PlayerPositionTendency positionTendencies, int totalPoints) {
-        return Player.builder()
-            .id(Player.PlayerId.generate())
-            .name(name())
-            .age(age())
-            .position(positionTendencies.getPosition())
-            .actualSkills(skillsBasedOnTendency(positionTendencies, totalPoints))
-            .teamId(teamId)
-            .build();
-    }
-
-    public static Player generateDefault() {
-        return generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES, 200);
     }
 
     public static PlayerPosition position() {

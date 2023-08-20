@@ -17,20 +17,18 @@ import java.util.stream.IntStream;
 @Component
 public class GeneratePlayersUseCase {
 
-    private final PlayerWriteRepository playerWriteRepository;
     private final PlayerPositionTendencyReadRepository playerPositionTendencyReadRepository;
+    private final CreatePlayerUseCase createPlayerUseCase;
 
     public List<Player> generate(int numberOfPlayers, Team.TeamId teamId) {
         log.info("Generating {} players", numberOfPlayers);
         return IntStream.range(0, numberOfPlayers)
             .mapToObj(i -> playerPositionTendencyReadRepository.get(PlayerProvider.position()))
-            .map(positionTendencies -> PlayerProvider.generate(teamId, positionTendencies, 200))
-            .map(player -> {
-                // TODO 72-add-potentials-to-the-player change this code to call CreatePlayerUseCase. We might mapper from player to NewPlayer and
-                //  maybe more changes
-                Player generatedPlayer = playerWriteRepository.save(player);
-                log.info("Generated player {}", generatedPlayer);
-                return generatedPlayer;
-            }).toList();
+            .map(positionTendencies -> createPlayerUseCase.create(CreatePlayerUseCase.NewPlayer.builder()
+                     .age(PlayerProvider.age())
+                     .points(200)
+                     .position(positionTendencies.getPosition())
+                     .teamId(teamId)
+                 .build())).toList();
     }
 }
