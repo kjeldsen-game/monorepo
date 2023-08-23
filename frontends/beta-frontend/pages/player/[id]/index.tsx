@@ -7,7 +7,7 @@ import PlayerDetails from '@/shared/components/PlayerDetails'
 import { PlayerStats, samplePlayer } from '@/data/SamplePlayer'
 import { useRouter } from 'next/router'
 import { PlayerContext, PlayerProvider } from 'contexts/PlayerContext'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { connectorAPI } from '@/libs/fetcher'
 import useSWR from 'swr'
 
@@ -17,19 +17,14 @@ const Player: NextPage = () => {
   console.log('contextplayer', playerContext)
   const router = useRouter();
   const {id} = router.query;
+  console.log('id is', id)
 
-  if (playerContext?.selectedPlayer === null) {
-    console.log('id is', id)
-
-    const { data, error, isLoading } = useSWR(`/player/${id}`, connectorAPI)
-    if (error) return <div>failed to load</div>
-    if (isLoading) return <div>loading...</div>
-    player = data
-    console.log('player is null', player)
-  } else {
-    console.log('player is not null')
-    player = playerContext?.selectedPlayer as PlayerStats
-  }
+  player = playerContext?.selectedPlayer as PlayerStats
+  const { data, error, isLoading } = useSWR(playerContext?.selectedPlayer ? null : `/player/${id}`, connectorAPI)
+  if (error) return <div>failed to load</div>
+  if (isLoading) return <div>loading...</div>
+  if (data) player = data
+  console.log('data is', data)
 
   return (
     <>
