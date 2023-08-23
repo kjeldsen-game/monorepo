@@ -7,9 +7,9 @@ import TeamDetails from '@/shared/components/TeamDetails'
 import PlayerTactics from '@/shared/components/PlayerTactics'
 import TeamTactics from '@/shared/components/TeamTactics'
 import { samplePlayerColumn } from '@/data/samplePlayerColumn'
-// import { getPlayers } from '../api/players/players'
 import useSWR from "swr"
 import { connectorAPI } from "@/libs/fetcher"
+import { PlayerProvider } from 'contexts/PlayerContext'
 
 const Team: NextPage = () => {
   const { data, error, isLoading } = useSWR('/player?size=40&page=0', connectorAPI)

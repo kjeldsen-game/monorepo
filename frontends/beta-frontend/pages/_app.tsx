@@ -10,6 +10,7 @@ import { Session } from 'next-auth'
 import { createEmotionCache } from '@/libs/emotion/cache'
 import { theme } from '@/libs/material/theme'
 import { Layout } from '@/shared/layout'
+import { PlayerProvider } from 'contexts/PlayerContext'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -39,15 +40,17 @@ export default function MyApp({
   return (
     <SessionProvider session={session}>
       <CacheProvider value={emotionCache}>
-        <Head>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-          <title>Kjeldsen</title>
-        </Head>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          {getLayout(<Component {...pageProps} />)}
-        </ThemeProvider>
+        <PlayerProvider>
+          <Head>
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
+            <title>Kjeldsen</title>
+          </Head>
+          <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            {getLayout(<Component {...pageProps} />)}
+          </ThemeProvider>
+        </PlayerProvider>
       </CacheProvider>
     </SessionProvider>
   )

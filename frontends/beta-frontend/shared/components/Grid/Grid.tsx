@@ -1,7 +1,7 @@
 import { DataGrid, GridCallbackDetails, GridColDef, GridEventListener, GridRowParams, MuiEvent } from '@mui/x-data-grid'
 import Box from '@mui/material/Box'
-import { useRouter } from 'next/router'
-
+import { useContext } from 'react'
+import { PlayerContext } from 'contexts/PlayerContext'
 
 type GridProps<T> = {
   rows: T[]
@@ -9,13 +9,14 @@ type GridProps<T> = {
 }
 
 function Grid<T>({ rows, columns }: GridProps<T>) {
-  const router = useRouter()
+  const playerContext = useContext(PlayerContext);
 
   const handleRowClick: GridEventListener<'rowClick'> = (params) => {
-    router.push({pathname: `/player/${params.row.id}`, query: params.row})
-
+    playerContext?.setSelectedPlayer(params.row)
+    // event?.preventDefault()
+    // router.push({pathname: `/player/${params.row.id}`, query: params.row})
     // console.log(params)
-    console.log(params.row)
+    // console.log(params.row)
   }
 
   return (
