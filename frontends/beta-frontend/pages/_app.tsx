@@ -40,17 +40,15 @@ export default function MyApp({
   return (
     <SessionProvider session={session}>
       <CacheProvider value={emotionCache}>
-        <PlayerProvider>
-          <Head>
-            <meta name="viewport" content="initial-scale=1, width=device-width" />
-            <title>Kjeldsen</title>
-          </Head>
-          <ThemeProvider theme={theme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            {getLayout(<Component {...pageProps} />)}
-          </ThemeProvider>
-        </PlayerProvider>
+        <Head>
+          <meta name="viewport" content="initial-scale=1, width=device-width" />
+          <title>Kjeldsen</title>
+        </Head>
+        <ThemeProvider theme={theme}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          {getLayout(<Component {...pageProps} />)}
+        </ThemeProvider>
       </CacheProvider>
     </SessionProvider>
   )
