@@ -23,7 +23,7 @@ public class GetHistoricalTrainingUseCaseTest {
 
     @Test
     public void should_generate_runtimeException_if_player_not_found() {
-        Player.PlayerId playerId = new Player.PlayerId("fulano");
+        Player.PlayerId playerId = new Player.PlayerId("player1");
         when(mockPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.empty());
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             getHistoricalTrainingUseCase.get(playerId);
@@ -35,7 +35,7 @@ public class GetHistoricalTrainingUseCaseTest {
 
     @Test
     public void should_generate_a_list_of_training_events() {
-        Player.PlayerId playerId = new Player.PlayerId("mengano");
+        Player.PlayerId playerId = new Player.PlayerId("player2");
         Player playerMock = mock(Player.class);
         List<PlayerTrainingEvent> trainingEvents = new ArrayList<>();
         when(mockPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.of(playerMock));

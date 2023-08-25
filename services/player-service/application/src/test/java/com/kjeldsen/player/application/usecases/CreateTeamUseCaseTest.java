@@ -31,6 +31,7 @@ class CreateTeamUseCaseTest {
         int numberOfPlayers = 1;
         String userId = UUID.randomUUID().toString();
         Player player = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES, PlayerCategory.JUNIOR, 200);
+        Integer canteraScore = 0;
 
         when(mockedGeneratePlayersUseCase.generate(anyInt(), any()))
             .thenReturn(List.of(player));
@@ -44,6 +45,7 @@ class CreateTeamUseCaseTest {
                     && team.getName().equals(teamName)
                     && team.getPlayers().size() == 1
                     && team.getPlayers().get(0).equals(player)
+                    && team.getCanteraScore().equals(canteraScore)
                 )
             );
     }

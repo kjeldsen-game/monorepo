@@ -17,6 +17,7 @@ public class Team {
     private String userId;
     private String name;
     private List<Player> players;
+    private Integer canteraScore = 0;
 
     public record TeamId(String value) {
         public static TeamId generate() {

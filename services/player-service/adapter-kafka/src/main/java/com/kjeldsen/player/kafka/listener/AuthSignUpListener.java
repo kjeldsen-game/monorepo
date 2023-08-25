@@ -27,7 +27,7 @@ public class AuthSignUpListener {
         log.info("Received event from Kafka: {}", eventWrapper.getId());
         UserSignedUpEvent userSignedUpEvent = objectMapper.convertValue(eventWrapper.getEventBody(), new TypeReference<>() {
         });
-        createTeamUseCase.create(userSignedUpEvent.getTeamName(), 15, userSignedUpEvent.getUserId());
+        createTeamUseCase.create(userSignedUpEvent.getTeamName(), 50, userSignedUpEvent.getUserId());
     }
 
 }
