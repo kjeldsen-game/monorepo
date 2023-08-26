@@ -97,8 +97,6 @@ public class Player {
         this.decline = playerTrainingDeclineEvent;
     }
 
-    // No habría que setear el skillPoints a los puntos del tendencies?? esta mapeado
-
     public Integer getActualSkillPoints(PlayerSkill skill) {
         return actualSkills.get(skill).getActual();
     }
