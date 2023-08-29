@@ -12,9 +12,9 @@ public interface PlayerMapper {
 
     PlayerMapper INSTANCE = Mappers.getMapper(PlayerMapper.class);
 
-    PlayerResponse playerPositionMap(Player player);
+    PlayerResponse map(Player player);
 
-    default PlayerPosition playerPositionMap(com.kjeldsen.player.rest.model.PlayerPosition position) {
+    default PlayerPosition map(com.kjeldsen.player.rest.model.PlayerPosition position) {
         return PlayerPosition.valueOf(position.name());
     }
 

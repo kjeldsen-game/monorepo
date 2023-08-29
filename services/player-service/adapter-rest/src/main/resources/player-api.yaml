@@ -399,6 +399,13 @@ components:
         - FORWARD
       example: FORWARD
 
+    PlayerCategory:
+      type: string
+      enum:
+        - JUNIOR
+        - SENIOR
+      example: JUNIOR
+
     CreatePlayerRequest:
       type: object
       properties:
@@ -416,6 +423,8 @@ components:
           example: 21
         position:
           $ref: "#/components/schemas/PlayerPosition"
+        category:
+          $ref: "#/components/schemas/PlayerCategory"
 
     GeneratePlayersRequest:
       type: object
@@ -463,6 +472,8 @@ components:
           example: John Doe
         position:
           $ref: "#/components/schemas/PlayerPosition"
+        category:
+          $ref: "#/components/schemas/PlayerCategory"
         actualSkills:
           type: object
           example: { "SCORE": 50 }

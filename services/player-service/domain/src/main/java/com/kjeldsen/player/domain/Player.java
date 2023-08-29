@@ -52,6 +52,7 @@ public class Player {
     private Team.TeamId teamId;
     private PlayerTrainingBloomEvent bloom;
     private PlayerTrainingDeclineEvent decline;
+    private PlayerCategory playerCategory;
 
     public static Player creation(PlayerCreationEvent playerCreationEvent) {
         return Player.builder()
@@ -61,6 +62,7 @@ public class Player {
             .position(playerCreationEvent.getPosition())
             .actualSkills(playerCreationEvent.getInitialSkills())
             .teamId(playerCreationEvent.getTeamId())
+            .playerCategory(playerCreationEvent.getPlayerCategory())
             .build();
     }
 

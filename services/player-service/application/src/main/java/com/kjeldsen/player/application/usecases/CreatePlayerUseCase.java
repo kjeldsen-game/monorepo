@@ -2,10 +2,7 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.events.domain.EventId;
 import com.kjeldsen.player.application.publisher.PlayerPublisher;
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerPositionTendency;
-import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.events.PlayerCreationEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.provider.PlayerProvider;
@@ -40,6 +37,7 @@ public class CreatePlayerUseCase {
             .position(newPlayer.getPosition())
             .initialSkills(PlayerProvider.skillsBasedOnTendency(positionTendencies, newPlayer.getPoints()))
             .teamId(newPlayer.getTeamId())
+            .playerCategory(newPlayer.getPlayerCategory())
             .build();
 
         playerCreationEventWriteRepository.save(playerCreationEvent);
@@ -55,6 +53,7 @@ public class CreatePlayerUseCase {
         private PlayerPosition position;
         private int points;
         private Team.TeamId teamId;
+        private PlayerCategory playerCategory;
     }
 
 }

@@ -1,21 +1,13 @@
 package com.kjeldsen.player.domain.provider;
 
 import com.github.javafaker.Faker;
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerPositionTendency;
-import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.Range;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -69,7 +61,7 @@ public class PlayerProvider {
         return allSkills[random];
     }
 
-    public static Player generate(Team.TeamId teamId, PlayerPositionTendency positionTendencies, int totalPoints) {
+    public static Player generate(Team.TeamId teamId, PlayerPositionTendency positionTendencies, PlayerCategory playerCategory, int totalPoints) {
         return Player.builder()
             .id(Player.PlayerId.generate())
             .name(name())
@@ -77,11 +69,12 @@ public class PlayerProvider {
             .position(positionTendencies.getPosition())
             .actualSkills(skillsBasedOnTendency(positionTendencies, totalPoints))
             .teamId(teamId)
+            .playerCategory(playerCategory)
             .build();
     }
 
     public static Player generateDefault() {
-        return generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES, 200);
+        return generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES, PlayerCategory.JUNIOR, 200);
     }
 
     public static PlayerPosition position() {
