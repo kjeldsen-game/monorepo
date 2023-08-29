@@ -2,6 +2,7 @@ package com.kjeldsen.player.rest.mapper;
 
 import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.PlayerSkill;
+import com.kjeldsen.player.domain.PlayerSkills;
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -15,6 +16,6 @@ public interface PlayerPositionTendencyMapper {
 
     PlayerPositionTendencyResponse map(PlayerPositionTendency playerPositionTendency);
 
-    Map<PlayerSkill, Integer> map(Map<String, Integer> tendencies);
+    Map<PlayerSkill, PlayerSkills> map(Map<String, Integer> tendencies);
 
 }

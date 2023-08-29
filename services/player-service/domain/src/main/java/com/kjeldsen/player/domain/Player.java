@@ -48,7 +48,6 @@ public class Player {
     private Integer age;
     private PlayerPosition position;
     // TODO 72-add-potentials-to-the-player change Integer for a wrapper object to save moved current points and potential points
-    // Refactorizar esto. Las actualSkills son el conjunto de los skillPoints y los potencialPoints
     private Map<PlayerSkill, PlayerSkills> actualSkills;
     private Team.TeamId teamId;
     private PlayerTrainingBloomEvent bloom;

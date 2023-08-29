@@ -70,7 +70,7 @@ public class GenerateTrainingUseCase {
             //    player.addSkillsPotencialPoints(playerSkill, potencialPoints);
             //}
 
-            playerTrainingEvent.setPoints(actualPoints);
+            playerTrainingEvent.setActualPoints(actualPoints);
             playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
         }
 
@@ -87,7 +87,7 @@ public class GenerateTrainingUseCase {
         Integer pointsToRise = generatePointsBloom(player.getBloom().getBloomSpeed(), points);
         player.addSkillsActualPoints(playerTrainingEvent.getSkill(), pointsToRise);
         playerTrainingEvent.setBloom(player.getBloom());
-        playerTrainingEvent.setPoints(points);
+        playerTrainingEvent.setActualPoints(points);
         playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
     }
 
