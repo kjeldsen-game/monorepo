@@ -53,7 +53,7 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceTest extends Abstract
         void return_stored_tendency_for_provided_position_when_exist_in_database() {
             PlayerPositionTendency storedPlayerPositionTendency = playerPositionTendencyMongoRepository.save(PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE, 1))
+                .tendencies(Map.of(PlayerSkill.SCORE, 7))
                 .build());
 
             PlayerPositionTendency actual = playerPositionTendencyReadRepository.get(PlayerPosition.FORWARD);
@@ -61,7 +61,7 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceTest extends Abstract
             assertThat(actual).isEqualTo(PlayerPositionTendency.builder()
                 .id(storedPlayerPositionTendency.getId())
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE, 1))
+                .tendencies(Map.of(PlayerSkill.SCORE, 7))
                 .build());
         }
     }
@@ -74,16 +74,23 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceTest extends Abstract
         void return_player_position_tendencies_for_all_positions_mainly_the_stored_one_or_default_one() {
             PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE, 1))
+                .tendencies(Map.of(PlayerSkill.SCORE, 7))
                 .build();
             playerPositionTendencyMongoRepository.save(storedPlayerPositionTendency);
 
             val actual = playerPositionTendencyReadRepository.find();
 
-            assertThat(actual).hasSize(3);
+            assertThat(actual).hasSize(10);
             assertThat(actual).contains(storedPlayerPositionTendency,
-                PlayerPositionTendency.DEFAULT_MIDDLE_TENDENCIES,
-                PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES);
+                PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_AERIAL_CENTRE_BACK_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_FULL_BACK_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_FULL_WINGBACK_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_DEFENSIVE_MIDFIELDER_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_CENTRE_MIDFIELDER_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_OFFENSIVE_MIDFIELDER_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_AERIAL_FORWARD_TENDENCIES);
         }
     }
 

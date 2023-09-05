@@ -19,6 +19,7 @@ class PlayerPositionTendencyTest {
             assertThat(PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES.getRandomSkillBasedOnTendency(Collections.emptySet())).isNotNull();
             assertThat(PlayerPositionTendency.DEFAULT_MIDDLE_TENDENCIES.getRandomSkillBasedOnTendency(Collections.emptySet())).isNotNull();
             assertThat(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.getRandomSkillBasedOnTendency(Collections.emptySet())).isNotNull();
+            assertThat(PlayerPositionTendency.DEFAULT_GOALKEEPER_TENDENCIES.getRandomSkillBasedOnTendency(Collections.emptySet())).isNotNull();
         }
     }
 
@@ -55,6 +56,14 @@ class PlayerPositionTendencyTest {
                     PlayerSkill.TACKLING, 1,
                     PlayerSkill.DEFENSE_POSITION, 1
                 ));
+            assertThat(PlayerPositionTendency.DEFAULT_GOALKEEPER_TENDENCIES.getTendencies())
+                .isEqualTo(Map.of(PlayerSkill.REFLEXES, 5,
+                    PlayerSkill.POSITIONING, 4,
+                    PlayerSkill.INTERCEPTIONS, 2,
+                    PlayerSkill.CONTROL, 2,
+                    PlayerSkill.ORGANIZATION, 2,
+                    PlayerSkill.ONE_ON_ONE, 4
+                ));
         }
 
         @Test
@@ -63,6 +72,7 @@ class PlayerPositionTendencyTest {
             assertThat(PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES.isDefault()).isTrue();
             assertThat(PlayerPositionTendency.DEFAULT_MIDDLE_TENDENCIES.isDefault()).isTrue();
             assertThat(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.isDefault()).isTrue();
+            assertThat(PlayerPositionTendency.DEFAULT_GOALKEEPER_TENDENCIES.isDefault()).isTrue();
 
             assertThat(PlayerPositionTendency.builder()
                 .position(PlayerPosition.DEFENDER)

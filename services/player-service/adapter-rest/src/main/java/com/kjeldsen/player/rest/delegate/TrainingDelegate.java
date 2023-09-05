@@ -28,7 +28,7 @@ public class TrainingDelegate implements TrainingApiDelegate {
 
         List<PlayerTrainingResponse> trainings = getHistoricalTrainingUseCase.get(Player.PlayerId.of(playerId))
             .stream()
-            .map(this::playerTrainingEvent2PlayerTrainingResponse)
+            .map(this::playerTrainingEvent2PlayerTrainingResponse)// TODO IVAN ESTO DEBERIA SER UN MAPPER ?
             .toList();
 
         PlayerHistoricalTrainingResponse playerHistoricalTrainingResponse = new PlayerHistoricalTrainingResponse()
@@ -49,7 +49,7 @@ public class TrainingDelegate implements TrainingApiDelegate {
     }
 
     private PlayerSkill playerSkill2DomainPlayerSkill(com.kjeldsen.player.domain.PlayerSkill playerSkill) {
-        return PlayerSkill.valueOf(playerSkill.name());
+        return PlayerSkill.valueOf(playerSkill.name()); // TODO IVAN ESTO TAMBIEN DEBERIA SER UN MAPPER ?
     }
 
     private PlayerTrainingResponse playerTrainingEvent2PlayerTrainingResponse(PlayerTrainingEvent playerTrainingEvent) {

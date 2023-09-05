@@ -46,7 +46,7 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceTest extends Abstrac
         public void create_a_new_player_position_tendency_when_there_is_not_existed_one_for_provided_position() {
             PlayerPositionTendency forwardTendencies = PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE, 5))
+                .tendencies(Map.of(PlayerSkill.SCORE, 7))
                 .build();
 
             playerPositionTendencyWriteRepository.save(forwardTendencies);
@@ -54,7 +54,7 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceTest extends Abstrac
             Optional<PlayerPositionTendency> actual = playerPositionTendencyMongoRepository.findByPosition(PlayerPosition.FORWARD);
 
             assertThat(actual.isPresent()).isTrue();
-            assertThat(actual.get().getTendencies().get(PlayerSkill.SCORE)).isEqualTo(5);
+            assertThat(actual.get().getTendencies().get(PlayerSkill.SCORE)).isEqualTo(7);
         }
 
         @Test
@@ -62,7 +62,7 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceTest extends Abstrac
         public void update_an_existed_player_position_tendency_when_there_is_existed_one_for_provided_position() {
             PlayerPositionTendency forwardTendencyDocument = PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE, 5))
+                .tendencies(Map.of(PlayerSkill.SCORE, 7))
                 .build();
             playerPositionTendencyMongoRepository.save(forwardTendencyDocument);
 
