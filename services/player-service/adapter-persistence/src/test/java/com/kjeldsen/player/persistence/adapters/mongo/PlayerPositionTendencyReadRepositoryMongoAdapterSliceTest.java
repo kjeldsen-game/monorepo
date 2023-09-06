@@ -72,25 +72,24 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceTest extends Abstract
         @Test
         @DisplayName("return player position tendencies for all positions mainly the stored one or default one")
         void return_player_position_tendencies_for_all_positions_mainly_the_stored_one_or_default_one() {
+            Integer noDefaultScoreSkill = 1;
             PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE, 7))
+                .tendencies(Map.of(PlayerSkill.SCORE, noDefaultScoreSkill))
                 .build();
             playerPositionTendencyMongoRepository.save(storedPlayerPositionTendency);
 
             val actual = playerPositionTendencyReadRepository.find();
 
-            assertThat(actual).hasSize(10);
-            assertThat(actual).contains(storedPlayerPositionTendency,
-                PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
-                PlayerPositionTendency.DEFAULT_AERIAL_CENTRE_BACK_TENDENCIES,
-                PlayerPositionTendency.DEFAULT_FULL_BACK_TENDENCIES,
-                PlayerPositionTendency.DEFAULT_FULL_WINGBACK_TENDENCIES,
-                PlayerPositionTendency.DEFAULT_DEFENSIVE_MIDFIELDER_TENDENCIES,
-                PlayerPositionTendency.DEFAULT_CENTRE_MIDFIELDER_TENDENCIES,
-                PlayerPositionTendency.DEFAULT_OFFENSIVE_MIDFIELDER_TENDENCIES,
-                PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES,
-                PlayerPositionTendency.DEFAULT_AERIAL_FORWARD_TENDENCIES);
+            assertThat(actual).hasSize(PlayerPositionTendency.DEFAULT_TENDENCIES.size());
+            PlayerPositionTendency playerPositionTendency1 = actual.stream().filter(playerPositionTendency -> playerPositionTendency.getPosition().equals(PlayerPosition.FORWARD)).findFirst().orElseThrow();
+            assertThat(playerPositionTendency1.getTendencies().get(PlayerSkill.SCORE)).isEqualTo(1);
+            assertThat(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.getTendencies().get(PlayerSkill.SCORE)).isNotEqualTo(playerPositionTendency1.getTendencies().get(PlayerSkill.SCORE));
+
+            PlayerPositionTendency.DEFAULT_TENDENCIES.stream()
+                .filter(playerPositionTendency -> !playerPositionTendency.getPosition().equals(PlayerPosition.FORWARD))
+                .forEach(playerPositionTendency -> assertThat(actual).contains(playerPositionTendency));
+
         }
     }
 

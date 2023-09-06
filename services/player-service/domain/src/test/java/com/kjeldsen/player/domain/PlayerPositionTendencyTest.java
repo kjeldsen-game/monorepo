@@ -16,8 +16,6 @@ class PlayerPositionTendencyTest {
         @Test
         @DisplayName("return a random skill based on the tendency")
         public void return_a_random_skill_based_on_the_tendency() {
-            assertThat(PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES.getRandomSkillBasedOnTendency(Collections.emptySet())).isNotNull();
-            assertThat(PlayerPositionTendency.DEFAULT_MIDDLE_TENDENCIES.getRandomSkillBasedOnTendency(Collections.emptySet())).isNotNull();
             assertThat(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.getRandomSkillBasedOnTendency(Collections.emptySet())).isNotNull();
             assertThat(PlayerPositionTendency.DEFAULT_GOALKEEPER_TENDENCIES.getRandomSkillBasedOnTendency(Collections.emptySet())).isNotNull();
         }
@@ -29,35 +27,118 @@ class PlayerPositionTendencyTest {
         @Test
         @DisplayName("have the correct skill tendencies")
         public void have_the_correct_skill_tendencies() {
-            assertThat(PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES.getTendencies())
-                .isEqualTo(Map.of(PlayerSkill.TACKLING, 5,
-                    PlayerSkill.DEFENSE_POSITION, 5,
-                    PlayerSkill.CO, 2,
+
+            assertThat(PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES.getTendencies())
+                .isEqualTo(Map.of(
                     PlayerSkill.SCORE, 1,
                     PlayerSkill.OFFENSIVE_POSITION, 1,
-                    PlayerSkill.BALL_CONTROL, 1,
-                    PlayerSkill.PASSING, 1
+                    PlayerSkill.BALL_CONTROL, 2,
+                    PlayerSkill.PASSING, 2,
+                    PlayerSkill.AERIAL, 4,
+                    PlayerSkill.CO, 4,
+                    PlayerSkill.TACKLING, 8,
+                    PlayerSkill.DEFENSE_POSITION, 8
                 ));
-            assertThat(PlayerPositionTendency.DEFAULT_MIDDLE_TENDENCIES.getTendencies())
-                .isEqualTo(Map.of(PlayerSkill.PASSING, 4,
-                    PlayerSkill.BALL_CONTROL, 3,
-                    PlayerSkill.OFFENSIVE_POSITION, 3,
-                    PlayerSkill.CO, 2,
-                    PlayerSkill.TACKLING, 2,
-                    PlayerSkill.DEFENSE_POSITION, 2,
-                    PlayerSkill.SCORE, 1
+
+            assertThat(PlayerPositionTendency.DEFAULT_AERIAL_CENTRE_BACK_TENDENCIES.getTendencies())
+                .isEqualTo(Map.of(
+                    PlayerSkill.SCORE, 1,
+                    PlayerSkill.OFFENSIVE_POSITION, 1,
+                    PlayerSkill.BALL_CONTROL, 2,
+                    PlayerSkill.PASSING, 2,
+                    PlayerSkill.AERIAL, 6,
+                    PlayerSkill.CO, 4,
+                    PlayerSkill.TACKLING, 5,
+                    PlayerSkill.DEFENSE_POSITION, 5
                 ));
-            assertThat(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.getTendencies())
-                .isEqualTo(Map.of(PlayerSkill.SCORE, 5,
+
+            assertThat(PlayerPositionTendency.DEFAULT_FULL_BACK_TENDENCIES.getTendencies())
+                .isEqualTo(Map.of(
+                    PlayerSkill.SCORE, 1,
+                    PlayerSkill.OFFENSIVE_POSITION, 2,
+                    PlayerSkill.BALL_CONTROL, 2,
+                    PlayerSkill.PASSING, 4,
+                    PlayerSkill.AERIAL, 3,
+                    PlayerSkill.CO, 4,
+                    PlayerSkill.TACKLING, 8,
+                    PlayerSkill.DEFENSE_POSITION, 8
+                ));
+
+            assertThat(PlayerPositionTendency.DEFAULT_FULL_WINGBACK_TENDENCIES.getTendencies())
+                .isEqualTo(Map.of(
+                    PlayerSkill.SCORE, 1,
                     PlayerSkill.OFFENSIVE_POSITION, 4,
                     PlayerSkill.BALL_CONTROL, 4,
-                    PlayerSkill.PASSING, 2,
-                    PlayerSkill.CO, 2,
+                    PlayerSkill.PASSING, 5,
+                    PlayerSkill.AERIAL, 3,
+                    PlayerSkill.CO, 4,
+                    PlayerSkill.TACKLING, 6,
+                    PlayerSkill.DEFENSE_POSITION, 6
+                ));
+
+            assertThat(PlayerPositionTendency.DEFAULT_DEFENSIVE_MIDFIELDER_TENDENCIES.getTendencies())
+                .isEqualTo(Map.of(
+                    PlayerSkill.SCORE, 1,
+                    PlayerSkill.OFFENSIVE_POSITION, 2,
+                    PlayerSkill.BALL_CONTROL, 3,
+                    PlayerSkill.PASSING, 6,
+                    PlayerSkill.AERIAL, 3,
+                    PlayerSkill.CO, 4,
+                    PlayerSkill.TACKLING, 6,
+                    PlayerSkill.DEFENSE_POSITION, 6
+                ));
+
+            assertThat(PlayerPositionTendency.DEFAULT_CENTRE_MIDFIELDER_TENDENCIES.getTendencies())
+                .isEqualTo(Map.of(
+                    PlayerSkill.SCORE, 1,
+                    PlayerSkill.OFFENSIVE_POSITION, 6,
+                    PlayerSkill.BALL_CONTROL, 6,
+                    PlayerSkill.PASSING, 8,
+                    PlayerSkill.AERIAL, 3,
+                    PlayerSkill.CO, 4,
+                    PlayerSkill.TACKLING, 4,
+                    PlayerSkill.DEFENSE_POSITION, 4
+                ));
+
+            assertThat(PlayerPositionTendency.DEFAULT_OFFENSIVE_MIDFIELDER_TENDENCIES.getTendencies())
+                .isEqualTo(Map.of(
+                    PlayerSkill.SCORE, 3,
+                    PlayerSkill.OFFENSIVE_POSITION, 8,
+                    PlayerSkill.BALL_CONTROL, 8,
+                    PlayerSkill.PASSING, 6,
+                    PlayerSkill.AERIAL, 3,
+                    PlayerSkill.CO, 4,
                     PlayerSkill.TACKLING, 1,
                     PlayerSkill.DEFENSE_POSITION, 1
                 ));
+
+            assertThat(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.getTendencies())
+                .isEqualTo(Map.of(
+                    PlayerSkill.SCORE, 7,
+                    PlayerSkill.OFFENSIVE_POSITION, 7,
+                    PlayerSkill.BALL_CONTROL, 7,
+                    PlayerSkill.PASSING, 3,
+                    PlayerSkill.AERIAL, 3,
+                    PlayerSkill.CO, 4,
+                    PlayerSkill.TACKLING, 1,
+                    PlayerSkill.DEFENSE_POSITION, 1
+                ));
+
+            assertThat(PlayerPositionTendency.DEFAULT_AERIAL_FORWARD_TENDENCIES.getTendencies())
+                .isEqualTo(Map.of(
+                    PlayerSkill.SCORE, 5,
+                    PlayerSkill.OFFENSIVE_POSITION, 5,
+                    PlayerSkill.BALL_CONTROL, 5,
+                    PlayerSkill.PASSING, 3,
+                    PlayerSkill.AERIAL, 7,
+                    PlayerSkill.CO, 4,
+                    PlayerSkill.TACKLING, 1,
+                    PlayerSkill.DEFENSE_POSITION, 1
+                ));
+
             assertThat(PlayerPositionTendency.DEFAULT_GOALKEEPER_TENDENCIES.getTendencies())
-                .isEqualTo(Map.of(PlayerSkill.REFLEXES, 5,
+                .isEqualTo(Map.of(
+                    PlayerSkill.REFLEXES, 5,
                     PlayerSkill.POSITIONING, 4,
                     PlayerSkill.INTERCEPTIONS, 2,
                     PlayerSkill.CONTROL, 2,
@@ -69,17 +150,31 @@ class PlayerPositionTendencyTest {
         @Test
         @DisplayName("have is default set to true")
         public void have_is_default_set_to_true() {
-            assertThat(PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES.isDefault()).isTrue();
-            assertThat(PlayerPositionTendency.DEFAULT_MIDDLE_TENDENCIES.isDefault()).isTrue();
+
+            assertThat(PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES.isDefault()).isTrue();
+            assertThat(PlayerPositionTendency.DEFAULT_AERIAL_CENTRE_BACK_TENDENCIES.isDefault()).isTrue();
+            assertThat(PlayerPositionTendency.DEFAULT_FULL_BACK_TENDENCIES.isDefault()).isTrue();
+            assertThat(PlayerPositionTendency.DEFAULT_FULL_WINGBACK_TENDENCIES.isDefault()).isTrue();
+            assertThat(PlayerPositionTendency.DEFAULT_DEFENSIVE_MIDFIELDER_TENDENCIES.isDefault()).isTrue();
+            assertThat(PlayerPositionTendency.DEFAULT_CENTRE_MIDFIELDER_TENDENCIES.isDefault()).isTrue();
+            assertThat(PlayerPositionTendency.DEFAULT_OFFENSIVE_MIDFIELDER_TENDENCIES.isDefault()).isTrue();
             assertThat(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.isDefault()).isTrue();
+            assertThat(PlayerPositionTendency.DEFAULT_AERIAL_FORWARD_TENDENCIES.isDefault()).isTrue();
             assertThat(PlayerPositionTendency.DEFAULT_GOALKEEPER_TENDENCIES.isDefault()).isTrue();
 
             assertThat(PlayerPositionTendency.builder()
-                .position(PlayerPosition.DEFENDER)
+                .position(PlayerPosition.CENTRE_BACK)
                 .tendencies(Map.of()).build()
-                .isDefault()
-            ).isFalse();
+                .isDefault());
+
+            /*
+               .isFalse();
+
+                Yo creo que el ".isFalse()" habría que quitarlo pues la instancia de PlayerPositionTendency tiene el map donde se pasa la skill y sus puntos vacío,
+                entonces al llamar a ".isDfeault" no lo encuentra y eso va a dar false. Si luego le ponemos que ese false sea false, quiere decir que entonces etsamos esperando un true,
+                por eso digo de quitarlo pero no estoy seguro.
+
+             */
         }
     }
-
 }

@@ -33,12 +33,12 @@ class CreatePlayerUseCaseTest {
         Team.TeamId teamId = Team.TeamId.of("teamId");
         CreatePlayerUseCase.NewPlayer newPlayer = CreatePlayerUseCase.NewPlayer.builder()
             .age(20)
-            .position(PlayerPosition.MIDDLE)
+            .position(PlayerPosition.CENTRE_MIDFIELDER)
             .points(200)
             .teamId(teamId)
             .build();
-        when(mockedPlayerPositionTendencyReadRepository.get(PlayerPosition.MIDDLE))
-            .thenReturn(PlayerPositionTendency.DEFAULT_MIDDLE_TENDENCIES);
+        when(mockedPlayerPositionTendencyReadRepository.get(PlayerPosition.CENTRE_MIDFIELDER))
+            .thenReturn(PlayerPositionTendency.DEFAULT_CENTRE_MIDFIELDER_TENDENCIES);
 
         createPlayerUseCase.create(newPlayer);
 
@@ -49,7 +49,7 @@ class CreatePlayerUseCaseTest {
         PlayerCreationEvent playerCreationEvent = argumentCaptor.getValue();
         assertThat(playerCreationEvent)
             .matches(player -> player.getAge().equals(20)
-                && player.getPosition().equals(PlayerPosition.MIDDLE)
+                && player.getPosition().equals(PlayerPosition.CENTRE_MIDFIELDER)
                 && StringUtils.isNotBlank(player.getName())
                 && player.getTeamId().equals(teamId)
                 && player.getInitialSkills().values().stream().mapToInt(Integer::intValue).sum() == 200);
