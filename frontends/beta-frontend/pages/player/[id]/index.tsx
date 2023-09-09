@@ -6,7 +6,8 @@ import PlayerDetails from '@/shared/components/PlayerDetails'
 import { PlayerStats } from '@/data/SamplePlayer'
 import { useRouter } from 'next/router'
 import { connectorAPI } from '@/libs/fetcher'
-import useSWR from 'swr'
+import useSWR, { useSWRConfig } from 'swr'
+import { useEffect } from 'react'
 
 const Player: NextPage = () => {
   let player = {} as PlayerStats
@@ -20,6 +21,10 @@ const Player: NextPage = () => {
   if (isLoading) return <div>loading...</div>
   if (data) player = data
   console.log('data is', data)
+
+  const { cache } = useSWRConfig();
+
+  console.log('cache', cache);
 
   return (
     <>
