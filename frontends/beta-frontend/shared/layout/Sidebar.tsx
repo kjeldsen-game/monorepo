@@ -12,7 +12,6 @@ import ListItemText from '@mui/material/ListItemText'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
 import Link from 'next/link'
-import { GpsFixed } from '@mui/icons-material'
 
 const drawerWidth = '15vw'
 
