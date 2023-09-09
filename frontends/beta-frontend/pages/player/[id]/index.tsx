@@ -22,10 +22,6 @@ const Player: NextPage = () => {
   if (data) player = data
   console.log('data is', data)
 
-  const cache = useSWRConfig();
-
-  console.log('cache', cache);
-
   return (
     <>
       <Box>

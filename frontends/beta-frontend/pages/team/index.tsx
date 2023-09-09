@@ -38,11 +38,11 @@ const Team: NextPage<TeamProps> = ({fallback}) => {
   console.log("Is data ready?", !!data);
   console.log('data is', data)
 
-  const { cache, mutate } = useSWRConfig();
+  // const { cache } = useSWRConfig();
 
-  useEffect(() => {
-    console.log('cache', cache);
-  }, [cache]);
+  // useEffect(() => {
+  //   console.log('cache', cache);
+  // }, [cache]);
 
 
   if (error) return <div>failed to load</div>
