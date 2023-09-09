@@ -5,7 +5,6 @@ import Box from '@mui/material/Box'
 import Grid from '@/shared/components/Grid/Grid'
 import { players } from '@/data/SamplePlayerTraining'
 import { sampleTrainingColumn } from '@/data/sampleTrainingColumn'
-import { PlayerProvider } from 'contexts/PlayerContext'
 
 const Training: NextPage = () => {
   return (

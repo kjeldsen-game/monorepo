@@ -1,7 +1,6 @@
 import { DataGrid, GridCallbackDetails, GridColDef, GridEventListener, GridRowParams, MuiEvent } from '@mui/x-data-grid'
 import Box from '@mui/material/Box'
 import { useContext } from 'react'
-import { PlayerContext } from 'contexts/PlayerContext'
 
 type GridProps<T> = {
   rows: T[]

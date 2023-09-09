@@ -10,7 +10,6 @@ import { Session } from 'next-auth'
 import { createEmotionCache } from '@/libs/emotion/cache'
 import { theme } from '@/libs/material/theme'
 import { Layout } from '@/shared/layout'
-import { PlayerProvider } from 'contexts/PlayerContext'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
