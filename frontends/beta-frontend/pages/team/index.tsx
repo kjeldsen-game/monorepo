@@ -6,12 +6,9 @@ import TeamDetails from '@/shared/components/TeamDetails'
 import PlayerTactics from '@/shared/components/PlayerTactics'
 import TeamTactics from '@/shared/components/TeamTactics'
 import { teamColumn } from '@/shared/components/Grid/TeamColumn'
-import useSWR, { useSWRConfig } from "swr"
-import { connector, connectorAPI } from '@/libs/fetcher'
-import { useEffect } from 'react'
+import useSWR from "swr"
+import { connectorAPI } from '@/libs/fetcher'
 
-// const fetcher = (url: string) => fetch(url).then((res) => res.json());
-// const API = "http://localhost:8082/player?size=40&page=0";
 const API = "/player?size=40&page=0";
 
 export async function getServerSideProps() {
@@ -26,25 +23,11 @@ export async function getServerSideProps() {
 }
 
 interface TeamProps {
-  fallback: any;
+  fallback: Object;
 }
 
 const Team: NextPage<TeamProps> = ({fallback}) => {
   const { data, error } = useSWR(API, connectorAPI, { fallback });
-
-  console.log('fallback[API] is', fallback[API])
-  console.log('fallback is', fallback)
-
-  console.log("Is data ready?", !!data);
-  console.log('data is', data)
-
-  // const { cache } = useSWRConfig();
-
-  // useEffect(() => {
-  //   console.log('cache', cache);
-  // }, [cache]);
-
-
   if (error) return <div>failed to load</div>
 
   return (

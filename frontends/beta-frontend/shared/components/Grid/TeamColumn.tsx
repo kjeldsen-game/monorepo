@@ -20,7 +20,7 @@ export const teamColumn = [
     headerAlign: 'center' as GridAlignment,
     minWidth: 130, flex: 1,
     renderCell: (params: GridCellParams) => <Link
-      href={`/player/${params.row.id}`} style={{textDecoration: 'none', color: 'inherit'}}>{params.row.name}</Link>
+      passHref href={`/player/${params.row.id}`}><a css={linkStyle}>{params.row.name}</a></Link>
   },
   { field: 'age', headerName: 'Age', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
   {

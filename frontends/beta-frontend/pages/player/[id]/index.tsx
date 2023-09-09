@@ -6,21 +6,18 @@ import PlayerDetails from '@/shared/components/PlayerDetails'
 import { PlayerStats } from '@/data/SamplePlayer'
 import { useRouter } from 'next/router'
 import { connectorAPI } from '@/libs/fetcher'
-import useSWR, { useSWRConfig } from 'swr'
-import { useEffect } from 'react'
+import useSWR from 'swr'
 
 const Player: NextPage = () => {
   let player = {} as PlayerStats
 
   const router = useRouter();
   const {id} = router.query;
-  console.log('id is', id)
 
   const { data, error, isLoading } = useSWR(`/player/${id}`, connectorAPI)
   if (error) return <div>failed to load</div>
   if (isLoading) return <div>loading...</div>
   if (data) player = data
-  console.log('data is', data)
 
   return (
     <>
