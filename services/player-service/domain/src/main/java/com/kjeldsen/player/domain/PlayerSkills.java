@@ -1,16 +1,14 @@
 package com.kjeldsen.player.domain;
 
 import com.kjeldsen.player.domain.generator.PointsGenerator;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 
 @Getter
 @Setter
 @Builder
 @ToString
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 
 public class PlayerSkills {
     public static final int MAX_SKILL_VALUE = 100;

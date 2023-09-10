@@ -20,35 +20,34 @@ import java.util.stream.IntStream;
 public class PlayerPositionTendency {
     public static final PlayerPositionTendency DEFAULT_DEFENDER_TENDENCIES = PlayerPositionTendency.builder()
         .position(PlayerPosition.DEFENDER)
-        .tendencies(Map.of(PlayerSkill.TACKLING, 5,
-            PlayerSkill.DEFENSE_POSITION, 5,
-            PlayerSkill.CO, 2,
-            PlayerSkill.SCORE, 1,
-            PlayerSkill.OFFENSIVE_POSITION, 1,
-            PlayerSkill.BALL_CONTROL, 1,
-            PlayerSkill.PASSING, 1
+        .tendencies(Map.of(PlayerSkill.TACKLING, new PlayerSkills(5,0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(5, 0),
+            PlayerSkill.CO, new PlayerSkills(2,0),
+            PlayerSkill.SCORE, new PlayerSkills(1,0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(1,0),
+            PlayerSkill.PASSING, new PlayerSkills(1,0)
         ))
         .build();
     public static final PlayerPositionTendency DEFAULT_MIDDLE_TENDENCIES = PlayerPositionTendency.builder()
         .position(PlayerPosition.MIDDLE)
-        .tendencies(Map.of(PlayerSkill.PASSING, 4,
-            PlayerSkill.BALL_CONTROL, 3,
-            PlayerSkill.OFFENSIVE_POSITION, 3,
-            PlayerSkill.CO, 2,
-            PlayerSkill.TACKLING, 2,
-            PlayerSkill.DEFENSE_POSITION, 2,
-            PlayerSkill.SCORE, 1
+        .tendencies(Map.of(PlayerSkill.PASSING, new PlayerSkills(4,0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(3,0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(3,0),
+            PlayerSkill.CO, new PlayerSkills(2,0),
+            PlayerSkill.TACKLING, new PlayerSkills(2,0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(2,0),
+            PlayerSkill.SCORE, new PlayerSkills(1,0)
         ))
         .build();
     public static final PlayerPositionTendency DEFAULT_FORWARD_TENDENCIES = PlayerPositionTendency.builder()
         .position(PlayerPosition.FORWARD)
-        .tendencies(Map.of(PlayerSkill.SCORE, 5,
-            PlayerSkill.OFFENSIVE_POSITION, 4,
-            PlayerSkill.BALL_CONTROL, 4,
-            PlayerSkill.PASSING, 2,
-            PlayerSkill.CO, 2,
-            PlayerSkill.TACKLING, 1,
-            PlayerSkill.DEFENSE_POSITION, 1
+        .tendencies(Map.of(PlayerSkill.SCORE, new PlayerSkills(5,0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(4,0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(4,0),
+            PlayerSkill.PASSING, new PlayerSkills(2,0),
+            PlayerSkill.CO, new PlayerSkills(2,0),
+            PlayerSkill.TACKLING, new PlayerSkills(1,0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(1,0)
         ))
         .build();
 
@@ -65,7 +64,7 @@ public class PlayerPositionTendency {
 
     private String id;
     private PlayerPosition position;
-    private Map<PlayerSkill, Integer> tendencies;
+    private Map<PlayerSkill, PlayerSkills> tendencies;
 
     public Boolean isDefault() {
         return DEFAULT_TENDENCIES.contains(this);
@@ -93,7 +92,7 @@ public class PlayerPositionTendency {
     private ArrayList<PlayerSkill> getDistributedSkills(Set<PlayerSkill> excludedSkills) {
         return tendencies.entrySet().stream()
             .filter(entry -> !excludedSkills.contains(entry.getKey()))
-            .flatMap(entry -> IntStream.range(0, entry.getValue())
+            .flatMap(entry -> IntStream.range(0, entry.getValue().getActual())
                 .mapToObj(i -> entry.getKey())
             )
             .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);

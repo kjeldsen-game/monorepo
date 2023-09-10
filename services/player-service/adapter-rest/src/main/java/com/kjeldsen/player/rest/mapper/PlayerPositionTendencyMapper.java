@@ -15,7 +15,7 @@ public interface PlayerPositionTendencyMapper {
     PlayerPositionTendencyMapper INSTANCE = Mappers.getMapper(PlayerPositionTendencyMapper.class);
 
     PlayerPositionTendencyResponse map(PlayerPositionTendency playerPositionTendency);
-
-    Map<PlayerSkill, PlayerSkills> map(Map<String, Integer> tendencies);
+    Map<String, Integer> mapToMapStringInteger(Map<PlayerSkill, PlayerSkills> target);
+    Map<PlayerSkill, PlayerSkills> mapToMapPlayerSkillPlayerSkills(Map<String, Integer> tendencies);
 
 }
