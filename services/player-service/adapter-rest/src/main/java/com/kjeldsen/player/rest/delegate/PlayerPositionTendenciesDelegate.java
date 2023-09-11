@@ -4,11 +4,16 @@ import com.kjeldsen.player.application.usecases.UpdatePlayerPositionTendencyUseC
 import com.kjeldsen.player.application.usecases.UpdatePlayerTendencies;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
+
+
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.rest.api.PlayerPositionTendenciesApiDelegate;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.mapper.PlayerPositionTendencyMapper;
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponse;
+import com.kjeldsen.player.rest.model.PlayerSkill;
+import com.kjeldsen.player.rest.model.PlayerSkills;
+import com.kjeldsen.player.rest.model.UpdatePlayerPositionTendencyRequestValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -41,7 +46,7 @@ public class PlayerPositionTendenciesDelegate implements PlayerPositionTendencie
 
     @Override
     public ResponseEntity<PlayerPositionTendencyResponse> updatePlayerPositionTendency(com.kjeldsen.player.rest.model.PlayerPosition position,
-                                                                                       Map<String, Integer> tendencies) {
+                                                                                       Map<String, UpdatePlayerPositionTendencyRequestValue> tendencies) {
 
         PlayerPositionTendency updatedPlayerPositionTendency = updatePlayerPositionTendencyUseCase.update(
             UpdatePlayerTendencies.builder()

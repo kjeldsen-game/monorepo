@@ -4,7 +4,9 @@ import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.PlayerSkills;
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponse;
+import com.kjeldsen.player.rest.model.UpdatePlayerPositionTendencyRequestValue;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.Map;
@@ -15,7 +17,11 @@ public interface PlayerPositionTendencyMapper {
     PlayerPositionTendencyMapper INSTANCE = Mappers.getMapper(PlayerPositionTendencyMapper.class);
 
     PlayerPositionTendencyResponse map(PlayerPositionTendency playerPositionTendency);
-    Map<String, Integer> mapToMapStringInteger(Map<PlayerSkill, PlayerSkills> target);
-    Map<PlayerSkill, PlayerSkills> mapToMapPlayerSkillPlayerSkills(Map<String, Integer> tendencies);
+    Map<PlayerSkill, PlayerSkills> map(Map<String, UpdatePlayerPositionTendencyRequestValue> tendencies);
+
+    @Mapping(target="actual",source="value.actual")
+//    @Mapping(target="potential",source="value.potential")
+    @Mapping(target="potential",expression = "java(value.getValue().getPotential())")
+    PlayerSkills map(UpdatePlayerPositionTendencyRequestValue value);
 
 }

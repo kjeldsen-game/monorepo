@@ -374,6 +374,22 @@ components:
         - FORWARD
       example: FORWARD
 
+    PlayerSkills:
+      type: object
+      properties:
+        actual:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          example: 5
+        potential:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          example: 30
+
     CreatePlayerRequest:
       type: object
       properties:
@@ -406,10 +422,12 @@ components:
       type: object
       example: { "SCORE": 5 }
       additionalProperties:
-        type: integer
+        type: object
         properties:
-          code:
+          key:
             $ref: "#/components/schemas/PlayerSkill"
+          value:
+            $ref: "#/components/schemas/PlayerSkills"
 
     PlayerResponse:
       type: object
@@ -429,19 +447,7 @@ components:
         position:
           $ref: "#/components/schemas/PlayerPosition"
         actualSkills:
-          type: object
-          example: { "SCORE": 50 }
-          additionalProperties:
-            type: string
-            properties:
-              code:
-                $ref: "#/components/schemas/PlayerSkill"
-              text:
-                type: integer
-                format: int32
-                minimum: 0
-                maximum: 100
-                example: 50
+          $ref: "#/components/schemas/PlayerSkills"
 
     PlayerHistoricalTrainingResponse:
       type: object
@@ -508,10 +514,12 @@ components:
           type: object
           example: { "SCORE": 5 }
           additionalProperties:
-            type: integer
+            type: object
             properties:
-              code:
+              key:
                 $ref: "#/components/schemas/PlayerSkill"
+              value:
+                $ref: "#/components/schemas/PlayerSkills"
         default:
           type: boolean
 
