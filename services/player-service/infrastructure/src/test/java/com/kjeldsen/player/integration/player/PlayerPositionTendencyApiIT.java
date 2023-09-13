@@ -48,26 +48,70 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
         public void return_a_list_player_position_tendencies() throws Exception {
             PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE, 5))
+                .tendencies(Map.of(PlayerSkill.SCORE, 7))
                 .build();
             playerPositionTendencyStore.save(storedPlayerPositionTendency);
 
             List<PlayerPositionTendencyResponse> expected = List.of(
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.CENTRE_BACK)
+                    .tendencies(PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.AERIAL_CENTRE_BACK)
+                    .tendencies(PlayerPositionTendency.DEFAULT_AERIAL_CENTRE_BACK_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.FULL_BACK)
+                    .tendencies(PlayerPositionTendency.DEFAULT_FULL_BACK_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.FULL_WINGBACK)
+                    .tendencies(PlayerPositionTendency.DEFAULT_FULL_WINGBACK_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.DEFENSIVE_MIDFIELDER)
+                    .tendencies(PlayerPositionTendency.DEFAULT_DEFENSIVE_MIDFIELDER_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.CENTRE_MIDFIELDER)
+                    .tendencies(PlayerPositionTendency.DEFAULT_CENTRE_MIDFIELDER_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.OFFENSIVE_MIDFIELDER)
+                    .tendencies(PlayerPositionTendency.DEFAULT_OFFENSIVE_MIDFIELDER_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                    ._default(true),
+
                 new PlayerPositionTendencyResponse()
                     .position(PlayerPosition.FORWARD)
                     .tendencies(storedPlayerPositionTendency.getTendencies()
                         .entrySet().stream()
                         .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
                     ._default(false),
+
                 new PlayerPositionTendencyResponse()
-                    .position(PlayerPosition.DEFENDER)
-                    .tendencies(PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES.getTendencies()
-                        .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
-                    ._default(true),
-                new PlayerPositionTendencyResponse()
-                    .position(PlayerPosition.MIDDLE)
-                    .tendencies(PlayerPositionTendency.DEFAULT_MIDDLE_TENDENCIES.getTendencies()
+                    .position(PlayerPosition.AERIAL_FORWARD)
+                    .tendencies(PlayerPositionTendency.DEFAULT_AERIAL_FORWARD_TENDENCIES.getTendencies()
                         .entrySet().stream()
                         .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
                     ._default(true)
@@ -87,13 +131,13 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
         @DisplayName("return a default player position tendency of a given position when no player position tendency exists in storage")
         public void return_a_default_player_position_tendency_of_a_given_position_when_no_player_position_tendency_exists_in_storage() throws Exception {
             PlayerPositionTendencyResponse expected = new PlayerPositionTendencyResponse()
-                .position(PlayerPosition.DEFENDER)
-                .tendencies(PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES.getTendencies()
+                .position(PlayerPosition.CENTRE_BACK)
+                .tendencies(PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES.getTendencies()
                     .entrySet().stream()
                     .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
-                ._default(PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES.isDefault());
+                ._default(PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES.isDefault());
 
-            mockMvc.perform(get("/player-position-tendencies/DEFENDER"))
+            mockMvc.perform(get("/player-position-tendencies/CENTRE_BACK"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(expected)));
@@ -104,7 +148,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
         public void return_a_stored_player_position_tendency_of_a_given_position_when_player_position_tendency_exists_in_storage() throws Exception {
             PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE, 5))
+                .tendencies(Map.of(PlayerSkill.SCORE, 7))
                 .build();
             playerPositionTendencyStore.save(storedPlayerPositionTendency);
 
@@ -129,11 +173,11 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
         @DisplayName("return an updated player position tendency of a given position")
         public void return_an_updated_player_position_tendency_of_a_given_position() throws Exception {
 
-            Map<PlayerSkill, Integer> request = Map.of(PlayerSkill.SCORE, 5);
+            Map<PlayerSkill, Integer> request = Map.of(PlayerSkill.SCORE, 7);
 
             PlayerPositionTendencyResponse expected = new PlayerPositionTendencyResponse()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE.name(), 5))
+                .tendencies(Map.of(PlayerSkill.SCORE.name(), 7))
                 ._default(false);
 
             mockMvc.perform(patch("/player-position-tendencies/FORWARD")

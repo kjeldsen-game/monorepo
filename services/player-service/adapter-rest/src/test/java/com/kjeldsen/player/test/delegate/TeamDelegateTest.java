@@ -30,6 +30,7 @@ public class TeamDelegateTest {
             .name("exampleName")
             .userId("exampleUserId")
             .players(examplePlayers)
+            .canteraScore(0)
             .build();
 
         when(mockedAuthenticationFetcher.getLoggedUserID()).thenReturn("123");

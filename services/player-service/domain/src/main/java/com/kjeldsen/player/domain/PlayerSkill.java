@@ -7,6 +7,13 @@ public enum PlayerSkill {
     PASSING,
     CO,
     TACKLING,
-    DEFENSE_POSITION
+    DEFENSE_POSITION,
+    AERIAL,
+    REFLEXES,
+    POSITIONING,
+    INTERCEPTIONS,
+    CONTROL,
+    ORGANIZATION,
+    ONE_ON_ONE
 }
 

@@ -27,7 +27,7 @@ public class GetTeamUseCaseTest {
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             getTeamUseCase.get(userId);
         });
-        assertEquals(String.format("Team not found for player with ID %s", userId), exception.getMessage());
+        assertEquals(String.format("Team not found for user with ID %s", userId), exception.getMessage());
         verify(mockedTeamReadRepository).findOneByUserId(userId);
         verifyNoMoreInteractions(mockedTeamReadRepository);
     }
@@ -54,6 +54,7 @@ public class GetTeamUseCaseTest {
             .name("exampleName")
             .userId("exampleUserId")
             .players(examplePlayers)
+            .canteraScore(0)
             .build();
         when(mockedTeamReadRepository.findOneByUserId(userId)).thenReturn(Optional.of(teamExpected));
 
