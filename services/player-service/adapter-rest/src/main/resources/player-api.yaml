@@ -387,16 +387,30 @@ components:
         - OFFENSIVE_POSITION
         - BALL_CONTROL
         - PASSING
+        - AERIAL
         - CO
         - TACKLING
         - DEFENSE_POSITION
+        - REFLEXES
+        - POSITIONING
+        - INTERCEPTIONS
+        - CONTROL
+        - ORGANIZATION
+        - ONE_ON_ONE
 
     PlayerPosition:
       type: string
       enum:
-        - DEFENDER
-        - MIDDLE
+        - CENTRE_BACK
+        - AERIAL_CENTRE_BACK
+        - FULL_BACK
+        - FULL_WINGBACK
+        - DEFENSIVE_MIDFIELDER
+        - CENTRE_MIDFIELDER
+        - OFFENSIVE_MIDFIELDER
         - FORWARD
+        - AERIAL_FORWARD
+        - GOALKEEPER
       example: FORWARD
 
     PlayerCategory:
@@ -454,6 +468,10 @@ components:
         name:
           type: string
           example: John Doe's Team
+        canteraScore:
+          type: integer
+          format: int32
+          example: 15
 
     PlayerResponse:
       type: object

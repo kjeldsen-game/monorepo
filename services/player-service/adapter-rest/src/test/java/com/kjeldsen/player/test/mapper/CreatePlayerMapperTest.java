@@ -15,7 +15,7 @@ public class CreatePlayerMapperTest {
     void should_find_input_and_return_expected_value_between_createPlayerRequest_and_createPlayerUseCase() {
         Integer points = 50;
         Integer age = 25;
-        PlayerPosition position = PlayerPosition.valueOf("DEFENDER");
+        PlayerPosition position = PlayerPosition.valueOf("CENTRE_BACK");
 
         CreatePlayerRequest createPlayerRequest = new CreatePlayerRequest();
         createPlayerRequest.setPoints(points);

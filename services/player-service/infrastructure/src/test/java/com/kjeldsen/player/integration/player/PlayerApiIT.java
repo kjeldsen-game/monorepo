@@ -136,7 +136,7 @@ class PlayerApiIT extends AbstractIT {
         @Test
         @DisplayName("return 200 and the specific player when a valid playerId is sent")
         void return_200_and_the_specific_player_when_a_valid_request_is_sent() throws Exception {
-            Player examplePlayer = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_DEFENDER_TENDENCIES, PlayerCategory.JUNIOR, 200);
+            Player examplePlayer = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES, PlayerCategory.JUNIOR, 200);
             examplePlayer = playerWriteRepository.save(examplePlayer);
 
             PlayerResponse response = new PlayerResponse()

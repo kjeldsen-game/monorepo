@@ -4,7 +4,14 @@ import lombok.Getter;
 
 @Getter
 public enum PlayerPosition {
-    DEFENDER,
-    MIDDLE,
-    FORWARD;
+    CENTRE_BACK,
+    AERIAL_CENTRE_BACK,
+    FULL_BACK,
+    FULL_WINGBACK,
+    DEFENSIVE_MIDFIELDER,
+    CENTRE_MIDFIELDER,
+    OFFENSIVE_MIDFIELDER,
+    FORWARD,
+    AERIAL_FORWARD,
+    GOALKEEPER
 }
