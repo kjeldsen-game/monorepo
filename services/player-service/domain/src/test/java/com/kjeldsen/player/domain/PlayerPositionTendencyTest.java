@@ -166,15 +166,6 @@ class PlayerPositionTendencyTest {
                 .position(PlayerPosition.CENTRE_BACK)
                 .tendencies(Map.of()).build()
                 .isDefault());
-
-            /*
-               .isFalse();
-
-                Yo creo que el ".isFalse()" habría que quitarlo pues la instancia de PlayerPositionTendency tiene el map donde se pasa la skill y sus puntos vacío,
-                entonces al llamar a ".isDfeault" no lo encuentra y eso va a dar false. Si luego le ponemos que ese false sea false, quiere decir que entonces etsamos esperando un true,
-                por eso digo de quitarlo pero no estoy seguro.
-
-             */
         }
     }
 }
