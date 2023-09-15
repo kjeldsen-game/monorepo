@@ -36,20 +36,30 @@ class PlayerActualSkillsTest {
         @Test
         @DisplayName("increase the amount points of a specified skill")
         void increase_the_amount_points_of_a_specified_skill() {
-            Player player = Player.builder()
-                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORE, 50)))
+            PlayerSkills skills = PlayerSkills.builder()
+                .actual(5)
+                .potential(0)
                 .build();
-            player.addSkillPoints(PlayerSkill.SCORE, 5);
+
+            Player player = Player.builder()
+                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORE, skills.getActual())))
+                .build();
+            player.addSkillsActualPoints(PlayerSkill.SCORE, 5);
             assertThat(player.getActualSkillPoints(PlayerSkill.SCORE)).isEqualTo(55);
         }
 
         @Test
         @DisplayName("increase the amount points of a specified skill to the maximum")
         void increase_the_amount_points_of_a_specified_skill_to_the_maximum() {
+            PlayerSkills skills = PlayerSkills.builder()
+                .actual(98)
+                .potential(0)
+                .build();
+
             Player player = Player.builder()
                 .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORE, 98)))
                 .build();
-            player.addSkillPoints(PlayerSkill.SCORE, 5);
+            player.addSkillsActualPoints(PlayerSkill.SCORE, 5);
             assertThat(player.getActualSkillPoints(PlayerSkill.SCORE)).isEqualTo(100);
         }
 

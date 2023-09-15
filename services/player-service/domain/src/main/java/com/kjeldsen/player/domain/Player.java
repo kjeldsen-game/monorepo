@@ -48,7 +48,7 @@ public class Player {
     private Integer age;
     private PlayerPosition position;
     // TODO 72-add-potentials-to-the-player change Integer for a wrapper object to save moved current points and potential points
-    private Map<PlayerSkill, Integer> actualSkills;
+    private Map<PlayerSkill, PlayerSkills> actualSkills;
     private Team.TeamId teamId;
     private PlayerTrainingBloomEvent bloom;
     private PlayerTrainingDeclineEvent decline;
@@ -99,16 +99,19 @@ public class Player {
     }
 
     public Integer getActualSkillPoints(PlayerSkill skill) {
-        return actualSkills.get(skill);
+        return actualSkills.get(skill).getActual();
     }
 
     // TODO 72-add-potentials-to-the-player this logic has to change
-    public void addSkillPoints(PlayerSkill skill, Integer points) {
-        actualSkills.put(skill, Math.min(MAX_SKILL_VALUE, getActualSkillPoints(skill) + points));
+    public void addSkillsActualPoints(PlayerSkill skill, Integer actualPoints) {
+        PlayerSkills skillPoints = actualSkills.get(skill);
+        skillPoints.setActual(Math.min(MAX_SKILL_VALUE, actualPoints));
     }
 
+
     private void subtractSkillPoints(PlayerSkill skill, Integer points) {
-        actualSkills.put(skill, Math.max(MIN_SKILL_VALUE, getActualSkillPoints(skill) - points));
+        PlayerSkills skillPoints = actualSkills.get(skill);
+        skillPoints.setActual(Math.max(MIN_SKILL_VALUE, getActualSkillPoints(skill) - points));
     }
 
     public record PlayerId(String value) {

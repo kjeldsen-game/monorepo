@@ -9,6 +9,7 @@ import com.kjeldsen.player.rest.api.PlayerPositionTendenciesApiDelegate;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.mapper.PlayerPositionTendencyMapper;
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponse;
+import com.kjeldsen.player.rest.model.UpdatePlayerPositionTendencyRequestValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -41,11 +42,11 @@ public class PlayerPositionTendenciesDelegate implements PlayerPositionTendencie
 
     @Override
     public ResponseEntity<PlayerPositionTendencyResponse> updatePlayerPositionTendency(com.kjeldsen.player.rest.model.PlayerPosition position,
-                                                                                       Map<String, Integer> tendencies) {
+                                                                                       Map<String, UpdatePlayerPositionTendencyRequestValue> tendencies) {
 
         PlayerPositionTendency updatedPlayerPositionTendency = updatePlayerPositionTendencyUseCase.update(
             UpdatePlayerTendencies.builder()
-                .position(PlayerMapper.INSTANCE.map(position))
+                .position(PlayerMapper.INSTANCE.playerPositionMap(position))
                 .tendencies(PlayerPositionTendencyMapper.INSTANCE.map(tendencies))
                 .build());
 

@@ -57,7 +57,7 @@ public class TrainingDelegate implements TrainingApiDelegate {
             .currentDay(playerTrainingEvent.getCurrentDay())
             .playerId(playerTrainingEvent.getPlayerId().toString())
             .skill(playerSkill2DomainPlayerSkill(playerTrainingEvent.getSkill()))
-            .points(playerTrainingEvent.getPoints())
+            .actualPoints(playerTrainingEvent.getActualPoints())
             .pointsBeforeTraining(playerTrainingEvent.getPointsBeforeTraining())
             .pointsAfterTraining(playerTrainingEvent.getPointsAfterTraining());
     }
