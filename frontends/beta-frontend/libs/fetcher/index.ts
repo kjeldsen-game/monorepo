@@ -43,7 +43,7 @@ export const connector = async (url: string, method: string, body?: any) => {
     },
     body: JSON.stringify(body),
   });
-  if (response.ok) {
+  if (response.ok && ) {
     const data = await response.json();
     return data;
   } else {
