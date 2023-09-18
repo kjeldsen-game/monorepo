@@ -39,16 +39,13 @@ export const connector = async (url: string, method: string, body?: any) => {
   const response = await fetch(`${url}`, {
     method: method,
     headers: {
-      // "accept": "*/*",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
   });
   if (response.ok) {
-    console.log(response)
-    response.json().then((data) => console.log(data));
-    // const data = await response.json();
-    // return data;
+    const data = await response.json();
+    return data;
   } else {
     const error = await response.json();
     throw new Error(error.message);
