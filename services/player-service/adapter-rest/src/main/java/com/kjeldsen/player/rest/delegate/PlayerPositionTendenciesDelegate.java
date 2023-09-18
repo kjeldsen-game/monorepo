@@ -35,7 +35,7 @@ public class PlayerPositionTendenciesDelegate implements PlayerPositionTendencie
 
     @Override
     public ResponseEntity<PlayerPositionTendencyResponse> getPlayerPositionTendency(com.kjeldsen.player.rest.model.PlayerPosition position) {
-        PlayerPositionTendency playerPositionTendency = playerPositionTendencyReadRepository.get(PlayerPosition.valueOf(String.valueOf(position)));
+        PlayerPositionTendency playerPositionTendency = playerPositionTendencyReadRepository.get(com.kjeldsen.player.domain.PlayerPosition.valueOf(String.valueOf(position)));
         PlayerPositionTendencyResponse response = PlayerPositionTendencyMapper.INSTANCE.map(playerPositionTendency);
         return ResponseEntity.ok(response);
     }

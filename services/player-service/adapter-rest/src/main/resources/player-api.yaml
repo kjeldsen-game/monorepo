@@ -411,7 +411,7 @@ components:
           type: integer
           format: int32
           minimum: 0
-          maximum: 100
+          maximum: 1000
           example: 30
 
     PlayerPosition:
@@ -453,7 +453,7 @@ components:
           example: 21
         position:
           $ref: "#/components/schemas/PlayerPosition"
-        category:
+        PlayerCategory:
           $ref: "#/components/schemas/PlayerCategory"
 
     GeneratePlayersRequest:
@@ -509,10 +509,14 @@ components:
           example: John Doe
         position:
           $ref: "#/components/schemas/PlayerPosition"
-        category:
+        PlayerCategory:
           $ref: "#/components/schemas/PlayerCategory"
         actualSkills:
-          $ref: "#/components/schemas/PlayerSkills"
+          additionalProperties:
+            type: object
+            properties:
+              PlayerSkills:
+                $ref: "#/components/schemas/PlayerSkills"
 
     PlayerHistoricalTrainingResponse:
       type: object
@@ -533,6 +537,9 @@ components:
           example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
         skill:
           $ref: "#/components/schemas/PlayerSkill"
+        points:
+          type: integer
+          format: int32
         actualPoints:
           type: integer
           format: int32
@@ -581,9 +588,9 @@ components:
           additionalProperties:
             type: object
             properties:
-              key:
+              PlayerSkill:
                 $ref: "#/components/schemas/PlayerSkill"
-              value:
+              PlayerSkills:
                 $ref: "#/components/schemas/PlayerSkills"
         default:
           type: boolean

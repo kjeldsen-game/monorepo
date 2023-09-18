@@ -105,7 +105,7 @@ public class Player {
     // TODO 72-add-potentials-to-the-player this logic has to change
     public void addSkillsActualPoints(PlayerSkill skill, Integer actualPoints) {
         PlayerSkills skillPoints = actualSkills.get(skill);
-        skillPoints.setActual(Math.min(MAX_SKILL_VALUE, actualPoints));
+        skillPoints.setActual(Math.min(MAX_SKILL_VALUE, +actualPoints));
     }
 
 
