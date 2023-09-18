@@ -43,9 +43,11 @@ export const connector = async (url: string, method: string, body?: any) => {
     },
     body: JSON.stringify(body),
   });
-  if (response.ok && ) {
+  if (response.ok && url.startsWith("http://localhost:8082")) {
     const data = await response.json();
     return data;
+  } else if (response.ok && url.startsWith("http://localhost:8081")) {
+    console.log("this works now");
   } else {
     const error = await response.json();
     throw new Error(error.message);
