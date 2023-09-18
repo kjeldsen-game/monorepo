@@ -9,7 +9,7 @@ import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.rest.api.SimulatorApiDelegate;
 import com.kjeldsen.player.rest.mapper.PlayerDeclineResponseMapper;
-import com.kjeldsen.player.rest.mapper.PlayerMapper;
+import com.kjeldsen.player.rest.mapper.PlayerPositionTendencyMapper;
 import com.kjeldsen.player.rest.mapper.PlayerTrainingResponseMapper;
 import com.kjeldsen.player.rest.model.PlayerDeclineResponse;
 import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
@@ -34,26 +34,26 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
 
     @Override
     public ResponseEntity<PlayerHistoricalTrainingResponse> registerSimulatedScheduledTraining(
-        String playerId,
-        RegisterSimulatedScheduledTrainingRequest registerSimulatedScheduledTrainingRequest) {
+            String playerId,
+            RegisterSimulatedScheduledTrainingRequest registerSimulatedScheduledTrainingRequest) {
 
         registerSimulatedScheduledTrainingRequest.getSkills()
-            .forEach(playerSkill -> scheduleTrainingUseCase.generate(
-                Player.PlayerId.of(playerId),
-                PlayerMapper.INSTANCE.map(playerSkill),
-                registerSimulatedScheduledTrainingRequest.getDays()
-            ));
+                .forEach(playerSkill -> scheduleTrainingUseCase.generate(
+                        Player.PlayerId.of(playerId),
+                        PlayerPositionTendencyMapper.INSTANCE.map(playerSkill.toString())
+                        registerSimulatedScheduledTrainingRequest.getDays()
+                );
 
         List<PlayerTrainingEvent> trainings = findAndProcessScheduledTrainingUseCase.findAndProcess(InstantProvider.nowAsLocalDate())
-            .stream()
-            .filter(playerTrainingEvent -> playerTrainingEvent.getPlayerId().equals(Player.PlayerId.of(playerId)))
-            .toList();
+                .stream()
+                .filter(playerTrainingEvent -> playerTrainingEvent.getPlayerId().equals(Player.PlayerId.of(playerId)))
+                .toList();
 
         return ResponseEntity.ok(new PlayerHistoricalTrainingResponse()
-            .playerId(playerId)
-            .trainings(trainings.stream()
-                .map(PlayerTrainingResponseMapper.INSTANCE::fromPlayerTrainingEvent)
-                .toList()));
+                .playerId(playerId)
+                .trainings(trainings.stream()
+                        .map(PlayerTrainingResponseMapper.INSTANCE::fromPlayerTrainingEvent)
+                        .toList()));
     }
 
     @Override
@@ -64,18 +64,18 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
 
         final AtomicInteger currentDayForDecline = new AtomicInteger(1);
         IntStream.rangeClosed(1, registerSimulatedDeclineRequest.getDaysToDecline())
-            .forEach(i -> {
-                PlayerTrainingDeclineEvent declineEvent = generateSingleDeclineTrainingUseCase.generate(
-                    Player.PlayerId.of(playerId),
-                    currentDayForDecline.getAndIncrement(),
-                    registerSimulatedDeclineRequest.getDeclineSpeed());
+                .forEach(i -> {
+                    PlayerTrainingDeclineEvent declineEvent = generateSingleDeclineTrainingUseCase.generate(
+                            Player.PlayerId.of(playerId),
+                            currentDayForDecline.getAndIncrement(),
+                            registerSimulatedDeclineRequest.getDeclineSpeed());
 
-                declineEvents.add(PlayerDeclineResponseMapper.INSTANCE.map(declineEvent));
+                    declineEvents.add(PlayerDeclineResponseMapper.INSTANCE.map(declineEvent));
 
-                if (declineEvent.getPointsToSubtract() > 0) {
-                    currentDayForDecline.set(1);
-                }
-            });
+                    if (declineEvent.getPointsToSubtract() > 0) {
+                        currentDayForDecline.set(1);
+                    }
+                });
 
         return ResponseEntity.ok(declineEvents);
     }

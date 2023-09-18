@@ -2,12 +2,12 @@ package com.kjeldsen.player.rest.delegate;
 
 import com.kjeldsen.player.application.usecases.UpdatePlayerPositionTendencyUseCase;
 import com.kjeldsen.player.application.usecases.UpdatePlayerTendencies;
-import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.rest.api.PlayerPositionTendenciesApiDelegate;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.mapper.PlayerPositionTendencyMapper;
+import com.kjeldsen.player.rest.model.PlayerPosition;
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponse;
 import com.kjeldsen.player.rest.model.UpdatePlayerPositionTendencyRequestValue;
 import lombok.RequiredArgsConstructor;
@@ -35,13 +35,13 @@ public class PlayerPositionTendenciesDelegate implements PlayerPositionTendencie
 
     @Override
     public ResponseEntity<PlayerPositionTendencyResponse> getPlayerPositionTendency(com.kjeldsen.player.rest.model.PlayerPosition position) {
-        PlayerPositionTendency playerPositionTendency = playerPositionTendencyReadRepository.get(PlayerPosition.valueOf(position.name()));
+        PlayerPositionTendency playerPositionTendency = playerPositionTendencyReadRepository.get(PlayerPosition.valueOf(String.valueOf(position)));
         PlayerPositionTendencyResponse response = PlayerPositionTendencyMapper.INSTANCE.map(playerPositionTendency);
         return ResponseEntity.ok(response);
     }
 
     @Override
-    public ResponseEntity<PlayerPositionTendencyResponse> updatePlayerPositionTendency(com.kjeldsen.player.rest.model.PlayerPosition position,
+    public ResponseEntity<PlayerPositionTendencyResponse> updatePlayerPositionTendency(PlayerPosition position,
                                                                                        Map<String, UpdatePlayerPositionTendencyRequestValue> tendencies) {
 
         PlayerPositionTendency updatedPlayerPositionTendency = updatePlayerPositionTendencyUseCase.update(

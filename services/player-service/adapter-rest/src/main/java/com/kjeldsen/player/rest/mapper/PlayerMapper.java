@@ -11,8 +11,8 @@ import org.mapstruct.factory.Mappers;
 public interface PlayerMapper {
 
     PlayerMapper INSTANCE = Mappers.getMapper(PlayerMapper.class);
-
-    PlayerResponse playerPositionMap(Player player);
+    
+    PlayerResponse playerResponseMap(Player player);
 
     default PlayerPosition playerPositionMap(com.kjeldsen.player.rest.model.PlayerPosition position) {
         return PlayerPosition.valueOf(position.name());

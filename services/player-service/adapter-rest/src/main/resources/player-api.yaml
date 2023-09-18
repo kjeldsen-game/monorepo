@@ -398,6 +398,22 @@ components:
         - ORGANIZATION
         - ONE_ON_ONE
 
+    PlayerSkills:
+      type: object
+      properties:
+        actual:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          example: 5
+        potential:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          example: 30
+
     PlayerPosition:
       type: string
       enum:
@@ -452,12 +468,15 @@ components:
 
     UpdatePlayerPositionTendencyRequest:
       type: object
-      example: { "SCORE": 5 }
+      example: { "SCORE": { "actual": 5, "potential": 50 } }
       additionalProperties:
-        type: integer
+        type: object
         properties:
-          code:
+          key:
             $ref: "#/components/schemas/PlayerSkill"
+          value:
+            $ref: "#/components/schemas/PlayerSkills"
+
 
     TeamResponse:
       type: object
@@ -493,19 +512,7 @@ components:
         category:
           $ref: "#/components/schemas/PlayerCategory"
         actualSkills:
-          type: object
-          example: { "SCORE": 50 }
-          additionalProperties:
-            type: string
-            properties:
-              code:
-                $ref: "#/components/schemas/PlayerSkill"
-              text:
-                type: integer
-                format: int32
-                minimum: 0
-                maximum: 100
-                example: 50
+          $ref: "#/components/schemas/PlayerSkills"
 
     PlayerHistoricalTrainingResponse:
       type: object
@@ -526,7 +533,10 @@ components:
           example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
         skill:
           $ref: "#/components/schemas/PlayerSkill"
-        points:
+        actualPoints:
+          type: integer
+          format: int32
+        potentialPoints:
           type: integer
           format: int32
         pointsBeforeTraining:
@@ -567,12 +577,14 @@ components:
           $ref: "#/components/schemas/PlayerPosition"
         tendencies:
           type: object
-          example: { "SCORE": 5 }
+          example: { "SCORE": { "actual": 5, "potential": 50 } }
           additionalProperties:
-            type: integer
+            type: object
             properties:
-              code:
+              key:
                 $ref: "#/components/schemas/PlayerSkill"
+              value:
+                $ref: "#/components/schemas/PlayerSkills"
         default:
           type: boolean
 

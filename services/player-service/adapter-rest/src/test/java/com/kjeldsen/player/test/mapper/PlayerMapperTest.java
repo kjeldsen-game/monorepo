@@ -3,6 +3,7 @@ package com.kjeldsen.player.test.mapper;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerSkill;
+import com.kjeldsen.player.domain.PlayerSkills;
 import com.kjeldsen.player.domain.provider.PlayerProvider;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.model.PlayerResponse;
@@ -30,8 +31,8 @@ class PlayerMapperTest {
             .age(playerAge)
             .position(PlayerPosition.FORWARD)
             .actualSkills(Map.of(
-                PlayerSkill.SCORE, 10,
-                PlayerSkill.PASSING, 20
+                PlayerSkill.SCORE, new PlayerSkills(10, 0),
+                PlayerSkill.PASSING, new PlayerSkills(20, 0)
             ))
             .build();
 

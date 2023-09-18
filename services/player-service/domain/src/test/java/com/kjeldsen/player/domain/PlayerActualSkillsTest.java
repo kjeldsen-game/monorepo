@@ -24,7 +24,7 @@ class PlayerActualSkillsTest {
 
             assertThat(player.getActualSkills().values()
                 .stream()
-                .mapToInt(Integer::intValue)
+                .mapToInt(PlayerSkills::getActual)
                 .sum())
                 .isEqualTo(200);
         }
@@ -36,40 +36,36 @@ class PlayerActualSkillsTest {
         @Test
         @DisplayName("increase the amount points of a specified skill")
         void increase_the_amount_points_of_a_specified_skill() {
-            PlayerSkills skills = PlayerSkills.builder()
-                .actual(5)
-                .potential(0)
-                .build();
+
+            PlayerSkills skillPoints = new PlayerSkills(50, 0);
 
             Player player = Player.builder()
-                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORE, skills.getActual())))
+                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORE, skillPoints)))
                 .build();
-            player.addSkillsActualPoints(PlayerSkill.SCORE, 5);
+            player.getActualSkills().get(PlayerSkill.SCORE).increaseActualPoints(5);
             assertThat(player.getActualSkillPoints(PlayerSkill.SCORE)).isEqualTo(55);
         }
 
         @Test
         @DisplayName("increase the amount points of a specified skill to the maximum")
         void increase_the_amount_points_of_a_specified_skill_to_the_maximum() {
-            PlayerSkills skills = PlayerSkills.builder()
-                .actual(98)
-                .potential(0)
-                .build();
 
+            PlayerSkills skillPoints = new PlayerSkills(98, 0);
             Player player = Player.builder()
-                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORE, 98)))
+                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORE, skillPoints)))
                 .build();
-            player.addSkillsActualPoints(PlayerSkill.SCORE, 5);
+            player.getActualSkills().get(PlayerSkill.SCORE).increaseActualPoints(5);
             assertThat(player.getActualSkillPoints(PlayerSkill.SCORE)).isEqualTo(100);
         }
 
         @Test
         @DisplayName("not increase the amount points of a specified skill above the maximum")
         void not_increase_the_amount_points_of_a_specified_skill_above_the_maximum() {
+            PlayerSkills skillPoints = new PlayerSkills(100, 0);
             Player player = Player.builder()
-                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORE, 100)))
+                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORE, skillPoints)))
                 .build();
-            player.addSkillPoints(PlayerSkill.SCORE, 5);
+            player.getActualSkills().get(PlayerSkill.SCORE).increaseActualPoints(5);
             assertThat(player.getActualSkillPoints(PlayerSkill.SCORE)).isEqualTo(100);
         }
     }
