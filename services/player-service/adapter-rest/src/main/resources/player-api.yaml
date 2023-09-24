@@ -606,7 +606,7 @@ components:
           example: 2
         skills:
           type: array
-          example: [ PASSING, SCORE ]
+          example: [ PASSING , SCORE ]
           items:
             $ref: "#/components/schemas/PlayerSkill"
 

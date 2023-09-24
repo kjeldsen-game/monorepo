@@ -47,7 +47,6 @@ public class PlayerProvider {
                 return;
             }
 
-            // TODO 72-add-potentials-to-the-player add the current points within the wrapper here
             PlayerSkills values = skillPointsMap.get(skill.get());
             values.increaseActualPoints(1);
 
@@ -58,7 +57,6 @@ public class PlayerProvider {
         });
 
         skillPointsMap.values().forEach(PlayerSkills::initializePotentialPoints);
-        // TODO 72-add-potentials-to-the-player add the potential to the player here
 
         return skillPointsMap;
     }
