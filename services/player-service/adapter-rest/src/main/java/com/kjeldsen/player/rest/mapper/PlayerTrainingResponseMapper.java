@@ -16,6 +16,5 @@ public interface PlayerTrainingResponseMapper {
     default PlayerSkill fromPlayerSkillDomain(com.kjeldsen.player.domain.PlayerSkill playerSkillDomain) {
         return PlayerSkill.valueOf(playerSkillDomain.name());
     }
-
-
+    
 }

@@ -28,7 +28,6 @@ public class FindAndProcessScheduledTrainingUseCase {
 
                 IntStream.rangeClosed(1, scheduledTraining.getTrainingDays())
                     .forEach(day -> {
-
                         PlayerTrainingEvent trainingEvent = generateTrainingUseCase.generate(scheduledTraining.getPlayerId(), scheduledTraining.getSkill(),
                             currentDay.getAndIncrement());
                         playerTrainingEvents.add(trainingEvent);

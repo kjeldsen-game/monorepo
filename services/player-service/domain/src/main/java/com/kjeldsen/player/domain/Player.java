@@ -98,8 +98,7 @@ public class Player {
     }
 
     public Integer getActualSkillPoints(PlayerSkill skill) {
-        PlayerSkills skillPoints = actualSkills.get(skill);
-        return skillPoints.getActual();
+        return actualSkills.get(skill).getActual();
     }
 
     public void addSkillsActualPoints(PlayerSkill skill, Integer actualPoints) {
