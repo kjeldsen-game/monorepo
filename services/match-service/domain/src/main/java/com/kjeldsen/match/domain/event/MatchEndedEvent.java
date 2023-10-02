@@ -1,13 +1,14 @@
 package com.kjeldsen.match.domain.event;
 
 import com.kjeldsen.match.domain.id.MatchId;
-import lombok.Getter;
-import lombok.experimental.SuperBuilder;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Value;
 
-@SuperBuilder
-@Getter
+@Value
+@Builder
+@EqualsAndHashCode(callSuper = false)
 public class MatchEndedEvent extends Event {
 
-    private MatchId matchId;
-
+    MatchId matchId;
 }

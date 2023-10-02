@@ -1,13 +1,18 @@
 package com.kjeldsen.match.domain.aggregate;
 
 import com.kjeldsen.match.domain.id.TeamId;
-import com.kjeldsen.match.domain.type.TeamStatus;
-import lombok.Getter;
+import java.util.List;
+import lombok.Builder;
+import lombok.Value;
 
-@Getter
+@Builder
+@Value
 public class Team {
 
-    private TeamId id;
-    private TeamStatus status;
+    TeamId id;
 
+    List<Player> players;
+    List<Player> bench;
+
+    int rating;
 }

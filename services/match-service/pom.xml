@@ -9,6 +9,7 @@
         <module>domain</module>
         <module>application</module>
         <module>persistence</module>
+        <module>engine</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -66,6 +67,12 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>0.12</version>
             <scope>test</scope>
         </dependency>
         <dependency>

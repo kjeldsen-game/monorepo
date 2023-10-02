@@ -1,15 +1,16 @@
 package com.kjeldsen.match.domain.aggregate;
 
 import com.kjeldsen.match.domain.id.PlayId;
-import lombok.Getter;
+import com.kjeldsen.match.domain.type.Action;
+import lombok.Builder;
+import lombok.Value;
 
-import java.util.List;
-
-@Getter
+@Builder
+@Value
 public class Play {
 
-    private PlayId playId;
-    private List<Player> players;
-    private List<Duel> duels;
-
+    PlayId playId;
+    Action action;
+    Duel duel;
+    int minute;
 }

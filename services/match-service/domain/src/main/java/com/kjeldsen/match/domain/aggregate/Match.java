@@ -1,25 +1,21 @@
 package com.kjeldsen.match.domain.aggregate;
 
+import com.kjeldsen.match.domain.event.MatchStartedEvent;
 import com.kjeldsen.match.domain.id.MatchId;
-import com.kjeldsen.match.domain.type.MatchModifier;
-import com.kjeldsen.match.domain.type.ModifierMetaInfo;
 import lombok.Builder;
-import lombok.Getter;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-
-import java.util.List;
+import lombok.Value;
 
 @Builder
-@Getter
+@Value
 public class Match {
 
-    private MatchId matchId;
-    private ImmutablePair<Team, Team> teams;
-    private List<Opportunity> opportunities;
-    private List<ModifierMetaInfo<MatchModifier>> modifiers;
+    MatchId matchId;
+    Team home;
+    Team away;
 
-    public boolean hasModifiers() {
-        return !modifiers.isEmpty();
+    public static Match generate(MatchStartedEvent matchStartedEvent) {
+        // TODO - return the aggregated match details
+        // This object need to contain all of the information required for the game engine
+        return Match.builder().build();
     }
-
 }

@@ -2,42 +2,27 @@ package com.kjeldsen.match.application.usecases;
 
 import com.kjeldsen.match.domain.aggregate.Team;
 import com.kjeldsen.match.domain.event.MatchCreatedEvent;
-import com.kjeldsen.match.domain.id.EventId;
 import com.kjeldsen.match.domain.id.MatchId;
-import com.kjeldsen.match.domain.id.TeamId;
-import com.kjeldsen.match.domain.provider.InstantProvider;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service
 public class MatchCreateUseCase {
 
-    public void startMatch(ImmutablePair<Team, Team> teams) {
+    public void create(Team home, Team away) {
+        log.info("Creating match for teams {} (home) and {} (away)", home.getId(), away.getId());
 
-        final TeamId attackingTeamId = getAttackingTeamId(teams);
-        final TeamId defendingTeamId = getDefendingTeamId(teams);
+        validateMatchCreate(home, away);
 
-        log.info("Creating match for teams [{}, {}]", attackingTeamId, defendingTeamId);
-
-        // TODO add validation for both teams
         MatchCreatedEvent.builder()
-            .eventId(EventId.generate())
-            .eventDate(InstantProvider.now())
             .matchId(MatchId.generate())
-            .teamIds(List.of(attackingTeamId, defendingTeamId))
+            .homeTeamId(home.getId())
+            .awayTeamId(away.getId())
             .build();
     }
 
-    private TeamId getAttackingTeamId(ImmutablePair<Team, Team> teams) {
-        return teams.getLeft().getId();
+    private void validateMatchCreate(Team home, Team away) {
+        // TODO - match between these teams already scheduled, etc.
     }
-
-    private TeamId getDefendingTeamId(ImmutablePair<Team, Team> teams) {
-        return teams.getRight().getId();
-    }
-
 }

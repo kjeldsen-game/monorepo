@@ -2,15 +2,17 @@ package com.kjeldsen.match.domain.aggregate;
 
 import com.kjeldsen.match.domain.id.MatchId;
 import com.kjeldsen.match.domain.id.OpportunityId;
-import lombok.Getter;
-
+import com.kjeldsen.match.domain.id.TeamId;
 import java.util.List;
+import lombok.Builder;
+import lombok.Value;
 
-@Getter
+@Builder
+@Value
 public class Opportunity {
 
-    private OpportunityId opportunityId;
-    private MatchId matchId;
-    private List<Play> plays;
-
+    OpportunityId opportunityId;
+    MatchId matchId;
+    TeamId teamId;
+    List<Play> plays;
 }

@@ -1,7 +1,9 @@
 package com.kjeldsen.match.domain.type;
 
 public enum PitchArea {
-    ONE,
-    TWO,
-    THREE
+
+    // TODO - the 9 pitch areas
+    BACK,
+    MIDFIELD,
+    FORWARD;
 }
