@@ -6,6 +6,26 @@ import Grid from '@/shared/components/Grid/Grid'
 import { players } from '@/data/SamplePlayerTraining'
 import { sampleTrainingColumn } from '@/data/sampleTrainingColumn'
 
+// use serversideprops to fetch training data from API similar to team page
+// can use connectorAPI because it has the same URL and returns the same content type
+
+// function to check which players got upgrades
+const checkTrainingUpgrades = (value: number) => {
+  // Should I be worried about performance here? I'm going to go through all the players in a team, display the ones that have
+  // gotten an upgrade from training, and then apply some css classes to the stats where they got an upgrade
+}
+
+// function to read data from API
+const checkTrainingValues = (value: number) => {
+  // Out of the players that got an upgrade, what did they get an upgrade in?
+}
+
+//function to apply css classes and styling based on value.
+const applyTrainingStyles = (value: number) => {
+  // apply css classes based on which stats got an upgrade
+}
+
+
 const Training: NextPage = () => {
   return (
     <>
