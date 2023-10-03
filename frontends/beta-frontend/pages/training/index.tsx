@@ -25,6 +25,7 @@ const applyTrainingStyles = (value: number) => {
   // apply css classes based on which stats got an upgrade
 }
 
+// I don't know if this is overcomplicated, or if there is a better way to apply css conditionally. But this would be my initial approach.
 
 const Training: NextPage = () => {
   return (
