@@ -37,9 +37,9 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         RegisterSimulatedScheduledTrainingRequest registerSimulatedScheduledTrainingRequest) {
 
         registerSimulatedScheduledTrainingRequest.getSkills()
-            .forEach(playerSkill -> scheduleTrainingUseCase.generate(
+            .forEach(skillsToTrain -> scheduleTrainingUseCase.generate(
                 Player.PlayerId.of(playerId),
-                this.playerSkill2RestToPlayerSkillDomain(playerSkill),
+                playerSkill2RestToPlayerSkillDomain(skillsToTrain.getValue()),
                 registerSimulatedScheduledTrainingRequest.getDays()
             ));
 
@@ -79,8 +79,8 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         return ResponseEntity.ok(declineEvents);
     }
 
-    private com.kjeldsen.player.domain.PlayerSkill playerSkill2RestToPlayerSkillDomain(com.kjeldsen.player.rest.model.PlayerSkill playerSkill) {
-        return com.kjeldsen.player.domain.PlayerSkill.valueOf(playerSkill.toString());
+    private com.kjeldsen.player.domain.PlayerSkill playerSkill2RestToPlayerSkillDomain(String playerSkill) {
+        return com.kjeldsen.player.domain.PlayerSkill.valueOf(playerSkill);
     }
 
 }

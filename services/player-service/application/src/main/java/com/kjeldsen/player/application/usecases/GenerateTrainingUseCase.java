@@ -55,7 +55,6 @@ public class GenerateTrainingUseCase {
         } else {
             Integer points = PointsGenerator.generatePointsRise(currentDay);
             playerTrainingEvent.setPoints(points);
-
             playerTrainingEvent.setActualPoints(player.getActualSkills().get(playerSkill).getActual());
             playerTrainingEvent.setPotentialPoints(player.getActualSkills().get(playerSkill).getPotential());
             playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
