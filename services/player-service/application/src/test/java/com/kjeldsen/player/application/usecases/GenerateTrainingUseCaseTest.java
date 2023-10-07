@@ -3,6 +3,7 @@ package com.kjeldsen.player.application.usecases;
 import com.kjeldsen.events.domain.EventId;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
+import com.kjeldsen.player.domain.PlayerSkills;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.generator.PointsGenerator;
 import com.kjeldsen.player.domain.provider.InstantProvider;
@@ -105,8 +106,8 @@ class GenerateTrainingUseCaseTest {
         return Player.builder()
             .id(playerId)
             .actualSkills(new HashMap<>(Map.of(
-                PlayerSkill.SCORE, 5,
-                PlayerSkill.CO, 3)))
+                PlayerSkill.SCORE, new PlayerSkills(5, 0),
+                PlayerSkill.CO, new PlayerSkills(3, 0))))
             .build();
     }
 }

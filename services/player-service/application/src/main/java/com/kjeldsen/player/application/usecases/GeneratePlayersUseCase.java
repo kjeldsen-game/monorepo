@@ -31,8 +31,6 @@ public class GeneratePlayersUseCase {
                 return PlayerProvider.generate(teamId, positionTendency, playerCategory, 200);
             })
             .map(player -> {
-                // TODO 72-add-potentials-to-the-player change this code to call CreatePlayerUseCase. We might mapper from player to NewPlayer and
-                //  maybe more changes
                 Player generatedPlayer = playerWriteRepository.save(player);
                 log.info("Generated player {}", generatedPlayer);
                 return generatedPlayer;

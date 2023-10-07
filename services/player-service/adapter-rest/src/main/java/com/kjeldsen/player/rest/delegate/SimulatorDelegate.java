@@ -38,9 +38,9 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         RegisterSimulatedScheduledTrainingRequest registerSimulatedScheduledTrainingRequest) {
 
         registerSimulatedScheduledTrainingRequest.getSkills()
-            .forEach(playerSkill -> scheduleTrainingUseCase.generate(
+            .forEach(skillsToTrain -> scheduleTrainingUseCase.generate(
                 Player.PlayerId.of(playerId),
-                PlayerMapper.INSTANCE.map(playerSkill),
+                PlayerMapper.INSTANCE.map(skillsToTrain.getValue()),
                 registerSimulatedScheduledTrainingRequest.getDays()
             ));
 

@@ -3,10 +3,13 @@ package com.kjeldsen.player.integration.player;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.PlayerSkill;
+import com.kjeldsen.player.domain.PlayerSkills;
 import com.kjeldsen.player.integration.AbstractIT;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerPositionTendencyMongoRepository;
+import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.model.PlayerPosition;
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponse;
+import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponseTendenciesValue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -48,7 +51,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
         public void return_a_list_player_position_tendencies() throws Exception {
             PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE, 7))
+                .tendencies(Map.of(PlayerSkill.SCORE, new PlayerSkills(7, 0)))
                 .build();
             playerPositionTendencyStore.save(storedPlayerPositionTendency);
 
@@ -57,63 +60,63 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
                     .position(PlayerPosition.CENTRE_BACK)
                     .tendencies(PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES.getTendencies()
                         .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                     ._default(true),
 
                 new PlayerPositionTendencyResponse()
                     .position(PlayerPosition.AERIAL_CENTRE_BACK)
                     .tendencies(PlayerPositionTendency.DEFAULT_AERIAL_CENTRE_BACK_TENDENCIES.getTendencies()
                         .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                     ._default(true),
 
                 new PlayerPositionTendencyResponse()
                     .position(PlayerPosition.FULL_BACK)
                     .tendencies(PlayerPositionTendency.DEFAULT_FULL_BACK_TENDENCIES.getTendencies()
                         .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                     ._default(true),
 
                 new PlayerPositionTendencyResponse()
                     .position(PlayerPosition.FULL_WINGBACK)
                     .tendencies(PlayerPositionTendency.DEFAULT_FULL_WINGBACK_TENDENCIES.getTendencies()
                         .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                     ._default(true),
 
                 new PlayerPositionTendencyResponse()
                     .position(PlayerPosition.DEFENSIVE_MIDFIELDER)
                     .tendencies(PlayerPositionTendency.DEFAULT_DEFENSIVE_MIDFIELDER_TENDENCIES.getTendencies()
                         .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                     ._default(true),
 
                 new PlayerPositionTendencyResponse()
                     .position(PlayerPosition.CENTRE_MIDFIELDER)
                     .tendencies(PlayerPositionTendency.DEFAULT_CENTRE_MIDFIELDER_TENDENCIES.getTendencies()
                         .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                     ._default(true),
 
                 new PlayerPositionTendencyResponse()
                     .position(PlayerPosition.OFFENSIVE_MIDFIELDER)
                     .tendencies(PlayerPositionTendency.DEFAULT_OFFENSIVE_MIDFIELDER_TENDENCIES.getTendencies()
                         .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                     ._default(true),
 
                 new PlayerPositionTendencyResponse()
                     .position(PlayerPosition.FORWARD)
                     .tendencies(storedPlayerPositionTendency.getTendencies()
                         .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                     ._default(false),
 
                 new PlayerPositionTendencyResponse()
                     .position(PlayerPosition.AERIAL_FORWARD)
                     .tendencies(PlayerPositionTendency.DEFAULT_AERIAL_FORWARD_TENDENCIES.getTendencies()
                         .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                     ._default(true)
             );
 
@@ -134,7 +137,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
                 .position(PlayerPosition.CENTRE_BACK)
                 .tendencies(PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES.getTendencies()
                     .entrySet().stream()
-                    .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                    .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                 ._default(PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES.isDefault());
 
             mockMvc.perform(get("/player-position-tendencies/CENTRE_BACK"))
@@ -148,7 +151,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
         public void return_a_stored_player_position_tendency_of_a_given_position_when_player_position_tendency_exists_in_storage() throws Exception {
             PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE, 7))
+                .tendencies(Map.of(PlayerSkill.SCORE, new PlayerSkills(7, 0)))
                 .build();
             playerPositionTendencyStore.save(storedPlayerPositionTendency);
 
@@ -156,7 +159,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
                 .position(PlayerPosition.FORWARD)
                 .tendencies(storedPlayerPositionTendency.getTendencies()
                     .entrySet().stream()
-                    .collect(Collectors.toMap(entry -> entry.getKey().name(), Map.Entry::getValue)))
+                    .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                 ._default(false);
 
             mockMvc.perform(get("/player-position-tendencies/FORWARD"))
@@ -175,9 +178,11 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
 
             Map<PlayerSkill, Integer> request = Map.of(PlayerSkill.SCORE, 7);
 
+            PlayerPositionTendencyResponseTendenciesValue var = new PlayerPositionTendencyResponseTendenciesValue();
+            var.setPlayerSkills(new com.kjeldsen.player.rest.model.PlayerSkills().actual(7).potential(0));
             PlayerPositionTendencyResponse expected = new PlayerPositionTendencyResponse()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE.name(), 7))
+                .tendencies(Map.of(PlayerSkill.SCORE.name(), var))
                 ._default(false);
 
             mockMvc.perform(patch("/player-position-tendencies/FORWARD")
@@ -188,4 +193,13 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
                 .andExpect(content().json(objectMapper.writeValueAsString(expected)));
         }
     }
+
+    public static PlayerPositionTendencyResponseTendenciesValue map(Map.Entry<com.kjeldsen.player.domain.PlayerSkill, com.kjeldsen.player.domain.PlayerSkills> mapEntrySkills) {
+        PlayerPositionTendencyResponseTendenciesValue playerPositionTendencyResponseTendenciesValue = new PlayerPositionTendencyResponseTendenciesValue();
+        playerPositionTendencyResponseTendenciesValue.setPlayerSkill(PlayerMapper.INSTANCE.playerSkillMap(mapEntrySkills.getKey().name()));
+        playerPositionTendencyResponseTendenciesValue.setPlayerSkills(PlayerMapper.INSTANCE.map(mapEntrySkills.getValue()));
+        return playerPositionTendencyResponseTendenciesValue;
+    }
+
+
 }

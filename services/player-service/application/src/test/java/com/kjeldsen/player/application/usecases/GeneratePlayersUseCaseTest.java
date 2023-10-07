@@ -1,9 +1,6 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerPositionTendency;
-import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -55,6 +52,6 @@ class GeneratePlayersUseCaseTest {
                 && player.getAge() <= 33
                 && StringUtils.isNotBlank(player.getName())
                 && player.getTeamId().equals(teamId)
-                && player.getActualSkills().values().stream().mapToInt(Integer::intValue).sum() == 200);
+                && player.getActualSkills().values().stream().map(PlayerSkills::getActual).mapToInt(Integer::intValue).sum() == 200);
     }
 }

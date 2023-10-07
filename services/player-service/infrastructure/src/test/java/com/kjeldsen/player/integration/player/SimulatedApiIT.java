@@ -55,8 +55,8 @@ public class SimulatedApiIT extends AbstractIT {
             playerWriteRepository.save(Player.builder()
                 .id(Player.PlayerId.of(playerId))
                 .actualSkills(Map.of(
-                    com.kjeldsen.player.domain.PlayerSkill.CO, 1,
-                    com.kjeldsen.player.domain.PlayerSkill.SCORE, 2
+                    com.kjeldsen.player.domain.PlayerSkill.CO, new com.kjeldsen.player.domain.PlayerSkills(1, 0),
+                    com.kjeldsen.player.domain.PlayerSkill.SCORE, new com.kjeldsen.player.domain.PlayerSkills(2, 0)
                 ))
                 .build());
 

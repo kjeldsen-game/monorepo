@@ -59,5 +59,4 @@ public class ScheduleTrainingUseCase {
             throw new IllegalArgumentException("Days must be between 1 and 1000");
         }
     }
-
 }

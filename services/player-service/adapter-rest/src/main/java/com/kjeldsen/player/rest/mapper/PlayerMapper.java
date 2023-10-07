@@ -12,9 +12,9 @@ public interface PlayerMapper {
 
     PlayerMapper INSTANCE = Mappers.getMapper(PlayerMapper.class);
 
-    PlayerResponse map(Player player);
+    PlayerResponse playerResponseMap(Player player);
 
-    default PlayerPosition map(com.kjeldsen.player.rest.model.PlayerPosition position) {
+    default PlayerPosition playerPositionMap(com.kjeldsen.player.rest.model.PlayerPosition position) {
         return PlayerPosition.valueOf(position.name());
     }
 
@@ -22,9 +22,14 @@ public interface PlayerMapper {
         return PlayerSkill.valueOf(playerSkill);
     }
 
-    default com.kjeldsen.player.domain.PlayerSkill map(PlayerSkill playerSkill) {
-        return com.kjeldsen.player.domain.PlayerSkill.valueOf(playerSkill.name());
+    default com.kjeldsen.player.domain.PlayerSkill map(String playerSkill) {
+        return com.kjeldsen.player.domain.PlayerSkill.valueOf(playerSkill);
     }
 
-
+    default com.kjeldsen.player.rest.model.PlayerSkills map(com.kjeldsen.player.domain.PlayerSkills playerSkills) {
+        com.kjeldsen.player.rest.model.PlayerSkills var1 = new com.kjeldsen.player.rest.model.PlayerSkills();
+        var1.setActual(playerSkills.getActual());
+        var1.setPotential(playerSkills.getPotential());
+        return var1;
+    }
 }

@@ -29,121 +29,124 @@ class PlayerPositionTendencyTest {
         public void have_the_correct_skill_tendencies() {
 
             assertThat(PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES.getTendencies())
-                .isEqualTo(Map.of(
-                    PlayerSkill.SCORE, 1,
-                    PlayerSkill.OFFENSIVE_POSITION, 1,
-                    PlayerSkill.BALL_CONTROL, 2,
-                    PlayerSkill.PASSING, 2,
-                    PlayerSkill.AERIAL, 4,
-                    PlayerSkill.CO, 4,
-                    PlayerSkill.TACKLING, 8,
-                    PlayerSkill.DEFENSE_POSITION, 8
+                .usingRecursiveComparison().isEqualTo(Map.of(
+                    PlayerSkill.SCORE, new PlayerSkills(1, 0),
+                    PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(1, 0),
+                    PlayerSkill.BALL_CONTROL, new PlayerSkills(2, 0),
+                    PlayerSkill.PASSING, new PlayerSkills(2, 0),
+                    PlayerSkill.AERIAL, new PlayerSkills(4, 0),
+                    PlayerSkill.CO, new PlayerSkills(4, 0),
+                    PlayerSkill.TACKLING, new PlayerSkills(8, 0),
+                    PlayerSkill.DEFENSE_POSITION, new PlayerSkills(8, 0)
                 ));
 
             assertThat(PlayerPositionTendency.DEFAULT_AERIAL_CENTRE_BACK_TENDENCIES.getTendencies())
-                .isEqualTo(Map.of(
-                    PlayerSkill.SCORE, 1,
-                    PlayerSkill.OFFENSIVE_POSITION, 1,
-                    PlayerSkill.BALL_CONTROL, 2,
-                    PlayerSkill.PASSING, 2,
-                    PlayerSkill.AERIAL, 6,
-                    PlayerSkill.CO, 4,
-                    PlayerSkill.TACKLING, 5,
-                    PlayerSkill.DEFENSE_POSITION, 5
+                .usingRecursiveComparison().isEqualTo(Map.of(
+                    PlayerSkill.SCORE, new PlayerSkills(1, 0),
+                    PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(1, 0),
+                    PlayerSkill.BALL_CONTROL, new PlayerSkills(2, 0),
+                    PlayerSkill.PASSING, new PlayerSkills(2, 0),
+                    PlayerSkill.AERIAL, new PlayerSkills(6, 0),
+                    PlayerSkill.CO, new PlayerSkills(4, 0),
+                    PlayerSkill.TACKLING, new PlayerSkills(5, 0),
+                    PlayerSkill.DEFENSE_POSITION, new PlayerSkills(5, 0)
                 ));
 
             assertThat(PlayerPositionTendency.DEFAULT_FULL_BACK_TENDENCIES.getTendencies())
-                .isEqualTo(Map.of(
-                    PlayerSkill.SCORE, 1,
-                    PlayerSkill.OFFENSIVE_POSITION, 2,
-                    PlayerSkill.BALL_CONTROL, 2,
-                    PlayerSkill.PASSING, 4,
-                    PlayerSkill.AERIAL, 3,
-                    PlayerSkill.CO, 4,
-                    PlayerSkill.TACKLING, 8,
-                    PlayerSkill.DEFENSE_POSITION, 8
+                .usingRecursiveComparison().isEqualTo(Map.of(
+                    PlayerSkill.SCORE, new PlayerSkills(1, 0),
+                    PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(2, 0),
+                    PlayerSkill.BALL_CONTROL, new PlayerSkills(2, 0),
+                    PlayerSkill.PASSING, new PlayerSkills(4, 0),
+                    PlayerSkill.AERIAL, new PlayerSkills(3, 0),
+                    PlayerSkill.CO, new PlayerSkills(4, 0),
+                    PlayerSkill.TACKLING, new PlayerSkills(8, 0),
+                    PlayerSkill.DEFENSE_POSITION, new PlayerSkills(8, 0)
                 ));
 
             assertThat(PlayerPositionTendency.DEFAULT_FULL_WINGBACK_TENDENCIES.getTendencies())
-                .isEqualTo(Map.of(
-                    PlayerSkill.SCORE, 1,
-                    PlayerSkill.OFFENSIVE_POSITION, 4,
-                    PlayerSkill.BALL_CONTROL, 4,
-                    PlayerSkill.PASSING, 5,
-                    PlayerSkill.AERIAL, 3,
-                    PlayerSkill.CO, 4,
-                    PlayerSkill.TACKLING, 6,
-                    PlayerSkill.DEFENSE_POSITION, 6
+                .usingRecursiveComparison().isEqualTo(Map.of(
+                    PlayerSkill.SCORE, new PlayerSkills(1, 0),
+                    PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(4, 0),
+                    PlayerSkill.BALL_CONTROL, new PlayerSkills(4, 0),
+                    PlayerSkill.PASSING, new PlayerSkills(5, 0),
+                    PlayerSkill.AERIAL, new PlayerSkills(3, 0),
+                    PlayerSkill.CO, new PlayerSkills(4, 0),
+                    PlayerSkill.TACKLING, new PlayerSkills(6, 0),
+                    PlayerSkill.DEFENSE_POSITION, new PlayerSkills(6, 0)
                 ));
 
             assertThat(PlayerPositionTendency.DEFAULT_DEFENSIVE_MIDFIELDER_TENDENCIES.getTendencies())
-                .isEqualTo(Map.of(
-                    PlayerSkill.SCORE, 1,
-                    PlayerSkill.OFFENSIVE_POSITION, 2,
-                    PlayerSkill.BALL_CONTROL, 3,
-                    PlayerSkill.PASSING, 6,
-                    PlayerSkill.AERIAL, 3,
-                    PlayerSkill.CO, 4,
-                    PlayerSkill.TACKLING, 6,
-                    PlayerSkill.DEFENSE_POSITION, 6
+                .usingRecursiveComparison().isEqualTo(Map.of(
+                    PlayerSkill.SCORE, new PlayerSkills(1, 0),
+                    PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(2, 0),
+                    PlayerSkill.BALL_CONTROL, new PlayerSkills(3, 0),
+                    PlayerSkill.PASSING, new PlayerSkills(6, 0),
+                    PlayerSkill.AERIAL, new PlayerSkills(3, 0),
+                    PlayerSkill.CO, new PlayerSkills(4, 0),
+                    PlayerSkill.TACKLING, new PlayerSkills(6, 0),
+                    PlayerSkill.DEFENSE_POSITION, new PlayerSkills(6, 0)
                 ));
 
             assertThat(PlayerPositionTendency.DEFAULT_CENTRE_MIDFIELDER_TENDENCIES.getTendencies())
-                .isEqualTo(Map.of(
-                    PlayerSkill.SCORE, 1,
-                    PlayerSkill.OFFENSIVE_POSITION, 6,
-                    PlayerSkill.BALL_CONTROL, 6,
-                    PlayerSkill.PASSING, 8,
-                    PlayerSkill.AERIAL, 3,
-                    PlayerSkill.CO, 4,
-                    PlayerSkill.TACKLING, 4,
-                    PlayerSkill.DEFENSE_POSITION, 4
+                .usingRecursiveComparison().isEqualTo(Map.of(
+                    PlayerSkill.SCORE, new PlayerSkills(1, 0),
+                    PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(6, 0),
+                    PlayerSkill.BALL_CONTROL, new PlayerSkills(6, 0),
+                    PlayerSkill.PASSING, new PlayerSkills(8, 0),
+                    PlayerSkill.AERIAL, new PlayerSkills(3, 0),
+                    PlayerSkill.CO, new PlayerSkills(4, 0),
+                    PlayerSkill.TACKLING, new PlayerSkills(4, 0),
+                    PlayerSkill.DEFENSE_POSITION, new PlayerSkills(4, 0)
                 ));
 
             assertThat(PlayerPositionTendency.DEFAULT_OFFENSIVE_MIDFIELDER_TENDENCIES.getTendencies())
-                .isEqualTo(Map.of(
-                    PlayerSkill.SCORE, 3,
-                    PlayerSkill.OFFENSIVE_POSITION, 8,
-                    PlayerSkill.BALL_CONTROL, 8,
-                    PlayerSkill.PASSING, 6,
-                    PlayerSkill.AERIAL, 3,
-                    PlayerSkill.CO, 4,
-                    PlayerSkill.TACKLING, 1,
-                    PlayerSkill.DEFENSE_POSITION, 1
+                .usingRecursiveComparison().isEqualTo(Map.of(
+                    PlayerSkill.SCORE, new PlayerSkills(3, 0),
+                    PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(8, 0),
+                    PlayerSkill.BALL_CONTROL, new PlayerSkills(8, 0),
+                    PlayerSkill.PASSING, new PlayerSkills(6, 0),
+                    PlayerSkill.AERIAL, new PlayerSkills(3, 0),
+                    PlayerSkill.CO, new PlayerSkills(4, 0),
+                    PlayerSkill.TACKLING, new PlayerSkills(1, 0),
+                    PlayerSkill.DEFENSE_POSITION, new PlayerSkills(1, 0)
                 ));
 
             assertThat(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.getTendencies())
+                .usingRecursiveComparison()
                 .isEqualTo(Map.of(
-                    PlayerSkill.SCORE, 7,
-                    PlayerSkill.OFFENSIVE_POSITION, 7,
-                    PlayerSkill.BALL_CONTROL, 7,
-                    PlayerSkill.PASSING, 3,
-                    PlayerSkill.AERIAL, 3,
-                    PlayerSkill.CO, 4,
-                    PlayerSkill.TACKLING, 1,
-                    PlayerSkill.DEFENSE_POSITION, 1
+                    PlayerSkill.SCORE, new PlayerSkills(7, 0),
+                    PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(7, 0),
+                    PlayerSkill.BALL_CONTROL, new PlayerSkills(7, 0),
+                    PlayerSkill.PASSING, new PlayerSkills(3, 0),
+                    PlayerSkill.AERIAL, new PlayerSkills(3, 0),
+                    PlayerSkill.CO, new PlayerSkills(4, 0),
+                    PlayerSkill.TACKLING, new PlayerSkills(1, 0),
+                    PlayerSkill.DEFENSE_POSITION, new PlayerSkills(1, 0)
                 ));
 
             assertThat(PlayerPositionTendency.DEFAULT_AERIAL_FORWARD_TENDENCIES.getTendencies())
+                .usingRecursiveComparison()
                 .isEqualTo(Map.of(
-                    PlayerSkill.SCORE, 5,
-                    PlayerSkill.OFFENSIVE_POSITION, 5,
-                    PlayerSkill.BALL_CONTROL, 5,
-                    PlayerSkill.PASSING, 3,
-                    PlayerSkill.AERIAL, 7,
-                    PlayerSkill.CO, 4,
-                    PlayerSkill.TACKLING, 1,
-                    PlayerSkill.DEFENSE_POSITION, 1
+                    PlayerSkill.SCORE, new PlayerSkills(5, 0),
+                    PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(5, 0),
+                    PlayerSkill.BALL_CONTROL, new PlayerSkills(5, 0),
+                    PlayerSkill.PASSING, new PlayerSkills(3, 0),
+                    PlayerSkill.AERIAL, new PlayerSkills(7, 0),
+                    PlayerSkill.CO, new PlayerSkills(4, 0),
+                    PlayerSkill.TACKLING, new PlayerSkills(1, 0),
+                    PlayerSkill.DEFENSE_POSITION, new PlayerSkills(1, 0)
                 ));
 
             assertThat(PlayerPositionTendency.DEFAULT_GOALKEEPER_TENDENCIES.getTendencies())
+                .usingRecursiveComparison()
                 .isEqualTo(Map.of(
-                    PlayerSkill.REFLEXES, 5,
-                    PlayerSkill.POSITIONING, 4,
-                    PlayerSkill.INTERCEPTIONS, 2,
-                    PlayerSkill.CONTROL, 2,
-                    PlayerSkill.ORGANIZATION, 2,
-                    PlayerSkill.ONE_ON_ONE, 4
+                    PlayerSkill.REFLEXES, new PlayerSkills(5, 0),
+                    PlayerSkill.POSITIONING, new PlayerSkills(4, 0),
+                    PlayerSkill.INTERCEPTIONS, new PlayerSkills(2, 0),
+                    PlayerSkill.CONTROL, new PlayerSkills(2, 0),
+                    PlayerSkill.ORGANIZATION, new PlayerSkills(2, 0),
+                    PlayerSkill.ONE_ON_ONE, new PlayerSkills(4, 0)
                 ));
         }
 

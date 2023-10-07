@@ -47,18 +47,17 @@ public class GenerateTrainingUseCase {
             .playerId(player.getId())
             .skill(playerSkill)
             .currentDay(currentDay)
-            .pointsBeforeTraining(player.getActualSkillPoints(playerSkill))
+            .pointsBeforeTraining(player.getActualSkills().get(playerSkill).getActual())
             .build();
 
         if (player.isBloomActive()) {
             handleBloomEvent(player, playerTrainingEvent);
         } else {
-            // TODO 72-add-potentials-to-the-player I think PointsGenerator.generatePointsRise should receive the player current points and
-            //  potential and based on both calculate the points rise
             Integer points = PointsGenerator.generatePointsRise(currentDay);
-            // TODO 72-add-potentials-to-the-player player.addSkillPoints should now not only set actual skill points but probably potential as well
-            player.addSkillPoints(playerSkill, points);
             playerTrainingEvent.setPoints(points);
+            playerTrainingEvent.setActualPoints(player.getActualSkillPoints(playerSkill));
+            player.addSkillsPoints(playerSkill, points);
+            playerTrainingEvent.setPotentialPoints(player.getPotentialSkillPoints(playerSkill));
             playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
         }
 
@@ -70,12 +69,11 @@ public class GenerateTrainingUseCase {
 
     private void handleBloomEvent(Player player, PlayerTrainingEvent playerTrainingEvent) {
         Integer points = PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay());
-        player.addSkillPoints(playerTrainingEvent.getSkill(), points);
-
+        player.addSkillsPoints(playerTrainingEvent.getSkill(), points);
         Integer pointsToRise = generatePointsBloom(player.getBloom().getBloomSpeed(), points);
-        player.addSkillPoints(playerTrainingEvent.getSkill(), pointsToRise);
+        player.addSkillsPoints(playerTrainingEvent.getSkill(), pointsToRise);
         playerTrainingEvent.setBloom(player.getBloom());
-        playerTrainingEvent.setPoints(points);
+        playerTrainingEvent.setActualPoints(points);
         playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
     }
 
