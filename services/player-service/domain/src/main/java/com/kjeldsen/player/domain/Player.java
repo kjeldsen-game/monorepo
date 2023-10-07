@@ -101,9 +101,14 @@ public class Player {
         return actualSkills.get(skill).getActual();
     }
 
-    public void addSkillsActualPoints(PlayerSkill skill, Integer actualPoints) {
+    public Integer getPotentialSkillPoints(PlayerSkill skill) {
+        return actualSkills.get(skill).getPotential();
+    }
+
+
+    public void addSkillsPoints(PlayerSkill skill, Integer points) {
         PlayerSkills skillPoints = actualSkills.get(skill);
-        skillPoints.setActual(Math.min(MAX_SKILL_VALUE, +actualPoints));
+        skillPoints.setActual(Math.min(MAX_SKILL_VALUE, skillPoints.getActual() + points));
     }
 
 
