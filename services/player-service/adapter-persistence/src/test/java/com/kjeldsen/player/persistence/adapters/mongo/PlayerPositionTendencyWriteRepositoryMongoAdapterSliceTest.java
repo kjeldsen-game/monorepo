@@ -55,7 +55,7 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceTest extends Abstrac
             Optional<PlayerPositionTendency> actual = playerPositionTendencyMongoRepository.findByPosition(PlayerPosition.FORWARD);
 
             assertThat(actual.isPresent()).isTrue();
-            assertThat(actual.get().getTendencies().get(PlayerSkill.SCORE)).isEqualTo(7);
+            assertThat(actual.get().getTendencies().get(PlayerSkill.SCORE)).usingRecursiveComparison().isEqualTo(new PlayerSkills(7, 0));
         }
 
         @Test
