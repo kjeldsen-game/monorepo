@@ -20,7 +20,7 @@ public class TeamReadRepositoryMongoAdapter implements TeamReadRepository {
     }
 
     @Override
-    public Optional<Team> findById(String id) {
+    public Optional<Team> findById(Team.TeamId id) {
         return teamMongoRepository.findById(id);
     }
 

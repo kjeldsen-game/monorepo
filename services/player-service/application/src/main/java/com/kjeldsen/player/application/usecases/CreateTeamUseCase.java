@@ -29,6 +29,9 @@ public class CreateTeamUseCase {
             .players(players)
             .cantera(Team.Cantera.builder()
                 .score(0.0)
+                .economyLevel(0)
+                .traditionLevel(0)
+                .buildingsLevel(0)
                 .build())
             .build();
         // TODO apart from saving the team aggregate/projection, we need to store a created_team_event. Then Team domain object should have a

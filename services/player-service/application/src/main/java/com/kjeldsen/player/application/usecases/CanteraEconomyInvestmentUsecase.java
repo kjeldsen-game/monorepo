@@ -20,7 +20,7 @@ public class CanteraEconomyInvestmentUsecase {
     private final TeamWriteRepository teamWriteRepository;
     private final CanteraInvestmentEventWriteRepository canteraInvestmentEventWriteRepository;
 
-    public void invest(String teamId, Integer points) {
+    public void invest(Team.TeamId teamId, Integer points) {
         log.info("Economy investment team {} with {} points", teamId, points);
 
         Team team = teamReadRepository.findById(teamId)
@@ -29,7 +29,7 @@ public class CanteraEconomyInvestmentUsecase {
         CanteraInvestmentEvent canteraInvestmentEvent = CanteraInvestmentEvent.builder()
             .id(EventId.generate())
             .occurredAt(InstantProvider.now())
-            .teamId(Team.TeamId.of(teamId))
+            .teamId(teamId)
             .investment(Team.Cantera.Investment.ECONOMY)
             .points(points)
             .build();
