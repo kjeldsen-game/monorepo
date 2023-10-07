@@ -15,8 +15,13 @@ public class TeamReadRepositoryMongoAdapter implements TeamReadRepository {
     private final TeamMongoRepository teamMongoRepository;
 
     @Override
-    public Optional<Team> findOneByUserId(String id) {
+    public Optional<Team> findByUserId(String id) {
         return teamMongoRepository.findOneByUserId(id);
+    }
+
+    @Override
+    public Optional<Team> findById(String id) {
+        return teamMongoRepository.findById(id);
     }
 
 }

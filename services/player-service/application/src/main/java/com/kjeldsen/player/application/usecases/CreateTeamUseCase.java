@@ -27,12 +27,14 @@ public class CreateTeamUseCase {
             .userId(userId)
             .name(teamName)
             .players(players)
-            .canteraScore(0)
+            .cantera(Team.Cantera.builder()
+                .score(0.0)
+                .build())
             .build();
         // TODO apart from saving the team aggregate/projection, we need to store a created_team_event. Then Team domain object should have a
         //  method like
         //  create(created_team_event) and based on the event it populates itself. Then you save it with the repo
-        // TODO notification for the user to know that his team as been created
+        // TODO notification for the user to know that his team has been created
         teamWriteRepository.save(team);
     }
 }

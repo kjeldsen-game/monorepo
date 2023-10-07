@@ -14,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class TeamDelegateTest {
 
@@ -30,7 +32,7 @@ public class TeamDelegateTest {
             .name("exampleName")
             .userId("exampleUserId")
             .players(examplePlayers)
-            .canteraScore(0)
+            .cantera(Team.Cantera.builder().score(.0).build())
             .build();
 
         when(mockedAuthenticationFetcher.getLoggedUserID()).thenReturn("123");

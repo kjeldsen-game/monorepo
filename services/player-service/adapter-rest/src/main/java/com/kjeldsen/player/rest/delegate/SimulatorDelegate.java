@@ -1,5 +1,8 @@
 package com.kjeldsen.player.rest.delegate;
 
+import com.kjeldsen.player.application.usecases.CanteraBuildingsInvestmentUsecase;
+import com.kjeldsen.player.application.usecases.CanteraEconomyInvestmentUsecase;
+import com.kjeldsen.player.application.usecases.CanteraTraditionInvestmentUsecase;
 import com.kjeldsen.player.application.usecases.FindAndProcessScheduledTrainingUseCase;
 import com.kjeldsen.player.application.usecases.GenerateSingleDeclineTrainingUseCase;
 import com.kjeldsen.player.application.usecases.ScheduleTrainingUseCase;
@@ -13,6 +16,7 @@ import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.mapper.PlayerTrainingResponseMapper;
 import com.kjeldsen.player.rest.model.PlayerDeclineResponse;
 import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
+import com.kjeldsen.player.rest.model.RegisterInvestmentOnCanteraRequest;
 import com.kjeldsen.player.rest.model.RegisterSimulatedDeclineRequest;
 import com.kjeldsen.player.rest.model.RegisterSimulatedScheduledTrainingRequest;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +35,9 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final ScheduleTrainingUseCase scheduleTrainingUseCase;
     private final FindAndProcessScheduledTrainingUseCase findAndProcessScheduledTrainingUseCase;
     private final GenerateSingleDeclineTrainingUseCase generateSingleDeclineTrainingUseCase;
+    private final CanteraEconomyInvestmentUsecase canteraEconomyInvestmentUsecase;
+    private final CanteraTraditionInvestmentUsecase canteraTraditionInvestmentUsecase;
+    private final CanteraBuildingsInvestmentUsecase canteraBuildingsInvestmentUsecase;
 
     @Override
     public ResponseEntity<PlayerHistoricalTrainingResponse> registerSimulatedScheduledTraining(
@@ -58,7 +65,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
 
     @Override
     public ResponseEntity<List<PlayerDeclineResponse>> registerSimulatedDecline(String playerId,
-                                                                                RegisterSimulatedDeclineRequest registerSimulatedDeclineRequest) {
+        RegisterSimulatedDeclineRequest registerSimulatedDeclineRequest) {
 
         List<PlayerDeclineResponse> declineEvents = new ArrayList<>();
 
@@ -79,4 +86,23 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
 
         return ResponseEntity.ok(declineEvents);
     }
+
+    @Override
+    public ResponseEntity<Void> registerInvestmentOnCantera(String teamId, RegisterInvestmentOnCanteraRequest registerInvestmentOnCanteraRequest) {
+        switch (registerInvestmentOnCanteraRequest.getInvestment()) {
+            case ECONOMY:
+                canteraEconomyInvestmentUsecase.invest(teamId, registerInvestmentOnCanteraRequest.getPoints());
+                break;
+            case TRADITION:
+                canteraTraditionInvestmentUsecase.invest(teamId, registerInvestmentOnCanteraRequest.getPoints());
+                break;
+            case BUILDING:
+                canteraBuildingsInvestmentUsecase.invest(teamId, registerInvestmentOnCanteraRequest.getPoints());
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid investment type");
+        }
+        return ResponseEntity.ok().build();
+    }
+
 }
