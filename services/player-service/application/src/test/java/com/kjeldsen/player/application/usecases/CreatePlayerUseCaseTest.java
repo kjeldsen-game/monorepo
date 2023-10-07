@@ -3,6 +3,7 @@ package com.kjeldsen.player.application.usecases;
 import com.kjeldsen.player.application.publisher.PlayerPublisher;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
+import com.kjeldsen.player.domain.PlayerSkills;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.PlayerCreationEvent;
 import com.kjeldsen.player.domain.repositories.PlayerCreationEventWriteRepository;
@@ -52,6 +53,6 @@ class CreatePlayerUseCaseTest {
                 && player.getPosition().equals(PlayerPosition.CENTRE_MIDFIELDER)
                 && StringUtils.isNotBlank(player.getName())
                 && player.getTeamId().equals(teamId)
-                && player.getInitialSkills().values().stream().mapToInt(Integer::intValue).sum() == 200);
+                && player.getInitialSkills().values().stream().map(PlayerSkills::getActual).mapToInt(Integer::intValue).sum() == 200);
     }
 }

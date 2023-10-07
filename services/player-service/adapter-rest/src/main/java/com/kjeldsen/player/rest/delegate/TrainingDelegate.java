@@ -28,7 +28,7 @@ public class TrainingDelegate implements TrainingApiDelegate {
 
         List<PlayerTrainingResponse> trainings = getHistoricalTrainingUseCase.get(Player.PlayerId.of(playerId))
             .stream()
-            .map(this::playerTrainingEvent2PlayerTrainingResponse)// TODO MUDO CAMBIA ESTO A UN MAPPER
+            .map(this::playerTrainingEvent2PlayerTrainingResponse)
             .toList();
 
         PlayerHistoricalTrainingResponse playerHistoricalTrainingResponse = new PlayerHistoricalTrainingResponse()
@@ -57,7 +57,7 @@ public class TrainingDelegate implements TrainingApiDelegate {
             .currentDay(playerTrainingEvent.getCurrentDay())
             .playerId(playerTrainingEvent.getPlayerId().toString())
             .skill(playerSkill2DomainPlayerSkill(playerTrainingEvent.getSkill()))
-            .points(playerTrainingEvent.getPoints())
+            .actualPoints(playerTrainingEvent.getActualPoints())
             .pointsBeforeTraining(playerTrainingEvent.getPointsBeforeTraining())
             .pointsAfterTraining(playerTrainingEvent.getPointsAfterTraining());
     }

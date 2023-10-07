@@ -27,13 +27,16 @@ public class PlayerProvider {
         return RandomUtils.nextInt(RANGE_OF_AGE.getMinimum(), RANGE_OF_AGE.getMaximum());
     }
 
-    public static Map<PlayerSkill, Integer> skillsBasedOnTendency(PlayerPositionTendency positionTendencies, Integer totalPoints) {
+    public static Map<PlayerSkill, PlayerSkills> skillsBasedOnTendency(PlayerPositionTendency positionTendencies, Integer totalPoints) {
 
-        HashMap<PlayerSkill, Integer> values = positionTendencies
+        HashMap<PlayerSkill, PlayerSkills> skillPointsMap = positionTendencies
             .getTendencies()
             .keySet()
             .stream()
-            .collect(HashMap::new, (map, skill) -> map.put(skill, 0), HashMap::putAll);
+            .collect(HashMap::new, (map, skill) -> map.put(skill, PlayerSkills.builder()
+                .actual(0)
+                .potential(0)
+                .build()), HashMap::putAll);
 
         Set<PlayerSkill> excludedSkills = new HashSet<>();
 
@@ -43,16 +46,19 @@ public class PlayerProvider {
             if (skill.isEmpty()) {
                 return;
             }
-            // TODO 72-add-potentials-to-the-player add the current points within the wrapper here
-            values.put(skill.get(), values.get(skill.get()) + 1);
-            if (values.get(skill.get()) == MAX_SKILL_VALUE) {
+
+            PlayerSkills values = skillPointsMap.get(skill.get());
+            values.increaseActualPoints(1);
+
+            if (values.getActual() == MAX_SKILL_VALUE) {
                 excludedSkills.add(skill.get());
             }
+            skillPointsMap.put(skill.get(), values);
         });
 
-        // TODO 72-add-potentials-to-the-player add the potential to the player here
+        skillPointsMap.values().forEach(PlayerSkills::initializePotentialPoints);
 
-        return values;
+        return skillPointsMap;
     }
 
     public static PlayerSkill randomSkill() {

@@ -398,6 +398,22 @@ components:
         - ORGANIZATION
         - ONE_ON_ONE
 
+    PlayerSkills:
+      type: object
+      properties:
+        actual:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          example: 5
+        potential:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 1000
+          example: 30
+
     PlayerPosition:
       type: string
       enum:
@@ -437,7 +453,7 @@ components:
           example: 21
         position:
           $ref: "#/components/schemas/PlayerPosition"
-        category:
+        PlayerCategory:
           $ref: "#/components/schemas/PlayerCategory"
 
     GeneratePlayersRequest:
@@ -452,12 +468,15 @@ components:
 
     UpdatePlayerPositionTendencyRequest:
       type: object
-      example: { "SCORE": 5 }
+      example: { "SCORE": { "actual": 5, "potential": 50 } }
       additionalProperties:
-        type: integer
+        type: object
         properties:
-          code:
+          key:
             $ref: "#/components/schemas/PlayerSkill"
+          value:
+            $ref: "#/components/schemas/PlayerSkills"
+
 
     TeamResponse:
       type: object
@@ -490,22 +509,14 @@ components:
           example: John Doe
         position:
           $ref: "#/components/schemas/PlayerPosition"
-        category:
+        PlayerCategory:
           $ref: "#/components/schemas/PlayerCategory"
         actualSkills:
-          type: object
-          example: { "SCORE": 50 }
           additionalProperties:
-            type: string
+            type: object
             properties:
-              code:
-                $ref: "#/components/schemas/PlayerSkill"
-              text:
-                type: integer
-                format: int32
-                minimum: 0
-                maximum: 100
-                example: 50
+              PlayerSkills:
+                $ref: "#/components/schemas/PlayerSkills"
 
     PlayerHistoricalTrainingResponse:
       type: object
@@ -527,6 +538,12 @@ components:
         skill:
           $ref: "#/components/schemas/PlayerSkill"
         points:
+          type: integer
+          format: int32
+        actualPoints:
+          type: integer
+          format: int32
+        potentialPoints:
           type: integer
           format: int32
         pointsBeforeTraining:
@@ -567,12 +584,14 @@ components:
           $ref: "#/components/schemas/PlayerPosition"
         tendencies:
           type: object
-          example: { "SCORE": 5 }
+          example: { "SCORE": { "actual": 5, "potential": 50 } }
           additionalProperties:
-            type: integer
+            type: object
             properties:
-              code:
+              PlayerSkill:
                 $ref: "#/components/schemas/PlayerSkill"
+              PlayerSkills:
+                $ref: "#/components/schemas/PlayerSkills"
         default:
           type: boolean
 
@@ -587,7 +606,7 @@ components:
           example: 2
         skills:
           type: array
-          example: [ PASSING, SCORE ]
+          example: [ PASSING , SCORE ]
           items:
             $ref: "#/components/schemas/PlayerSkill"
 

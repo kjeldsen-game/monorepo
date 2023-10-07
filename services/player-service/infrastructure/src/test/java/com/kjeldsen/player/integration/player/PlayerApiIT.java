@@ -10,10 +10,8 @@ import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.integration.AbstractIT;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
-import com.kjeldsen.player.rest.model.CreatePlayerRequest;
-import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
-import com.kjeldsen.player.rest.model.PlayerPosition;
-import com.kjeldsen.player.rest.model.PlayerResponse;
+import com.kjeldsen.player.rest.mapper.PlayerMapper;
+import com.kjeldsen.player.rest.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -23,6 +21,7 @@ import org.springframework.http.MediaType;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -111,9 +110,10 @@ class PlayerApiIT extends AbstractIT {
                         .id(player.getId().value())
                         .name(player.getName())
                         .age(player.getAge())
+                        .playerCategory(com.kjeldsen.player.rest.model.PlayerCategory.valueOf(player.getPlayerCategory().name()))
                         .position(PlayerPosition.fromValue(player.getPosition().name()))
                         .actualSkills(player.getActualSkills().entrySet().stream()
-                            .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString()))
+                            .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerApiIT::map))
                         ))
                 .toList()
                 .subList(0, 10);
@@ -144,9 +144,9 @@ class PlayerApiIT extends AbstractIT {
                 .name(examplePlayer.getName())
                 .age(examplePlayer.getAge())
                 .position(PlayerPosition.fromValue(examplePlayer.getPosition().name()))
-                .category(com.kjeldsen.player.rest.model.PlayerCategory.fromValue(examplePlayer.getPlayerCategory().name()))
+                .playerCategory(com.kjeldsen.player.rest.model.PlayerCategory.fromValue(examplePlayer.getPlayerCategory().name()))
                 .actualSkills(examplePlayer.getActualSkills().entrySet().stream()
-                    .collect(Collectors.toMap(entry -> entry.getKey().name(), entry -> entry.getValue().toString()))
+                    .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerApiIT::map))
                 );
 
             mockMvc.perform(get("/player/{playerId}", examplePlayer.getId().value()))
@@ -164,4 +164,9 @@ class PlayerApiIT extends AbstractIT {
             .build();
     }
 
+    public static PlayerResponseActualSkillsValue map(Map.Entry<com.kjeldsen.player.domain.PlayerSkill, com.kjeldsen.player.domain.PlayerSkills> mapEntrySkills) {
+        PlayerResponseActualSkillsValue PlayerResponseActualSkillsValue = new PlayerResponseActualSkillsValue();
+        PlayerResponseActualSkillsValue.setPlayerSkills(PlayerMapper.INSTANCE.map(mapEntrySkills.getValue()));
+        return PlayerResponseActualSkillsValue;
+    }
 }

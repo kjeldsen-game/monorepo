@@ -24,6 +24,8 @@ public class PlayerTrainingEvent extends Event {
     private PlayerSkill skill;
     private PlayerTrainingBloomEvent bloom;
     private Integer points;
+    private Integer actualPoints;
+    private Integer potentialPoints;
     private Integer pointsBeforeTraining;
     private Integer pointsAfterTraining;
     private Integer currentDay;
