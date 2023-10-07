@@ -9,6 +9,7 @@ import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.rest.api.SimulatorApiDelegate;
 import com.kjeldsen.player.rest.mapper.PlayerDeclineResponseMapper;
+import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.mapper.PlayerTrainingResponseMapper;
 import com.kjeldsen.player.rest.model.PlayerDeclineResponse;
 import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
@@ -39,7 +40,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         registerSimulatedScheduledTrainingRequest.getSkills()
             .forEach(skillsToTrain -> scheduleTrainingUseCase.generate(
                 Player.PlayerId.of(playerId),
-                playerSkill2RestToPlayerSkillDomain(skillsToTrain.getValue()),
+                PlayerMapper.INSTANCE.map(skillsToTrain.getValue()),
                 registerSimulatedScheduledTrainingRequest.getDays()
             ));
 
@@ -78,9 +79,4 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
 
         return ResponseEntity.ok(declineEvents);
     }
-
-    private com.kjeldsen.player.domain.PlayerSkill playerSkill2RestToPlayerSkillDomain(String playerSkill) {
-        return com.kjeldsen.player.domain.PlayerSkill.valueOf(playerSkill);
-    }
-
 }

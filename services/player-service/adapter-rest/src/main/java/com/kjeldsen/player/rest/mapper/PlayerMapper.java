@@ -22,5 +22,7 @@ public interface PlayerMapper {
         return PlayerSkill.valueOf(playerSkill);
     }
 
-
+    default com.kjeldsen.player.domain.PlayerSkill map(String playerSkill) {
+        return com.kjeldsen.player.domain.PlayerSkill.valueOf(playerSkill);
+    }
 }
