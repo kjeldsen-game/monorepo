@@ -7,6 +7,7 @@ import lombok.Getter;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -19,6 +20,7 @@ public class Team {
     private String userId;
     private String name;
     private List<Player> players;
+    private Economy economy;
     private Cantera cantera;
 
     public record TeamId(String value) {
@@ -29,6 +31,38 @@ public class Team {
         public static TeamId of(String id) {
             return new TeamId(id);
         }
+    }
+
+    @Builder
+    @Getter
+    public static class Economy {
+
+        private BigDecimal balance;
+
+        public enum IncomePeriodicity {
+            WEEKLY,
+            ANNUAL
+        }
+
+        public enum IncomeMode {
+            CONSERVATIVE,
+            MODERATE,
+            AGGRESSIVE
+        }
+
+        public enum IncomeType {
+            SPONSOR,
+            ATTENDANCE
+        }
+
+        public void increaseBalance(BigDecimal increase) {
+            balance = balance.add(increase);
+        }
+
+        public void decreaseBalance(BigDecimal decrease) {
+            balance = balance.subtract(decrease);
+        }
+
     }
 
     @Builder

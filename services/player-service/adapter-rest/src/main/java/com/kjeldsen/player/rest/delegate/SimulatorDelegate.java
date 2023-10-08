@@ -1,5 +1,6 @@
 package com.kjeldsen.player.rest.delegate;
 
+import com.kjeldsen.player.application.usecases.AnnualIncomeSponsorUsecase;
 import com.kjeldsen.player.application.usecases.CanteraBuildingsInvestmentUsecase;
 import com.kjeldsen.player.application.usecases.CanteraEconomyInvestmentUsecase;
 import com.kjeldsen.player.application.usecases.CanteraTraditionInvestmentUsecase;
@@ -7,6 +8,7 @@ import com.kjeldsen.player.application.usecases.EconomyInvestmentUsecase;
 import com.kjeldsen.player.application.usecases.FindAndProcessScheduledTrainingUseCase;
 import com.kjeldsen.player.application.usecases.GenerateSingleDeclineTrainingUseCase;
 import com.kjeldsen.player.application.usecases.ScheduleTrainingUseCase;
+import com.kjeldsen.player.application.usecases.WeeklyIncomeSponsorUsecase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
@@ -22,6 +24,8 @@ import com.kjeldsen.player.rest.model.RegisterEconomicInvestmentRequest;
 import com.kjeldsen.player.rest.model.RegisterInvestmentOnCanteraRequest;
 import com.kjeldsen.player.rest.model.RegisterSimulatedDeclineRequest;
 import com.kjeldsen.player.rest.model.RegisterSimulatedScheduledTrainingRequest;
+import com.kjeldsen.player.rest.model.RegisterSponsorIncomeRequest;
+import com.kjeldsen.player.rest.model.SponsorPeriodicity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -43,6 +47,8 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final CanteraTraditionInvestmentUsecase canteraTraditionInvestmentUsecase;
     private final CanteraBuildingsInvestmentUsecase canteraBuildingsInvestmentUsecase;
     private final EconomyInvestmentUsecase economyInvestmentUsecase;
+    private final AnnualIncomeSponsorUsecase annualIncomeSponsorUsecase;
+    private final WeeklyIncomeSponsorUsecase weeklyIncomeSponsorUsecase;
 
     @Override
     public ResponseEntity<PlayerHistoricalTrainingResponse> registerSimulatedScheduledTraining(
@@ -114,6 +120,32 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     @Override
     public ResponseEntity<Void> registerEconomicInvestment(String teamId, RegisterEconomicInvestmentRequest registerEconomicInvestmentRequest) {
         economyInvestmentUsecase.invest(Team.TeamId.of(teamId), BigDecimal.valueOf(registerEconomicInvestmentRequest.getAmount()));
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> registerSponsorIncome(String teamId, RegisterSponsorIncomeRequest registerSponsorIncomeRequest) {
+
+        Integer weeks = registerSponsorIncomeRequest.getWeeks();
+        Integer wins = registerSponsorIncomeRequest.getWins();
+
+        IntStream.rangeClosed(1, weeks).forEach(index -> registerSponsorIncomeRequest.getSponsors()
+            .stream()
+            .filter(sponsor -> SponsorPeriodicity.WEEKLY.equals(sponsor.getPeriodicity()))
+            .forEach(sponsor -> {
+                Team.Economy.IncomeMode mode = Team.Economy.IncomeMode.valueOf(sponsor.getMode().name());
+                weeklyIncomeSponsorUsecase.income(Team.TeamId.of(teamId), mode, wins);
+            }));
+
+        int years = weeks / 13; // 13 weeks in a season
+        IntStream.rangeClosed(1, years).forEach(index -> registerSponsorIncomeRequest.getSponsors()
+            .stream()
+            .filter(sponsor -> SponsorPeriodicity.ANNUAL.equals(sponsor.getPeriodicity()))
+            .forEach(sponsor -> {
+                Team.Economy.IncomeMode mode = Team.Economy.IncomeMode.valueOf(sponsor.getMode().name());
+                annualIncomeSponsorUsecase.income(Team.TeamId.of(teamId), mode, wins);
+            }));
+
         return ResponseEntity.ok().build();
     }
 

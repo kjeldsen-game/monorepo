@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Slf4j
@@ -32,6 +33,9 @@ public class CreateTeamUseCase {
                 .economyLevel(0)
                 .traditionLevel(0)
                 .buildingsLevel(0)
+                .build())
+            .economy(Team.Economy.builder()
+                .balance(BigDecimal.ZERO)
                 .build())
             .build();
         // TODO apart from saving the team aggregate/projection, we need to store a created_team_event. Then Team domain object should have a

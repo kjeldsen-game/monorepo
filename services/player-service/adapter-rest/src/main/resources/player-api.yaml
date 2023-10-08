@@ -297,6 +297,26 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
+  /simulator/sponsor-income/{teamId}:
+    post:
+      summary: Register a sponsor income
+      operationId: registerSponsorIncome
+      tags:
+        - simulator
+      parameters:
+        - $ref: '#/components/parameters/TeamIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/RegisterSponsorIncomeRequest"
+      responses:
+        "201":
+          description: Simulated sponsor income
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
   /simulator/decline/{playerId}:
     post:
       summary: Register a simulated decline
@@ -382,6 +402,13 @@ components:
 
     RegisterEconomicInvestmentRequest:
       description: Register an economic investment
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RegisterEconomicInvestmentRequest"
+
+    RegisterSponsorIncomeRequest:
+      description: Register a sponsor income
       content:
         application/json:
           schema:
@@ -506,6 +533,21 @@ components:
         - SENIOR
       example: JUNIOR
 
+    SponsorPeriodicity:
+      type: string
+      enum:
+        - WEEKLY
+        - ANNUAL
+      example: ANNUAL
+
+    SponsorMode:
+      type: string
+      enum:
+        - CONSERVATIVE
+        - MODERATE
+        - AGGRESSIVE
+      example: MODERATE
+
     CreatePlayerRequest:
       type: object
       properties:
@@ -559,6 +601,8 @@ components:
           example: John Doe's Team
         cantera:
           $ref: "#/components/schemas/Cantera"
+        economy:
+          $ref: "#/components/schemas/Economy"
 
     Cantera:
       type: object
@@ -587,6 +631,23 @@ components:
           minimum: 0
           maximum: 100
           example: 50
+
+    Economy:
+      type: object
+      properties:
+        balance:
+          type: number
+          format: double
+          example: 50000
+
+    Sponsor:
+      type: object
+      example: [ { "periodicity": "ANNUAL", "mode": "CONSERVATIVE" }, { "periodicity": "WEEKLY", "mode": "AGGRESSIVE" } ]
+      properties:
+        periodicity:
+          $ref: "#/components/schemas/SponsorPeriodicity"
+        mode:
+          $ref: "#/components/schemas/SponsorMode"
 
     PlayerResponse:
       type: object
@@ -726,6 +787,23 @@ components:
           format: double
           minimum: 0
           example: 1000000
+
+    RegisterSponsorIncomeRequest:
+      type: object
+      example: { "weeks": 5, "wins": 5, "sponsors": [ { "periodicity": "ANNUAL", "mode": "CONSERVATIVE" }, { "periodicity": "WEEKLY", "mode": "AGGRESSIVE" } ] }
+      properties:
+        weeks:
+          type: integer
+          format: int32
+          example: 5
+        wins:
+          type: integer
+          format: int32
+          example: 5
+        sponsors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Sponsor"
 
     RegisterBloomPhaseRequest:
       type: object
