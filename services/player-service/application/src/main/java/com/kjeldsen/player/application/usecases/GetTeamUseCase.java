@@ -14,7 +14,7 @@ public class GetTeamUseCase {
     private final TeamReadRepository teamReadRepository;
 
     public Team get(String userId) {
-        return teamReadRepository.findOneByUserId(userId)
+        return teamReadRepository.findByUserId(userId)
             .orElseThrow(() -> new RuntimeException(String.format("Team not found for user with ID %s", userId)));
     }
 

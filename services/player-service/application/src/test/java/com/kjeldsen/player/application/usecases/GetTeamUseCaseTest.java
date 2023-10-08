@@ -13,7 +13,9 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 public class GetTeamUseCaseTest {
 
@@ -23,12 +25,12 @@ public class GetTeamUseCaseTest {
     @Test
     public void should_throw_exception_when_team_does_not_exist() {
         String userId = "exampleUserId";
-        when(mockedTeamReadRepository.findOneByUserId(userId)).thenReturn(Optional.empty());
+        when(mockedTeamReadRepository.findByUserId(userId)).thenReturn(Optional.empty());
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             getTeamUseCase.get(userId);
         });
         assertEquals(String.format("Team not found for user with ID %s", userId), exception.getMessage());
-        verify(mockedTeamReadRepository).findOneByUserId(userId);
+        verify(mockedTeamReadRepository).findByUserId(userId);
         verifyNoMoreInteractions(mockedTeamReadRepository);
     }
 
@@ -36,12 +38,12 @@ public class GetTeamUseCaseTest {
     public void should_throw_exception_when_team_query_fails() {
         String userId = "exampleUserId";
         String errorMessage = "Error message";
-        when(mockedTeamReadRepository.findOneByUserId(userId)).thenThrow(new RuntimeException(errorMessage));
+        when(mockedTeamReadRepository.findByUserId(userId)).thenThrow(new RuntimeException(errorMessage));
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             getTeamUseCase.get(userId);
         });
         assertEquals(errorMessage, exception.getMessage());
-        verify(mockedTeamReadRepository).findOneByUserId(userId);
+        verify(mockedTeamReadRepository).findByUserId(userId);
         verifyNoMoreInteractions(mockedTeamReadRepository);
     }
 
@@ -54,15 +56,15 @@ public class GetTeamUseCaseTest {
             .name("exampleName")
             .userId("exampleUserId")
             .players(examplePlayers)
-            .canteraScore(0)
+            .cantera(Team.Cantera.builder().score(.0).build())
             .build();
-        when(mockedTeamReadRepository.findOneByUserId(userId)).thenReturn(Optional.of(teamExpected));
+        when(mockedTeamReadRepository.findByUserId(userId)).thenReturn(Optional.of(teamExpected));
 
         Team teamResult = getTeamUseCase.get(userId);
 
         Assertions.assertNotNull(teamResult);
         assertEquals(teamExpected, teamResult);
-        verify(mockedTeamReadRepository).findOneByUserId(userId);
+        verify(mockedTeamReadRepository).findByUserId(userId);
         verifyNoMoreInteractions(mockedTeamReadRepository);
     }
 }
