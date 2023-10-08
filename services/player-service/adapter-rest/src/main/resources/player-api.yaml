@@ -257,6 +257,100 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
+  /simulator/cantera-score/{teamId}:
+    post:
+      summary: Register an investment on the Cantera
+      operationId: registerInvestmentOnCantera
+      tags:
+        - simulator
+      parameters:
+        - $ref: '#/components/parameters/TeamIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/RegisterInvestmentOnCanteraRequest"
+      responses:
+        "201":
+          description: Simulated investment on cantera was applied
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/economic-investment/{teamId}:
+    post:
+      summary: Register an economic investment
+      operationId: registerEconomicInvestment
+      tags:
+        - simulator
+      parameters:
+        - $ref: '#/components/parameters/TeamIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/RegisterEconomicInvestmentRequest"
+      responses:
+        "201":
+          description: Simulated economic investment
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/sponsor-income/{teamId}:
+    post:
+      summary: Register a sponsor income
+      operationId: registerSponsorIncome
+      tags:
+        - simulator
+      parameters:
+        - $ref: '#/components/parameters/TeamIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/RegisterSponsorIncomeRequest"
+      responses:
+        "201":
+          description: Simulated sponsor income
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/salary-payroll/{teamId}:
+    post:
+      summary: Simulates a salary payroll
+      operationId: simulateSalaryPayroll
+      tags:
+        - simulator
+      parameters:
+        - $ref: '#/components/parameters/TeamIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/SimulateSalaryPayrollRequest"
+      responses:
+        "201":
+          description: Simulated sponsor income
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/salary-increase/{teamId}:
+    post:
+      summary: Simulates a salary increase
+      operationId: simulateSalaryIncrease
+      tags:
+        - simulator
+      parameters:
+        - $ref: '#/components/parameters/TeamIdPathParameter'
+      responses:
+        "201":
+          description: Simulated sponsor income
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
   /simulator/decline/{playerId}:
     post:
       summary: Register a simulated decline
@@ -295,6 +389,14 @@ components:
       schema:
         type: string
 
+    TeamIdPathParameter:
+      name: teamId
+      in: path
+      description: Id of the team
+      required: true
+      schema:
+        type: string
+
   requestBodies:
 
     CreatePlayerRequest:
@@ -324,6 +426,34 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/RegisterSimulatedScheduledTrainingRequest"
+
+    RegisterInvestmentOnCanteraRequest:
+      description: Register an investment on cantera request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RegisterInvestmentOnCanteraRequest"
+
+    RegisterEconomicInvestmentRequest:
+      description: Register an economic investment
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RegisterEconomicInvestmentRequest"
+
+    RegisterSponsorIncomeRequest:
+      description: Register a sponsor income
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RegisterEconomicInvestmentRequest"
+
+    SimulateSalaryPayrollRequest:
+      description: Simulate a salary payroll
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SimulateSalaryPayrollRequest"
 
     RegisterBloomPhaseRequest:
       description: Register a bloom phase request
@@ -398,6 +528,14 @@ components:
         - ORGANIZATION
         - ONE_ON_ONE
 
+    CanteraInvestment:
+      example: ECONOMY
+      type: string
+      enum:
+        - ECONOMY
+        - TRADITION
+        - BUILDING
+
     PlayerSkills:
       type: object
       properties:
@@ -436,6 +574,29 @@ components:
         - SENIOR
       example: JUNIOR
 
+    PlayerEconomy:
+      type: object
+      properties:
+        salary:
+          type: number
+          format: double
+          example: 70000
+
+    SponsorPeriodicity:
+      type: string
+      enum:
+        - WEEKLY
+        - ANNUAL
+      example: ANNUAL
+
+    SponsorMode:
+      type: string
+      enum:
+        - CONSERVATIVE
+        - MODERATE
+        - AGGRESSIVE
+      example: MODERATE
+
     CreatePlayerRequest:
       type: object
       properties:
@@ -453,7 +614,7 @@ components:
           example: 21
         position:
           $ref: "#/components/schemas/PlayerPosition"
-        PlayerCategory:
+        category:
           $ref: "#/components/schemas/PlayerCategory"
 
     GeneratePlayersRequest:
@@ -487,10 +648,55 @@ components:
         name:
           type: string
           example: John Doe's Team
-        canteraScore:
-          type: integer
-          format: int32
-          example: 15
+        cantera:
+          $ref: "#/components/schemas/Cantera"
+        economy:
+          $ref: "#/components/schemas/Economy"
+
+    Cantera:
+      type: object
+      properties:
+        score:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          example: 70
+        economyLevel:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          example: 55
+        traditionLevel:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          example: 60
+        buildingsLevel:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          example: 50
+
+    Economy:
+      type: object
+      properties:
+        balance:
+          type: number
+          format: double
+          example: 50000
+
+    Sponsor:
+      type: object
+      example: [ { "periodicity": "ANNUAL", "mode": "CONSERVATIVE" }, { "periodicity": "WEEKLY", "mode": "AGGRESSIVE" } ]
+      properties:
+        periodicity:
+          $ref: "#/components/schemas/SponsorPeriodicity"
+        mode:
+          $ref: "#/components/schemas/SponsorMode"
 
     PlayerResponse:
       type: object
@@ -509,7 +715,7 @@ components:
           example: John Doe
         position:
           $ref: "#/components/schemas/PlayerPosition"
-        PlayerCategory:
+        category:
           $ref: "#/components/schemas/PlayerCategory"
         actualSkills:
           additionalProperties:
@@ -517,6 +723,8 @@ components:
             properties:
               PlayerSkills:
                 $ref: "#/components/schemas/PlayerSkills"
+        economy:
+          $ref: "#/components/schemas/PlayerEconomy"
 
     PlayerHistoricalTrainingResponse:
       type: object
@@ -609,6 +817,52 @@ components:
           example: [ PASSING , SCORE ]
           items:
             $ref: "#/components/schemas/PlayerSkill"
+
+    RegisterInvestmentOnCanteraRequest:
+      type: object
+      properties:
+        points:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 100
+          example: 6
+        investment:
+          $ref: "#/components/schemas/CanteraInvestment"
+
+    RegisterEconomicInvestmentRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+          minimum: 0
+          example: 1000000
+
+    SimulateSalaryPayrollRequest:
+      type: object
+      properties:
+        weeks:
+          type: integer
+          format: int32
+          example: 5
+
+    RegisterSponsorIncomeRequest:
+      type: object
+      example: { "weeks": 5, "wins": 5, "sponsors": [ { "periodicity": "ANNUAL", "mode": "CONSERVATIVE" }, { "periodicity": "WEEKLY", "mode": "AGGRESSIVE" } ] }
+      properties:
+        weeks:
+          type: integer
+          format: int32
+          example: 5
+        wins:
+          type: integer
+          format: int32
+          example: 5
+        sponsors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Sponsor"
 
     RegisterBloomPhaseRequest:
       type: object

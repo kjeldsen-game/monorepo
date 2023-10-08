@@ -2,11 +2,13 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Slf4j
@@ -16,6 +18,7 @@ public class CreateTeamUseCase {
 
     private final GeneratePlayersUseCase generatePlayersUseCase;
     private final TeamWriteRepository teamWriteRepository;
+    private final PlayerWriteRepository playerWriteRepository;
 
     public void create(String teamName, Integer numberOfPlayers, String userId) {
         log.info("Creating team {} with {} players for user {}", teamName, numberOfPlayers, userId);
@@ -26,13 +29,21 @@ public class CreateTeamUseCase {
             .id(newTeamId)
             .userId(userId)
             .name(teamName)
-            .players(players)
-            .canteraScore(0)
+            .cantera(Team.Cantera.builder()
+                .score(0.0)
+                .economyLevel(0)
+                .traditionLevel(0)
+                .buildingsLevel(0)
+                .build())
+            .economy(Team.Economy.builder()
+                .balance(BigDecimal.ZERO)
+                .build())
             .build();
         // TODO apart from saving the team aggregate/projection, we need to store a created_team_event. Then Team domain object should have a
         //  method like
         //  create(created_team_event) and based on the event it populates itself. Then you save it with the repo
-        // TODO notification for the user to know that his team as been created
+        // TODO notification for the user to know that his team has been created
         teamWriteRepository.save(team);
+        players.forEach(playerWriteRepository::save);
     }
 }

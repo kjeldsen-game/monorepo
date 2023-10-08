@@ -1,13 +1,23 @@
 package com.kjeldsen.player.domain.provider;
 
 import com.github.javafaker.Faker;
-import com.kjeldsen.player.domain.*;
+import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.PlayerCategory;
+import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.domain.PlayerPositionTendency;
+import com.kjeldsen.player.domain.PlayerSkill;
+import com.kjeldsen.player.domain.PlayerSkills;
+import com.kjeldsen.player.domain.Team;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.Range;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -68,15 +78,18 @@ public class PlayerProvider {
     }
 
     public static Player generate(Team.TeamId teamId, PlayerPositionTendency positionTendencies, PlayerCategory playerCategory, int totalPoints) {
-        return Player.builder()
+        Player player = Player.builder()
             .id(Player.PlayerId.generate())
             .name(name())
             .age(age())
             .position(positionTendencies.getPosition())
             .actualSkills(skillsBasedOnTendency(positionTendencies, totalPoints))
             .teamId(teamId)
-            .playerCategory(playerCategory)
+            .category(playerCategory)
+            .economy(Player.Economy.builder().build())
             .build();
+        player.negotiateSalary();
+        return player;
     }
 
     public static Player generateDefault() {

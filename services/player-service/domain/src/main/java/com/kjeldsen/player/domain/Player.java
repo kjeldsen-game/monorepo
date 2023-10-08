@@ -4,6 +4,7 @@ import com.kjeldsen.player.domain.events.PlayerCreationEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.generator.PointsGenerator;
+import com.kjeldsen.player.domain.generator.SalaryGenerator;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -51,18 +53,22 @@ public class Player {
     private Team.TeamId teamId;
     private PlayerTrainingBloomEvent bloom;
     private PlayerTrainingDeclineEvent decline;
-    private PlayerCategory playerCategory;
+    private PlayerCategory category;
+    private Economy economy;
 
     public static Player creation(PlayerCreationEvent playerCreationEvent) {
-        return Player.builder()
+        Player player = Player.builder()
             .id(playerCreationEvent.getPlayerId())
             .name(playerCreationEvent.getName())
             .age(playerCreationEvent.getAge())
             .position(playerCreationEvent.getPosition())
             .actualSkills(playerCreationEvent.getInitialSkills())
             .teamId(playerCreationEvent.getTeamId())
-            .playerCategory(playerCreationEvent.getPlayerCategory())
+            .category(playerCreationEvent.getPlayerCategory())
+            .economy(Economy.builder().build())
             .build();
+        player.negotiateSalary();
+        return player;
     }
 
     public boolean isBloomActive() {
@@ -117,6 +123,10 @@ public class Player {
         skillPoints.setActual(Math.max(MIN_SKILL_VALUE, getActualSkillPoints(skill) - points));
     }
 
+    public void negotiateSalary() {
+        economy.salary = SalaryGenerator.salary(this);
+    }
+
     public record PlayerId(String value) {
         public static com.kjeldsen.player.domain.Player.PlayerId generate() {
             return new com.kjeldsen.player.domain.Player.PlayerId(UUID.randomUUID().toString());
@@ -125,6 +135,12 @@ public class Player {
         public static com.kjeldsen.player.domain.Player.PlayerId of(String value) {
             return new com.kjeldsen.player.domain.Player.PlayerId(value);
         }
+    }
+
+    @Builder
+    @Getter
+    public static class Economy {
+        private BigDecimal salary;
     }
 
 }

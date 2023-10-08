@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface TeamMongoRepository extends MongoRepository<Team, String> {
+public interface TeamMongoRepository extends MongoRepository<Team, Team.TeamId> {
     Optional<Team> findOneByUserId(String id);
 }
