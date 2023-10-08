@@ -1,14 +1,11 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,12 +47,10 @@ public class GetTeamUseCaseTest {
     @Test
     public void should_return_team_when_found() {
         String userId = "exampleUserId";
-        List<Player> examplePlayers = new ArrayList<>();
         Team teamExpected = Team.builder()
             .id(Team.TeamId.of("exampleId"))
             .name("exampleName")
             .userId("exampleUserId")
-            .players(examplePlayers)
             .cantera(Team.Cantera.builder().score(.0).build())
             .build();
         when(mockedTeamReadRepository.findByUserId(userId)).thenReturn(Optional.of(teamExpected));

@@ -1,14 +1,6 @@
 package com.kjeldsen.player.rest.delegate;
 
-import com.kjeldsen.player.application.usecases.AnnualIncomeSponsorUsecase;
-import com.kjeldsen.player.application.usecases.CanteraBuildingsInvestmentUsecase;
-import com.kjeldsen.player.application.usecases.CanteraEconomyInvestmentUsecase;
-import com.kjeldsen.player.application.usecases.CanteraTraditionInvestmentUsecase;
-import com.kjeldsen.player.application.usecases.EconomyInvestmentUsecase;
-import com.kjeldsen.player.application.usecases.FindAndProcessScheduledTrainingUseCase;
-import com.kjeldsen.player.application.usecases.GenerateSingleDeclineTrainingUseCase;
-import com.kjeldsen.player.application.usecases.ScheduleTrainingUseCase;
-import com.kjeldsen.player.application.usecases.WeeklyIncomeSponsorUsecase;
+import com.kjeldsen.player.application.usecases.*;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
@@ -25,6 +17,7 @@ import com.kjeldsen.player.rest.model.RegisterInvestmentOnCanteraRequest;
 import com.kjeldsen.player.rest.model.RegisterSimulatedDeclineRequest;
 import com.kjeldsen.player.rest.model.RegisterSimulatedScheduledTrainingRequest;
 import com.kjeldsen.player.rest.model.RegisterSponsorIncomeRequest;
+import com.kjeldsen.player.rest.model.SimulateSalaryPayrollRequest;
 import com.kjeldsen.player.rest.model.SponsorPeriodicity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +42,9 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final EconomyInvestmentUsecase economyInvestmentUsecase;
     private final AnnualIncomeSponsorUsecase annualIncomeSponsorUsecase;
     private final WeeklyIncomeSponsorUsecase weeklyIncomeSponsorUsecase;
+    private final PaySalariesTeamUseCase paySalariesTeamUseCase;
+    private final UpdateSalariesTeamUseCase updateSalariesTeamUseCase;
+    private final GenerateTrainingUseCase generateTrainingUseCase;
 
     @Override
     public ResponseEntity<PlayerHistoricalTrainingResponse> registerSimulatedScheduledTraining(
@@ -146,6 +142,19 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
                 annualIncomeSponsorUsecase.income(Team.TeamId.of(teamId), mode, wins);
             }));
 
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> simulateSalaryPayroll(String teamId, SimulateSalaryPayrollRequest simulateSalaryPayrollRequest) {
+        IntStream.rangeClosed(1, simulateSalaryPayrollRequest.getWeeks())
+            .forEach(index -> paySalariesTeamUseCase.pay(Team.TeamId.of(teamId)));
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> simulateSalaryIncrease(String teamId) {
+        updateSalariesTeamUseCase.update(Team.TeamId.of(teamId));
         return ResponseEntity.ok().build();
     }
 

@@ -2,6 +2,7 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ public class CreateTeamUseCase {
 
     private final GeneratePlayersUseCase generatePlayersUseCase;
     private final TeamWriteRepository teamWriteRepository;
+    private final PlayerWriteRepository playerWriteRepository;
 
     public void create(String teamName, Integer numberOfPlayers, String userId) {
         log.info("Creating team {} with {} players for user {}", teamName, numberOfPlayers, userId);
@@ -27,7 +29,6 @@ public class CreateTeamUseCase {
             .id(newTeamId)
             .userId(userId)
             .name(teamName)
-            .players(players)
             .cantera(Team.Cantera.builder()
                 .score(0.0)
                 .economyLevel(0)
@@ -43,5 +44,6 @@ public class CreateTeamUseCase {
         //  create(created_team_event) and based on the event it populates itself. Then you save it with the repo
         // TODO notification for the user to know that his team has been created
         teamWriteRepository.save(team);
+        players.forEach(playerWriteRepository::save);
     }
 }

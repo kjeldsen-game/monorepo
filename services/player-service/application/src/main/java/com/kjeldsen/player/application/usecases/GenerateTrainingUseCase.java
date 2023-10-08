@@ -77,6 +77,7 @@ public class GenerateTrainingUseCase {
         playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
     }
 
+    // TODO make private and refactor tests
     public void validateDays(Integer days) {
         if (!RANGE_OF_DAYS.contains(days)) {
             throw new IllegalArgumentException("Days must be between 1 and 1000");

@@ -1,6 +1,7 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
 import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
@@ -32,5 +33,10 @@ public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
         Pageable pageable = PageRequest.of(query.getPage(), query.getSize());
 
         return playerMongoRepository.findAll(playerDocumentExample, pageable).stream().toList();
+    }
+
+    @Override
+    public List<Player> findByTeamId(Team.TeamId teamId) {
+        return playerMongoRepository.findByTeamId(teamId);
     }
 }

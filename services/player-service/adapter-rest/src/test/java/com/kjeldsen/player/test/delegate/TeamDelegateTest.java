@@ -1,7 +1,6 @@
 package com.kjeldsen.player.test.delegate;
 
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
-import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.rest.delegate.TeamDelegate;
 import com.kjeldsen.player.rest.model.TeamResponse;
@@ -10,9 +9,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -26,12 +22,10 @@ public class TeamDelegateTest {
 
     @Test
     public void should_return_a_team_response_on_getTeam_method() {
-        List<Player> examplePlayers = new ArrayList<>();
         Team team = Team.builder()
             .id(Team.TeamId.of("exampleId"))
             .name("exampleName")
             .userId("exampleUserId")
-            .players(examplePlayers)
             .cantera(Team.Cantera.builder().score(.0).build())
             .build();
 

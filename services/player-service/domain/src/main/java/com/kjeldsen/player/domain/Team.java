@@ -8,7 +8,6 @@ import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Data
 @Builder
@@ -19,7 +18,6 @@ public class Team {
     private TeamId id;
     private String userId;
     private String name;
-    private List<Player> players;
     private Economy economy;
     private Cantera cantera;
 
@@ -53,6 +51,10 @@ public class Team {
         public enum IncomeType {
             SPONSOR,
             ATTENDANCE
+        }
+
+        public enum ExpenseType {
+            PLAYER_SALARY
         }
 
         public void increaseBalance(BigDecimal increase) {

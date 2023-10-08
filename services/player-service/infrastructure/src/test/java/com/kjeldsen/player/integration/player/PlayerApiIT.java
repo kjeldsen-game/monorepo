@@ -11,7 +11,11 @@ import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.integration.AbstractIT;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
-import com.kjeldsen.player.rest.model.*;
+import com.kjeldsen.player.rest.model.CreatePlayerRequest;
+import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
+import com.kjeldsen.player.rest.model.PlayerPosition;
+import com.kjeldsen.player.rest.model.PlayerResponse;
+import com.kjeldsen.player.rest.model.PlayerResponseActualSkillsValue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -29,7 +33,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class PlayerApiIT extends AbstractIT {
 
@@ -110,7 +116,7 @@ class PlayerApiIT extends AbstractIT {
                         .id(player.getId().value())
                         .name(player.getName())
                         .age(player.getAge())
-                        .playerCategory(com.kjeldsen.player.rest.model.PlayerCategory.valueOf(player.getPlayerCategory().name()))
+                        .category(com.kjeldsen.player.rest.model.PlayerCategory.valueOf(player.getCategory().name()))
                         .position(PlayerPosition.fromValue(player.getPosition().name()))
                         .actualSkills(player.getActualSkills().entrySet().stream()
                             .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerApiIT::map))
@@ -136,7 +142,8 @@ class PlayerApiIT extends AbstractIT {
         @Test
         @DisplayName("return 200 and the specific player when a valid playerId is sent")
         void return_200_and_the_specific_player_when_a_valid_request_is_sent() throws Exception {
-            Player examplePlayer = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES, PlayerCategory.JUNIOR, 200);
+            Player examplePlayer = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
+                PlayerCategory.JUNIOR, 200);
             examplePlayer = playerWriteRepository.save(examplePlayer);
 
             PlayerResponse response = new PlayerResponse()
@@ -144,7 +151,7 @@ class PlayerApiIT extends AbstractIT {
                 .name(examplePlayer.getName())
                 .age(examplePlayer.getAge())
                 .position(PlayerPosition.fromValue(examplePlayer.getPosition().name()))
-                .playerCategory(com.kjeldsen.player.rest.model.PlayerCategory.fromValue(examplePlayer.getPlayerCategory().name()))
+                .category(com.kjeldsen.player.rest.model.PlayerCategory.fromValue(examplePlayer.getCategory().name()))
                 .actualSkills(examplePlayer.getActualSkills().entrySet().stream()
                     .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerApiIT::map))
                 );
@@ -164,7 +171,8 @@ class PlayerApiIT extends AbstractIT {
             .build();
     }
 
-    public static PlayerResponseActualSkillsValue map(Map.Entry<com.kjeldsen.player.domain.PlayerSkill, com.kjeldsen.player.domain.PlayerSkills> mapEntrySkills) {
+    public static PlayerResponseActualSkillsValue map(
+        Map.Entry<com.kjeldsen.player.domain.PlayerSkill, com.kjeldsen.player.domain.PlayerSkills> mapEntrySkills) {
         PlayerResponseActualSkillsValue PlayerResponseActualSkillsValue = new PlayerResponseActualSkillsValue();
         PlayerResponseActualSkillsValue.setPlayerSkills(PlayerMapper.INSTANCE.map(mapEntrySkills.getValue()));
         return PlayerResponseActualSkillsValue;

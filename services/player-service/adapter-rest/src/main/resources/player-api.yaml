@@ -317,6 +317,40 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
+  /simulator/salary-payroll/{teamId}:
+    post:
+      summary: Simulates a salary payroll
+      operationId: simulateSalaryPayroll
+      tags:
+        - simulator
+      parameters:
+        - $ref: '#/components/parameters/TeamIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/SimulateSalaryPayrollRequest"
+      responses:
+        "201":
+          description: Simulated sponsor income
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/salary-increase/{teamId}:
+    post:
+      summary: Simulates a salary increase
+      operationId: simulateSalaryIncrease
+      tags:
+        - simulator
+      parameters:
+        - $ref: '#/components/parameters/TeamIdPathParameter'
+      responses:
+        "201":
+          description: Simulated sponsor income
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
   /simulator/decline/{playerId}:
     post:
       summary: Register a simulated decline
@@ -413,6 +447,13 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/RegisterEconomicInvestmentRequest"
+
+    SimulateSalaryPayrollRequest:
+      description: Simulate a salary payroll
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SimulateSalaryPayrollRequest"
 
     RegisterBloomPhaseRequest:
       description: Register a bloom phase request
@@ -533,6 +574,14 @@ components:
         - SENIOR
       example: JUNIOR
 
+    PlayerEconomy:
+      type: object
+      properties:
+        salary:
+          type: number
+          format: double
+          example: 70000
+
     SponsorPeriodicity:
       type: string
       enum:
@@ -565,7 +614,7 @@ components:
           example: 21
         position:
           $ref: "#/components/schemas/PlayerPosition"
-        PlayerCategory:
+        category:
           $ref: "#/components/schemas/PlayerCategory"
 
     GeneratePlayersRequest:
@@ -666,7 +715,7 @@ components:
           example: John Doe
         position:
           $ref: "#/components/schemas/PlayerPosition"
-        PlayerCategory:
+        category:
           $ref: "#/components/schemas/PlayerCategory"
         actualSkills:
           additionalProperties:
@@ -674,6 +723,8 @@ components:
             properties:
               PlayerSkills:
                 $ref: "#/components/schemas/PlayerSkills"
+        economy:
+          $ref: "#/components/schemas/PlayerEconomy"
 
     PlayerHistoricalTrainingResponse:
       type: object
@@ -787,6 +838,14 @@ components:
           format: double
           minimum: 0
           example: 1000000
+
+    SimulateSalaryPayrollRequest:
+      type: object
+      properties:
+        weeks:
+          type: integer
+          format: int32
+          example: 5
 
     RegisterSponsorIncomeRequest:
       type: object
