@@ -1,6 +1,7 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.events.domain.EventId;
+import com.kjeldsen.player.application.usecases.cantera.CanteraEconomyInvestmentUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.EconomyInvestmentEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
@@ -24,7 +25,7 @@ public class EconomyInvestmentUsecase {
 
     private final TeamReadRepository teamReadRepository;
     private final EconomyInvestmentEventWriteRepository economyInvestmentEventWriteRepository;
-    private final CanteraEconomyInvestmentUsecase canteraEconomyInvestmentUsecase;
+    private final CanteraEconomyInvestmentUseCase canteraEconomyInvestmentUsecase;
 
     public void invest(Team.TeamId teamId, BigDecimal amount) {
         log.info("Economy investment team {} with {} amount", teamId, amount);

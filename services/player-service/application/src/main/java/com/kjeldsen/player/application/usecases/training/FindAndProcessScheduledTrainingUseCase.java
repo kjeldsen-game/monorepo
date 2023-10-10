@@ -1,4 +1,4 @@
-package com.kjeldsen.player.application.usecases;
+package com.kjeldsen.player.application.usecases.training;
 
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventReadRepository;

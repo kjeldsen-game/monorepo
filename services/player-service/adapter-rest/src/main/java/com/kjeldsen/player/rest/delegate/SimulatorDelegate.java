@@ -1,6 +1,13 @@
 package com.kjeldsen.player.rest.delegate;
 
 import com.kjeldsen.player.application.usecases.*;
+import com.kjeldsen.player.application.usecases.cantera.CanteraBuildingsInvestmentUseCase;
+import com.kjeldsen.player.application.usecases.cantera.CanteraEconomyInvestmentUseCase;
+import com.kjeldsen.player.application.usecases.cantera.CanteraTraditionInvestmentUseCase;
+import com.kjeldsen.player.application.usecases.training.FindAndProcessScheduledTrainingUseCase;
+import com.kjeldsen.player.application.usecases.training.GenerateSingleDeclineTrainingUseCase;
+import com.kjeldsen.player.application.usecases.training.GenerateTrainingUseCase;
+import com.kjeldsen.player.application.usecases.training.ScheduleTrainingUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
@@ -10,15 +17,7 @@ import com.kjeldsen.player.rest.api.SimulatorApiDelegate;
 import com.kjeldsen.player.rest.mapper.PlayerDeclineResponseMapper;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.mapper.PlayerTrainingResponseMapper;
-import com.kjeldsen.player.rest.model.PlayerDeclineResponse;
-import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
-import com.kjeldsen.player.rest.model.RegisterEconomicInvestmentRequest;
-import com.kjeldsen.player.rest.model.RegisterInvestmentOnCanteraRequest;
-import com.kjeldsen.player.rest.model.RegisterSimulatedDeclineRequest;
-import com.kjeldsen.player.rest.model.RegisterSimulatedScheduledTrainingRequest;
-import com.kjeldsen.player.rest.model.RegisterSponsorIncomeRequest;
-import com.kjeldsen.player.rest.model.SimulateSalaryPayrollRequest;
-import com.kjeldsen.player.rest.model.SponsorPeriodicity;
+import com.kjeldsen.player.rest.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -36,9 +35,9 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final ScheduleTrainingUseCase scheduleTrainingUseCase;
     private final FindAndProcessScheduledTrainingUseCase findAndProcessScheduledTrainingUseCase;
     private final GenerateSingleDeclineTrainingUseCase generateSingleDeclineTrainingUseCase;
-    private final CanteraEconomyInvestmentUsecase canteraEconomyInvestmentUsecase;
-    private final CanteraTraditionInvestmentUsecase canteraTraditionInvestmentUsecase;
-    private final CanteraBuildingsInvestmentUsecase canteraBuildingsInvestmentUsecase;
+    private final CanteraEconomyInvestmentUseCase canteraEconomyInvestmentUsecase;
+    private final CanteraTraditionInvestmentUseCase canteraTraditionInvestmentUsecase;
+    private final CanteraBuildingsInvestmentUseCase canteraBuildingsInvestmentUsecase;
     private final EconomyInvestmentUsecase economyInvestmentUsecase;
     private final AnnualIncomeSponsorUsecase annualIncomeSponsorUsecase;
     private final WeeklyIncomeSponsorUsecase weeklyIncomeSponsorUsecase;
@@ -72,7 +71,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
 
     @Override
     public ResponseEntity<List<PlayerDeclineResponse>> registerSimulatedDecline(String playerId,
-        RegisterSimulatedDeclineRequest registerSimulatedDeclineRequest) {
+                                                                                RegisterSimulatedDeclineRequest registerSimulatedDeclineRequest) {
 
         List<PlayerDeclineResponse> declineEvents = new ArrayList<>();
 
