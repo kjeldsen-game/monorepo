@@ -44,8 +44,6 @@ export const connector = async (url: string, method: string, body?: any) => {
     body: JSON.stringify(body),
   });
 
-  const contentType = response.headers.get("content-type");
-
   try {
     const data = await response.json();
     return data;
@@ -54,23 +52,11 @@ export const connector = async (url: string, method: string, body?: any) => {
     if (response.ok) {
       console.log("Response is ok but no JSON")
     } else {
-      // TODO: try out catch e and throw new Error(e)
       const error = await response.json();
       throw new Error(error.message);
     }
   }
-
   return false;
-
-  // if (response.ok && contentType?.includes("application/json")) {
-  //   const data = await response.json();
-  //   return data;
-  // } else if (response.ok) {
-  //   console.log("Response is ok but no JSON");
-  // } else {
-  //   const error = await response.json();
-  //   throw new Error(error.message);
-  // }
 };
 
 export const connectorAuth = (url: string, method: string, body?: any) => {

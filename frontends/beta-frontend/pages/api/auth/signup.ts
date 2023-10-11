@@ -2,9 +2,6 @@ import { connector, connectorAuth } from "@/libs/fetcher";
 import { signIn } from "next-auth/react";
 
 export async function apiSignup(username: string, password: string, teamName: string) {
-  console.log(username)
-  console.log(password)
-  console.log(teamName)
   await connectorAuth('/auth/sign-up', "POST", {
     username,
     password,
