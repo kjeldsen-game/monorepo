@@ -9,6 +9,7 @@ interface SignUpFormValues {
   username: string
   password: string
   confirmPassword: string
+  teamName: string
 }
 
 const SignUpPage: NextPageWithLayout = () => {
@@ -29,8 +30,8 @@ const SignUpPage: NextPageWithLayout = () => {
             justifyContent: 'center',
             rowGap: '1rem',
           }}
-          onSubmit={handleSubmit(async ({ username, password }) => {
-            apiSignup(username, password)
+          onSubmit={handleSubmit(async ({ username, password, teamName }) => {
+            apiSignup(username, password, teamName)
           })}>
           <Controller
             name="username"
@@ -40,6 +41,23 @@ const SignUpPage: NextPageWithLayout = () => {
             render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
               <TextField
                 label="Username"
+                variant="filled"
+                value={value}
+                onChange={onChange}
+                onBlur={onBlur}
+                error={!!error}
+                helperText={error ? error.message : null}
+              />
+            )}
+          />
+                    <Controller
+            name="teamName"
+            control={control}
+            defaultValue=""
+            rules={{ required: 'Team Name required' }}
+            render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+              <TextField
+                label="Team Name"
                 variant="filled"
                 value={value}
                 onChange={onChange}

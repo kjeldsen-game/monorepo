@@ -43,13 +43,20 @@ export const connector = async (url: string, method: string, body?: any) => {
     },
     body: JSON.stringify(body),
   });
-  if (response.ok) {
+
+  try {
     const data = await response.json();
     return data;
-  } else {
-    const error = await response.json();
-    throw new Error(error.message);
   }
+  catch (e) {
+    if (response.ok) {
+      console.log("Response is ok but no JSON")
+    } else {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+  }
+  return false;
 };
 
 export const connectorAuth = (url: string, method: string, body?: any) => {
