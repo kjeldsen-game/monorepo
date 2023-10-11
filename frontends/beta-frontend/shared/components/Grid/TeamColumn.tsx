@@ -30,6 +30,23 @@ export const teamColumn = [
     align: 'center' as GridAlignment,
     minWidth: 70,
     flex: 1,
+    // create css class for each position
+    // cellClassName: (params: GridCellClassParams) => {
+    //   if (params.value === 'GK') {
+    //     return 'gk';
+    //   }
+    //   if (params.value === 'DF') {
+    //     return 'df';
+    //   }
+    //   if (params.value === 'MF') {
+    //     return 'mf';
+    //   }
+    //   if (params.value === 'FW') {
+    //     return 'fw';
+    //   }
+    //   return '';
+    // },
+
   },
   {
     field: 'DEFENSE_POSITION',
