@@ -41,6 +41,8 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final EconomyInvestmentUsecase economyInvestmentUsecase;
     private final AnnualIncomeSponsorUsecase annualIncomeSponsorUsecase;
     private final WeeklyIncomeSponsorUsecase weeklyIncomeSponsorUsecase;
+
+    private final MatchIncomeAttendanceUseCase matchIncomeAttendanceUseCase;
     private final PaySalariesTeamUseCase paySalariesTeamUseCase;
     private final UpdateSalariesTeamUseCase updateSalariesTeamUseCase;
     private final GenerateTrainingUseCase generateTrainingUseCase;
@@ -154,6 +156,16 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     @Override
     public ResponseEntity<Void> simulateSalaryIncrease(String teamId) {
         updateSalariesTeamUseCase.update(Team.TeamId.of(teamId));
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<Void> simulateAttendanceIncome(String teamId, RegisterAttendanceIncomeRequest registerAttendanceIncomeRequest) {
+
+        Integer spectators = registerAttendanceIncomeRequest.getSpectators();
+        Double seatPrice = registerAttendanceIncomeRequest.getSeatPrice();
+
+        matchIncomeAttendanceUseCase.income(Team.TeamId.of(teamId), spectators);
+
         return ResponseEntity.ok().build();
     }
 

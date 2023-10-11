@@ -16,18 +16,19 @@ import java.math.BigDecimal;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class MatchIncomeAttendanceUsecase {
+public class MatchIncomeAttendanceUseCase {
+
     private final TeamReadRepository teamReadRepository;
     private final IncomeEventWriteRepository incomeEventWriteRepository;
     private final TeamWriteRepository teamWriteRepository;
 
     public void income(Team.TeamId teamId, Integer spectators) {
-        log.info("MatchIncomeAttendanceUsecase team {} with {} mode and {} spectators", teamId, spectators);
+        log.info("MatchIncomeAttendanceUsecase team {} with {} spectators and {} seat price.", teamId, spectators, seatPrice);
 
         Team team = teamReadRepository.findById(teamId)
             .orElseThrow(() -> new RuntimeException("Team not found"));
 
-        BigDecimal amount = BigDecimal.valueOf(calculateMatchRevenue(spectators));
+        BigDecimal amount = BigDecimal.valueOf(calculateMatchRevenue(team, spectators, seatPrice));
 
         IncomeEvent incomeEvent = IncomeEvent.builder()
             .id(EventId.generate())
@@ -47,8 +48,15 @@ public class MatchIncomeAttendanceUsecase {
         teamWriteRepository.save(team);
     }
 
-    private Double calculateMatchRevenue(Integer spectators) {
-        Double seatPrice = 10.0;
+    private Double calculateMatchRevenue(Team team, Integer spectators, Double seatPrice) {
+
+        if (team.getEconomy().getStadium().getSeats() > spectators) {
+            throw new RuntimeException("Your stadium allows: " + team.getEconomy().getStadium().getSeats() + " spectators. Try again.");
+        }
+
+        if (team.getEconomy().getStadium().getSeats() < 0) {
+            throw new RuntimeException("You cannot have less than 0 spectators. Try again.");
+        }
         return seatPrice * spectators;
     }
 }
