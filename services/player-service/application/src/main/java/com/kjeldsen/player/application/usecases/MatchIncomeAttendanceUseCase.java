@@ -22,9 +22,8 @@ public class MatchIncomeAttendanceUseCase {
     private final IncomeEventWriteRepository incomeEventWriteRepository;
     private final TeamWriteRepository teamWriteRepository;
 
-    public void income(Team.TeamId teamId, Integer spectators) {
+    public void income(Team.TeamId teamId, Integer spectators, Double seatPrice) {
         log.info("MatchIncomeAttendanceUsecase team {} with {} spectators and {} seat price.", teamId, spectators, seatPrice);
-
         Team team = teamReadRepository.findById(teamId)
             .orElseThrow(() -> new RuntimeException("Team not found"));
 
@@ -48,15 +47,16 @@ public class MatchIncomeAttendanceUseCase {
         teamWriteRepository.save(team);
     }
 
-    private Double calculateMatchRevenue(Team team, Integer spectators, Double seatPrice) {
-
-        if (team.getEconomy().getStadium().getSeats() > spectators) {
-            throw new RuntimeException("Your stadium allows: " + team.getEconomy().getStadium().getSeats() + " spectators. Try again.");
+    public Double calculateMatchRevenue(Team team, Integer spectators, Double seatPrice) {
+        if (team.getEconomy().getStadium().getSeats() < spectators) {
+            throw new IllegalArgumentException("Your stadium allows: " + team.getEconomy().getStadium().getSeats() + " spectators. Try again.");
         }
 
-        if (team.getEconomy().getStadium().getSeats() < 0) {
-            throw new RuntimeException("You cannot have less than 0 spectators. Try again.");
+        if (spectators < 0) {
+            throw new IllegalArgumentException("You cannot have less than 0 spectators. Try again.");
         }
+
         return seatPrice * spectators;
     }
+
 }

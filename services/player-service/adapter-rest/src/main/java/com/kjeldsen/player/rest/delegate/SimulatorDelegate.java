@@ -39,7 +39,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final CanteraTraditionInvestmentUseCase canteraTraditionInvestmentUsecase;
     private final CanteraBuildingsInvestmentUseCase canteraBuildingsInvestmentUsecase;
     private final EconomyInvestmentUsecase economyInvestmentUsecase;
-    private final AnnualIncomeSponsorUsecase annualIncomeSponsorUsecase;
+    private final AnnualIncomeSponsorUseCase annualIncomeSponsorUsecase;
     private final WeeklyIncomeSponsorUsecase weeklyIncomeSponsorUsecase;
 
     private final MatchIncomeAttendanceUseCase matchIncomeAttendanceUseCase;
@@ -164,7 +164,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         Integer spectators = registerAttendanceIncomeRequest.getSpectators();
         Double seatPrice = registerAttendanceIncomeRequest.getSeatPrice();
 
-        matchIncomeAttendanceUseCase.income(Team.TeamId.of(teamId), spectators);
+        matchIncomeAttendanceUseCase.income(Team.TeamId.of(teamId), spectators, seatPrice);
 
         return ResponseEntity.ok().build();
     }

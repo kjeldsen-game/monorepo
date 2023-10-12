@@ -716,6 +716,14 @@ components:
           type: number
           format: double
           example: 50000
+        stadium:
+          type: object
+          example: { "stadium": { "seats": 1000 } }
+          properties:
+            seats:
+              type: integer
+              format: int32
+              example: 10000
 
     Sponsor:
       type: object

@@ -37,6 +37,9 @@ public class CreateTeamUseCase {
                 .build())
             .economy(Team.Economy.builder()
                 .balance(BigDecimal.ZERO)
+                .stadium(Team.Economy.Stadium.builder()
+                    .seats(10000)
+                    .build())
                 .build())
             .build();
         // TODO apart from saving the team aggregate/projection, we need to store a created_team_event. Then Team domain object should have a

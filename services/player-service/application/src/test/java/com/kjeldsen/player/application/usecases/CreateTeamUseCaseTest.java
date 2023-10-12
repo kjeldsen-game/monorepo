@@ -15,9 +15,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -50,6 +48,7 @@ class CreateTeamUseCaseTest {
                     && team.getUserId().equals(userId)
                     && team.getName().equals(teamName)
                     && team.getCantera().getScore().equals(canteraScore)
+                    && team.getEconomy().getStadium().getSeats().equals(10000)
                 )
             );
     }

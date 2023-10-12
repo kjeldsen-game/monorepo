@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class AnnualIncomeSponsorUsecase {
+public class AnnualIncomeSponsorUseCase {
 
     private final TeamReadRepository teamReadRepository;
     private final IncomeEventWriteRepository incomeEventWriteRepository;
