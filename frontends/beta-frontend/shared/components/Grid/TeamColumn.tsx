@@ -3,6 +3,7 @@ import { GridAlignment } from '@mui/x-data-grid'
 import { PlayerOrderSelect } from '@/shared/components/PlayerOrderSelect'
 import Link from 'next/link'
 import { css } from '@emotion/react';
+import clsx from 'clsx';
 
 const linkStyle = css`
   text-decoration: none;
@@ -24,29 +25,40 @@ export const teamColumn = [
   },
   { field: 'age', headerName: 'Age', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
   {
+    // field: 'position',
     field: 'position',
+    valueFormatter: (params: GridValueGetterParams ) => {
+      switch (params.value) {
+        case 'GOALKEEPER':
+          return 'GK';
+        case 'DEFENDER':
+          return 'DF';
+        case 'MIDDLE':
+          return 'MD';
+        case 'FORWARD':
+          return 'FW';
+        default:
+          return params.value;
+      }
+    },
     headerName: 'Position',
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 70,
     flex: 1,
-    // create css class for each position
-    // cellClassName: (params: GridCellClassParams) => {
-    //   if (params.value === 'GK') {
-    //     return 'gk';
-    //   }
-    //   if (params.value === 'DF') {
-    //     return 'df';
-    //   }
-    //   if (params.value === 'MF') {
-    //     return 'mf';
-    //   }
-    //   if (params.value === 'FW') {
-    //     return 'fw';
-    //   }
-    //   return '';
-    // },
+    // Assign Css class based on position
+    cellClassName: (params: GridCellParams<string>) => {
+      if (params.value == null) {
+        return '';
+      }
 
+      return clsx('super-app', {
+        goalkeeper: params.value === 'GOALKEEPER',
+        defender: params.value === 'DEFENDER',
+        middle: params.value === 'MIDDLE',
+        forward: params.value === 'FORWARD',
+      });
+    },
   },
   {
     field: 'DEFENSE_POSITION',
