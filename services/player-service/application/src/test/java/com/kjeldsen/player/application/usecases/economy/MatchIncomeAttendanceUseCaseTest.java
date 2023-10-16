@@ -1,4 +1,4 @@
-package com.kjeldsen.player.application.usecases;
+package com.kjeldsen.player.application.usecases.economy;
 
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.IncomeEventWriteRepository;
@@ -55,8 +55,6 @@ public class MatchIncomeAttendanceUseCaseTest {
         Integer spectators = 11000;
         Double seatPrice = 20.0;
         Team.TeamId teamId = Team.TeamId.generate();
-
-        BigDecimal balance = BigDecimal.valueOf(spectators * seatPrice);
 
         when(teamReadRepository.findById(teamId)).thenReturn(Optional.of(getTeam(teamId)));
 

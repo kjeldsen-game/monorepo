@@ -1,4 +1,4 @@
-package com.kjeldsen.player.application.usecases;
+package com.kjeldsen.player.application.usecases.economy;
 
 import com.kjeldsen.events.domain.EventId;
 import com.kjeldsen.player.application.usecases.cantera.CanteraEconomyInvestmentUseCase;
@@ -17,7 +17,7 @@ import java.math.RoundingMode;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class EconomyInvestmentUsecase {
+public class EconomyInvestmentUseCase {
 
     private static final BigDecimal MAX_KEY_VALUE_INVESTMENT_POINTS = BigDecimal.valueOf(5);
     private static final BigDecimal KEY_VALUE_INVESTMENT_AMOUNT = BigDecimal.valueOf(250_000);

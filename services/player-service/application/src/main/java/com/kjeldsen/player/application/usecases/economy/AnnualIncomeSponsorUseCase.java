@@ -1,4 +1,4 @@
-package com.kjeldsen.player.application.usecases;
+package com.kjeldsen.player.application.usecases.economy;
 
 import com.kjeldsen.events.domain.EventId;
 import com.kjeldsen.player.domain.Team;
@@ -48,7 +48,7 @@ public class AnnualIncomeSponsorUseCase {
         teamWriteRepository.save(team);
     }
 
-    private BigDecimal getAmount(Team.Economy.IncomeMode mode, Integer wins) {
+    public BigDecimal getAmount(Team.Economy.IncomeMode mode, Integer wins) {
         return switch (mode) {
             case CONSERVATIVE -> BigDecimal.valueOf(1_000_000).add(BigDecimal.valueOf(wins * 100_000));
             case MODERATE -> BigDecimal.valueOf(750_000).add(BigDecimal.valueOf(wins * 200_000));
