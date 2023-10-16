@@ -1,6 +1,5 @@
-import { GridCellParams, GridValueGetterParams } from '@mui/x-data-grid'
+import { GridCellParams, GridValueFormatterParams, GridValueGetterParams } from '@mui/x-data-grid'
 import { GridAlignment } from '@mui/x-data-grid'
-import { PlayerOrderSelect } from '@/shared/components/PlayerOrderSelect'
 import Link from 'next/link'
 import { css } from '@emotion/react';
 import clsx from 'clsx';
@@ -27,7 +26,7 @@ export const teamColumn = [
   {
     // field: 'position',
     field: 'position',
-    valueFormatter: (params: GridValueGetterParams ) => {
+    valueFormatter: (params: GridValueFormatterParams<any>) => {
       switch (params.value) {
         case 'GOALKEEPER':
           return 'GK';
