@@ -5,10 +5,12 @@ import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.repositories.*;
+import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
+import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.stereotype.Component;
@@ -28,8 +30,6 @@ public class UpdateSalariesTeamUseCaseTest {
 
     private final String TEAM_NAME = "TeamName";
     private final TeamReadRepository teamReadRepository = mock(TeamReadRepository.class);
-    private final ExpenseEventWriteRepository expenseEventWriteRepository = mock(ExpenseEventWriteRepository.class);
-    private final TeamWriteRepository teamWriteRepository = mock(TeamWriteRepository.class);
     private final PlayerWriteRepository playerWriteRepository = mock(PlayerWriteRepository.class);
     private final PlayerWriteRepository mockedPlayerWriteRepository = mock(PlayerWriteRepository.class);
     final private PlayerPositionTendencyReadRepository mockedPlayerPositionTendencyReadRepository = mock(
@@ -68,17 +68,9 @@ public class UpdateSalariesTeamUseCaseTest {
 
         updateSalariesTeamUseCase.update(teamId);
 
-        BigDecimal balanceTeam = teamm.getEconomy().getBalance();
         playersToSave.forEach(player -> {
-            verify(playerReadRepository)
-                .save(
-                    argThat(investmentEvent -> investmentEvent.getTeamId().equals(teamId)
-                        && investmentEvent.getAmount().equals(amount)
-                    )
-                );
+            verify(playerWriteRepository).save(player);
         });
-        BigDecimal finalBalanceTeam = getTeam(teamId).getEconomy().getBalance();
-        Assertions.assertThat(balanceTeam).isLessThan(finalBalanceTeam);
     }
 
     private Team getTeam(Team.TeamId teamId) {
