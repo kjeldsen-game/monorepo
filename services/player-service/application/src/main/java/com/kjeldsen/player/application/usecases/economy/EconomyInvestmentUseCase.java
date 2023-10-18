@@ -1,6 +1,7 @@
-package com.kjeldsen.player.application.usecases;
+package com.kjeldsen.player.application.usecases.economy;
 
 import com.kjeldsen.events.domain.EventId;
+import com.kjeldsen.player.application.usecases.cantera.CanteraEconomyInvestmentUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.EconomyInvestmentEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
@@ -16,7 +17,7 @@ import java.math.RoundingMode;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class EconomyInvestmentUsecase {
+public class EconomyInvestmentUseCase {
 
     private static final BigDecimal MAX_KEY_VALUE_INVESTMENT_POINTS = BigDecimal.valueOf(5);
     private static final BigDecimal KEY_VALUE_INVESTMENT_AMOUNT = BigDecimal.valueOf(250_000);
@@ -24,7 +25,7 @@ public class EconomyInvestmentUsecase {
 
     private final TeamReadRepository teamReadRepository;
     private final EconomyInvestmentEventWriteRepository economyInvestmentEventWriteRepository;
-    private final CanteraEconomyInvestmentUsecase canteraEconomyInvestmentUsecase;
+    private final CanteraEconomyInvestmentUseCase canteraEconomyInvestmentUsecase;
 
     public void invest(Team.TeamId teamId, BigDecimal amount) {
         log.info("Economy investment team {} with {} amount", teamId, amount);

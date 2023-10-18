@@ -317,6 +317,26 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
+  /simulator/attendance-income/{teamId}:
+    post:
+      summary: Simulates a match attendance increase
+      operationId: simulateAttendanceIncome
+      tags:
+        - simulator
+      parameters:
+        - $ref: '#/components/parameters/TeamIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/RegisterAttendanceIncomeRequest"
+      responses:
+        "201":
+          description: Simulated attendance income
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
   /simulator/salary-payroll/{teamId}:
     post:
       summary: Simulates a salary payroll
@@ -447,6 +467,13 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/RegisterEconomicInvestmentRequest"
+
+    RegisterAttendanceIncomeRequest:
+      description: Register a sponsor income
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RegisterAttendanceIncomeRequest"
 
     SimulateSalaryPayrollRequest:
       description: Simulate a salary payroll
@@ -587,6 +614,7 @@ components:
       enum:
         - WEEKLY
         - ANNUAL
+        - MATCH
       example: ANNUAL
 
     SponsorMode:
@@ -688,6 +716,14 @@ components:
           type: number
           format: double
           example: 50000
+        stadium:
+          type: object
+          example: { "stadium": { "seats": 1000 } }
+          properties:
+            seats:
+              type: integer
+              format: int32
+              example: 10000
 
     Sponsor:
       type: object
@@ -863,6 +899,19 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Sponsor"
+
+    RegisterAttendanceIncomeRequest:
+      type: object
+      example: { "spectators": 5, "seatPrice": 10.0 }
+      properties:
+        spectators:
+          type: integer
+          format: int32
+          example: 1000
+        seatPrice:
+          type: number
+          format: double
+          example: 15.0
 
     RegisterBloomPhaseRequest:
       type: object
