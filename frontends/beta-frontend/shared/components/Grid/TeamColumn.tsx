@@ -52,10 +52,7 @@ export const teamColumn = [
       }
 
       return clsx('super-app', {
-        goalkeeper: params.value === 'GOALKEEPER',
-        defender: params.value === 'DEFENDER',
-        middle: params.value === 'MIDDLE',
-        forward: params.value === 'FORWARD',
+        [params.value.toLowerCase()]: true,
       });
     },
   },
