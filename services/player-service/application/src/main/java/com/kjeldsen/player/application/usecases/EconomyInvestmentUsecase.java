@@ -24,7 +24,7 @@ public class EconomyInvestmentUsecase {
 
     private final TeamReadRepository teamReadRepository;
     private final EconomyInvestmentEventWriteRepository economyInvestmentEventWriteRepository;
-    private final CanteraEconomyInvestmentUsecase canteraEconomyInvestmentUsecase;
+    private final CanteraEconomyInvestmentUseCase canteraEconomyInvestmentUsecase;
 
     public void invest(Team.TeamId teamId, BigDecimal amount) {
         log.info("Economy investment team {} with {} amount", teamId, amount);

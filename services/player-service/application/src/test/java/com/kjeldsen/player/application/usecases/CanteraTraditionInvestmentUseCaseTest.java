@@ -16,12 +16,12 @@ import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class CanteraTraditionInvestmentUsecaseTest {
+public class CanteraTraditionInvestmentUseCaseTest {
 
     private final TeamReadRepository teamReadRepository = Mockito.mock(TeamReadRepository.class);
     private final TeamWriteRepository teamWriteRepository = Mockito.mock(TeamWriteRepository.class);
     private final CanteraInvestmentEventWriteRepository canteraInvestmentEventWriteRepository = Mockito.mock(CanteraInvestmentEventWriteRepository.class);
-    private final CanteraTraditionInvestmentUsecase canteraTraditionInvestmentUsecase = new CanteraTraditionInvestmentUsecase(teamReadRepository, teamWriteRepository, canteraInvestmentEventWriteRepository);
+    private final CanteraTraditionInvestmentUseCase canteraTraditionInvestmentUsecase = new CanteraTraditionInvestmentUseCase(teamReadRepository, teamWriteRepository, canteraInvestmentEventWriteRepository);
 
     @Test
     public void should_throw_exception_when_teamId_does_not_found() {

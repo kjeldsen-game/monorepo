@@ -14,14 +14,14 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class CanteraBuildingsInvestmentUsecase {
+public class CanteraTraditionInvestmentUseCase {
 
     private final TeamReadRepository teamReadRepository;
     private final TeamWriteRepository teamWriteRepository;
     private final CanteraInvestmentEventWriteRepository canteraInvestmentEventWriteRepository;
 
     public void invest(Team.TeamId teamId, Integer points) {
-        log.info("Buildings investment team {} with {} points", teamId, points);
+        log.info("Tradition investment team {} with {} points", teamId, points);
 
         Team team = teamReadRepository.findById(teamId)
             .orElseThrow(() -> new RuntimeException("Team not found"));
@@ -30,13 +30,13 @@ public class CanteraBuildingsInvestmentUsecase {
             .id(EventId.generate())
             .occurredAt(InstantProvider.now())
             .teamId(teamId)
-            .investment(Team.Cantera.Investment.BUILDINGS)
+            .investment(Team.Cantera.Investment.TRADITION)
             .points(points)
             .build();
 
         canteraInvestmentEventWriteRepository.save(canteraInvestmentEvent);
 
-        team.getCantera().addBuildingsInvestment(canteraInvestmentEvent);
+        team.getCantera().addTraditionInvestment(canteraInvestmentEvent);
 
         teamWriteRepository.save(team);
     }
