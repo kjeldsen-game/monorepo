@@ -11,7 +11,7 @@ type GridProps<T> = {
 function Grid<T>({ rows, columns }: GridProps<T>) {
   return (
     <Box sx={{
-      '& .super-app.goalkeeper': {
+      '& .super-app.goalkeeper .MuiDataGrid-cellContent': {
         backgroundColor: '#A4BC10',
         color: 'white',
         padding: '6px',

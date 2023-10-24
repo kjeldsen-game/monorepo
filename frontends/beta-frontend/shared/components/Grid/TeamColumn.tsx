@@ -24,7 +24,6 @@ export const teamColumn = [
   },
   { field: 'age', headerName: 'Age', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
   {
-    // field: 'position',
     field: 'position',
     valueFormatter: (params: GridValueFormatterParams<any>) => {
       switch (params.value) {
@@ -63,7 +62,10 @@ export const teamColumn = [
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.DEFENSE_POSITION,
+    valueGetter: (params: GridValueGetterParams) => {
+      const defensePosition = params.row.actualSkills.DEFENSE_POSITION;
+      return defensePosition ? defensePosition.PlayerSkills.actual : null;
+    },
   },
   {
     field: 'BALL_CONTROL',
