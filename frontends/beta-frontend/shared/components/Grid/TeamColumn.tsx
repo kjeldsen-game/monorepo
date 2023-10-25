@@ -72,7 +72,7 @@ export const teamColumn = [
   },
   {
     field: 'BALL_CONTROL',
-    headerName: (<div>BC<sup>INT</sup></div>),
+    headerName: console.log(typeof((<div>BC<sup>INT</sup></div>))),
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 50,

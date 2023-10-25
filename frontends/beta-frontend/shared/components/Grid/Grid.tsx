@@ -1,9 +1,13 @@
 import { DataGrid, GridCallbackDetails, GridColDef, GridEventListener, GridRowParams, MuiEvent } from '@mui/x-data-grid'
 import Box from '@mui/material/Box'
 
+interface CustomGridColDef extends GridColDef {
+  headerName: string | object;
+}
+
 type GridProps<T> = {
   rows: T[]
-  columns: GridColDef[]
+  columns: CustomGridColDef[]
 }
 
 function Grid<T>({ rows, columns }: GridProps<T>) {
