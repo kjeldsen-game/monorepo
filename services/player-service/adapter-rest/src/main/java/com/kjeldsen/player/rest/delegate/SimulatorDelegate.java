@@ -1,6 +1,6 @@
 package com.kjeldsen.player.rest.delegate;
 
-import com.kjeldsen.player.application.usecases.cantera.CanteraBuildingsInvestmentUseCase;
+import com.kjeldsen.player.application.usecases.cantera.CanteraBuildingsInvestmentUsecase;
 import com.kjeldsen.player.application.usecases.cantera.CanteraEconomyInvestmentUseCase;
 import com.kjeldsen.player.application.usecases.cantera.CanteraTraditionInvestmentUseCase;
 import com.kjeldsen.player.application.usecases.economy.*;
@@ -37,7 +37,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final GenerateSingleDeclineTrainingUseCase generateSingleDeclineTrainingUseCase;
     private final CanteraEconomyInvestmentUseCase canteraEconomyInvestmentUsecase;
     private final CanteraTraditionInvestmentUseCase canteraTraditionInvestmentUsecase;
-    private final CanteraBuildingsInvestmentUseCase canteraBuildingsInvestmentUsecase;
+    private final CanteraBuildingsInvestmentUsecase canteraBuildingsInvestmentUsecase;
     private final EconomyInvestmentUseCase economyInvestmentUsecase;
     private final AnnualIncomeSponsorUseCase annualIncomeSponsorUsecase;
     private final WeeklyIncomeSponsorUseCase weeklyIncomeSponsorUsecase;
