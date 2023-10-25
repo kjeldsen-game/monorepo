@@ -1,4 +1,4 @@
-package com.kjeldsen.player.application.usecases;
+package com.kjeldsen.player.application.usecases.economy;
 
 import com.kjeldsen.events.domain.EventId;
 import com.kjeldsen.player.domain.Team;
@@ -22,6 +22,7 @@ public class PaySalariesTeamUseCase {
     private final TeamWriteRepository teamWriteRepository;
     private final PlayerReadRepository playerReadRepository;
     private final ExpenseEventWriteRepository expenseEventWriteRepository;
+
 
     @Transactional
     public void pay(Team.TeamId teamId) {

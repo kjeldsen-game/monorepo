@@ -1,4 +1,4 @@
-package com.kjeldsen.player.application.usecases;
+package com.kjeldsen.player.application.usecases.economy;
 
 import com.kjeldsen.events.domain.EventId;
 import com.kjeldsen.player.domain.Team;
@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class WeeklyIncomeSponsorUsecase {
+public class WeeklyIncomeSponsorUseCase {
 
     private final TeamReadRepository teamReadRepository;
     private final IncomeEventWriteRepository incomeEventWriteRepository;
@@ -48,7 +48,7 @@ public class WeeklyIncomeSponsorUsecase {
         teamWriteRepository.save(team);
     }
 
-    private BigDecimal getAmount(Team.Economy.IncomeMode mode, Integer wins) {
+    public BigDecimal getAmount(Team.Economy.IncomeMode mode, Integer wins) {
         return switch (mode) {
             case CONSERVATIVE -> BigDecimal.valueOf(100_000);
             case MODERATE -> BigDecimal.valueOf(50_000).add(BigDecimal.valueOf(wins * 100_000));

@@ -36,10 +36,23 @@ public class Team {
     public static class Economy {
 
         private BigDecimal balance;
+        private Stadium stadium;
+
+        @Builder
+        @Getter
+        public static class Stadium {
+            public static final int MAX_SEATS = 10000;
+            public static final int MIN_SEATS = 0;
+
+            private Integer seats;
+            private Integer spectators;
+
+        }
 
         public enum IncomePeriodicity {
             WEEKLY,
-            ANNUAL
+            ANNUAL,
+            MATCH
         }
 
         public enum IncomeMode {

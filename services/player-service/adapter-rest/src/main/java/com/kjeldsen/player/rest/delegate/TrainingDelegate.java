@@ -1,7 +1,7 @@
 package com.kjeldsen.player.rest.delegate;
 
-import com.kjeldsen.player.application.usecases.GenerateBloomPhaseUseCase;
-import com.kjeldsen.player.application.usecases.GetHistoricalTrainingUseCase;
+import com.kjeldsen.player.application.usecases.training.GenerateBloomPhaseUseCase;
+import com.kjeldsen.player.application.usecases.training.GetHistoricalTrainingUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.rest.api.TrainingApiDelegate;

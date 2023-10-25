@@ -1,6 +1,13 @@
 package com.kjeldsen.player.rest.delegate;
 
-import com.kjeldsen.player.application.usecases.*;
+import com.kjeldsen.player.application.usecases.cantera.CanteraBuildingsInvestmentUseCase;
+import com.kjeldsen.player.application.usecases.cantera.CanteraEconomyInvestmentUseCase;
+import com.kjeldsen.player.application.usecases.cantera.CanteraTraditionInvestmentUseCase;
+import com.kjeldsen.player.application.usecases.economy.*;
+import com.kjeldsen.player.application.usecases.training.FindAndProcessScheduledTrainingUseCase;
+import com.kjeldsen.player.application.usecases.training.GenerateSingleDeclineTrainingUseCase;
+import com.kjeldsen.player.application.usecases.training.GenerateTrainingUseCase;
+import com.kjeldsen.player.application.usecases.training.ScheduleTrainingUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
@@ -31,9 +38,11 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final CanteraEconomyInvestmentUseCase canteraEconomyInvestmentUsecase;
     private final CanteraTraditionInvestmentUseCase canteraTraditionInvestmentUsecase;
     private final CanteraBuildingsInvestmentUseCase canteraBuildingsInvestmentUsecase;
-    private final EconomyInvestmentUsecase economyInvestmentUsecase;
-    private final AnnualIncomeSponsorUsecase annualIncomeSponsorUsecase;
-    private final WeeklyIncomeSponsorUsecase weeklyIncomeSponsorUsecase;
+    private final EconomyInvestmentUseCase economyInvestmentUsecase;
+    private final AnnualIncomeSponsorUseCase annualIncomeSponsorUsecase;
+    private final WeeklyIncomeSponsorUseCase weeklyIncomeSponsorUsecase;
+
+    private final MatchIncomeAttendanceUseCase matchIncomeAttendanceUseCase;
     private final PaySalariesTeamUseCase paySalariesTeamUseCase;
     private final UpdateSalariesTeamUseCase updateSalariesTeamUseCase;
     private final GenerateTrainingUseCase generateTrainingUseCase;
@@ -147,6 +156,16 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     @Override
     public ResponseEntity<Void> simulateSalaryIncrease(String teamId) {
         updateSalariesTeamUseCase.update(Team.TeamId.of(teamId));
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<Void> simulateAttendanceIncome(String teamId, RegisterAttendanceIncomeRequest registerAttendanceIncomeRequest) {
+
+        Integer spectators = registerAttendanceIncomeRequest.getSpectators();
+        Double seatPrice = registerAttendanceIncomeRequest.getSeatPrice();
+
+        matchIncomeAttendanceUseCase.income(Team.TeamId.of(teamId), spectators, seatPrice);
+
         return ResponseEntity.ok().build();
     }
 
