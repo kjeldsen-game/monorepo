@@ -57,60 +57,93 @@ export const teamColumn = [
   },
   {
     field: 'DEFENSE_POSITION',
-    headerName: 'DP',
+    headerName: (<div>DP<sup>CO</sup></div>),
     minWidth: 50,
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => {
-      const defensePosition = params.row.actualSkills.DEFENSE_POSITION;
-      return defensePosition ? defensePosition.PlayerSkills.actual : null;
+      try {
+        return params.row.actualSkills.DEFENSE_POSITION.PlayerSkills.actual;
+      } catch {
+        return params.row.actualSkills.CONTROL.PlayerSkills.actual;
+      }
     },
   },
   {
     field: 'BALL_CONTROL',
-    headerName: 'BC',
+    headerName: (<div>BC<sup>INT</sup></div>),
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.BALL_CONTROL,
+    valueGetter: (params: GridValueGetterParams) => {
+      try {
+        return params.row.actualSkills.BALL_CONTROL.PlayerSkills.actual;
+      } catch {
+        return params.row.actualSkills.INTERCEPTIONS.PlayerSkills.actual;
+      }
+    },
   },
   {
     field: 'SCORE',
-    headerName: 'SC',
+    headerName: (<div>SC<sup>1on1</sup></div>),
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.SCORE,
+    valueGetter: (params: GridValueGetterParams) => {
+      try {
+        return params.row.actualSkills.SCORE.PlayerSkills.actual;
+      } catch {
+        return params.row.actualSkills.ONE_ON_ONE.PlayerSkills.actual;
+      }
+    },
   },
   {
     field: 'PASSING',
-    headerName: 'PA',
+    headerName: (<div>PA<sup>ORG</sup></div>),
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.PASSING,
+    valueGetter: (params: GridValueGetterParams) => {
+      try {
+        return params.row.actualSkills.PASSING.PlayerSkills.actual;
+      } catch {
+        return params.row.actualSkills.ORGANIZATION.PlayerSkills.actual;
+      }
+    },
   },
   {
     field: 'OFFENSIVE_POSITION',
-    headerName: 'OP',
+    headerName: (<div>OP<sup>POS</sup></div>),
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.OFFENSIVE_POSITION,
+    valueGetter: (params: GridValueGetterParams) => {
+      try {
+        return params.row.actualSkills.OFFENSIVE_POSITION.PlayerSkills.actual;
+      } catch {
+        return params.row.actualSkills.POSITIONING.PlayerSkills.actual;
+      }
+    },
   },
   {
     field: 'TACKLING',
-    headerName: 'TA',
+    headerName: (<div>TA<sup>RE</sup></div>),
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.TACKLING,
+    valueGetter: (params: GridValueGetterParams) => {
+      try {
+        return params.row.actualSkills.TACKLING.PlayerSkills.actual;
+      } catch {
+        return params.row.actualSkills.REFLEXES.PlayerSkills.actual;
+      }
+    },
   },
   {
     field: 'CO',
@@ -119,7 +152,7 @@ export const teamColumn = [
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.CO,
+    valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.CO?.PlayerSkills.actual,
   },
   // {
   //   field: 'GP',
