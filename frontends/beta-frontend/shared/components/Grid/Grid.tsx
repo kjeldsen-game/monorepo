@@ -2,7 +2,7 @@ import { DataGrid, GridCallbackDetails, GridColDef, GridEventListener, GridRowPa
 import Box from '@mui/material/Box'
 
 interface CustomGridColDef extends GridColDef {
-  headerName: string | object;
+  headerName: object;
 }
 
 type GridProps<T> = {

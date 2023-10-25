@@ -63,24 +63,24 @@ export const teamColumn = [
     align: 'center' as GridAlignment,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => {
-      try {
+      if (params.row.actualSkills.DEFENSE_POSITION) {
         return params.row.actualSkills.DEFENSE_POSITION.PlayerSkills.actual;
-      } catch {
+      } else {
         return params.row.actualSkills.CONTROL.PlayerSkills.actual;
       }
     },
   },
   {
     field: 'BALL_CONTROL',
-    headerName: console.log(typeof((<div>BC<sup>INT</sup></div>))),
+    headerName: (<div>BC<sup>INT</sup></div>),
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => {
-      try {
+      if (params.row.actualSkills.BALL_CONTROL) {
         return params.row.actualSkills.BALL_CONTROL.PlayerSkills.actual;
-      } catch {
+      } else {
         return params.row.actualSkills.INTERCEPTIONS.PlayerSkills.actual;
       }
     },
@@ -93,9 +93,9 @@ export const teamColumn = [
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => {
-      try {
+      if (params.row.actualSkills.SCORE) {
         return params.row.actualSkills.SCORE.PlayerSkills.actual;
-      } catch {
+      } else {
         return params.row.actualSkills.ONE_ON_ONE.PlayerSkills.actual;
       }
     },
@@ -108,9 +108,9 @@ export const teamColumn = [
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => {
-      try {
+      if (params.row.actualSkills.PASSING) {
         return params.row.actualSkills.PASSING.PlayerSkills.actual;
-      } catch {
+      } else {
         return params.row.actualSkills.ORGANIZATION.PlayerSkills.actual;
       }
     },
@@ -123,9 +123,9 @@ export const teamColumn = [
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => {
-      try {
+      if (params.row.actualSkills.OFFENSIVE_POSITION) {
         return params.row.actualSkills.OFFENSIVE_POSITION.PlayerSkills.actual;
-      } catch {
+      } else {
         return params.row.actualSkills.POSITIONING.PlayerSkills.actual;
       }
     },
@@ -138,9 +138,9 @@ export const teamColumn = [
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => {
-      try {
+      if (params.row.actualSkills.TACKLING) {
         return params.row.actualSkills.TACKLING.PlayerSkills.actual;
-      } catch {
+      } else {
         return params.row.actualSkills.REFLEXES.PlayerSkills.actual;
       }
     },
