@@ -1,0 +1,39 @@
+label {
+  padding: 0.5em;
+}
+
+h1, h2 {
+  line-height: 2;
+}
+
+.meta {
+  display: inline;
+  padding-right: 1em;
+}
+
+.win {
+  color: green;
+  font-style: italic;
+}
+
+.lose {
+  color: red;
+  font-style: italic;
+}
+
+#plot-placeholder {
+  margin-top: 2em;
+  width: 100%;
+  height: 400px;
+  background-color: lightgrey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.play-divider {
+  display: inline-block;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  padding: 0.2em 1em 0.2em 2em;
+}
