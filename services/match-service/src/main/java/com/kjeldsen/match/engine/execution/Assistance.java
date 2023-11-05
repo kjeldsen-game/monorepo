@@ -1,14 +1,14 @@
 package com.kjeldsen.match.engine.execution;
 
+import com.kjeldsen.match.engine.entities.PitchArea;
+import com.kjeldsen.match.engine.entities.PitchArea.PitchRank;
+import com.kjeldsen.match.engine.entities.PlayerPosition;
+import com.kjeldsen.match.engine.entities.SkillType;
+import com.kjeldsen.match.engine.entities.duel.DuelRole;
+import com.kjeldsen.match.engine.modifers.Tactic;
 import com.kjeldsen.match.engine.state.GameState;
-import com.kjeldsen.match.entities.PitchArea;
-import com.kjeldsen.match.entities.PitchArea.PitchFile;
-import com.kjeldsen.match.entities.PitchArea.PitchRank;
-import com.kjeldsen.match.entities.duel.DuelRole;
-import com.kjeldsen.match.entities.player.Player;
-import com.kjeldsen.match.entities.player.PlayerPosition;
-import com.kjeldsen.match.entities.player.PlayerSkill;
-import java.util.List;
+import com.kjeldsen.match.engine.state.TeamState;
+import com.kjeldsen.match.models.Player;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -28,14 +28,13 @@ public class Assistance {
     public static Map<String, Integer> teamAssistance(
         GameState state, Player player, DuelRole role) {
 
-        return getTeam(state, role)
-            .stream()
+        PitchArea pitchArea = state.getBallState().getArea();
+        TeamState team = getTeam(state, role);
+        return team.getPlayers().stream()
             .filter(teammate -> !teammate.equals(player))
-            .collect(
-                Collectors.toMap(
-                    Player::getName,
-                    teammate ->
-                        playerAssistance(teammate, role, state.getBallState().getArea())))
+            .collect(Collectors.toMap(
+                Player::getName,
+                teammate -> playerAssistance(team.getTactic(), teammate, role, pitchArea)))
             .entrySet()
             .stream()
             .filter(assistance -> assistance.getValue() > 0)
@@ -45,22 +44,24 @@ public class Assistance {
     }
 
     // Calculates the assistance an individual player provides to the teammate in the duel
-    private static int playerAssistance(Player player, DuelRole role, PitchArea ballArea) {
+    private static int playerAssistance(
+        Tactic tactic, Player player, DuelRole role, PitchArea ballArea) {
+
         return switch (role) {
             case INITIATOR -> {
-                double factor =
-                    attackerSupport(player.getPosition(), ballArea.rank(), ballArea.file());
-                double op = player.getSkillSet().get(PlayerSkill.OFFENSIVE_POSITIONING);
+                double factor = attackerSupport(player.getPosition(), ballArea);
+                double op = player.getSkills().get(SkillType.OFFENSIVE_POSITIONING);
                 double bc =
-                    player.getSkillSet().get(PlayerSkill.BALL_CONTROL) * BALL_CONTROL_FACTOR;
-                yield (int) (factor * (op + bc));
+                    player.getSkills().get(SkillType.BALL_CONTROL) * BALL_CONTROL_FACTOR;
+                double modifier =
+                    tactic.assistanceBonus(player.getPosition(), DuelRole.INITIATOR, ballArea);
+                yield (int) ((factor * (op + bc)) * (1 + modifier));
             }
 
             case CHALLENGER -> {
-                double factor =
-                    defenderSupport(player.getPosition(), ballArea.rank(), ballArea.file());
-                double dp = player.getSkillSet().get(PlayerSkill.DEFENSIVE_POSITIONING);
-                double ta = player.getSkillSet().get(PlayerSkill.TACKLING) * TACKLING_FACTOR;
+                double factor = defenderSupport(player.getPosition(), ballArea);
+                double dp = player.getSkills().get(SkillType.DEFENSIVE_POSITIONING);
+                double ta = player.getSkills().get(SkillType.TACKLING) * TACKLING_FACTOR;
                 yield (int) (factor * (dp + ta));
             }
         };
@@ -110,15 +111,15 @@ public class Assistance {
     }
 
     // Factor by which assistance is multiplied by for the attacking player
-    private static double attackerSupport(PlayerPosition position, PitchRank rank, PitchFile file) {
-        if (rank == PitchRank.FORWARD) {
-            return switch (file) {
+    private static double attackerSupport(PlayerPosition position, PitchArea area) {
+        if (area.rank() == PitchRank.FORWARD) {
+            return switch (area.file()) {
                 case LEFT, RIGHT -> flankForwardAttackerSupport(position);
                 case CENTER -> centerForwardAttackerSupport(position);
             };
         }
-        if (rank == PitchRank.MIDDLE) {
-            return switch (file) {
+        if (area.rank() == PitchRank.MIDDLE) {
+            return switch (area.file()) {
                 case LEFT, RIGHT -> flankMidfieldAttackerSupport(position);
                 case CENTER -> centerMidfieldAttackerSupport(position);
             };
@@ -128,15 +129,15 @@ public class Assistance {
     }
 
     // Factor by which assistance is multiplied by for the defending player
-    private static double defenderSupport(PlayerPosition position, PitchRank rank, PitchFile file) {
-        if (rank == PitchRank.FORWARD) {
-            return switch (file) {
+    private static double defenderSupport(PlayerPosition position, PitchArea area) {
+        if (area.rank() == PitchRank.FORWARD) {
+            return switch (area.file()) {
                 case LEFT, RIGHT -> flankForwardDefenderSupport(position);
                 case CENTER -> centerForwardDefenderSupport(position);
             };
         }
-        if (rank == PitchRank.MIDDLE) {
-            return switch (file) {
+        if (area.rank() == PitchRank.MIDDLE) {
+            return switch (area.file()) {
                 case LEFT, RIGHT -> flankMidfieldDefenderSupport(position);
                 case CENTER -> centerMidfieldDefenderSupport(position);
             };
@@ -273,10 +274,10 @@ public class Assistance {
         };
     }
 
-    private static List<Player> getTeam(GameState state, DuelRole role) {
+    private static TeamState getTeam(GameState state, DuelRole role) {
         return switch (role) {
-            case INITIATOR -> state.attackingTeam().getPlayers();
-            case CHALLENGER -> state.defendingTeam().getPlayers();
+            case INITIATOR -> state.attackingTeam();
+            case CHALLENGER -> state.defendingTeam();
         };
     }
 }

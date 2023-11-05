@@ -2,9 +2,8 @@ package com.kjeldsen.match.engine.execution;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.kjeldsen.match.engine.random.DuelRandomization;
-import com.kjeldsen.match.entities.duel.DuelRole;
+import com.kjeldsen.match.engine.entities.duel.DuelRole;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 

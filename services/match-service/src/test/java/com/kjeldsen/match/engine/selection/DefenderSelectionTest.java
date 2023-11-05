@@ -7,12 +7,11 @@ import com.kjeldsen.match.engine.RandomHelper;
 import com.kjeldsen.match.engine.state.BallState;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.state.TeamState;
-import com.kjeldsen.match.entities.Id;
-import com.kjeldsen.match.entities.Match;
-import com.kjeldsen.match.entities.PitchArea;
-import com.kjeldsen.match.entities.Team;
-import com.kjeldsen.match.entities.player.Player;
-import com.kjeldsen.match.entities.player.PlayerPosition;
+import com.kjeldsen.match.models.Match;
+import com.kjeldsen.match.engine.entities.PitchArea;
+import com.kjeldsen.match.models.Team;
+import com.kjeldsen.match.models.Player;
+import com.kjeldsen.match.engine.entities.PlayerPosition;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,14 +33,14 @@ public class DefenderSelectionTest {
     @Test
     @Disabled
     void selectMidfieldReceiverDistribution() {
-        Id teamId = Id.generate();
+        Team team = RandomHelper.genTeam();
 
         List<Player> players = List.of(
-            genPlayerWithPosition(teamId, PlayerPosition.CENTER_MIDFIELDER),
-            genPlayerWithPosition(teamId, PlayerPosition.OFFENSIVE_MIDFIELDER),
-            genPlayerWithPosition(teamId, PlayerPosition.DEFENSIVE_MIDFIELDER),
-            genPlayerWithPosition(teamId, PlayerPosition.RIGHT_MIDFIELDER),
-            genPlayerWithPosition(teamId, PlayerPosition.LEFT_WINGER));
+            genPlayerWithPosition(team, PlayerPosition.CENTER_MIDFIELDER),
+            genPlayerWithPosition(team, PlayerPosition.OFFENSIVE_MIDFIELDER),
+            genPlayerWithPosition(team, PlayerPosition.DEFENSIVE_MIDFIELDER),
+            genPlayerWithPosition(team, PlayerPosition.RIGHT_MIDFIELDER),
+            genPlayerWithPosition(team, PlayerPosition.LEFT_WINGER));
 
         Map<PlayerPosition, Integer> selections = new HashMap<>();
         selections.put(PlayerPosition.CENTER_MIDFIELDER, 0);
@@ -62,7 +61,6 @@ public class DefenderSelectionTest {
         GameState state = GameState.builder()
             .turn(GameState.Turn.HOME)
             .clock(0)
-            .addedTime(0)
             .home(TeamState.init(match.getHome()))
             .away(TeamState.init(match.getAway()))
             .ballState(ballState)

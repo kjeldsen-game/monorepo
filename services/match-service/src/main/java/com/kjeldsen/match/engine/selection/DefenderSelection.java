@@ -2,15 +2,15 @@ package com.kjeldsen.match.engine.selection;
 
 import com.kjeldsen.match.engine.exceptions.GameStateException;
 import com.kjeldsen.match.engine.state.GameState;
-import com.kjeldsen.match.entities.Id;
-import com.kjeldsen.match.entities.PitchArea;
-import com.kjeldsen.match.entities.Play;
-import com.kjeldsen.match.entities.duel.DuelType;
-import com.kjeldsen.match.entities.player.Player;
+import com.kjeldsen.match.engine.entities.PitchArea;
+import com.kjeldsen.match.engine.entities.Play;
+import com.kjeldsen.match.engine.entities.duel.DuelType;
+import com.kjeldsen.match.models.Player;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class DefenderSelection {
@@ -33,10 +33,10 @@ public class DefenderSelection {
             .toList();
 
         if (candidates.isEmpty()) {
-            throw new GameStateException("No defenders found to defend in midfield attack");
+            throw new GameStateException(state, "No defenders found to defend in midfield attack");
         }
 
-        Map<Id, Integer> values = candidates.stream()
+        Map<Long, Integer> values = candidates.stream()
             .collect(Collectors.toMap(
                 Player::getId,
                 player -> {
@@ -63,12 +63,7 @@ public class DefenderSelection {
                 },
                 (a, b) -> b, HashMap::new));
 
-        Map<Id, Double> probabilities = Probability.toProbabilityMap(values);
-        Id selectedId = Probability.selectFromProbabilities(probabilities);
-        return candidates.stream()
-            .filter(p -> p.getId() == selectedId)
-            .findAny()
-            .orElseThrow(() -> new GameStateException("No player found"));
+        return Probability.drawPlayer(state, candidates, values);
     }
 
     // Returns a defender for an attack in the forward area
@@ -83,10 +78,11 @@ public class DefenderSelection {
             .toList();
 
         if (candidates.isEmpty()) {
-            throw new GameStateException("No defenders found to defend in forward area attack");
+            throw new GameStateException(
+                state, "No defenders found to defend in forward area attack");
         }
 
-        Map<Id, Integer> values = candidates.stream()
+        Map<Long, Integer> values = candidates.stream()
             .collect(Collectors.toMap(
                 Player::getId,
                 player -> {
@@ -113,12 +109,7 @@ public class DefenderSelection {
                 },
                 (a, b) -> b, HashMap::new));
 
-        Map<Id, Double> probabilities = Probability.toProbabilityMap(values);
-        Id selectedId = Probability.selectFromProbabilities(probabilities);
-        return candidates.stream()
-            .filter(p -> p.getId() == selectedId)
-            .findAny()
-            .orElseThrow(() -> new GameStateException("No player found"));
+        return Probability.drawPlayer(state, candidates, values);
     }
 
     // Returns true if the player was *not* involved as a defender in the previous positional duel.
@@ -128,9 +119,9 @@ public class DefenderSelection {
             .sorted(Comparator.comparingInt(Play::getMinute).reversed())
             .map(Play::getDuel)
             .filter(duel -> duel.getType() == DuelType.POSITIONAL
-                && duel.getChallenger().getTeamId() == player.getTeamId())
+                && Objects.equals(duel.getChallenger().getTeam().getId(), player.getTeam().getId()))
             .findFirst()
-            .map(duel -> duel.getChallenger().getId() != player.getId())
+            .map(duel -> !Objects.equals(duel.getChallenger().getId(), player.getId()))
             .orElse(true);
     }
 }

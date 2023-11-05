@@ -2,9 +2,9 @@ package com.kjeldsen.match.engine.execution;
 
 import com.kjeldsen.match.engine.exceptions.GameStateException;
 import com.kjeldsen.match.engine.state.GameState;
-import com.kjeldsen.match.entities.Play;
-import com.kjeldsen.match.entities.duel.DuelResult;
-import com.kjeldsen.match.entities.duel.DuelType;
+import com.kjeldsen.match.engine.entities.Play;
+import com.kjeldsen.match.engine.entities.duel.DuelResult;
+import com.kjeldsen.match.engine.entities.duel.DuelType;
 
 public class Carryover {
 
@@ -22,7 +22,7 @@ public class Carryover {
             .map(Play::getDuel)
             .map(duel -> {
                 if (duel.getType() != DuelType.POSITIONAL) {
-                    throw new GameStateException("The last duel was not a positional duel");
+                    throw new GameStateException(state, "The last duel was not a positional duel");
                 } else {
                     int diff =
                         duel.getInitiatorStats().getAssistance()
@@ -30,7 +30,7 @@ public class Carryover {
                     return Math.max(Math.min(diff, CARRYOVER_LIMIT), -CARRYOVER_LIMIT);
                 }
             })
-            .orElseThrow(() -> new GameStateException("No plays have been made yet"));
+            .orElseThrow(() -> new GameStateException(state, "No plays have been made yet"));
     }
 
     // For non-positional duel, the carryover is calculated not from the difference in assistance
@@ -42,6 +42,7 @@ public class Carryover {
             .map(duel -> {
                 if (duel.getType() == DuelType.POSITIONAL && duel.getResult() == DuelResult.LOSE) {
                     throw new GameStateException(
+                        state,
                         "Carryover to ball control duels should come from the positional duel");
                 } else {
                     int diff =
@@ -49,6 +50,6 @@ public class Carryover {
                     return Math.max(Math.min(diff, CARRYOVER_LIMIT), -CARRYOVER_LIMIT);
                 }
             })
-            .orElseThrow(() -> new GameStateException("No plays have been made yet"));
+            .orElseThrow(() -> new GameStateException(state, "No plays have been made yet"));
     }
 }

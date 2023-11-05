@@ -1,7 +1,10 @@
 package com.kjeldsen.match.engine.processing;
 
-import com.kjeldsen.match.entities.MatchResult;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kjeldsen.match.engine.entities.MatchResult;
+import com.kjeldsen.match.engine.entities.Play;
 import com.kjeldsen.match.engine.state.GameState;
+import com.kjeldsen.match.models.Team;
 import java.util.List;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -12,14 +15,25 @@ public class Report {
 
     /*
      * Generates post-match reports in the form of a narrated game possibly with additional
-     * information such as rating changes and statistics.
-     *
-     * TODO - return JSON object for frontend to use
+     * information such as rating changes and statistics. This report will be used by the frontend
+     * to display the game.
      */
 
+    Team home;
+    Team away;
+    List<Play> plays;
+    int homeScore;
+    int awayScore;
+    @JsonIgnore
+    List<String> narration;
+    @JsonIgnore
+    GameStats gameStats; // Illustration of how to add additional information to the report
 
-    // Ignore - this will be moved to frontend instead of printing to the console
-    public static void generate(GameState endState) {
+
+    public Report(GameState endState, Team home, Team away) {
+        this.home = home;
+        this.away = away;
+
         int homeScore = endState.getHome().getScore();
         int awayScore = endState.getAway().getScore();
 
@@ -31,18 +45,17 @@ public class Report {
         } else {
             result = MatchResult.DRAW;
         }
-
-        System.out.println("#################### Match report ####################");
-
         List<String> narrated = Narration.narrate(endState);
-        narrated.forEach(System.out::println);
-
-        System.out.println("#################### Skill and ratings updates ####################");
-
         Pair<Integer, Integer> ratings = Ratings.eloRatings(homeScore, awayScore, result);
-        log.info("Ratings before: home {} - away {}",
-            endState.getHome().getScore(),
-            endState.getAway().getScore());
-        log.info("Ratings after: home {} - away {}", ratings.left(), ratings.right());
+
+        this.plays = endState.getPlays();
+        this.narration = narrated;
+        this.homeScore = homeScore;
+        this.awayScore = awayScore;
+        this.gameStats = new GameStats(ratings.left(), ratings.right());
+    }
+
+    public record GameStats(int homeRating, int awayRating) {
+
     }
 }

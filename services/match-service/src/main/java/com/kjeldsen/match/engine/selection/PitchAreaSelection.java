@@ -1,9 +1,9 @@
 package com.kjeldsen.match.engine.selection;
 
 import com.kjeldsen.match.engine.state.GameState;
-import com.kjeldsen.match.entities.PitchArea;
-import com.kjeldsen.match.entities.duel.DuelRole;
-import com.kjeldsen.match.entities.player.Player;
+import com.kjeldsen.match.engine.entities.PitchArea;
+import com.kjeldsen.match.engine.entities.duel.DuelRole;
+import com.kjeldsen.match.models.Player;
 import java.util.List;
 import java.util.Random;
 

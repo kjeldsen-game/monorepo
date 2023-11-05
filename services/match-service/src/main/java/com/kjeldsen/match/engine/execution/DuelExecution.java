@@ -1,14 +1,18 @@
 package com.kjeldsen.match.engine.execution;
 
+import com.kjeldsen.match.engine.entities.PitchArea;
+import com.kjeldsen.match.engine.entities.Play;
+import com.kjeldsen.match.engine.entities.duel.DuelResult;
+import com.kjeldsen.match.engine.entities.duel.DuelRole;
+import com.kjeldsen.match.engine.entities.duel.DuelStats;
+import com.kjeldsen.match.engine.entities.duel.DuelType;
 import com.kjeldsen.match.engine.exceptions.GameStateException;
+import com.kjeldsen.match.engine.modifers.HorizontalPressure;
+import com.kjeldsen.match.engine.modifers.VerticalPressure;
 import com.kjeldsen.match.engine.random.DuelRandomization;
 import com.kjeldsen.match.engine.state.GameState;
-import com.kjeldsen.match.entities.Play;
-import com.kjeldsen.match.entities.duel.DuelResult;
-import com.kjeldsen.match.entities.duel.DuelRole;
-import com.kjeldsen.match.entities.duel.DuelStats;
-import com.kjeldsen.match.entities.duel.DuelType;
-import com.kjeldsen.match.entities.player.Player;
+import com.kjeldsen.match.engine.state.TeamState;
+import com.kjeldsen.match.models.Player;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
@@ -64,7 +68,11 @@ public class DuelExecution {
         int challengerPerformance =
             DuelRandomization.performance(
                 state, challenger, DuelType.POSITIONAL, DuelRole.CHALLENGER);
-        int challengerAssistance = normalizedAssistanceTotals.get(DuelRole.CHALLENGER);
+
+        double assistanceModifier =
+            1 + defensiveAssistanceModifier(state.getBallState().getArea(), state.defendingTeam());
+        int challengerAssistance =
+            (int) (normalizedAssistanceTotals.get(DuelRole.CHALLENGER) * assistanceModifier);
 
         int challengerTotal =
             challengerSkillPoints + challengerPerformance + challengerAssistance;
@@ -90,6 +98,16 @@ public class DuelExecution {
                     .total(challengerTotal)
                     .build())
             .build();
+    }
+
+    // Defensive assistance is affected by the vertical and horizontal pressure modifiers.
+    // Returns a factor that increases/decreases the assistance value.
+    private static double defensiveAssistanceModifier(PitchArea area, TeamState teamState) {
+        VerticalPressure vertical = teamState.getVerticalPressure();
+        HorizontalPressure horizontal = teamState.getHorizontalPressure();
+        double verticalBonus = vertical.defensiveAssistanceBonus(area);
+        double horizontalBonus = horizontal.defensiveAssistanceBonus(area);
+        return verticalBonus + horizontalBonus;
     }
 
     // Ball control follows a positional duel. Here the factors to determine a winner are (1) skill
@@ -146,7 +164,8 @@ public class DuelExecution {
         GameState state, Player initiator, Player challenger, Player receiver) {
 
         Optional.ofNullable(receiver)
-            .orElseThrow(() -> new GameStateException("A receiver was not set for a pass duel"));
+            .orElseThrow(
+                () -> new GameStateException(state, "A receiver was not set for a pass duel"));
 
         int initiatorSkillPoints = initiator.duelSkill(DuelType.PASSING, DuelRole.INITIATOR);
         int initiatorPerformance =

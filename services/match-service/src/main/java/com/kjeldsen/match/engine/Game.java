@@ -1,5 +1,12 @@
 package com.kjeldsen.match.engine;
 
+import com.kjeldsen.match.engine.entities.Action;
+import com.kjeldsen.match.engine.entities.PitchArea;
+import com.kjeldsen.match.engine.entities.Play;
+import com.kjeldsen.match.engine.entities.duel.Duel;
+import com.kjeldsen.match.engine.entities.duel.DuelResult;
+import com.kjeldsen.match.engine.entities.duel.DuelRole;
+import com.kjeldsen.match.engine.entities.duel.DuelType;
 import com.kjeldsen.match.engine.execution.DuelDTO;
 import com.kjeldsen.match.engine.execution.DuelExecution;
 import com.kjeldsen.match.engine.selection.ActionSelection;
@@ -11,17 +18,10 @@ import com.kjeldsen.match.engine.state.BallState;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.state.GameState.Turn;
 import com.kjeldsen.match.engine.state.TeamState;
-import com.kjeldsen.match.entities.Action;
-import com.kjeldsen.match.entities.Id;
-import com.kjeldsen.match.entities.Match;
-import com.kjeldsen.match.entities.PitchArea;
-import com.kjeldsen.match.entities.Play;
-import com.kjeldsen.match.entities.duel.Duel;
-import com.kjeldsen.match.entities.duel.DuelResult;
-import com.kjeldsen.match.entities.duel.DuelRole;
-import com.kjeldsen.match.entities.duel.DuelType;
-import com.kjeldsen.match.entities.player.Player;
+import com.kjeldsen.match.models.Match;
+import com.kjeldsen.match.models.Player;
 import java.util.Optional;
+import java.util.Random;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,52 +47,39 @@ public class Game {
         log.info("Initialising game state for match {}", match.getId());
         GameState state = GameState.init(match);
 
-        log.info("Home team players");
-        state.getHome().getPlayers()
-            .forEach(p -> System.out.println(p.getName() + " [" + p.getPosition() + "]"));
+        log.info("Home team:\n{}", match.getHome());
+        log.info("Away team:\n{}", match.getAway());
 
-        log.info("Away team players");
-        state.getAway().getPlayers()
-            .forEach(p -> System.out.println(p.getName() + " [" + p.getPosition() + "]"));
-
-        log.info("Kicking off game...");
         state = kickOff(state);
 
         log.info("First half starting...");
-        while (state.getClock() <= HALF_TIME + state.getAddedTime()) {
+        while (state.getClock() <= HALF_TIME) {
             state = nextPlay(state);
         }
-
-        log.info("Half time. Result: {}",
-            state.getHome().getScore() + " - " + state.getAway().getScore());
 
         // Here we should switch sides and give the ball to the other team but for this version we
         // ignore first/second half and just carry on playing.
-
         log.info("Second half starting...");
-        while (state.getClock() <= (FULL_TIME + state.getAddedTime())) {
+        while (state.getClock() <= FULL_TIME) {
             state = nextPlay(state);
         }
 
-        log.info("Match ended. Result: {}",
+        log.info(
+            "Match ended. Result: {}",
             state.getHome().getScore() + " - " + state.getAway().getScore());
-
         return state;
     }
 
     // At kick-off the game is set up with a player in possession of the ball. Any other pre-game
     // modification can be done here.
     public static GameState kickOff(GameState state) {
-        Player starting = KickOffSelection.selectPlayer(state.attackingTeam());
-
-        log.info("Starting player is {}", starting.getName());
+        Player starting = KickOffSelection.selectPlayer(state, state.attackingTeam());
 
         return Optional.of(state)
             .map((before) ->
                 GameState.builder()
                     .turn(before.getTurn())
                     .clock(before.getClock() + Action.PASS.getDuration())
-                    .addedTime(before.getAddedTime())
                     .home(before.getHome())
                     .away(before.getAway())
                     .ballState((new BallState(starting, PitchArea.CENTER_MIDFIELD)))
@@ -143,11 +130,13 @@ public class Game {
 
         // The play is now over. It is saved and the state is transitioned depending on the result.
         Play play = Play.builder()
-            .id(Id.generate())
+            .id(new Random().nextLong())
             .duel(duel)
             .action(action)
             .minute(state.getClock())
             .build();
+
+        log.info("Play complete:\n{}", play);
 
         if (outcome.getResult() == DuelResult.WIN) {
             if (action == Action.SHOOT) {
@@ -166,13 +155,13 @@ public class Game {
         Duel duel = play.getDuel();
         BallState newBallState = Optional.ofNullable(duel.getReceiver())
             .map(receiver -> {
-                PitchArea pitchArea = PitchAreaSelection.select(
-                    state, duel.getReceiver(), DuelRole.INITIATOR);
+                PitchArea pitchArea =
+                    PitchAreaSelection.select(state, duel.getReceiver(), DuelRole.INITIATOR);
                 return new BallState(duel.getReceiver(), pitchArea);
             })
             .orElseGet(() -> {
-                PitchArea pitchArea = PitchAreaSelection.select(
-                    state, duel.getInitiator(), DuelRole.INITIATOR);
+                PitchArea pitchArea =
+                    PitchAreaSelection.select(state, duel.getInitiator(), DuelRole.INITIATOR);
                 return new BallState(duel.getInitiator(), pitchArea);
             });
 
@@ -181,7 +170,6 @@ public class Game {
                 GameState.builder()
                     .turn(before.getTurn()) // Keep same team on turn
                     .clock(before.getClock() + play.getAction().getDuration())
-                    .addedTime(before.getAddedTime())
                     .home(before.getHome())
                     .away(before.getAway())
                     .ballState(newBallState)
@@ -200,7 +188,6 @@ public class Game {
                 GameState.builder()
                     .turn(before.getTurn() == Turn.HOME ? Turn.AWAY : Turn.HOME)
                     .clock(before.getClock() + play.getAction().getDuration())
-                    .addedTime(before.getAddedTime())
                     .home(before.getHome())
                     .away(before.getAway())
                     .ballState(newBallState)
@@ -215,17 +202,16 @@ public class Game {
             .map((before) ->
                 TeamState.builder()
                     .players(before.getPlayers())
-                    .playerLocation(before.getPlayerLocation())
-                    .penaltyCards(before.getPenaltyCards())
+                    .tactic(before.getTactic())
+                    .verticalPressure(before.getVerticalPressure())
+                    .horizontalPressure(before.getHorizontalPressure())
                     .score(before.getScore() + 1)
-                    .fouls(before.getFouls())
-                    .injuries(before.getInjuries())
                     .build())
             .orElseThrow();
 
         // Give the ball to the kick-off player from the team that conceded the goal
         BallState newBallState = new BallState(
-            KickOffSelection.selectPlayer(state.defendingTeam()),
+            KickOffSelection.selectPlayer(state, state.defendingTeam()),
             PitchArea.CENTER_MIDFIELD);
 
         return Optional.of(state)
@@ -233,7 +219,6 @@ public class Game {
                 GameState.builder()
                     .turn(before.getTurn() == Turn.HOME ? Turn.AWAY : Turn.HOME)
                     .clock(before.getClock() + play.getAction().getDuration())
-                    .addedTime(before.getAddedTime())
                     // Here we update the team whose turn it was since that's the team that scored
                     .home(before.getTurn() == Turn.HOME ? newTeamState : before.getHome())
                     .away(before.getTurn() == Turn.AWAY ? newTeamState : before.getAway())

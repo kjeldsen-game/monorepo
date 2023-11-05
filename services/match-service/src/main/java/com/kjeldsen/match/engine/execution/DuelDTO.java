@@ -1,7 +1,7 @@
 package com.kjeldsen.match.engine.execution;
 
-import com.kjeldsen.match.entities.duel.DuelStats;
-import com.kjeldsen.match.entities.duel.DuelResult;
+import com.kjeldsen.match.engine.entities.duel.DuelStats;
+import com.kjeldsen.match.engine.entities.duel.DuelResult;
 import lombok.Builder;
 import lombok.Value;
 

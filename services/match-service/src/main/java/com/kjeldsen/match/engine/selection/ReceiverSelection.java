@@ -1,13 +1,14 @@
 package com.kjeldsen.match.engine.selection;
 
+import com.kjeldsen.match.engine.entities.PitchArea;
+import com.kjeldsen.match.engine.entities.PlayerPosition;
 import com.kjeldsen.match.engine.exceptions.GameStateException;
 import com.kjeldsen.match.engine.state.GameState;
-import com.kjeldsen.match.entities.Id;
-import com.kjeldsen.match.entities.PitchArea;
-import com.kjeldsen.match.entities.player.Player;
+import com.kjeldsen.match.models.Player;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -41,7 +42,7 @@ public class ReceiverSelection {
             .filter(player -> player.getPosition().isMidfielder())
             .findAny()
             .orElseThrow(
-                () -> new GameStateException("No midfielders found to receive ball"));
+                () -> new GameStateException(state, "No midfielders found to receive ball"));
     }
 
     public static Player selectReceiverFromMidfield(GameState state, Player initiator) {
@@ -51,34 +52,33 @@ public class ReceiverSelection {
             .toList();
 
         if (candidates.isEmpty()) {
-            throw new GameStateException("No forwards or midfielders found to receive ball");
+            throw new GameStateException(state, "No forwards or midfielders found to receive ball");
         }
 
         // When calculating probabilities, first assign values based on the player's position
         // category (a natural position counts as 2, an offensive as 4 and a support as 1).
-        Map<Id, Integer> values = candidates.stream()
+        Map<Long, Integer> values = candidates.stream()
             .collect(Collectors.toMap(
                 Player::getId,
                 player -> {
-                    if (player.getPosition().isNatural()) {
-                        return 2;
-                    } else if (player.getPosition().isDefensive()) {
-                        return 1;
-                    } else if (player.getPosition().isOffensive()) {
-                        return 4;
+                    PlayerPosition position = player.getPosition();
+                    double modifier = state.attackingTeam().getTactic().selectionBonus(position);
+
+                    int value;
+                    if (position.isNatural()) {
+                        value = 2;
+                    } else if (position.isDefensive()) {
+                        value = 1;
+                    } else if (position.isOffensive()) {
+                        value = 4;
                     } else {
-                        return 0;
+                        value = 0;
                     }
+                    return (int) (value * (modifier + 1));
                 },
                 (a, b) -> b, HashMap::new));
 
-        Map<Id, Double> probabilities = Probability.toProbabilityMap(values);
-
-        Id selectedPlayerId = Probability.selectFromProbabilities(probabilities);
-        return candidates.stream()
-            .filter(p -> p.getId() == selectedPlayerId)
-            .findAny()
-            .orElseThrow(() -> new GameStateException("No receiver found")); // Should never fail!
+        return Probability.drawPlayer(state, candidates, values);
     }
 
     public static Player selectReceiverFromForward(GameState state, Player initiator) {
@@ -89,12 +89,12 @@ public class ReceiverSelection {
             .toList();
 
         if (candidates.isEmpty()) {
-            throw new GameStateException("No players found to receive ball from forward");
+            throw new GameStateException(state, "No players found to receive ball from forward");
         }
 
         // When calculating probabilities, first assign values based on the player's position
         // category (a natural position counts as 2, an offensive as 1).
-        Map<Id, Integer> values = candidates.stream()
+        Map<Long, Integer> values = candidates.stream()
             .collect(Collectors.toMap(
                 Player::getId,
                 player -> {
@@ -107,17 +107,12 @@ public class ReceiverSelection {
                 },
                 (a, b) -> b, HashMap::new));
 
-        Map<Id, Double> probabilities = Probability.toProbabilityMap(values);
-        Id selectedPlayerId = Probability.selectFromProbabilities(probabilities);
-        return candidates.stream()
-            .filter(p -> p.getId() == selectedPlayerId)
-            .findAny()
-            .orElseThrow(() -> new GameStateException("No receiver found")); // Should never fail!
+        return Probability.drawPlayer(state, candidates, values);
     }
 
     private static Stream<Player> nearbyTeammates(GameState state, Player player) {
         return state.attackingTeam().getPlayers().stream()
-            .filter(teammate -> player.getId() != teammate.getId())
+            .filter(teammate -> !Objects.equals(player.getId(), teammate.getId()))
             .filter(teammate -> teammateIsNearby(state.getBallState().getArea(), teammate));
     }
 

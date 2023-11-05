@@ -1,15 +1,13 @@
 package com.kjeldsen.match.engine.state;
 
+import com.kjeldsen.match.engine.entities.Action;
+import com.kjeldsen.match.engine.entities.Play;
+import com.kjeldsen.match.engine.entities.duel.DuelType;
 import com.kjeldsen.match.engine.exceptions.GameStateException;
-import com.kjeldsen.match.entities.Action;
-import com.kjeldsen.match.entities.Match;
-import com.kjeldsen.match.entities.PitchArea;
-import com.kjeldsen.match.entities.Play;
-import com.kjeldsen.match.entities.duel.DuelType;
+import com.kjeldsen.match.models.Match;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import lombok.Builder;
 import lombok.Value;
 
@@ -34,8 +32,6 @@ public class GameState {
 
     // The clock is the number of minutes that have elapsed since the start of the game.
     int clock;
-    // Time added after fouls, injuries, etc.
-    int addedTime;
 
     // State of other components in game
     TeamState home;
@@ -49,9 +45,8 @@ public class GameState {
     // to a default start value.
     public static GameState init(Match match) {
         return GameState.builder()
-            .turn(new Random().nextBoolean() ? Turn.HOME : Turn.AWAY)
+            .turn(Turn.HOME) // TODO randomize - this is temporarily set to home for testing
             .clock(0)
-            .addedTime(0)
             .home(TeamState.init(match.getHome()))
             .away(TeamState.init(match.getAway()))
             .ballState(BallState.init())
@@ -124,21 +119,16 @@ public class GameState {
                 if (clock == 0) {
                     return this;
                 } else {
-                    throw new GameStateException("No player is in possession of the ball");
+                    throw new GameStateException(null, "No player is in possession of the ball");
                 }
             }
 
-            // The player with the ball must be on the active team and must also be in the same
-            // pitch area as the ball
             TeamState activeTeam = this.turn == Turn.HOME ? home : away;
             activeTeam.getPlayers().stream()
                 .filter((player) -> player.getId().equals(ballState.getPlayer().getId()))
                 .findAny()
                 .orElseThrow(
-                    () -> new GameStateException("Player with ball is not on active team"));
-
-            PitchArea playerArea = activeTeam.getPlayerLocation()
-                .get(ballState.getPlayer().getId());
+                    () -> new GameStateException(null, "Player with ball is not on active team"));
 
             return this;
         }

@@ -1,4 +1,4 @@
 FROM amazoncorretto:17
 EXPOSE 8083
-ADD infrastructure/target/match-service.jar /myservice.jar
-ENTRYPOINT ["java", "-jar", "/myservice.jar"]
+ADD target/kjeldsen-match-*-SNAPSHOT.jar  /match-service.jar
+ENTRYPOINT ["java", "-jar", "/match-service.jar"]

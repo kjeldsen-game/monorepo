@@ -5,25 +5,28 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.kjeldsen.match.engine.RandomHelper;
 import com.kjeldsen.match.engine.state.GameState;
-import com.kjeldsen.match.entities.Action;
-import com.kjeldsen.match.entities.Id;
-import com.kjeldsen.match.entities.Play;
-import com.kjeldsen.match.entities.duel.Duel;
-import com.kjeldsen.match.entities.duel.DuelType;
-import com.kjeldsen.match.entities.player.Player;
-import com.kjeldsen.match.entities.player.PlayerSkill;
+import com.kjeldsen.match.engine.entities.Action;
+import com.kjeldsen.match.engine.entities.Play;
+import com.kjeldsen.match.models.Team;
+import com.kjeldsen.match.engine.entities.duel.Duel;
+import com.kjeldsen.match.engine.entities.duel.DuelType;
+import com.kjeldsen.match.models.Player;
+import com.kjeldsen.match.engine.entities.SkillType;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 public class DuelRandomizationTest {
 
     @Test
     void previousDuelFound() {
-        Player initiator = RandomHelper.genPlayer(Id.generate());
-        Player challenger = RandomHelper.genPlayer(Id.generate());
+        Team home = RandomHelper.genTeam();
+        Team away = RandomHelper.genTeam();
+        Player initiator = RandomHelper.genPlayer(home);
+        Player challenger = RandomHelper.genPlayer(away);
         Play first = Play.builder()
-            .id(Id.generate())
+            .id(new Random().nextLong())
             .action(Action.PASS)
             .duel(Duel.builder()
                 .type(DuelType.PASSING)
@@ -33,7 +36,7 @@ public class DuelRandomizationTest {
             .minute(1)
             .build();
         Play second = Play.builder()
-            .id(Id.generate())
+            .id(new Random().nextLong())
             .action(Action.POSITION)
             .duel(Duel.builder()
                 .type(DuelType.POSITIONAL)
@@ -46,7 +49,7 @@ public class DuelRandomizationTest {
         GameState state = GameState.builder().plays(List.of(first, second)).build();
 
         Optional<Duel> previous =
-            DuelRandomization.previousDuel(state, initiator, PlayerSkill.PASSING);
+            DuelRandomization.previousDuel(state, initiator, SkillType.PASSING);
         assertTrue(previous.isPresent());
         assertEquals(first.getDuel(), previous.get());
     }

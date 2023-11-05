@@ -1,6 +1,6 @@
 package com.kjeldsen.match.engine.processing;
 
-import com.kjeldsen.match.entities.MatchResult;
+import com.kjeldsen.match.engine.entities.MatchResult;
 
 public final class Ratings {
 

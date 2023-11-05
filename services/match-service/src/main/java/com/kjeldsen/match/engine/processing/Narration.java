@@ -1,14 +1,13 @@
 package com.kjeldsen.match.engine.processing;
 
 import com.kjeldsen.match.engine.state.GameState;
-import com.kjeldsen.match.entities.Action;
-import com.kjeldsen.match.entities.Play;
-import com.kjeldsen.match.entities.duel.Duel;
-import com.kjeldsen.match.entities.duel.DuelResult;
-import com.kjeldsen.match.entities.duel.DuelStats;
-import com.kjeldsen.match.entities.player.Player;
+import com.kjeldsen.match.engine.entities.Action;
+import com.kjeldsen.match.engine.entities.Play;
+import com.kjeldsen.match.engine.entities.duel.Duel;
+import com.kjeldsen.match.engine.entities.duel.DuelResult;
+import com.kjeldsen.match.engine.entities.duel.DuelStats;
+import com.kjeldsen.match.models.Player;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Narration {

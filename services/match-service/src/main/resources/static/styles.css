@@ -37,3 +37,39 @@ h1, h2 {
   margin-bottom: 1em;
   padding: 0.2em 1em 0.2em 2em;
 }
+
+#selected-positions-box {
+  height: 100%;
+  background-repeat:no-repeat;
+  background-image: url('pitch.png');
+  margin-left: 2em;
+}
+
+.heatmap {
+  background-repeat:no-repeat;
+  background-image: url('pitch.png');
+}
+
+.callout {
+  background-color: #fff;
+  border: 1px solid #e4e7ea;
+  border-left: 4px solid #c8ced3;
+  border-radius: .25rem;
+  margin: 1rem 0;
+  padding: .75rem 1.25rem;
+  position: relative;
+}
+
+.callout h4 {
+  font-size: 1.3125rem;
+  margin-top: 0;
+  margin-bottom: .8rem
+}
+.callout p:last-child {
+  margin-bottom: 0;
+}
+
+.callout-primary {
+  background-color: #cfe2ff;
+  border-left-color: #052c65;
+}

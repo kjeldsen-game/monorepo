@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kjeldsen Game</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+        crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/jquery-ui@1.13.2/themes/base/theme.min.css"
+        rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container my-3 col-lg-10 center">
+    <div class="navbar-nav navbar-start">
+      <a class="navbar-brand" href="/">Kjeldsen</a>
+      <button id="team-page-link" class="nav-button btn btn-outline-light m-1 active">Team</button>
+      <button id="game-page-link" class="nav-button btn btn-outline-light m-1">Play</button>
+      <button id="stats-page-link" class="nav-button btn btn-outline-light m-1">Statistics</button>
+      <button id="manual-page-link" class="nav-button btn btn-outline-light m-1">Manual</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container my-4">
+  <div class="col-lg-10 center">
+    <div style="display:none;" id="response-message" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <span id="response-message-text"></span>
+      <button id="dismiss-alert" type="button" class="btn-close" aria-label="Close"></button>
+    </div>
+
+    <div id="team-page" class="page">
+      <div class="container mt-4">
+        <h1>Team</h1>
+        <div class="callout callout-primary d-flex justify-content-between align-items-center">
+          <div>
+            <h5>Create your team</h5>
+            Drag and drop 10 player positions into the pitch
+          </div>
+          <div>
+            <a id="generate-default-team" class="btn btn-sm btn-secondary">Default Team</a>
+            <a id="clear-team" class="btn btn-sm btn-secondary">Clear Team</a>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <h3>Available Positions</h3>
+            <ul class="position-list" id="availablePositions">
+              <h5>
+                <li class="badge text-bg-secondary" data-position="SWEEPER">SWEEPER</li>
+              </h5>
+              <h5>
+                <li class="badge text-bg-secondary" data-position="CENTER_BACK">CENTER_BACK</li>
+              </h5>
+              <h5>
+                <li class="badge text-bg-secondary" data-position="RIGHT_BACK">RIGHT_BACK</li>
+              </h5>
+              <h5>
+                <li class="badge text-bg-secondary" data-position="LEFT_BACK">LEFT_BACK</li>
+              </h5>
+              <h5>
+                <li class="badge text-bg-secondary" data-position="RIGHT_WINGBACK">RIGHT_WINGBACK</li>
+              </h5>
+              <h5>
+                <li class="badge text-bg-secondary" data-position="LEFT_WINGBACK">LEFT_WINGBACK</li>
+              </h5>
+              <h5>
+                <li class="badge text-bg-secondary" data-position="DEFENSIVE_MIDFIELDER">DEFENSIVE_MIDFIELDER</li>
+              </h5>
+              <h5>
+                <li class="badge text-bg-secondary" data-position="CENTER_MIDFIELDER">CENTER_MIDFIELDER</li>
+              </h5>
+              <h5>
+                <li class="badge text-bg-secondary" data-position="OFFENSIVE_MIDFIELDER">OFFENSIVE_MIDFIELDER</li>
+              </h5>
+              <h5>
+                <li class="badge text-bg-secondary" data-position="RIGHT_MIDFIELDER">RIGHT_MIDFIELDER</li>
+              </h5>
+              <h5>
+                <li class="badge text-bg-secondary" data-position="LEFT_MIDFIELDER">LEFT_MIDFIELDER</li>
+              </h5>
+              <h5>
+                <li class="badge text-bg-secondary" data-position="RIGHT_WINGER">RIGHT_WINGER</li>
+              </h5>
+              <h5>
+                <li class="badge text-bg-secondary" data-position="LEFT_WINGER">LEFT_WINGER</li>
+              </h5>
+              <h5>
+                <li class="badge text-bg-secondary" data-position="FALSE_NINE">FALSE_NINE</li>
+              </h5>
+              <h5>
+                <li class="badge text-bg-secondary" data-position="FORWARD">FORWARD</li>
+              </h5>
+              <h5>
+                <li class="badge text-bg-secondary" data-position="STRIKER">STRIKER</li>
+              </h5>
+            </ul>
+          </div>
+          <div class="col-md-6 text-center">
+            <h3>Your Team</h3>
+            <div class="text-center p-4" id="selected-positions-box">
+              <ul class="selected-positions" id="selected-positions">
+                <h5>
+                  <li class="badge text-bg-secondary" data-position="GOALKEEPER">GOALKEEPER</li>
+                </h5>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 text-center">
+        <a id="generate-new-team" class="btn btn-primary w-50">Create Team</a>
+      </div>
+    </div>
+
+    <div id="game-page" class="page" style="display:none;">
+      <h1>Play</h1>
+
+      <div id="game">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a id="teams-tab" class="nav-link active">Teams</a>
+          </li>
+          <li class="nav-item">
+            <a id="plays-tab" class="nav-link">Match</a>
+          </li>
+          <li class="nav-item">
+            <a id="analysis-tab" class="nav-link">Analysis</a>
+          </li>
+        </ul>
+
+        <div class="pt-4">
+          <div id="teams" class="tab">
+            <h2>Your Team</h2>
+            <h4 class="d-inline">Strategy</h4>
+            <a type="button"
+               tabindex="0"
+               class="btn btn-sm btn-outline-success m-2"
+               data-bs-toggle="popover"
+               data-bs-trigger="focus"
+               data-bs-title="Game Strategies"
+               data-html="true"
+               data-bs-content="There are three modifiers that affect your team's game play: tactics, horizontal pressure, and vertical pressure. Read the manual to learn how these work.">
+              Help
+            </a>
+            <form id="tacticForm">
+              <div class="row">
+                <div class="form-group col-3">
+                  <label for="tacticDropdown">General Tactic</label>
+                  <select class="form-control" id="tacticDropdown">
+                    <option value="DOUBLE_TEAM">DOUBLE_TEAM</option>
+                    <option value="MAN_ON_MAN">MAN_ON_MAN</option>
+                    <option value="ZONE">ZONE</option>
+                    <option value="COUNTER_ATTACK">COUNTER_ATTACK</option>
+                    <option value="POSSESSION_CONTROL">POSSESSION_CONTROL</option>
+                    <option value="TIKA_TAKA">TIKA_TAKA</option>
+                    <option value="WING_PLAY">WING_PLAY</option>
+                    <option value="CATENACCIO">CATENACCIO</option>
+                    <option value="ROUTE_ONE">ROUTE_ONE</option>
+                    <option value="OFFSIDE_TRAP">OFFSIDE_TRAP</option>
+                  </select>
+                </div>
+                <div class="form-group col-3">
+                  <label for="verticalPressureDropdown">Vertical Pressure</label>
+                  <select class="form-control" id="verticalPressureDropdown">
+                    <option value="MID_PRESSURE">MID_PRESSURE</option>
+                    <option value="LOW_PRESSURE">LOW_PRESSURE</option>
+                    <option value="NO_VERTICAL_FOCUS">NO_VERTICAL_FOCUS</option>
+                  </select>
+                </div>
+                <div class="form-group col-3">
+                  <label for="horizontalPressureDropdown">Horizontal Pressure</label>
+                  <select class="form-control" id="horizontalPressureDropdown">
+                    <option value="SWARM_CENTER">SWARM_CENTER</option>
+                    <option value="SWARM_FLANKS">SWARM_FLANKS</option>
+                    <option value="NO_HORIZONTAL_FOCUS">NO_HORIZONTAL_FOCUS</option>
+                  </select>
+                </div>
+                <div class="form-group col-3">
+                  <div class="form-control border-0">
+                    <button type="submit" class="btn btn-secondary btn-sm m-4">Save Strategy</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div id="my-strategies" class="p-3">
+              Tactic: <span class="badge rounded-pill text-bg-info" id="home-tactic"></span>
+              Vertical pressure: <span class="badge rounded-pill text-bg-info" id="home-vertical-pressure"></span>
+              Horizontal pressure: <span class="badge rounded-pill text-bg-info" id="home-horizontal-pressure"></span>
+            </div>
+
+            <table id="home-team-table" class='table table-striped-columns'>
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Scoring">SC</th>
+                <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Offensive Positioning">OP</th>
+                <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ball Control">BC</th>
+                <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Passing">PA</th>
+                <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Aerial Ability">AE</th>
+                <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tackling">TA</th>
+                <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Defensive Positioning">DP</th>
+                <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reflexes">RE</th>
+                <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Intercepting (disabled)">IN</th>
+                <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Experience" class="table-dark">EX</th>
+                <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Rating" class="table-dark">RA</th>
+              </tr>
+              </thead>
+              <tbody id="home-rows"></tbody>
+            </table>
+
+            <hr>
+            <h3>Opponent's Team</h3>
+            <a id="random-team-button" class="btn btn-primary m-4">New Opponent</a>
+            <div style="display: none;" class="away-team">
+              <div class="p-3">
+                Tactic: <span class="badge rounded-pill text-bg-info" id="away-tactic"></span>
+                Vertical pressure: <span class="badge rounded-pill text-bg-info" id="away-vertical-pressure"></span>
+                Horizontal pressure: <span class="badge rounded-pill text-bg-info" id="away-horizontal-pressure"></span>
+              </div>
+              <table id="away-team-table" class='table table-striped-columns'>
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Position</th>
+                  <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Scoring">SC</th>
+                  <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Offensive Positioning">OP</th>
+                  <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ball Control">BC</th>
+                  <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Passing">PA</th>
+                  <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Aerial Ability">AE</th>
+                  <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tackling">TA</th>
+                  <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Defensive Positioning">DP</th>
+                  <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Reflexes">RE</th>
+                  <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Intercepting (disabled)">IN</th>
+                  <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Experience" class="table-dark">EX</th>
+                  <th data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Rating" class="table-dark">RA</th>
+                </tr>
+                </thead>
+                <tbody id="away-rows"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="plays" class="tab" style="display:none">
+        <a id="generate" class="btn btn-primary">Start Match</a>
+        <div id="match-result" style="display: none">
+          <div class="d-flex justify-content-between">
+            <h2></h2>
+            <div class="text-center">
+              <p>Highlights (not implemented)</p>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" checked type="checkbox" id="inlineCheckbox1" value="option1">
+                <label class="form-check-label" for="inlineCheckbox1">Pass</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" checked type="checkbox" id="inlineCheckbox2" value="option2">
+                <label class="form-check-label" for="inlineCheckbox2">Positional</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" checked type="checkbox" id="inlineCheckbox3" value="option3">
+                <label class="form-check-label" for="inlineCheckbox3">Ball Control</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" checked type="checkbox" id="inlineCheckbox4" value="option4">
+                <label class="form-check-label" for="inlineCheckbox4">Shot</label>
+              </div>
+            </div>
+          </div>
+          <div class="text-center p-4">
+            <div class="p-4"><img src="coin.png" alt=""></div>
+            <div>You're on the <u id="starting-team"></u> team and take the kickoff</div>
+          </div>
+
+          <div id="narration"></div>
+          <div id="end-result-success" class="display-4 text-center border m-5">
+            <div class="text-bg-primary">Game Over</div>
+            <p>Home - Away</p>
+            <div id="final-score"></div>
+          </div>
+
+          <div id="end-result-fail" class="text-center border m-5">
+            <div class="display-4 text-bg-danger">Game Over</div>
+            <h3 class="m-5">Match could not continue because it reached an invalid state</h3>
+          </div>
+        </div>
+
+        <div style="position: fixed; bottom: 2em; right:2em;">
+          <div class="d-flex align-items-end flex-column">
+            <div id="mini-table" class="border" style="display: none">
+            </div>
+            <div class="border rounded p-2 d-flex">
+              <div class="form-check form-switch rounded">
+                <input class="form-check-input" type="checkbox" role="switch" id="toggle-team">
+              </div>
+              <div>Toggle team</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="analysis" class="tab" style="display:none">
+        <h4>Pitch area duel frequency</h4>
+        <div class="d-flex justify-content-center">
+          <div style="height: 512px; width: 512px; " class="heatmap"></div>
+        </div>
+        <hr>
+        <h4>Match statistics</h4>
+        <table id="match-statistics" class='table table-striped-columns'>
+          <thead>
+          <tr>
+            <th></th>
+            <th>Home Team</th>
+            <th>Away Team</th>
+          <tr>
+          </thead>
+          <tbody>
+          <tr>
+            <th class="text-end">Shots on target</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th class="text-end">Possession</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th class="text-end">Passes</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th class="text-end">Fouls</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th class="text-end">Yellow cards</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th class="text-end">Red cards</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th class="text-end">Offsides</th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th class="text-end">Corners</th>
+            <td></td>
+            <td></td>
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="stats-page" class="page" style="display: none">
+      <h1>Statistics</h1>
+      <div class="row">
+        <div class="col">
+          <label for="performance-min">Performance min</label>
+          <input id="performance-min" type="number" class="form-control" placeholder="-15">
+        </div>
+        <div class="col">
+          <label for="performance-max">Performance max</label>
+          <input id="performance-max" type="number" class="form-control" placeholder="+15">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="assistance-min">Assistance min</label>
+          <input id="assistance-min" type="number" class="form-control" placeholder="-25">
+        </div>
+        <div class="col">
+          <label for="assistance-max">Assistance max</label>
+          <input id="assistance-max" type="number" class="form-control" placeholder="+25">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="carryover">Carryover max</label>
+          <input id="carryover" type="number" class="form-control" placeholder="25">
+        </div>
+      </div>
+
+      <label for="randomness" class="form-label">Randomness stability (not implemented)</label>
+      <input type="range" class="form-range" min="0" max="10" id="randomness">
+
+      <div class="row">
+        <div class="col">
+          <label for="p1-skill">Player 1 Skill</label>
+          <input id="p1-skill" type="number" class="form-control" placeholder="50">
+        </div>
+        <div class="col">
+          <label for="p2-skill">Player 2 Skill</label>
+          <input id="p2-skill" type="number" class="form-control" placeholder="50">
+        </div>
+        <div class="col">
+          <label for="trials">Trials</label>
+          <input id="trials" type="number" class="form-control" placeholder="100">
+        </div>
+      </div>
+      <br>
+      <a id="stats-button" class="btn btn-primary">Run</a>
+      <div id="plot-placeholder">
+        <a id="stats-button-two" class="btn btn-primary">Run</a>
+      </div>
+      <div id="plot"></div>
+    </div>
+
+    <div id="manual-page" class="page" style="display: none">
+      <h1>Manual</h1>
+
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget ultricies ultrices, nunc
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-ui@1.13.2/dist/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous">
+</script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/heatmap.js@2.0.5/build/heatmap.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

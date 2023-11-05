@@ -2,12 +2,12 @@ package com.kjeldsen.match.engine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.kjeldsen.match.engine.entities.Action;
 import com.kjeldsen.match.engine.processing.Report;
 import com.kjeldsen.match.engine.state.GameState;
-import com.kjeldsen.match.entities.Action;
-import com.kjeldsen.match.entities.Id;
-import com.kjeldsen.match.entities.Match;
-import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.match.models.Match;
+import com.kjeldsen.match.models.Team;
+import java.util.Random;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +37,7 @@ class GameTest {
             Team home = RandomHelper.genTeam();
             Team away = RandomHelper.genTeam();
             Match match = Match.builder()
-                .id(Id.generate())
+                .id(new Random().nextLong())
                 .home(home)
                 .away(away)
                 .build();
@@ -56,13 +56,14 @@ class GameTest {
         Team home = RandomHelper.genTeam();
         Team away = RandomHelper.genTeam();
         Match match = Match.builder()
-            .id(Id.generate())
+            .id(new Random().nextLong())
             .home(home)
             .away(away)
             .build();
 
         GameState state = Game.play(match);
-        Report.generate(state);
+        Report report = new Report(state, home, away);
+
     }
 
     @Test
@@ -73,7 +74,7 @@ class GameTest {
         Team home = RandomHelper.genTeam();
         Team away = RandomHelper.genTeam();
         Match match = Match.builder()
-            .id(Id.generate())
+            .id(new Random().nextLong())
             .home(home)
             .away(away)
             .build();

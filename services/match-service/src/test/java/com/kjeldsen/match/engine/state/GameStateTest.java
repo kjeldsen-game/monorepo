@@ -1,12 +1,14 @@
 package com.kjeldsen.match.engine.state;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.kjeldsen.match.entities.Match;
-import com.kjeldsen.match.entities.PitchArea;
-import com.kjeldsen.match.entities.Team;
 import com.kjeldsen.match.engine.RandomHelper;
+import com.kjeldsen.match.engine.entities.PitchArea;
 import com.kjeldsen.match.engine.exceptions.GameStateException;
+import com.kjeldsen.match.models.Match;
+import com.kjeldsen.match.models.Team;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +27,6 @@ class GameStateTest {
         assertNotNull(gameState);
         assertNotNull(gameState.getTurn());
         assertEquals(0, gameState.getClock());
-        assertEquals(0, gameState.getAddedTime());
         assertNotNull(gameState.getHome());
         assertNotNull(gameState.getAway());
         assertNotNull(gameState.getBallState());
@@ -45,10 +46,6 @@ class GameStateTest {
         assertNotNull(teamState);
         assertEquals(0, teamState.getScore());
         assertNotNull(teamState.getPlayers());
-        assertNotNull(teamState.getPlayerLocation());
-        assertNotNull(teamState.getPenaltyCards());
-        assertEquals(0, teamState.getFouls());
-        assertEquals(0, teamState.getInjuries());
     }
 
     @Test
@@ -68,7 +65,6 @@ class GameStateTest {
                     GameState.builder()
                         .turn(before.getTurn())
                         .clock(1)
-                        .addedTime(before.getAddedTime())
                         .home(before.getHome())
                         .away(before.getAway())
                         .ballState((new BallState(null, PitchArea.CENTER_MIDFIELD)))

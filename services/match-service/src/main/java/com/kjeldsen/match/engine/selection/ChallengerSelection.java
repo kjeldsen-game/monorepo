@@ -1,11 +1,11 @@
 package com.kjeldsen.match.engine.selection;
 
+import com.kjeldsen.match.engine.entities.PitchArea;
+import com.kjeldsen.match.engine.entities.PlayerPosition;
+import com.kjeldsen.match.engine.entities.duel.DuelType;
 import com.kjeldsen.match.engine.exceptions.GameStateException;
 import com.kjeldsen.match.engine.state.GameState;
-import com.kjeldsen.match.entities.PitchArea;
-import com.kjeldsen.match.entities.duel.DuelType;
-import com.kjeldsen.match.entities.player.Player;
-import com.kjeldsen.match.entities.player.PlayerPosition;
+import com.kjeldsen.match.models.Player;
 import java.util.List;
 
 public class ChallengerSelection {
@@ -25,7 +25,7 @@ public class ChallengerSelection {
             case SHOT -> players.stream()
                 .filter(p -> p.getPosition() == PlayerPosition.GOALKEEPER)
                 .findAny()
-                .orElseThrow(() -> new GameStateException("No goalkeeper found"));
+                .orElseThrow(() -> new GameStateException(state, "No goalkeeper found"));
         };
     }
 
@@ -34,10 +34,12 @@ public class ChallengerSelection {
         // Passing duels always succeed for now so select any nearby player
         PitchArea ballArea = state.getBallState().getArea();
         return state.defendingTeam().getPlayers().stream()
+            .filter(challenger -> challenger.getPosition() != PlayerPosition.GOALKEEPER)
             .filter(challenger ->
                 challenger.getPosition().coverage().stream().anyMatch(ballArea::opponentIsNearby)
             ).findAny()
-            .orElseThrow(() -> new GameStateException("No players found to intercept the ball"));
+            .orElseThrow(
+                () -> new GameStateException(state, "No players found to intercept the ball"));
     }
 
     // Returns a player from the defending team to challenge the player in a ball control duel.
@@ -46,15 +48,18 @@ public class ChallengerSelection {
         // here is the player that started and lost the positional duel
         return state.lastPlay()
             .map(play -> play.getDuel().getInitiator())
-            .orElseThrow(() -> new GameStateException("A positional duel must be played first"));
+            .orElseThrow(
+                () -> new GameStateException(state, "A positional duel must be played first"));
     }
 
     // Returns a defender to counter the challenger in a positional duel.
     public static Player selectPositionalDuelChallenger(GameState state) {
         PitchArea ballArea = state.getBallState().getArea();
         return switch (ballArea.rank()) {
-            // A defender should never be required if the ball is in the back area
-            case BACK -> throw new GameStateException("No defenders in the back area");
+            // If the ball is in the back area (from the attacking team's perspective), positional
+            // duels should not be played. Defenders in control of the ball should pass it forward.
+            case BACK -> throw new GameStateException(
+                state, "Defenders should not start positional duels");
             case MIDDLE -> DefenderSelection.selectDefenderForMidfield(state);
             case FORWARD -> DefenderSelection.selectDefenderForForward(state);
         };
