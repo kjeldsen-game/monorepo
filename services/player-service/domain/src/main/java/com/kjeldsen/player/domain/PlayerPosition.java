@@ -4,7 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum PlayerPosition {
-    CENTRE_BACK,
+
+    CENTRE_BACK, // ESTE SE QUEDA
     AERIAL_CENTRE_BACK,
     FULL_BACK,
     FULL_WINGBACK,
@@ -14,4 +15,6 @@ public enum PlayerPosition {
     FORWARD,
     AERIAL_FORWARD,
     GOALKEEPER
+    //sigue a rajatabla lla tabla de la tarjeta que esta en doing
+
 }

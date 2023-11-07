@@ -40,10 +40,10 @@ class PlayerActualSkillsTest {
             PlayerSkills skillPoints = new PlayerSkills(50, 0);
 
             Player player = Player.builder()
-                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORE, skillPoints)))
+                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORING, skillPoints)))
                 .build();
-            player.getActualSkills().get(PlayerSkill.SCORE).increaseActualPoints(5);
-            assertThat(player.getActualSkillPoints(PlayerSkill.SCORE)).isEqualTo(55);
+            player.getActualSkills().get(PlayerSkill.SCORING).increaseActualPoints(5);
+            assertThat(player.getActualSkillPoints(PlayerSkill.SCORING)).isEqualTo(55);
         }
 
         @Test
@@ -52,10 +52,10 @@ class PlayerActualSkillsTest {
 
             PlayerSkills skillPoints = new PlayerSkills(98, 0);
             Player player = Player.builder()
-                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORE, skillPoints)))
+                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORING, skillPoints)))
                 .build();
-            player.getActualSkills().get(PlayerSkill.SCORE).increaseActualPoints(5);
-            assertThat(player.getActualSkillPoints(PlayerSkill.SCORE)).isEqualTo(100);
+            player.getActualSkills().get(PlayerSkill.SCORING).increaseActualPoints(5);
+            assertThat(player.getActualSkillPoints(PlayerSkill.SCORING)).isEqualTo(100);
         }
 
         @Test
@@ -63,10 +63,10 @@ class PlayerActualSkillsTest {
         void not_increase_the_amount_points_of_a_specified_skill_above_the_maximum() {
             PlayerSkills skillPoints = new PlayerSkills(100, 0);
             Player player = Player.builder()
-                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORE, skillPoints)))
+                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORING, skillPoints)))
                 .build();
-            player.getActualSkills().get(PlayerSkill.SCORE).increaseActualPoints(5);
-            assertThat(player.getActualSkillPoints(PlayerSkill.SCORE)).isEqualTo(100);
+            player.getActualSkills().get(PlayerSkill.SCORING).increaseActualPoints(5);
+            assertThat(player.getActualSkillPoints(PlayerSkill.SCORING)).isEqualTo(100);
         }
     }
 }

@@ -1,16 +1,19 @@
 package com.kjeldsen.player.domain;
 
 public enum PlayerSkill {
-    SCORE,
-    OFFENSIVE_POSITION,
+
+
+    SCORING,
+    OFFENSIVE_POSITIONING,
     BALL_CONTROL,
     PASSING,
-    CO,
-    TACKLING,
-    DEFENSE_POSITION,
     AERIAL,
+    CONSTITUTION,
+    TACKLING,
+    DEFENSIVE_POSITIONING,
+
     REFLEXES,
-    POSITIONING,
+    GOALKEEPER_POSITIONING,
     INTERCEPTIONS,
     CONTROL,
     ORGANIZATION,

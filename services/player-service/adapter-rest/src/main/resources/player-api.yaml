@@ -540,16 +540,16 @@ components:
     PlayerSkill:
       type: string
       enum:
-        - SCORE
-        - OFFENSIVE_POSITION
+        - SCORING
+        - OFFENSIVE_POSITIONING
         - BALL_CONTROL
         - PASSING
         - AERIAL
-        - CO
+        - CONSTITUTION
         - TACKLING
-        - DEFENSE_POSITION
+        - DEFENSIVE_POSITIONING
         - REFLEXES
-        - POSITIONING
+        - GOALKEEPER_POSITIONING
         - INTERCEPTIONS
         - CONTROL
         - ORGANIZATION
@@ -657,7 +657,7 @@ components:
 
     UpdatePlayerPositionTendencyRequest:
       type: object
-      example: { "SCORE": { "actual": 5, "potential": 50 } }
+      example: { "SCORING": { "actual": 5, "potential": 50 } }
       additionalProperties:
         type: object
         properties:
@@ -828,7 +828,7 @@ components:
           $ref: "#/components/schemas/PlayerPosition"
         tendencies:
           type: object
-          example: { "SCORE": { "actual": 5, "potential": 50 } }
+          example: { "SCORING": { "actual": 5, "potential": 50 } }
           additionalProperties:
             type: object
             properties:
@@ -850,7 +850,7 @@ components:
           example: 2
         skills:
           type: array
-          example: [ PASSING , SCORE ]
+          example: [ PASSING , SCORING ]
           items:
             $ref: "#/components/schemas/PlayerSkill"
 
