@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import static com.kjeldsen.player.domain.generator.PotentialRiseGenerator.generateRaiseProbability;
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -26,21 +28,24 @@ public class GeneratePotentialRiseUseCase {
 
         Player player = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
 
-        if (player.getAge() <= MAX_AGE) {
-            return generateAndStoreEvent(player);
+        int rise = generateRaiseProbability();
+
+        if (player.getAge() <= MAX_AGE && rise != 0) {
+            return generateAndStoreEvent(player, rise);
         } else {
             return null;
         }
     }
 
-    private PlayerPotentialRiseEvent generateAndStoreEvent(Player player) {
+    private PlayerPotentialRiseEvent generateAndStoreEvent(Player player, int rise) {
 
         PlayerPotentialRiseEvent playerPotentialRiseEvent = PlayerPotentialRiseEvent.builder()
             .id(EventId.generate())
             .occurredAt(InstantProvider.now())
             .playerId(player.getId())
-            .pointsBeforeRaise(0)
-            .pointsAfterRaise(0)
+            .potentialBeforeRaise(0)
+            .pointsToRise(rise)
+            .potentialAfterRaise(0)
             .skillThatRisen(PlayerProvider.randomSkill())
             .build();
 
