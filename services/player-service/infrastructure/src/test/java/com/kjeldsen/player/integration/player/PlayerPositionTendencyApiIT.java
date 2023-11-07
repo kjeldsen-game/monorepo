@@ -71,15 +71,36 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
                     ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(PlayerPosition.FULL_BACK)
-                    .tendencies(PlayerPositionTendency.DEFAULT_FULL_BACK_TENDENCIES.getTendencies()
+                    .position(PlayerPosition.SWEEPER)
+                    .tendencies(PlayerPositionTendency.DEFAULT_SWEEPER_TENDENCIES.getTendencies()
                         .entrySet().stream()
                         .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                     ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(PlayerPosition.FULL_WINGBACK)
-                    .tendencies(PlayerPositionTendency.DEFAULT_FULL_WINGBACK_TENDENCIES.getTendencies()
+                    .position(PlayerPosition.LEFT_BACK)
+                    .tendencies(PlayerPositionTendency.DEFAULT_LEFT_BACK_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.RIGHT_BACK)
+                    .tendencies(PlayerPositionTendency.DEFAULT_RIGHT_BACK_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.LEFT_WINGBACK)
+                    .tendencies(PlayerPositionTendency.DEFAULT_LEFT_WINGBACK_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.RIGHT_WINGBACK)
+                    .tendencies(PlayerPositionTendency.DEFAULT_RIGHT_WINGBACK_TENDENCIES.getTendencies()
                         .entrySet().stream()
                         .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                     ._default(true),
@@ -99,8 +120,36 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
                     ._default(true),
 
                 new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.LEFT_MIDFIELDER)
+                    .tendencies(PlayerPositionTendency.DEFAULT_LEFT_MIDFIELDER_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.RIGHT_MIDFIELDER)
+                    .tendencies(PlayerPositionTendency.DEFAULT_RIGHT_MIDFIELDER_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.LEFT_WINGER)
+                    .tendencies(PlayerPositionTendency.DEFAULT_LEFT_WINGER_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
                     .position(PlayerPosition.OFFENSIVE_MIDFIELDER)
                     .tendencies(PlayerPositionTendency.DEFAULT_OFFENSIVE_MIDFIELDER_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.RIGHT_WINGER)
+                    .tendencies(PlayerPositionTendency.DEFAULT_RIGHT_WINGER_TENDENCIES.getTendencies()
                         .entrySet().stream()
                         .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                     ._default(true),
@@ -115,6 +164,27 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
                 new PlayerPositionTendencyResponse()
                     .position(PlayerPosition.AERIAL_FORWARD)
                     .tendencies(PlayerPositionTendency.DEFAULT_AERIAL_FORWARD_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.STRIKER)
+                    .tendencies(PlayerPositionTendency.DEFAULT_STRIKER_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.AERIAL_STRIKER)
+                    .tendencies(PlayerPositionTendency.DEFAULT_AERIAL_STRIKER_TENDENCIES.getTendencies()
+                        .entrySet().stream()
+                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                    ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                    .position(PlayerPosition.GOALKEEPER)
+                    .tendencies(PlayerPositionTendency.DEFAULT_GOALKEEPER_TENDENCIES.getTendencies()
                         .entrySet().stream()
                         .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                     ._default(true)

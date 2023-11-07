@@ -42,15 +42,28 @@ public class PaySalariesTeamUseCaseTest {
     public void take_salaries_from_players_has_an_event_by_each_player() {
         Team.TeamId teamId = Team.TeamId.generate();
         when(mockedPlayerPositionTendencyReadRepository.get(any(PlayerPosition.class)))
-            .thenReturn(PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
+            .thenReturn(
+                PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
                 PlayerPositionTendency.DEFAULT_AERIAL_CENTRE_BACK_TENDENCIES,
-                PlayerPositionTendency.DEFAULT_FULL_BACK_TENDENCIES,
-                PlayerPositionTendency.DEFAULT_FULL_WINGBACK_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_SWEEPER_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_LEFT_BACK_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_RIGHT_BACK_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_LEFT_WINGBACK_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_RIGHT_WINGBACK_TENDENCIES,
+
                 PlayerPositionTendency.DEFAULT_DEFENSIVE_MIDFIELDER_TENDENCIES,
                 PlayerPositionTendency.DEFAULT_CENTRE_MIDFIELDER_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_LEFT_MIDFIELDER_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_RIGHT_MIDFIELDER_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_LEFT_WINGER_TENDENCIES,
                 PlayerPositionTendency.DEFAULT_OFFENSIVE_MIDFIELDER_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_RIGHT_WINGER_TENDENCIES,
+
                 PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES,
                 PlayerPositionTendency.DEFAULT_AERIAL_FORWARD_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_STRIKER_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_AERIAL_STRIKER_TENDENCIES,
+
                 PlayerPositionTendency.DEFAULT_GOALKEEPER_TENDENCIES);
 
         generatePlayersUseCase.generate(10, teamId);
@@ -85,15 +98,28 @@ public class PaySalariesTeamUseCaseTest {
     public void take_salaries_from_players_decreasing_the_balance_in_right_way() {
         Team.TeamId teamId = Team.TeamId.generate();
         when(mockedPlayerPositionTendencyReadRepository.get(any(PlayerPosition.class)))
-            .thenReturn(PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
+            .thenReturn(
+                PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
                 PlayerPositionTendency.DEFAULT_AERIAL_CENTRE_BACK_TENDENCIES,
-                PlayerPositionTendency.DEFAULT_FULL_BACK_TENDENCIES,
-                PlayerPositionTendency.DEFAULT_FULL_WINGBACK_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_SWEEPER_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_LEFT_BACK_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_RIGHT_BACK_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_LEFT_WINGBACK_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_RIGHT_WINGBACK_TENDENCIES,
+
                 PlayerPositionTendency.DEFAULT_DEFENSIVE_MIDFIELDER_TENDENCIES,
                 PlayerPositionTendency.DEFAULT_CENTRE_MIDFIELDER_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_LEFT_MIDFIELDER_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_RIGHT_MIDFIELDER_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_LEFT_WINGER_TENDENCIES,
                 PlayerPositionTendency.DEFAULT_OFFENSIVE_MIDFIELDER_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_RIGHT_WINGER_TENDENCIES,
+
                 PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES,
                 PlayerPositionTendency.DEFAULT_AERIAL_FORWARD_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_STRIKER_TENDENCIES,
+                PlayerPositionTendency.DEFAULT_AERIAL_STRIKER_TENDENCIES,
+
                 PlayerPositionTendency.DEFAULT_GOALKEEPER_TENDENCIES);
 
         generatePlayersUseCase.generate(10, teamId);
