@@ -19,8 +19,8 @@ public class Assistance {
      * Determines the assistance a player gets from his teammates in a positional duel.
      */
 
-    public static final int MAX_ASSISTANCE = 25;
-    public static final int MIN_ASSISTANCE = -25;
+    public static final int MAX_ASSISTANCE = 50;
+    public static final int MIN_ASSISTANCE = 0;
     public static double BALL_CONTROL_FACTOR = 0.9;
     public static double TACKLING_FACTOR = 0.9;
 
@@ -67,47 +67,34 @@ public class Assistance {
         };
     }
 
-    // Takes the assistance that two players in a duel receive and normalizes the difference to a
-    // value between constants defined in this class.
-    public static Map<DuelRole, Integer> normalizeAssistance(
+    // Takes the assistance that two players in a duel receive and adjust the difference to a
+    // value between constants defined in this class. The adjustment operation is based on taking
+    // the square root of the difference and bringing the result into the range of the constants.
+    public static Map<DuelRole, Integer> adjustAssistance(
         Map<String, Integer> initiatorAssistance, Map<String, Integer> challengerAssistance) {
 
         int initiatorTotal =
             initiatorAssistance.values().stream()
                 .mapToInt(Integer::intValue)
                 .sum();
-        int challengerTotal = challengerAssistance.values().stream()
-            .mapToInt(Integer::intValue)
-            .sum();
+        int challengerTotal =
+            challengerAssistance.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
 
-        int total = initiatorTotal + challengerTotal;
-        if (total == 0) {
-            return Map.of(
-                DuelRole.INITIATOR, 0,
-                DuelRole.CHALLENGER, 0);
-        }
-
-        // Normalized point difference is given to winner
+        // Adjust the difference and give it to winner. The loser gets 0.
+        double difference = Math.abs(initiatorTotal - challengerTotal);
+        // The assistance is capped, but the actual value will rarely come near the limit. It takes
+        // a difference of 400 to reach the limit.
+        int assistance = (int) Math.min(Math.sqrt(difference) * 2.5, MAX_ASSISTANCE);
         DuelRole winner =
-            initiatorTotal > challengerTotal ? DuelRole.INITIATOR : DuelRole.CHALLENGER;
+            (initiatorTotal > challengerTotal) ? DuelRole.INITIATOR : DuelRole.CHALLENGER;
+        DuelRole loser = (winner == DuelRole.INITIATOR) ? DuelRole.CHALLENGER : DuelRole.INITIATOR;
 
-        return switch (winner) {
-            case INITIATOR -> setAssistance(DuelRole.INITIATOR, initiatorTotal, total);
-            case CHALLENGER -> setAssistance(DuelRole.CHALLENGER, challengerTotal, total);
-        };
-    }
-
-    // Given the winner's total, returns a value between the min and max assistance constants
-    private static Map<DuelRole, Integer> setAssistance(
-        DuelRole winner, int winnerTotal, int total) {
-        double factor = (double) winnerTotal / total;
-        int assistance =
-            (int) (Math.abs((MAX_ASSISTANCE - MIN_ASSISTANCE)) * factor) + MIN_ASSISTANCE;
-
-        DuelRole loser = winner == DuelRole.INITIATOR ? DuelRole.CHALLENGER : DuelRole.INITIATOR;
         return Map.of(
             winner, assistance,
-            loser, 0);
+            loser, 0
+        );
     }
 
     // Factor by which assistance is multiplied by for the attacking player

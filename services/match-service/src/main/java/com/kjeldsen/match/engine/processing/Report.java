@@ -8,6 +8,7 @@ import com.kjeldsen.match.models.Team;
 import java.util.List;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.Pair;
 
 @Slf4j
 @Value
@@ -52,7 +53,7 @@ public class Report {
         this.narration = narrated;
         this.homeScore = homeScore;
         this.awayScore = awayScore;
-        this.gameStats = new GameStats(ratings.left(), ratings.right());
+        this.gameStats = new GameStats(ratings.getLeft(), ratings.getRight());
     }
 
     public record GameStats(int homeRating, int awayRating) {

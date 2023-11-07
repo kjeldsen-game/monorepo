@@ -16,6 +16,7 @@ import com.kjeldsen.match.models.Player;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class DuelExecution {
 
@@ -47,21 +48,22 @@ public class DuelExecution {
     public static DuelDTO handlePositionalDuel(
         GameState state, Player initiator, Player challenger) {
         // The range of team assistance values can be very high. We need the assistance for both
-        // players first then we can normalize their sums to arrive at a sensible value.
+        // players first then the difference can be adjusted to a sensible value and given to the
+        // winner of the duel.
         Map<String, Integer> initiatorTeamAssistance =
             Assistance.teamAssistance(state, initiator, DuelRole.INITIATOR);
         Map<String, Integer> challengerTeamAssistance =
             Assistance.teamAssistance(state, challenger, DuelRole.CHALLENGER);
 
-        Map<DuelRole, Integer> normalizedAssistanceTotals =
-            Assistance.normalizeAssistance(
+        Map<DuelRole, Integer> adjustedAssistanceTotals =
+            Assistance.adjustAssistance(
                 initiatorTeamAssistance, challengerTeamAssistance);
 
         int initiatorSkillPoints = initiator.duelSkill(DuelType.POSITIONAL, DuelRole.INITIATOR);
         int initiatorPerformance =
             DuelRandomization.performance(
                 state, initiator, DuelType.POSITIONAL, DuelRole.INITIATOR);
-        int initiatorAssistance = normalizedAssistanceTotals.get(DuelRole.INITIATOR);
+        int initiatorAssistance = adjustedAssistanceTotals.get(DuelRole.INITIATOR);
         int initiatorTotal = initiatorSkillPoints + initiatorPerformance + initiatorAssistance;
 
         int challengerSkillPoints = challenger.duelSkill(DuelType.POSITIONAL, DuelRole.CHALLENGER);
@@ -72,7 +74,7 @@ public class DuelExecution {
         double assistanceModifier =
             1 + defensiveAssistanceModifier(state.getBallState().getArea(), state.defendingTeam());
         int challengerAssistance =
-            (int) (normalizedAssistanceTotals.get(DuelRole.CHALLENGER) * assistanceModifier);
+            (int) (adjustedAssistanceTotals.get(DuelRole.CHALLENGER) * assistanceModifier);
 
         int challengerTotal =
             challengerSkillPoints + challengerPerformance + challengerAssistance;
@@ -128,15 +130,12 @@ public class DuelExecution {
                 state, challenger, DuelType.BALL_CONTROL, DuelRole.CHALLENGER);
         int challengerTotal = challengerSkillPoints + challengerPerformance;
 
-        // Positive carry over means the initiator won the previous duel
-        int carryover = Carryover.fromPositionalDuel(state);
-        DuelRole carryoverReceiver = carryover > 0 ? DuelRole.INITIATOR : DuelRole.CHALLENGER;
-        if (carryoverReceiver == DuelRole.INITIATOR) {
-            initiatorTotal += carryover;
-        } else {
-            challengerTotal -= carryover;
+        Pair<DuelRole, Integer> carryover = Carryover.fromPositionalDuel(state);
+        DuelRole carryoverReceiver = carryover.getLeft();
+        switch (carryoverReceiver) {
+            case INITIATOR -> initiatorTotal += carryover.getRight();
+            case CHALLENGER -> challengerTotal += carryover.getRight();
         }
-        carryover = Math.abs(carryover);
 
         DuelResult result = (initiatorTotal > challengerTotal) ? DuelResult.WIN : DuelResult.LOSE;
 
@@ -146,14 +145,14 @@ public class DuelExecution {
                 DuelStats.builder()
                     .skillPoints(initiatorSkillPoints)
                     .performance(initiatorPerformance)
-                    .carryover(carryoverReceiver == DuelRole.INITIATOR ? carryover : null)
+                    .carryover(carryoverReceiver == DuelRole.INITIATOR ? carryover.getRight() : 0)
                     .total(initiatorTotal)
                     .build())
             .challengerStats(
                 DuelStats.builder()
                     .skillPoints(challengerSkillPoints)
                     .performance(challengerPerformance)
-                    .carryover(carryoverReceiver == DuelRole.CHALLENGER ? carryover : null)
+                    .carryover(carryoverReceiver == DuelRole.CHALLENGER ? carryover.getRight() : 0)
                     .total(challengerTotal)
                     .build())
             .build();
@@ -213,14 +212,12 @@ public class DuelExecution {
         int challengerTotal = challengerSkillPoints + challengerPerformance;
 
         // Positive carry over means the initiator won the previous duel
-        int carryover = Carryover.fromPreviousDuel(state);
-        DuelRole carryoverReceiver = carryover > 0 ? DuelRole.INITIATOR : DuelRole.CHALLENGER;
-        if (carryoverReceiver == DuelRole.INITIATOR) {
-            initiatorTotal += carryover;
-        } else {
-            challengerTotal -= carryover;
+        Pair<DuelRole, Integer> carryover = Carryover.fromPreviousDuel(state);
+        DuelRole carryoverReceiver = carryover.getLeft();
+        switch (carryoverReceiver) {
+            case INITIATOR -> initiatorTotal += carryover.getRight();
+            case CHALLENGER -> challengerTotal += carryover.getRight();
         }
-        carryover = Math.abs(carryover);
 
         DuelResult result = (initiatorTotal > challengerTotal) ? DuelResult.WIN : DuelResult.LOSE;
         return DuelDTO.builder()
@@ -228,14 +225,14 @@ public class DuelExecution {
                 DuelStats.builder()
                     .skillPoints(initiatorSkillPoints)
                     .performance(initiatorPerformance)
-                    .carryover(carryoverReceiver == DuelRole.INITIATOR ? carryover : null)
+                    .carryover(carryoverReceiver == DuelRole.INITIATOR ? carryover.getRight() : 0)
                     .total(initiatorTotal)
                     .build())
             .challengerStats(
                 DuelStats.builder()
                     .skillPoints(challengerSkillPoints)
                     .performance(challengerPerformance)
-                    .carryover(carryoverReceiver == DuelRole.CHALLENGER ? carryover : null)
+                    .carryover(carryoverReceiver == DuelRole.CHALLENGER ? carryover.getRight() : 0)
                     .total(challengerTotal)
                     .build())
             .result(result)

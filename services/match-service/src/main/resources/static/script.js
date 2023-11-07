@@ -253,14 +253,15 @@ class Narration {
     return `<p>${meta}</p>
             <div class="row">
               <div class="col-2"> ${field} </div>
-              <div class="col-7">
+              <div class="col-8">
                 <div>
                   <p>${attempt}</p>
                   <p>${response}</p>
                   <i class="text-primary">${outcome}</i>
                 </div>
+                <br>
+                <div>${stats}</div>
               </div>
-              <div class="col-3">${stats}</div>
             </div>`;
   }
 
@@ -303,7 +304,7 @@ class Narration {
     };
     const highlightStyle = areas[field] || '';
     return `
-    <div style="position: relative; margin-right: 2em">
+    <div style="position: relative">
       <img alt="field" src="./field.png" style="width: 100%;">
       <div style="position: absolute; background-color: rgba(67,148,255,0.68); ${highlightStyle}"></div>
     </div>
@@ -409,6 +410,9 @@ class Narration {
     }
     if (initiatorStats.assistance != null) {
       let initiatorId = Math.random().toString(36).slice(2, 10)
+      let initiatorTotal =
+          Object.values(initiatorStats.teamAssistance)
+          .reduce((acc, val) => acc + val, 0);
       let initiatorAssistance =
           `<div class="modal fade" id="${initiatorId}" tabindex="-1">
             <div class="modal-dialog">
@@ -422,7 +426,7 @@ class Narration {
                               <ul>
                                 <b>${key}</b>            
                                 <span>${initiatorStats.teamAssistance[key]}</span>
-                              </ul>`).join("")}
+                              </ul>`).join("") + "<hr> <b>Total = </b> " +  initiatorTotal}
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -432,6 +436,9 @@ class Narration {
           </div>`;
 
       let challengerId = Math.random().toString(36).slice(2, 10)
+      let challengerTotal =
+          Object.values(challengerStats.teamAssistance)
+          .reduce((acc, val) => acc + val, 0);
       let challengerAssistance =
           `<div class="modal fade" id="${challengerId}" tabindex="-1">
             <div class="modal-dialog">
@@ -445,7 +452,7 @@ class Narration {
                               <ul>
                                 <b>${key}</b>            
                                 <span>${challengerStats.teamAssistance[key]}</span>
-                              </ul>`).join("")}
+                              </ul>`).join("") + "<hr> <b>Total = </b> " +  challengerTotal}
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -464,7 +471,7 @@ class Narration {
       stats += `<tr>
                  <td style="text-align: right">Carryover</td>    
                  <td>${initiatorStats.carryover}</td>
-                 <td>n/a</td>
+                 <td>${challengerStats.carryover}</td>
                </tr>`;
     }
     if (initiatorStats.total !== null) {
@@ -547,34 +554,34 @@ class Narration {
   }
 
   static describeAssistance(assistance) {
-    if (assistance <= -21) {
+    if (assistance <= 4) {
       return 'awful';
     }
-    if (assistance <= -16) {
+    if (assistance <= 9) {
       return 'poor';
     }
-    if (assistance <= -11) {
+    if (assistance <= 14) {
       return 'weak';
     }
-    if (assistance <= -6) {
+    if (assistance <= 19) {
       return 'decent';
     }
-    if (assistance <= -1) {
+    if (assistance <= 24) {
       return 'good';
     }
-    if (assistance <= 0) {
+    if (assistance <= 25) {
       return 'excellent';
     }
-    if (assistance <= 5) {
+    if (assistance <= 30) {
       return 'superb';
     }
-    if (assistance <= 10) {
+    if (assistance <= 35) {
       return 'brilliant';
     }
-    if (assistance <= 15) {
+    if (assistance <= 40) {
       return 'awesome';
     }
-    if (assistance <= 20) {
+    if (assistance <= 45) {
       return 'masterful';
     }
     return 'unbelievable';

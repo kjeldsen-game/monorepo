@@ -8,7 +8,9 @@ spring:
     active: 'local'
 
   datasource:
-    url: jdbc:h2:file:./game-db
+    url: jdbc:h2:mem:game-db
+    # For saving db to file:
+    # url: jdbc:h2:file:./game-db
     username: admin
     password: password
     driverClassName: org.h2.Driver

@@ -2,8 +2,8 @@ package com.kjeldsen.match.engine.execution;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.kjeldsen.match.engine.random.DuelRandomization;
 import com.kjeldsen.match.engine.entities.duel.DuelRole;
+import com.kjeldsen.match.engine.random.DuelRandomization;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
@@ -25,15 +25,16 @@ class AssistanceTest {
             "Diana", 50
         );
 
-        Map<DuelRole, Integer> normalizedAssistanceTotals =
-            Assistance.normalizeAssistance(initiatorTeamAssistance, challengerTeamAssistance);
+        Map<DuelRole, Integer> adjustedAssistanceTotals =
+            Assistance.adjustAssistance(initiatorTeamAssistance, challengerTeamAssistance);
 
-        assertEquals(0, normalizedAssistanceTotals.get(DuelRole.INITIATOR));
-        assertEquals(0, normalizedAssistanceTotals.get(DuelRole.CHALLENGER));
+        assertEquals(0, adjustedAssistanceTotals.get(DuelRole.INITIATOR));
+        assertEquals(0, adjustedAssistanceTotals.get(DuelRole.CHALLENGER));
     }
 
     @Test
     void largeRangeAssistanceNormalizedCorrectly() {
+        // A difference of 400 is enough to reach the max assistance limit
         Map<String, Integer> initiatorTeamAssistance = Map.of(
             "Alice", 100,
             "Bob", 100,
@@ -48,13 +49,13 @@ class AssistanceTest {
             "Diana", 0
         );
 
-        Map<DuelRole, Integer> normalizedAssistanceTotals =
-            Assistance.normalizeAssistance(initiatorTeamAssistance, challengerTeamAssistance);
+        Map<DuelRole, Integer> adjustedAssistanceTotals =
+            Assistance.adjustAssistance(initiatorTeamAssistance, challengerTeamAssistance);
 
         assertEquals(
-            Assistance.MAX_ASSISTANCE, normalizedAssistanceTotals.get(DuelRole.INITIATOR));
+            Assistance.MAX_ASSISTANCE, adjustedAssistanceTotals.get(DuelRole.INITIATOR));
         assertEquals(
-            0, normalizedAssistanceTotals.get(DuelRole.CHALLENGER));
+            0, adjustedAssistanceTotals.get(DuelRole.CHALLENGER));
     }
 
     @Test

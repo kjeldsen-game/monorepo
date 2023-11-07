@@ -1,13 +1,14 @@
 package com.kjeldsen.match.engine.random;
 
-import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.entities.Play;
+import com.kjeldsen.match.engine.entities.SkillType;
 import com.kjeldsen.match.engine.entities.duel.Duel;
 import com.kjeldsen.match.engine.entities.duel.DuelRole;
 import com.kjeldsen.match.engine.entities.duel.DuelType;
+import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.models.Player;
-import com.kjeldsen.match.engine.entities.SkillType;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
@@ -16,8 +17,8 @@ public class DuelRandomization {
     public static final int MAX_PERFORMANCE = 15;
     public static final int MIN_PERFORMANCE = -15;
 
-    public static final int MAX_ASSISTANCE = 25;
-    public static final int MIN_ASSISTANCE = -25;
+    public static final int MAX_ASSISTANCE = 50;
+    public static final int MIN_ASSISTANCE = 0;
 
     // Probability of a player with total points `a` winning a duel against a player with level `b`.
     // These points include the bonus and assistance.
@@ -63,10 +64,10 @@ public class DuelRandomization {
             .sorted(Comparator.comparingInt(Play::getMinute).reversed())
             .map(Play::getDuel)
             .filter(duel -> {
-                if (duel.getInitiator().getId() == player.getId()) {
+                if (Objects.equals(duel.getInitiator().getId(), player.getId())) {
                     return duel.getType().requiredSkill(DuelRole.INITIATOR) == skill;
                 }
-                if (duel.getChallenger().getId() == player.getId()) {
+                if (Objects.equals(duel.getChallenger().getId(), player.getId())) {
                     return duel.getType().requiredSkill(DuelRole.CHALLENGER) == skill;
                 }
                 return false;

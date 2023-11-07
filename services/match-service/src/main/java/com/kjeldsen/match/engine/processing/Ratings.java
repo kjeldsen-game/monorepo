@@ -1,6 +1,7 @@
 package com.kjeldsen.match.engine.processing;
 
 import com.kjeldsen.match.engine.entities.MatchResult;
+import org.apache.commons.lang3.tuple.Pair;
 
 public final class Ratings {
 
@@ -20,7 +21,7 @@ public final class Ratings {
         int scoreA = (int) Math.round(rating1 + K * (observedEloScore - expectedEloScore));
         int scoreB = (int) Math.round(rating2 + K * (expectedEloScore - observedEloScore));
 
-        return new Pair<>(scoreA, scoreB);
+        return Pair.of(scoreA, scoreB);
     }
 
     private static double expectedEloScore(double rating1, double rating2) {
