@@ -3,7 +3,7 @@ package com.kjeldsen.player.integration.player;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.provider.PlayerProvider;
-import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerWriteRepository;
 import com.kjeldsen.player.integration.AbstractIT;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
 import com.kjeldsen.player.rest.model.*;

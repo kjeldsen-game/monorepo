@@ -23,7 +23,7 @@ public class PlayerSkills {
     }
 
     public void initializePotentialPoints() {
-        potential = PointsGenerator.generatePotencialPoints(actual);
+        potential = PointsGenerator.generatePotentialPoints(actual);
     }
 
 }

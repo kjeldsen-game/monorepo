@@ -6,16 +6,12 @@ import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.provider.PlayerProvider;
 import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
-import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
-import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerReadRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerWriteRepository;
 import com.kjeldsen.player.integration.AbstractIT;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
-import com.kjeldsen.player.rest.model.CreatePlayerRequest;
-import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
-import com.kjeldsen.player.rest.model.PlayerPosition;
-import com.kjeldsen.player.rest.model.PlayerResponse;
-import com.kjeldsen.player.rest.model.PlayerResponseActualSkillsValue;
+import com.kjeldsen.player.rest.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -33,9 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class PlayerApiIT extends AbstractIT {
 

@@ -2,8 +2,8 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

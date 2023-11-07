@@ -1,7 +1,7 @@
 package com.kjeldsen.player.application.publisher;
 
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

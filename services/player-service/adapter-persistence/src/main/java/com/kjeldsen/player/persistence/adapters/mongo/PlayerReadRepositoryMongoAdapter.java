@@ -3,7 +3,7 @@ package com.kjeldsen.player.persistence.adapters.mongo;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
-import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerReadRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;

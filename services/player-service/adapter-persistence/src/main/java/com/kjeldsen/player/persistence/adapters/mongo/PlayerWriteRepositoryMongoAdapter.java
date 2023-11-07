@@ -1,7 +1,7 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerWriteRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -2,7 +2,7 @@ package com.kjeldsen.player.persistence.adapters.mongo;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
-import com.kjeldsen.player.domain.repositories.PlayerTrainingBloomEventReadRepository;
+import com.kjeldsen.player.domain.repositories.training.PlayerTrainingBloomEventReadRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerTrainingBloomEventMongoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

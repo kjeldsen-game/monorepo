@@ -1,8 +1,8 @@
 package com.kjeldsen.player.integration.player;
 
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
-import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerReadRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerWriteRepository;
 import com.kjeldsen.player.integration.AbstractIT;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
 import com.kjeldsen.player.rest.model.RegisterBloomPhaseRequest;

@@ -1,8 +1,8 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.domain.*;
-import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
-import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerPositionTendencyReadRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerWriteRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

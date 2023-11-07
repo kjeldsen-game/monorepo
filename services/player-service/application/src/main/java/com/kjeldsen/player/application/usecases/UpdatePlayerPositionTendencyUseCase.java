@@ -1,7 +1,7 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.domain.PlayerPositionTendency;
-import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyWriteRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerPositionTendencyWriteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

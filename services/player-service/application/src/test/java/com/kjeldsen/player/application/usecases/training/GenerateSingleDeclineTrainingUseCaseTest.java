@@ -1,9 +1,9 @@
 package com.kjeldsen.player.application.usecases.training;
 
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
-import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventWriteRepository;
-import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerReadRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerWriteRepository;
+import com.kjeldsen.player.domain.repositories.training.PlayerTrainingDeclineEventWriteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

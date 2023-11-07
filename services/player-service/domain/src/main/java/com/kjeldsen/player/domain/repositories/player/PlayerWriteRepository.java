@@ -1,4 +1,4 @@
-package com.kjeldsen.player.domain.repositories;
+package com.kjeldsen.player.domain.repositories.player;
 
 import com.kjeldsen.player.domain.Player;
 

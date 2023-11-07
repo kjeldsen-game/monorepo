@@ -1,7 +1,8 @@
-package com.kjeldsen.player.domain.repositories;
+package com.kjeldsen.player.domain.repositories.player;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
 
 import java.util.List;
 import java.util.Optional;

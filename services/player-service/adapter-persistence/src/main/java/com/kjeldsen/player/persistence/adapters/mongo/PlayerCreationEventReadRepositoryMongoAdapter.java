@@ -2,7 +2,7 @@ package com.kjeldsen.player.persistence.adapters.mongo;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.events.PlayerCreationEvent;
-import com.kjeldsen.player.domain.repositories.PlayerCreationEventReadRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerCreationEventReadRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerCreationEventMongoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

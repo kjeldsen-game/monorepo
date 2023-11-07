@@ -2,8 +2,8 @@ package com.kjeldsen.player.application.usecases.training;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
-import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventWriteRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerReadRepository;
+import com.kjeldsen.player.domain.repositories.training.PlayerTrainingScheduledEventWriteRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

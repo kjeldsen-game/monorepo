@@ -1,4 +1,4 @@
-package com.kjeldsen.player.domain.repositories;
+package com.kjeldsen.player.domain.repositories.training;
 
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 

@@ -1,7 +1,7 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
-import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventWriteRepository;
+import com.kjeldsen.player.domain.repositories.training.PlayerTrainingDeclineEventWriteRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerTrainingDeclineEventMongoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -6,7 +6,7 @@ import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
-import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerReadRepository;
 import com.kjeldsen.player.rest.api.PlayerApiDelegate;
 import com.kjeldsen.player.rest.mapper.CreatePlayerMapper;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;

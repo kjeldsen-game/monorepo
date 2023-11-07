@@ -4,7 +4,7 @@ import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.PlayerSkills;
-import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyWriteRepository;
+import com.kjeldsen.player.domain.repositories.player.PlayerPositionTendencyWriteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

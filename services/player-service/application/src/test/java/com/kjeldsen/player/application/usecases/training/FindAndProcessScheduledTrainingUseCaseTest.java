@@ -4,7 +4,7 @@ import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
-import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventReadRepository;
+import com.kjeldsen.player.domain.repositories.training.PlayerTrainingScheduledEventReadRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
