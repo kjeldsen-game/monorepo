@@ -9,7 +9,7 @@ import { teamColumn } from '@/shared/components/Grid/TeamColumn'
 import useSWR from "swr"
 import { connectorAPI } from '@/libs/fetcher'
 
-const API = "/player?size=40&page=0";
+const API = "/player?size=50&page=0";
 
 export async function getServerSideProps() {
   const repoInfo = await connectorAPI(API, "GET");
@@ -28,6 +28,7 @@ interface TeamProps {
 
 const Team: NextPage<TeamProps> = ({fallback}) => {
   const { data, error } = useSWR(API, connectorAPI, { fallback });
+  console.log(data)
   if (error) return <div>failed to load</div>
 
   return (
