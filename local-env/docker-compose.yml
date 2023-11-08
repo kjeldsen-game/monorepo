@@ -20,27 +20,3 @@ services:
       timeout: 10s
       retries: 3
       start_period: 5s
-
-  ##################
-  ## Auth Service ##
-  ##################
-
-  auth-service:
-    # image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/auth-service:latest
-    build:
-      context: ../services/auth-service
-      dockerfile: ./Dockerfile
-    ports:
-      - 8081:8081
-    container_name: auth-service
-    env_file:
-      - ./config/common.env
-      - ./config/auth-service.env
-    depends_on:
-      local-mongodb:
-        condition: service_healthy
-    healthcheck:
-      test: "curl --fail --silent localhost:8081/actuator/health | grep UP || exit 1"
-      interval: 20s
-      timeout: 5s
-      retries: 5

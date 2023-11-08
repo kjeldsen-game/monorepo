@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>main-service</artifactId>
+        <groupId>com.kjeldsen</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>infrastructure</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>auth-adapter-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>auth-adapter-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>player-adapter-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>player-adapter-persistence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mongodb</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>kafka</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

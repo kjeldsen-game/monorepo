@@ -1,0 +1,77 @@
+server:
+  port: 8081
+  error:
+    include-message: always
+
+spring:
+  application:
+    name: main-service
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: admin
+      password: root
+      database: admin
+  kafka:
+    bootstrap-servers: http://localhost:9092
+    linger-ms: 10
+
+springdoc:
+  version: '@springdoc.version@'
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    use-root-path: true
+  show-actuator: true
+
+kafka:
+  topics:
+    auth-signup: AuthSignup
+
+hosts:
+  auth-service:
+    url: 'http://localhost:8081'
+
+security:
+  oauth2:
+    access-token-validity-seconds: 86400  # 1 day
+    refresh-token-validity-seconds: 2592000  # 30 days
+    client-id: client_id
+    client-secret: client_secret
+    public-key: -----BEGIN PUBLIC KEY-----
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuObgk+RKEKqQ9EY8gMHL
+      1p3Q+OLmq/dQyT4FyafDdPHbB1RXoGM07t4Y+i7Uj6+M4IZOCKrVyEI0BsHv0WEh
+      BLN+m5F5/x4oxzDdb4OCUhMrGxPtUQmuqkRSMYqZyD1NHfm+w/3jTiEHeC4PpZxd
+      GwXRCwzYjNXV9TFntx8iZnqq8GDuQszyAjfaf1KLVH2lrTPo3ERGt1gKSH5qOfyZ
+      ZC0zp89DmPzYSmTWvrzAcclrgvpiy2dk+c+SCKhsMpJqIcREbC7z3kLT1yGYkdx3
+      DhyofcSeFws9ibdMbwW7C7PPERnZMGMXOY100i9NpqskK1GrebWuBLwqD8izrMn+
+      ewIDAQAB
+      -----END PUBLIC KEY-----
+    private-key: -----BEGIN RSA PRIVATE KEY-----
+      MIIEpQIBAAKCAQEAuObgk+RKEKqQ9EY8gMHL1p3Q+OLmq/dQyT4FyafDdPHbB1RX
+      oGM07t4Y+i7Uj6+M4IZOCKrVyEI0BsHv0WEhBLN+m5F5/x4oxzDdb4OCUhMrGxPt
+      UQmuqkRSMYqZyD1NHfm+w/3jTiEHeC4PpZxdGwXRCwzYjNXV9TFntx8iZnqq8GDu
+      QszyAjfaf1KLVH2lrTPo3ERGt1gKSH5qOfyZZC0zp89DmPzYSmTWvrzAcclrgvpi
+      y2dk+c+SCKhsMpJqIcREbC7z3kLT1yGYkdx3DhyofcSeFws9ibdMbwW7C7PPERnZ
+      MGMXOY100i9NpqskK1GrebWuBLwqD8izrMn+ewIDAQABAoIBAQCfVb1zVEeK4yD0
+      j031+oqIUAjTYNw8lmuUb5EXPC1Pqlb/kuvL95GWwecuOIrNow64MKQwDd8Zqgsh
+      Q6BAgv2sCm1w68UAVmH3fKFlRiNYTNJZjCt2KOzOJv/ZV0G77y90RFHinPdyzT2d
+      j7vGD9+fuLxyVEiL3H16xG9Gu1quiVGqUdl4wpEH2Z5EfkYgBod7RcIlb38r4Q4A
+      49OL3lMiPPLflY1bMVbGer/z8kehqo+lWH9V3yAxf4frHyiWfS+xxEUm6XRC2Rs2
+      qixjg5XRG4O9gegPUIWvQcNzeff2hMgWPK539ijzmvAh/jLoEPettBy+1O2+Vl+B
+      NrSVMZbRAoGBANm4iXTMSTnu44PsDOKxmxSHQ5RMbCGOFGrxkhBgbilZHd7O2W/X
+      owk1VKwwOwWj36Fvo9EdOxBz66JQpLzYRMzvrXSZCbSub+t3BCjcmTzM+fSL56lu
+      Qv6If6b9LpUvwHU1tzswjntUHKYuiTk5fYqkONkdNnS3h7Quv9WNDegTAoGBANlp
+      Lkup2tkv4TatG426Jlwj88csQHk0mHd7Nw1wVBIuR+AUf790BivKpbrcZC+HX+rZ
+      cmOv5MNg888bCE4uTXWHHB2jF9ngvWYA45FvUaCYznCnEOasj2FAnjzsEyhzKIig
+      z6VO4NbfEoNqLsNe/riGle838KG/0PUvYuAcICz5AoGBALKzC2dpUWUSlX0vHvhm
+      LFJyH162Rz5XXpzUgD2e2Gxpr+Gzx7ZLuI6TTlcyEw+zDJd1iXDW3CbJ7orARCaY
+      IAhRZP5Bqjy5vDT479oWDlRgLXyx5Eglryk5ogTO5BAhLIdHuogDd770L7uakJj+
+      ffNwjRRvLMYp6WFTybKe3t4vAoGBAIM6j60wG18ZHXGpT4ZepCTdtpm0Rj5i1tzX
+      zMUZ1kUbFltVRD7Fw6vPJ/YAbaCar/TLx9YQJ58e+Es8X+kA3dRg90GUXiMvGmNl
+      ifcRIE41rfYlgXgbFHh5ToorXOz/hanilzOKxwArqbsU7qESx+GNqxa3x1F6vKAi
+      OCZaE7nRAoGAalAkHi1Fv3kkHQIXmq+gXfgog8nvWAT9JNtq40EyMKj7h7SwN1AN
+      DDEH2BHz/eyCep6OcIsfeCTNDqlnQgB0ZEpHBPYMSQ2a1RasFmcmB0dy3kU7X1MS
+      Mj3zZSFV5VuaPhjbk4mZIzGi/34o4BBVnZNJNuk4xvgRR6Qn3+lqRvQ=
+      -----END RSA PRIVATE KEY-----
