@@ -1,6 +1,0 @@
-spring:
-  kafka:
-    bootstrap-servers: ${spring.embedded.kafka.brokers}
-    consumer:
-      group-id: ${spring.application.name}
-      auto-offset-reset: earliest

@@ -9,6 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>infrastructure</artifactId>
     <dependencies>
+        <!-- Modules -->
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>auth-adapter-rest</artifactId>
@@ -25,6 +26,7 @@
             <groupId>com.kjeldsen</groupId>
             <artifactId>player-adapter-persistence</artifactId>
         </dependency>
+        <!-- Others -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
