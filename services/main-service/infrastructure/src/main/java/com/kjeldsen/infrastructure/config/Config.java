@@ -1,4 +1,4 @@
-package com.kjeldsen.auth.config;
+package com.kjeldsen.infrastructure.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.web.client.RestTemplateBuilder;

@@ -1,4 +1,4 @@
-package com.kjeldsen.auth.config;
+package com.kjeldsen.infrastructure.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;

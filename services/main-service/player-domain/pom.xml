@@ -11,6 +11,10 @@
     <artifactId>player-domain</artifactId>
     <dependencies>
         <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>domain</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>

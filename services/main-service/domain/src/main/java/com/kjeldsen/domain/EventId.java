@@ -1,4 +1,4 @@
-package com.kjeldsen.events.domain;
+package com.kjeldsen.domain;
 
 import java.util.UUID;
 

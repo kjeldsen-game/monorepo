@@ -22,13 +22,13 @@ public class SignUpUseCase {
         throwConflictIfFound(signUp);
         signUpWriteRepository.save(signUp);
         // TODO change this to some kind of internal event so we don't need to access to all players usecases modules
-        createTeamUseCase.create(signUp.getTeamName(), 30, signUp.getId());
+        createTeamUseCase.create(signUp.getTeamName(), 50, signUp.getId());
     }
 
     private void throwConflictIfFound(SignUp signUp) {
         signUpReadRepository.findByUsernameIgnoreCase(signUp.getUsername())
-                .ifPresent(conflictingSignUp -> {
-                    throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("Username %s already in use", conflictingSignUp.getUsername()));
-                });
+            .ifPresent(conflictingSignUp -> {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("Username %s already in use", conflictingSignUp.getUsername()));
+            });
     }
 }

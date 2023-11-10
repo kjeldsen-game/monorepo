@@ -1,4 +1,4 @@
-package com.kjeldsen.auth;
+package com.kjeldsen.infrastructure;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

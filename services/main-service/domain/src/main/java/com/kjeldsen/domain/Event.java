@@ -1,4 +1,4 @@
-package com.kjeldsen.events.domain;
+package com.kjeldsen.domain;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
