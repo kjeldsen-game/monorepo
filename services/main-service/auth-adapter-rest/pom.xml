@@ -53,7 +53,7 @@
         <!-- Modules -->
         <dependency>
             <groupId>com.kjeldsen</groupId>
-            <artifactId>auth-usecases</artifactId>
+            <artifactId>auth-application</artifactId>
         </dependency>
         <!-- Others -->
         <dependency>

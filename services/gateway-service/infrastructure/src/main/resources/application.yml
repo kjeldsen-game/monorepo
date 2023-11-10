@@ -10,21 +10,17 @@ spring:
     allow-circular-references: true
 
 hosts:
-  auth-service: 'http://localhost:8081'
-  player-service: 'http://localhost:8082'
+  main-service: 'http://localhost:8081'
 
 zuul:
   sensitive-headers:
   routes:
-    auth-service:
-      path: /auth-service/**
-      url: ${hosts.auth-service}
-    player-service:
-      path: /player-service/**
-      url: ${hosts.player-service}
+    main-service:
+      path: /main-service/**
+      url: ${hosts.main-service}
 
 security:
   oauth2:
     resource:
       jwt:
-        key-uri: ${hosts.auth-service}/oauth/token_key
+        key-uri: ${hosts.main-service}/oauth/token_key

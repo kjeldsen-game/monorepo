@@ -3,6 +3,7 @@ package com.kjeldsen.auth.usecases;
 import com.kjeldsen.auth.domain.SignUp;
 import com.kjeldsen.auth.persistence.SignUpReadRepository;
 import com.kjeldsen.auth.persistence.SignUpWriteRepository;
+import com.kjeldsen.player.application.usecases.CreateTeamUseCase;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -16,7 +17,8 @@ class SignUpUseCaseTest {
 
     private final SignUpWriteRepository mockSignUpWriteRepository = mock(SignUpWriteRepository.class);
     private final SignUpReadRepository mockSignUpReadRepository = mock(SignUpReadRepository.class);
-    private final SignUpUseCase signUpUseCase = new SignUpUseCase(mockSignUpWriteRepository, mockSignUpReadRepository);
+    private final CreateTeamUseCase createTeamUseCase = mock(CreateTeamUseCase.class);
+    private final SignUpUseCase signUpUseCase = new SignUpUseCase(mockSignUpWriteRepository, mockSignUpReadRepository, createTeamUseCase);
 
     @Test
     void should_sign_up_user_correctly() {

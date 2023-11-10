@@ -21,10 +21,6 @@ The structure of the proyect follows a CQRS pattern https://martinfowler.com/bli
 ## Hexagonal Architecture
 The structure of the proyect follows a hexagonal architecture where domain defines the entities and the business logic and adapters connect to any external piece.
 
-## Kafka
-
-The platform will be using Kafka services to produce/consume events.
-
 ## Local Development environment
 
 In the folder local-env you can find a project that allows developers to replicate the entire platform quite easy. It is based on Docker Compose and will run up all services and databases needed to work. Read the README of the projects for more information.

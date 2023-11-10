@@ -24,7 +24,7 @@ export default NextAuth({
           client_secret: AUTH_CLIENT_SECRET,
         })
 
-        const res = await fetch(`${API_GATEWAY_ENDPOINT}/auth-service/oauth/token`, {
+        const res = await fetch(`${API_GATEWAY_ENDPOINT}/main-service/oauth/token`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

@@ -9,8 +9,8 @@ import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 @Configuration
 public class RemoteTokenServicesConfig {
 
-    @Value("${hosts.auth-service.url}")
-    private String authServiceUrl;
+    @Value("${hosts.main-service.url}")
+    private String mainServiceUrl;
 
     @Value("${security.oauth2.client-id}")
     private String clientId;
@@ -22,7 +22,7 @@ public class RemoteTokenServicesConfig {
     @Bean
     public RemoteTokenServices tokenService() {
         RemoteTokenServices tokenService = new RemoteTokenServices();
-        final String checkTokenEndpointUrl = String.format("%s/oauth/check_token", authServiceUrl);
+        final String checkTokenEndpointUrl = String.format("%s/oauth/check_token", mainServiceUrl);
         tokenService.setCheckTokenEndpointUrl(checkTokenEndpointUrl);
         tokenService.setClientId(clientId);
         tokenService.setClientSecret(clientSecret);

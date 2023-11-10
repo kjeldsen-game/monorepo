@@ -13,7 +13,10 @@
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>auth-persistence</artifactId>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>player-application</artifactId>
         </dependency>
     </dependencies>
 </project>

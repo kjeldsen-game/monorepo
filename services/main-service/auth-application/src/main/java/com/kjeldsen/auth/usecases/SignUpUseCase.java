@@ -3,6 +3,7 @@ package com.kjeldsen.auth.usecases;
 import com.kjeldsen.auth.domain.SignUp;
 import com.kjeldsen.auth.persistence.SignUpReadRepository;
 import com.kjeldsen.auth.persistence.SignUpWriteRepository;
+import com.kjeldsen.player.application.usecases.CreateTeamUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,14 @@ public class SignUpUseCase {
 
     private final SignUpWriteRepository signUpWriteRepository;
     private final SignUpReadRepository signUpReadRepository;
+    private final CreateTeamUseCase createTeamUseCase;
 
-    // TODO Miguel this should be transactional. Add integration test that makes sure of the rollback in db if kafka message fails
+    // TODO this should be transactional. Add integration test that makes sure of the rollback in db
     public void signUp(SignUp signUp) throws ResponseStatusException {
         throwConflictIfFound(signUp);
         signUpWriteRepository.save(signUp);
-        // TODO change to call players module authSignUpProducer.send(signUp);
+        // TODO change this to some kind of internal event so we don't need to access to all players usecases modules
+        createTeamUseCase.create(signUp.getTeamName(), 30, signUp.getId());
     }
 
     private void throwConflictIfFound(SignUp signUp) {

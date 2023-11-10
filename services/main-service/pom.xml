@@ -7,7 +7,7 @@
         <module>auth-adapter-mongodb</module>
         <module>auth-domain</module>
         <module>auth-persistence</module>
-        <module>auth-usecases</module>
+        <module>auth-application</module>
         <module>auth-adapter-rest</module>
         <module>player-adapter-persistence</module>
         <module>player-adapter-rest</module>
@@ -194,7 +194,7 @@
             </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>auth-usecases</artifactId>
+                <artifactId>auth-application</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
