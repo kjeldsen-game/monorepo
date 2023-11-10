@@ -26,6 +26,10 @@
             <groupId>com.kjeldsen</groupId>
             <artifactId>player-adapter-persistence</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>security</artifactId>
+        </dependency>
         <!-- Others -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
