@@ -30,9 +30,6 @@
     <name>main-service</name>
     <description>Demo project for Spring Boot</description>
     <properties>
-        <!-- LIBS -->
-        <security-lib.version>0.0.1-SNAPSHOT</security-lib.version>
-        <!-- Others -->
         <java.version>17</java.version>
         <openapi-generator-maven-plugin.version>6.1.0</openapi-generator-maven-plugin.version>
         <springdoc-openapi-maven-plugin.version>1.4</springdoc-openapi-maven-plugin.version>
@@ -219,12 +216,6 @@
                 <groupId>com.kjeldsen</groupId>
                 <artifactId>security</artifactId>
                 <version>${project.version}</version>
-            </dependency>
-            <!-- LIBS -->
-            <dependency>
-                <groupId>com.kjeldsen</groupId>
-                <artifactId>security-lib</artifactId>
-                <version>${security-lib.version}</version>
             </dependency>
             <!-- Others -->
             <dependency>
