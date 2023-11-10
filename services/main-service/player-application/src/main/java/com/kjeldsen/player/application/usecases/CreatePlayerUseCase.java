@@ -1,6 +1,6 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.events.domain.EventId;
+import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.application.publisher.PlayerPublisher;
 import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.events.PlayerCreationEvent;

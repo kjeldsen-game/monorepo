@@ -8,5 +8,4 @@ spring:
       active: 'local'
 
 hosts:
-  auth-service: 'http://${AUTH_SERVICE_HOST}'
-  player-service: 'http://${PLAYER_SERVICE_HOST}'
+  main-service: 'http://${MAIN_SERVICE_HOST}'

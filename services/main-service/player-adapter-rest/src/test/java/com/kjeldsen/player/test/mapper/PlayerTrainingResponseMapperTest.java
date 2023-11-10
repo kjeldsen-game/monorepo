@@ -1,6 +1,6 @@
 package com.kjeldsen.player.test.mapper;
 
-import com.kjeldsen.events.domain.EventId;
+import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;

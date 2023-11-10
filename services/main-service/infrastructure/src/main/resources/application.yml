@@ -13,9 +13,6 @@ spring:
       username: admin
       password: root
       database: admin
-  kafka:
-    bootstrap-servers: http://localhost:9092
-    linger-ms: 10
 
 springdoc:
   version: '@springdoc.version@'
@@ -24,14 +21,6 @@ springdoc:
   swagger-ui:
     use-root-path: true
   show-actuator: true
-
-kafka:
-  topics:
-    auth-signup: AuthSignup
-
-hosts:
-  auth-service:
-    url: 'http://localhost:8081'
 
 security:
   oauth2:

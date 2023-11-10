@@ -10,9 +10,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 public class GatewaySecurityConfig extends ResourceServerConfigurerAdapter {
 
     private static final String[] AUTH_WHITELIST = {
-        "/auth-service/auth/sign-up",
-        "/auth-service/oauth/token",
-        "/auth-service/oauth/check_token",
+        "/main-service/auth/sign-up",
+        "/main-service/oauth/token",
+        "/main-service/oauth/check_token",
         "/actuator/health"
     };
 
