@@ -72,6 +72,10 @@
     <dependencies>
         <dependency>
             <groupId>com.kjeldsen</groupId>
+            <artifactId>security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
             <artifactId>player-application</artifactId>
         </dependency>
         <dependency>
