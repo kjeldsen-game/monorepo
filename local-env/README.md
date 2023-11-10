@@ -29,22 +29,6 @@ Login to Code Artifact to publish/download libraries
 
 ---
 
-## Kafka
-
-Create topic
-- `docker exec kafka  kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic my-topic`
-
-List topics
-- `docker exec kafka  kafka-topics --list --bootstrap-server localhost:9092`
-
-Send message to a topic (active sending mode, you can send multiple)
-- `docker exec -it kafka kafka-console-producer --bootstrap-server localhost:9092 --topic my-topic`
-
-Consume messages from a topic (active receiving mode, you can receive multiple)
-- `docker exec kafka kafka-console-consumer --bootstrap-server localhost:9092 --topic my-topic --from-beginning`
-
----
-
 ## Localstack
 
 We are using Localstack to have a local development environment emulating AWS Cloud services. For more information, access https://github.com/localstack/localstack
