@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="hi"
+                 name="Help Instance"
+                 start-page="README.md">
+
+    <toc-element topic="BirdSightArchitecture.md"/>
+    <toc-element topic="GLOSSARY.md"/>
+    <toc-element topic="MatchTimeline.md"/>
+    <toc-element topic="README.md"/>
+    <toc-element topic="semantic-version.md"/>
+    <toc-element topic="services-summary.md"/>
+    <toc-element topic="TECH-STACK-SETUP.md"/>
+</instance-profile>
