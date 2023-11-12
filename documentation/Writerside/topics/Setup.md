@@ -1,22 +1,22 @@
 # Set up 
-You will need certain steps installed before to start the app.
 
-- We need to check it out if we have:
-    * Terminal Git Bush.
-    * AWS CLI.
-    * Java.
-    * Maven.
-    * Git.
-    * Docker.
-    * Mermaid
-    * Postman.
-    * Visual Studio Code.
-    * IntelliJ Idea
+You will need certain steps installed to start the platform.
 
+We need to have:
+- Terminal Git Bush.
+- AWS CLI.
+- Java.
+- Maven.
+- Git.
+- Docker.
+- Mermaid
+- Postman.
+- Visual Studio Code.
+- IntelliJ Idea
 
 ## Git
 https://git-scm.com/download
-> **IMPORTANT**  We installed git bash too. 
+> **IMPORTANT**  We install GitBash too. 
 
 ## AWS CLI
 https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html
@@ -43,4 +43,4 @@ https://code.visualstudio.com/download
 https://www.jetbrains.com/idea/download/#section=windows
 
 For every installation, we need to follow the instructions in ich site.
-When we have everything, we just have to follow the README on local-env. 
+When we have everything, we just have to follow [Local Development](LocalDevelopment.md). 
