@@ -6,12 +6,11 @@
                  name="Help Instance"
                  start-page="README.md">
 
-    <toc-element topic="BirdSightArchitecture.md"/>
-    <toc-element topic="GLOSSARY.md"/>
-    <toc-element topic="MatchTimeline.md"/>
     <toc-element topic="README.md"/>
-    <toc-element topic="semantic-version.md"/>
-    <toc-element topic="services-summary.md"/>
-    <toc-element topic="TECH-STACK-SETUP.md"/>
-    <toc-element topic="local-env.md"/>
+    <toc-element topic="Setup.md"/>
+    <toc-element topic="LocalDevelopment.md"/>
+    <toc-element topic="PlatformInfrastructure.md"/>
+    <toc-element topic="Glossary.md"/>
+    <toc-element topic="BirdSightArchitecture.md"/>
+    <toc-element topic="Timelines.md"/>
 </instance-profile>

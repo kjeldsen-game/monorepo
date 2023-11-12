@@ -1,4 +1,6 @@
-# Match timeline for a basic scenario
+# Timelines
+
+## Match timeline
 
 Having: 
 
@@ -10,8 +12,6 @@ Having:
     - 1 play with a pass
     - 1 play with a shoot
         - 1 duel where team B wins the duel and team B scores
-
-## gantt chart
 
 ```mermaid
 

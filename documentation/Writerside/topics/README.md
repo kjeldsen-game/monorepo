@@ -1,12 +1,8 @@
 # Kjeldsen
 
-The Kjeldsen platform has been develop with the idea of micro-services. Each identified business entity will have it's own services and database to perform all actions related with the entity data.
-
-# Tech
-
 ## Event-Sourcing
 We are using an Event-Sourcing architecture for following key points:
-- Data become the numer one level citizen, every single action that occurs in the system gets stored in the form of an event
+- Data become the number one level citizen, every single action that occurs in the system gets stored in the form of an event
 - The performance of the system will keep a good shape in the long term
 - The scalability of the project, both vertically and horizontally will be easy to implement
 - The project will be stateless, so the Continuous Deployment, Orchestration, and Containerization are easy to implement
@@ -16,10 +12,10 @@ We are using an Event-Sourcing architecture for following key points:
     - https://martinfowler.com/eaaDev/EventSourcing.html
 
 ## CQRS
-The structure of the proyect follows a CQRS pattern https://martinfowler.com/bliki/CQRS.html
+The structure of the project follows a CQRS pattern https://martinfowler.com/bliki/CQRS.html
 
 ## Hexagonal Architecture
-The structure of the proyect follows a hexagonal architecture where domain defines the entities and the business logic and adapters connect to any external piece.
+The structure of the project follows a hexagonal architecture where domain defines the entities and the business logic and adapters connect to any external piece.
 
 ## Local Development environment
 
