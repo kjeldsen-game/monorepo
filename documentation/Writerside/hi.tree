@@ -4,7 +4,13 @@
 
 <instance-profile id="hi"
                  name="Help Instance"
-                 start-page="Default-topic.md">
+                 start-page="README.md">
 
-    <toc-element topic="Default-topic.md"/>
+    <toc-element topic="BirdSightArchitecture.md"/>
+    <toc-element topic="GLOSSARY.md"/>
+    <toc-element topic="MatchTimeline.md"/>
+    <toc-element topic="README.md"/>
+    <toc-element topic="semantic-version.md"/>
+    <toc-element topic="services-summary.md"/>
+    <toc-element topic="TECH-STACK-SETUP.md"/>
 </instance-profile>
