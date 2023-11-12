@@ -5,12 +5,12 @@ on:
   # Replace `main` with your branch’s name
   pull_request:
     paths:
-      - "doc/**"
+      - "documentation/**"
   push:
     branches: 
       - main
     paths:
-      - "doc/**"
+      - "documentation/**"
 
 # Gives the workflow permissions to clone the repo and create a page deployment
 permissions:
