@@ -13,4 +13,5 @@
     <toc-element topic="semantic-version.md"/>
     <toc-element topic="services-summary.md"/>
     <toc-element topic="TECH-STACK-SETUP.md"/>
+    <toc-element topic="local-env.md"/>
 </instance-profile>
