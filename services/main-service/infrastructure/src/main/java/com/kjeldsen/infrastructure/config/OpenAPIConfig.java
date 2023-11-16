@@ -1,4 +1,4 @@
-package com.kjeldsen.auth.rest;
+package com.kjeldsen.infrastructure.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -18,6 +18,9 @@ import org.springframework.context.annotation.Configuration;
     ),
     servers = {
         @Server(url = "http://localhost:8081")
+    },
+    security = {
+        @io.swagger.v3.oas.annotations.security.SecurityRequirement(name = "security_auth")
     }
 )
 @SecurityScheme(
@@ -28,5 +31,5 @@ import org.springframework.context.annotation.Configuration;
         refreshUrl = "/oauth/token",
         scopes = {@OAuthScope(name = "all", description = "all scope")}))
 )
-public class AuthOpenAPIConfig {
+public class OpenAPIConfig {
 }

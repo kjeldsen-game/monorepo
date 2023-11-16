@@ -55,6 +55,10 @@
             <groupId>com.kjeldsen</groupId>
             <artifactId>auth-application</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>security-tools</artifactId>
+        </dependency>
         <!-- Others -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

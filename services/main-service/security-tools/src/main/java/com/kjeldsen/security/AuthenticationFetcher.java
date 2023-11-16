@@ -1,7 +1,9 @@
 package com.kjeldsen.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParser;
 import org.springframework.boot.json.JsonParserFactory;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.jwt.JwtHelper;
@@ -14,6 +16,9 @@ import java.util.Optional;
 
 @Component
 public class AuthenticationFetcher {
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     public static final String TOKEN_ENHANCE_USER_ID = "uid";
 

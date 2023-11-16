@@ -3,8 +3,8 @@ package com.kjeldsen.auth.rest.delegate;
 import com.kjeldsen.auth.domain.SignUp;
 import com.kjeldsen.auth.rest.api.AuthApiDelegate;
 import com.kjeldsen.auth.rest.model.SignUpRequest;
-import com.kjeldsen.auth.rest.security.CustomPasswordEncoder;
 import com.kjeldsen.auth.usecases.SignUpUseCase;
+import com.kjeldsen.security.CustomPasswordEncoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +21,10 @@ public class AuthDelegate implements AuthApiDelegate {
     public ResponseEntity<Void> signup(SignUpRequest signUpRequest) {
 
         SignUp signUp = SignUp.builder()
-                .username(signUpRequest.getUsername())
-                .passwordHash(customPasswordEncoder.encode(signUpRequest.getPassword()))
-                .teamName(signUpRequest.getTeamName())
-                .build();
+            .username(signUpRequest.getUsername())
+            .passwordHash(customPasswordEncoder.encode(signUpRequest.getPassword()))
+            .teamName(signUpRequest.getTeamName())
+            .build();
 
         signUpUseCase.signUp(signUp);
 

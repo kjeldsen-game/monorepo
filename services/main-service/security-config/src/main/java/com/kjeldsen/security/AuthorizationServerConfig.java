@@ -1,4 +1,4 @@
-package com.kjeldsen.auth.rest.security;
+package com.kjeldsen.security;
 
 import com.kjeldsen.auth.domain.SignUp;
 import com.kjeldsen.auth.usecases.UserDetailsServiceUseCase;

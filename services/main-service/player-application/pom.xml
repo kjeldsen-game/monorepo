@@ -13,12 +13,10 @@
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>player-domain</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>player-adapter-persistence</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>

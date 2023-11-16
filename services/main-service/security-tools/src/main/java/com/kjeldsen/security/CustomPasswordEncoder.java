@@ -1,4 +1,4 @@
-package com.kjeldsen.auth.rest.security;
+package com.kjeldsen.security;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;

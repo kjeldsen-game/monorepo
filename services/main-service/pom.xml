@@ -16,7 +16,8 @@
         <module>match-engine</module>
         <module>infrastructure</module>
         <module>domain</module>
-        <module>security</module>
+        <module>security-config</module>
+        <module>security-tools</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -80,7 +81,7 @@
         <jaxb-core.version>2.3.0.1</jaxb-core.version>
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <spring-security-oauth2.version>2.3.8.RELEASE</spring-security-oauth2.version>
+        <spring-security-oauth2.version>2.5.2.RELEASE</spring-security-oauth2.version>
         <spring-boot-starter-json.version>3.1.2</spring-boot-starter-json.version>
     </properties>
     <build>
@@ -214,7 +215,12 @@
             </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>security</artifactId>
+                <artifactId>security-config</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>security-tools</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- Others -->
