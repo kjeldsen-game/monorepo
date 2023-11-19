@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.security.OAuthFlow;
 import io.swagger.v3.oas.annotations.security.OAuthFlows;
 import io.swagger.v3.oas.annotations.security.OAuthScope;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,16 +21,19 @@ import org.springframework.context.annotation.Configuration;
         @Server(url = "http://localhost:8081")
     },
     security = {
-        @io.swagger.v3.oas.annotations.security.SecurityRequirement(name = "security_auth")
+        @io.swagger.v3.oas.annotations.security.SecurityRequirement(name = "oauth2"),
     }
 )
-@SecurityScheme(
-    name = "security_auth",
-    type = SecuritySchemeType.OAUTH2,
-    flows = @OAuthFlows(password = @OAuthFlow(
-        tokenUrl = "/oauth/token",
-        refreshUrl = "/oauth/token",
-        scopes = {@OAuthScope(name = "all", description = "all scope")}))
-)
+@SecuritySchemes({
+    @SecurityScheme(
+        name = "oauth2",
+        type = SecuritySchemeType.OAUTH2,
+        bearerFormat = "JWT",
+        scheme = "bearer",
+        flows = @OAuthFlows(
+            password = @OAuthFlow(tokenUrl = "/oauth/token", scopes = {@OAuthScope(name = "all", description = "all scope")})
+        )
+    )
+})
 public class OpenAPIConfig {
 }
