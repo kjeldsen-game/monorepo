@@ -4,6 +4,7 @@ import com.kjeldsen.player.application.usecases.UpdatePlayerPositionTendencyUseC
 import com.kjeldsen.player.application.usecases.UpdatePlayerTendencies;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.repositories.player.PlayerPositionTendencyReadRepository;
+
 import com.kjeldsen.player.rest.api.PlayerPositionTendenciesApiDelegate;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.mapper.PlayerPositionTendencyMapper;
