@@ -10,19 +10,19 @@ public enum PlayerPosition {
 
     GOALKEEPER,
     SWEEPER,
-    CENTER_BACK,
+    CENTER_BACK, // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
     RIGHT_BACK,
     LEFT_BACK,
     RIGHT_WINGBACK,
     LEFT_WINGBACK,
     DEFENSIVE_MIDFIELDER,
-    CENTER_MIDFIELDER,
+    CENTER_MIDFIELDER, // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
     OFFENSIVE_MIDFIELDER,
     RIGHT_MIDFIELDER,
     LEFT_MIDFIELDER,
     RIGHT_WINGER,
     LEFT_WINGER,
-    FALSE_NINE,
+    FALSE_NINE, //TODO NADIR MAYBE THIS IS AN ERROR OR AN OLD POSITION BECAUSE I DON'T REMEMBER THIS POSITION AT ALL IN DOCUMENTATION
     FORWARD,
     STRIKER;
 
@@ -37,14 +37,14 @@ public enum PlayerPosition {
         return List.of(
                 PlayerPosition.LEFT_MIDFIELDER,
                 PlayerPosition.RIGHT_MIDFIELDER,
-                PlayerPosition.CENTER_MIDFIELDER,
+                PlayerPosition.CENTER_MIDFIELDER, // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
                 PlayerPosition.DEFENSIVE_MIDFIELDER,
                 PlayerPosition.OFFENSIVE_MIDFIELDER,
                 PlayerPosition.LEFT_WINGER,
                 PlayerPosition.RIGHT_WINGER,
                 PlayerPosition.LEFT_WINGBACK,
                 PlayerPosition.RIGHT_WINGBACK,
-                PlayerPosition.FALSE_NINE)
+                PlayerPosition.FALSE_NINE) //TODO NADIR MAYBE THIS IS AN ERROR OR AN OLD POSITION BECAUSE I DON'T REMEMBER THIS POSITION AT ALL IN DOCUMENTATION
             .contains(this);
     }
 
@@ -53,14 +53,14 @@ public enum PlayerPosition {
                 PlayerPosition.SWEEPER,
                 PlayerPosition.LEFT_BACK,
                 PlayerPosition.RIGHT_BACK,
-                PlayerPosition.CENTER_BACK)
+                PlayerPosition.CENTER_BACK) // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
             .contains(this);
     }
 
     public boolean isCentral() {
         return List.of(
-                PlayerPosition.CENTER_BACK,
-                PlayerPosition.CENTER_MIDFIELDER,
+                PlayerPosition.CENTER_BACK, // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+                PlayerPosition.CENTER_MIDFIELDER, // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
                 PlayerPosition.OFFENSIVE_MIDFIELDER,
                 PlayerPosition.DEFENSIVE_MIDFIELDER,
                 PlayerPosition.SWEEPER,
@@ -79,10 +79,10 @@ public enum PlayerPosition {
         return List.of(
                 PlayerPosition.LEFT_BACK,
                 PlayerPosition.RIGHT_BACK,
-                PlayerPosition.CENTER_BACK,
+                PlayerPosition.CENTER_BACK, // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
                 PlayerPosition.LEFT_MIDFIELDER,
                 PlayerPosition.RIGHT_MIDFIELDER,
-                PlayerPosition.CENTER_MIDFIELDER,
+                PlayerPosition.CENTER_MIDFIELDER, // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
                 PlayerPosition.FORWARD,
                 PlayerPosition.STRIKER)
             .contains(this);
@@ -94,7 +94,7 @@ public enum PlayerPosition {
                 PlayerPosition.LEFT_WINGER,
                 PlayerPosition.RIGHT_WINGER,
                 PlayerPosition.OFFENSIVE_MIDFIELDER,
-                PlayerPosition.FALSE_NINE)
+                PlayerPosition.FALSE_NINE) //TODO NADIR MAYBE THIS IS AN ERROR OR AN OLD POSITION BECAUSE I DON'T REMEMBER THIS POSITION AT ALL IN DOCUMENTATION
             .contains(this);
     }
 
@@ -117,26 +117,26 @@ public enum PlayerPosition {
     // Pitch areas covered by the player - where the player is expected to be given the position.
     public List<PitchArea> coverage() {
         return switch (this) {
-            case GOALKEEPER, SWEEPER, CENTER_BACK -> List.of(PitchArea.CENTER_BACK);
+            case GOALKEEPER, SWEEPER, CENTER_BACK -> List.of(PitchArea.CENTER_BACK); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
             case RIGHT_BACK -> List.of(PitchArea.RIGHT_BACK);
             case LEFT_BACK -> List.of(PitchArea.LEFT_BACK);
             case RIGHT_WINGBACK ->
                 List.of(PitchArea.RIGHT_BACK, PitchArea.RIGHT_MIDFIELD, PitchArea.RIGHT_FORWARD);
             case LEFT_WINGBACK ->
                 List.of(PitchArea.LEFT_BACK, PitchArea.LEFT_MIDFIELD, PitchArea.LEFT_FORWARD);
-            case DEFENSIVE_MIDFIELDER -> List.of(PitchArea.CENTER_BACK, PitchArea.CENTER_MIDFIELD);
-            case CENTER_MIDFIELDER -> List.of(PitchArea.CENTER_MIDFIELD);
-            case OFFENSIVE_MIDFIELDER, FALSE_NINE ->
-                List.of(PitchArea.CENTER_MIDFIELD, PitchArea.CENTER_FORWARD);
+            case DEFENSIVE_MIDFIELDER -> List.of(PitchArea.CENTER_BACK, PitchArea.CENTER_MIDFIELD); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+            case CENTER_MIDFIELDER -> List.of(PitchArea.CENTER_MIDFIELD); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+            case OFFENSIVE_MIDFIELDER, FALSE_NINE -> //TODO NADIR MAYBE THIS IS AN ERROR OR AN OLD POSITION BECAUSE I DON'T REMEMBER THIS POSITION AT ALL IN DOCUMENTATION
+                List.of(PitchArea.CENTER_MIDFIELD, PitchArea.CENTER_FORWARD); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
             case RIGHT_MIDFIELDER -> List.of(PitchArea.RIGHT_MIDFIELD, PitchArea.RIGHT_FORWARD);
             case LEFT_MIDFIELDER -> List.of(PitchArea.LEFT_MIDFIELD, PitchArea.LEFT_FORWARD);
             case RIGHT_WINGER -> List.of(PitchArea.RIGHT_MIDFIELD, PitchArea.RIGHT_FORWARD,
-                PitchArea.CENTER_FORWARD);
+                PitchArea.CENTER_FORWARD); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
             case LEFT_WINGER ->
-                List.of(PitchArea.LEFT_MIDFIELD, PitchArea.LEFT_FORWARD, PitchArea.CENTER_FORWARD);
+                List.of(PitchArea.LEFT_MIDFIELD, PitchArea.LEFT_FORWARD, PitchArea.CENTER_FORWARD); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
             case FORWARD ->
-                List.of(PitchArea.LEFT_FORWARD, PitchArea.CENTER_FORWARD, PitchArea.RIGHT_FORWARD);
-            case STRIKER -> List.of(PitchArea.CENTER_FORWARD);
+                List.of(PitchArea.LEFT_FORWARD, PitchArea.CENTER_FORWARD, PitchArea.RIGHT_FORWARD); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+            case STRIKER -> List.of(PitchArea.CENTER_FORWARD); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
         };
     }
 }

@@ -36,14 +36,14 @@ public class DefenderSelectionTest {
         Team team = RandomHelper.genTeam();
 
         List<Player> players = List.of(
-            genPlayerWithPosition(team, PlayerPosition.CENTER_MIDFIELDER),
+            genPlayerWithPosition(team, PlayerPosition.CENTER_MIDFIELDER), // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
             genPlayerWithPosition(team, PlayerPosition.OFFENSIVE_MIDFIELDER),
             genPlayerWithPosition(team, PlayerPosition.DEFENSIVE_MIDFIELDER),
             genPlayerWithPosition(team, PlayerPosition.RIGHT_MIDFIELDER),
             genPlayerWithPosition(team, PlayerPosition.LEFT_WINGER));
 
         Map<PlayerPosition, Integer> selections = new HashMap<>();
-        selections.put(PlayerPosition.CENTER_MIDFIELDER, 0);
+        selections.put(PlayerPosition.CENTER_MIDFIELDER, 0); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
         selections.put(PlayerPosition.OFFENSIVE_MIDFIELDER, 0);
         selections.put(PlayerPosition.DEFENSIVE_MIDFIELDER, 0);
         selections.put(PlayerPosition.RIGHT_MIDFIELDER, 0);
