@@ -1,11 +1,11 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.events.domain.EventId;
+import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.events.PlayerPotentialRiseScheduledEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerPotentialRiseScheduledEventWriteRepository;
-import com.kjeldsen.player.domain.repositories.player.PlayerReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Range;

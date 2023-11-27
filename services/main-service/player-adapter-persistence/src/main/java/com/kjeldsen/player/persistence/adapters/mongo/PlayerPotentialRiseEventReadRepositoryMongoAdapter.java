@@ -1,22 +1,20 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
-import com.kjeldsen.player.domain.repositories.PlayerTrainingEventReadRepository;
-import com.kjeldsen.player.persistence.mongo.repositories.PlayerTrainingEventMongoRepository;
+import com.kjeldsen.player.domain.events.PlayerPotentialRiseEvent;
+import com.kjeldsen.player.domain.repositories.PlayerPotentialRiseEventReadRepository;
+import com.kjeldsen.player.persistence.mongo.repositories.PlayerPotentialRiseEventMongoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
 @Component
 @RequiredArgsConstructor
-public class PlayerTrainingEventReadRepositoryMongoAdapter implements PlayerTrainingEventReadRepository {
-
-    private final PlayerTrainingEventMongoRepository playerTrainingEventMongoRepository;
+public class PlayerPotentialRiseEventReadRepositoryMongoAdapter implements PlayerPotentialRiseEventReadRepository {
+    private final PlayerPotentialRiseEventMongoRepository playerPotentialRiseEventMongoRepository;
 
     @Override
-    public List<PlayerTrainingEvent> findAllByPlayerId(Player.PlayerId playerId) {
-        return playerTrainingEventMongoRepository.findAllByPlayerId(playerId);
+    public List<PlayerPotentialRiseEvent> findAllByPlayerId(Player.PlayerId playerId) {
+        return playerPotentialRiseEventMongoRepository.findAllByPlayerId(playerId);
     }
 }

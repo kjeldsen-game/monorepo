@@ -1,13 +1,13 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.events.domain.EventId;
+import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.events.PlayerPotentialRiseEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.provider.PlayerProvider;
-import com.kjeldsen.player.domain.repositories.player.PlayerPotentialRiseEventWriteRepository;
-import com.kjeldsen.player.domain.repositories.player.PlayerReadRepository;
-import com.kjeldsen.player.domain.repositories.player.PlayerWriteRepository;
+import com.kjeldsen.player.domain.repositories.PlayerPotentialRiseEventWriteRepository;
+import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

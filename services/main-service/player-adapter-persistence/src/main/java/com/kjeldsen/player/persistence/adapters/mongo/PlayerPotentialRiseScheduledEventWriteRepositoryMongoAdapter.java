@@ -1,20 +1,18 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
-import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
-import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventWriteRepository;
-import com.kjeldsen.player.persistence.mongo.repositories.PlayerTrainingScheduledEventMongoRepository;
+import com.kjeldsen.player.domain.events.PlayerPotentialRiseScheduledEvent;
+import com.kjeldsen.player.domain.repositories.PlayerPotentialRiseScheduledEventWriteRepository;
+import com.kjeldsen.player.persistence.mongo.repositories.PlayerPotentialRiseScheduledEventMongoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class PlayerTrainingScheduledEventWriteRepositoryMongoAdapter implements PlayerTrainingScheduledEventWriteRepository {
-
-    private final  PlayerTrainingScheduledEventMongoRepository playerTrainingScheduledEventMongoRepository;
+public class PlayerPotentialRiseScheduledEventWriteRepositoryMongoAdapter implements PlayerPotentialRiseScheduledEventWriteRepository {
+    private final PlayerPotentialRiseScheduledEventMongoRepository playerPotentialRiseScheduledEventMongoRepository;
 
     @Override
-    public PlayerTrainingScheduledEvent save(PlayerTrainingScheduledEvent playerTrainingScheduledEvent) {
-        return playerTrainingScheduledEventMongoRepository.save(playerTrainingScheduledEvent);
+    public PlayerPotentialRiseScheduledEvent save(PlayerPotentialRiseScheduledEvent playerPotentialRiseScheduledEvent) {
+        return playerPotentialRiseScheduledEventMongoRepository.save(playerPotentialRiseScheduledEvent);
     }
-
 }

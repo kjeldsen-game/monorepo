@@ -1,9 +1,7 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.player.application.usecases.training.GenerateTrainingUseCase;
 import com.kjeldsen.player.domain.events.PlayerPotentialRiseEvent;
 import com.kjeldsen.player.domain.repositories.PlayerPotentialRiseScheduledEventReadRepository;
-import com.kjeldsen.player.domain.repositories.training.PlayerTrainingScheduledEventReadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

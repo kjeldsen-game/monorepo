@@ -1,8 +1,8 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
-import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
-import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventReadRepository;
-import com.kjeldsen.player.persistence.mongo.repositories.PlayerTrainingScheduledEventMongoRepository;
+import com.kjeldsen.player.domain.events.PlayerPotentialRiseScheduledEvent;
+import com.kjeldsen.player.domain.repositories.PlayerPotentialRiseScheduledEventReadRepository;
+import com.kjeldsen.player.persistence.mongo.repositories.PlayerPotentialRiseScheduledEventMongoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,13 +11,11 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class PlayerTrainingScheduledEventReadRepositoryMongoAdapter implements PlayerTrainingScheduledEventReadRepository {
-
-    private final  PlayerTrainingScheduledEventMongoRepository playerTrainingScheduledEventMongoRepository;
+public class PlayerPotentialRiseScheduledEventReadRepositoryMongoAdapter implements PlayerPotentialRiseScheduledEventReadRepository {
+    private final PlayerPotentialRiseScheduledEventMongoRepository playerPotentialRiseScheduledEventMongoRepository;
 
     @Override
-    public List<PlayerTrainingScheduledEvent> findAllActiveScheduledTrainings(LocalDate date) {
-        return playerTrainingScheduledEventMongoRepository.findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(date);
+    public List<PlayerPotentialRiseScheduledEvent> findAllActiveScheduledPotentialRise(LocalDate date) {
+        return playerPotentialRiseScheduledEventMongoRepository.findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(date);
     }
-
 }
