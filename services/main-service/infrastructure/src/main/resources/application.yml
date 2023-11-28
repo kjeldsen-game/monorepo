@@ -26,8 +26,8 @@ security:
   oauth2:
     access-token-validity-seconds: 86400  # 1 day
     refresh-token-validity-seconds: 2592000  # 30 days
-    client-id: client_id
-    client-secret: client_secret
+    client-id: client-id
+    client-secret: client-secret
     public-key: -----BEGIN PUBLIC KEY-----
       MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuObgk+RKEKqQ9EY8gMHL
       1p3Q+OLmq/dQyT4FyafDdPHbB1RXoGM07t4Y+i7Uj6+M4IZOCKrVyEI0BsHv0WEh
