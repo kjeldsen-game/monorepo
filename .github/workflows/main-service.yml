@@ -4,13 +4,13 @@ on:
   pull_request:
     paths:
       - "services/main-service/**"
-  #push:
-  #  tags:
-  #    - 'v*.*.*'
-  #  branches:
-  #    - main
-  #  paths:
-  #    - "services/main-service/**"
+  push:
+    tags:
+      - 'v*.*.*'
+    branches:
+      - main
+    paths:
+      - "services/main-service/**"
 
 jobs:
 
