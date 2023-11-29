@@ -34,12 +34,15 @@ class AssistanceTest {
 
     @Test
     void largeRangeAssistanceNormalizedCorrectly() {
-        // A difference of 400 is enough to reach the max assistance limit
+        // A difference of 625 is enough to reach the max assistance limit
         Map<String, Integer> initiatorTeamAssistance = Map.of(
             "Alice", 100,
             "Bob", 100,
             "Charlie", 100,
-            "Diana", 100
+            "Diana", 100,
+            "Eve", 100,
+            "Frank", 100,
+            "George", 100
         );
 
         Map<String, Integer> challengerTeamAssistance = Map.of(

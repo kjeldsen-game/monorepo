@@ -4,9 +4,11 @@ import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.ok;
 
 import com.github.javafaker.Faker;
+import com.kjeldsen.match.security.AuthService;
 import com.kjeldsen.match.engine.entities.PlayerPosition;
 import com.kjeldsen.match.engine.entities.SkillType;
 import com.kjeldsen.match.engine.modifers.HorizontalPressure;
+import com.kjeldsen.match.engine.modifers.PlayerOrder;
 import com.kjeldsen.match.engine.modifers.Tactic;
 import com.kjeldsen.match.engine.modifers.VerticalPressure;
 import com.kjeldsen.match.models.Player;
@@ -19,13 +21,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,18 +44,18 @@ public class TeamController {
     private final UserRepository userRepository;
     private final TeamRepository teamRepository;
     private final PlayerRepository playerRepository;
+    private final AuthService authService;
 
     @PostMapping("/teams")
-    public ResponseEntity<?> create(@RequestBody Team team) {
+    public ResponseEntity<?> create(@RequestBody Team team, Authentication auth) {
+        User user = authService.getUser(auth);
+        if (user.getTeam() != null) {
+            throw new ValidationException("You already have a team.");
+        }
         validateTeam(team);
 
-        Optional<User> user = userRepository.findAll().stream().findAny();
-        if (user.isEmpty()) {
-            throw new ValidationException("You must be logged in to create a team.");
-        }
-
         // Defaults
-        team.setUser(user.get());
+        team.setUser(user);
         team.setRating(0);
         Team savedTeam = teamRepository.save(team);
 
@@ -63,6 +66,7 @@ public class TeamController {
                     .name("%s %s".formatted(faker.name().firstName(), faker.name().lastName()))
                     .position(player.getPosition())
                     .skills(randomSkillSet())
+                    .playerOrder(PlayerOrder.NONE)
                     .team(savedTeam)
                     .build())
             .toList();
@@ -72,7 +76,8 @@ public class TeamController {
         return ok(savedTeam);
     }
 
-    @GetMapping("/teams/{id}")
+
+    @GetMapping("/team/{id}")
     public ResponseEntity<?> read(@PathVariable Long id) {
         return teamRepository.findById(id)
             .map(ResponseEntity::ok)
@@ -80,8 +85,17 @@ public class TeamController {
     }
 
     @PatchMapping("/teams/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Team newTeam) {
+    public ResponseEntity<?> update(
+        @PathVariable Long id, @RequestBody Team newTeam, Authentication auth) {
+
+        User user = authService.getUser(auth);
         return teamRepository.findById(id)
+            .map(existingTeam -> {
+                if (!Objects.equals(existingTeam.getUser().getId(), user.getId())) {
+                    throw new ValidationException("You do not own this team");
+                }
+                return existingTeam;
+            })
             .map(existingTeam -> {
                 if (newTeam.getTactic() != null) {
                     existingTeam.setTactic(newTeam.getTactic());
@@ -137,8 +151,17 @@ public class TeamController {
     }
 
     private static List<Player> randomPlayers(Team team) {
+        Faker faker = new Faker();
         List<Player> players = new ArrayList<>(11);
-        players.add(randomPlayer(team, PlayerPosition.GOALKEEPER));
+        Player goalkeeper = Player.builder()
+            .team(team)
+            .name("%s %s".formatted(faker.name().firstName(), faker.name().lastName()))
+            .position(PlayerPosition.GOALKEEPER)
+            .skills(randomSkillSet())
+            .playerOrder(PlayerOrder.NONE)
+            .build();
+
+        players.add(goalkeeper);
         players.add(randomPlayer(team, PlayerPosition.LEFT_BACK));
         players.add(randomPlayer(team, PlayerPosition.RIGHT_BACK));
         players.add(randomPlayer(team, PlayerPosition.CENTER_BACK));
@@ -155,11 +178,11 @@ public class TeamController {
     private static Player randomPlayer(Team team, PlayerPosition position) {
         Faker faker = new Faker();
         return Player.builder()
-            .id(new Random().nextLong())
             .team(team)
             .name("%s %s".formatted(faker.name().firstName(), faker.name().lastName()))
             .position(position)
             .skills(randomSkillSet())
+            .playerOrder(PlayerOrder.NONE)
             .build();
     }
 

@@ -13,20 +13,20 @@ public enum HorizontalPressure {
     SWARM_FLANKS,
     NO_HORIZONTAL_FOCUS;
 
-    public double defensiveAssistanceBonus(PitchArea area) {
+    public double defensiveAssistanceModifier(PitchArea area) {
         return switch (this) {
             case SWARM_CENTER:
                 if (area.file() == PitchFile.CENTER) {
-                    yield 0.15;
+                    yield 1.15;
                 }
-                yield -0.15;
+                yield 0.85;
             case SWARM_FLANKS:
                 if (area.file() != PitchFile.CENTER) {
-                    yield 0.15;
+                    yield 1.15;
                 }
-                yield -0.15;
+                yield 0.85;
             case NO_HORIZONTAL_FOCUS:
-                yield 0.0;
+                yield 1.0;
         };
     }
 }

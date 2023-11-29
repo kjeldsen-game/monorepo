@@ -9,13 +9,14 @@ import lombok.Value;
 @Value
 public class Play {
 
-    Long id;
     Action action;
     Duel duel;
-    int minute;
+    Integer clock;
 
     @Override
     public String toString() {
+        // Don't show the player skills in every play. These don't change mid-game and can be
+        // accessed from the team object.
         return JsonUtils.prettyPrintExclude(this, "*.skills");
     }
 }

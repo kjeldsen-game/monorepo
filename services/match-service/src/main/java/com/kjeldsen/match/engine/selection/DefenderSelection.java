@@ -1,10 +1,9 @@
 package com.kjeldsen.match.engine.selection;
 
-import com.kjeldsen.match.engine.exceptions.GameStateException;
-import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.entities.PitchArea;
 import com.kjeldsen.match.engine.entities.Play;
 import com.kjeldsen.match.engine.entities.duel.DuelType;
+import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.models.Player;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -20,20 +19,18 @@ public class DefenderSelection {
      */
 
     // Returns a defender for an attack in the midfield area
-    public static Player selectDefenderForMidfield(GameState state) {
+    public static Player selectFromMidfield(GameState state, PitchArea pitchArea) {
         List<Player> players = state.defendingTeam().getPlayers();
-        PitchArea area = state.getBallState().getArea();
         List<Player> candidates = players.stream()
-            .filter(
-                p -> (p.getPosition().isMidfielder() && !p.getPosition().isOffensive())
-                    || p.getPosition().isWingback())
-            .filter(
-                p -> p.getPosition().coverage().stream().anyMatch(area::opponentIsNearby))
-            .filter(p -> isFree(state, p))
+            .filter(candidate ->
+                (candidate.getPosition().isMidfielder() && !candidate.getPosition().isOffensive())
+                    || candidate.getPosition().isWingback())
+            .filter(candidate -> candidate.getPosition().coverage().contains(pitchArea))
+            .filter(candidate -> isFree(state, candidate))
             .toList();
 
         if (candidates.isEmpty()) {
-            throw new GameStateException(state, "No defenders found to defend in midfield attack");
+            return null;
         }
 
         Map<Long, Integer> values = candidates.stream()
@@ -67,19 +64,17 @@ public class DefenderSelection {
     }
 
     // Returns a defender for an attack in the forward area
-    public static Player selectDefenderForForward(GameState state) {
+    public static Player selectFromBack(GameState state, PitchArea pitchArea) {
         List<Player> players = state.defendingTeam().getPlayers();
-        PitchArea area = state.getBallState().getArea();
         List<Player> candidates = players.stream()
-            .filter(defender -> defender.getPosition().isDefender())
+            .filter(candidate -> candidate.getPosition().isDefender())
             .filter(candidate ->
-                candidate.getPosition().coverage().stream().anyMatch(area::opponentIsNearby))
+                candidate.getPosition().coverage().contains(pitchArea))
             .filter(candidate -> isFree(state, candidate))
             .toList();
 
         if (candidates.isEmpty()) {
-            throw new GameStateException(
-                state, "No defenders found to defend in forward area attack");
+            return null;
         }
 
         Map<Long, Integer> values = candidates.stream()
@@ -116,9 +111,10 @@ public class DefenderSelection {
     // This is to avoid players taking part in consecutive plays.
     private static boolean isFree(GameState state, Player player) {
         return state.getPlays().stream()
-            .sorted(Comparator.comparingInt(Play::getMinute).reversed())
+            .sorted(Comparator.comparingInt(Play::getClock).reversed())
             .map(Play::getDuel)
             .filter(duel -> duel.getType() == DuelType.POSITIONAL
+                && duel.getChallenger() != null
                 && Objects.equals(duel.getChallenger().getTeam().getId(), player.getTeam().getId()))
             .findFirst()
             .map(duel -> !Objects.equals(duel.getChallenger().getId(), player.getId()))

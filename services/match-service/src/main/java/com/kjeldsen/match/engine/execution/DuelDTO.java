@@ -1,7 +1,8 @@
 package com.kjeldsen.match.engine.execution;
 
-import com.kjeldsen.match.engine.entities.duel.DuelStats;
+import com.kjeldsen.match.engine.entities.duel.DuelOrigin;
 import com.kjeldsen.match.engine.entities.duel.DuelResult;
+import com.kjeldsen.match.models.DuelStats;
 import lombok.Builder;
 import lombok.Value;
 
@@ -14,6 +15,8 @@ public class DuelDTO {
      */
 
     DuelResult result;
+    DuelOrigin origin;
+    DuelParams params;
     DuelStats initiatorStats;
     DuelStats challengerStats;
 }

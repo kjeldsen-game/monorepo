@@ -3,15 +3,21 @@ package com.kjeldsen.match.engine;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.kjeldsen.match.engine.entities.Action;
-import com.kjeldsen.match.engine.processing.Report;
+import com.kjeldsen.match.engine.processing.ReportService;
+import com.kjeldsen.match.models.MatchReport;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.models.Match;
 import com.kjeldsen.match.models.Team;
 import java.util.Random;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@RequiredArgsConstructor
 class GameTest {
+
+    private final ReportService reportService;
+
 
     @Test
     void kickOffIncrementsClock() {
@@ -62,8 +68,7 @@ class GameTest {
             .build();
 
         GameState state = Game.play(match);
-        Report report = new Report(state, home, away);
-
+        MatchReport report = reportService.generateReport(state, home, away);
     }
 
     @Test

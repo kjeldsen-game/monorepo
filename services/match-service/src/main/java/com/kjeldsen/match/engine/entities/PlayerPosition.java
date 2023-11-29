@@ -130,10 +130,8 @@ public enum PlayerPosition {
                 List.of(PitchArea.CENTER_MIDFIELD, PitchArea.CENTER_FORWARD);
             case RIGHT_MIDFIELDER -> List.of(PitchArea.RIGHT_MIDFIELD, PitchArea.RIGHT_FORWARD);
             case LEFT_MIDFIELDER -> List.of(PitchArea.LEFT_MIDFIELD, PitchArea.LEFT_FORWARD);
-            case RIGHT_WINGER -> List.of(PitchArea.RIGHT_MIDFIELD, PitchArea.RIGHT_FORWARD,
-                PitchArea.CENTER_FORWARD);
-            case LEFT_WINGER ->
-                List.of(PitchArea.LEFT_MIDFIELD, PitchArea.LEFT_FORWARD, PitchArea.CENTER_FORWARD);
+            case RIGHT_WINGER -> List.of(PitchArea.RIGHT_MIDFIELD, PitchArea.RIGHT_FORWARD);
+            case LEFT_WINGER -> List.of(PitchArea.LEFT_MIDFIELD, PitchArea.LEFT_FORWARD);
             case FORWARD ->
                 List.of(PitchArea.LEFT_FORWARD, PitchArea.CENTER_FORWARD, PitchArea.RIGHT_FORWARD);
             case STRIKER -> List.of(PitchArea.CENTER_FORWARD);

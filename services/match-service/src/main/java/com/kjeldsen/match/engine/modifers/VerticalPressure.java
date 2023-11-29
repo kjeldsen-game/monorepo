@@ -13,26 +13,26 @@ public enum VerticalPressure {
     LOW_PRESSURE,
     NO_VERTICAL_FOCUS;
 
-    public double defensiveAssistanceBonus(PitchArea area) {
+    public double defensiveAssistanceModifier(PitchArea area) {
         return switch (this) {
             case MID_PRESSURE:
                 if (area.rank() == PitchRank.MIDDLE) {
-                    yield 0.1;
+                    yield 1.1;
                 }
                 if (area.rank() == PitchRank.FORWARD) {
-                    yield -0.1;
+                    yield 0.9;
                 }
-                yield 0.0;
+                yield 1.0;
             case LOW_PRESSURE:
                 if (area.rank() == PitchRank.FORWARD) {
-                    yield 0.1;
+                    yield 1.1;
                 }
                 if (area.rank() == PitchRank.MIDDLE) {
-                    yield -0.1;
+                    yield 0.9;
                 }
-                yield 0.0;
+                yield 1.0;
             case NO_VERTICAL_FOCUS:
-                yield 0.0;
+                yield 1.0;
         };
     }
 }

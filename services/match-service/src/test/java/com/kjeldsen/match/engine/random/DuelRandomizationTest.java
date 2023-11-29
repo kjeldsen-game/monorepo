@@ -14,7 +14,6 @@ import com.kjeldsen.match.models.Player;
 import com.kjeldsen.match.engine.entities.SkillType;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 public class DuelRandomizationTest {
@@ -26,24 +25,22 @@ public class DuelRandomizationTest {
         Player initiator = RandomHelper.genPlayer(home);
         Player challenger = RandomHelper.genPlayer(away);
         Play first = Play.builder()
-            .id(new Random().nextLong())
             .action(Action.PASS)
             .duel(Duel.builder()
                 .type(DuelType.PASSING)
                 .initiator(initiator)
                 .challenger(challenger)
                 .build())
-            .minute(1)
+            .clock(1)
             .build();
         Play second = Play.builder()
-            .id(new Random().nextLong())
             .action(Action.POSITION)
             .duel(Duel.builder()
                 .type(DuelType.POSITIONAL)
                 .initiator(initiator)
                 .challenger(challenger)
                 .build())
-            .minute(2)
+            .clock(2)
             .build();
 
         GameState state = GameState.builder().plays(List.of(first, second)).build();

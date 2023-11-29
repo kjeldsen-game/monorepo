@@ -4,11 +4,12 @@ import com.kjeldsen.match.engine.entities.Action;
 import com.kjeldsen.match.engine.entities.PitchArea;
 import com.kjeldsen.match.engine.entities.Play;
 import com.kjeldsen.match.engine.entities.duel.Duel;
-import com.kjeldsen.match.engine.entities.duel.DuelResult;
-import com.kjeldsen.match.engine.entities.duel.DuelRole;
+import com.kjeldsen.match.engine.entities.duel.DuelOrigin;
 import com.kjeldsen.match.engine.entities.duel.DuelType;
 import com.kjeldsen.match.engine.execution.DuelDTO;
 import com.kjeldsen.match.engine.execution.DuelExecution;
+import com.kjeldsen.match.engine.execution.DuelParams;
+import com.kjeldsen.match.engine.modifers.PlayerOrder;
 import com.kjeldsen.match.engine.selection.ActionSelection;
 import com.kjeldsen.match.engine.selection.ChallengerSelection;
 import com.kjeldsen.match.engine.selection.KickOffSelection;
@@ -17,11 +18,11 @@ import com.kjeldsen.match.engine.selection.ReceiverSelection;
 import com.kjeldsen.match.engine.state.BallState;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.state.GameState.Turn;
+import com.kjeldsen.match.engine.state.GameStateException;
 import com.kjeldsen.match.engine.state.TeamState;
 import com.kjeldsen.match.models.Match;
 import com.kjeldsen.match.models.Player;
 import java.util.Optional;
-import java.util.Random;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
@@ -104,66 +105,82 @@ public class Game {
         // to defend against the action by engaging in the duel - and for some actions (e.g. pass)
         // also a receiver. Player selection is also delegated to the selection module.
         DuelType duelType = action.getDuelType();
+        // In some cases it's possible that there is no challenger. This may be an exception (e.g.
+        // if no goalkeeper is present) or permitted behaviour (e.g. if a team doesn't have a
+        // defender to challenger an attacker in a particular area). Handling of null pointers in
+        // this area needs to be improved when rules are clarified.
         Player challenger = ChallengerSelection.selectChallenger(state, duelType);
         // For duels that require a receiver always wrap this variable with an Optional and check
         // that an actual player is present.
         Player receiver = null;
         if (duelType.requiresReceiver()) {
-            receiver = ReceiverSelection.selectReceiver(state, initiator);
+            receiver = ReceiverSelection.select(state, initiator);
         }
+
+        // Duel parameters may be amended by tactics, player orders and other modifiers.
+        DuelParams params = DuelParams.builder()
+            .state(state)
+            .duelType(duelType)
+            .initiator(initiator)
+            .challenger(challenger)
+            .receiver(receiver)
+            .origin(DuelOrigin.DEFAULT)
+            .build();
 
         // The duel can be created once its result is determined. Any details about the duel that
         // need to be stored for future analysis should be set in the duel DTO and saved as part of
         // the duel here.
-        DuelDTO outcome =
-            DuelExecution.executeDuel(state, duelType, initiator, challenger, receiver);
+        DuelDTO outcome = DuelExecution.executeDuel(params);
+
         Duel duel = Duel.builder()
-            .type(duelType)
+            .type(outcome.getParams().getDuelType())
             .initiator(initiator)
-            .receiver(receiver)
-            .challenger(challenger)
+            .receiver(outcome.getParams().getReceiver())
+            .challenger(outcome.getParams().getChallenger())
             .result(outcome.getResult())
-            .pitchArea(state.getBallState().getArea())
+            .pitchArea(outcome.getParams().getState().getBallState().getArea())
             .initiatorStats(outcome.getInitiatorStats())
             .challengerStats(outcome.getChallengerStats())
+            .origin(outcome.getOrigin())
             .build();
 
         // The play is now over. It is saved and the state is transitioned depending on the result.
         Play play = Play.builder()
-            .id(new Random().nextLong())
             .duel(duel)
-            .action(action)
-            .minute(state.getClock())
+            .action(outcome.getParams().getDuelType().getAction())
+            .clock(state.getClock())
             .build();
 
         log.info("Play complete:\n{}", play);
 
-        if (outcome.getResult() == DuelResult.WIN) {
-            if (action == Action.SHOOT) {
-                return handleGoal(state, play);
-            } else {
-                return handleDuelWin(state, play);
+        return switch (outcome.getResult()) {
+            case WIN -> {
+                if (action == Action.SHOOT) {
+                    yield handleGoal(state, play);
+                } else {
+                    yield handleDuelWin(state, play);
+                }
             }
-        } else {
-            return handleDuelLoss(state, play);
-        }
+            case LOSE -> handleDuelLoss(state, play);
+        };
     }
 
+    // For duel wins, we determine who takes control of the ball (depending on whether a receiver
+    // was present) then increment clock and continue playing
     private static GameState handleDuelWin(GameState state, Play play) {
-        // For duel wins, we determine where the ball is (depending on whether there was a receiver)
-        // then increment clock and continue with the opportunity
         Duel duel = play.getDuel();
-        BallState newBallState = Optional.ofNullable(duel.getReceiver())
-            .map(receiver -> {
-                PitchArea pitchArea =
-                    PitchAreaSelection.select(state, duel.getReceiver(), DuelRole.INITIATOR);
-                return new BallState(duel.getReceiver(), pitchArea);
-            })
-            .orElseGet(() -> {
-                PitchArea pitchArea =
-                    PitchAreaSelection.select(state, duel.getInitiator(), DuelRole.INITIATOR);
-                return new BallState(duel.getInitiator(), pitchArea);
-            });
+        Player player = Optional.ofNullable(duel.getReceiver()).orElseGet(duel::getInitiator);
+
+        PitchArea currentArea = state.getBallState().getArea();
+
+        PitchArea playerArea;
+        if (play.getDuel().getType().movesBall()) {
+            playerArea = PitchAreaSelection.select(currentArea, player)
+                .orElseThrow(() -> new GameStateException(state, "No pitch area to select from"));
+        } else {
+            playerArea = currentArea;
+        }
+        BallState newBallState = new BallState(player, playerArea);
 
         return Optional.of(state)
             .map((before) ->
@@ -178,11 +195,29 @@ public class Game {
             .orElseThrow();
     }
 
+    // For duel losses, we switch sides and give the ball to the challenger.
     private static GameState handleDuelLoss(GameState state, Play play) {
-        // For duel losses, we switch sides and give the ball to the challenger
-        PitchArea pitchArea = PitchAreaSelection.select(
-            state, play.getDuel().getChallenger(), DuelRole.CHALLENGER);
-        BallState newBallState = new BallState(play.getDuel().getChallenger(), pitchArea);
+        // Since the attacking team lost the last duel, the pitch area needs to be flipped so that
+        // it is oriented from the perspective of the current player's team.
+        PitchArea currentArea = state.getBallState().getArea().flipPerspective();
+
+        // TODO refactor this
+        Optional<BallState> fromModifier = checkModifiers(play);
+        BallState newBallState;
+        if (fromModifier.isPresent()) {
+            newBallState = fromModifier.get();
+        } else {
+            PitchArea playerArea;
+            if (play.getDuel().getType().movesBall()) {
+                playerArea = PitchAreaSelection.select(currentArea, play.getDuel().getChallenger())
+                    .orElseThrow(
+                        () -> new GameStateException(state, "No pitch area to select from"));
+            } else {
+                playerArea = currentArea;
+            }
+            newBallState = new BallState(play.getDuel().getChallenger(), playerArea);
+        }
+
         return Optional.of(state)
             .map((before) ->
                 GameState.builder()
@@ -196,8 +231,8 @@ public class Game {
             .orElseThrow();
     }
 
+    // For goals, we switch sides and increment the score
     private static GameState handleGoal(GameState state, Play play) {
-        // For goals, we switch sides and increment the score
         TeamState newTeamState = Optional.of(state.attackingTeam())
             .map((before) ->
                 TeamState.builder()
@@ -226,5 +261,22 @@ public class Game {
                     .plays(GameState.concatPlay(before.getPlays(), play))
                     .build())
             .orElseThrow();
+    }
+
+    // TODO - refactor, this should probably go somewhere else
+    private static Optional<BallState> checkModifiers(Play play) {
+        if (play.getDuel().getOrigin() == DuelOrigin.DEFAULT) {
+            return Optional.empty();
+        }
+
+        PlayerOrder order = play.getDuel().getInitiator().getPlayerOrder();
+        if (order == PlayerOrder.CHANGE_FLANK) {
+            PitchArea newArea = play.getDuel().getPitchArea().switchFile();
+            Player receiver = play.getDuel().getReceiver();
+            BallState newBallState = new BallState(receiver, newArea);
+            return Optional.of(newBallState);
+        }
+
+        return Optional.empty();
     }
 }

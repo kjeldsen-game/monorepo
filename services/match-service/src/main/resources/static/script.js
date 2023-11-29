@@ -10,17 +10,29 @@
  *
  */
 
+let me;
+let opponentTeamId = 0;
+
+refreshAuth();
+
+$.ajaxSetup({
+  beforeSend: function (xhr) {
+    xhr.setRequestHeader('Authorization', '...');
+  }
+});
+
 $("#generate").click(() => {
   let request = {
-    data: JSON.stringify({}),
+    data: JSON.stringify({away: {id: opponentTeamId}}),
     contentType: 'application/json',
     type: 'POST'
   }
   $.ajax("/matches", request)
   .done(report => {
+    console.log(report)
     let homeTeamId = report.home.id;
     let awayTeamId = report.away.id;
-    let startingTeamId = report.plays[0].duel.initiator.teamId;
+    let startingTeamId = report.plays[0].initiator.teamId;
     console.log("Home team: " + homeTeamId);
     console.log("Away team: " + awayTeamId);
     console.log("Starting team: " + startingTeamId);
@@ -45,7 +57,7 @@ $("#generate").click(() => {
     let report = error["report"];
     let homeTeamId = 1;
     let awayTeamId = 6;
-    let startingTeamId = report.plays[0].duel.initiator.teamId;
+    let startingTeamId = report.plays[0].initiator.teamId;
     console.log("Home team: " + homeTeamId);
     console.log("Away team: " + awayTeamId);
     console.log("Starting team: " + startingTeamId);
@@ -64,6 +76,7 @@ $("#generate").click(() => {
 
 $("#random-team-button").click(() => {
   $.get("/teams/random", team => {
+    opponentTeamId = team.id;
     let awayRows = Teams.getTeamRows(team)
     $("#away-rows").html(awayRows);
     $("#away-tactic").html(team.tactic);
@@ -116,16 +129,26 @@ $("#team-page-link").click(() => {
   switchPage("team");
 });
 
-$("#game-page-link").click(() => {
-  $.get("/teams/1", team => {
-    let homeRows = Teams.getTeamRows(team)
-    $("#home-rows").html(homeRows);
-    // Modifiers
-    $("#home-tactic").html(team.tactic);
-    $("#home-vertical-pressure").html(team.verticalPressure);
-    $("#home-horizontal-pressure").html(team.horizontalPressure);
+$("#logout-link").click(() => {
+  $.get("/logout", () => {
+    window.location.href = "signin.html";
   });
-  switchPage("game");
+});
+
+$("#game-page-link").click(() => {
+  $.get("/users/me", user => {
+    me = user;
+
+    $.get(`/team/${me.team.id}`, team => {
+      let homeRows = Teams.getTeamRows(team)
+      $("#home-rows").html(homeRows);
+      // Modifiers
+      $("#home-tactic").html(team.tactic);
+      $("#home-vertical-pressure").html(team.verticalPressure);
+      $("#home-horizontal-pressure").html(team.horizontalPressure);
+    });
+    switchPage("game");
+  });
 });
 
 $("#stats-page-link").click(() => {
@@ -142,10 +165,17 @@ class Teams {
     let positions = ["GOALKEEPER", "LEFT_BACK", "CENTER_BACK", "RIGHT_BACK",
       "RIGHT_WINGER", "LEFT_WINGER", "LEFT_MIDFIELDER", "CENTER_MIDFIELDER",
       "RIGHT_MIDFIELDER", "FORWARD", "STRIKER"]
+    let orders =
+        ["PASS_FORWARD", "LONG_SHOT", "PASS_TO_AREA", "CHANGE_FLANK", "SHOOT",
+          "DRIBBLE"];
 
     return team.players.map(player => {
-      let dropdown = `${positions.map(position => {
+      let positionDropdown = `${positions.map(position => {
         return `<option>${position}</option>`
+      }).join("")}`;
+
+      let ordersDropdown = `${orders.map(order => {
+        return `<option>${order}</option>`
       }).join("")}`;
       return `<tr>
                 <td>${player.name}</td>
@@ -153,7 +183,15 @@ class Teams {
                   <div class="form-group">
                     <select id="${player.id}" class="form-control player-position-select">
                       <option>${player.position}</option>
-                      ${dropdown}
+                      ${positionDropdown}
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <select id="${player.id}" class="form-control player-order-select">
+                      <option>${player.playerOrder}</option>
+                      ${ordersDropdown}
                     </select>
                   </div>
                 </td>
@@ -194,6 +232,26 @@ $(document).on('change', '.player-position-select', function () {
   })
 });
 
+$(document).on('change', '.player-order-select', function () {
+  let playerId = $(this).attr("id");
+  let order = $(this).val();
+  let player = {
+    playerOrder: order,
+  };
+  let request = {
+    data: JSON.stringify(player),
+    contentType: 'application/json',
+    type: 'PATCH'
+  }
+  $.ajax(`/players/${playerId}`, request)
+  .fail(data => {
+    let error = JSON.parse(data.responseText);
+    $("#response-message").addClass("alert-danger")
+    .removeClass("alert-success").show();
+    $("#response-message-text").html(error["message"]);
+  })
+});
+
 class Narration {
   static narrate(plays, teamPerspective) {
     return "<div class='play'>"
@@ -203,9 +261,9 @@ class Narration {
         + "</div>";
   }
 
-  static areaFromPerspective(duel, teamPerspective) {
-    let pitchArea = duel.pitchArea;
-    if (duel.initiator.teamId !== teamPerspective) {
+  static areaFromPerspective(play, teamPerspective) {
+    let pitchArea = play.pitchArea;
+    if (play.initiator.teamId !== teamPerspective) {
       if (pitchArea.includes("LEFT")) {
         pitchArea = pitchArea.replace("LEFT", "RIGHT");
       } else if (pitchArea.includes("RIGHT")) {
@@ -221,24 +279,24 @@ class Narration {
   }
 
   static describePlay(play, teamPerspective) {
-    let pitchArea = Narration.areaFromPerspective(play.duel, teamPerspective);
+    let pitchArea = Narration.areaFromPerspective(play, teamPerspective);
 
     const meta = Narration.getMeta(play, pitchArea);
-    const initiator = play.duel.initiator;
+    const initiator = play.initiator;
     const field = Narration.getField(pitchArea);
     let attempt = `<b>${initiator.name}</b>
                          <span class="badge bg-secondary">${initiator.position}</span>
                          ${Narration.describeInitiatorAction(play)}`;
 
-    if (play.duel.receiver !== null) {
-      const receiver = play.duel.receiver;
+    if (play.receiver != null) {
+      const receiver = play.receiver;
       attempt += ` to <b>${receiver.name}</b>
                   <span class="badge bg-secondary">${receiver.position}</span>`;
     }
-    const challenger = play.duel.challenger;
+    const challenger = play.challenger;
     const response = `Challenger:
-                            <b>${challenger.name}</b>
-                            <span class="badge bg-secondary">${challenger.position}</span>
+                            <b>${challenger?.name}</b>
+                            <span class="badge bg-secondary">${challenger?.position}</span>
                             ${Narration.describeChallengerAction(play)}`;
 
     let outcome;
@@ -249,7 +307,7 @@ class Narration {
       outcome = Narration.describeOutcome(play, initiator, challenger);
     }
 
-    const stats = Narration.getDuelStats(play.duel);
+    const stats = Narration.getDuelStats(play);
     return `<p>${meta}</p>
             <div class="row">
               <div class="col-2"> ${field} </div>
@@ -272,7 +330,7 @@ class Narration {
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 16 16">
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
                 </svg>
-                ${play.minute} min
+                ${play.clock} min
               </p>
               <p class="meta">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
@@ -285,6 +343,13 @@ class Narration {
                   <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
                 </svg>
                 ${pitchArea}
+              </p>
+              <p class="meta">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                  <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                </svg>
+                ${play.origin}
               </p>
             </div>
           </div>`
@@ -314,7 +379,7 @@ class Narration {
   static describeOutcome(play, initiator, challenger) {
     const initiatorName = initiator.name;
     const challengerName = challenger.name;
-    if (play.duel.result === "WIN") {
+    if (play.result === "WIN") {
       switch (play.action) {
         case "PASS":
           return "The pass was successful (interceptions disabled)";
@@ -339,8 +404,8 @@ class Narration {
     const action = play.action;
     const denomination =
         Narration.describePerformance(
-            play.duel.initiatorStats.performance
-            + play.duel.initiatorStats.skillPoints);
+            play.initiatorStats.performance
+            + play.initiatorStats.skillPoints);
     switch (action) {
       case "PASS":
         return `made ${denomination} pass`;
@@ -357,8 +422,8 @@ class Narration {
     const action = play.action;
     const denomination =
         Narration.describePerformance(
-            play.duel.challengerStats.performance
-            + play.duel.challengerStats.skillPoints);
+            play.challengerStats.performance
+            + play.challengerStats.skillPoints);
     switch (action) {
       case "PASS":
         return `made ${denomination} attempt to intercept the ball`;
@@ -371,14 +436,14 @@ class Narration {
     }
   }
 
-  static getDuelStats(duel) {
-    const initiatorStats = duel.initiatorStats;
-    const challengerStats = duel.challengerStats;
+  static getDuelStats(play) {
+    const initiatorStats = play.initiatorStats;
+    const challengerStats = play.challengerStats;
     return `${Narration.getPlayerStats(
-        duel.type,
-        duel.initiator.name,
+        play.duelType,
+        play.initiator.name,
         initiatorStats,
-        duel.challenger.name,
+        play.challenger?.name,
         challengerStats)}`;
   }
 
@@ -426,7 +491,8 @@ class Narration {
                               <ul>
                                 <b>${key}</b>            
                                 <span>${initiatorStats.teamAssistance[key]}</span>
-                              </ul>`).join("") + "<hr> <b>Total = </b> " +  initiatorTotal}
+                              </ul>`).join("") + "<hr> <b>Total = </b> "
+          + initiatorTotal}
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -452,7 +518,8 @@ class Narration {
                               <ul>
                                 <b>${key}</b>            
                                 <span>${challengerStats.teamAssistance[key]}</span>
-                              </ul>`).join("") + "<hr> <b>Total = </b> " +  challengerTotal}
+                              </ul>`).join("") + "<hr> <b>Total = </b> "
+          + challengerTotal}
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -590,23 +657,23 @@ class Narration {
   static describePositionalOutcome(play, initiator, challenger) {
 
     let initiatorAssistance =
-        Narration.describeAssistance(play.duel.initiatorStats.assistance);
+        Narration.describeAssistance(play.initiatorStats.assistance);
     let challengerAssistance =
-        Narration.describeAssistance(play.duel.challengerStats.assistance);
+        Narration.describeAssistance(play.challengerStats.assistance);
 
     let initiatorOutcome =
         `<b>${initiator.name}</b> had <i>${initiatorAssistance}</i> spacing help`;
 
     let challengerOutcome =
-        `<b>${challenger.name}</b> received <i>${challengerAssistance}</i> defensive support`;
+        `<b>${challenger?.name}</b> received <i>${challengerAssistance}</i> defensive support`;
 
     let difference =
-        play.duel.initiatorStats.total - play.duel.challengerStats.total;
+        play.initiatorStats.total - play.challengerStats.total;
     let position = Narration.describePosition(-difference);
     let won = difference > 0;
     let outcome = won
-        ? `<p>${initiator.name} won, ${challenger.name} was ${position}`
-        : `<p>${initiator.name} lost, ${challenger.name} was ${position}`;
+        ? `<p>${initiator.name} won, ${challenger?.name} was ${position}`
+        : `<p>${initiator.name} lost, ${challenger?.name} was ${position}`;
     return `<div class="text-primary">
               <p>${initiatorOutcome}</p>
               <p>${challengerOutcome}</p>
@@ -755,12 +822,46 @@ $("#sign-up-form").on("submit", event => {
     type: 'POST'
   }
   $.ajax("/users", request)
+  .done(res => {
+    $.ajax("/auth/token", request)
+    .done(data => {
+      refreshAuth();
+    });
+
+    $("#response-message")
+    .addClass("alert-success")
+    .removeClass("alert-danger").show();
+    $("#response-message-text").html("Account created").show();
+    $("#create-team-button").show();
+  })
+  .fail(data => {
+    let error = JSON.parse(data.responseText);
+    $("#response-message").addClass("alert-danger")
+    .removeClass("alert-success").show();
+    $("#response-message-text").html(error["message"]);
+  })
+});
+
+$("#sign-in-form").on("submit", event => {
+  event.preventDefault();
+  let data = {
+    email: $("#email").val(),
+    password: $("#password").val()
+  };
+  let request = {
+    data: JSON.stringify(data),
+    contentType: 'application/json',
+    type: 'POST'
+  }
+  $.ajax("/auth/token", request)
   .done(data => {
-    $("#response-message-text").html("Account created")
+    $("#response-message-text").html("You are signed in")
     .addClass("alert-success")
     .removeClass("alert-danger")
     .show();
-    $("#create-team-button").show();
+
+    refreshAuth();
+    window.location.href = "home.html";
   })
   .fail(data => {
     let error = JSON.parse(data.responseText);
@@ -820,7 +921,7 @@ $("#generate-new-team").click(() => {
     contentType: 'application/json',
     type: 'POST'
   }
-  $.ajax("/teams", request)
+  $.ajax(`/teams`, request)
   .done(function (data) {
     $("#response-message")
     .addClass("alert-success").removeClass("alert-danger").show();
@@ -855,7 +956,7 @@ $("#tacticForm").submit(function (event) {
     }),
     contentType: 'application/json'
   }
-  $.ajax("/teams/1", request)
+  $.ajax(`/teams/${me.team.id}`, request)
   .done(function (data) {
     $("#home-tactic").html(data.tactic);
     $("#home-vertical-pressure").html(data.verticalPressure);
@@ -917,3 +1018,9 @@ let data = {
   data: points
 };
 heatmap.setData(data);
+
+function refreshAuth() {
+  $.get("/users/me", user => {
+    me = user;
+  });
+}

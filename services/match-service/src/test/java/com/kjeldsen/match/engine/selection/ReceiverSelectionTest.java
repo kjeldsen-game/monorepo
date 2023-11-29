@@ -1,8 +1,8 @@
 package com.kjeldsen.match.engine.selection;
 
 import static com.kjeldsen.match.engine.RandomHelper.genPlayerWithPosition;
-import static com.kjeldsen.match.engine.selection.ReceiverSelection.selectReceiverFromForward;
-import static com.kjeldsen.match.engine.selection.ReceiverSelection.selectReceiverFromMidfield;
+import static com.kjeldsen.match.engine.selection.ReceiverSelection.selectFromForward;
+import static com.kjeldsen.match.engine.selection.ReceiverSelection.selectFromMidfield;
 
 import com.kjeldsen.match.engine.RandomHelper;
 import com.kjeldsen.match.engine.state.BallState;
@@ -67,7 +67,7 @@ public class ReceiverSelectionTest {
 
         // Make this number larger to get more accurate results
         for (int i = 0; i < 10; i++) {
-            Player selected = selectReceiverFromMidfield(state, initiator);
+            Player selected = selectFromMidfield(state, initiator);
             selections.merge(selected.getPosition(), 1, Integer::sum);
         }
 
@@ -114,7 +114,7 @@ public class ReceiverSelectionTest {
             .build();
 
         for (int i = 0; i < 10; i++) {
-            Player selected = selectReceiverFromForward(state, initiator);
+            Player selected = selectFromForward(state, initiator);
             selections.merge(selected.getPosition(), 1, Integer::sum);
         }
 

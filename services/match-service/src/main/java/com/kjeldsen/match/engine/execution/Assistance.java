@@ -5,7 +5,9 @@ import com.kjeldsen.match.engine.entities.PitchArea.PitchRank;
 import com.kjeldsen.match.engine.entities.PlayerPosition;
 import com.kjeldsen.match.engine.entities.SkillType;
 import com.kjeldsen.match.engine.entities.duel.DuelRole;
+import com.kjeldsen.match.engine.modifers.HorizontalPressure;
 import com.kjeldsen.match.engine.modifers.Tactic;
+import com.kjeldsen.match.engine.modifers.VerticalPressure;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.state.TeamState;
 import com.kjeldsen.match.models.Player;
@@ -19,7 +21,7 @@ public class Assistance {
      * Determines the assistance a player gets from his teammates in a positional duel.
      */
 
-    public static final int MAX_ASSISTANCE = 50;
+    public static final int MAX_ASSISTANCE = 25;
     public static final int MIN_ASSISTANCE = 0;
     public static double BALL_CONTROL_FACTOR = 0.9;
     public static double TACKLING_FACTOR = 0.9;
@@ -49,27 +51,27 @@ public class Assistance {
 
         return switch (role) {
             case INITIATOR -> {
-                double factor = attackerSupport(player.getPosition(), ballArea);
+                double supportFactor = attackerSupport(player.getPosition(), ballArea);
                 double op = player.getSkills().get(SkillType.OFFENSIVE_POSITIONING);
                 double bc =
                     player.getSkills().get(SkillType.BALL_CONTROL) * BALL_CONTROL_FACTOR;
-                double modifier =
-                    tactic.assistanceBonus(player.getPosition(), DuelRole.INITIATOR, ballArea);
-                yield (int) ((factor * (op + bc)) * (1 + modifier));
+                double tacticFactor =
+                    tactic.assistanceFactor(player.getPosition(), DuelRole.INITIATOR, ballArea);
+                yield (int) ((op + bc) * supportFactor * tacticFactor);
             }
 
             case CHALLENGER -> {
-                double factor = defenderSupport(player.getPosition(), ballArea);
+                double supportFactor = defenderSupport(player.getPosition(), ballArea);
                 double dp = player.getSkills().get(SkillType.DEFENSIVE_POSITIONING);
                 double ta = player.getSkills().get(SkillType.TACKLING) * TACKLING_FACTOR;
-                yield (int) (factor * (dp + ta));
+                yield (int) (supportFactor * (dp + ta));
             }
         };
     }
 
-    // Takes the assistance that two players in a duel receive and adjust the difference to a
-    // value between constants defined in this class. The adjustment operation is based on taking
-    // the square root of the difference and bringing the result into the range of the constants.
+    // Takes the assistance that two players in a duel receive and adjusts the difference to a
+    // value between the constants defined in this class. This is done by taking the square root of
+    // the difference and limiting it to the maximum assistance.
     public static Map<DuelRole, Integer> adjustAssistance(
         Map<String, Integer> initiatorAssistance, Map<String, Integer> challengerAssistance) {
 
@@ -84,9 +86,8 @@ public class Assistance {
 
         // Adjust the difference and give it to winner. The loser gets 0.
         double difference = Math.abs(initiatorTotal - challengerTotal);
-        // The assistance is capped, but the actual value will rarely come near the limit. It takes
-        // a difference of 400 to reach the limit.
-        int assistance = (int) Math.min(Math.sqrt(difference) * 2.5, MAX_ASSISTANCE);
+        // The assistance is capped, but the actual value will rarely come near the limit.
+        int assistance = (int) Math.min(Math.sqrt(difference), MAX_ASSISTANCE);
         DuelRole winner =
             (initiatorTotal > challengerTotal) ? DuelRole.INITIATOR : DuelRole.CHALLENGER;
         DuelRole loser = (winner == DuelRole.INITIATOR) ? DuelRole.CHALLENGER : DuelRole.INITIATOR;
@@ -95,6 +96,23 @@ public class Assistance {
             winner, assistance,
             loser, 0
         );
+    }
+
+    // Assistance is affected by the vertical and horizontal pressure modifiers. These modifiers are
+    // expressed as a percentage by which to increase/decrease assistance. To get the factor here we
+    // add 1 to the modifier, then it can be multiplied by the base assistance value.
+    public static double assistanceFactor(GameState state, DuelRole role) {
+        // Horizontal pressure and vertical pressure are presently only for defensive assistance.
+        if (role == DuelRole.INITIATOR) {
+            return 1.0;
+        }
+        PitchArea area = state.getBallState().getArea();
+        TeamState teamState = state.defendingTeam();
+        VerticalPressure vertical = teamState.getVerticalPressure();
+        HorizontalPressure horizontal = teamState.getHorizontalPressure();
+        double verticalModifier = vertical.defensiveAssistanceModifier(area);
+        double horizontalModifier = horizontal.defensiveAssistanceModifier(area);
+        return verticalModifier + horizontalModifier;
     }
 
     // Factor by which assistance is multiplied by for the attacking player

@@ -26,4 +26,11 @@ public final class JsonUtils {
             JsonView.with(object).onClass(object.getClass(), match().exclude(ignoreProperties));
         return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(view);
     }
+
+    @SneakyThrows
+    public static <T> String exclude(T object, String... ignoreProperties) {
+        JsonView<T> view =
+            JsonView.with(object).onClass(object.getClass(), match().exclude(ignoreProperties));
+        return mapper.writeValueAsString(view);
+    }
 }

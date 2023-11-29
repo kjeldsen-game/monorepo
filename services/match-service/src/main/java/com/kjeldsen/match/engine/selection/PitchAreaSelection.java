@@ -1,10 +1,9 @@
 package com.kjeldsen.match.engine.selection;
 
-import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.entities.PitchArea;
-import com.kjeldsen.match.engine.entities.duel.DuelRole;
 import com.kjeldsen.match.models.Player;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class PitchAreaSelection {
@@ -15,17 +14,14 @@ public class PitchAreaSelection {
      * area they are allowed to play in, this class selects a single pitch area for each player.
      */
 
-    // For now returns a random area from the player's pitch area coverage that is near the ball.
-    // The `role` parameter is the role played in the last duel.
-    public static PitchArea select(GameState state, Player player, DuelRole role) {
-        PitchArea ballArea = state.getBallState().getArea();
+    public static Optional<PitchArea> select(PitchArea ballArea, Player player) {
         List<PitchArea> areas = player.getPosition().coverage().stream()
-            .filter(area ->
-                switch (role) {
-                    case INITIATOR -> ballArea.teammateIsNearby(area);
-                    case CHALLENGER -> ballArea.opponentIsNearby(area);
-                })
+            .filter(ballArea::teammateIsNearby)
             .toList();
-        return areas.get(new Random().nextInt(areas.size()));
+
+        if (!areas.isEmpty()) {
+            return Optional.of(areas.get(new Random().nextInt(areas.size())));
+        }
+        return Optional.empty();
     }
 }

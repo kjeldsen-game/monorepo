@@ -1,7 +1,7 @@
 package com.kjeldsen.match.engine.selection;
 
 import static com.kjeldsen.match.engine.RandomHelper.genPlayerWithPosition;
-import static com.kjeldsen.match.engine.selection.DefenderSelection.selectDefenderForMidfield;
+import static com.kjeldsen.match.engine.selection.DefenderSelection.selectFromMidfield;
 
 import com.kjeldsen.match.engine.RandomHelper;
 import com.kjeldsen.match.engine.state.BallState;
@@ -69,7 +69,7 @@ public class DefenderSelectionTest {
 
         // Make this number larger to get more accurate results
         for (int i = 0; i < 10000; i++) {
-            Player selected = selectDefenderForMidfield(state);
+            Player selected = selectFromMidfield(state, PitchArea.CENTER_MIDFIELD);
             selections.merge(selected.getPosition(), 1, Integer::sum);
         }
 

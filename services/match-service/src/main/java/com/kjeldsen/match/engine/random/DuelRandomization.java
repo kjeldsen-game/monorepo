@@ -17,11 +17,11 @@ public class DuelRandomization {
     public static final int MAX_PERFORMANCE = 15;
     public static final int MIN_PERFORMANCE = -15;
 
-    public static final int MAX_ASSISTANCE = 50;
+    public static final int MAX_ASSISTANCE = 25;
     public static final int MIN_ASSISTANCE = 0;
 
     // Probability of a player with total points `a` winning a duel against a player with level `b`.
-    // These points include the bonus and assistance.
+    // These points include the modifier and assistance.
     public static double initialWinProbability(int a, int b) {
         // Difference in rating yields a number between -140 and 140
         double diff = a - b;
@@ -61,14 +61,16 @@ public class DuelRandomization {
     // Returns the previous duel that involved a particular skill for the given player
     public static Optional<Duel> previousDuel(GameState state, Player player, SkillType skill) {
         return state.getPlays().stream()
-            .sorted(Comparator.comparingInt(Play::getMinute).reversed())
+            .sorted(Comparator.comparingInt(Play::getClock).reversed())
             .map(Play::getDuel)
             .filter(duel -> {
                 if (Objects.equals(duel.getInitiator().getId(), player.getId())) {
                     return duel.getType().requiredSkill(DuelRole.INITIATOR) == skill;
                 }
-                if (Objects.equals(duel.getChallenger().getId(), player.getId())) {
-                    return duel.getType().requiredSkill(DuelRole.CHALLENGER) == skill;
+                if (duel.getChallenger() != null) {
+                    if (Objects.equals(duel.getChallenger().getId(), player.getId())) {
+                        return duel.getType().requiredSkill(DuelRole.CHALLENGER) == skill;
+                    }
                 }
                 return false;
             })

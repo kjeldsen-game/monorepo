@@ -69,7 +69,7 @@ class DuelExecutionTest {
                 .build();
             Play build = Play.builder()
                 .duel(duel)
-                .minute(i)
+                .clock(i)
                 .build();
             plays.add(build);
         }
@@ -109,7 +109,7 @@ class DuelExecutionTest {
                 .build();
             Play build = Play.builder()
                 .duel(duel)
-                .minute(i)
+                .clock(i)
                 .build();
             plays.add(build);
         }

@@ -7,14 +7,9 @@ import com.kjeldsen.match.engine.entities.duel.DuelRole;
 public enum Tactic {
 
     /*
-     * The tactic modifier affects both offensive and defensive assistance, as well as player
-     * selection.
-     *
-     * The selection and assistance bonuses are percentages (0.0 - 1.0) that are then summed when
-     * calculating the total bonus. E.g. a player may receive a 0.1 (10%) increase from one modifier
-     * and another 0.15 (15%) increase from another modifier, resulting in a 0.25 (25%) increase.
-     * These should then be added to 1.0 to get the factor, 1.25 (125%), which can be then be used
-     * to multiply the base value by.
+     * The tactic modifier affects both offensive and defensive assistance, and player selection.
+     * The return values of these methods should be multiplied by the base value i.e. a factor of
+     *  2 means a 100% increase.
      */
 
     DOUBLE_TEAM,
@@ -29,28 +24,28 @@ public enum Tactic {
     OFFSIDE_TRAP;
 
 
-    // Tactics that affect player selection return a bonus percentage increase or decrease. A value
-    // of 1.0 means the probability of selection is double (i.e. a 100% increase)
-    public double selectionBonus(PlayerPosition playerPosition) {
+    // Tactics affecting player selection return a factor that increase or decrease the probability
+    // of a player being selected.
+    public double selectionFactor(PlayerPosition playerPosition) {
         return switch (this) {
             case TIKA_TAKA -> {
                 if (playerPosition.isCentral()) {
-                    yield 1.0;
+                    yield 2.0;
                 }
-                yield 0.0;
+                yield 1.0;
             }
             case WING_PLAY -> {
                 if (!playerPosition.isCentral()) {
-                    yield 1.0;
+                    yield 2.0;
                 }
-                yield 0.0;
+                yield 1.0;
             }
-            default -> 0.0; // Tactics that do not affect selection
+            default -> 1.0; // Tactics that do not affect selection
         };
     }
 
-    // Tactics that affect assistance return a bonus percentage increase or decrease
-    public double assistanceBonus(PlayerPosition position, DuelRole role, PitchArea pitchArea) {
+    // Tactics that affect assistance return a modifier percentage increase or decrease
+    public double assistanceFactor(PlayerPosition position, DuelRole role, PitchArea pitchArea) {
         return switch (this) {
             case DOUBLE_TEAM -> doubleTeam(role, pitchArea);
             case MAN_ON_MAN -> manOnMan(role, pitchArea);
@@ -60,13 +55,13 @@ public enum Tactic {
             case CATENACCIO -> catenaccio(role, pitchArea);
             case ROUTE_ONE -> routeOne(role, pitchArea);
             case OFFSIDE_TRAP -> offsideTrap(role, pitchArea);
-            default -> 0.0; // Tactics that do not affect assistance
+            default -> 1.0; // Tactics that do not affect assistance
         };
     }
 
     private double doubleTeam(DuelRole role, PitchArea area) {
         // TODO incomplete
-        return 0;
+        return 1.0;
     }
 
     private double manOnMan(DuelRole role, PitchArea area) {
@@ -74,13 +69,13 @@ public enum Tactic {
         return switch (role) {
             case CHALLENGER -> {
                 if (area == PitchArea.CENTER_BACK) {
-                    yield -0.15;
+                    yield 0.85;
                 }
                 yield 0.0;
             }
             case INITIATOR -> {
                 if (area == PitchArea.CENTER_FORWARD) {
-                    yield -0.15;
+                    yield 0.85;
                 }
                 yield 0.0;
             }
@@ -92,15 +87,15 @@ public enum Tactic {
         return switch (role) {
             case CHALLENGER -> {
                 if (area == PitchArea.CENTER_BACK) {
-                    yield 0.15;
+                    yield 1.15;
                 }
-                yield 0.0;
+                yield 1.0;
             }
             case INITIATOR -> {
                 if (area == PitchArea.CENTER_FORWARD) {
-                    yield 0.15;
+                    yield 1.15;
                 }
-                yield 0.0;
+                yield 1.0;
             }
         };
     }
@@ -108,30 +103,30 @@ public enum Tactic {
 
     private double counterAttack(DuelRole role) {
         return switch (role) {
-            case CHALLENGER -> 0.2;
-            case INITIATOR -> -0.1;
+            case CHALLENGER -> 1.2;
+            case INITIATOR -> 0.9;
         };
     }
 
     private double possessionControl(PlayerPosition position, DuelRole role, PitchArea area) {
         if (position.isMidfielder() && position.isNatural()) {
-            return 0.05;
+            return 1.05;
         }
         if (position.isMidfielder() && position.isOffensive()) {
-            return 0.03;
+            return 1.03;
         }
-        return 0.0;
+        return 1.0;
     }
 
     private double catenaccio(DuelRole role, PitchArea area) {
-        return 0;
+        return 1.0;
     }
 
     private double routeOne(DuelRole role, PitchArea area) {
-        return 0;
+        return 1.0;
     }
 
     private double offsideTrap(DuelRole role, PitchArea area) {
-        return 0;
+        return 1.0;
     }
 }

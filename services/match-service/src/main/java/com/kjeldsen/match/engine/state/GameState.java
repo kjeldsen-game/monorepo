@@ -3,7 +3,6 @@ package com.kjeldsen.match.engine.state;
 import com.kjeldsen.match.engine.entities.Action;
 import com.kjeldsen.match.engine.entities.Play;
 import com.kjeldsen.match.engine.entities.duel.DuelType;
-import com.kjeldsen.match.engine.exceptions.GameStateException;
 import com.kjeldsen.match.models.Match;
 import java.util.ArrayList;
 import java.util.List;
@@ -119,7 +118,7 @@ public class GameState {
                 if (clock == 0) {
                     return this;
                 } else {
-                    throw new GameStateException(null, "No player is in possession of the ball");
+                    throw new GameStateException("No player is in possession of the ball");
                 }
             }
 
@@ -128,7 +127,7 @@ public class GameState {
                 .filter((player) -> player.getId().equals(ballState.getPlayer().getId()))
                 .findAny()
                 .orElseThrow(
-                    () -> new GameStateException(null, "Player with ball is not on active team"));
+                    () -> new GameStateException("Player with ball is not on active team"));
 
             return this;
         }

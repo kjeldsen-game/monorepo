@@ -2,13 +2,14 @@ package com.kjeldsen.match.engine.selection;
 
 import com.kjeldsen.match.engine.entities.PitchArea;
 import com.kjeldsen.match.engine.entities.PlayerPosition;
-import com.kjeldsen.match.engine.exceptions.GameStateException;
 import com.kjeldsen.match.engine.state.GameState;
+import com.kjeldsen.match.engine.state.GameStateException;
 import com.kjeldsen.match.models.Player;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,16 +28,16 @@ public class ReceiverSelection {
      */
 
     // Returns a player to receive the ball based on the current pitch area.
-    public static Player selectReceiver(GameState state, Player initiator) {
+    public static Player select(GameState state, Player initiator) {
         PitchArea ballArea = state.getBallState().getArea();
         return switch (ballArea.rank()) {
-            case BACK -> selectReceiverFromBack(state, initiator);
-            case MIDDLE -> selectReceiverFromMidfield(state, initiator);
-            case FORWARD -> selectReceiverFromForward(state, initiator);
+            case BACK -> selectFromBack(state, initiator);
+            case MIDDLE -> selectFromMidfield(state, initiator);
+            case FORWARD -> selectFromForward(state, initiator);
         };
     }
 
-    public static Player selectReceiverFromBack(GameState state, Player initiator) {
+    public static Player selectFromBack(GameState state, Player initiator) {
         // Currently select any midfielder nearby to move the ball forward along the pitch
         return nearbyTeammates(state, initiator)
             .filter(player -> player.getPosition().isMidfielder())
@@ -45,7 +46,7 @@ public class ReceiverSelection {
                 () -> new GameStateException(state, "No midfielders found to receive ball"));
     }
 
-    public static Player selectReceiverFromMidfield(GameState state, Player initiator) {
+    public static Player selectFromMidfield(GameState state, Player initiator) {
         List<Player> candidates = nearbyTeammates(state, initiator)
             .filter(
                 player -> player.getPosition().isMidfielder() || player.getPosition().isWingback())
@@ -62,7 +63,7 @@ public class ReceiverSelection {
                 Player::getId,
                 player -> {
                     PlayerPosition position = player.getPosition();
-                    double modifier = state.attackingTeam().getTactic().selectionBonus(position);
+                    double factor = state.attackingTeam().getTactic().selectionFactor(position);
 
                     int value;
                     if (position.isNatural()) {
@@ -74,14 +75,14 @@ public class ReceiverSelection {
                     } else {
                         value = 0;
                     }
-                    return (int) (value * (modifier + 1));
+                    return (int) (value * factor);
                 },
                 (a, b) -> b, HashMap::new));
 
         return Probability.drawPlayer(state, candidates, values);
     }
 
-    public static Player selectReceiverFromForward(GameState state, Player initiator) {
+    public static Player selectFromForward(GameState state, Player initiator) {
         List<Player> candidates = nearbyTeammates(state, initiator)
             .filter(
                 player -> player.getPosition().isForward()
@@ -108,6 +109,23 @@ public class ReceiverSelection {
                 (a, b) -> b, HashMap::new));
 
         return Probability.drawPlayer(state, candidates, values);
+    }
+
+    public static Optional<Player> selectForward(GameState state, Player initiator) {
+        return nearbyTeammates(state, initiator)
+            .filter(player -> player.getPosition().isForward())
+            .findAny();
+    }
+
+    public static Optional<Player> selectFromArea(
+        GameState state, Player initiator, PitchArea area) {
+
+        return state.attackingTeam().getPlayers().stream()
+            .filter(teammate -> !Objects.equals(initiator.getId(), teammate.getId()))
+            .filter(teammate ->
+                teammate.getPosition().coverage().stream()
+                    .anyMatch(teammateArea -> teammateArea == area))
+            .findAny();
     }
 
     private static Stream<Player> nearbyTeammates(GameState state, Player player) {

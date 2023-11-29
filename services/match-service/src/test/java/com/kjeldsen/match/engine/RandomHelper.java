@@ -1,10 +1,14 @@
 package com.kjeldsen.match.engine;
 
 import com.github.javafaker.Faker;
-import com.kjeldsen.match.models.Team;
-import com.kjeldsen.match.models.Player;
 import com.kjeldsen.match.engine.entities.PlayerPosition;
 import com.kjeldsen.match.engine.entities.SkillType;
+import com.kjeldsen.match.engine.modifers.HorizontalPressure;
+import com.kjeldsen.match.engine.modifers.PlayerOrder;
+import com.kjeldsen.match.engine.modifers.Tactic;
+import com.kjeldsen.match.engine.modifers.VerticalPressure;
+import com.kjeldsen.match.models.Player;
+import com.kjeldsen.match.models.Team;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,8 +47,10 @@ public final class RandomHelper {
             .team(team)
             .name(faker.name().fullName())
             .position(position)
+            .playerOrder(genPlayerOrder())
             .skills(genSkillSet()).build();
     }
+
 
     public static Player genPlayer(Team team) {
         return Player.builder()
@@ -61,6 +67,10 @@ public final class RandomHelper {
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
+    private static PlayerOrder genPlayerOrder() {
+        return PlayerOrder.values()[new Random().nextInt(PlayerOrder.values().length)];
+    }
+
     public static int genAttributeRating() {
         return new Random().nextInt(30, 100);
     }
@@ -71,9 +81,19 @@ public final class RandomHelper {
             .build();
         List<Player> players = genPlayers(team);
         int rating = genAttributeRating();
+
+        Tactic tactic = Tactic.values()[new Random().nextInt(Tactic.values().length)];
+        VerticalPressure vp =
+            VerticalPressure.values()[new Random().nextInt(VerticalPressure.values().length)];
+        HorizontalPressure hp =
+            HorizontalPressure.values()[new Random().nextInt(HorizontalPressure.values().length)];
+
         return Team.builder()
             .id(team.getId())
             .players(players)
+            .tactic(tactic)
+            .verticalPressure(vp)
+            .horizontalPressure(hp)
             .rating(rating)
             .build();
     }

@@ -1,12 +1,9 @@
 package com.kjeldsen.match.engine.execution;
 
 import com.kjeldsen.match.engine.entities.Play;
-import com.kjeldsen.match.engine.entities.duel.DuelResult;
 import com.kjeldsen.match.engine.entities.duel.DuelRole;
-import com.kjeldsen.match.engine.entities.duel.DuelType;
-import com.kjeldsen.match.engine.exceptions.GameStateException;
 import com.kjeldsen.match.engine.state.GameState;
-import org.apache.commons.lang3.tuple.Pair;
+import java.util.Map;
 
 public class Carryover {
 
@@ -14,55 +11,38 @@ public class Carryover {
      * Determines the points to be carried over to the next duel
      */
 
-    public static final int CARRYOVER_LIMIT = 25;
+    public static final int CARRYOVER_LIMIT = Assistance.MAX_ASSISTANCE / 2;
 
-    // For ball control duels, the carryover from the previous (positional) duel is calculated from
-    // the difference in assistance between the two players in that duel, capped at the carryover
-    // limit. This value is given to the winner of the (previous) duel and contributes to the
-    // (current) ball control duel.
-    public static Pair<DuelRole, Integer> fromPositionalDuel(GameState state) {
+    // Carryover from the previous duel is half of the difference of the total duel points of the
+    // two players. The carryover value is given to the winner of the (previous) duel and
+    // contributes to the (current) duel. This is capped at half of the maximum assistance.
+    public static Map<DuelRole, Integer> getCarryover(GameState state) {
         return state.lastPlay()
             .map(Play::getDuel)
             .map(duel -> {
-                if (duel.getType() != DuelType.POSITIONAL) {
-                    throw new GameStateException(state, "The last duel was not a positional duel");
-                } else {
-                    int initiatorAssistance = duel.getInitiatorStats().getAssistance();
-                    int challengerAssistance = duel.getChallengerStats().getAssistance();
-                    int diff = Math.abs(initiatorAssistance - challengerAssistance);
-                    DuelRole winner =
-                        initiatorAssistance > challengerAssistance
-                            ? DuelRole.INITIATOR
-                            : DuelRole.CHALLENGER;
-                    return Pair.of(winner, diff / 2);
-                }
-            })
-            .orElseThrow(() -> new GameStateException(state, "No plays have been made yet"));
-    }
+                int initiatorTotal = duel.getInitiatorStats().getTotal();
+                int challengerTotal = duel.getChallengerStats().getTotal();
+                int diff = Math.abs(initiatorTotal - challengerTotal);
+                int carryover = diff / 2;
 
-    // For non-positional duel, the carryover is calculated not from the difference in assistance
-    // (which is carried over only to ball control duels) but from the total difference. This value
-    // is given to the winner of that duel over for the next duel.
-    public static Pair<DuelRole, Integer> fromPreviousDuel(GameState state) {
-        return state.lastPlay()
-            .map(Play::getDuel)
-            .map(duel -> {
-                if (duel.getType() == DuelType.POSITIONAL && duel.getResult() == DuelResult.LOSE) {
-                    throw new GameStateException(
-                        state,
-                        "Carryover to ball control duels should come from the positional duel");
-                } else {
+                DuelRole winner =
+                    initiatorTotal > challengerTotal
+                        ? DuelRole.INITIATOR
+                        : DuelRole.CHALLENGER;
+                DuelRole loser =
+                    (winner == DuelRole.INITIATOR)
+                        ? DuelRole.CHALLENGER
+                        : DuelRole.INITIATOR;
 
-                    int initiatorTotal = duel.getInitiatorStats().getTotal();
-                    int challengerTotal = duel.getChallengerStats().getTotal();
-                    int diff = Math.abs(initiatorTotal - challengerTotal);
-                    DuelRole winner =
-                        initiatorTotal > challengerTotal
-                            ? DuelRole.INITIATOR
-                            : DuelRole.CHALLENGER;
-                    return Pair.of(winner, Math.min(diff, CARRYOVER_LIMIT));
-                }
+                // TODO limiting carryover
+                return Map.of(
+                    winner, carryover,
+                    loser, 0
+                );
             })
-            .orElseThrow(() -> new GameStateException(state, "No plays have been made yet"));
+            .orElseGet(() -> Map.of(
+                DuelRole.INITIATOR, 0,
+                DuelRole.CHALLENGER, 0
+            ));
     }
 }

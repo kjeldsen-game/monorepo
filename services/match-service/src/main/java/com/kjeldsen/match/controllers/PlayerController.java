@@ -1,13 +1,16 @@
 package com.kjeldsen.match.controllers;
 
 import static org.springframework.http.ResponseEntity.badRequest;
-import static org.springframework.http.ResponseEntity.notFound;
 import static org.springframework.http.ResponseEntity.ok;
 
+import com.kjeldsen.match.security.AuthService;
 import com.kjeldsen.match.models.Player;
+import com.kjeldsen.match.models.User;
 import com.kjeldsen.match.repositories.PlayerRepository;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PlayerController {
 
     private final PlayerRepository playerRepository;
+    private final AuthService authService;
 
     @PostMapping("/players")
     public ResponseEntity<?> create(@RequestBody Player player) {
@@ -34,13 +38,24 @@ public class PlayerController {
     }
 
     @PatchMapping("/players/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Player player) {
-        return playerRepository.findById(id)
-            .map(p -> {
-                p.setPosition(player.getPosition());
-                playerRepository.save(p);
-                return ok(p);
-            })
-            .orElseGet(() -> notFound().build());
+    public ResponseEntity<?> update(
+        @PathVariable Long id, @RequestBody Player newPlayer, Authentication auth) {
+        User user = authService.getUser(auth);
+
+        Player existingPlayer = playerRepository.findById(id)
+            .orElseThrow(() -> new ValidationException("Player not found"));
+
+        if (!Objects.equals(existingPlayer.getTeamId(), user.getTeam().getId())) {
+            throw new ValidationException("Player is not on your team");
+        }
+        if (newPlayer.getPosition() != null) {
+            existingPlayer.setPosition(newPlayer.getPosition());
+        }
+        if (newPlayer.getPlayerOrder() != null) {
+            existingPlayer.setPlayerOrder(newPlayer.getPlayerOrder());
+        }
+
+        playerRepository.save(existingPlayer);
+        return ok(existingPlayer);
     }
 }

@@ -44,12 +44,13 @@ class ActionSelectionTest {
     }
 
     @Test
-    void defenderPassesOnly() {
+    void defenderPassesAndTacklesOnly() {
         Player defender = Player.builder().position(PlayerPosition.CENTER_BACK).build();
         GameState state = setGameState(defender, PitchArea.CENTER_BACK);
         List<Action> actions = ActionSelection.filterActions(allActions, state, defender);
-        assertEquals(1, actions.size());
-        assertEquals(Action.PASS, actions.get(0));
+        assertEquals(2, actions.size());
+        assertTrue(actions.contains(Action.TACKLE));
+        assertTrue(actions.contains(Action.PASS));
     }
 
     @Test

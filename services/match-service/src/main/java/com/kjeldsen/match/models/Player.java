@@ -3,14 +3,18 @@ package com.kjeldsen.match.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.kjeldsen.match.controllers.ValidationException;
 import com.kjeldsen.match.engine.entities.PlayerPosition;
 import com.kjeldsen.match.engine.entities.SkillType;
 import com.kjeldsen.match.engine.entities.duel.DuelRole;
 import com.kjeldsen.match.engine.entities.duel.DuelType;
+import com.kjeldsen.match.engine.modifers.PlayerOrder;
 import com.kjeldsen.match.utils.JsonUtils;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -46,6 +50,9 @@ public class Player {
     @ElementCollection
     Map<SkillType, Integer> skills;
 
+    @Enumerated(EnumType.STRING)
+    PlayerOrder playerOrder;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     Team team;
@@ -62,6 +69,14 @@ public class Player {
             return null;
         }
     }
+
+    public void setPlayerOrder(PlayerOrder playerOrder) {
+        if (position == PlayerPosition.GOALKEEPER) {
+            throw new ValidationException("Not a goalkeeper order");
+        }
+        this.playerOrder = playerOrder;
+    }
+
 
     // Instead of accessing the skill points directly, this method should be used to determine the
     // skill level of the player via the duel logic

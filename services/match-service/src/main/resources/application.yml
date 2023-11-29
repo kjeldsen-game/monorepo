@@ -1,5 +1,7 @@
 server:
   port: 8083
+  error:
+    path: /error
 
 spring:
   application:
@@ -8,9 +10,9 @@ spring:
     active: 'local'
 
   datasource:
-    url: jdbc:h2:mem:game-db
+    # url: jdbc:h2:mem:game-db
     # For saving db to file:
-    # url: jdbc:h2:file:./game-db
+    url: jdbc:h2:file:./game-db
     username: admin
     password: password
     driverClassName: org.h2.Driver
@@ -27,3 +29,11 @@ spring:
         # use_sql_comments: true
     defer-datasource-initialization: true
     generate-ddl: true
+
+logging:
+  level:
+    root: info
+
+token:
+  signing:
+    key: D0D3D6D9DCDFE1E4E7EAEDEFF2F5F8FBSASDF91DJA9L1D2D3D4D5D6D7D8D9D0D

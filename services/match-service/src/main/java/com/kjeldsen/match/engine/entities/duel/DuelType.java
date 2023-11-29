@@ -72,4 +72,18 @@ public enum DuelType {
 
         }
     }
+
+    public Action getAction() {
+        return switch (this) {
+            case PASSING -> Action.PASS;
+            case POSITIONAL -> Action.POSITION;
+            case BALL_CONTROL -> Action.TACKLE;
+            case SHOT -> Action.SHOOT;
+        };
+    }
+
+    // Certain duels involve the movement of the ball whereas others occur in the same area
+    public boolean movesBall() {
+        return List.of(DuelType.PASSING, DuelType.SHOT).contains(this);
+    }
 }

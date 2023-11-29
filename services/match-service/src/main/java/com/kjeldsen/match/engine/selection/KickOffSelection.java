@@ -1,6 +1,6 @@
 package com.kjeldsen.match.engine.selection;
 
-import com.kjeldsen.match.engine.exceptions.GameStateException;
+import com.kjeldsen.match.engine.state.GameStateException;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.state.TeamState;
 import com.kjeldsen.match.models.Player;
