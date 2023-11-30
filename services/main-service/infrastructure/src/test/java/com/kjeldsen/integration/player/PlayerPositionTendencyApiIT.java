@@ -8,7 +8,6 @@ import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.PlayerSkills;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerPositionTendencyMongoRepository;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
-//import com.kjeldsen.player.rest.model.PlayerPosition; // TODO DALI E IVAN ESTO ME ESTABA DANDO ERROR Y REQUERÍA UN TIPO REST EN PLAYERPOSITION Y TENÍA UN DOMAIN Y NO SE PORQUE
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponse;
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponseTendenciesValue;
 import org.junit.jupiter.api.BeforeEach;
@@ -112,13 +111,6 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
                                 .entrySet().stream()
                                 .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                         ._default(true),
-
-                /*new PlayerPositionTendencyResponse() // TODO MUDO COMPROBAR POR QUE ES EL UNICO DIFERENTE
-                    .position(PlayerPosition.CENTRE_MIDFIELDER)
-                    .tendencies(storedPlayerPositionTendency.getTendencies()
-                        .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(false),*/
 
                 new PlayerPositionTendencyResponse()
                         .position(com.kjeldsen.player.rest.model.PlayerPosition.CENTRE_MIDFIELDER)
