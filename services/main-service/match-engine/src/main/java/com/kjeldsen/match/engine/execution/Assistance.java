@@ -141,7 +141,7 @@ public class Assistance {
             case LEFT_BACK -> 0.5;
             case OFFENSIVE_MIDFIELDER -> 0.5;
             case FORWARD -> 0.5;
-            case CENTER_MIDFIELDER -> 0.35; // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+            case CENTER_MIDFIELDER -> 0.35;
             case RIGHT_WINGER -> 1.0;
             case RIGHT_MIDFIELDER -> 0.75;
             case RIGHT_WINGBACK -> 0.75;
@@ -156,7 +156,7 @@ public class Assistance {
             case LEFT_MIDFIELDER -> 0.5;
             case OFFENSIVE_MIDFIELDER -> 0.75;
             case FORWARD -> 1.0;
-            case CENTER_MIDFIELDER -> 0.5; // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+            case CENTER_MIDFIELDER -> 0.5;
             case RIGHT_WINGER -> 0.75;
             case RIGHT_MIDFIELDER -> 0.5;
             default -> 0.0;
@@ -171,7 +171,7 @@ public class Assistance {
             case LEFT_WINGBACK -> 1.0;
             case LEFT_BACK -> 0.75;
             case OFFENSIVE_MIDFIELDER -> 0.75;
-            case CENTER_MIDFIELDER -> 0.5; // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+            case CENTER_MIDFIELDER -> 0.5;
             case DEFENSIVE_MIDFIELDER -> 0.35;
             case RIGHT_WINGER -> 1.0;
             case RIGHT_MIDFIELDER -> 1.0;
@@ -188,7 +188,7 @@ public class Assistance {
             case LEFT_MIDFIELDER -> 0.75;
             case OFFENSIVE_MIDFIELDER -> 1.25;
             case FORWARD -> 0.25;
-            case CENTER_MIDFIELDER -> 1.0; // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+            case CENTER_MIDFIELDER -> 1.0;
             case DEFENSIVE_MIDFIELDER -> 0.5;
             case RIGHT_WINGER -> 0.35;
             case RIGHT_MIDFIELDER -> 0.75;
@@ -203,7 +203,7 @@ public class Assistance {
             case LEFT_WINGBACK -> 0.75;
             case LEFT_BACK -> 1.0;
             case OFFENSIVE_MIDFIELDER -> 0.5;
-            case CENTER_MIDFIELDER -> 0.35; // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+            case CENTER_MIDFIELDER -> 0.35;
             case DEFENSIVE_MIDFIELDER -> 0.5;
             case RIGHT_WINGER -> 0.35;
             case RIGHT_MIDFIELDER -> 0.35;
@@ -220,7 +220,7 @@ public class Assistance {
             case LEFT_MIDFIELDER -> 0.25;
             case OFFENSIVE_MIDFIELDER -> 0.5;
             case FORWARD -> 0.75;
-            case CENTER_MIDFIELDER -> 0.5; // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+            case CENTER_MIDFIELDER -> 0.5;
             case DEFENSIVE_MIDFIELDER -> 0.75;
             case RIGHT_WINGER -> 0.25;
             case RIGHT_MIDFIELDER -> 0.25;
@@ -236,7 +236,7 @@ public class Assistance {
             case LEFT_WINGBACK -> 1.0;
             case LEFT_BACK -> 1.0;
             case OFFENSIVE_MIDFIELDER -> 0.35;
-            case CENTER_MIDFIELDER -> 0.5; // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+            case CENTER_MIDFIELDER -> 0.5;
             case DEFENSIVE_MIDFIELDER -> 0.75;
             case RIGHT_WINGER -> 0.75;
             case RIGHT_MIDFIELDER -> 1.0;
@@ -252,7 +252,7 @@ public class Assistance {
             case LEFT_MIDFIELDER -> 0.5;
             case OFFENSIVE_MIDFIELDER -> 0.5;
             case FORWARD -> 0.25;
-            case CENTER_MIDFIELDER -> 0.75; // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+            case CENTER_MIDFIELDER -> 0.75;
             case DEFENSIVE_MIDFIELDER -> 1.25;
             case RIGHT_WINGER -> 0.35;
             case RIGHT_MIDFIELDER -> 0.5;

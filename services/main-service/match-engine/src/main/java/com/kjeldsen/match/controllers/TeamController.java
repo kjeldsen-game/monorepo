@@ -138,14 +138,13 @@ public class TeamController {
 
     private static List<Player> randomPlayers(Team team) {
         List<Player> players = new ArrayList<>(11);
-        // TODO NADIR I AM NOT SURE BUT MAYBE YOU ARE MISSING A FEW (SWEEPER, LEFT_WINGBACK, RIGHT_WINBACK, DEFENSIVE_MIDFIELDER AND OFFENSIVE_MIDFIELDER)
         players.add(randomPlayer(team, PlayerPosition.GOALKEEPER));
         players.add(randomPlayer(team, PlayerPosition.LEFT_BACK));
         players.add(randomPlayer(team, PlayerPosition.RIGHT_BACK));
-        players.add(randomPlayer(team, PlayerPosition.CENTER_BACK)); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE "CENTRE" IN THE DOCUMENTATION
+        players.add(randomPlayer(team, PlayerPosition.CENTER_BACK));
         players.add(randomPlayer(team, PlayerPosition.LEFT_MIDFIELDER));
         players.add(randomPlayer(team, PlayerPosition.RIGHT_MIDFIELDER));
-        players.add(randomPlayer(team, PlayerPosition.CENTER_MIDFIELDER)); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+        players.add(randomPlayer(team, PlayerPosition.CENTER_MIDFIELDER));
         players.add(randomPlayer(team, PlayerPosition.LEFT_WINGER));
         players.add(randomPlayer(team, PlayerPosition.RIGHT_WINGER));
         players.add(randomPlayer(team, PlayerPosition.STRIKER));

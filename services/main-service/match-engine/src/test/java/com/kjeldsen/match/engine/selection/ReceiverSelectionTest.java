@@ -39,13 +39,13 @@ public class ReceiverSelectionTest {
             genPlayerWithPosition(team, PlayerPosition.LEFT_MIDFIELDER),
             genPlayerWithPosition(team, PlayerPosition.DEFENSIVE_MIDFIELDER),
             genPlayerWithPosition(team, PlayerPosition.RIGHT_WINGER),
-            genPlayerWithPosition(team, PlayerPosition.CENTER_MIDFIELDER)); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+            genPlayerWithPosition(team, PlayerPosition.CENTER_MIDFIELDER));
 
         Map<PlayerPosition, Integer> selections = new HashMap<>();
         selections.put(PlayerPosition.LEFT_MIDFIELDER, 0);
         selections.put(PlayerPosition.DEFENSIVE_MIDFIELDER, 0);
         selections.put(PlayerPosition.RIGHT_WINGER, 0);
-        selections.put(PlayerPosition.CENTER_MIDFIELDER, 0); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+        selections.put(PlayerPosition.CENTER_MIDFIELDER, 0);
 
         Team home = Team.builder().players(players).build();
         Match match = Match.builder()

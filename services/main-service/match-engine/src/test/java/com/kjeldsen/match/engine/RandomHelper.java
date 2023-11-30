@@ -23,16 +23,16 @@ public final class RandomHelper {
     // Returns 11 random players including goalkeeper and a striker
     public static List<Player> genPlayers(Team team) {
         List<Player> players = new ArrayList<>(11);
-        players.add(genPlayerWithPosition(team, PlayerPosition.LEFT_BACK)); //
-        players.add(genPlayerWithPosition(team, PlayerPosition.RIGHT_BACK)); //
-        players.add(genPlayerWithPosition(team, PlayerPosition.CENTER_BACK)); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+        players.add(genPlayerWithPosition(team, PlayerPosition.LEFT_BACK));
+        players.add(genPlayerWithPosition(team, PlayerPosition.RIGHT_BACK));
+        players.add(genPlayerWithPosition(team, PlayerPosition.CENTER_BACK));
         players.add(genPlayerWithPosition(team, PlayerPosition.LEFT_MIDFIELDER));
         players.add(genPlayerWithPosition(team, PlayerPosition.RIGHT_MIDFIELDER));
-        players.add(genPlayerWithPosition(team, PlayerPosition.CENTER_MIDFIELDER)); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+        players.add(genPlayerWithPosition(team, PlayerPosition.CENTER_MIDFIELDER));
         players.add(genPlayerWithPosition(team, PlayerPosition.LEFT_WINGER));
         players.add(genPlayerWithPosition(team, PlayerPosition.RIGHT_WINGER));
         players.add(genPlayerWithPosition(team, PlayerPosition.STRIKER));
-        players.add(genPlayerWithPosition(team, PlayerPosition.STRIKER)); // TODO NADIR MAYBE IS THIS REPEATED ? MAYBE YOU WANTED TO SAY "SWEEPER"?
+        players.add(genPlayerWithPosition(team, PlayerPosition.STRIKER));
         players.add(genPlayerWithPosition(team, PlayerPosition.GOALKEEPER));
         return players;
     }

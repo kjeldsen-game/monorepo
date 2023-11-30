@@ -29,6 +29,19 @@ public class PlayerPositionTendency {
             PlayerSkill.DEFENSE_POSITION, new PlayerSkills(8, 0)
         )).build();
 
+    public static final PlayerPositionTendency DEFAULT_AERIAL_CENTRE_BACK_TENDENCIES = PlayerPositionTendency.builder()
+        .position(PlayerPosition.AERIAL_CENTRE_BACK)
+        .tendencies(Map.of(
+            PlayerSkill.SCORE, new PlayerSkills(1, 0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(1, 0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(2, 0),
+            PlayerSkill.PASSING, new PlayerSkills(2, 0),
+            PlayerSkill.AERIAL, new PlayerSkills(8, 0),
+            PlayerSkill.CO, new PlayerSkills(4, 0),
+            PlayerSkill.TACKLING, new PlayerSkills(6, 0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(6, 0)
+        )).build();
+
     public static final PlayerPositionTendency DEFAULT_SWEEPER_TENDENCIES = PlayerPositionTendency.builder()
         .position(PlayerPosition.SWEEPER)
         .tendencies(Map.of(
@@ -36,27 +49,40 @@ public class PlayerPositionTendency {
             PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(1, 0),
             PlayerSkill.BALL_CONTROL, new PlayerSkills(2, 0),
             PlayerSkill.PASSING, new PlayerSkills(2, 0),
-            PlayerSkill.AERIAL, new PlayerSkills(6, 0),
-            PlayerSkill.CO, new PlayerSkills(4, 0),
-            PlayerSkill.TACKLING, new PlayerSkills(5, 0),
-            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(5, 0)
-        )).build();
-
-    public static final PlayerPositionTendency DEFAULT_LEFT_BACK_TENDENCIES = PlayerPositionTendency.builder()
-        .position(PlayerPosition.LEFT_BACK)
-        .tendencies(Map.of(
-            PlayerSkill.SCORE, new PlayerSkills(1, 0),
-            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(2, 0),
-            PlayerSkill.BALL_CONTROL, new PlayerSkills(2, 0),
-            PlayerSkill.PASSING, new PlayerSkills(4, 0),
             PlayerSkill.AERIAL, new PlayerSkills(3, 0),
             PlayerSkill.CO, new PlayerSkills(4, 0),
             PlayerSkill.TACKLING, new PlayerSkills(8, 0),
             PlayerSkill.DEFENSE_POSITION, new PlayerSkills(8, 0)
         )).build();
 
+    public static final PlayerPositionTendency DEFAULT_LEFT_BACK_TENDENCIES = PlayerPositionTendency.builder()
+        .position(PlayerPosition.LEFT_BACK)
+        .tendencies(Map.of(
+            PlayerSkill.SCORE, new PlayerSkills(1, 0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(3, 0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(3, 0),
+            PlayerSkill.PASSING, new PlayerSkills(4, 0),
+            PlayerSkill.AERIAL, new PlayerSkills(3, 0),
+            PlayerSkill.CO, new PlayerSkills(4, 0),
+            PlayerSkill.TACKLING, new PlayerSkills(7, 0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(7, 0)
+        )).build();
+
     public static final PlayerPositionTendency DEFAULT_RIGHT_BACK_TENDENCIES = PlayerPositionTendency.builder()
         .position(PlayerPosition.RIGHT_BACK)
+        .tendencies(Map.of(
+            PlayerSkill.SCORE, new PlayerSkills(1, 0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(3, 0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(3, 0),
+            PlayerSkill.PASSING, new PlayerSkills(4, 0),
+            PlayerSkill.AERIAL, new PlayerSkills(3, 0),
+            PlayerSkill.CO, new PlayerSkills(4, 0),
+            PlayerSkill.TACKLING, new PlayerSkills(7, 0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(7, 0)
+        )).build();
+
+    public static final PlayerPositionTendency DEFAULT_LEFT_WINGBACK_TENDENCIES = PlayerPositionTendency.builder()
+        .position(PlayerPosition.LEFT_WINGBACK)
         .tendencies(Map.of(
             PlayerSkill.SCORE, new PlayerSkills(1, 0),
             PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(4, 0),
@@ -68,150 +94,176 @@ public class PlayerPositionTendency {
             PlayerSkill.DEFENSE_POSITION, new PlayerSkills(6, 0)
         )).build();
 
-    public static final PlayerPositionTendency DEFAULT_LEFT_WINGBACK_TENDENCIES = PlayerPositionTendency.builder()
-        .position(PlayerPosition.LEFT_WINGBACK)
+    public static final PlayerPositionTendency DEFAULT_RIGHT_WINGBACK_TENDENCIES = PlayerPositionTendency.builder()
+        .position(PlayerPosition.RIGHT_WINGBACK)
         .tendencies(Map.of(
             PlayerSkill.SCORE, new PlayerSkills(1, 0),
-            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(2, 0),
-            PlayerSkill.BALL_CONTROL, new PlayerSkills(3, 0),
-            PlayerSkill.PASSING, new PlayerSkills(6, 0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(4, 0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(4, 0),
+            PlayerSkill.PASSING, new PlayerSkills(5, 0),
             PlayerSkill.AERIAL, new PlayerSkills(3, 0),
             PlayerSkill.CO, new PlayerSkills(4, 0),
             PlayerSkill.TACKLING, new PlayerSkills(6, 0),
             PlayerSkill.DEFENSE_POSITION, new PlayerSkills(6, 0)
         )).build();
 
-    public static final PlayerPositionTendency DEFAULT_RIGHT_WINGBACK_TENDENCIES = PlayerPositionTendency.builder()
-        .position(PlayerPosition.RIGHT_WINGBACK)
-        .tendencies(Map.of(
-            PlayerSkill.SCORE, new PlayerSkills(1, 0),
-            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(6, 0),
-            PlayerSkill.BALL_CONTROL, new PlayerSkills(6, 0),
-            PlayerSkill.PASSING, new PlayerSkills(8, 0),
-            PlayerSkill.AERIAL, new PlayerSkills(3, 0),
-            PlayerSkill.CO, new PlayerSkills(4, 0),
-            PlayerSkill.TACKLING, new PlayerSkills(4, 0),
-            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(4, 0)
-        )).build();
-
     public static final PlayerPositionTendency DEFAULT_DEFENSIVE_MIDFIELDER_TENDENCIES = PlayerPositionTendency.builder()
         .position(PlayerPosition.DEFENSIVE_MIDFIELDER)
         .tendencies(Map.of(
-            PlayerSkill.SCORE, new PlayerSkills(3, 0),
-            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(8, 0),
-            PlayerSkill.BALL_CONTROL, new PlayerSkills(8, 0),
-            PlayerSkill.PASSING, new PlayerSkills(6, 0),
-            PlayerSkill.AERIAL, new PlayerSkills(3, 0),
+            PlayerSkill.SCORE, new PlayerSkills(1, 0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(2, 0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(4, 0),
+            PlayerSkill.PASSING, new PlayerSkills(5, 0),
+            PlayerSkill.AERIAL, new PlayerSkills(2, 0),
             PlayerSkill.CO, new PlayerSkills(4, 0),
-            PlayerSkill.TACKLING, new PlayerSkills(1, 0),
-            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(1, 0)
+            PlayerSkill.TACKLING, new PlayerSkills(6, 0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(6, 0)
         )).build();
 
     public static final PlayerPositionTendency DEFAULT_CENTRE_MIDFIELDER_TENDENCIES = PlayerPositionTendency.builder()
         .position(PlayerPosition.CENTRE_MIDFIELDER)
         .tendencies(Map.of(
-            PlayerSkill.SCORE, new PlayerSkills(7, 0),
-            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(7, 0),
-            PlayerSkill.BALL_CONTROL, new PlayerSkills(7, 0),
-            PlayerSkill.PASSING, new PlayerSkills(3, 0),
-            PlayerSkill.AERIAL, new PlayerSkills(3, 0),
+            PlayerSkill.SCORE, new PlayerSkills(2, 0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(6, 0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(6, 0),
+            PlayerSkill.PASSING, new PlayerSkills(8, 0),
+            PlayerSkill.AERIAL, new PlayerSkills(2, 0),
             PlayerSkill.CO, new PlayerSkills(4, 0),
-            PlayerSkill.TACKLING, new PlayerSkills(1, 0),
-            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(1, 0)
+            PlayerSkill.TACKLING, new PlayerSkills(4, 0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(4, 0)
         )).build();
 
     public static final PlayerPositionTendency DEFAULT_LEFT_MIDFIELDER_TENDENCIES = PlayerPositionTendency.builder()
         .position(PlayerPosition.LEFT_MIDFIELDER)
         .tendencies(Map.of(
-            PlayerSkill.SCORE, new PlayerSkills(5, 0),
-            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(5, 0),
-            PlayerSkill.BALL_CONTROL, new PlayerSkills(5, 0),
-            PlayerSkill.PASSING, new PlayerSkills(3, 0),
-            PlayerSkill.AERIAL, new PlayerSkills(7, 0),
+            PlayerSkill.SCORE, new PlayerSkills(2, 0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(6, 0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(6, 0),
+            PlayerSkill.PASSING, new PlayerSkills(8, 0),
+            PlayerSkill.AERIAL, new PlayerSkills(2, 0),
             PlayerSkill.CO, new PlayerSkills(4, 0),
-            PlayerSkill.TACKLING, new PlayerSkills(1, 0),
-            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(1, 0)
+            PlayerSkill.TACKLING, new PlayerSkills(4, 0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(4, 0)
         )).build();
 
     public static final PlayerPositionTendency DEFAULT_RIGHT_MIDFIELDER_TENDENCIES = PlayerPositionTendency.builder()
         .position(PlayerPosition.RIGHT_MIDFIELDER)
         .tendencies(Map.of(
-            PlayerSkill.REFLEXES, new PlayerSkills(5, 0),
-            PlayerSkill.POSITIONING, new PlayerSkills(4, 0),
-            PlayerSkill.INTERCEPTIONS, new PlayerSkills(2, 0),
-            PlayerSkill.CONTROL, new PlayerSkills(2, 0),
-            PlayerSkill.ORGANIZATION, new PlayerSkills(2, 0),
-            PlayerSkill.ONE_ON_ONE, new PlayerSkills(4, 0)
+            PlayerSkill.SCORE, new PlayerSkills(2, 0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(6, 0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(6, 0),
+            PlayerSkill.PASSING, new PlayerSkills(8, 0),
+            PlayerSkill.AERIAL, new PlayerSkills(2, 0),
+            PlayerSkill.CO, new PlayerSkills(4, 0),
+            PlayerSkill.TACKLING, new PlayerSkills(4, 0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(4, 0)
         )).build();
 
     public static final PlayerPositionTendency DEFAULT_LEFT_WINGER_TENDENCIES = PlayerPositionTendency.builder()
-            .position(PlayerPosition.LEFT_WINGER)
-            .tendencies(Map.of(
-                    PlayerSkill.REFLEXES, new PlayerSkills(5, 0),
-                    PlayerSkill.POSITIONING, new PlayerSkills(4, 0),
-                    PlayerSkill.INTERCEPTIONS, new PlayerSkills(2, 0),
-                    PlayerSkill.CONTROL, new PlayerSkills(2, 0),
-                    PlayerSkill.ORGANIZATION, new PlayerSkills(2, 0),
-                    PlayerSkill.ONE_ON_ONE, new PlayerSkills(4, 0)
-            )).build();
+        .position(PlayerPosition.LEFT_WINGER)
+        .tendencies(Map.of(
+            PlayerSkill.SCORE, new PlayerSkills(4, 0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(8, 0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(8, 0),
+            PlayerSkill.PASSING, new PlayerSkills(6, 0),
+            PlayerSkill.AERIAL, new PlayerSkills(2, 0),
+            PlayerSkill.CO, new PlayerSkills(4, 0),
+            PlayerSkill.TACKLING, new PlayerSkills(1, 0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(1, 0)
+        )).build();
 
     public static final PlayerPositionTendency DEFAULT_OFFENSIVE_MIDFIELDER_TENDENCIES = PlayerPositionTendency.builder()
-            .position(PlayerPosition.OFFENSIVE_MIDFIELDER)
-            .tendencies(Map.of(
-                    PlayerSkill.REFLEXES, new PlayerSkills(5, 0),
-                    PlayerSkill.POSITIONING, new PlayerSkills(4, 0),
-                    PlayerSkill.INTERCEPTIONS, new PlayerSkills(2, 0),
-                    PlayerSkill.CONTROL, new PlayerSkills(2, 0),
-                    PlayerSkill.ORGANIZATION, new PlayerSkills(2, 0),
-                    PlayerSkill.ONE_ON_ONE, new PlayerSkills(4, 0)
-            )).build();
+        .position(PlayerPosition.OFFENSIVE_MIDFIELDER)
+        .tendencies(Map.of(
+            PlayerSkill.SCORE, new PlayerSkills(4, 0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(8, 0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(8, 0),
+            PlayerSkill.PASSING, new PlayerSkills(6, 0),
+            PlayerSkill.AERIAL, new PlayerSkills(2, 0),
+            PlayerSkill.CO, new PlayerSkills(4, 0),
+            PlayerSkill.TACKLING, new PlayerSkills(1, 0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(1, 0)
+        )).build();
 
     public static final PlayerPositionTendency DEFAULT_RIGHT_WINGER_TENDENCIES = PlayerPositionTendency.builder()
-            .position(PlayerPosition.RIGHT_WINGER)
-            .tendencies(Map.of(
-                    PlayerSkill.REFLEXES, new PlayerSkills(5, 0),
-                    PlayerSkill.POSITIONING, new PlayerSkills(4, 0),
-                    PlayerSkill.INTERCEPTIONS, new PlayerSkills(2, 0),
-                    PlayerSkill.CONTROL, new PlayerSkills(2, 0),
-                    PlayerSkill.ORGANIZATION, new PlayerSkills(2, 0),
-                    PlayerSkill.ONE_ON_ONE, new PlayerSkills(4, 0)
-            )).build();
+        .position(PlayerPosition.RIGHT_WINGER)
+        .tendencies(Map.of(
+            PlayerSkill.SCORE, new PlayerSkills(4, 0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(8, 0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(8, 0),
+            PlayerSkill.PASSING, new PlayerSkills(6, 0),
+            PlayerSkill.AERIAL, new PlayerSkills(2, 0),
+            PlayerSkill.CO, new PlayerSkills(4, 0),
+            PlayerSkill.TACKLING, new PlayerSkills(1, 0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(1, 0)
+        )).build();
 
     public static final PlayerPositionTendency DEFAULT_FORWARD_TENDENCIES = PlayerPositionTendency.builder()
-            .position(PlayerPosition.FORWARD)
-            .tendencies(Map.of(
-                    PlayerSkill.REFLEXES, new PlayerSkills(5, 0),
-                    PlayerSkill.POSITIONING, new PlayerSkills(4, 0),
-                    PlayerSkill.INTERCEPTIONS, new PlayerSkills(2, 0),
-                    PlayerSkill.CONTROL, new PlayerSkills(2, 0),
-                    PlayerSkill.ORGANIZATION, new PlayerSkills(2, 0),
-                    PlayerSkill.ONE_ON_ONE, new PlayerSkills(4, 0)
-            )).build();
+        .position(PlayerPosition.FORWARD)
+        .tendencies(Map.of(
+            PlayerSkill.SCORE, new PlayerSkills(7, 0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(7, 0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(7, 0),
+            PlayerSkill.PASSING, new PlayerSkills(3, 0),
+            PlayerSkill.AERIAL, new PlayerSkills(4, 0),
+            PlayerSkill.CO, new PlayerSkills(4, 0),
+            PlayerSkill.TACKLING, new PlayerSkills(1, 0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(1, 0)
+        )).build();
+
+    public static final PlayerPositionTendency DEFAULT_AERIAL_FORWARD_TENDENCIES = PlayerPositionTendency.builder()
+        .position(PlayerPosition.AERIAL_FORWARD)
+        .tendencies(Map.of(
+            PlayerSkill.SCORE, new PlayerSkills(5, 0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(5, 0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(5, 0),
+            PlayerSkill.PASSING, new PlayerSkills(2, 0),
+            PlayerSkill.AERIAL, new PlayerSkills(8, 0),
+            PlayerSkill.CO, new PlayerSkills(4, 0),
+            PlayerSkill.TACKLING, new PlayerSkills(1, 0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(1, 0)
+        )).build();
 
     public static final PlayerPositionTendency DEFAULT_STRIKER_TENDENCIES = PlayerPositionTendency.builder()
-            .position(PlayerPosition.STRIKER)
-            .tendencies(Map.of(
-                    PlayerSkill.REFLEXES, new PlayerSkills(5, 0),
-                    PlayerSkill.POSITIONING, new PlayerSkills(4, 0),
-                    PlayerSkill.INTERCEPTIONS, new PlayerSkills(2, 0),
-                    PlayerSkill.CONTROL, new PlayerSkills(2, 0),
-                    PlayerSkill.ORGANIZATION, new PlayerSkills(2, 0),
-                    PlayerSkill.ONE_ON_ONE, new PlayerSkills(4, 0)
-            )).build();
+        .position(PlayerPosition.STRIKER)
+        .tendencies(Map.of(
+            PlayerSkill.SCORE, new PlayerSkills(8, 0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(6, 0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(6, 0),
+            PlayerSkill.PASSING, new PlayerSkills(1, 0),
+            PlayerSkill.AERIAL, new PlayerSkills(5, 0),
+            PlayerSkill.CO, new PlayerSkills(4, 0),
+            PlayerSkill.TACKLING, new PlayerSkills(1, 0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(1, 0)
+        )).build();
+
+    public static final PlayerPositionTendency DEFAULT_AERIAL_STRIKER_TENDENCIES = PlayerPositionTendency.builder()
+        .position(PlayerPosition.AERIAL_STRIKER)
+        .tendencies(Map.of(
+            PlayerSkill.SCORE, new PlayerSkills(6, 0),
+            PlayerSkill.OFFENSIVE_POSITION, new PlayerSkills(4, 0),
+            PlayerSkill.BALL_CONTROL, new PlayerSkills(4, 0),
+            PlayerSkill.PASSING, new PlayerSkills(1, 0),
+            PlayerSkill.AERIAL, new PlayerSkills(9, 0),
+            PlayerSkill.CO, new PlayerSkills(4, 0),
+            PlayerSkill.TACKLING, new PlayerSkills(1, 0),
+            PlayerSkill.DEFENSE_POSITION, new PlayerSkills(1, 0)
+        )).build();
 
     public static final PlayerPositionTendency DEFAULT_GOALKEEPER_TENDENCIES = PlayerPositionTendency.builder()
             .position(PlayerPosition.GOALKEEPER)
             .tendencies(Map.of(
-                    PlayerSkill.REFLEXES, new PlayerSkills(5, 0),
-                    PlayerSkill.POSITIONING, new PlayerSkills(4, 0),
-                    PlayerSkill.INTERCEPTIONS, new PlayerSkills(2, 0),
-                    PlayerSkill.CONTROL, new PlayerSkills(2, 0),
-                    PlayerSkill.ORGANIZATION, new PlayerSkills(2, 0),
-                    PlayerSkill.ONE_ON_ONE, new PlayerSkills(4, 0)
+                    PlayerSkill.REFLEXES, new PlayerSkills(8, 0),
+                    PlayerSkill.POSITIONING, new PlayerSkills(6, 0),
+                    PlayerSkill.INTERCEPTIONS, new PlayerSkills(3, 0),
+                    PlayerSkill.CONTROL, new PlayerSkills(3, 0),
+                    PlayerSkill.ORGANIZATION, new PlayerSkills(3, 0),
+                    PlayerSkill.ONE_ON_ONE, new PlayerSkills(6, 0)
             )).build();
 
     public static final List<PlayerPositionTendency> DEFAULT_TENDENCIES = List.of(
         DEFAULT_CENTRE_BACK_TENDENCIES,
+        DEFAULT_AERIAL_CENTRE_BACK_TENDENCIES,
         DEFAULT_SWEEPER_TENDENCIES,
         DEFAULT_LEFT_BACK_TENDENCIES,
         DEFAULT_RIGHT_BACK_TENDENCIES,
@@ -225,13 +277,16 @@ public class PlayerPositionTendency {
         DEFAULT_OFFENSIVE_MIDFIELDER_TENDENCIES,
         DEFAULT_RIGHT_WINGER_TENDENCIES,
         DEFAULT_FORWARD_TENDENCIES,
+        DEFAULT_AERIAL_FORWARD_TENDENCIES,
         DEFAULT_STRIKER_TENDENCIES,
+        DEFAULT_AERIAL_STRIKER_TENDENCIES,
         DEFAULT_GOALKEEPER_TENDENCIES);
 
 
     public static PlayerPositionTendency getDefault(PlayerPosition position) {
         return switch (position) {
             case CENTRE_BACK -> DEFAULT_CENTRE_BACK_TENDENCIES;
+            case AERIAL_CENTRE_BACK -> DEFAULT_AERIAL_CENTRE_BACK_TENDENCIES;
             case SWEEPER -> DEFAULT_SWEEPER_TENDENCIES;
             case LEFT_BACK -> DEFAULT_LEFT_BACK_TENDENCIES;
             case RIGHT_BACK -> DEFAULT_RIGHT_BACK_TENDENCIES;
@@ -245,7 +300,9 @@ public class PlayerPositionTendency {
             case OFFENSIVE_MIDFIELDER -> DEFAULT_OFFENSIVE_MIDFIELDER_TENDENCIES;
             case RIGHT_WINGER -> DEFAULT_RIGHT_WINGER_TENDENCIES;
             case FORWARD -> DEFAULT_FORWARD_TENDENCIES;
+            case AERIAL_FORWARD -> DEFAULT_AERIAL_FORWARD_TENDENCIES;
             case STRIKER -> DEFAULT_STRIKER_TENDENCIES;
+            case AERIAL_STRIKER -> DEFAULT_AERIAL_STRIKER_TENDENCIES;
             case GOALKEEPER -> DEFAULT_GOALKEEPER_TENDENCIES;
         };
     }

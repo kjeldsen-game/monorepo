@@ -45,7 +45,7 @@ class ActionSelectionTest {
 
     @Test
     void defenderPassesOnly() {
-        Player defender = Player.builder().position(PlayerPosition.CENTER_BACK).build(); // TODO NADIR I AM NOT SURE IF IS IMPORTANT BUT EDUARDO USUALLY WRITE CENTRE IN THE DOCUMENTATION
+        Player defender = Player.builder().position(PlayerPosition.CENTER_BACK).build();
         GameState state = setGameState(defender, PitchArea.CENTER_BACK);
         List<Action> actions = ActionSelection.filterActions(allActions, state, defender);
         assertEquals(1, actions.size());

@@ -8,7 +8,7 @@ import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.PlayerSkills;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerPositionTendencyMongoRepository;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
-// import com.kjeldsen.player.rest.model.PlayerPosition; // TODO DALI ESTO ME ESTABA DANDO ERROR Y REQUERÍA UN TIPO REST EN PLAYERPOSITION Y TENÍA UN DOMAIN Y NO SE PORQUE
+//import com.kjeldsen.player.rest.model.PlayerPosition; // TODO DALI E IVAN ESTO ME ESTABA DANDO ERROR Y REQUERÍA UN TIPO REST EN PLAYERPOSITION Y TENÍA UN DOMAIN Y NO SE PORQUE
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponse;
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponseTendenciesValue;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,51 +60,58 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
                 new PlayerPositionTendencyResponse()
                     .position(com.kjeldsen.player.rest.model.PlayerPosition.CENTRE_BACK)
                     .tendencies(PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES.getTendencies()
-                        .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                            .entrySet().stream()
+                            .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                     ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(com.kjeldsen.player.rest.model.PlayerPosition.SWEEPER)
-                    .tendencies(PlayerPositionTendency.DEFAULT_SWEEPER_TENDENCIES.getTendencies()
-                        .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(true),
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.AERIAL_CENTRE_BACK)
+                        .tendencies(PlayerPositionTendency.DEFAULT_AERIAL_CENTRE_BACK_TENDENCIES.getTendencies()
+                            .entrySet().stream()
+                            .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(com.kjeldsen.player.rest.model.PlayerPosition.LEFT_BACK)
-                    .tendencies(PlayerPositionTendency.DEFAULT_LEFT_BACK_TENDENCIES.getTendencies()
-                        .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(true),
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.SWEEPER)
+                        .tendencies(PlayerPositionTendency.DEFAULT_SWEEPER_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(com.kjeldsen.player.rest.model.PlayerPosition.RIGHT_BACK)
-                    .tendencies(PlayerPositionTendency.DEFAULT_RIGHT_BACK_TENDENCIES.getTendencies()
-                        .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(true),
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.LEFT_BACK)
+                        .tendencies(PlayerPositionTendency.DEFAULT_LEFT_BACK_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(com.kjeldsen.player.rest.model.PlayerPosition.LEFT_WINGBACK)
-                    .tendencies(PlayerPositionTendency.DEFAULT_LEFT_WINGBACK_TENDENCIES.getTendencies()
-                        .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(true),
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.RIGHT_BACK)
+                        .tendencies(PlayerPositionTendency.DEFAULT_RIGHT_BACK_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(com.kjeldsen.player.rest.model.PlayerPosition.RIGHT_WINGBACK)
-                    .tendencies(PlayerPositionTendency.DEFAULT_RIGHT_WINGBACK_TENDENCIES.getTendencies()
-                        .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(true),
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.LEFT_WINGBACK)
+                        .tendencies(PlayerPositionTendency.DEFAULT_LEFT_WINGBACK_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(com.kjeldsen.player.rest.model.PlayerPosition.DEFENSIVE_MIDFIELDER)
-                    .tendencies(PlayerPositionTendency.DEFAULT_DEFENSIVE_MIDFIELDER_TENDENCIES.getTendencies()
-                        .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(true),
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.RIGHT_WINGBACK)
+                        .tendencies(PlayerPositionTendency.DEFAULT_RIGHT_WINGBACK_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.DEFENSIVE_MIDFIELDER)
+                        .tendencies(PlayerPositionTendency.DEFAULT_DEFENSIVE_MIDFIELDER_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
 
                 /*new PlayerPositionTendencyResponse() // TODO MUDO COMPROBAR POR QUE ES EL UNICO DIFERENTE
                     .position(PlayerPosition.CENTRE_MIDFIELDER)
@@ -114,67 +121,81 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
                     ._default(false),*/
 
                 new PlayerPositionTendencyResponse()
-                    .position(com.kjeldsen.player.rest.model.PlayerPosition.CENTRE_MIDFIELDER)
-                    .tendencies(PlayerPositionTendency.DEFAULT_CENTRE_MIDFIELDER_TENDENCIES.getTendencies()
-                        .entrySet().stream()
-                        .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(true),
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.CENTRE_MIDFIELDER)
+                        .tendencies(PlayerPositionTendency.DEFAULT_CENTRE_MIDFIELDER_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(com.kjeldsen.player.rest.model.PlayerPosition.LEFT_MIDFIELDER)
-                    .tendencies(PlayerPositionTendency.DEFAULT_LEFT_MIDFIELDER_TENDENCIES.getTendencies()
-                            .entrySet().stream()
-                            .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(true),
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.LEFT_MIDFIELDER)
+                        .tendencies(PlayerPositionTendency.DEFAULT_LEFT_MIDFIELDER_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(com.kjeldsen.player.rest.model.PlayerPosition.RIGHT_MIDFIELDER)
-                    .tendencies(PlayerPositionTendency.DEFAULT_RIGHT_MIDFIELDER_TENDENCIES.getTendencies()
-                            .entrySet().stream()
-                            .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(true),
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.RIGHT_MIDFIELDER)
+                        .tendencies(PlayerPositionTendency.DEFAULT_RIGHT_MIDFIELDER_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(com.kjeldsen.player.rest.model.PlayerPosition.LEFT_WINGER)
-                    .tendencies(PlayerPositionTendency.DEFAULT_LEFT_WINGER_TENDENCIES.getTendencies()
-                            .entrySet().stream()
-                            .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(true),
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.LEFT_WINGER)
+                        .tendencies(PlayerPositionTendency.DEFAULT_LEFT_WINGER_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(com.kjeldsen.player.rest.model.PlayerPosition.OFFENSIVE_MIDFIELDER)
-                    .tendencies(PlayerPositionTendency.DEFAULT_OFFENSIVE_MIDFIELDER_TENDENCIES.getTendencies()
-                            .entrySet().stream()
-                            .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(true),
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.OFFENSIVE_MIDFIELDER)
+                        .tendencies(PlayerPositionTendency.DEFAULT_OFFENSIVE_MIDFIELDER_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(com.kjeldsen.player.rest.model.PlayerPosition.RIGHT_WINGER)
-                    .tendencies(PlayerPositionTendency.DEFAULT_RIGHT_WINGER_TENDENCIES.getTendencies()
-                            .entrySet().stream()
-                            .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(true),
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.RIGHT_WINGER)
+                        .tendencies(PlayerPositionTendency.DEFAULT_RIGHT_WINGER_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(com.kjeldsen.player.rest.model.PlayerPosition.FORWARD)
-                    .tendencies(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.getTendencies()
-                            .entrySet().stream()
-                            .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(true),
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.FORWARD)
+                        .tendencies(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(com.kjeldsen.player.rest.model.PlayerPosition.STRIKER)
-                    .tendencies(PlayerPositionTendency.DEFAULT_STRIKER_TENDENCIES.getTendencies()
-                            .entrySet().stream()
-                            .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(true),
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.AERIAL_FORWARD)
+                        .tendencies(PlayerPositionTendency.DEFAULT_AERIAL_FORWARD_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
 
                 new PlayerPositionTendencyResponse()
-                    .position(com.kjeldsen.player.rest.model.PlayerPosition.GOALKEEPER)
-                    .tendencies(PlayerPositionTendency.DEFAULT_GOALKEEPER_TENDENCIES.getTendencies()
-                            .entrySet().stream()
-                            .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
-                    ._default(true)
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.STRIKER)
+                        .tendencies(PlayerPositionTendency.DEFAULT_STRIKER_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.AERIAL_STRIKER)
+                        .tendencies(PlayerPositionTendency.DEFAULT_AERIAL_STRIKER_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true),
+
+                new PlayerPositionTendencyResponse()
+                        .position(com.kjeldsen.player.rest.model.PlayerPosition.GOALKEEPER)
+                        .tendencies(PlayerPositionTendency.DEFAULT_GOALKEEPER_TENDENCIES.getTendencies()
+                                .entrySet().stream()
+                                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
+                        ._default(true)
             );
 
             mockMvc.perform(get("/player-position-tendencies"))
