@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kjeldsen Game</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+        crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/jquery-ui@1.13.2/themes/base/theme.min.css"
+        rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container my-3 col-lg-10 center">
+    <div class="navbar-nav navbar-start">
+      <a class="navbar-brand" href="/">Kjeldsen</a>
+      <a id="team-page-link" class="btn btn-outline-light m-1 disabled">Team</a>
+      <button id="game-page-link" class="btn btn-outline-light m-1 disabled">Play</button>
+      <button id="stats-page-link" class="btn btn-outline-light m-1 disabled">Statistics</button>
+      <button id="manual-page-link" class="btn btn-outline-light m-1 disabled">Manual</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid p-4">
+  <div class="row d-flex justify-content-around">
+    <div class="col-md-4 col-sm-6">
+      <div style="display:none;" id="response-message" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span id="response-message-text"></span>
+        <button id="dismiss-alert" type="button" class="btn-close" aria-label="Close"></button>
+      </div>
+      <form id="sign-up-form">
+        <h1>Join Kjeldsen</h1>
+
+        <div class="form-floating">
+          <input type="email" class="form-control" id="email" placeholder="name@example.com">
+          <label for="email">Email address</label>
+        </div>
+        <br>
+        <div class="form-floating">
+          <input type="password" class="form-control" id="password" placeholder="Password">
+          <label for="password">Password</label>
+        </div>
+
+        <div class="text-center">
+          <button class="btn btn-primary w-50 m-4" type="submit">Create Account</button>
+        </div>
+
+        <div id="create-team-button" style="display: none" class="text-end">
+          <a class="btn btn-success m-4" href="/">Create Team</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="text-center">
+      <a href="/signin.html">Sign in if you already have an account</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-ui@1.13.2/dist/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous">
+</script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
