@@ -13,7 +13,7 @@
         <module>player-adapter-rest</module>
         <module>player-application</module>
         <module>player-domain</module>
-        <module>match-engine</module>
+        <module>match-service</module>
         <module>infrastructure</module>
         <module>domain</module>
         <module>security-config</module>
