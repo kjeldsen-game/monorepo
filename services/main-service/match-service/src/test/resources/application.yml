@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    active: test
+
+  datasource:
+    url: jdbc:h2:mem:test-db
+    username: admin
+    password: password
+    driverClassName: org.h2.Driver
+logging:
+  level:
+    root: warn
+
+token:
+  signing:
+    key: D0D3D6D9DCDFE1E4E7EAEDEFF2F5F8FBSASDF91DJA9L1D2D3D4D5D6D7D8D9D0D
