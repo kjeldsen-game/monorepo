@@ -257,6 +257,30 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
+  /simulator/potential-rise/{playerId}:
+    post:
+      summary: Register a simulated scheduled potential rise
+      operationId: registerSimulatedScheduledPotentialRise
+      tags:
+        - simulator
+      parameters:
+        - $ref: '#/components/parameters/PlayerIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/RegisterSimulatedScheduledPotentialRiseRequest"
+      responses:
+        "200":
+          description: Simulated potential rise was scheduled
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlayerHistoricalPotentialRiseResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
   /simulator/cantera-score/{teamId}:
     post:
       summary: Register an investment on the Cantera
@@ -426,6 +450,13 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/RegisterSimulatedScheduledTrainingRequest"
+
+    RegisterSimulatedScheduledPotentialRiseRequest:
+      description: Register a simulated scheduled Potential Rise request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RegisterSimulatedScheduledPotentialRiseRequest"
 
     RegisterInvestmentOnCanteraRequest:
       description: Register an investment on cantera request
@@ -735,6 +766,17 @@ components:
         economy:
           $ref: "#/components/schemas/PlayerEconomy"
 
+    PlayerHistoricalPotentialRiseResponse:
+      type: object
+      properties:
+        playerId:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        potentialRises:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerPotentialRiseResponse"
+
     PlayerHistoricalTrainingResponse:
       type: object
       properties:
@@ -767,6 +809,30 @@ components:
           type: integer
           format: int32
         pointsAfterTraining:
+          type: integer
+          format: int32
+        currentDay:
+          type: integer
+          format: int32
+
+    PlayerPotentialRiseResponse:
+      type: object
+      properties:
+        playerId:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        skillThatRisen:
+          $ref: "#/components/schemas/PlayerSkill"
+        pointsToRise:
+          type: integer
+          format: int32
+        actualPoints:
+          type: integer
+          format: int32
+        potentialBeforeRaise:
+          type: integer
+          format: int32
+        potentialAfterRaise:
           type: integer
           format: int32
         currentDay:
@@ -826,6 +892,16 @@ components:
           example: [ PASSING , SCORE ]
           items:
             $ref: "#/components/schemas/PlayerSkill"
+
+    RegisterSimulatedScheduledPotentialRiseRequest:
+      type: object
+      properties:
+        daysToSimulate:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 1000
+          example: 2
 
     RegisterInvestmentOnCanteraRequest:
       type: object
