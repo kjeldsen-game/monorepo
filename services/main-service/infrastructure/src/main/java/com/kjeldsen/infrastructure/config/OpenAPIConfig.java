@@ -21,17 +21,22 @@ import org.springframework.context.annotation.Configuration;
         @Server(url = "http://localhost:8081")
     },
     security = {
-        @io.swagger.v3.oas.annotations.security.SecurityRequirement(name = "oauth2"),
+        @io.swagger.v3.oas.annotations.security.SecurityRequirement(name = "bearerAuth"),
     }
 )
 @SecuritySchemes({
     @SecurityScheme(
-        name = "oauth2",
+        name = "bearerAuth",
         type = SecuritySchemeType.OAUTH2,
         bearerFormat = "JWT",
         scheme = "bearer",
         flows = @OAuthFlows(
-            password = @OAuthFlow(tokenUrl = "/oauth/token", scopes = {@OAuthScope(name = "all", description = "all scope")})
+            authorizationCode = @OAuthFlow(
+                authorizationUrl = "https://kjeldsengame-dev.auth.eu-west-1.amazoncognito.com/oauth2/authorize",
+                refreshUrl = "https://kjeldsengame-dev.auth.eu-west-1.amazoncognito.com/oauth2/refresh",
+                tokenUrl = "https://kjeldsengame-dev.auth.eu-west-1.amazoncognito.com/oauth2/token",
+                scopes = {@OAuthScope(name = "all", description = "all scope")}
+            )
         )
     )
 })

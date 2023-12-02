@@ -23,7 +23,7 @@ public class GenerateTrainingUseCase {
 
     private static final Integer MIN_DAY = 1;
     private static final Integer MAX_DAY = 1000;
-    private static final Range<Integer> RANGE_OF_DAYS = Range.between(MIN_DAY, MAX_DAY);
+    private static final Range<Integer> RANGE_OF_DAYS = Range.of(MIN_DAY, MAX_DAY);
 
     private final PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository;
     private final PlayerReadRepository playerReadRepository;

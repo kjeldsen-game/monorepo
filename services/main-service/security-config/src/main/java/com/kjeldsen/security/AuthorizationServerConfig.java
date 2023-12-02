@@ -1,36 +1,15 @@
 package com.kjeldsen.security;
 
-import com.kjeldsen.auth.domain.SignUp;
-import com.kjeldsen.auth.usecases.UserDetailsServiceUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
-@Configuration
-@EnableAuthorizationServer
+//@Configuration
+// @EnableAuthorizationServer
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
-
+public class AuthorizationServerConfig /*extends AuthorizationServerConfigurerAdapter**/ {
+/*
     public static final String SCOPE_READ = "read";
     public static final String SCOPE_WRITE = "write";
     public static final String SCOPE_ALL = "all";
@@ -60,7 +39,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Value("${security.oauth2.private-key}")
     private String privateKey;
-
+/*
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
 
@@ -127,5 +106,5 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             .accessTokenValiditySeconds(accessTokenValiditySeconds)
             .refreshTokenValiditySeconds(refreshTokenValiditySeconds);
     }
-
+*/
 }

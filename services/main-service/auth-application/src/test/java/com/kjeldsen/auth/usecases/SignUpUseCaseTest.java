@@ -5,7 +5,6 @@ import com.kjeldsen.auth.persistence.SignUpReadRepository;
 import com.kjeldsen.auth.persistence.SignUpWriteRepository;
 import com.kjeldsen.player.application.usecases.CreateTeamUseCase;
 import org.junit.jupiter.api.Test;
-import org.springframework.web.server.ResponseStatusException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
@@ -43,7 +42,8 @@ class SignUpUseCaseTest {
 
         when(mockSignUpReadRepository.findByUsernameIgnoreCase(signUp.getUsername())).thenReturn(java.util.Optional.of(signUp));
 
-        assertThatThrownBy(() -> signUpUseCase.signUp(signUp)).isInstanceOf(ResponseStatusException.class).hasMessage("409 CONFLICT \"Username john.doe already in use\"");
+        assertThatThrownBy(() -> signUpUseCase.signUp(signUp)).isInstanceOf(RuntimeException.class).hasMessage(
+            "Username john.doe already in use");
 
         verify(mockSignUpWriteRepository, times(0)).save(signUp);
     }

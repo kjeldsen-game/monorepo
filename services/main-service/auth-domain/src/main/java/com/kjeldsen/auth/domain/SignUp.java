@@ -7,12 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.Collections;
 
 @Setter
 @Getter
@@ -20,7 +14,7 @@ import java.util.Collections;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "SignUpEvents")
-public class SignUp implements UserDetails {
+public class SignUp /*implements UserDetails*/ {
 
     public static final String DEFAULT_ROLE = "USER";
 
@@ -31,7 +25,7 @@ public class SignUp implements UserDetails {
 
     private String teamName;
 
-    @Override
+   /* @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(DEFAULT_ROLE));
     }
@@ -64,6 +58,6 @@ public class SignUp implements UserDetails {
     @Override
     public boolean isEnabled() {
         return Boolean.TRUE;
-    }
+    }*/
 
 }

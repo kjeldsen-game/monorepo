@@ -25,7 +25,7 @@ public class PlayerProvider {
 
     private static final Integer MIN_AGE = 15;
     private static final Integer MAX_AGE = 33;
-    private static final Range<Integer> RANGE_OF_AGE = Range.between(MIN_AGE, MAX_AGE);
+    private static final Range<Integer> RANGE_OF_AGE = Range.of(MIN_AGE, MAX_AGE);
     public static final int MAX_SKILL_VALUE = 100;
 
     public static String name() {

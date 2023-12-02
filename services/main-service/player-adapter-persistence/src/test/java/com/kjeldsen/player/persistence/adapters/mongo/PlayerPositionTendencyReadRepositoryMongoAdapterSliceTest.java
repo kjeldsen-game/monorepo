@@ -13,7 +13,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
@@ -23,7 +22,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataMongoTest(includeFilters = @ComponentScan.Filter(classes = Component.class), excludeAutoConfiguration = EmbeddedMongoAutoConfiguration.class)
+@DataMongoTest(includeFilters = @ComponentScan.Filter(classes = Component.class))
 @ActiveProfiles("test")
 class PlayerPositionTendencyReadRepositoryMongoAdapterSliceTest extends AbstractMongoDbTest {
 
@@ -83,9 +82,11 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceTest extends Abstract
             val actual = playerPositionTendencyReadRepository.find();
 
             assertThat(actual).hasSize(PlayerPositionTendency.DEFAULT_TENDENCIES.size());
-            PlayerPositionTendency playerPositionTendency1 = actual.stream().filter(playerPositionTendency -> playerPositionTendency.getPosition().equals(PlayerPosition.FORWARD)).findFirst().orElseThrow();
+            PlayerPositionTendency playerPositionTendency1 = actual.stream().filter(
+                playerPositionTendency -> playerPositionTendency.getPosition().equals(PlayerPosition.FORWARD)).findFirst().orElseThrow();
             assertThat(playerPositionTendency1.getTendencies().get(PlayerSkill.SCORE)).usingRecursiveComparison().isEqualTo(new PlayerSkills(1, 0));
-            assertThat(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.getTendencies().get(PlayerSkill.SCORE)).isNotEqualTo(playerPositionTendency1.getTendencies().get(PlayerSkill.SCORE));
+            assertThat(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.getTendencies().get(PlayerSkill.SCORE)).isNotEqualTo(
+                playerPositionTendency1.getTendencies().get(PlayerSkill.SCORE));
 
             PlayerPositionTendency.DEFAULT_TENDENCIES.stream()
                 .filter(playerPositionTendency -> !playerPositionTendency.getPosition().equals(PlayerPosition.FORWARD))

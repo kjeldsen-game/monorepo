@@ -1,11 +1,7 @@
 package com.kjeldsen.security;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
-
-@Component
-public class CustomPasswordEncoder implements PasswordEncoder {
+//@Component
+public class CustomPasswordEncoder { /*implements PasswordEncoder {
 
     public static final int BCRYPT_PASSWORD_STRENGTH = 12;
 
@@ -18,4 +14,5 @@ public class CustomPasswordEncoder implements PasswordEncoder {
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
         return BCrypt.checkpw(rawPassword.toString(), encodedPassword);
     }
+    */
 }

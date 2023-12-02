@@ -77,22 +77,22 @@ public class Player {
         }
         int initialRange = bloom.getBloomStartAge();
         int endRange = initialRange + bloom.getYearsOn();
-        return Range.between(initialRange, endRange).contains(age);
+        return Range.of(initialRange, endRange).contains(age);
     }
 
     public void addBloomPhase(PlayerTrainingBloomEvent playerTrainingBloomEvent) {
-        throwIfNot(Range.between(MIN_BLOOM_PLAYER_AGE, MAX_BLOOM_PLAYER_AGE).contains(age), BLOOM_PLAYER_AGE_INVALID_RANGE);
-        throwIfNot(Range.between(MIN_BLOOM_YEARS_ON, MAX_BLOOM_YEARS_ON).contains(playerTrainingBloomEvent.getYearsOn()),
+        throwIfNot(Range.of(MIN_BLOOM_PLAYER_AGE, MAX_BLOOM_PLAYER_AGE).contains(age), BLOOM_PLAYER_AGE_INVALID_RANGE);
+        throwIfNot(Range.of(MIN_BLOOM_YEARS_ON, MAX_BLOOM_YEARS_ON).contains(playerTrainingBloomEvent.getYearsOn()),
             BLOOM_YEARS_ON_INVALID_RANGE);
-        throwIfNot(Range.between(MIN_BLOOM_SPEED, MAX_BLOOM_SPEED).contains(playerTrainingBloomEvent.getBloomSpeed()),
+        throwIfNot(Range.of(MIN_BLOOM_SPEED, MAX_BLOOM_SPEED).contains(playerTrainingBloomEvent.getBloomSpeed()),
             BLOOM_SPEED_INVALID_RANGE);
 
         this.bloom = playerTrainingBloomEvent;
     }
 
     public void addDeclinePhase(PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
-        throwIfNot(Range.between(MIN_DECLINE_PLAYER_AGE, MAX_DECLINE_PLAYER_AGE).contains(age), DECLINE_PLAYER_AGE_INVALID_RANGE);
-        throwIfNot(Range.between(MIN_DECLINE_SPEED, MAX_DECLINE_SPEED).contains(playerTrainingDeclineEvent.getDeclineSpeed()),
+        throwIfNot(Range.of(MIN_DECLINE_PLAYER_AGE, MAX_DECLINE_PLAYER_AGE).contains(age), DECLINE_PLAYER_AGE_INVALID_RANGE);
+        throwIfNot(Range.of(MIN_DECLINE_SPEED, MAX_DECLINE_SPEED).contains(playerTrainingDeclineEvent.getDeclineSpeed()),
             DECLINE_SPEED_INVALID_RANGE);
 
         final int decreasePoints = PointsGenerator.generateDecreasePoints(
