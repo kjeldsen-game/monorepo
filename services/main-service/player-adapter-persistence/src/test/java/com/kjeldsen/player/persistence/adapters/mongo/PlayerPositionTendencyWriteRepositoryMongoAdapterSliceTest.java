@@ -47,7 +47,7 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceTest extends Abstrac
         public void create_a_new_player_position_tendency_when_there_is_not_existed_one_for_provided_position() {
             PlayerPositionTendency forwardTendencies = PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE, new PlayerSkills(7, 0)))
+                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0)))
                 .build();
 
             playerPositionTendencyWriteRepository.save(forwardTendencies);
@@ -55,7 +55,7 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceTest extends Abstrac
             Optional<PlayerPositionTendency> actual = playerPositionTendencyMongoRepository.findByPosition(PlayerPosition.FORWARD);
 
             assertThat(actual.isPresent()).isTrue();
-            assertThat(actual.get().getTendencies().get(PlayerSkill.SCORE)).usingRecursiveComparison().isEqualTo(new PlayerSkills(7, 0));
+            assertThat(actual.get().getTendencies().get(PlayerSkill.SCORING)).usingRecursiveComparison().isEqualTo(new PlayerSkills(7, 0));
         }
 
         @Test
@@ -63,19 +63,19 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceTest extends Abstrac
         public void update_an_existed_player_position_tendency_when_there_is_existed_one_for_provided_position() {
             PlayerPositionTendency forwardTendencyDocument = PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE, new PlayerSkills(7, 0)))
+                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0)))
                 .build();
             playerPositionTendencyMongoRepository.save(forwardTendencyDocument);
 
             PlayerPositionTendency forwardTendencies = PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE, new PlayerSkills(10, 0)))
+                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(10, 0)))
                 .build();
 
             playerPositionTendencyWriteRepository.save(forwardTendencies);
 
             Optional<PlayerPositionTendency> actual = playerPositionTendencyMongoRepository.findByPosition(PlayerPosition.FORWARD);
-            PlayerSkills playerSkills = actual.get().getTendencies().get(PlayerSkill.SCORE);
+            PlayerSkills playerSkills = actual.get().getTendencies().get(PlayerSkill.SCORING);
             assertThat(actual.isPresent()).isTrue();
             assertThat(playerSkills.getActual()).isEqualTo(10);
         }

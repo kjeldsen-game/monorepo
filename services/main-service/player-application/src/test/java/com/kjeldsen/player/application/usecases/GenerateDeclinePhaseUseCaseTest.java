@@ -29,7 +29,7 @@ class GenerateDeclinePhaseUseCaseTest {
     private static final Player.PlayerId PLAYER_ID = mock(Player.PlayerId.class);
     private static final EventId EVENT_ID = EventId.from("event-id");
     private static final Instant NOW = Instant.now();
-    private static final PlayerSkill PLAYER_SKILL = PlayerSkill.SCORE;
+    private static final PlayerSkill PLAYER_SKILL = PlayerSkill.SCORING;
 
     private final PlayerReadRepository mockedPlayerReadRepository = Mockito.mock(PlayerReadRepository.class);
     private final PlayerWriteRepository mockedPlayerWriteRepository = Mockito.mock(PlayerWriteRepository.class);

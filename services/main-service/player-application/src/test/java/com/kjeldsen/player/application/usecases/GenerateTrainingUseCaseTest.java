@@ -66,7 +66,7 @@ class GenerateTrainingUseCaseTest {
             pointsGeneratorMockedStatic.when(() -> PointsGenerator.generatePointsRise(0)).thenReturn(5);
             pointsGeneratorMockedStatic.when(() -> PointsGenerator.generatePointsRise(1)).thenReturn(3);
 
-            generateTrainingUseCase.generate(playerId, PlayerSkill.SCORE, days);
+            generateTrainingUseCase.generate(playerId, PlayerSkill.SCORING, days);
 
             eventIdMockedStatic.verify(EventId::generate);
             instantMockedStatic.verify(InstantProvider::now);
@@ -80,7 +80,7 @@ class GenerateTrainingUseCaseTest {
 
             assertEquals(1, playerTrainingEvents.size());
 
-            assertEquals(PlayerSkill.SCORE, playerTrainingEvents.get(0).getSkill());
+            assertEquals(PlayerSkill.SCORING, playerTrainingEvents.get(0).getSkill());
             assertEquals(3, playerTrainingEvents.get(0).getPoints());
 
             assertThat(playerTrainingEvents).allMatch(player -> player.getPlayerId().equals(playerId));
@@ -106,8 +106,8 @@ class GenerateTrainingUseCaseTest {
         return Player.builder()
             .id(playerId)
             .actualSkills(new HashMap<>(Map.of(
-                PlayerSkill.SCORE, new PlayerSkills(5, 0),
-                PlayerSkill.CO, new PlayerSkills(3, 0))))
+                PlayerSkill.SCORING, new PlayerSkills(5, 0),
+                PlayerSkill.CONSTITUTION, new PlayerSkills(3, 0))))
             .build();
     }
 }

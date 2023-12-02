@@ -51,7 +51,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
         public void return_a_list_player_position_tendencies() throws Exception {
             PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE, new PlayerSkills(7, 0)))
+                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0)))
                 .build();
             playerPositionTendencyStore.save(storedPlayerPositionTendency);
 
@@ -221,7 +221,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
         public void return_a_stored_player_position_tendency_of_a_given_position_when_player_position_tendency_exists_in_storage() throws Exception {
             PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE, new PlayerSkills(7, 0)))
+                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0)))
                 .build();
             playerPositionTendencyStore.save(storedPlayerPositionTendency);
 
@@ -246,13 +246,13 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
         @DisplayName("return an updated player position tendency of a given position")
         public void return_an_updated_player_position_tendency_of_a_given_position() throws Exception {
 
-            Map<PlayerSkill, Integer> request = Map.of(PlayerSkill.SCORE, 7);
+            Map<PlayerSkill, Integer> request = Map.of(PlayerSkill.SCORING, 7);
 
             PlayerPositionTendencyResponseTendenciesValue var = new PlayerPositionTendencyResponseTendenciesValue();
             var.setPlayerSkills(new com.kjeldsen.player.rest.model.PlayerSkills().actual(7).potential(0));
             PlayerPositionTendencyResponse expected = new PlayerPositionTendencyResponse()
                 .position(com.kjeldsen.player.rest.model.PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORE.name(), var))
+                .tendencies(Map.of(PlayerSkill.SCORING.name(), var))
                 ._default(false);
 
             mockMvc.perform(patch("/player-position-tendencies/FORWARD")

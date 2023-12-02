@@ -24,10 +24,10 @@ class UpdatePlayerPositionTendencyUseCaseTest {
         PlayerSkills v1 = new PlayerSkills(5, 0);
         PlayerSkills v2 = new PlayerSkills(4, 0);
         updatePlayerPositionTendencyUseCase.update(
-            new UpdatePlayerTendencies(PlayerPosition.FORWARD, Map.of(PlayerSkill.SCORE, v1, PlayerSkill.OFFENSIVE_POSITION, v2)));
+            new UpdatePlayerTendencies(PlayerPosition.FORWARD, Map.of(PlayerSkill.SCORING, v1, PlayerSkill.OFFENSIVE_POSITIONING, v2)));
 
         PlayerPositionTendency expectedPlayerPositionToBeSaved = PlayerPositionTendency.builder().position(PlayerPosition.FORWARD).tendencies(
-            Map.of(PlayerSkill.SCORE, v1, PlayerSkill.OFFENSIVE_POSITION, v2)).build();
+            Map.of(PlayerSkill.SCORING, v1, PlayerSkill.OFFENSIVE_POSITIONING, v2)).build();
         Mockito.verify(mockedPlayerPositionTendencyWriteRepository)
             .save(Mockito.eq(expectedPlayerPositionToBeSaved));
     }
