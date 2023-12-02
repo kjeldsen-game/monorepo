@@ -43,8 +43,8 @@ public class SimulatedApiIT extends AbstractIT {
         void return_200_and_the_list_of_the_registered_simulated_scheduled_trainings() throws Exception {
 
             List<PlayerSkill> skillList = new ArrayList<>();
-            skillList.add(PlayerSkill.CO);
-            skillList.add(PlayerSkill.SCORE);
+            skillList.add(PlayerSkill.CONSTITUTION);
+            skillList.add(PlayerSkill.SCORING);
 
             RegisterSimulatedScheduledTrainingRequest request = new RegisterSimulatedScheduledTrainingRequest()
                 .days(2)
@@ -55,8 +55,8 @@ public class SimulatedApiIT extends AbstractIT {
             playerWriteRepository.save(Player.builder()
                 .id(Player.PlayerId.of(playerId))
                 .actualSkills(Map.of(
-                    com.kjeldsen.player.domain.PlayerSkill.CO, new com.kjeldsen.player.domain.PlayerSkills(1, 0),
-                    com.kjeldsen.player.domain.PlayerSkill.SCORE, new com.kjeldsen.player.domain.PlayerSkills(2, 0)
+                    com.kjeldsen.player.domain.PlayerSkill.CONSTITUTION, new com.kjeldsen.player.domain.PlayerSkills(1, 0),
+                    com.kjeldsen.player.domain.PlayerSkill.SCORING, new com.kjeldsen.player.domain.PlayerSkills(2, 0)
                 ))
                 .build());
 
@@ -74,19 +74,19 @@ public class SimulatedApiIT extends AbstractIT {
 
             assertThat(playerHistoricalTrainingResponse1.getTrainings().get(0).getPlayerId()).isEqualTo(playerId);
             assertThat(playerHistoricalTrainingResponse1.getTrainings().get(0).getCurrentDay()).isEqualTo(1);
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(0).getSkill()).isEqualTo(PlayerSkill.CO);
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(0).getSkill()).isEqualTo(PlayerSkill.CONSTITUTION);
 
             assertThat(playerHistoricalTrainingResponse1.getTrainings().get(1).getPlayerId()).isEqualTo(playerId);
             assertThat(playerHistoricalTrainingResponse1.getTrainings().get(1).getCurrentDay()).isEqualTo(2);
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(1).getSkill()).isEqualTo(PlayerSkill.CO);
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(1).getSkill()).isEqualTo(PlayerSkill.CONSTITUTION);
 
             assertThat(playerHistoricalTrainingResponse1.getTrainings().get(2).getPlayerId()).isEqualTo(playerId);
             assertThat(playerHistoricalTrainingResponse1.getTrainings().get(2).getCurrentDay()).isEqualTo(1);
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(2).getSkill()).isEqualTo(PlayerSkill.SCORE);
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(2).getSkill()).isEqualTo(PlayerSkill.SCORING);
 
             assertThat(playerHistoricalTrainingResponse1.getTrainings().get(3).getPlayerId()).isEqualTo(playerId);
             assertThat(playerHistoricalTrainingResponse1.getTrainings().get(3).getCurrentDay()).isEqualTo(2);
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(3).getSkill()).isEqualTo(PlayerSkill.SCORE);
+            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(3).getSkill()).isEqualTo(PlayerSkill.SCORING);
 
         }
     }

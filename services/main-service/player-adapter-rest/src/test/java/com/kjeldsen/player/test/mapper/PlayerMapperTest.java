@@ -31,7 +31,7 @@ class PlayerMapperTest {
             .age(playerAge)
             .position(PlayerPosition.FORWARD)
             .actualSkills(Map.of(
-                PlayerSkill.SCORE, new PlayerSkills(10, 0),
+                PlayerSkill.SCORING, new PlayerSkills(10, 0),
                 PlayerSkill.PASSING, new PlayerSkills(20, 0)
             ))
             .build();
@@ -39,7 +39,7 @@ class PlayerMapperTest {
         PlayerResponse playerResponse = PlayerMapper.INSTANCE.playerResponseMap(player);
 
         assertEquals(playerId.value(), playerResponse.getId());
-        assertEquals(10, playerResponse.getActualSkills().get("SCORE").getPlayerSkills().getActual());
+        assertEquals(10, playerResponse.getActualSkills().get("SCORING").getPlayerSkills().getActual());
         assertEquals(player.getName(), playerResponse.getName());
         assertEquals(player.getAge(), playerResponse.getAge());
         assertEquals(PlayerPosition.FORWARD.toString(), playerResponse.getPosition().toString());
