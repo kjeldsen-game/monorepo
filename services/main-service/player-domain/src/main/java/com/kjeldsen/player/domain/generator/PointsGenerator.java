@@ -5,8 +5,8 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PointsGenerator {
-    private static final Float increaseMaxPorcentage = 60f;
-
+    private static final Float increaseMaxPercentage = 3f;
+    public static final int MAX_SKILL_VALUE = 100;
     public static int generatePointsRise(int currentDay) {
         double probability = probabilityRiseBasedOnCurrentDay(currentDay);
         double randomProbabilityRise = RandomGenerator.random() * 100;
@@ -63,7 +63,7 @@ public class PointsGenerator {
         return (int) ((probability * points) / 100);
     }
 
-    public static int generatePotencialPoints(int actualPoints) {
-        return (int) (increaseMaxPorcentage * actualPoints);
+    public static int generatePotentialPoints(int actualPoints) {
+        return (int) (Math.min(MAX_SKILL_VALUE, increaseMaxPercentage * actualPoints));
     }
 }

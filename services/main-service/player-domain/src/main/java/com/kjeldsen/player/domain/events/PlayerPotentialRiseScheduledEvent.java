@@ -14,8 +14,8 @@ import java.time.Instant;
 @Getter
 @Setter
 @SuperBuilder
-@Document(collection = "PlayerTrainingScheduledEvent")
-@TypeAlias("PlayerTrainingScheduledEvent")
+@Document(collection = "PlayerPotentialRiseScheduledEvent")
+@TypeAlias("PlayerPotentialRiseScheduledEvent")
 @NoArgsConstructor
 public class PlayerPotentialRiseScheduledEvent extends Event {
 

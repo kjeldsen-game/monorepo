@@ -20,9 +20,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @TypeAlias("PlayerPotentialRaiseEvent")
 public class PlayerPotentialRiseEvent extends Event {
     private Player.PlayerId playerId;
-    private int potentialBeforeRaise;
-    private int pointsToRise;
-    private int potentialAfterRaise;
+    private Integer actualPoints;
+    private Integer currentDay;
+    private Integer potentialBeforeRaise;
+    private Integer pointsToRise;
+    private Integer potentialAfterRaise;
     private PlayerSkill skillThatRisen;
-
 }

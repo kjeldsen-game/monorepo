@@ -3,22 +3,16 @@ package com.kjeldsen.player.rest.delegate;
 import com.kjeldsen.player.application.usecases.*;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.events.PlayerPotentialRiseEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.rest.api.SimulatorApiDelegate;
 import com.kjeldsen.player.rest.mapper.PlayerDeclineResponseMapper;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
+import com.kjeldsen.player.rest.mapper.PlayerPotentialRiseResponseMapper;
 import com.kjeldsen.player.rest.mapper.PlayerTrainingResponseMapper;
-import com.kjeldsen.player.rest.model.PlayerDeclineResponse;
-import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
-import com.kjeldsen.player.rest.model.RegisterEconomicInvestmentRequest;
-import com.kjeldsen.player.rest.model.RegisterInvestmentOnCanteraRequest;
-import com.kjeldsen.player.rest.model.RegisterSimulatedDeclineRequest;
-import com.kjeldsen.player.rest.model.RegisterSimulatedScheduledTrainingRequest;
-import com.kjeldsen.player.rest.model.RegisterSponsorIncomeRequest;
-import com.kjeldsen.player.rest.model.SimulateSalaryPayrollRequest;
-import com.kjeldsen.player.rest.model.SponsorPeriodicity;
+import com.kjeldsen.player.rest.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -32,9 +26,11 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 @Component
 public class SimulatorDelegate implements SimulatorApiDelegate {
-
+    private static final Integer MAX_AGE = 21;
     private final ScheduleTrainingUseCase scheduleTrainingUseCase;
+    private final SchedulePotentialRiseUseCase schedulePotentialRiseUseCase;
     private final FindAndProcessScheduledTrainingUseCase findAndProcessScheduledTrainingUseCase;
+    private final FindAndProcessScheduledPotentialUseCase findAndProcessScheduledPotentialRiseUseCase;
     private final GenerateSingleDeclineTrainingUseCase generateSingleDeclineTrainingUseCase;
     private final CanteraEconomyInvestmentUsecase canteraEconomyInvestmentUsecase;
     private final CanteraTraditionInvestmentUsecase canteraTraditionInvestmentUsecase;
@@ -44,30 +40,51 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final WeeklyIncomeSponsorUsecase weeklyIncomeSponsorUsecase;
     private final PaySalariesTeamUseCase paySalariesTeamUseCase;
     private final UpdateSalariesTeamUseCase updateSalariesTeamUseCase;
-    private final GenerateTrainingUseCase generateTrainingUseCase;
+    @Override
+    public ResponseEntity<PlayerHistoricalPotentialRiseResponse> registerSimulatedScheduledPotentialRise(
+                String playerId,
+                RegisterSimulatedScheduledPotentialRiseRequest registerSimulatedScheduledPotentialRiseRequest) {
 
+        schedulePotentialRiseUseCase.generate(
+                Player.PlayerId.of(playerId),
+                registerSimulatedScheduledPotentialRiseRequest.getDaysToSimulate()
+        );
+
+     List<PlayerPotentialRiseEvent> potentialRises = findAndProcessScheduledPotentialRiseUseCase.findAndProcess(InstantProvider.nowAsLocalDate())
+        .stream()
+        .filter(playerPotentialRiseEvent -> playerPotentialRiseEvent.getPlayerId().equals(Player.PlayerId.of(playerId)))
+        .toList();
+
+        return ResponseEntity.ok(new PlayerHistoricalPotentialRiseResponse()
+        .playerId(playerId)
+            .potentialRises(potentialRises.stream()
+            .map(PlayerPotentialRiseResponseMapper.INSTANCE::fromPlayerPotentialRiseEvent)
+            .toList()
+            ));
+    }
     @Override
     public ResponseEntity<PlayerHistoricalTrainingResponse> registerSimulatedScheduledTraining(
-        String playerId,
-        RegisterSimulatedScheduledTrainingRequest registerSimulatedScheduledTrainingRequest) {
+            String playerId,
+            RegisterSimulatedScheduledTrainingRequest registerSimulatedScheduledTrainingRequest) {
 
         registerSimulatedScheduledTrainingRequest.getSkills()
-            .forEach(skillsToTrain -> scheduleTrainingUseCase.generate(
-                Player.PlayerId.of(playerId),
-                PlayerMapper.INSTANCE.map(skillsToTrain.getValue()),
-                registerSimulatedScheduledTrainingRequest.getDays()
-            ));
+                .forEach(skillsToTrain -> scheduleTrainingUseCase.generate(
+                        Player.PlayerId.of(playerId),
+                        PlayerMapper.INSTANCE.map(skillsToTrain.getValue()),
+                        registerSimulatedScheduledTrainingRequest.getDays()
+                ));
 
         List<PlayerTrainingEvent> trainings = findAndProcessScheduledTrainingUseCase.findAndProcess(InstantProvider.nowAsLocalDate())
-            .stream()
-            .filter(playerTrainingEvent -> playerTrainingEvent.getPlayerId().equals(Player.PlayerId.of(playerId)))
-            .toList();
+                .stream()
+                .filter(playerTrainingEvent -> playerTrainingEvent.getPlayerId().equals(Player.PlayerId.of(playerId)))
+                .toList();
 
         return ResponseEntity.ok(new PlayerHistoricalTrainingResponse()
-            .playerId(playerId)
-            .trainings(trainings.stream()
-                .map(PlayerTrainingResponseMapper.INSTANCE::fromPlayerTrainingEvent)
-                .toList()));
+                .playerId(playerId)
+                .trainings(trainings.stream()
+                        .map(PlayerTrainingResponseMapper.INSTANCE::fromPlayerTrainingEvent)
+                        .toList()
+                ));
     }
 
     @Override
