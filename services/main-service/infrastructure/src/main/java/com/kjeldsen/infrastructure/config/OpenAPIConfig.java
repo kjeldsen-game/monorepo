@@ -18,7 +18,8 @@ import org.springframework.context.annotation.Configuration;
         version = "1"
     ),
     servers = {
-        @Server(url = "http://localhost:8081")
+        @Server(url = "http://localhost:8081"),
+        @Server(url = "https://kjeldsengame.com")
     },
     security = {
         @io.swagger.v3.oas.annotations.security.SecurityRequirement(name = "oauth2"),
