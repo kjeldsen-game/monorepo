@@ -14,6 +14,7 @@
         <module>player-application</module>
         <module>player-domain</module>
         <module>match-service</module>
+        <module>match-adapter-rest</module>
         <module>infrastructure</module>
         <module>domain</module>
         <module>security-config</module>
@@ -206,6 +207,11 @@
             <dependency>
                 <groupId>com.kjeldsen</groupId>
                 <artifactId>player-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>match-adapter-rest</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Match Service API
+
+tags:
+  - name: match
+
+paths:
+
+  /match:
+    post:
+      summary: Create a match
+      operationId: createMatch
+      tags:
+        - match
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/CreateMatchRequest"
+      responses:
+        "201":
+          description: Match was created
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+components:
+
+  requestBodies:
+
+    CreateMatchRequest:
+      description: Create match request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateMatchRequest"
+
+  responses:
+
+    DefaultErrorResponse:
+      description: Unexpected error
+      content:
+        "*/*":
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Error"
+
+  schemas:
+
+    Error:
+      type: "object"
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+    CreateMatchRequest:
+      type: object
+      properties:
+        home:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int63
+              example: 1
+        away:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int63
+              example: 1
