@@ -15,66 +15,43 @@ paths:
       tags:
         - match
       requestBody:
+        description: Create match request
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/requestBodies/CreateMatchRequest"
+              type: object
+              properties:
+                home:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                away:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int63
+                      example: 1
       responses:
         "201":
           description: Match was created
         default:
-          $ref: "#/components/responses/DefaultErrorResponse"
-components:
-
-  requestBodies:
-
-    CreateMatchRequest:
-      description: Create match request
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/CreateMatchRequest"
-
-  responses:
-
-    DefaultErrorResponse:
-      description: Unexpected error
-      content:
-        "*/*":
-          schema:
-            type: array
-            items:
-              $ref: "#/components/schemas/Error"
-
-  schemas:
-
-    Error:
-      type: "object"
-      required:
-        - code
-        - message
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-
-    CreateMatchRequest:
-      type: object
-      properties:
-        home:
-          type: object
-          properties:
-            id:
-              type: integer
-              format: int63
-              example: 1
-        away:
-          type: object
-          properties:
-            id:
-              type: integer
-              format: int63
-              example: 1
+          description: Unexpected error
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  type: "object"
+                  required:
+                    - code
+                    - message
+                  properties:
+                    code:
+                      type: integer
+                      format: int32
+                    message:
+                      type: string

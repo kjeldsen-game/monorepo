@@ -29,6 +29,10 @@
                             <modelPackage>com.kjeldsen.match.rest.model</modelPackage>
                             <configOptions>
                                 <delegatePattern>true</delegatePattern>
+                                <useJakartaEe>true</useJakartaEe>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <generatorName>spring</generatorName>
+                                <oas3>true</oas3>
                             </configOptions>
                             <generateApiTests>false</generateApiTests>
                             <generateModelTests>false</generateModelTests>
