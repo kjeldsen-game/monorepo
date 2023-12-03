@@ -3,7 +3,7 @@ package com.kjeldsen.match.engine.state;
 import com.kjeldsen.match.engine.entities.Action;
 import com.kjeldsen.match.engine.entities.Play;
 import com.kjeldsen.match.engine.entities.duel.DuelType;
-import com.kjeldsen.match.models.Match;
+import com.kjeldsen.match.engine.entities.Match;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

@@ -7,7 +7,7 @@ import com.kjeldsen.match.engine.entities.Play;
 import com.kjeldsen.match.engine.entities.duel.Duel;
 import com.kjeldsen.match.engine.entities.duel.DuelResult;
 import com.kjeldsen.match.engine.entities.duel.DuelType;
-import com.kjeldsen.match.models.Player;
+import com.kjeldsen.match.engine.entities.Player;
 import com.kjeldsen.match.engine.entities.SkillType;
 import com.kjeldsen.match.engine.random.DuelRandomization;
 import com.kjeldsen.match.engine.state.GameState;

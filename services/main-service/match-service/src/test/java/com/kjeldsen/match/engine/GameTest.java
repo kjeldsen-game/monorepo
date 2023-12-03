@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.kjeldsen.match.engine.entities.Action;
 import com.kjeldsen.match.engine.state.GameState;
-import com.kjeldsen.match.models.Match;
-import com.kjeldsen.match.models.MatchReport;
-import com.kjeldsen.match.models.Team;
+import com.kjeldsen.match.engine.entities.Match;
+import com.kjeldsen.match.engine.entities.MatchReport;
+import com.kjeldsen.match.engine.entities.Team;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;

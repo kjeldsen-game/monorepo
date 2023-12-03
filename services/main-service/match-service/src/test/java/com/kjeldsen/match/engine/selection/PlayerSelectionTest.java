@@ -6,8 +6,8 @@ import com.kjeldsen.match.engine.RandomHelper;
 import com.kjeldsen.match.engine.state.GameStateException;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.state.TeamState;
-import com.kjeldsen.match.models.Player;
-import com.kjeldsen.match.models.Team;
+import com.kjeldsen.match.engine.entities.Player;
+import com.kjeldsen.match.engine.entities.Team;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 

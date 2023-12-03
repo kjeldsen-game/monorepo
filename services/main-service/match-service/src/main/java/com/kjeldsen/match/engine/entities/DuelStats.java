@@ -1,4 +1,4 @@
-package com.kjeldsen.match.models;
+package com.kjeldsen.match.engine.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

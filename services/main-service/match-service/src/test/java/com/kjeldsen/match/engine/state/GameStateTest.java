@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.kjeldsen.match.engine.RandomHelper;
 import com.kjeldsen.match.engine.entities.PitchArea;
-import com.kjeldsen.match.models.Match;
-import com.kjeldsen.match.models.Team;
+import com.kjeldsen.match.engine.entities.Match;
+import com.kjeldsen.match.engine.entities.Team;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 

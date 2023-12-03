@@ -1,9 +1,7 @@
-package com.kjeldsen.match.models;
+package com.kjeldsen.match.engine.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.kjeldsen.match.engine.entities.PlayerPosition;
-import com.kjeldsen.match.engine.entities.SkillType;
 import com.kjeldsen.match.engine.entities.duel.DuelRole;
 import com.kjeldsen.match.engine.entities.duel.DuelType;
 import com.kjeldsen.match.engine.modifers.PlayerOrder;

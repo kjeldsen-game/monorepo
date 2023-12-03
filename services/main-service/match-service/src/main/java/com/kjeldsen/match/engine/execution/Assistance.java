@@ -10,7 +10,7 @@ import com.kjeldsen.match.engine.modifers.Tactic;
 import com.kjeldsen.match.engine.modifers.VerticalPressure;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.state.TeamState;
-import com.kjeldsen.match.models.Player;
+import com.kjeldsen.match.engine.entities.Player;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;

@@ -10,7 +10,7 @@ import com.kjeldsen.match.engine.entities.duel.DuelOrigin;
 import com.kjeldsen.match.engine.execution.DuelParams;
 import com.kjeldsen.match.engine.selection.ReceiverSelection;
 import com.kjeldsen.match.engine.state.GameStateException;
-import com.kjeldsen.match.models.Player;
+import com.kjeldsen.match.engine.entities.Player;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;

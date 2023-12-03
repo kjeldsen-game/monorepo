@@ -1,9 +1,7 @@
-package com.kjeldsen.match.models;
+package com.kjeldsen.match.engine.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.kjeldsen.match.engine.entities.MatchResult;
-import com.kjeldsen.match.engine.entities.Play;
 import com.kjeldsen.match.engine.processing.Ratings;
 import com.kjeldsen.match.engine.state.GameState;
 import java.util.List;

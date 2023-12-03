@@ -3,7 +3,7 @@ package com.kjeldsen.match.controllers;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.state.GameStateException;
-import com.kjeldsen.match.models.MatchReport;
+import com.kjeldsen.match.engine.entities.MatchReport;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.kjeldsen.match.models;
+package com.kjeldsen.match.engine.entities;
 
 import com.kjeldsen.match.engine.modifers.HorizontalPressure;
 import com.kjeldsen.match.engine.modifers.Tactic;

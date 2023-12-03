@@ -1,7 +1,7 @@
 package com.kjeldsen.match.engine.state;
 
 import com.kjeldsen.match.engine.entities.PitchArea;
-import com.kjeldsen.match.models.Player;
+import com.kjeldsen.match.engine.entities.Player;
 import lombok.Value;
 
 @Value

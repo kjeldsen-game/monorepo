@@ -5,9 +5,8 @@ import com.kjeldsen.match.engine.entities.PlayerPosition;
 import com.kjeldsen.match.engine.entities.duel.DuelType;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.state.GameStateException;
-import com.kjeldsen.match.models.Player;
+import com.kjeldsen.match.engine.entities.Player;
 import java.util.List;
-import java.util.Optional;
 
 public class ChallengerSelection {
 
