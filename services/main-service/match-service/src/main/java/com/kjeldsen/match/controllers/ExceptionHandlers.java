@@ -5,7 +5,6 @@ import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.state.GameStateException;
 import com.kjeldsen.match.models.MatchReport;
 import java.util.Optional;
-import javax.naming.AuthenticationException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -31,12 +30,6 @@ public class ExceptionHandlers {
             this.message = message;
             this.report = null;
         }
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<?> handleException(AuthenticationException e) {
-        ResponseError error = new ResponseError(e.getMessage());
-        return ResponseEntity.badRequest().body(error);
     }
 
     @ExceptionHandler(Exception.class)
