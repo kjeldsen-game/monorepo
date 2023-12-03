@@ -118,7 +118,7 @@ public class Player {
     }
     public void addSkillsPotentialRisePoints(PlayerSkill skill, Integer points) {
         PlayerSkills skillPoints = actualSkills.get(skill);
-        skillPoints.setPotential(skillPoints.getPotential() + points);
+        skillPoints.setPotential(Math.min(MAX_SKILL_VALUE, skillPoints.getPotential() + points));
     }
 
     private void subtractSkillPoints(PlayerSkill skill, Integer points) {
