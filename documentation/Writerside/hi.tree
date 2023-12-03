@@ -13,4 +13,5 @@
     <toc-element topic="Glossary.md"/>
     <toc-element topic="BirdSightArchitecture.md"/>
     <toc-element topic="Timelines.md"/>
+    <toc-element topic="Release.md"/>
 </instance-profile>
