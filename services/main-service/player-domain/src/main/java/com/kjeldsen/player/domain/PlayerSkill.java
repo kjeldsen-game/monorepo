@@ -15,6 +15,6 @@ public enum PlayerSkill {
     CONTROL,
     ORGANIZATION,
     ONE_ON_ONE,
-    INTERCEPTING; // Engine use only, ignore
+    INTERCEPTING; // Currently for engine use only, ignore
 }
 

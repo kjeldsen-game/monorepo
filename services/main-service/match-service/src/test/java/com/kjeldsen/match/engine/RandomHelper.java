@@ -1,12 +1,12 @@
 package com.kjeldsen.match.engine;
 
 import com.github.javafaker.Faker;
-import com.kjeldsen.match.engine.entities.Player;
-import com.kjeldsen.match.engine.entities.Team;
-import com.kjeldsen.match.engine.modifers.HorizontalPressure;
-import com.kjeldsen.match.engine.modifers.PlayerOrder;
-import com.kjeldsen.match.engine.modifers.Tactic;
-import com.kjeldsen.match.engine.modifers.VerticalPressure;
+import com.kjeldsen.match.entities.Player;
+import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.match.modifers.HorizontalPressure;
+import com.kjeldsen.match.modifers.PlayerOrder;
+import com.kjeldsen.match.modifers.Tactic;
+import com.kjeldsen.match.modifers.VerticalPressure;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerSkill;
 import java.util.ArrayList;
