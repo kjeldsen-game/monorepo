@@ -1,16 +1,15 @@
 package com.kjeldsen.match.engine.execution;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.kjeldsen.match.engine.entities.Play;
+import com.kjeldsen.match.engine.entities.Player;
 import com.kjeldsen.match.engine.entities.duel.Duel;
 import com.kjeldsen.match.engine.entities.duel.DuelResult;
 import com.kjeldsen.match.engine.entities.duel.DuelType;
-import com.kjeldsen.match.engine.entities.Player;
-import com.kjeldsen.match.engine.entities.SkillType;
 import com.kjeldsen.match.engine.random.DuelRandomization;
 import com.kjeldsen.match.engine.state.GameState;
+import com.kjeldsen.player.domain.PlayerSkill;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -44,9 +43,9 @@ class DuelExecutionTest {
 
     @Test
     void consecutiveLossesInitiator() {
-        Player initiator = Player.builder().skills(Map.of(SkillType.OFFENSIVE_POSITIONING, 40))
+        Player initiator = Player.builder().skills(Map.of(PlayerSkill.OFFENSIVE_POSITIONING, 40))
             .build();
-        Player challenger = Player.builder().skills(Map.of(SkillType.DEFENSIVE_POSITIONING, 60))
+        Player challenger = Player.builder().skills(Map.of(PlayerSkill.DEFENSIVE_POSITIONING, 60))
             .build();
 
         List<DuelResult> results = List.of(
@@ -84,9 +83,9 @@ class DuelExecutionTest {
 
     @Test
     void consecutiveLossesChallenger() {
-        Player initiator = Player.builder().skills(Map.of(SkillType.OFFENSIVE_POSITIONING, 40))
+        Player initiator = Player.builder().skills(Map.of(PlayerSkill.OFFENSIVE_POSITIONING, 40))
             .build();
-        Player challenger = Player.builder().skills(Map.of(SkillType.DEFENSIVE_POSITIONING, 60))
+        Player challenger = Player.builder().skills(Map.of(PlayerSkill.DEFENSIVE_POSITIONING, 60))
             .build();
 
         List<DuelResult> results = List.of(

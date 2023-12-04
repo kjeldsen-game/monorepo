@@ -11,7 +11,7 @@ import com.kjeldsen.match.engine.entities.Team;
 import com.kjeldsen.match.engine.entities.duel.Duel;
 import com.kjeldsen.match.engine.entities.duel.DuelType;
 import com.kjeldsen.match.engine.entities.Player;
-import com.kjeldsen.match.engine.entities.SkillType;
+import com.kjeldsen.player.domain.PlayerSkill;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -46,7 +46,7 @@ public class DuelRandomizationTest {
         GameState state = GameState.builder().plays(List.of(first, second)).build();
 
         Optional<Duel> previous =
-            DuelRandomization.previousDuel(state, initiator, SkillType.PASSING);
+            DuelRandomization.previousDuel(state, initiator, PlayerSkill.PASSING);
         assertTrue(previous.isPresent());
         assertEquals(first.getDuel(), previous.get());
     }

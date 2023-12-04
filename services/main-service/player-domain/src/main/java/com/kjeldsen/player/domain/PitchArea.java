@@ -1,4 +1,4 @@
-package com.kjeldsen.match.engine.entities;
+package com.kjeldsen.player.domain;
 
 public enum PitchArea {
 
@@ -7,11 +7,11 @@ public enum PitchArea {
      * team. Center forward maps directly onto the penalty box despite the area being larger.
      *
      * |----------------|------------------|-----------------|
-     * |  LEFT_FORWARD  |  CENTER_FORWARD  |  RIGHT_FORWARD  |
+     * |  LEFT_FORWARD  |  CENTRE_FORWARD  |  RIGHT_FORWARD  |
      * |----------------|------------------|-----------------|
-     * |  LEFT_MIDFIELD |  CENTER_MIDFIELD |  RIGHT_MIDFIELD |
+     * |  LEFT_MIDFIELD |  CENTRE_MIDFIELD |  RIGHT_MIDFIELD |
      * |----------------|------------------|-----------------|
-     * |  LEFT_BACK     |  CENTER_BACK     |  RIGHT_BACK     |
+     * |  LEFT_BACK     |  CENTRE_BACK     |  RIGHT_BACK     |
      * |----------------|------------------|-----------------|
      *
      * The pitch is further categorised into forward, middle, and back ranks:
@@ -27,22 +27,22 @@ public enum PitchArea {
      * And left, center, and right files:
      *
      * |----------------|------------------|-----------------|
-     * |  LEFT          |  CENTER          |  RIGHT          |
+     * |  LEFT          |  CENTRE          |  RIGHT          |
      * |----------------|------------------|-----------------|
-     * |  LEFT          |  CENTER          |  RIGHT          |
+     * |  LEFT          |  CENTRE          |  RIGHT          |
      * |----------------|------------------|-----------------|
-     * |  LEFT          |  CENTER          |  RIGHT          |
+     * |  LEFT          |  CENTRE          |  RIGHT          |
      * |----------------|------------------|-----------------|
      */
 
     LEFT_FORWARD,
-    CENTER_FORWARD, // Penalty box
+    CENTRE_FORWARD, // Penalty box
     RIGHT_FORWARD,
     LEFT_MIDFIELD,
-    CENTER_MIDFIELD,
+    CENTRE_MIDFIELD,
     RIGHT_MIDFIELD,
     LEFT_BACK,
-    CENTER_BACK,
+    CENTRE_BACK,
     RIGHT_BACK;
 
     public enum PitchRank {
@@ -53,22 +53,22 @@ public enum PitchArea {
 
     public enum PitchFile {
         LEFT,
-        CENTER,
+        CENTRE,
         RIGHT
     }
 
     public PitchRank rank() {
         return switch (this) {
-            case LEFT_FORWARD, CENTER_FORWARD, RIGHT_FORWARD -> PitchRank.FORWARD;
-            case LEFT_MIDFIELD, CENTER_MIDFIELD, RIGHT_MIDFIELD -> PitchRank.MIDDLE;
-            case LEFT_BACK, CENTER_BACK, RIGHT_BACK -> PitchRank.BACK;
+            case LEFT_FORWARD, CENTRE_FORWARD, RIGHT_FORWARD -> PitchRank.FORWARD;
+            case LEFT_MIDFIELD, CENTRE_MIDFIELD, RIGHT_MIDFIELD -> PitchRank.MIDDLE;
+            case LEFT_BACK, CENTRE_BACK, RIGHT_BACK -> PitchRank.BACK;
         };
     }
 
     public PitchFile file() {
         return switch (this) {
             case LEFT_FORWARD, LEFT_MIDFIELD, LEFT_BACK -> PitchFile.LEFT;
-            case CENTER_FORWARD, CENTER_MIDFIELD, CENTER_BACK -> PitchFile.CENTER;
+            case CENTRE_FORWARD, CENTRE_MIDFIELD, CENTRE_BACK -> PitchFile.CENTRE;
             case RIGHT_FORWARD, RIGHT_MIDFIELD, RIGHT_BACK -> PitchFile.RIGHT;
         };
     }
@@ -88,13 +88,13 @@ public enum PitchArea {
     public PitchArea flipPerspective() {
         return switch (this) {
             case LEFT_FORWARD -> RIGHT_BACK;
-            case CENTER_FORWARD -> CENTER_BACK;
+            case CENTRE_FORWARD -> CENTRE_BACK;
             case RIGHT_FORWARD -> LEFT_BACK;
             case LEFT_MIDFIELD -> RIGHT_MIDFIELD;
-            case CENTER_MIDFIELD -> CENTER_MIDFIELD;
+            case CENTRE_MIDFIELD -> CENTRE_MIDFIELD;
             case RIGHT_MIDFIELD -> LEFT_MIDFIELD;
             case LEFT_BACK -> RIGHT_FORWARD;
-            case CENTER_BACK -> CENTER_FORWARD;
+            case CENTRE_BACK -> CENTRE_FORWARD;
             case RIGHT_BACK -> LEFT_FORWARD;
         };
     }
@@ -102,13 +102,13 @@ public enum PitchArea {
     public PitchArea switchFile() {
         return switch (this) {
             case LEFT_FORWARD -> RIGHT_FORWARD;
-            case CENTER_FORWARD -> CENTER_FORWARD;
+            case CENTRE_FORWARD -> CENTRE_FORWARD;
             case RIGHT_FORWARD -> LEFT_FORWARD;
             case LEFT_MIDFIELD -> RIGHT_MIDFIELD;
-            case CENTER_MIDFIELD -> CENTER_MIDFIELD;
+            case CENTRE_MIDFIELD -> CENTRE_MIDFIELD;
             case RIGHT_MIDFIELD -> LEFT_MIDFIELD;
             case LEFT_BACK -> RIGHT_BACK;
-            case CENTER_BACK -> CENTER_BACK;
+            case CENTRE_BACK -> CENTRE_BACK;
             case RIGHT_BACK -> LEFT_BACK;
         };
     }

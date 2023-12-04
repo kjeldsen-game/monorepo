@@ -1,16 +1,16 @@
 package com.kjeldsen.match.engine.modifers;
 
 import com.kjeldsen.match.engine.entities.Action;
-import com.kjeldsen.match.engine.entities.PitchArea;
-import com.kjeldsen.match.engine.entities.PitchArea.PitchFile;
-import com.kjeldsen.match.engine.entities.PitchArea.PitchRank;
-import com.kjeldsen.match.engine.entities.PlayerPosition;
-import com.kjeldsen.match.engine.entities.SkillType;
 import com.kjeldsen.match.engine.entities.duel.DuelOrigin;
 import com.kjeldsen.match.engine.execution.DuelParams;
 import com.kjeldsen.match.engine.selection.ReceiverSelection;
 import com.kjeldsen.match.engine.state.GameStateException;
 import com.kjeldsen.match.engine.entities.Player;
+import com.kjeldsen.player.domain.PitchArea;
+import com.kjeldsen.player.domain.PitchArea.PitchFile;
+import com.kjeldsen.player.domain.PitchArea.PitchRank;
+import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.domain.PlayerSkill;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
@@ -81,9 +81,9 @@ public enum PlayerOrder {
             .orElseThrow(
                 () -> new GameStateException(params.getState(), "No goalkeeper found"));
 
-        Map<SkillType, Integer> skills = goalkeeper.getSkills();
-        int bonus = params.getState().getBallState().getArea().file() == PitchFile.CENTER ? 10 : 25;
-        skills.put(SkillType.REFLEXES, skills.get(SkillType.REFLEXES) + bonus);
+        Map<PlayerSkill, Integer> skills = goalkeeper.getSkills();
+        int bonus = params.getState().getBallState().getArea().file() == PitchFile.CENTRE ? 10 : 25;
+        skills.put(PlayerSkill.REFLEXES, skills.get(PlayerSkill.REFLEXES) + bonus);
         goalkeeper.setSkills(skills);
 
         return DuelParams.builder()
@@ -99,7 +99,7 @@ public enum PlayerOrder {
         PitchFile file = params.getState().getBallState().getArea().file();
         PitchRank rank = params.getState().getBallState().getArea().rank();
 
-        if (file == PitchFile.CENTER || rank != PitchRank.MIDDLE) {
+        if (file == PitchFile.CENTRE || rank != PitchRank.MIDDLE) {
             return params;
         }
         // At this point the rank must be middle and the file is the opposite of the current one,

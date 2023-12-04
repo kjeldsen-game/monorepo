@@ -1,10 +1,10 @@
 package com.kjeldsen.match.engine.selection;
 
-import com.kjeldsen.match.engine.entities.PitchArea;
 import com.kjeldsen.match.engine.entities.Play;
 import com.kjeldsen.match.engine.entities.duel.DuelType;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.entities.Player;
+import com.kjeldsen.player.domain.PitchArea;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +33,7 @@ public class DefenderSelection {
             return null;
         }
 
-        Map<Long, Integer> values = candidates.stream()
+        Map<String, Integer> values = candidates.stream()
             .collect(Collectors.toMap(
                 Player::getId,
                 player -> {
@@ -77,7 +77,7 @@ public class DefenderSelection {
             return null;
         }
 
-        Map<Long, Integer> values = candidates.stream()
+        Map<String, Integer> values = candidates.stream()
             .collect(Collectors.toMap(
                 Player::getId,
                 player -> {
@@ -115,7 +115,7 @@ public class DefenderSelection {
             .map(Play::getDuel)
             .filter(duel -> duel.getType() == DuelType.POSITIONAL
                 && duel.getChallenger() != null
-                && Objects.equals(duel.getChallenger().getTeam().getId(), player.getTeam().getId()))
+                && Objects.equals(duel.getChallenger().getTeamId(), player.getTeamId()))
             .findFirst()
             .map(duel -> !Objects.equals(duel.getChallenger().getId(), player.getId()))
             .orElse(true);

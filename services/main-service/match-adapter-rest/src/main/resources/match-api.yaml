@@ -56,8 +56,7 @@ components:
         - message
       properties:
         code:
-          type: integer
-          format: int32
+          type: string
         message:
           type: string
 
@@ -68,13 +67,11 @@ components:
           type: object
           properties:
             id:
-              type: integer
-              format: int63
-              example: 1
+              type: string
+              example: id
         away:
           type: object
           properties:
             id:
-              type: integer
-              format: int63
-              example: 1
+              type: string
+              example: id

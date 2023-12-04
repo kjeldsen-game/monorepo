@@ -1,8 +1,8 @@
 package com.kjeldsen.match.engine.entities.duel;
 
-import com.kjeldsen.match.engine.entities.PitchArea;
 import com.kjeldsen.match.engine.entities.DuelStats;
 import com.kjeldsen.match.engine.entities.Player;
+import com.kjeldsen.player.domain.PitchArea;
 import lombok.Builder;
 import lombok.Value;
 

@@ -6,6 +6,8 @@ import com.kjeldsen.match.engine.entities.duel.DuelRole;
 import com.kjeldsen.match.engine.entities.duel.DuelType;
 import com.kjeldsen.match.engine.modifers.PlayerOrder;
 import com.kjeldsen.match.utils.JsonUtils;
+import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.domain.PlayerSkill;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,23 +24,13 @@ public class Player {
     public static final int MAX_SKILL_VALUE = 100;
     public static final int MIN_SKILL_VALUE = 0;
 
-    Long id;
+    String id;
+    String teamId;
 
     String name;
     PlayerPosition position;
-    Map<SkillType, Integer> skills;
+    Map<PlayerSkill, Integer> skills;
     PlayerOrder playerOrder;
-    Team team;
-
-    @SuppressWarnings("unused")
-    public Long getTeamId() {
-        if (team != null) {
-            return team.getId();
-        } else {
-            return null;
-        }
-    }
-
 
     // Instead of accessing the skill points directly, this method should be used to determine the
     // skill level of the player via the duel logic

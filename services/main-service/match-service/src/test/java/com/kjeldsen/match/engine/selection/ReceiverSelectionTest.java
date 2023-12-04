@@ -9,10 +9,10 @@ import com.kjeldsen.match.engine.state.BallState;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.state.TeamState;
 import com.kjeldsen.match.engine.entities.Match;
-import com.kjeldsen.match.engine.entities.PitchArea;
 import com.kjeldsen.match.engine.entities.Team;
 import com.kjeldsen.match.engine.entities.Player;
-import com.kjeldsen.match.engine.entities.PlayerPosition;
+import com.kjeldsen.player.domain.PitchArea;
+import com.kjeldsen.player.domain.PlayerPosition;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,19 +33,19 @@ public class ReceiverSelectionTest {
     @Disabled
     void selectMidfieldReceiverDistribution() {
         Team team = RandomHelper.genTeam();
-        Player initiator = genPlayerWithPosition(team, PlayerPosition.CENTER_MIDFIELDER);
+        Player initiator = genPlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER);
 
         List<Player> players = List.of(
             genPlayerWithPosition(team, PlayerPosition.LEFT_MIDFIELDER),
             genPlayerWithPosition(team, PlayerPosition.DEFENSIVE_MIDFIELDER),
             genPlayerWithPosition(team, PlayerPosition.RIGHT_WINGER),
-            genPlayerWithPosition(team, PlayerPosition.CENTER_MIDFIELDER));
+            genPlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER));
 
         Map<PlayerPosition, Integer> selections = new HashMap<>();
         selections.put(PlayerPosition.LEFT_MIDFIELDER, 0);
         selections.put(PlayerPosition.DEFENSIVE_MIDFIELDER, 0);
         selections.put(PlayerPosition.RIGHT_WINGER, 0);
-        selections.put(PlayerPosition.CENTER_MIDFIELDER, 0);
+        selections.put(PlayerPosition.CENTRE_MIDFIELDER, 0);
 
         Team home = Team.builder().players(players).build();
         Match match = Match.builder()
@@ -54,7 +54,7 @@ public class ReceiverSelectionTest {
             .build();
 
         BallState ballState =
-            new BallState(home.getPlayers().get(0), PitchArea.CENTER_MIDFIELD);
+            new BallState(home.getPlayers().get(0), PitchArea.CENTRE_MIDFIELD);
 
         GameState state = GameState.builder()
             .turn(GameState.Turn.HOME)
@@ -102,7 +102,7 @@ public class ReceiverSelectionTest {
             .build();
 
         BallState ballState =
-            new BallState(home.getPlayers().get(0), PitchArea.CENTER_MIDFIELD);
+            new BallState(home.getPlayers().get(0), PitchArea.CENTRE_MIDFIELD);
 
         GameState state = GameState.builder()
             .turn(GameState.Turn.HOME)

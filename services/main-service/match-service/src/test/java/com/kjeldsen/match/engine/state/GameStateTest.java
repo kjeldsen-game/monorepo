@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.kjeldsen.match.engine.RandomHelper;
-import com.kjeldsen.match.engine.entities.PitchArea;
 import com.kjeldsen.match.engine.entities.Match;
 import com.kjeldsen.match.engine.entities.Team;
+import com.kjeldsen.player.domain.PitchArea;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
@@ -66,7 +66,7 @@ class GameStateTest {
                         .clock(1)
                         .home(before.getHome())
                         .away(before.getAway())
-                        .ballState((new BallState(null, PitchArea.CENTER_MIDFIELD)))
+                        .ballState((new BallState(null, PitchArea.CENTRE_MIDFIELD)))
                         .plays(before.getPlays())
                         .build())
                 .orElse(state));

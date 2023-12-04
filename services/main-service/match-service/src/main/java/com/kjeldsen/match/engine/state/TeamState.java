@@ -17,7 +17,7 @@ public class TeamState {
      * Represents positions and conditions of players on the team
      */
 
-    Long id; // Temp - should not be here
+    String id;
     List<Player> players;
     int score;
 

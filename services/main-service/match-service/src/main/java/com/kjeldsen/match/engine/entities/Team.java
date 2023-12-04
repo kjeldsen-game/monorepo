@@ -16,13 +16,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Team {
 
-    Long id;
+    String id;
     List<Player> players;
 
     Integer rating;
 
-    // Modifiers - TODO these need to be passed as part of the match configuration as opposed to
-    // being part of the team definition
     Tactic tactic;
     VerticalPressure verticalPressure;
     HorizontalPressure horizontalPressure;

@@ -1,7 +1,8 @@
 package com.kjeldsen.match.engine.modifers;
 
-import com.kjeldsen.match.engine.entities.PitchArea;
-import com.kjeldsen.match.engine.entities.PitchArea.PitchRank;
+
+import com.kjeldsen.player.domain.PitchArea;
+import com.kjeldsen.player.domain.PitchArea.PitchRank;
 
 public enum VerticalPressure {
 

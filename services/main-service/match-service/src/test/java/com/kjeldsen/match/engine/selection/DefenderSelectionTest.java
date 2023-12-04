@@ -8,10 +8,10 @@ import com.kjeldsen.match.engine.state.BallState;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.state.TeamState;
 import com.kjeldsen.match.engine.entities.Match;
-import com.kjeldsen.match.engine.entities.PitchArea;
 import com.kjeldsen.match.engine.entities.Team;
 import com.kjeldsen.match.engine.entities.Player;
-import com.kjeldsen.match.engine.entities.PlayerPosition;
+import com.kjeldsen.player.domain.PitchArea;
+import com.kjeldsen.player.domain.PlayerPosition;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,14 +36,14 @@ public class DefenderSelectionTest {
         Team team = RandomHelper.genTeam();
 
         List<Player> players = List.of(
-            genPlayerWithPosition(team, PlayerPosition.CENTER_MIDFIELDER),
+            genPlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER),
             genPlayerWithPosition(team, PlayerPosition.OFFENSIVE_MIDFIELDER),
             genPlayerWithPosition(team, PlayerPosition.DEFENSIVE_MIDFIELDER),
             genPlayerWithPosition(team, PlayerPosition.RIGHT_MIDFIELDER),
             genPlayerWithPosition(team, PlayerPosition.LEFT_WINGER));
 
         Map<PlayerPosition, Integer> selections = new HashMap<>();
-        selections.put(PlayerPosition.CENTER_MIDFIELDER, 0);
+        selections.put(PlayerPosition.CENTRE_MIDFIELDER, 0);
         selections.put(PlayerPosition.OFFENSIVE_MIDFIELDER, 0);
         selections.put(PlayerPosition.DEFENSIVE_MIDFIELDER, 0);
         selections.put(PlayerPosition.RIGHT_MIDFIELDER, 0);
@@ -56,7 +56,7 @@ public class DefenderSelectionTest {
             .build();
 
         BallState ballState =
-            new BallState(home.getPlayers().get(0), PitchArea.CENTER_MIDFIELD);
+            new BallState(home.getPlayers().get(0), PitchArea.CENTRE_MIDFIELD);
 
         GameState state = GameState.builder()
             .turn(GameState.Turn.HOME)
@@ -69,7 +69,7 @@ public class DefenderSelectionTest {
 
         // Make this number larger to get more accurate results
         for (int i = 0; i < 10000; i++) {
-            Player selected = selectFromMidfield(state, PitchArea.CENTER_MIDFIELD);
+            Player selected = selectFromMidfield(state, PitchArea.CENTRE_MIDFIELD);
             selections.merge(selected.getPosition(), 1, Integer::sum);
         }
 

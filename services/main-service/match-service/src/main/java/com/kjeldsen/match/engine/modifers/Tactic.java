@@ -1,8 +1,8 @@
 package com.kjeldsen.match.engine.modifers;
 
-import com.kjeldsen.match.engine.entities.PitchArea;
-import com.kjeldsen.match.engine.entities.PlayerPosition;
 import com.kjeldsen.match.engine.entities.duel.DuelRole;
+import com.kjeldsen.player.domain.PitchArea;
+import com.kjeldsen.player.domain.PlayerPosition;
 
 public enum Tactic {
 
@@ -68,13 +68,13 @@ public enum Tactic {
         // TODO incomplete
         return switch (role) {
             case CHALLENGER -> {
-                if (area == PitchArea.CENTER_BACK) {
+                if (area == PitchArea.CENTRE_BACK) {
                     yield 0.85;
                 }
                 yield 0.0;
             }
             case INITIATOR -> {
-                if (area == PitchArea.CENTER_FORWARD) {
+                if (area == PitchArea.CENTRE_FORWARD) {
                     yield 0.85;
                 }
                 yield 0.0;
@@ -86,13 +86,13 @@ public enum Tactic {
         // TODO incomplete
         return switch (role) {
             case CHALLENGER -> {
-                if (area == PitchArea.CENTER_BACK) {
+                if (area == PitchArea.CENTRE_BACK) {
                     yield 1.15;
                 }
                 yield 1.0;
             }
             case INITIATOR -> {
-                if (area == PitchArea.CENTER_FORWARD) {
+                if (area == PitchArea.CENTRE_FORWARD) {
                     yield 1.15;
                 }
                 yield 1.0;

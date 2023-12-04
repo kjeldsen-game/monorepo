@@ -1,7 +1,7 @@
 package com.kjeldsen.match.engine.entities.duel;
 
 import com.kjeldsen.match.engine.entities.Action;
-import com.kjeldsen.match.engine.entities.SkillType;
+import com.kjeldsen.player.domain.PlayerSkill;
 import java.util.List;
 
 public enum DuelType {
@@ -54,20 +54,20 @@ public enum DuelType {
 
     // The skill involved in the particular duel type. This depends on whether the player in the
     // duel is the initiator or challenger.
-    public SkillType requiredSkill(DuelRole role) {
+    public PlayerSkill requiredSkill(DuelRole role) {
         if (role == DuelRole.INITIATOR) {
             return switch (this) {
-                case PASSING -> SkillType.PASSING;
-                case POSITIONAL -> SkillType.OFFENSIVE_POSITIONING;
-                case BALL_CONTROL -> SkillType.TACKLING;
-                case SHOT -> SkillType.SCORING;
+                case PASSING -> PlayerSkill.PASSING;
+                case POSITIONAL -> PlayerSkill.OFFENSIVE_POSITIONING;
+                case BALL_CONTROL -> PlayerSkill.TACKLING;
+                case SHOT -> PlayerSkill.SCORING;
             };
         } else {
             return switch (this) {
-                case PASSING -> SkillType.INTERCEPTING;
-                case POSITIONAL -> SkillType.DEFENSIVE_POSITIONING;
-                case BALL_CONTROL -> SkillType.BALL_CONTROL;
-                case SHOT -> SkillType.REFLEXES;
+                case PASSING -> PlayerSkill.INTERCEPTING;
+                case POSITIONAL -> PlayerSkill.DEFENSIVE_POSITIONING;
+                case BALL_CONTROL -> PlayerSkill.BALL_CONTROL;
+                case SHOT -> PlayerSkill.REFLEXES;
             };
 
         }

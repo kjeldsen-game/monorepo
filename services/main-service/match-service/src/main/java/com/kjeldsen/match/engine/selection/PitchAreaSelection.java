@@ -1,7 +1,7 @@
 package com.kjeldsen.match.engine.selection;
 
-import com.kjeldsen.match.engine.entities.PitchArea;
 import com.kjeldsen.match.engine.entities.Player;
+import com.kjeldsen.player.domain.PitchArea;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;

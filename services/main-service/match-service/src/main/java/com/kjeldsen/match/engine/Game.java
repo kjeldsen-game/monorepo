@@ -1,7 +1,6 @@
 package com.kjeldsen.match.engine;
 
 import com.kjeldsen.match.engine.entities.Action;
-import com.kjeldsen.match.engine.entities.PitchArea;
 import com.kjeldsen.match.engine.entities.Play;
 import com.kjeldsen.match.engine.entities.duel.Duel;
 import com.kjeldsen.match.engine.entities.duel.DuelOrigin;
@@ -22,6 +21,7 @@ import com.kjeldsen.match.engine.state.GameStateException;
 import com.kjeldsen.match.engine.state.TeamState;
 import com.kjeldsen.match.engine.entities.Match;
 import com.kjeldsen.match.engine.entities.Player;
+import com.kjeldsen.player.domain.PitchArea;
 import java.util.Optional;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -83,7 +83,7 @@ public class Game {
                     .clock(before.getClock() + Action.PASS.getDuration())
                     .home(before.getHome())
                     .away(before.getAway())
-                    .ballState((new BallState(starting, PitchArea.CENTER_MIDFIELD)))
+                    .ballState((new BallState(starting, PitchArea.CENTRE_MIDFIELD)))
                     .plays(before.getPlays())
                     .build())
             .orElseThrow();
@@ -247,7 +247,7 @@ public class Game {
         // Give the ball to the kick-off player from the team that conceded the goal
         BallState newBallState = new BallState(
             KickOffSelection.selectPlayer(state, state.defendingTeam()),
-            PitchArea.CENTER_MIDFIELD);
+            PitchArea.CENTRE_MIDFIELD);
 
         return Optional.of(state)
             .map((before) ->

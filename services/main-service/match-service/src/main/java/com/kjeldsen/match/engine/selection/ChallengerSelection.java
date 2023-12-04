@@ -1,11 +1,11 @@
 package com.kjeldsen.match.engine.selection;
 
-import com.kjeldsen.match.engine.entities.PitchArea;
-import com.kjeldsen.match.engine.entities.PlayerPosition;
 import com.kjeldsen.match.engine.entities.duel.DuelType;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.state.GameStateException;
 import com.kjeldsen.match.engine.entities.Player;
+import com.kjeldsen.player.domain.PitchArea;
+import com.kjeldsen.player.domain.PlayerPosition;
 import java.util.List;
 
 public class ChallengerSelection {

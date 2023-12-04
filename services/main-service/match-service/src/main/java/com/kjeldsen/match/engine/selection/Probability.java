@@ -17,10 +17,10 @@ public class Probability {
     // Given a list of candidate players, returns one based on a map of their relative value, which
     // represents how likely they are to be selected
     public static Player drawPlayer(
-        GameState state, List<Player> candidates, Map<Long, Integer> values) {
+        GameState state, List<Player> candidates, Map<String, Integer> values) {
 
-        Map<Long, Double> probabilities = toProbabilityMap(values);
-        Long selectedPlayerId = selectFromProbabilities(state, probabilities);
+        Map<String, Double> probabilities = toProbabilityMap(values);
+        String selectedPlayerId = selectFromProbabilities(state, probabilities);
         return candidates.stream()
             .filter(p -> Objects.equals(p.getId(), selectedPlayerId))
             .findAny()
@@ -31,7 +31,7 @@ public class Probability {
 
     // Calculates the actual probability that a player will be selected based on the values
     // assigned to their position
-    private static Map<Long, Double> toProbabilityMap(Map<Long, Integer> values) {
+    private static Map<String, Double> toProbabilityMap(Map<String, Integer> values) {
         int sum = values.values().stream().reduce(0, Integer::sum);
         return values.entrySet().stream()
             .collect(Collectors.toMap(
@@ -44,13 +44,13 @@ public class Probability {
     // The technique used here is based on calculating cumulative probabilities and then
     // generating a random number between 0 and 1. This number will fall within one of the
     // cumulative probability ranges and the player associated with that range will be selected.
-    private static Long selectFromProbabilities(GameState state, Map<Long, Double> probabilities) {
+    private static String selectFromProbabilities(GameState state, Map<String, Double> probabilities) {
         double[] cumulativeProbabilities = new double[probabilities.size()];
-        Long[] playerIds = new Long[probabilities.size()];
+        String[] playerIds = new String[probabilities.size()];
         int index = 0;
         double cumulativeProbability = 0.0;
 
-        for (Map.Entry<Long, Double> entry : probabilities.entrySet()) {
+        for (Map.Entry<String, Double> entry : probabilities.entrySet()) {
             playerIds[index] = entry.getKey();
             cumulativeProbability += entry.getValue();
             cumulativeProbabilities[index] = cumulativeProbability;

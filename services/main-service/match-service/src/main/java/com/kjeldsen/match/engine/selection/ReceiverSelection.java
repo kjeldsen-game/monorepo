@@ -1,10 +1,10 @@
 package com.kjeldsen.match.engine.selection;
 
-import com.kjeldsen.match.engine.entities.PitchArea;
-import com.kjeldsen.match.engine.entities.PlayerPosition;
+import com.kjeldsen.match.engine.entities.Player;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.state.GameStateException;
-import com.kjeldsen.match.engine.entities.Player;
+import com.kjeldsen.player.domain.PitchArea;
+import com.kjeldsen.player.domain.PlayerPosition;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +58,7 @@ public class ReceiverSelection {
 
         // When calculating probabilities, first assign values based on the player's position
         // category (a natural position counts as 2, an offensive as 4 and a support as 1).
-        Map<Long, Integer> values = candidates.stream()
+        Map<String, Integer> values = candidates.stream()
             .collect(Collectors.toMap(
                 Player::getId,
                 player -> {
@@ -95,7 +95,7 @@ public class ReceiverSelection {
 
         // When calculating probabilities, first assign values based on the player's position
         // category (a natural position counts as 2, an offensive as 1).
-        Map<Long, Integer> values = candidates.stream()
+        Map<String, Integer> values = candidates.stream()
             .collect(Collectors.toMap(
                 Player::getId,
                 player -> {

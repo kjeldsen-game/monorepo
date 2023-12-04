@@ -1,16 +1,16 @@
 package com.kjeldsen.match.engine.execution;
 
-import com.kjeldsen.match.engine.entities.PitchArea;
-import com.kjeldsen.match.engine.entities.PitchArea.PitchRank;
-import com.kjeldsen.match.engine.entities.PlayerPosition;
-import com.kjeldsen.match.engine.entities.SkillType;
+import com.kjeldsen.match.engine.entities.Player;
 import com.kjeldsen.match.engine.entities.duel.DuelRole;
 import com.kjeldsen.match.engine.modifers.HorizontalPressure;
 import com.kjeldsen.match.engine.modifers.Tactic;
 import com.kjeldsen.match.engine.modifers.VerticalPressure;
 import com.kjeldsen.match.engine.state.GameState;
 import com.kjeldsen.match.engine.state.TeamState;
-import com.kjeldsen.match.engine.entities.Player;
+import com.kjeldsen.player.domain.PitchArea;
+import com.kjeldsen.player.domain.PitchArea.PitchRank;
+import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.domain.PlayerSkill;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -52,9 +52,9 @@ public class Assistance {
         return switch (role) {
             case INITIATOR -> {
                 double supportFactor = attackerSupport(player.getPosition(), ballArea);
-                double op = player.getSkills().get(SkillType.OFFENSIVE_POSITIONING);
+                double op = player.getSkills().get(PlayerSkill.OFFENSIVE_POSITIONING);
                 double bc =
-                    player.getSkills().get(SkillType.BALL_CONTROL) * BALL_CONTROL_FACTOR;
+                    player.getSkills().get(PlayerSkill.BALL_CONTROL) * BALL_CONTROL_FACTOR;
                 double tacticFactor =
                     tactic.assistanceFactor(player.getPosition(), DuelRole.INITIATOR, ballArea);
                 yield (int) ((op + bc) * supportFactor * tacticFactor);
@@ -62,8 +62,8 @@ public class Assistance {
 
             case CHALLENGER -> {
                 double supportFactor = defenderSupport(player.getPosition(), ballArea);
-                double dp = player.getSkills().get(SkillType.DEFENSIVE_POSITIONING);
-                double ta = player.getSkills().get(SkillType.TACKLING) * TACKLING_FACTOR;
+                double dp = player.getSkills().get(PlayerSkill.DEFENSIVE_POSITIONING);
+                double ta = player.getSkills().get(PlayerSkill.TACKLING) * TACKLING_FACTOR;
                 yield (int) (supportFactor * (dp + ta));
             }
         };
@@ -120,13 +120,13 @@ public class Assistance {
         if (area.rank() == PitchRank.FORWARD) {
             return switch (area.file()) {
                 case LEFT, RIGHT -> flankForwardAttackerSupport(position);
-                case CENTER -> centerForwardAttackerSupport(position);
+                case CENTRE -> centerForwardAttackerSupport(position);
             };
         }
         if (area.rank() == PitchRank.MIDDLE) {
             return switch (area.file()) {
                 case LEFT, RIGHT -> flankMidfieldAttackerSupport(position);
-                case CENTER -> centerMidfieldAttackerSupport(position);
+                case CENTRE -> centerMidfieldAttackerSupport(position);
             };
         }
 
@@ -138,13 +138,13 @@ public class Assistance {
         if (area.rank() == PitchRank.FORWARD) {
             return switch (area.file()) {
                 case LEFT, RIGHT -> flankForwardDefenderSupport(position);
-                case CENTER -> centerForwardDefenderSupport(position);
+                case CENTRE -> centerForwardDefenderSupport(position);
             };
         }
         if (area.rank() == PitchRank.MIDDLE) {
             return switch (area.file()) {
                 case LEFT, RIGHT -> flankMidfieldDefenderSupport(position);
-                case CENTER -> centerMidfieldDefenderSupport(position);
+                case CENTRE -> centerMidfieldDefenderSupport(position);
             };
         }
 
@@ -159,7 +159,7 @@ public class Assistance {
             case LEFT_BACK -> 0.5;
             case OFFENSIVE_MIDFIELDER -> 0.5;
             case FORWARD -> 0.5;
-            case CENTER_MIDFIELDER -> 0.35;
+            case CENTRE_MIDFIELDER -> 0.35;
             case RIGHT_WINGER -> 1.0;
             case RIGHT_MIDFIELDER -> 0.75;
             case RIGHT_WINGBACK -> 0.75;
@@ -174,7 +174,7 @@ public class Assistance {
             case LEFT_MIDFIELDER -> 0.5;
             case OFFENSIVE_MIDFIELDER -> 0.75;
             case FORWARD -> 1.0;
-            case CENTER_MIDFIELDER -> 0.5;
+            case CENTRE_MIDFIELDER -> 0.5;
             case RIGHT_WINGER -> 0.75;
             case RIGHT_MIDFIELDER -> 0.5;
             default -> 0.0;
@@ -189,7 +189,7 @@ public class Assistance {
             case LEFT_WINGBACK -> 1.0;
             case LEFT_BACK -> 0.75;
             case OFFENSIVE_MIDFIELDER -> 0.75;
-            case CENTER_MIDFIELDER -> 0.5;
+            case CENTRE_MIDFIELDER -> 0.5;
             case DEFENSIVE_MIDFIELDER -> 0.35;
             case RIGHT_WINGER -> 1.0;
             case RIGHT_MIDFIELDER -> 1.0;
@@ -206,7 +206,7 @@ public class Assistance {
             case LEFT_MIDFIELDER -> 0.75;
             case OFFENSIVE_MIDFIELDER -> 1.25;
             case FORWARD -> 0.25;
-            case CENTER_MIDFIELDER -> 1.0;
+            case CENTRE_MIDFIELDER -> 1.0;
             case DEFENSIVE_MIDFIELDER -> 0.5;
             case RIGHT_WINGER -> 0.35;
             case RIGHT_MIDFIELDER -> 0.75;
@@ -221,7 +221,7 @@ public class Assistance {
             case LEFT_WINGBACK -> 0.75;
             case LEFT_BACK -> 1.0;
             case OFFENSIVE_MIDFIELDER -> 0.5;
-            case CENTER_MIDFIELDER -> 0.35;
+            case CENTRE_MIDFIELDER -> 0.35;
             case DEFENSIVE_MIDFIELDER -> 0.5;
             case RIGHT_WINGER -> 0.35;
             case RIGHT_MIDFIELDER -> 0.35;
@@ -238,7 +238,7 @@ public class Assistance {
             case LEFT_MIDFIELDER -> 0.25;
             case OFFENSIVE_MIDFIELDER -> 0.5;
             case FORWARD -> 0.75;
-            case CENTER_MIDFIELDER -> 0.5;
+            case CENTRE_MIDFIELDER -> 0.5;
             case DEFENSIVE_MIDFIELDER -> 0.75;
             case RIGHT_WINGER -> 0.25;
             case RIGHT_MIDFIELDER -> 0.25;
@@ -254,7 +254,7 @@ public class Assistance {
             case LEFT_WINGBACK -> 1.0;
             case LEFT_BACK -> 1.0;
             case OFFENSIVE_MIDFIELDER -> 0.35;
-            case CENTER_MIDFIELDER -> 0.5;
+            case CENTRE_MIDFIELDER -> 0.5;
             case DEFENSIVE_MIDFIELDER -> 0.75;
             case RIGHT_WINGER -> 0.75;
             case RIGHT_MIDFIELDER -> 1.0;
@@ -270,7 +270,7 @@ public class Assistance {
             case LEFT_MIDFIELDER -> 0.5;
             case OFFENSIVE_MIDFIELDER -> 0.5;
             case FORWARD -> 0.25;
-            case CENTER_MIDFIELDER -> 0.75;
+            case CENTRE_MIDFIELDER -> 0.75;
             case DEFENSIVE_MIDFIELDER -> 1.25;
             case RIGHT_WINGER -> 0.35;
             case RIGHT_MIDFIELDER -> 0.5;

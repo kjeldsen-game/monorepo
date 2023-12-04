@@ -7,9 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.kjeldsen.match.engine.RandomHelper;
 import com.kjeldsen.match.engine.entities.Action;
-import com.kjeldsen.match.engine.entities.PitchArea;
 import com.kjeldsen.match.engine.entities.Play;
-import com.kjeldsen.match.engine.entities.PlayerPosition;
 import com.kjeldsen.match.engine.entities.duel.Duel;
 import com.kjeldsen.match.engine.state.BallState;
 import com.kjeldsen.match.engine.state.GameState;
@@ -17,11 +15,14 @@ import com.kjeldsen.match.engine.state.GameState.Turn;
 import com.kjeldsen.match.engine.entities.Match;
 import com.kjeldsen.match.engine.entities.Player;
 import com.kjeldsen.match.engine.entities.Team;
+import com.kjeldsen.player.domain.PitchArea;
+import com.kjeldsen.player.domain.PlayerPosition;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import org.junit.jupiter.api.Test;
+import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
 
 class ActionSelectionTest {
 
@@ -30,7 +31,7 @@ class ActionSelectionTest {
     @Test
     void forwardInPenaltyBoxDoesNotPass() {
         Player forward = Player.builder().position(PlayerPosition.FORWARD).build();
-        GameState state = setGameState(forward, PitchArea.CENTER_FORWARD);
+        GameState state = setGameState(forward, PitchArea.CENTRE_FORWARD);
         List<Action> actions = ActionSelection.filterActions(allActions, state, forward);
         assertFalse(actions.contains(Action.PASS));
     }
@@ -45,8 +46,8 @@ class ActionSelectionTest {
 
     @Test
     void defenderPassesAndTacklesOnly() {
-        Player defender = Player.builder().position(PlayerPosition.CENTER_BACK).build();
-        GameState state = setGameState(defender, PitchArea.CENTER_BACK);
+        Player defender = Player.builder().position(PlayerPosition.CENTRE_BACK).build();
+        GameState state = setGameState(defender, PitchArea.CENTRE_BACK);
         List<Action> actions = ActionSelection.filterActions(allActions, state, defender);
         assertEquals(2, actions.size());
         assertTrue(actions.contains(Action.TACKLE));
@@ -64,9 +65,9 @@ class ActionSelectionTest {
 
     // Helper to create a game state with a player in control of the ball in a particular area
     private GameState setGameState(Player player, PitchArea area) {
-        player.setId(new Random().nextLong());
+        player.setId(RandomStringUtils.random(5));
         Team home = Team.builder()
-            .id(new Random().nextLong())
+            .id(RandomStringUtils.random(5))
             .build();
         List<Player> players = genPlayers(home);
         players.remove(1);

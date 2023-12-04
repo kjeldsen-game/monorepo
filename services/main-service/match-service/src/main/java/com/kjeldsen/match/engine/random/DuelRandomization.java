@@ -1,12 +1,12 @@
 package com.kjeldsen.match.engine.random;
 
 import com.kjeldsen.match.engine.entities.Play;
-import com.kjeldsen.match.engine.entities.SkillType;
+import com.kjeldsen.match.engine.entities.Player;
 import com.kjeldsen.match.engine.entities.duel.Duel;
 import com.kjeldsen.match.engine.entities.duel.DuelRole;
 import com.kjeldsen.match.engine.entities.duel.DuelType;
 import com.kjeldsen.match.engine.state.GameState;
-import com.kjeldsen.match.engine.entities.Player;
+import com.kjeldsen.player.domain.PlayerSkill;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;
@@ -42,7 +42,7 @@ public class DuelRandomization {
     // smaller and higher range of performance values. This value is also adjusted based on their
     // performance in previous duels to avoid too many consecutive wins/losses.
     public static int performance(GameState state, Player player, DuelType type, DuelRole role) {
-        SkillType requiredSkill = type.requiredSkill(role);
+        PlayerSkill requiredSkill = type.requiredSkill(role);
         // TODO - experience adjustment
         int adjustment = previousDuel(state, player, requiredSkill)
             .map(duel -> {
@@ -59,7 +59,7 @@ public class DuelRandomization {
     }
 
     // Returns the previous duel that involved a particular skill for the given player
-    public static Optional<Duel> previousDuel(GameState state, Player player, SkillType skill) {
+    public static Optional<Duel> previousDuel(GameState state, Player player, PlayerSkill skill) {
         return state.getPlays().stream()
             .sorted(Comparator.comparingInt(Play::getClock).reversed())
             .map(Play::getDuel)
