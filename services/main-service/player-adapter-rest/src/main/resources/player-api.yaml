@@ -558,6 +558,7 @@ components:
         - CONTROL
         - ORGANIZATION
         - ONE_ON_ONE
+        - INTERCEPTING
 
     CanteraInvestment:
       example: ECONOMY

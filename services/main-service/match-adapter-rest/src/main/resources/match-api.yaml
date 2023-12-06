@@ -49,6 +49,37 @@ components:
 
   schemas:
 
+    Tactic:
+      type: string
+      example: DOUBLE_TEAM
+      enum:
+        - DOUBLE_TEAM
+        - MAN_ON_MAN
+        - ZONE
+        - COUNTER_ATTACK
+        - POSSESSION_CONTROL
+        - TIKA_TAKA
+        - WING_PLAY
+        - CATENACCIO
+        - ROUTE_ONE
+        - OFFSIDE_TRAP
+
+    HorizontalPressure:
+      type: string
+      example: NO_HORIZONTAL_FOCUS
+      enum:
+        - SWARM_CENTRE
+        - SWARM_FLANKS
+        - NO_HORIZONTAL_FOCUS
+
+    VerticalPressure:
+      type: string
+      example: NO_VERTICAL_FOCUS
+      enum:
+        - MID_PRESSURE
+        - LOW_PRESSURE
+        - NO_VERTICAL_FOCUS
+
     Error:
       type: "object"
       required:
@@ -56,8 +87,7 @@ components:
         - message
       properties:
         code:
-          type: integer
-          format: int32
+          type: string
         message:
           type: string
 
@@ -68,13 +98,25 @@ components:
           type: object
           properties:
             id:
-              type: integer
-              format: int63
-              example: 1
+              type: string
+              example: id
+            modifiers:
+              $ref: "#/components/schemas/Modifiers"
         away:
           type: object
           properties:
             id:
-              type: integer
-              format: int63
-              example: 1
+              type: string
+              example: id
+            modifiers:
+              $ref: "#/components/schemas/Modifiers"
+
+    Modifiers:
+      type: object
+      properties:
+        tactic:
+          $ref: "#/components/schemas/Tactic"
+        horizontalPressure:
+          $ref: "#/components/schemas/HorizontalPressure"
+        verticalPressure:
+          $ref: "#/components/schemas/VerticalPressure"
