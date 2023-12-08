@@ -8,7 +8,7 @@ import com.kjeldsen.match.entities.duel.DuelType;
 import com.kjeldsen.match.execution.DuelDTO;
 import com.kjeldsen.match.execution.DuelExecution;
 import com.kjeldsen.match.execution.DuelParams;
-import com.kjeldsen.match.modifers.PlayerOrder;
+import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.match.selection.ActionSelection;
 import com.kjeldsen.match.selection.ChallengerSelection;
 import com.kjeldsen.match.selection.KickOffSelection;
