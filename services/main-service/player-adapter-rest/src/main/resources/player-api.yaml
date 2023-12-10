@@ -615,6 +615,14 @@ components:
         - SENIOR
       example: JUNIOR
 
+    PlayerStatus:
+      type: string
+      enum:
+        - INACTIVE
+        - ACTIVE
+        - BENCH
+      example: INACTIVE
+
     PlayerEconomy:
       type: object
       properties:
@@ -758,6 +766,8 @@ components:
           $ref: "#/components/schemas/PlayerPosition"
         category:
           $ref: "#/components/schemas/PlayerCategory"
+        status:
+          $ref: "#/components/schemas/PlayerStatus"
         actualSkills:
           additionalProperties:
             type: object

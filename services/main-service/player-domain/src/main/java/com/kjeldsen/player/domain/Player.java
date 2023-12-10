@@ -54,6 +54,7 @@ public class Player {
     private PlayerTrainingBloomEvent bloom;
     private PlayerTrainingDeclineEvent decline;
     private PlayerCategory category;
+    private PlayerStatus status;
     private Economy economy;
 
     public static Player creation(PlayerCreationEvent playerCreationEvent) {
@@ -62,6 +63,7 @@ public class Player {
             .name(playerCreationEvent.getName())
             .age(playerCreationEvent.getAge())
             .position(playerCreationEvent.getPosition())
+            .status(PlayerStatus.INACTIVE)
             .actualSkills(playerCreationEvent.getInitialSkills())
             .teamId(playerCreationEvent.getTeamId())
             .category(playerCreationEvent.getPlayerCategory())

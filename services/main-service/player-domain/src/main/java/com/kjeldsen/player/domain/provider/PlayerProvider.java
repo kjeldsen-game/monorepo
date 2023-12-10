@@ -77,6 +77,7 @@ public class PlayerProvider {
             .actualSkills(skillsBasedOnTendency(positionTendencies, totalPoints))
             .teamId(teamId)
             .category(playerCategory)
+            .status(PlayerStatus.INACTIVE)
             .economy(Player.Economy.builder().build())
             .build();
         player.negotiateSalary();
