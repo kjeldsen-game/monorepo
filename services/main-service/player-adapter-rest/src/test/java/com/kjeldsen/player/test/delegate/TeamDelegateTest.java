@@ -2,6 +2,7 @@ package com.kjeldsen.player.test.delegate;
 
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.rest.delegate.TeamDelegate;
 import com.kjeldsen.player.rest.model.TeamResponse;
 import com.kjeldsen.security.AuthenticationFetcher;
@@ -18,7 +19,8 @@ public class TeamDelegateTest {
 
     private final GetTeamUseCase mockedGetTeamUseCase = Mockito.mock(GetTeamUseCase.class);
     private final AuthenticationFetcher mockedAuthenticationFetcher = Mockito.mock(AuthenticationFetcher.class);
-    private final TeamDelegate teamDelegate = new TeamDelegate(mockedGetTeamUseCase, mockedAuthenticationFetcher);
+    private final TeamReadRepository teamReadRepository = Mockito.mock(TeamReadRepository.class);
+    private final TeamDelegate teamDelegate = new TeamDelegate(mockedGetTeamUseCase, mockedAuthenticationFetcher, teamReadRepository);
 
     @Test
     public void should_return_a_team_response_on_getTeam_method() {
