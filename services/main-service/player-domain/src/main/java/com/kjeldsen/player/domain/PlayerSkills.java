@@ -12,6 +12,11 @@ import lombok.*;
 public class PlayerSkills {
     public static final int MAX_SKILL_VALUE = 100;
     public static final int MIN_SKILL_VALUE = 0;
+
+    public static PlayerSkills empty() {
+        return PlayerSkills.builder().actual(0).potential(0).build();
+    }
+
     private Integer actual;
     private Integer potential;
 

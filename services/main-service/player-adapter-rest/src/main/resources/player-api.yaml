@@ -607,6 +607,14 @@ components:
         - GOALKEEPER
       example: FORWARD
 
+    SkillTypes:
+      type: string
+      enum:
+        - CORE
+        - SECONDARY
+        - RESIDUAL
+      example: CORE
+
     PlayerCategory:
       type: string
       enum:

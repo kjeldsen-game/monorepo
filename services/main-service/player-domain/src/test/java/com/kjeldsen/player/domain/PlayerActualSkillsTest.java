@@ -19,14 +19,14 @@ class PlayerActualSkillsTest {
         @DisplayName("create an instance with the given total points distributed in the actual skills of the given position")
         void create_an_instance_with_the_given_total_points_distributed_in_the_actual_skills_of_the_given_position() {
             Player player = Player.builder()
-                .actualSkills(PlayerProvider.skillsBasedOnTendency(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES, 200))
-                .build();
+                    .actualSkillsAlternative(PlayerProvider.skillsBasedOnTendency(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES, 200))
+                    .build();
 
             assertThat(player.getActualSkills().values()
-                .stream()
-                .mapToInt(PlayerSkills::getActual)
-                .sum())
-                .isEqualTo(200);
+                    .stream()
+                    .mapToInt(PlayerSkills::getActual)
+                    .sum())
+                    .isEqualTo(200);
         }
     }
 
@@ -40,8 +40,8 @@ class PlayerActualSkillsTest {
             PlayerSkills skillPoints = new PlayerSkills(50, 0);
 
             Player player = Player.builder()
-                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORING, skillPoints)))
-                .build();
+                    .actualSkillsAlternative(Map.of(SkillType.CORE, new HashMap<>(Map.of(PlayerSkill.SCORING, skillPoints))))
+                    .build();
             player.getActualSkills().get(PlayerSkill.SCORING).increaseActualPoints(5);
             assertThat(player.getActualSkillPoints(PlayerSkill.SCORING)).isEqualTo(55);
         }
@@ -52,8 +52,8 @@ class PlayerActualSkillsTest {
 
             PlayerSkills skillPoints = new PlayerSkills(98, 0);
             Player player = Player.builder()
-                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORING, skillPoints)))
-                .build();
+                    .actualSkillsAlternative(Map.of(SkillType.CORE, new HashMap<>(Map.of(PlayerSkill.SCORING, skillPoints))))
+                    .build();
             player.getActualSkills().get(PlayerSkill.SCORING).increaseActualPoints(5);
             assertThat(player.getActualSkillPoints(PlayerSkill.SCORING)).isEqualTo(100);
         }
@@ -63,8 +63,8 @@ class PlayerActualSkillsTest {
         void not_increase_the_amount_points_of_a_specified_skill_above_the_maximum() {
             PlayerSkills skillPoints = new PlayerSkills(100, 0);
             Player player = Player.builder()
-                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORING, skillPoints)))
-                .build();
+                    .actualSkillsAlternative(Map.of(SkillType.CORE, new HashMap<>(Map.of(PlayerSkill.SCORING, skillPoints))))
+                    .build();
             player.getActualSkills().get(PlayerSkill.SCORING).increaseActualPoints(5);
             assertThat(player.getActualSkillPoints(PlayerSkill.SCORING)).isEqualTo(100);
         }

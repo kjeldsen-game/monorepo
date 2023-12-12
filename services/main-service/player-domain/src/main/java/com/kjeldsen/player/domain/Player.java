@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static com.kjeldsen.player.domain.exception.BusinessValidationException.throwIfNot;
 import static com.kjeldsen.player.domain.exception.ErrorCodes.*;
@@ -49,7 +50,7 @@ public class Player {
     private String name;
     private Integer age;
     private PlayerPosition position;
-    private Map<PlayerSkill, PlayerSkills> actualSkills;
+    private Map<SkillType, Map<PlayerSkill, PlayerSkills>> actualSkillsAlternative;
     private Team.TeamId teamId;
     private PlayerTrainingBloomEvent bloom;
     private PlayerTrainingDeclineEvent decline;
@@ -58,15 +59,15 @@ public class Player {
 
     public static Player creation(PlayerCreationEvent playerCreationEvent) {
         Player player = Player.builder()
-            .id(playerCreationEvent.getPlayerId())
-            .name(playerCreationEvent.getName())
-            .age(playerCreationEvent.getAge())
-            .position(playerCreationEvent.getPosition())
-            .actualSkills(playerCreationEvent.getInitialSkills())
-            .teamId(playerCreationEvent.getTeamId())
-            .category(playerCreationEvent.getPlayerCategory())
-            .economy(Economy.builder().build())
-            .build();
+                .id(playerCreationEvent.getPlayerId())
+                .name(playerCreationEvent.getName())
+                .age(playerCreationEvent.getAge())
+                .position(playerCreationEvent.getPosition())
+                .actualSkillsAlternative(playerCreationEvent.getInitialSkillsByType())
+                .teamId(playerCreationEvent.getTeamId())
+                .category(playerCreationEvent.getPlayerCategory())
+                .economy(Economy.builder().build())
+                .build();
         player.negotiateSalary();
         return player;
     }
@@ -83,9 +84,9 @@ public class Player {
     public void addBloomPhase(PlayerTrainingBloomEvent playerTrainingBloomEvent) {
         throwIfNot(Range.between(MIN_BLOOM_PLAYER_AGE, MAX_BLOOM_PLAYER_AGE).contains(age), BLOOM_PLAYER_AGE_INVALID_RANGE);
         throwIfNot(Range.between(MIN_BLOOM_YEARS_ON, MAX_BLOOM_YEARS_ON).contains(playerTrainingBloomEvent.getYearsOn()),
-            BLOOM_YEARS_ON_INVALID_RANGE);
+                BLOOM_YEARS_ON_INVALID_RANGE);
         throwIfNot(Range.between(MIN_BLOOM_SPEED, MAX_BLOOM_SPEED).contains(playerTrainingBloomEvent.getBloomSpeed()),
-            BLOOM_SPEED_INVALID_RANGE);
+                BLOOM_SPEED_INVALID_RANGE);
 
         this.bloom = playerTrainingBloomEvent;
     }
@@ -93,36 +94,41 @@ public class Player {
     public void addDeclinePhase(PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
         throwIfNot(Range.between(MIN_DECLINE_PLAYER_AGE, MAX_DECLINE_PLAYER_AGE).contains(age), DECLINE_PLAYER_AGE_INVALID_RANGE);
         throwIfNot(Range.between(MIN_DECLINE_SPEED, MAX_DECLINE_SPEED).contains(playerTrainingDeclineEvent.getDeclineSpeed()),
-            DECLINE_SPEED_INVALID_RANGE);
+                DECLINE_SPEED_INVALID_RANGE);
 
         final int decreasePoints = PointsGenerator.generateDecreasePoints(
-            playerTrainingDeclineEvent.getDeclineSpeed(),
-            playerTrainingDeclineEvent.getPointsToSubtract());
+                playerTrainingDeclineEvent.getDeclineSpeed(),
+                playerTrainingDeclineEvent.getPointsToSubtract());
 
         subtractSkillPoints(playerTrainingDeclineEvent.getSkill(), decreasePoints);
         this.decline = playerTrainingDeclineEvent;
     }
 
+    public Map<PlayerSkill, PlayerSkills> getActualSkills() {
+        return getActualSkillsAlternative().values().stream().flatMap(playerSkillValues -> playerSkillValues.entrySet().stream()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
     public Integer getActualSkillPoints(PlayerSkill skill) {
-        return actualSkills.get(skill).getActual();
+        return getActualSkills().get(skill).getActual();
     }
 
     public Integer getPotentialSkillPoints(PlayerSkill skill) {
-        return actualSkills.get(skill).getPotential();
+        return getActualSkills().get(skill).getPotential();
     }
 
 
     public void addSkillsPoints(PlayerSkill skill, Integer points) {
-        PlayerSkills skillPoints = actualSkills.get(skill);
+        PlayerSkills skillPoints = getActualSkills().get(skill);
         skillPoints.setActual(Math.min(MAX_SKILL_VALUE, skillPoints.getActual() + points));
     }
+
     public void addSkillsPotentialRisePoints(PlayerSkill skill, Integer points) {
-        PlayerSkills skillPoints = actualSkills.get(skill);
+        PlayerSkills skillPoints = getActualSkills().get(skill);
         skillPoints.setPotential(skillPoints.getPotential() + points);
     }
 
     private void subtractSkillPoints(PlayerSkill skill, Integer points) {
-        PlayerSkills skillPoints = actualSkills.get(skill);
+        PlayerSkills skillPoints = getActualSkills().get(skill);
         skillPoints.setActual(Math.max(MIN_SKILL_VALUE, getActualSkillPoints(skill) - points));
     }
 
