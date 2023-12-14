@@ -2,10 +2,7 @@ package com.kjeldsen.integration.player;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kjeldsen.integration.AbstractIT;
-import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerPositionTendency;
-import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.PlayerSkills;
+import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerPositionTendencyMongoRepository;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.model.PlayerPositionTendencyResponse;
@@ -51,7 +48,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
         public void return_a_list_player_position_tendencies() throws Exception {
             PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0)))
+                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0, PlayerSkillRelevance.CORE)))
                 .build();
             playerPositionTendencyStore.save(storedPlayerPositionTendency);
 
@@ -221,7 +218,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
         public void return_a_stored_player_position_tendency_of_a_given_position_when_player_position_tendency_exists_in_storage() throws Exception {
             PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0)))
+                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0, PlayerSkillRelevance.CORE)))
                 .build();
             playerPositionTendencyStore.save(storedPlayerPositionTendency);
 

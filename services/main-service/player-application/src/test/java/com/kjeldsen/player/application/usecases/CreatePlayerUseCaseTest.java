@@ -53,13 +53,6 @@ class CreatePlayerUseCaseTest {
                 && player.getPosition().equals(PlayerPosition.CENTRE_MIDFIELDER)
                 && StringUtils.isNotBlank(player.getName())
                 && player.getTeamId().equals(teamId)
-                && player.getInitialSkillsByType().values()
-                    .stream()
-                    .flatMap(playerSkills -> playerSkills.values().stream())
-                    .mapToInt(PlayerSkills::getActual)
-                            .sum() == 200);
-
-                    //.map(PlayerSkills::getActual)
-                    //.mapToInt(Integer::intValue).sum() == 200);
+                && player.getInitialSkills().values().stream().map(PlayerSkills::getActual).mapToInt(Integer::intValue).sum() == 200);
     }
 }

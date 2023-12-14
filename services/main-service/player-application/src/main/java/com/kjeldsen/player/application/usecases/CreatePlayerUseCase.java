@@ -35,7 +35,7 @@ public class CreatePlayerUseCase {
                 .name(PlayerProvider.name())
                 .age(newPlayer.getAge())
                 .position(newPlayer.getPosition())
-                .initialSkillsByType(PlayerProvider.skillsBasedOnTendency(positionTendencies, newPlayer.getPoints()))
+                .initialSkills(PlayerProvider.skillsBasedOnTendency(positionTendencies, newPlayer.getPoints()))
                 .teamId(newPlayer.getTeamId())
                 .playerCategory(newPlayer.getPlayerCategory())
                 .build();

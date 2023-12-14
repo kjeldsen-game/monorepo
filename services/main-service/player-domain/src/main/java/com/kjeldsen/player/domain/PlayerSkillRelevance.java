@@ -1,6 +1,6 @@
 package com.kjeldsen.player.domain;
 
-public enum SkillType {
+public enum PlayerSkillRelevance {
 
     CORE,
     SECONDARY,

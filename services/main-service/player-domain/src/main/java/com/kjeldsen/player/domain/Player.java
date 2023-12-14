@@ -50,7 +50,7 @@ public class Player {
     private String name;
     private Integer age;
     private PlayerPosition position;
-    private Map<SkillType, Map<PlayerSkill, PlayerSkills>> actualSkillsAlternative;
+    private Map<PlayerSkill, PlayerSkills> actualSkills;
     private Team.TeamId teamId;
     private PlayerTrainingBloomEvent bloom;
     private PlayerTrainingDeclineEvent decline;
@@ -63,7 +63,7 @@ public class Player {
                 .name(playerCreationEvent.getName())
                 .age(playerCreationEvent.getAge())
                 .position(playerCreationEvent.getPosition())
-                .actualSkillsAlternative(playerCreationEvent.getInitialSkillsByType())
+                .actualSkills(playerCreationEvent.getInitialSkills())
                 .teamId(playerCreationEvent.getTeamId())
                 .category(playerCreationEvent.getPlayerCategory())
                 .economy(Economy.builder().build())
@@ -102,10 +102,6 @@ public class Player {
 
         subtractSkillPoints(playerTrainingDeclineEvent.getSkill(), decreasePoints);
         this.decline = playerTrainingDeclineEvent;
-    }
-
-    public Map<PlayerSkill, PlayerSkills> getActualSkills() {
-        return getActualSkillsAlternative().values().stream().flatMap(playerSkillValues -> playerSkillValues.entrySet().stream()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public Integer getActualSkillPoints(PlayerSkill skill) {

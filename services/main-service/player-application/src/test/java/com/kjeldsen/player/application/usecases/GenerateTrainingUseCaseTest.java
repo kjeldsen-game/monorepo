@@ -1,9 +1,7 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.domain.EventId;
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.PlayerSkills;
+import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.generator.PointsGenerator;
 import com.kjeldsen.player.domain.provider.InstantProvider;
@@ -104,10 +102,11 @@ class GenerateTrainingUseCaseTest {
 
     private Player getPlayer(Player.PlayerId playerId) {
         return Player.builder()
-            .id(playerId)
+                .position(PlayerPosition.FORWARD)
+                .id(playerId)
             .actualSkills(new HashMap<>(Map.of(
-                PlayerSkill.SCORING, new PlayerSkills(5, 0),
-                PlayerSkill.CONSTITUTION, new PlayerSkills(3, 0))))
+                PlayerSkill.SCORING, new PlayerSkills(5, 0, PlayerSkillRelevance.CORE),
+                PlayerSkill.CONSTITUTION, new PlayerSkills(3, 0, PlayerSkillRelevance.SECONDARY))))
             .build();
     }
 }

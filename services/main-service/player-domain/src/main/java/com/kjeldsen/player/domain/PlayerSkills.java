@@ -13,15 +13,13 @@ public class PlayerSkills {
     public static final int MAX_SKILL_VALUE = 100;
     public static final int MIN_SKILL_VALUE = 0;
 
-    public static PlayerSkills empty() {
-        return PlayerSkills.builder().actual(0).potential(0).build();
-    }
-
     private Integer actual;
     private Integer potential;
+    private PlayerSkillRelevance playerSkillRelevance;
 
-
-    //TODO type de Mudo va aqui (por orden del maestro jedi https://trello.com/c/KiQgS1QA/110-skill-types)
+    public static PlayerSkills empty() {
+        return PlayerSkills.builder().actual(0).potential(0).playerSkillRelevance(PlayerSkillRelevance.RESIDUAL).build();
+    }
 
     public void increaseActualPoints(Integer points) {
         actual = Math.min(MAX_SKILL_VALUE, actual + points);

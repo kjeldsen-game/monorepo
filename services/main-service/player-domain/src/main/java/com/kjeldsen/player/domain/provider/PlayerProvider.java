@@ -27,18 +27,18 @@ public class PlayerProvider {
         return RandomUtils.nextInt(RANGE_OF_AGE.getMinimum(), RANGE_OF_AGE.getMaximum());
     }
 
-    public static Map<SkillType, Map<PlayerSkill, PlayerSkills>> skillsBasedOnTendency(PlayerPositionTendency positionTendencies, Integer totalPoints) {
+    public static Map<PlayerSkill, PlayerSkills> skillsBasedOnTendency(PlayerPositionTendency positionTendencies, Integer totalPoints) {
 
-        Map<SkillType, Map<PlayerSkill, PlayerSkills>> tendenciesAlternative = positionTendencies
-                .getTendencies();
-        Map<SkillType, Map<PlayerSkill, PlayerSkills>> initialTendencies = new HashMap<>();
-
-        tendenciesAlternative.forEach((skillType, playerSkillValues) -> {
-            Map<PlayerSkill, PlayerSkills> initialPlayerSkillValues = new HashMap<>();
-            playerSkillValues.forEach((skill, value) -> initialPlayerSkillValues.put(skill, PlayerSkills.empty()));
-            initialTendencies.put(skillType, initialPlayerSkillValues);
-        });
-
+        HashMap<PlayerSkill, PlayerSkills> skillPointsMap = positionTendencies
+                .getTendencies()
+                .keySet()
+                .stream()
+                .collect(HashMap::new, (map, skill) -> map.put(skill, PlayerSkills.builder()
+                        .actual(0)
+                        .potential(0)
+                        .playerSkillRelevance(PlayerSkillRelevance.RESIDUAL)
+                        .build()), HashMap::putAll);
+                ;
 
         Set<PlayerSkill> excludedSkills = new HashSet<>();
 
@@ -49,18 +49,16 @@ public class PlayerProvider {
             if (skill.isEmpty()) {
                 return;
             }
-            PlayerSkills values = initialTendencies.values().stream().filter(map -> map.containsKey(skill.get())).map(map -> map.get(skill.get())).findFirst().orElse(PlayerSkills.empty());
+            PlayerSkills values = skillPointsMap.get(skill.get());
             values.increaseActualPoints(1);
 
             if (values.getActual() == MAX_SKILL_VALUE) {
                 excludedSkills.add(skill.get());
             }
-            initialTendencies.values().stream().filter(map -> map.containsKey(skill.get())).findFirst().get().put(skill.get(), values);
+            skillPointsMap.put(skill.get(), values);
         });
-
-        initialTendencies.values().forEach(playerSkillValues -> playerSkillValues.values().forEach(PlayerSkills::initializePotentialPoints));
-
-        return initialTendencies;
+        skillPointsMap.values().forEach(PlayerSkills::initializePotentialPoints);
+        return skillPointsMap;
     }
 
     public static PlayerSkill randomSkill() {
@@ -75,7 +73,7 @@ public class PlayerProvider {
                 .name(name())
                 .age(age())
                 .position(positionTendencies.getPosition())
-                .actualSkillsAlternative(skillsBasedOnTendency(positionTendencies, totalPoints))
+                .actualSkills(skillsBasedOnTendency(positionTendencies, totalPoints))
                 .teamId(teamId)
                 .category(playerCategory)
                 .economy(Player.Economy.builder().build())

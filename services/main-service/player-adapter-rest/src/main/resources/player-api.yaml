@@ -582,6 +582,8 @@ components:
           minimum: 0
           maximum: 1000
           example: 30
+        playerSkillRelevance:
+          $ref: "#/components/schemas/PlayerSkillRelevance"
 
     PlayerPosition:
       type: string
@@ -607,7 +609,7 @@ components:
         - GOALKEEPER
       example: FORWARD
 
-    SkillTypes:
+    PlayerSkillRelevance:
       type: string
       enum:
         - CORE
@@ -677,7 +679,7 @@ components:
 
     UpdatePlayerPositionTendencyRequest:
       type: object
-      example: { "SCORE": { "actual": 5, "potential": 50 } }
+      example: { "SCORING": { "actual": 5, "potential": 50, "playerSkillRelevance": CORE } }
       additionalProperties:
         type: object
         properties:
@@ -875,7 +877,7 @@ components:
           $ref: "#/components/schemas/PlayerPosition"
         tendencies:
           type: object
-          example: { "SCORE": { "actual": 5, "potential": 50 } }
+          example: { "SCORING": { "actual": 5, "potential": 50, "playerSkillRelevance": CORE } }
           additionalProperties:
             type: object
             properties:
@@ -897,7 +899,7 @@ components:
           example: 2
         skills:
           type: array
-          example: [ PASSING , SCORE ]
+          example: [ PASSING , SCORING ]
           items:
             $ref: "#/components/schemas/PlayerSkill"
 
