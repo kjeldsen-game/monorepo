@@ -1,40 +1,28 @@
 package com.kjeldsen.match.modifers;
 
 import com.kjeldsen.match.entities.Action;
+import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.duel.DuelOrigin;
 import com.kjeldsen.match.execution.DuelParams;
 import com.kjeldsen.match.selection.ReceiverSelection;
 import com.kjeldsen.match.state.GameStateException;
-import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PitchArea.PitchFile;
 import com.kjeldsen.player.domain.PitchArea.PitchRank;
+import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerSkill;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
-public enum PlayerOrder {
+public class Orders {
 
     /*
-     * Each player can receive an order from the manager. The order will affect how the player
-     * carries out his action. If an order cannot be carried out because the team has not been,
-     * configured correctly, or any other reason, then the order will not be applied and the default
-     * action will be used as a fallback.
+     * Applies player orders by modifying duel parameters
      */
 
-    // Midfield orders
-
-    PASS_FORWARD,
-    LONG_SHOT,
-    CHANGE_FLANK,
-
-    // Disabled for player
-
-    NONE;
-
-    public DuelParams apply(DuelParams params) {
+    public static DuelParams apply(DuelParams params, PlayerOrder order) {
         // Player orders are not applied to every single play. For now whether a player order is
         // applied is randomly determined.
         double playerOrderProbability = 0.5;
@@ -42,7 +30,7 @@ public enum PlayerOrder {
         if (flip < playerOrderProbability) {
             return params;
         }
-        return switch (this) {
+        return switch (order) {
             case PASS_FORWARD -> passForward(params);
             case LONG_SHOT -> longShot(params);
             case CHANGE_FLANK -> changeFlank(params);
@@ -51,7 +39,7 @@ public enum PlayerOrder {
     }
 
     // Moves the ball forward from the midfield by passing to a forward player, if there is one
-    private DuelParams passForward(DuelParams params) {
+    private static DuelParams passForward(DuelParams params) {
         if (params.getState().getBallState().getArea().rank() != PitchRank.MIDDLE) {
             return params;
         }
@@ -71,7 +59,7 @@ public enum PlayerOrder {
     }
 
     // Shoots from midfield
-    private DuelParams longShot(DuelParams params) {
+    private static DuelParams longShot(DuelParams params) {
         if (params.getState().getBallState().getArea().rank() != PitchRank.MIDDLE) {
             return params;
         }
@@ -95,7 +83,7 @@ public enum PlayerOrder {
             .build();
     }
 
-    private DuelParams changeFlank(DuelParams params) {
+    private static DuelParams changeFlank(DuelParams params) {
         PitchFile file = params.getState().getBallState().getArea().file();
         PitchRank rank = params.getState().getBallState().getArea().rank();
 

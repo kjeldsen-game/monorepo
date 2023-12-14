@@ -1,10 +1,21 @@
 package com.kjeldsen.player.domain;
 
+import static com.kjeldsen.player.domain.exception.BusinessValidationException.throwIfNot;
+import static com.kjeldsen.player.domain.exception.ErrorCodes.BLOOM_PLAYER_AGE_INVALID_RANGE;
+import static com.kjeldsen.player.domain.exception.ErrorCodes.BLOOM_SPEED_INVALID_RANGE;
+import static com.kjeldsen.player.domain.exception.ErrorCodes.BLOOM_YEARS_ON_INVALID_RANGE;
+import static com.kjeldsen.player.domain.exception.ErrorCodes.DECLINE_PLAYER_AGE_INVALID_RANGE;
+import static com.kjeldsen.player.domain.exception.ErrorCodes.DECLINE_SPEED_INVALID_RANGE;
+
 import com.kjeldsen.player.domain.events.PlayerCreationEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.generator.PointsGenerator;
 import com.kjeldsen.player.domain.generator.SalaryGenerator;
+import java.math.BigDecimal;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,14 +24,6 @@ import org.apache.commons.lang3.Range;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.math.BigDecimal;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
-
-import static com.kjeldsen.player.domain.exception.BusinessValidationException.throwIfNot;
-import static com.kjeldsen.player.domain.exception.ErrorCodes.*;
 
 @Getter
 @Setter
@@ -49,6 +52,7 @@ public class Player {
     private String name;
     private Integer age;
     private PlayerPosition position;
+    private PlayerOrder playerOrder;
     private Map<PlayerSkill, PlayerSkills> actualSkills;
     private Team.TeamId teamId;
     private PlayerTrainingBloomEvent bloom;
@@ -62,6 +66,7 @@ public class Player {
             .name(playerCreationEvent.getName())
             .age(playerCreationEvent.getAge())
             .position(playerCreationEvent.getPosition())
+            .playerOrder(PlayerOrder.NONE)
             .actualSkills(playerCreationEvent.getInitialSkills())
             .teamId(playerCreationEvent.getTeamId())
             .category(playerCreationEvent.getPlayerCategory())
@@ -116,6 +121,7 @@ public class Player {
         PlayerSkills skillPoints = actualSkills.get(skill);
         skillPoints.setActual(Math.min(MAX_SKILL_VALUE, skillPoints.getActual() + points));
     }
+
     public void addSkillsPotentialRisePoints(PlayerSkill skill, Integer points) {
         PlayerSkills skillPoints = actualSkills.get(skill);
         skillPoints.setPotential(Math.min(MAX_SKILL_VALUE, skillPoints.getPotential() + points));

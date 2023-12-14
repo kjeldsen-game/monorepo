@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.kjeldsen.match.entities.duel.DuelRole;
 import com.kjeldsen.match.entities.duel.DuelType;
-import com.kjeldsen.match.modifers.PlayerOrder;
+import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.match.utils.JsonUtils;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerSkill;
@@ -40,9 +40,6 @@ public class Player {
             return skills.get(duelType.requiredSkill(role));
         } catch (NullPointerException e) {
             // Error might be thrown because the goalkeeper is attempting to pass
-            System.out.println("~~~~~~~~~");
-            System.out.println(duelType);
-            System.out.println(role);
             if (duelType == DuelType.PASSING && role == DuelRole.INITIATOR) {
                 return skills.get(PlayerSkill.ORGANIZATION);
             }

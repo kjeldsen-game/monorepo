@@ -4,6 +4,7 @@ import com.kjeldsen.match.entities.Play;
 import com.kjeldsen.match.entities.duel.DuelResult;
 import com.kjeldsen.match.entities.duel.DuelRole;
 import com.kjeldsen.match.entities.duel.DuelType;
+import com.kjeldsen.match.modifers.Orders;
 import com.kjeldsen.match.random.DuelRandomization;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.GameStateException;
@@ -23,7 +24,7 @@ public class DuelExecution {
         // Before we execute the duel, player orders are given the opportunity to change of the
         // parameters for execution - the action (duelType) and challenger - as well as the skill
         // points of players involved (this is only temporary).
-        DuelParams modifiedParams = params.getInitiator().getPlayerOrder().apply(params);
+        DuelParams modifiedParams = Orders.apply(params, params.getInitiator().getPlayerOrder());
 
         return switch (modifiedParams.getDuelType()) {
             case POSITIONAL -> handlePositionalDuel(modifiedParams);
