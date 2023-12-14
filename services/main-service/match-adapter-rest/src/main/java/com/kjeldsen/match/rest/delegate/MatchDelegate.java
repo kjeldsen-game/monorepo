@@ -6,7 +6,6 @@ import com.kjeldsen.match.entities.MatchReport;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.Team;
 import com.kjeldsen.match.modifers.HorizontalPressure;
-import com.kjeldsen.match.modifers.PlayerOrder;
 import com.kjeldsen.match.modifers.Tactic;
 import com.kjeldsen.match.modifers.VerticalPressure;
 import com.kjeldsen.match.rest.api.MatchApiDelegate;
@@ -14,6 +13,7 @@ import com.kjeldsen.match.rest.model.CreateMatchRequest;
 import com.kjeldsen.match.rest.model.Modifiers;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.utils.JsonUtils;
+import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.Team.TeamId;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
@@ -93,7 +93,7 @@ public class MatchDelegate implements MatchApiDelegate {
             .teamId(player.getTeamId().value())
             .position(player.getPosition())
             .skills(skills)
-            .playerOrder(PlayerOrder.NONE)
+            .playerOrder(player.getPlayerOrder())
             .build();
     }
 }
