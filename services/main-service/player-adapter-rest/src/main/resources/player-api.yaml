@@ -12,7 +12,7 @@ tags:
 
 paths:
 
-  /team:
+  /team/me:
     get:
       summary: Retrieves the team associated to the logged user
       operationId: getTeam
@@ -21,6 +21,87 @@ paths:
       responses:
         "200":
           description: Returns the team
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/TeamResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /team:
+    get:
+      summary: Get all teams
+      operationId: getAllTeams
+      parameters:
+        - name: name
+          in: query
+          description: Name of team
+          required: false
+          schema:
+            type: string
+        - name: size
+          in: query
+          description: Number of teams to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: page
+          in: query
+          description: Page number of the teams to return
+          required: false
+          schema:
+            default: 0
+            type: integer
+            format: int32
+      tags:
+        - team
+      responses:
+        "200":
+          description: Teams were retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/responses/TeamResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /team/{teamId}:
+    get:
+      summary: Retrieves a team
+      operationId: getTeamById
+      tags:
+        - team
+      parameters:
+        - $ref: '#/components/parameters/TeamIdPathParameter'
+      responses:
+        "200":
+          description: Returns the team
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/TeamResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+    patch:
+      summary: Edits a team
+      operationId: updateTeamById
+      tags:
+        - team
+      parameters:
+        - $ref: '#/components/parameters/TeamIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/EditTeamRequest"
+      responses:
+        "200":
+          description: Returns the updated team
           content:
             application/json:
               schema:
@@ -423,6 +504,13 @@ components:
 
   requestBodies:
 
+    EditTeamRequest:
+      description: Edit team request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EditTeamRequest"
+
     CreatePlayerRequest:
       description: Create player request
       content:
@@ -540,6 +628,13 @@ components:
               $ref: "#/components/schemas/Error"
 
   schemas:
+
+    PlayerStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
+        - BENCH
 
     PlayerSkill:
       type: string
@@ -679,6 +774,26 @@ components:
           value:
             $ref: "#/components/schemas/PlayerSkills"
 
+    EditTeamRequest:
+      type: object
+      properties:
+        players:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditPlayerRequest"
+      required:
+        - players
+
+    EditPlayerRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        status:
+          $ref: "#/components/schemas/PlayerStatus"
+        position:
+          $ref: "#/components/schemas/PlayerPosition"
 
     TeamResponse:
       type: object

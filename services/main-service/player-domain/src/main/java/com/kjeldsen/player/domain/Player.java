@@ -52,6 +52,7 @@ public class Player {
     private String name;
     private Integer age;
     private PlayerPosition position;
+    private PlayerStatus status;
     private PlayerOrder playerOrder;
     private Map<PlayerSkill, PlayerSkills> actualSkills;
     private Team.TeamId teamId;
