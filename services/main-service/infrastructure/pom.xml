@@ -24,6 +24,10 @@
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
+            <artifactId>match-adapter-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
             <artifactId>player-adapter-persistence</artifactId>
         </dependency>
         <dependency>

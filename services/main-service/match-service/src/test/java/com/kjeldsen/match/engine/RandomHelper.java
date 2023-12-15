@@ -1,20 +1,21 @@
 package com.kjeldsen.match.engine;
 
 import com.github.javafaker.Faker;
-import com.kjeldsen.match.engine.entities.PlayerPosition;
-import com.kjeldsen.match.engine.entities.SkillType;
-import com.kjeldsen.match.engine.modifers.HorizontalPressure;
-import com.kjeldsen.match.engine.modifers.PlayerOrder;
-import com.kjeldsen.match.engine.modifers.Tactic;
-import com.kjeldsen.match.engine.modifers.VerticalPressure;
-import com.kjeldsen.match.models.Player;
-import com.kjeldsen.match.models.Team;
+import com.kjeldsen.match.entities.Player;
+import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.match.modifers.HorizontalPressure;
+import com.kjeldsen.player.domain.PlayerOrder;
+import com.kjeldsen.match.modifers.Tactic;
+import com.kjeldsen.match.modifers.VerticalPressure;
+import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.domain.PlayerSkill;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
+import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
 
 public final class RandomHelper {
 
@@ -29,10 +30,10 @@ public final class RandomHelper {
         List<Player> players = new ArrayList<>(11);
         players.add(genPlayerWithPosition(team, PlayerPosition.LEFT_BACK));
         players.add(genPlayerWithPosition(team, PlayerPosition.RIGHT_BACK));
-        players.add(genPlayerWithPosition(team, PlayerPosition.CENTER_BACK));
+        players.add(genPlayerWithPosition(team, PlayerPosition.CENTRE_BACK));
         players.add(genPlayerWithPosition(team, PlayerPosition.LEFT_MIDFIELDER));
         players.add(genPlayerWithPosition(team, PlayerPosition.RIGHT_MIDFIELDER));
-        players.add(genPlayerWithPosition(team, PlayerPosition.CENTER_MIDFIELDER));
+        players.add(genPlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER));
         players.add(genPlayerWithPosition(team, PlayerPosition.LEFT_WINGER));
         players.add(genPlayerWithPosition(team, PlayerPosition.RIGHT_WINGER));
         players.add(genPlayerWithPosition(team, PlayerPosition.STRIKER));
@@ -43,8 +44,8 @@ public final class RandomHelper {
 
     public static Player genPlayerWithPosition(Team team, PlayerPosition position) {
         return Player.builder()
-            .id(new Random().nextLong())
-            .team(team)
+            .id(RandomStringUtils.random(5))
+            .teamId(team.getId())
             .name(faker.name().fullName())
             .position(position)
             .playerOrder(genPlayerOrder())
@@ -54,15 +55,15 @@ public final class RandomHelper {
 
     public static Player genPlayer(Team team) {
         return Player.builder()
-            .id(new Random().nextLong())
-            .team(team)
+            .id(RandomStringUtils.random(5))
+            .teamId(team.getId())
             .name(faker.name().fullName())
             .position(PlayerPosition.values()[new Random().nextInt(PlayerPosition.values().length)])
             .skills(genSkillSet()).build();
     }
 
-    private static Map<SkillType, Integer> genSkillSet() {
-        return Arrays.stream(SkillType.values())
+    private static Map<PlayerSkill, Integer> genSkillSet() {
+        return Arrays.stream(PlayerSkill.values())
             .map(skill -> Map.entry(skill, genAttributeRating()))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
@@ -77,7 +78,7 @@ public final class RandomHelper {
 
     public static Team genTeam() {
         Team team = Team.builder()
-            .id(new Random().nextLong())
+            .id(RandomStringUtils.random(5))
             .build();
         List<Player> players = genPlayers(team);
         int rating = genAttributeRating();
