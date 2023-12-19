@@ -7,6 +7,7 @@ import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Builder
@@ -334,6 +335,7 @@ public class PlayerPositionTendency {
      * CO, CO,
      * TACKLING,
      * DEFENSE_POSITION]
+     * @return
      */
     private ArrayList<PlayerSkill> getDistributedSkills(Set<PlayerSkill> excludedSkills) {
         return tendencies.entrySet().stream()

@@ -36,7 +36,7 @@ public class PlayerProvider {
                 .collect(HashMap::new, (map, skill) -> map.put(skill, PlayerSkills.builder()
                         .actual(0)
                         .potential(0)
-                        .playerSkillRelevance(PlayerSkillRelevance.RESIDUAL)
+                        .playerSkillRelevance(PlayerSkills.getSkillRelevanceBasedOnPositionAndSkill(positionTendencies.getPosition(), skill))
                         .build()), HashMap::putAll);
                 ;
 
@@ -61,12 +61,6 @@ public class PlayerProvider {
         return skillPointsMap;
     }
 
-    public static PlayerSkill randomSkill() {
-        PlayerSkill[] allSkills = PlayerSkill.values();
-        int random = (int) (Math.random() * allSkills.length);
-        return allSkills[random];
-    }
-
     public static Player generate(Team.TeamId teamId, PlayerPositionTendency positionTendencies, PlayerCategory playerCategory, int totalPoints) {
         Player player = Player.builder()
                 .id(Player.PlayerId.generate())
@@ -80,6 +74,12 @@ public class PlayerProvider {
                 .build();
         player.negotiateSalary();
         return player;
+    }
+
+    public static PlayerSkill randomSkill() {
+        PlayerSkill[] allSkills = PlayerSkill.values();
+        int random = (int) (Math.random() * allSkills.length);
+        return allSkills[random];
     }
 
     public static Player generateDefault() {

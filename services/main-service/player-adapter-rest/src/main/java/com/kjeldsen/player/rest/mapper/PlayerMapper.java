@@ -4,6 +4,7 @@ import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.rest.model.PlayerResponse;
 import com.kjeldsen.player.rest.model.PlayerSkill;
+import com.kjeldsen.player.rest.model.PlayerSkillRelevance;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -30,6 +31,7 @@ public interface PlayerMapper {
         com.kjeldsen.player.rest.model.PlayerSkills var1 = new com.kjeldsen.player.rest.model.PlayerSkills();
         var1.setActual(playerSkills.getActual());
         var1.setPotential(playerSkills.getPotential());
+        var1.setPlayerSkillRelevance(PlayerSkillRelevance.valueOf(playerSkills.getPlayerSkillRelevance().name()));
         return var1;
     }
 }
