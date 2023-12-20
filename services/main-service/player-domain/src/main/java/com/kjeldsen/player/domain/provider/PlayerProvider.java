@@ -36,7 +36,7 @@ public class PlayerProvider {
                 .collect(HashMap::new, (map, skill) -> map.put(skill, PlayerSkills.builder()
                         .actual(0)
                         .potential(0)
-                        .playerSkillRelevance(PlayerSkills.getSkillRelevanceBasedOnPositionAndSkill(positionTendencies.getPosition(), skill))
+                        .playerSkillRelevance(getSkillRelevanceBasedOnPositionAndSkill(positionTendencies.getPosition(), skill))
                         .build()), HashMap::putAll);
                 ;
 
@@ -59,6 +59,36 @@ public class PlayerProvider {
         });
         skillPointsMap.values().forEach(PlayerSkills::initializePotentialPoints);
         return skillPointsMap;
+    }
+
+    public static PlayerSkillRelevance getSkillRelevanceBasedOnPositionAndSkill(PlayerPosition position, PlayerSkill skill){
+        return switch (position) {
+            case CENTRE_BACK, AERIAL_CENTRE_BACK, SWEEPER, LEFT_BACK, RIGHT_BACK, LEFT_WINGBACK, RIGHT_WINGBACK, DEFENSIVE_MIDFIELDER -> switch (skill) {
+                case TACKLING, DEFENSIVE_POSITIONING -> PlayerSkillRelevance.CORE;
+                case AERIAL, CONSTITUTION -> PlayerSkillRelevance.SECONDARY;
+                case SCORING, OFFENSIVE_POSITIONING, BALL_CONTROL, PASSING -> PlayerSkillRelevance.RESIDUAL;
+                default -> throw new IllegalStateException("Unexpected value for skill: " + skill);
+            };
+            case LEFT_MIDFIELDER, CENTRE_MIDFIELDER, RIGHT_MIDFIELDER, LEFT_WINGER, OFFENSIVE_MIDFIELDER, RIGHT_WINGER -> switch (skill) {
+                case PASSING -> PlayerSkillRelevance.CORE;
+                case OFFENSIVE_POSITIONING, BALL_CONTROL, CONSTITUTION, TACKLING, DEFENSIVE_POSITIONING -> PlayerSkillRelevance.SECONDARY;
+                case SCORING, AERIAL -> PlayerSkillRelevance.RESIDUAL;
+                default -> throw new IllegalStateException("Unexpected value for skill: " + skill);
+            };
+            case FORWARD, AERIAL_FORWARD, STRIKER, AERIAL_STRIKER -> switch (skill) {
+                case SCORING, OFFENSIVE_POSITIONING, BALL_CONTROL -> PlayerSkillRelevance.CORE;
+                case PASSING, AERIAL, CONSTITUTION -> PlayerSkillRelevance.SECONDARY;
+                case TACKLING, DEFENSIVE_POSITIONING -> PlayerSkillRelevance.RESIDUAL;
+                default -> throw new IllegalStateException("Unexpected value for skill: " + skill);
+            };
+            case GOALKEEPER -> switch (skill) {
+                case REFLEXES, GOALKEEPER_POSITIONING -> PlayerSkillRelevance.CORE;
+                case INTERCEPTIONS, ONE_ON_ONE -> PlayerSkillRelevance.SECONDARY;
+                case CONTROL, ORGANIZATION -> PlayerSkillRelevance.RESIDUAL;
+                default -> throw new IllegalStateException("Unexpected value for skill: " + skill);
+            };
+            default -> throw new IllegalStateException("Unexpected value for position: " + position);
+        };
     }
 
     public static Player generate(Team.TeamId teamId, PlayerPositionTendency positionTendencies, PlayerCategory playerCategory, int totalPoints) {
