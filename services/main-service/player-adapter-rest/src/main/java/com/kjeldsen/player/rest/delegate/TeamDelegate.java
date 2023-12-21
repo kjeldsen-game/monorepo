@@ -136,10 +136,10 @@ public class TeamDelegate implements TeamApiDelegate {
             .map(this::extractPosition)
             .anyMatch(PlayerPosition.RIGHT_WINGBACK::equals);
         if (!rightDefender && !rightWingback) {
-            throw new InvalidTeamException("Back right flank coverage is required (LB or LWB)");
+            throw new InvalidTeamException("Back right flank coverage is required (RB or RWB)");
         }
         if (rightDefender && rightWingback) {
-            throw new InvalidTeamException("Only one player covering back right flank is allowed (LB or LWB)");
+            throw new InvalidTeamException("Only one player covering back right flank is allowed (RB or RWB)");
         }
     }
 
@@ -164,10 +164,10 @@ public class TeamDelegate implements TeamApiDelegate {
             .map(this::extractPosition)
             .anyMatch(PlayerPosition.RIGHT_WINGER::equals);
         if (!rightMidfielder && !rightWinger) {
-            throw new InvalidTeamException("Right flank coverage is required (LM or LW)");
+            throw new InvalidTeamException("Right flank coverage is required (RM or RW)");
         }
         if (rightMidfielder && rightWinger) {
-            throw new InvalidTeamException("Only one player covering right midfield flank is allowed (LM or LW)");
+            throw new InvalidTeamException("Only one player covering right midfield flank is allowed (RM or RW)");
         }
     }
 
@@ -177,11 +177,11 @@ public class TeamDelegate implements TeamApiDelegate {
                 || extractPosition(playerUpdate) == PlayerPosition.AERIAL_FORWARD)
             .toList();
 
-        if (forwards.size() < 3) {
+        if (forwards.isEmpty()) {
             throw new InvalidTeamException("A minimum of 1 forward is required");
         }
 
-        if (forwards.size() > 6) {
+        if (forwards.size() > 3) {
             throw new InvalidTeamException("A maximum of 3 forwards are allowed");
         }
 
@@ -205,7 +205,7 @@ public class TeamDelegate implements TeamApiDelegate {
         }
 
         if (midfielders.size() > 6) {
-            throw new InvalidTeamException("A maximum of 3 midfielders are allowed");
+            throw new InvalidTeamException("A maximum of 6 midfielders are allowed");
         }
 
         if (midfielders.stream().noneMatch(midfielder -> extractPosition(midfielder).isCentral())) {
@@ -229,13 +229,14 @@ public class TeamDelegate implements TeamApiDelegate {
 
     private void validateDefenders(List<EditPlayerRequest> activePlayers) {
         List<EditPlayerRequest> defenders = activePlayers.stream()
-            .filter(playerUpdate -> extractPosition(playerUpdate).isDefensive())
+            .filter(playerUpdate -> extractPosition(playerUpdate).isDefender()
+                || extractPosition(playerUpdate).isWingback())
             .toList();
 
         if (defenders.size() < 3) {
             throw new InvalidTeamException("A minimum of 3 defenders are required");
         }
-        if (defenders.size() < 5) {
+        if (defenders.size() > 5) {
             throw new InvalidTeamException("A maximum of 5 defenders are allowed");
         }
 
