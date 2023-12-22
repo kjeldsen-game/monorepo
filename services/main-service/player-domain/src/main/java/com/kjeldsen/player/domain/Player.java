@@ -50,7 +50,7 @@ public class Player {
     @Id
     private PlayerId id;
     private String name;
-    private Integer age;
+    private PlayerAge age;
     private PlayerPosition position;
     private PlayerStatus status;
     private PlayerOrder playerOrder;
@@ -84,28 +84,20 @@ public class Player {
         }
         int initialRange = bloom.getBloomStartAge();
         int endRange = initialRange + bloom.getYearsOn();
-        return Range.between(initialRange, endRange).contains(age);
+        return Range.between(initialRange, endRange).contains(age.getYears());
     }
 
     public void addBloomPhase(PlayerTrainingBloomEvent playerTrainingBloomEvent) {
-        throwIfNot(Range.between(MIN_BLOOM_PLAYER_AGE, MAX_BLOOM_PLAYER_AGE).contains(age),
-            BLOOM_PLAYER_AGE_INVALID_RANGE);
-        throwIfNot(Range.between(MIN_BLOOM_YEARS_ON, MAX_BLOOM_YEARS_ON)
-                .contains(playerTrainingBloomEvent.getYearsOn()),
-            BLOOM_YEARS_ON_INVALID_RANGE);
-        throwIfNot(Range.between(MIN_BLOOM_SPEED, MAX_BLOOM_SPEED)
-                .contains(playerTrainingBloomEvent.getBloomSpeed()),
-            BLOOM_SPEED_INVALID_RANGE);
+        throwIfNot(Range.between(MIN_BLOOM_PLAYER_AGE, MAX_BLOOM_PLAYER_AGE).contains(age.getYears()), BLOOM_PLAYER_AGE_INVALID_RANGE);
+        throwIfNot(Range.between(MIN_BLOOM_YEARS_ON, MAX_BLOOM_YEARS_ON).contains(playerTrainingBloomEvent.getYearsOn()), BLOOM_YEARS_ON_INVALID_RANGE);
+        throwIfNot(Range.between(MIN_BLOOM_SPEED, MAX_BLOOM_SPEED) .contains(playerTrainingBloomEvent.getBloomSpeed()), BLOOM_SPEED_INVALID_RANGE);
 
         this.bloom = playerTrainingBloomEvent;
     }
 
     public void addDeclinePhase(PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
-        throwIfNot(Range.between(MIN_DECLINE_PLAYER_AGE, MAX_DECLINE_PLAYER_AGE).contains(age),
-            DECLINE_PLAYER_AGE_INVALID_RANGE);
-        throwIfNot(Range.between(MIN_DECLINE_SPEED, MAX_DECLINE_SPEED)
-                .contains(playerTrainingDeclineEvent.getDeclineSpeed()),
-            DECLINE_SPEED_INVALID_RANGE);
+        throwIfNot(Range.between(MIN_DECLINE_PLAYER_AGE, MAX_DECLINE_PLAYER_AGE).contains(age.getYears()), DECLINE_PLAYER_AGE_INVALID_RANGE);
+        throwIfNot(Range.between(MIN_DECLINE_SPEED, MAX_DECLINE_SPEED).contains(playerTrainingDeclineEvent.getDeclineSpeed()), DECLINE_SPEED_INVALID_RANGE);
 
         final int decreasePoints = PointsGenerator.generateDecreasePoints(
             playerTrainingDeclineEvent.getDeclineSpeed(),

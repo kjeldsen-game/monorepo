@@ -665,6 +665,22 @@ components:
         playerSkillRelevance:
           $ref: "#/components/schemas/PlayerSkillRelevance"
 
+    PlayerAge:
+      type: object
+      properties:
+        years:
+          type: number
+          format: int32
+          minimum: 15
+          maximum: 33
+          example: 20
+        months:
+          type: number
+          example: 1.05
+        days:
+          type: number
+          example: 3.01
+
     PlayerPosition:
       type: string
       enum:
@@ -737,11 +753,7 @@ components:
           maximum: 700
           example: 5
         age:
-          type: integer
-          format: int32
-          minimum: 15
-          maximum: 33
-          example: 21
+          $ref: "#/components/schemas/PlayerAge"
         position:
           $ref: "#/components/schemas/PlayerPosition"
         category:
@@ -859,11 +871,7 @@ components:
           type: string
           example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
         age:
-          type: integer
-          format: int32
-          minimum: 15
-          maximum: 33
-          example: 21
+          $ref: "#/components/schemas/PlayerAge"
         name:
           type: string
           example: John Doe

@@ -5,17 +5,12 @@ import com.kjeldsen.player.domain.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
-import org.apache.commons.lang3.Range;
 
 import java.util.*;
 import java.util.stream.IntStream;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PlayerProvider {
-
-    private static final Integer MIN_AGE = 15;
-    private static final Integer MAX_AGE = 33;
-    private static final Range<Integer> RANGE_OF_AGE = Range.between(MIN_AGE, MAX_AGE);
     public static final int MAX_SKILL_VALUE = 100;
 
     public static String name() {
@@ -23,9 +18,6 @@ public class PlayerProvider {
         return faker.name().fullName();
     }
 
-    public static Integer age() {
-        return RandomUtils.nextInt(RANGE_OF_AGE.getMinimum(), RANGE_OF_AGE.getMaximum());
-    }
 
     public static Map<PlayerSkill, PlayerSkills> skillsBasedOnTendency(PlayerPositionTendency positionTendencies, Integer totalPoints) {
 
@@ -143,7 +135,6 @@ public class PlayerProvider {
         List<PlayerSkill> allSkills = skills.keySet().stream().toList();
         int random = (int) (Math.random() * allSkills.size());
         return allSkills.get(random);
-    }
 
     public static Player generateDefault() {
         return generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES, PlayerCategory.JUNIOR, 200);

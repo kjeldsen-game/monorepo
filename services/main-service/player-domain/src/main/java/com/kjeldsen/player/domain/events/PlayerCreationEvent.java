@@ -19,7 +19,7 @@ public class PlayerCreationEvent extends Event {
 
     private Player.PlayerId playerId;
     private String name;
-    private Integer age;
+    private PlayerAge age;
     private PlayerPosition position;
     // TODO 72-add-potentials-to-the-player change Integer for a wrapper object to save moved current points and potential points
     private Map<PlayerSkill, PlayerSkills> initialSkills;
