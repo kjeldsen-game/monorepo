@@ -1,9 +1,6 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
-import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerPositionTendency;
-import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.PlayerSkills;
+import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.persistence.common.AbstractMongoDbTest;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerPositionTendencyMongoRepository;
@@ -54,7 +51,7 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceTest extends Abstract
         void return_stored_tendency_for_provided_position_when_exist_in_database() {
             PlayerPositionTendency storedPlayerPositionTendency = playerPositionTendencyMongoRepository.save(PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0)))
+                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0, PlayerSkillRelevance.CORE)))
                 .build());
 
             PlayerPositionTendency actual = playerPositionTendencyReadRepository.get(PlayerPosition.FORWARD);
@@ -62,7 +59,7 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceTest extends Abstract
             assertThat(actual).usingRecursiveComparison().isEqualTo(PlayerPositionTendency.builder()
                 .id(storedPlayerPositionTendency.getId())
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0)))
+                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0, PlayerSkillRelevance.CORE)))
                 .build());
         }
     }
@@ -76,7 +73,7 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceTest extends Abstract
             Integer noDefaultScoreSkill = 1;
             PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(noDefaultScoreSkill, 0)))
+                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(noDefaultScoreSkill, 0, PlayerSkillRelevance.CORE)))
                 .build();
             playerPositionTendencyMongoRepository.save(storedPlayerPositionTendency);
 
@@ -84,7 +81,7 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceTest extends Abstract
 
             assertThat(actual).hasSize(PlayerPositionTendency.DEFAULT_TENDENCIES.size());
             PlayerPositionTendency playerPositionTendency1 = actual.stream().filter(playerPositionTendency -> playerPositionTendency.getPosition().equals(PlayerPosition.FORWARD)).findFirst().orElseThrow();
-            assertThat(playerPositionTendency1.getTendencies().get(PlayerSkill.SCORING)).usingRecursiveComparison().isEqualTo(new PlayerSkills(1, 0));
+            assertThat(playerPositionTendency1.getTendencies().get(PlayerSkill.SCORING)).usingRecursiveComparison().isEqualTo(new PlayerSkills(1, 0, PlayerSkillRelevance.CORE));
             assertThat(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.getTendencies().get(PlayerSkill.SCORING)).isNotEqualTo(playerPositionTendency1.getTendencies().get(PlayerSkill.SCORING));
 
             PlayerPositionTendency.DEFAULT_TENDENCIES.stream()

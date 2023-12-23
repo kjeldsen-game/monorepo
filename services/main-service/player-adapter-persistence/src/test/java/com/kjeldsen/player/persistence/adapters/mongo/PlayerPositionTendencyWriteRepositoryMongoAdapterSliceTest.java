@@ -1,9 +1,6 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
-import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerPositionTendency;
-import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.PlayerSkills;
+import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyWriteRepository;
 import com.kjeldsen.player.persistence.common.AbstractMongoDbTest;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerPositionTendencyMongoRepository;
@@ -47,7 +44,7 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceTest extends Abstrac
         public void create_a_new_player_position_tendency_when_there_is_not_existed_one_for_provided_position() {
             PlayerPositionTendency forwardTendencies = PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0)))
+                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0, PlayerSkillRelevance.CORE)))
                 .build();
 
             playerPositionTendencyWriteRepository.save(forwardTendencies);
@@ -55,7 +52,7 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceTest extends Abstrac
             Optional<PlayerPositionTendency> actual = playerPositionTendencyMongoRepository.findByPosition(PlayerPosition.FORWARD);
 
             assertThat(actual.isPresent()).isTrue();
-            assertThat(actual.get().getTendencies().get(PlayerSkill.SCORING)).usingRecursiveComparison().isEqualTo(new PlayerSkills(7, 0));
+            assertThat(actual.get().getTendencies().get(PlayerSkill.SCORING)).usingRecursiveComparison().isEqualTo(new PlayerSkills(7, 0, PlayerSkillRelevance.CORE));
         }
 
         @Test
@@ -63,13 +60,13 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceTest extends Abstrac
         public void update_an_existed_player_position_tendency_when_there_is_existed_one_for_provided_position() {
             PlayerPositionTendency forwardTendencyDocument = PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0)))
+                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0, PlayerSkillRelevance.CORE)))
                 .build();
             playerPositionTendencyMongoRepository.save(forwardTendencyDocument);
 
             PlayerPositionTendency forwardTendencies = PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(10, 0)))
+                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(10, 0, PlayerSkillRelevance.CORE)))
                 .build();
 
             playerPositionTendencyWriteRepository.save(forwardTendencies);

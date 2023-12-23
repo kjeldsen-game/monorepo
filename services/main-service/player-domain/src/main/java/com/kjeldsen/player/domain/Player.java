@@ -87,18 +87,23 @@ public class Player {
     }
 
     public void addBloomPhase(PlayerTrainingBloomEvent playerTrainingBloomEvent) {
-        throwIfNot(Range.between(MIN_BLOOM_PLAYER_AGE, MAX_BLOOM_PLAYER_AGE).contains(age), BLOOM_PLAYER_AGE_INVALID_RANGE);
-        throwIfNot(Range.between(MIN_BLOOM_YEARS_ON, MAX_BLOOM_YEARS_ON).contains(playerTrainingBloomEvent.getYearsOn()),
+        throwIfNot(Range.between(MIN_BLOOM_PLAYER_AGE, MAX_BLOOM_PLAYER_AGE).contains(age),
+            BLOOM_PLAYER_AGE_INVALID_RANGE);
+        throwIfNot(Range.between(MIN_BLOOM_YEARS_ON, MAX_BLOOM_YEARS_ON)
+                .contains(playerTrainingBloomEvent.getYearsOn()),
             BLOOM_YEARS_ON_INVALID_RANGE);
-        throwIfNot(Range.between(MIN_BLOOM_SPEED, MAX_BLOOM_SPEED).contains(playerTrainingBloomEvent.getBloomSpeed()),
+        throwIfNot(Range.between(MIN_BLOOM_SPEED, MAX_BLOOM_SPEED)
+                .contains(playerTrainingBloomEvent.getBloomSpeed()),
             BLOOM_SPEED_INVALID_RANGE);
 
         this.bloom = playerTrainingBloomEvent;
     }
 
     public void addDeclinePhase(PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
-        throwIfNot(Range.between(MIN_DECLINE_PLAYER_AGE, MAX_DECLINE_PLAYER_AGE).contains(age), DECLINE_PLAYER_AGE_INVALID_RANGE);
-        throwIfNot(Range.between(MIN_DECLINE_SPEED, MAX_DECLINE_SPEED).contains(playerTrainingDeclineEvent.getDeclineSpeed()),
+        throwIfNot(Range.between(MIN_DECLINE_PLAYER_AGE, MAX_DECLINE_PLAYER_AGE).contains(age),
+            DECLINE_PLAYER_AGE_INVALID_RANGE);
+        throwIfNot(Range.between(MIN_DECLINE_SPEED, MAX_DECLINE_SPEED)
+                .contains(playerTrainingDeclineEvent.getDeclineSpeed()),
             DECLINE_SPEED_INVALID_RANGE);
 
         final int decreasePoints = PointsGenerator.generateDecreasePoints(
@@ -110,26 +115,26 @@ public class Player {
     }
 
     public Integer getActualSkillPoints(PlayerSkill skill) {
-        return actualSkills.get(skill).getActual();
+        return getActualSkills().get(skill).getActual();
     }
 
     public Integer getPotentialSkillPoints(PlayerSkill skill) {
-        return actualSkills.get(skill).getPotential();
+        return getActualSkills().get(skill).getPotential();
     }
 
 
     public void addSkillsPoints(PlayerSkill skill, Integer points) {
-        PlayerSkills skillPoints = actualSkills.get(skill);
+        PlayerSkills skillPoints = getActualSkills().get(skill);
         skillPoints.setActual(Math.min(MAX_SKILL_VALUE, skillPoints.getActual() + points));
     }
 
     public void addSkillsPotentialRisePoints(PlayerSkill skill, Integer points) {
-        PlayerSkills skillPoints = actualSkills.get(skill);
+        PlayerSkills skillPoints = getActualSkills().get(skill);
         skillPoints.setPotential(Math.min(MAX_SKILL_VALUE, skillPoints.getPotential() + points));
     }
 
     private void subtractSkillPoints(PlayerSkill skill, Integer points) {
-        PlayerSkills skillPoints = actualSkills.get(skill);
+        PlayerSkills skillPoints = getActualSkills().get(skill);
         skillPoints.setActual(Math.max(MIN_SKILL_VALUE, getActualSkillPoints(skill) - points));
     }
 
@@ -138,6 +143,7 @@ public class Player {
     }
 
     public record PlayerId(String value) {
+
         public static com.kjeldsen.player.domain.Player.PlayerId generate() {
             return new com.kjeldsen.player.domain.Player.PlayerId(UUID.randomUUID().toString());
         }
@@ -150,6 +156,7 @@ public class Player {
     @Builder
     @Getter
     public static class Economy {
+
         private BigDecimal salary;
     }
 

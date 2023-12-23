@@ -29,16 +29,16 @@ public class CreatePlayerUseCase {
         PlayerPositionTendency positionTendencies = playerPositionTendencyReadRepository.get(newPlayer.getPosition());
 
         PlayerCreationEvent playerCreationEvent = PlayerCreationEvent.builder()
-            .id(EventId.generate())
-            .occurredAt(InstantProvider.now())
-            .playerId(Player.PlayerId.generate())
-            .name(PlayerProvider.name())
-            .age(newPlayer.getAge())
-            .position(newPlayer.getPosition())
-            .initialSkills(PlayerProvider.skillsBasedOnTendency(positionTendencies, newPlayer.getPoints()))
-            .teamId(newPlayer.getTeamId())
-            .playerCategory(newPlayer.getPlayerCategory())
-            .build();
+                .id(EventId.generate())
+                .occurredAt(InstantProvider.now())
+                .playerId(Player.PlayerId.generate())
+                .name(PlayerProvider.name())
+                .age(newPlayer.getAge())
+                .position(newPlayer.getPosition())
+                .initialSkills(PlayerProvider.skillsBasedOnTendency(positionTendencies, newPlayer.getPoints()))
+                .teamId(newPlayer.getTeamId())
+                .playerCategory(newPlayer.getPlayerCategory())
+                .build();
 
         playerCreationEventWriteRepository.save(playerCreationEvent);
 
