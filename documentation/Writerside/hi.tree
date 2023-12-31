@@ -14,4 +14,6 @@
     <toc-element topic="BirdSightArchitecture.md"/>
     <toc-element topic="Timelines.md"/>
     <toc-element topic="Release.md"/>
+    <toc-element topic="MatchService.md"/>
+    <toc-element topic="MatchService.es.md"/>
 </instance-profile>
