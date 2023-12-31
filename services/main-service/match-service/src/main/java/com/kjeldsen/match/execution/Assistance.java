@@ -34,6 +34,7 @@ public class Assistance {
         TeamState team = getTeam(state, role);
         return team.getPlayers().stream()
             .filter(teammate -> !teammate.equals(player))
+            .filter(teammate -> teammate.getPosition() != PlayerPosition.GOALKEEPER)
             .collect(Collectors.toMap(
                 Player::getName,
                 teammate -> playerAssistance(team.getTactic(), teammate, role, pitchArea)))

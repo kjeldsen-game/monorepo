@@ -26,8 +26,6 @@ public class MatchReport {
      * Used by frontends to display match results.
      */
 
-    Long id;
-
     Team home;
     Team away;
 

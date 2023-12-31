@@ -213,14 +213,14 @@ public class TeamDelegate implements TeamApiDelegate {
         }
 
         List<EditPlayerRequest> defensiveMidfielders = midfielders.stream()
-            .filter(midfielder -> extractPosition(midfielder).isDefensive())
+            .filter(midfielder -> extractPosition(midfielder) == PlayerPosition.DEFENSIVE_MIDFIELDER)
             .toList();
         if (defensiveMidfielders.size() > 1) {
             throw new InvalidTeamException("Only one defensive midfielder is allowed");
         }
 
         List<EditPlayerRequest> offensiveMidfielders = midfielders.stream()
-            .filter(midfielder -> extractPosition(midfielder).isOffensive())
+            .filter(midfielder -> extractPosition(midfielder) == PlayerPosition.OFFENSIVE_MIDFIELDER)
             .toList();
         if (offensiveMidfielders.size() > 1) {
             throw new InvalidTeamException("Only one offensive midfielder is allowed");

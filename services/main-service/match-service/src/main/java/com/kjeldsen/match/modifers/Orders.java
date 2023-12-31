@@ -30,6 +30,10 @@ public class Orders {
         if (flip < playerOrderProbability) {
             return params;
         }
+
+        if (order == null) {
+            return params;
+        }
         return switch (order) {
             case PASS_FORWARD -> passForward(params);
             case LONG_SHOT -> longShot(params);

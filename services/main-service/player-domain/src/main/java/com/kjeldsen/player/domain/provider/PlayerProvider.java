@@ -122,6 +122,8 @@ public class PlayerProvider {
                 .age(age())
                 .position(positionTendencies.getPosition())
                 .actualSkills(skillsBasedOnTendency(positionTendencies, totalPoints))
+                .playerOrder(PlayerOrder.NONE)
+                .status(PlayerStatus.INACTIVE)
                 .teamId(teamId)
                 .category(playerCategory)
                 .economy(Player.Economy.builder().build())
