@@ -33,7 +33,6 @@ class CreatePlayerUseCaseTest {
     void create_a_player_with_the_given_age_position_and_total_points_distributed_in_the_actual_skills() {
         Team.TeamId teamId = Team.TeamId.of("teamId");
         CreatePlayerUseCase.NewPlayer newPlayer = CreatePlayerUseCase.NewPlayer.builder()
-            .age(20)
             .position(PlayerPosition.CENTRE_MIDFIELDER)
             .points(200)
             .teamId(teamId)
@@ -49,8 +48,7 @@ class CreatePlayerUseCaseTest {
 
         PlayerCreationEvent playerCreationEvent = argumentCaptor.getValue();
         assertThat(playerCreationEvent)
-            .matches(player -> player.getAge().equals(20)
-                && player.getPosition().equals(PlayerPosition.CENTRE_MIDFIELDER)
+            .matches(player -> player.getPosition().equals(PlayerPosition.CENTRE_MIDFIELDER)
                 && StringUtils.isNotBlank(player.getName())
                 && player.getTeamId().equals(teamId)
                 && player.getInitialSkills().values().stream().map(PlayerSkills::getActual).mapToInt(Integer::intValue).sum() == 200);

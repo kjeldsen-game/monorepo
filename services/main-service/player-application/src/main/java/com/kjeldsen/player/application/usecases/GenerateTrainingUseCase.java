@@ -2,6 +2,7 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.PlayerAge;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.generator.PointsGenerator;
@@ -35,7 +36,7 @@ public class GenerateTrainingUseCase {
         validateDays(currentDay);
 
         Player player = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
-
+        playerAging(player);
         return generateAndStoreEvent(player, skill, currentDay);
     }
 
@@ -83,5 +84,10 @@ public class GenerateTrainingUseCase {
             throw new IllegalArgumentException("Days must be between 1 and 1000");
         }
     }
-
+    public Player playerAging(Player player){
+        PlayerAge age = player.getAge();
+        PlayerAge playerAge = PlayerAge.gettingOlder(age);
+        player.setAge(playerAge);
+        return player;
+    }
 }
