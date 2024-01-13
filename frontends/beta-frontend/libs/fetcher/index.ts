@@ -64,5 +64,5 @@ export const connectorAuth = (url: string, method: string, body?: any) => {
 }
 
 export const connectorAPI = (url: string, method: string, body?: any) => {
-  return connector(`http://localhost:8082${url}`, method, body )
+  return connector(`http://localhost:8081${url}`, method, body )
 }
