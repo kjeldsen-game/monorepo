@@ -12,11 +12,7 @@
         <!-- Modules -->
         <dependency>
             <groupId>com.kjeldsen</groupId>
-            <artifactId>auth-adapter-rest</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>auth-adapter-mongodb</artifactId>
+            <artifactId>auth-service</artifactId>
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
@@ -29,10 +25,6 @@
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>player-adapter-persistence</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>security-config</artifactId>
         </dependency>
         <!-- Others -->
         <dependency>

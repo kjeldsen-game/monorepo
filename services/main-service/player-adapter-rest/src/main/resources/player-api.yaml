@@ -12,22 +12,6 @@ tags:
 
 paths:
 
-  /team/me:
-    get:
-      summary: Retrieves the team associated to the logged user
-      operationId: getTeam
-      tags:
-        - team
-      responses:
-        "200":
-          description: Returns the team
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/responses/TeamResponse"
-        default:
-          $ref: "#/components/responses/DefaultErrorResponse"
-
   /team:
     get:
       summary: Get all teams
