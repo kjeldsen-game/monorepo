@@ -12,6 +12,7 @@ import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.StringUtils;
 
 @RequiredArgsConstructor
 class GameTest {
@@ -40,7 +41,7 @@ class GameTest {
             Team home = RandomHelper.genTeam();
             Team away = RandomHelper.genTeam();
             Match match = Match.builder()
-                .id(new Random().nextLong())
+                .id(java.util.UUID.randomUUID().toString())
                 .home(home)
                 .away(away)
                 .build();
@@ -59,7 +60,7 @@ class GameTest {
         Team home = RandomHelper.genTeam();
         Team away = RandomHelper.genTeam();
         Match match = Match.builder()
-            .id(new Random().nextLong())
+            .id(java.util.UUID.randomUUID().toString())
             .home(home)
             .away(away)
             .build();
@@ -76,7 +77,7 @@ class GameTest {
         Team home = RandomHelper.genTeam();
         Team away = RandomHelper.genTeam();
         Match match = Match.builder()
-            .id(new Random().nextLong())
+            .id(java.util.UUID.randomUUID().toString())
             .home(home)
             .away(away)
             .build();

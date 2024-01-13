@@ -68,6 +68,7 @@ public class Player {
             .age(playerCreationEvent.getAge())
             .position(playerCreationEvent.getPosition())
             .playerOrder(PlayerOrder.NONE)
+            .status(PlayerStatus.INACTIVE)
             .actualSkills(playerCreationEvent.getInitialSkills())
             .teamId(playerCreationEvent.getTeamId())
             .category(playerCreationEvent.getPlayerCategory())
