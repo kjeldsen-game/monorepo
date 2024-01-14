@@ -108,6 +108,7 @@ public class PlayerProvider {
     }
 
     public static Player generate(Team.TeamId teamId, PlayerPositionTendency positionTendencies, PlayerCategory playerCategory, int totalPoints) {
+<<<<<<< HEAD
         Player player = Player.builder()
                 .id(Player.PlayerId.generate())
                 .name(name())
@@ -120,6 +121,32 @@ public class PlayerProvider {
                 .category(playerCategory)
                 .economy(Player.Economy.builder().build())
                 .build();
+=======
+        Player player;
+        if(playerCategory.name().equals(PlayerCategory.JUNIOR.name())){
+            player = Player.builder()
+                    .id(Player.PlayerId.generate())
+                    .name(name())
+                    .age(PlayerAge.generateAgeOfAPlayer(playerCategory))
+                    .position(positionTendencies.getPosition())
+                    .actualSkills(skillsBasedOnTendency(positionTendencies, totalPoints))
+                    .teamId(teamId)
+                    .category(PlayerCategory.JUNIOR)
+                    .economy(Player.Economy.builder().build())
+                    .build();
+        } else {
+            player = Player.builder()
+                    .id(Player.PlayerId.generate())
+                    .name(name())
+                    .age(PlayerAge.generateAgeOfAPlayer(playerCategory))
+                    .position(positionTendencies.getPosition())
+                    .actualSkills(skillsBasedOnTendency(positionTendencies, totalPoints))
+                    .teamId(teamId)
+                    .category(PlayerCategory.SENIOR)
+                    .economy(Player.Economy.builder().build())
+                    .build();
+        }
+>>>>>>> 034bd1b (Fixing player category - Player aging done)
         player.negotiateSalary();
         return player;
     }
