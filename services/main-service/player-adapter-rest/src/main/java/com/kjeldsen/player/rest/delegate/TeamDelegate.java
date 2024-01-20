@@ -11,9 +11,11 @@ import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.rest.api.TeamApiDelegate;
+import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.mapper.TeamMapper;
 import com.kjeldsen.player.rest.model.EditPlayerRequest;
 import com.kjeldsen.player.rest.model.EditTeamRequest;
+import com.kjeldsen.player.rest.model.PlayerResponse;
 import com.kjeldsen.player.rest.model.TeamResponse;
 import java.util.List;
 import java.util.Objects;
@@ -48,6 +50,12 @@ public class TeamDelegate implements TeamApiDelegate {
         Team team = teamReadRepository.findOneById(Team.TeamId.of(teamId))
             .orElseThrow();
         TeamResponse response = TeamMapper.INSTANCE.map(team);
+        playerReadRepository.findByTeamId(TeamId.of(teamId));
+        List<PlayerResponse> players = playerReadRepository.findByTeamId(TeamId.of(teamId))
+            .stream()
+            .map(PlayerMapper.INSTANCE::playerResponseMap)
+            .toList();
+        response.setPlayers(players);
         return ResponseEntity.ok(response);
     }
 

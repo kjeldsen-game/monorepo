@@ -802,6 +802,10 @@ components:
           $ref: "#/components/schemas/Cantera"
         economy:
           $ref: "#/components/schemas/Economy"
+        players:
+          type: array
+          items:
+            $ref: "#/components/responses/PlayerResponse"
 
     Cantera:
       type: object
