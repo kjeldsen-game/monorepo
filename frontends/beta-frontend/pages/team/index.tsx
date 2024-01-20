@@ -23,9 +23,10 @@ export async function getServerSideProps() {
 }
 
 interface TeamProps {
-  fallback: Object;
+  fallback: () => void;
 }
 
+// eslint-disable-next-line react/prop-types
 const Team: NextPage<TeamProps> = ({fallback}) => {
   const { data, error } = useSWR(API, connectorAPI, { fallback });
   console.log(data)

@@ -1,4 +1,4 @@
-import { GridCellParams, GridColumnHeaderParams, GridValueFormatterParams, GridValueGetterParams } from '@mui/x-data-grid'
+import { GridCellParams, GridValueFormatterParams, GridValueGetterParams } from '@mui/x-data-grid'
 import { GridAlignment } from '@mui/x-data-grid'
 import Link from 'next/link'
 import { css } from '@emotion/react';
@@ -20,12 +20,12 @@ export const teamColumn = [
     headerAlign: 'center' as GridAlignment,
     minWidth: 130, flex: 1,
     renderCell: (params: GridCellParams) => <Link
-      passHref href={`/player/${params.row.id}`}><a css={linkStyle}>{params.row.name}</a></Link>
+    passHref href={`/player/${params.row.id}`}><a css={linkStyle}>{params.row.name}</a></Link>
   },
   { field: 'age', headerName: 'Age', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
   {
     field: 'position',
-    valueFormatter: (params: GridValueFormatterParams<any>) => {
+    valueFormatter: (params: GridValueFormatterParams<unknown>) => {
       switch (params.value) {
         case 'GOALKEEPER':
           return 'GK';
@@ -57,7 +57,7 @@ export const teamColumn = [
   },
   {
     field: 'DEFENSE_POSITION',
-    renderHeader: (params: GridColumnHeaderParams) => <div>DP<sup>CO</sup></div>,
+    renderHeader: () => <div>DP<sup>CO</sup></div>,
     minWidth: 50,
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
@@ -69,7 +69,7 @@ export const teamColumn = [
   },
   {
     field: 'BALL_CONTROL',
-    renderHeader: (params: GridColumnHeaderParams) => <div>BC<sup>INT</sup></div>,
+    renderHeader: () => <div>BC<sup>INT</sup></div>,
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 50,
@@ -81,7 +81,7 @@ export const teamColumn = [
   },
   {
     field: 'SCORE',
-    renderHeader: (params: GridColumnHeaderParams) => <div>SC<sup>1on1</sup></div>,
+    renderHeader: () => <div>SC<sup>1on1</sup></div>,
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 50,
@@ -93,7 +93,7 @@ export const teamColumn = [
   },
   {
     field: 'PASSING',
-    renderHeader: (params: GridColumnHeaderParams) => <div>PA<sup>ORG</sup></div>,
+    renderHeader: () => <div>PA<sup>ORG</sup></div>,
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 50,
@@ -105,7 +105,7 @@ export const teamColumn = [
   },
   {
     field: 'OFFENSIVE_POSITION',
-    renderHeader: (params: GridColumnHeaderParams) => <div>OP<sup>POS</sup></div>,
+    renderHeader: () => <div>OP<sup>POS</sup></div>,
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 50,
@@ -117,7 +117,7 @@ export const teamColumn = [
   },
   {
     field: 'TACKLING',
-    renderHeader: (params: GridColumnHeaderParams) => <div>TA<sup>RE</sup></div>,
+    renderHeader: () => <div>TA<sup>RE</sup></div>,
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 50,
