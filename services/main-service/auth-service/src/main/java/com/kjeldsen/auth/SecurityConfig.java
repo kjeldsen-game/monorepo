@@ -1,15 +1,18 @@
 package com.kjeldsen.auth;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.credential.DefaultPasswordService;
 import org.apache.shiro.authc.credential.PasswordService;
+import org.apache.shiro.config.IniSecurityManagerFactory;
+import org.apache.shiro.env.BasicIniEnvironment;
+import org.apache.shiro.env.Environment;
 import org.apache.shiro.realm.Realm;
-import org.apache.shiro.session.mgt.SessionManager;
-import org.apache.shiro.session.mgt.eis.MemorySessionDAO;
-import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
+import org.apache.shiro.util.Factory;
+import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.apache.shiro.web.mgt.WebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -43,17 +46,14 @@ public class SecurityConfig {
         return new DefaultPasswordService();
     }
 
-
-    @Bean
-    public DefaultWebSecurityManager securityManager() {
-        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(realm());
-        return securityManager;
-    }
-
     @Bean
     public Realm realm() {
         return new CustomRealm();
+    }
+
+    @Bean
+    public SecurityManager securityManager() {
+        return new CustomSecurityManager(realm());
     }
 }
 

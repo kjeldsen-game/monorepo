@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.PasswordService;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -25,18 +26,12 @@ public class AuthDelegate implements AuthApiDelegate {
     private final PasswordService passwordService;
     private final CreateTeamUseCase createTeamUseCase;
     private final TeamReadRepository teamReadRepository;
+    private final AuthService authService;
 
     @Override
     public ResponseEntity<UserDetailsResponse> me() {
-        Subject subject = SecurityUtils.getSubject();
-        if (subject == null || subject.getPrincipal() == null) {
-            throw new RuntimeException("User not logged in");
-        }
-
-        String email = subject.getPrincipal().toString();
-
-        User user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = authService.currentUser()
+            .orElseThrow(() -> new RuntimeException("User not logged in"));
 
         Optional<Team> team = teamReadRepository.findByUserId(user.getId());
         if (team.isEmpty()) {
@@ -53,6 +48,9 @@ public class AuthDelegate implements AuthApiDelegate {
 
     @Override
     public ResponseEntity<String> login(LoginRequest request) {
+        // Remembers the user's token so they don't need to log in every time. This is set to true
+        // by default but the login screen can add a checkbox to allow users to disable it.
+        boolean rememberMe = true;
         return userRepository.findByEmail(request.getEmail())
             .map(user -> {
                 if (!passwordService.passwordsMatch(request.getPassword(), user.getPassword())) {
@@ -61,7 +59,7 @@ public class AuthDelegate implements AuthApiDelegate {
 
                 UsernamePasswordToken token =
                     new UsernamePasswordToken(user.getEmail(), user.getPassword());
-                token.setRememberMe(true);
+                token.setRememberMe(rememberMe);
                 SecurityUtils.getSubject().login(token);
                 return ResponseEntity.ok("Login successful");
             })

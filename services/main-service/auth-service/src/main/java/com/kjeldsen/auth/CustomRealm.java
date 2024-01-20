@@ -22,10 +22,10 @@ public class CustomRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String username = (String) principals.getPrimaryPrincipal();
-        Optional<User> user = userRepository.findByEmail(username);
+        String email = (String) principals.getPrimaryPrincipal();
+        Optional<User> user = userRepository.findByEmail(email);
         if (user.isEmpty()) {
-            throw new UnknownAccountException("No account found for user [" + username + "]");
+            throw new UnknownAccountException("No account found for user [" + email + "]");
         }
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.addRoles(user.get().getRoles());
@@ -34,15 +34,14 @@ public class CustomRealm extends AuthorizingRealm {
     }
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
+        throws AuthenticationException {
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
-        String username = upToken.getUsername();
-        Optional<User> user = userRepository.findByEmail(username);
-
+        String email = upToken.getUsername();
+        Optional<User> user = userRepository.findByEmail(email);
         if (user.isEmpty()) {
-            throw new UnknownAccountException("No account found for user [" + username + "]");
+            throw new UnknownAccountException("No account found for user [" + email + "]");
         }
-
         return
             new SimpleAuthenticationInfo(
                 user.get().getEmail(), user.get().getPassword(), getName());
