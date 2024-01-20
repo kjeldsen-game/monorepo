@@ -39,30 +39,29 @@ export const connector = async (url: string, method: string, body?: any) => {
   const response = await fetch(`${url}`, {
     method: method,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
-  });
+  })
 
   try {
-    const data = await response.json();
-    return data;
-  }
-  catch (e) {
+    const data = await response.json()
+    return data
+  } catch (e) {
     if (response.ok) {
-      console.log("Response is ok but no JSON")
+      console.log('Response is ok but no JSON')
     } else {
-      const error = await response.json();
-      throw new Error(error.message);
+      const error = await response.json()
+      throw new Error(error.message)
     }
   }
-  return false;
-};
+  return false
+}
 
 export const connectorAuth = (url: string, method: string, body?: any) => {
-  return connector(`${API_GATEWAY_ENDPOINT}${url}`, method, body )
+  return connector(`${API_GATEWAY_ENDPOINT}${url}`, method, body)
 }
 
 export const connectorAPI = (url: string, method: string, body?: any) => {
-  return connector(`http://localhost:8081${url}`, method, body )
+  return connector(`${API_GATEWAY_ENDPOINT}${url}`, method, body)
 }

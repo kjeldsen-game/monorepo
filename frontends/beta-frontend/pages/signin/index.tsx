@@ -35,8 +35,8 @@ const SignInPage: NextPageWithLayout = () => {
               justifyContent: 'center',
               rowGap: '1rem',
             }}
-            onSubmit={handleSubmit(async (username, password) => {
-              apiSignIn(username, password)
+            onSubmit={handleSubmit(async (data) => {
+              apiSignIn(data.username, data.password)
             })}>
             <Controller
               name="username"

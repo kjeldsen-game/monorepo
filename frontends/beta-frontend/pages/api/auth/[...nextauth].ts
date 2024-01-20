@@ -6,8 +6,7 @@ import factory from '@/libs/fetcher'
 export default NextAuth({
   providers: [
     CredentialsProvider({
-      id: 'credentials',
-      name: 'my-project',
+      name: 'credentials',
       credentials: {
         username: {
           label: 'username',
@@ -15,6 +14,7 @@ export default NextAuth({
         },
         password: { label: 'Password', type: 'password' },
       },
+      type: 'credentials',
       async authorize(credentials) {
         const payload = new URLSearchParams({
           username: credentials?.username || '',
@@ -24,7 +24,7 @@ export default NextAuth({
           client_secret: AUTH_CLIENT_SECRET,
         })
 
-        const res = await fetch(`${API_GATEWAY_ENDPOINT}/main-service/oauth/token`, {
+        const res = await fetch(`${API_GATEWAY_ENDPOINT}/auth/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
