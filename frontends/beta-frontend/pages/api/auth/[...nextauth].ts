@@ -1,7 +1,6 @@
-import NextAuth from 'next-auth'
+import NextAuth, { User } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { API_GATEWAY_ENDPOINT, AUTH_CLIENT_ID, AUTH_CLIENT_SECRET } from '@/config'
-import factory from '@/libs/fetcher'
 
 export default NextAuth({
   providers: [
@@ -9,35 +8,37 @@ export default NextAuth({
       name: 'credentials',
       credentials: {
         username: {
-          label: 'username',
+          label: 'email',
           type: 'text',
         },
-        password: { label: 'Password', type: 'password' },
+        password: { label: 'password', type: 'password' },
       },
       type: 'credentials',
-      async authorize(credentials) {
-        const payload = new URLSearchParams({
-          username: credentials?.username || '',
+      authorize: async (credentials) => {
+        const payload = {
+          email: credentials?.username || '',
           password: credentials?.password || '',
-          grant_type: 'password',
           client_id: AUTH_CLIENT_ID,
           client_secret: AUTH_CLIENT_SECRET,
-        })
+        };
 
         const res = await fetch(`${API_GATEWAY_ENDPOINT}/auth/login`, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
           },
-          body: payload.toString(),
+          body: JSON.stringify(payload),
         })
 
-        const data = await res.json()
+        // TODO: Get data from the backend, at the moment it returns a plain string
+        const mockData: User = {
+          id: '1',
+          name: 'user',
+          email: credentials?.username,
+        }
 
         // Returning token to set in session
-        return {
-          token: data,
-        }
+        return mockData;
       },
     }),
   ],
