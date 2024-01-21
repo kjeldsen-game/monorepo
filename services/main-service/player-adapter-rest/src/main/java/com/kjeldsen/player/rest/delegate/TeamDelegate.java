@@ -11,11 +11,12 @@ import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.rest.api.TeamApiDelegate;
+import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.mapper.TeamMapper;
 import com.kjeldsen.player.rest.model.EditPlayerRequest;
 import com.kjeldsen.player.rest.model.EditTeamRequest;
+import com.kjeldsen.player.rest.model.PlayerResponse;
 import com.kjeldsen.player.rest.model.TeamResponse;
-import com.kjeldsen.security.AuthenticationFetcher;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -28,17 +29,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class TeamDelegate implements TeamApiDelegate {
 
     private final GetTeamUseCase getTeamUseCase;
-    private final AuthenticationFetcher authenticationFetcher;
     private final TeamReadRepository teamReadRepository;
     private final PlayerReadRepository playerReadRepository;
     private final PlayerWriteRepository playerWriteRepository;
-
-    @Override
-    public ResponseEntity<TeamResponse> getTeam() {
-        String loggedUserID = authenticationFetcher.getLoggedUserID();
-        final Team team = getTeamUseCase.get(loggedUserID);
-        return ResponseEntity.ok(TeamMapper.INSTANCE.map(team));
-    }
 
     @Override
     public ResponseEntity<List<TeamResponse>> getAllTeams(String name, Integer size, Integer page) {
@@ -57,12 +50,19 @@ public class TeamDelegate implements TeamApiDelegate {
         Team team = teamReadRepository.findOneById(Team.TeamId.of(teamId))
             .orElseThrow();
         TeamResponse response = TeamMapper.INSTANCE.map(team);
+        playerReadRepository.findByTeamId(TeamId.of(teamId));
+        List<PlayerResponse> players = playerReadRepository.findByTeamId(TeamId.of(teamId))
+            .stream()
+            .map(PlayerMapper.INSTANCE::playerResponseMap)
+            .toList();
+        response.setPlayers(players);
         return ResponseEntity.ok(response);
     }
 
     @Override
     @Transactional
-    public ResponseEntity<TeamResponse> updateTeamById(String teamId, EditTeamRequest editTeamRequest) {
+    public ResponseEntity<TeamResponse> updateTeamById(String teamId,
+        EditTeamRequest editTeamRequest) {
         List<EditPlayerRequest> playerUpdates = editTeamRequest.getPlayers();
 
         List<EditPlayerRequest> activePlayers = playerUpdates.stream()
@@ -126,7 +126,8 @@ public class TeamDelegate implements TeamApiDelegate {
             throw new InvalidTeamException("Back left flank coverage is required (LB or LWB)");
         }
         if (leftDefender && leftWingBack) {
-            throw new InvalidTeamException("Only one player covering back left flank is allowed (LB or LWB)");
+            throw new InvalidTeamException(
+                "Only one player covering back left flank is allowed (LB or LWB)");
         }
 
         boolean rightDefender = activePlayers.stream()
@@ -139,7 +140,8 @@ public class TeamDelegate implements TeamApiDelegate {
             throw new InvalidTeamException("Back right flank coverage is required (RB or RWB)");
         }
         if (rightDefender && rightWingback) {
-            throw new InvalidTeamException("Only one player covering back right flank is allowed (RB or RWB)");
+            throw new InvalidTeamException(
+                "Only one player covering back right flank is allowed (RB or RWB)");
         }
     }
 
@@ -154,7 +156,8 @@ public class TeamDelegate implements TeamApiDelegate {
             throw new InvalidTeamException("Left flank coverage is required (LM or LW)");
         }
         if (leftMidfielder && leftWinger) {
-            throw new InvalidTeamException("Only one player covering midfield left flank is allowed (LM or LW)");
+            throw new InvalidTeamException(
+                "Only one player covering midfield left flank is allowed (LM or LW)");
         }
 
         boolean rightMidfielder = activePlayers.stream()
@@ -167,7 +170,8 @@ public class TeamDelegate implements TeamApiDelegate {
             throw new InvalidTeamException("Right flank coverage is required (RM or RW)");
         }
         if (rightMidfielder && rightWinger) {
-            throw new InvalidTeamException("Only one player covering right midfield flank is allowed (RM or RW)");
+            throw new InvalidTeamException(
+                "Only one player covering right midfield flank is allowed (RM or RW)");
         }
     }
 
@@ -213,14 +217,16 @@ public class TeamDelegate implements TeamApiDelegate {
         }
 
         List<EditPlayerRequest> defensiveMidfielders = midfielders.stream()
-            .filter(midfielder -> extractPosition(midfielder) == PlayerPosition.DEFENSIVE_MIDFIELDER)
+            .filter(
+                midfielder -> extractPosition(midfielder) == PlayerPosition.DEFENSIVE_MIDFIELDER)
             .toList();
         if (defensiveMidfielders.size() > 1) {
             throw new InvalidTeamException("Only one defensive midfielder is allowed");
         }
 
         List<EditPlayerRequest> offensiveMidfielders = midfielders.stream()
-            .filter(midfielder -> extractPosition(midfielder) == PlayerPosition.OFFENSIVE_MIDFIELDER)
+            .filter(
+                midfielder -> extractPosition(midfielder) == PlayerPosition.OFFENSIVE_MIDFIELDER)
             .toList();
         if (offensiveMidfielders.size() > 1) {
             throw new InvalidTeamException("Only one offensive midfielder is allowed");

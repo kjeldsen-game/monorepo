@@ -4,11 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>auth-adapter-mongodb</module>
-        <module>auth-domain</module>
-        <module>auth-persistence</module>
-        <module>auth-application</module>
-        <module>auth-adapter-rest</module>
+        <module>auth-service</module>
         <module>player-adapter-persistence</module>
         <module>player-adapter-rest</module>
         <module>player-application</module>
@@ -17,8 +13,6 @@
         <module>match-adapter-rest</module>
         <module>infrastructure</module>
         <module>domain</module>
-        <module>security-config</module>
-        <module>security-tools</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -171,7 +165,7 @@
             </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>auth-adapter-rest</artifactId>
+                <artifactId>auth-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
