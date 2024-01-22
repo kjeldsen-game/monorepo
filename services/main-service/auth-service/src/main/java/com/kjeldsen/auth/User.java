@@ -1,5 +1,6 @@
 package com.kjeldsen.auth;
 
+import com.kjeldsen.auth.config.Role;
 import java.util.List;
 import java.util.Set;
 import lombok.Data;

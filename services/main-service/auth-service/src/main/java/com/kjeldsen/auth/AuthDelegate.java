@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.PasswordService;
-import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -29,47 +28,45 @@ public class AuthDelegate implements AuthApiDelegate {
     private final AuthService authService;
 
     @Override
+    public ResponseEntity<Void> unauthorized() {
+        return ResponseEntity.badRequest().build();
+    }
+
+    @Override
     public ResponseEntity<UserDetailsResponse> me() {
         User user = authService.currentUser()
             .orElseThrow(() -> new RuntimeException("User not logged in"));
 
-        Optional<Team> team = teamReadRepository.findByUserId(user.getId());
-        if (team.isEmpty()) {
-            throw new RuntimeException("Team not found");
-        }
-
-        UserDetailsResponse details = new UserDetailsResponse();
-        details.setEmail(user.getEmail());
-        details.setId(user.getId());
-        details.setTeamId(team.get().getId().value());
-
+        UserDetailsResponse details = buildUserDetailsResponse(user);
         return ResponseEntity.ok(details);
     }
 
     @Override
-    public ResponseEntity<String> login(LoginRequest request) {
+    public ResponseEntity<UserDetailsResponse> login(LoginRequest request) {
         // Remembers the user's token so they don't need to log in every time. This is set to true
         // by default but the login screen can add a checkbox to allow users to disable it.
         boolean rememberMe = true;
         return userRepository.findByEmail(request.getEmail())
             .map(user -> {
                 if (!passwordService.passwordsMatch(request.getPassword(), user.getPassword())) {
-                    return ResponseEntity.badRequest().body("Password incorrect");
+                    throw new RuntimeException("Password incorrect");
                 }
 
                 UsernamePasswordToken token =
                     new UsernamePasswordToken(user.getEmail(), user.getPassword());
                 token.setRememberMe(rememberMe);
                 SecurityUtils.getSubject().login(token);
-                return ResponseEntity.ok("Login successful");
+
+                UserDetailsResponse details = buildUserDetailsResponse(user);
+                return ResponseEntity.ok(details);
             })
-            .orElseGet(() -> ResponseEntity.badRequest().body("User not found"));
+            .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     @Override
-    public ResponseEntity<String> register(RegisterRequest request) {
+    public ResponseEntity<Void> register(RegisterRequest request) {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            return ResponseEntity.badRequest().body("Username already exists");
+            throw new RuntimeException("Username taken");
         }
 
         User user = new User();
@@ -84,12 +81,12 @@ public class AuthDelegate implements AuthApiDelegate {
             .size(1)
             .build();
         if (!teamReadRepository.find(query).isEmpty()) {
-            return ResponseEntity.badRequest().body("Team name already exists");
+            throw new RuntimeException("Team name taken");
         }
 
         User registered = userRepository.save(user);
         createTeamUseCase.create(teamName, 50, registered.getId());
-        return ResponseEntity.ok("User created");
+        return ResponseEntity.ok().build();
     }
 
     @Override
@@ -100,5 +97,18 @@ public class AuthDelegate implements AuthApiDelegate {
         }
         user.logout();
         return ResponseEntity.ok("Logout successful");
+    }
+
+    private UserDetailsResponse buildUserDetailsResponse(User user) {
+        Optional<Team> team = teamReadRepository.findByUserId(user.getId());
+        if (team.isEmpty()) {
+            throw new RuntimeException("Team not found");
+        }
+
+        UserDetailsResponse details = new UserDetailsResponse();
+        details.setEmail(user.getEmail());
+        details.setId(user.getId());
+        details.setTeamId(team.get().getId().value());
+        return details;
     }
 }
