@@ -138,6 +138,13 @@ public class PlayerProvider {
         return allSkills[random];
     }
 
+    public static PlayerSkill randomSkillForSpecificPlayer(Optional<Player> player) {
+        Map<PlayerSkill, PlayerSkills> skills = player.get().getActualSkills();
+        List<PlayerSkill> allSkills = skills.keySet().stream().toList();
+        int random = (int) (Math.random() * allSkills.size());
+        return allSkills.get(random);
+    }
+
     public static Player generateDefault() {
         return generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES, PlayerCategory.JUNIOR, 200);
     }
