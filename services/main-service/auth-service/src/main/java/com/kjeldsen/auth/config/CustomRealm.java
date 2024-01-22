@@ -1,5 +1,7 @@
-package com.kjeldsen.auth;
+package com.kjeldsen.auth.config;
 
+import com.kjeldsen.auth.User;
+import com.kjeldsen.auth.UserRepository;
 import java.util.Optional;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

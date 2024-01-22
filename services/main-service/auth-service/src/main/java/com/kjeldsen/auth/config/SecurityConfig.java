@@ -1,18 +1,13 @@
-package com.kjeldsen.auth;
+package com.kjeldsen.auth.config;
 
-import org.apache.shiro.SecurityUtils;
+import com.kjeldsen.auth.config.CustomRealm;
+import com.kjeldsen.auth.config.CustomSecurityManager;
 import org.apache.shiro.authc.credential.DefaultPasswordService;
 import org.apache.shiro.authc.credential.PasswordService;
-import org.apache.shiro.config.IniSecurityManagerFactory;
-import org.apache.shiro.env.BasicIniEnvironment;
-import org.apache.shiro.env.Environment;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
-import org.apache.shiro.util.Factory;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.mgt.WebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

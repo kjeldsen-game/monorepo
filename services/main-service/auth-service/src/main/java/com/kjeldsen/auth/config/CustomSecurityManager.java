@@ -1,4 +1,4 @@
-package com.kjeldsen.auth;
+package com.kjeldsen.auth.config;
 
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
