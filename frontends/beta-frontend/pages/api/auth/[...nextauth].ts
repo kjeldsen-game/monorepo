@@ -30,6 +30,8 @@ export default NextAuth({
           body: JSON.stringify(payload),
         })
 
+      
+
         // TODO: Get data from the backend, at the moment it returns a plain string
         const mockData: User = {
           id: '1',
@@ -38,7 +40,11 @@ export default NextAuth({
         }
 
         // Returning token to set in session
-        return mockData;
+        if (res.ok) {
+          return mockData;
+        }
+
+        return null;
       },
     }),
   ],
