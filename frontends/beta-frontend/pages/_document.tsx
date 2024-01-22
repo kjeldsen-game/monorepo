@@ -14,7 +14,9 @@ export default class MyDocument extends Document {
           <link rel="shortcut icon" href="/favicon.ico" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"></link>
           <meta name="emotion-insertion-point" content="" />
-          {(this.props as any).emotionStyleTags}
+          {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (this.props as any).emotionStyleTags}
         </Head>
         <body>
           <Main />
@@ -59,6 +61,7 @@ MyDocument.getInitialProps = async (ctx) => {
 
   ctx.renderPage = () =>
     originalRenderPage({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       enhanceApp: (App: any) =>
         function EnhanceApp(props) {
           return <App emotionCache={cache} {...props} />

@@ -1,7 +1,6 @@
 import React from 'react'
-import { Box, Button, Card, CardContent, CardHeader, Link as MuiLink, TextField } from '@mui/material'
+import { Box, Button, Card, CardContent, CardHeader, TextField } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
-import { signIn } from 'next-auth/react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { NextPageWithLayout } from '@/pages/_app'
