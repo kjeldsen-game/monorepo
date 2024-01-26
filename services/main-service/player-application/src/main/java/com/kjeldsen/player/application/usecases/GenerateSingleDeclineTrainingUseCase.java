@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -26,10 +28,10 @@ public class GenerateSingleDeclineTrainingUseCase {
     public PlayerTrainingDeclineEvent generate(Player.PlayerId playerId, Integer currentDay, Integer declineSpeed) {
         log.info("Generating a decline phase");
 
-        PlayerSkill skill = PlayerProvider.randomSkill();
-
         Player player = playerReadRepository.findOneById(playerId)
             .orElseThrow(() -> new RuntimeException("Player not found."));
+
+        PlayerSkill skill = PlayerProvider.randomSkillForSpecificPlayer(Optional.of(player));
 
         return generateAndStoreEvent(player, skill, currentDay, declineSpeed);
     }

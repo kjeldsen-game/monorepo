@@ -5,6 +5,7 @@ import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.PlayerSkills;
 import com.kjeldsen.player.domain.events.PlayerPotentialRiseEvent;
 import com.kjeldsen.player.domain.generator.PotentialRiseGenerator;
+import com.kjeldsen.player.domain.provider.PlayerProvider;
 import com.kjeldsen.player.domain.repositories.PlayerPotentialRiseScheduledEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +42,7 @@ public class FindAndProcessScheduledPotentialUseCase {
                 IntStream.rangeClosed(1, scheduledRise.getDaysToSimulate())
                         .forEach(day -> {
                             Integer rise = PotentialRiseGenerator.generatePotentialRaise();
-                            PlayerSkill randomSkill = randomSkillForSpecificPlayer(player);
+                            PlayerSkill randomSkill = PlayerProvider.randomSkillForSpecificPlayer(player);
                             if(rise!=0){
                                 PlayerPotentialRiseEvent potentialRiseEvent = generatePotentialRiseUseCase.generate(
                                         scheduledRise.getPlayerId(), randomSkill, currentDay.getAndIncrement(), rise, day);
@@ -53,10 +54,4 @@ public class FindAndProcessScheduledPotentialUseCase {
         return PlayerPotentialRiseEvents;
     }
 
-    private static PlayerSkill randomSkillForSpecificPlayer(Optional<Player> player) {
-        Map<PlayerSkill, PlayerSkills> skills = player.get().getActualSkills();
-        List<PlayerSkill> allSkills = skills.keySet().stream().toList();
-        int random = (int) (Math.random() * allSkills.size());
-        return allSkills.get(random);
-    }
 }
