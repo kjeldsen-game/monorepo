@@ -1,6 +1,7 @@
-import NextAuth, { User } from 'next-auth'
+import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { API_ENDPOINT, AUTH_CLIENT_ID, AUTH_CLIENT_SECRET } from '@/config'
+import { GameUser } from '@/shared/models/GameUser'
 
 export default NextAuth({
   providers: [
@@ -30,19 +31,9 @@ export default NextAuth({
           body: JSON.stringify(payload),
         })
 
-        // TODO: Get data from the backend, at the moment it returns a plain string
-        const mockData: User = {
-          id: '1',
-          name: 'user',
-          email: credentials?.username,
-        }
-
         // Returning token to set in session
-        if (res.ok) {
-          return mockData
-        }
-
-        return null
+        const data = await res.json()
+        return data
       },
     }),
   ],
@@ -56,9 +47,13 @@ export default NextAuth({
       user && (token.user = user)
       return token
     },
-    session: async ({ session, token }) => {
-      session.user = token.user // Setting token in session
-      return session
+    session: async (data) => {
+      const userData = data.token.user as GameUser
+      const sessionData = {
+        ...data.session,
+        user: { name: undefined, email: 'kdcr', image: undefined, team: userData.team },
+      }
+      return sessionData
     },
   },
   theme: {

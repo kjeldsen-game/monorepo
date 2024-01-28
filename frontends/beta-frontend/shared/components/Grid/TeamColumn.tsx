@@ -56,15 +56,16 @@ export const teamColumn = [
     },
   },
   {
-    field: 'DEFENSE_POSITION',
+    field: 'DEFENSIVE_POSITIONING',
     renderHeader: () => <div>DP<sup>CO</sup></div>,
     minWidth: 50,
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => {
-      return params.row.actualSkills.DEFENSE_POSITION?.PlayerSkills.actual ||
-      params.row.actualSkills.CONTROL.PlayerSkills.actual;
+      console.log(params);
+      return params.row.actualSkills.DEFENSIVE_POSITIONING?.PlayerSkills.actual ||
+      params.row.actualSkills.CONTROL?.PlayerSkills.actual;
     },
   },
   {
@@ -76,7 +77,7 @@ export const teamColumn = [
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => {
       return params.row.actualSkills.BALL_CONTROL?.PlayerSkills.actual ||
-      params.row.actualSkills.INTERCEPTIONS.PlayerSkills.actual;
+      params.row.actualSkills.INTERCEPTIONS?.PlayerSkills.actual;
     },
   },
   {
@@ -87,8 +88,8 @@ export const teamColumn = [
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => {
-      return params.row.actualSkills.SCORE?.PlayerSkills.actual ||
-      params.row.actualSkills.ONE_ON_ONE.PlayerSkills.actual;
+      return params.row.actualSkills.SCORING?.PlayerSkills.actual ||
+      params.row.actualSkills.ONE_ON_ONE?.PlayerSkills.actual;
     },
   },
   {
@@ -100,19 +101,19 @@ export const teamColumn = [
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => {
       return params.row.actualSkills.PASSING?.PlayerSkills.actual ||
-      params.row.actualSkills.ORGANIZATION.PlayerSkills.actual;
+      params.row.actualSkills.ORGANIZATION?.PlayerSkills.actual;
     },
   },
   {
-    field: 'OFFENSIVE_POSITION',
+    field: 'OFFENSIVE_POSITIONING',
     renderHeader: () => <div>OP<sup>POS</sup></div>,
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 50,
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => {
-      return params.row.actualSkills.OFFENSIVE_POSITION?.PlayerSkills.actual ||
-      params.row.actualSkills.POSITIONING.PlayerSkills.actual;
+      return params.row.actualSkills.OFFENSIVE_POSITIONING?.PlayerSkills.actual ||
+      params.row.actualSkills.POSITIONING?.PlayerSkills.actual;
     },
   },
   {
@@ -124,7 +125,7 @@ export const teamColumn = [
     flex: 1,
     valueGetter: (params: GridValueGetterParams) => {
       return params.row.actualSkills.TACKLING?.PlayerSkills.actual ||
-      params.row.actualSkills.REFLEXES.PlayerSkills.actual;
+      params.row.actualSkills.REFLEXES?.PlayerSkills.actual;
     },
   },
   {
