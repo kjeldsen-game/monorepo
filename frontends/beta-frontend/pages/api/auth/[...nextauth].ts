@@ -2,6 +2,7 @@ import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { API_ENDPOINT, AUTH_CLIENT_ID, AUTH_CLIENT_SECRET } from '@/config'
 import { GameUser } from '@/shared/models/GameUser'
+import { API_GATEWAY_ENDPOINT, AUTH_CLIENT_ID, AUTH_CLIENT_SECRET } from '@/config'
 
 export default NextAuth({
   providers: [
@@ -47,13 +48,10 @@ export default NextAuth({
       user && (token.user = user)
       return token
     },
-    session: async (data) => {
-      const userData = data.token.user as GameUser
-      const sessionData = {
-        ...data.session,
-        user: { name: undefined, email: 'kdcr', image: undefined, team: userData.team },
-      }
-      return sessionData
+    session: async ({ session, token }) => {
+      session.user = token.user
+
+      return session
     },
   },
   theme: {
