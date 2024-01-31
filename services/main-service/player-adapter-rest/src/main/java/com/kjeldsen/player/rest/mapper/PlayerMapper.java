@@ -8,6 +8,8 @@ import com.kjeldsen.player.rest.model.PlayerSkillRelevance;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.math.BigDecimal;
+
 @Mapper(uses = {IdMapper.class})
 public interface PlayerMapper {
 
@@ -32,6 +34,14 @@ public interface PlayerMapper {
         var1.setActual(playerSkills.getActual());
         var1.setPotential(playerSkills.getPotential());
         var1.setPlayerSkillRelevance(PlayerSkillRelevance.valueOf(playerSkills.getPlayerSkillRelevance().name()));
+        return var1;
+    }
+
+    default com.kjeldsen.player.rest.model.PlayerAge map(com.kjeldsen.player.domain.PlayerAge playerAge) {
+        com.kjeldsen.player.rest.model.PlayerAge var1 = new com.kjeldsen.player.rest.model.PlayerAge();
+        var1.setYears(BigDecimal.valueOf(playerAge.getYears()));
+        var1.setMonths(BigDecimal.valueOf(playerAge.getMonths()));
+        var1.setDays(BigDecimal.valueOf(playerAge.getDays()));
         return var1;
     }
 }

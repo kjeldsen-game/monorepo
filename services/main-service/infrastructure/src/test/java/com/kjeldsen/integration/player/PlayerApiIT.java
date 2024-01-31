@@ -11,11 +11,7 @@ import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
-import com.kjeldsen.player.rest.model.CreatePlayerRequest;
-import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
-import com.kjeldsen.player.rest.model.PlayerPosition;
-import com.kjeldsen.player.rest.model.PlayerResponse;
-import com.kjeldsen.player.rest.model.PlayerResponseActualSkillsValue;
+import com.kjeldsen.player.rest.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -23,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -57,8 +54,10 @@ class PlayerApiIT extends AbstractIT {
         @Test
         @DisplayName("return 201 when a valid request is sent")
         void return_201_status_when_a_valid_request_is_sent() throws Exception {
+            PlayerAge age = new PlayerAge();
+            age.setYears(BigDecimal.valueOf(16));
             CreatePlayerRequest request = new CreatePlayerRequest()
-                .age(16)
+                .age(age)
                 .position(PlayerPosition.FORWARD)
                 .points(700);
 
@@ -70,7 +69,7 @@ class PlayerApiIT extends AbstractIT {
             var players = playerReadRepository.find(findPlayersQuery(com.kjeldsen.player.domain.PlayerPosition.FORWARD));
 
             assertThat(players).hasSize(1);
-            assertThat(players.get(0).getAge()).isEqualTo(16);
+            assertThat(players.get(0).getAge().getYears()).isEqualTo(16);
             assertThat(players.get(0).getPosition().name()).isEqualTo("FORWARD");
         }
     }
@@ -102,10 +101,16 @@ class PlayerApiIT extends AbstractIT {
         @Test
         @DisplayName("return a page of players")
         void return_a_page_of_players() throws Exception {
+
             IntStream.range(0, 100)
                 .mapToObj(i -> PlayerPositionTendency.getDefault(PlayerProvider.position()))
                 .map(positionTendencies -> PlayerProvider.generate(Team.TeamId.generate(), positionTendencies, PlayerCategory.JUNIOR, 200))
-                .forEach(player -> playerWriteRepository.save(player));
+                .forEach(player -> {
+                    com.kjeldsen.player.domain.PlayerAge ageToCreate = null;
+                    ageToCreate = com.kjeldsen.player.domain.PlayerAge.generateAgeOfAPlayer();
+                    player.setAge(ageToCreate);
+                    playerWriteRepository.save(player);
+                });
 
             List<PlayerResponse> expected = playerReadRepository.find(findPlayersQuery(com.kjeldsen.player.domain.PlayerPosition.FORWARD))
                 .stream()
@@ -115,7 +120,7 @@ class PlayerApiIT extends AbstractIT {
                     new PlayerResponse()
                         .id(player.getId().value())
                         .name(player.getName())
-                        .age(player.getAge())
+                        .age(PlayerMapper.INSTANCE.map(player.getAge()))
                         .category(com.kjeldsen.player.rest.model.PlayerCategory.valueOf(player.getCategory().name()))
                         .position(PlayerPosition.fromValue(player.getPosition().name()))
                         .actualSkills(player.getActualSkills().entrySet().stream()
@@ -149,8 +154,9 @@ class PlayerApiIT extends AbstractIT {
             PlayerResponse response = new PlayerResponse()
                 .id(examplePlayer.getId().value())
                 .name(examplePlayer.getName())
-                .age(examplePlayer.getAge())
+                .age(PlayerMapper.INSTANCE.map(examplePlayer.getAge()))
                 .position(PlayerPosition.fromValue(examplePlayer.getPosition().name()))
+                    .economy(examplePlayer.getEconomy())
                 .category(com.kjeldsen.player.rest.model.PlayerCategory.fromValue(examplePlayer.getCategory().name()))
                 .actualSkills(examplePlayer.getActualSkills().entrySet().stream()
                     .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerApiIT::map))
