@@ -20,7 +20,7 @@ const TeamView: React.FC<TeamProps> = ({ team }) => {
           <PlayerTactics />
           <TeamTactics />
         </Box>
-        <Box sx={{ minWidth: '80vw' }}>{team?.players ? <Grid rows={team?.players} columns={teamColumn} /> : <CircularProgress />}</Box>
+        <Box sx={{ minWidth: '80vw' }}>{team?.players ? <Grid rows={team?.players} columns={teamColumn(true)} /> : <CircularProgress />}</Box>
       </Box>
     </>
   )

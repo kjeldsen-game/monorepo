@@ -8,7 +8,6 @@ import { useTeam } from './useTeam'
 const Team: NextPage = () => {
   const { data: userData, status: sessionStatus } = useSession({ required: true })
 
-  console.log(userData?.user.teamId)
   const { data } = useTeam(userData?.user.teamId)
 
   if (sessionStatus === 'loading') return <CircularProgress />
