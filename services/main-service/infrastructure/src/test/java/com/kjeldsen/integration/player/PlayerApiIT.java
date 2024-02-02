@@ -149,17 +149,18 @@ class PlayerApiIT extends AbstractIT {
         void return_200_and_the_specific_player_when_a_valid_request_is_sent() throws Exception {
             Player examplePlayer = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
                 PlayerCategory.JUNIOR, 200);
+            Player.Economy playerEconomy = examplePlayer.getEconomy();
             examplePlayer = playerWriteRepository.save(examplePlayer);
 
             PlayerResponse response = new PlayerResponse()
                 .id(examplePlayer.getId().value())
                 .name(examplePlayer.getName())
+                .economy(map(playerEconomy))
                 .age(PlayerMapper.INSTANCE.map(examplePlayer.getAge()))
                 .position(PlayerPosition.fromValue(examplePlayer.getPosition().name()))
-                    .economy(examplePlayer.getEconomy())
                 .category(com.kjeldsen.player.rest.model.PlayerCategory.fromValue(examplePlayer.getCategory().name()))
                 .actualSkills(examplePlayer.getActualSkills().entrySet().stream()
-                    .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerApiIT::map))
+                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerApiIT::map))
                 );
 
             mockMvc.perform(get("/player/{playerId}", examplePlayer.getId().value()))
@@ -182,5 +183,11 @@ class PlayerApiIT extends AbstractIT {
         PlayerResponseActualSkillsValue PlayerResponseActualSkillsValue = new PlayerResponseActualSkillsValue();
         PlayerResponseActualSkillsValue.setPlayerSkills(PlayerMapper.INSTANCE.map(mapEntrySkills.getValue()));
         return PlayerResponseActualSkillsValue;
+    }
+
+    public static PlayerEconomy map(Player.Economy economy) {
+        PlayerEconomy playerEconomy = new PlayerEconomy();
+        playerEconomy.setSalary(economy.getSalary().doubleValue());
+        return playerEconomy;
     }
 }
