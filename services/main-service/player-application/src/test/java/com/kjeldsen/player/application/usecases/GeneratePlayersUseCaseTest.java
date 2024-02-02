@@ -57,8 +57,8 @@ class GeneratePlayersUseCaseTest {
 
         assertFalse(playersToSave.isEmpty());
         assertThat(playersToSave).allMatch(player ->
-            player.getAge() >= 15
-                && player.getAge() <= 33
+            player.getAge().getYears() >= 15
+                && player.getAge().getYears() <= 33
                 && StringUtils.isNotBlank(player.getName())
                 && player.getTeamId().equals(teamId)
                 && player.getActualSkills().values().stream().map(PlayerSkills::getActual).mapToInt(Integer::intValue).sum() == 200);

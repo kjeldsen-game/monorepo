@@ -5,17 +5,12 @@ import com.kjeldsen.player.domain.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
-import org.apache.commons.lang3.Range;
 
 import java.util.*;
 import java.util.stream.IntStream;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PlayerProvider {
-
-    private static final Integer MIN_AGE = 15;
-    private static final Integer MAX_AGE = 33;
-    private static final Range<Integer> RANGE_OF_AGE = Range.between(MIN_AGE, MAX_AGE);
     public static final int MAX_SKILL_VALUE = 100;
 
     public static String name() {
@@ -23,9 +18,6 @@ public class PlayerProvider {
         return faker.name().fullName();
     }
 
-    public static Integer age() {
-        return RandomUtils.nextInt(RANGE_OF_AGE.getMinimum(), RANGE_OF_AGE.getMaximum());
-    }
 
     public static Map<PlayerSkill, PlayerSkills> skillsBasedOnTendency(PlayerPositionTendency positionTendencies, Integer totalPoints) {
 
@@ -117,17 +109,17 @@ public class PlayerProvider {
 
     public static Player generate(Team.TeamId teamId, PlayerPositionTendency positionTendencies, PlayerCategory playerCategory, int totalPoints) {
         Player player = Player.builder()
-                .id(Player.PlayerId.generate())
-                .name(name())
-                .age(age())
-                .position(positionTendencies.getPosition())
-                .actualSkills(skillsBasedOnTendency(positionTendencies, totalPoints))
-                .playerOrder(PlayerOrder.NONE)
-                .status(PlayerStatus.INACTIVE)
-                .teamId(teamId)
-                .category(playerCategory)
-                .economy(Player.Economy.builder().build())
-                .build();
+                    .id(Player.PlayerId.generate())
+                    .name(name())
+                    .age(PlayerAge.generateAgeOfAPlayer(playerCategory))
+                    .position(positionTendencies.getPosition())
+                    .status(PlayerStatus.INACTIVE)
+                    .playerOrder(PlayerOrder.NONE)
+                    .actualSkills(skillsBasedOnTendency(positionTendencies, totalPoints))
+                    .teamId(teamId)
+                    .category(playerCategory == PlayerCategory.JUNIOR ? PlayerCategory.JUNIOR : PlayerCategory.SENIOR)
+                    .economy(Player.Economy.builder().build())
+                    .build();
         player.negotiateSalary();
         return player;
     }

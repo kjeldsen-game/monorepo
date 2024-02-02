@@ -36,7 +36,7 @@ public class FindAndProcessScheduledPotentialUseCase {
                 final AtomicInteger currentDay = new AtomicInteger(1);
 
                 Optional<Player> player = playerReadRepository.findOneById(scheduledRise.getPlayerId());
-                if (player.get().getAge() >= MAX_AGE){
+                if (player.get().getAge().getYears()>= MAX_AGE){
                     throw new IllegalArgumentException("The age of the player must be less than 21 years.");
                 }
                 IntStream.rangeClosed(1, scheduledRise.getDaysToSimulate())

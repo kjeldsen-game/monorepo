@@ -19,7 +19,9 @@ class PlayerMapperTest {
     void mapPlayerToPlayerResponse() {
 
         Player.PlayerId playerId = Player.PlayerId.generate();
-        Integer playerAge = PlayerProvider.age();
+        PlayerAge playerAge = PlayerAge.builder()
+                .years(25)
+                .build();
         String playerName = PlayerProvider.name();
 
         Player player = Player.builder()
@@ -38,7 +40,7 @@ class PlayerMapperTest {
         assertEquals(playerId.value(), playerResponse.getId());
         assertEquals(10, playerResponse.getActualSkills().get("SCORING").getPlayerSkills().getActual());
         assertEquals(player.getName(), playerResponse.getName());
-        assertEquals(player.getAge(), playerResponse.getAge());
+        assertEquals(player.getAge().getYears(), playerResponse.getAge().getYears().intValue());
         assertEquals(PlayerPosition.FORWARD.toString(), playerResponse.getPosition().toString());
         assertEquals(2, playerResponse.getActualSkills().size());
     }
