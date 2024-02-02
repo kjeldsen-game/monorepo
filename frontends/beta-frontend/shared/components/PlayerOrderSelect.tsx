@@ -1,5 +1,6 @@
 import React from 'react'
-import { Select, MenuItem, FormControl, SelectChangeEvent, InputLabel, NativeSelect } from '@mui/material'
+import { Select, MenuItem, FormControl, SelectChangeEvent, InputLabel } from '@mui/material'
+import { PlayerOrder } from '../models/PlayerOrder'
 
 export function PlayerOrderSelect() {
   const [playerOrder, setPlayerOrder] = React.useState('')
@@ -9,7 +10,7 @@ export function PlayerOrderSelect() {
   }
 
   return (
-    <FormControl sx={{ minWidth: 70, marginTop: '16px' }} size="small">
+    <FormControl sx={{ minWidth: 140, marginTop: '16px' }} size="small">
       <InputLabel id="po1-select-label">PO</InputLabel>
       <Select
         labelId="po1-select-label"
@@ -17,9 +18,14 @@ export function PlayerOrderSelect() {
         value={playerOrder}
         onChange={handleChangePlayerOrder}
         sx={{ marginBottom: '1rem' }}>
-        <MenuItem value={'playerOrder1'}>playerOrder1</MenuItem>
-        <MenuItem value={'playerOrder2'}>playerOrder2</MenuItem>
-        <MenuItem value={'playerOrder3'}>playerOrder3</MenuItem>
+        {Object.values(PlayerOrder).map((order) => {
+          return (
+            // TODO: improve key by adding player id to it to make unique
+            <MenuItem key={`player-order-${order}`} value={order}>
+              {order}
+            </MenuItem>
+          )
+        })}
       </Select>
     </FormControl>
   )
