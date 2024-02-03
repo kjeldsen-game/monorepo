@@ -1,6 +1,6 @@
 import { API_ENDPOINT } from '@/config'
 
-type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
+type Method = 'CONNECT' | 'DELETE' | 'GET' | 'HEAD' | 'OPTIONS' | 'PATCH' | 'POST' | 'PUT' | 'TRACE'
 
 interface RequestConfig<Data> {
   headers?: Record<string, string>
@@ -34,7 +34,7 @@ export default function factory(c?: FetcherConfig) {
 }
 
 //create Auth Connector function to connect REST API with fetch with error handling
-export const connector = async (url: string, method: string, body?: unknown) => {
+export const connector = async (url: string, method: Method, body?: unknown) => {
   const response = await fetch(`${url}`, {
     method: method,
     headers: {
@@ -54,10 +54,10 @@ export const connector = async (url: string, method: string, body?: unknown) => 
   return false
 }
 
-export const connectorAuth = (url: string, method: string, body?: unknown) => {
+export const connectorAuth = (url: string, method: Method, body?: unknown) => {
   return connector(`${API_ENDPOINT}${url}`, method, body)
 }
 
-export const connectorAPI = (url: string, method: string = 'GET', body?: unknown) => {
+export const connectorAPI = (url: string, method: Method = 'GET', body?: unknown) => {
   return connector(`${API_ENDPOINT}${url}`, method, body)
 }
