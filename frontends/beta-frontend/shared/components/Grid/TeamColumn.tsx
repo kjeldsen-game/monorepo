@@ -1,21 +1,17 @@
 import { GridCellParams, GridColDef, GridValueFormatterParams, GridValueGetterParams } from '@mui/x-data-grid'
 import { GridAlignment } from '@mui/x-data-grid'
 import Link from 'next/link'
-import { css } from '@emotion/react'
 import clsx from 'clsx'
 import { PlayerOrderSelect } from '../PlayerOrderSelect'
 import { PlayerPositionSelect } from '../PlayerPositionSelect'
 import { PlayerPosition } from '@/shared/models/PlayerPosition'
+import { Player } from '@/shared/models/Player'
 
-const linkStyle = css`
-  text-decoration: none;
-  color: inherit;
-  &:hover {
-    text-decoration: underline;
+export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Player) => void) => {
+  const handlePlayerPositionChange = (player: Player, value: PlayerPosition): void => {
+    handlePlayerChange?.({ ...player, position: value })
   }
-`
 
-export const teamColumn = (isEditing: boolean) => {
   const columns: GridColDef[] = [
     // { field: 'status', headerName: 'Health', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
     {
@@ -26,7 +22,7 @@ export const teamColumn = (isEditing: boolean) => {
       flex: 1,
       renderCell: (params: GridCellParams) => (
         <Link passHref href={`/player/${params.row.id}`}>
-          <a css={linkStyle}>{params.row.name}</a>
+          {params.row.name}
         </Link>
       ),
     },
@@ -162,6 +158,35 @@ export const teamColumn = (isEditing: boolean) => {
       flex: 1,
       valueGetter: (params: GridValueGetterParams) => params.row.actualSkills.CO?.PlayerSkills.actual,
     },
+    {
+      field: 'playerPosition',
+      headerName: 'PP',
+      headerAlign: 'center' as GridAlignment,
+      align: 'center' as GridAlignment,
+      renderCell: (params) => {
+        return isEditing ? (
+          <PlayerPositionSelect
+            onChange={(value) => handlePlayerPositionChange(params.row, value)}
+            value={PlayerPosition[params.row.position as keyof typeof PlayerPosition] ?? undefined}
+          />
+        ) : undefined
+      },
+      valueGetter: (params) => PlayerPosition[params.row.position as keyof typeof PlayerPosition],
+      minWidth: 150,
+      flex: 1,
+      editable: isEditing,
+    },
+    {
+      field: 'playerOrder',
+      headerName: 'PO',
+      headerAlign: 'center' as GridAlignment,
+      align: 'center' as GridAlignment,
+      sortable: false,
+      renderCell: () => <PlayerOrderSelect />,
+      minWidth: 150,
+      flex: 1,
+      editable: isEditing,
+    },
     // {
     //   field: 'GP',
     //   headerName: 'GP',
@@ -271,28 +296,6 @@ export const teamColumn = (isEditing: boolean) => {
     //   flex: 1,
     // },
   ]
-
-  if (isEditing)
-    columns.push(
-      {
-        field: 'playerPosition',
-        headerName: 'PP',
-        headerAlign: 'center' as GridAlignment,
-        align: 'center' as GridAlignment,
-        renderCell: () => <PlayerPositionSelect onChange={(value) => console.log(value)} value={PlayerPosition.Forward} />,
-        minWidth: 150,
-        flex: 1,
-      },
-      {
-        field: 'playerOrder',
-        headerName: 'PO',
-        headerAlign: 'center' as GridAlignment,
-        align: 'center' as GridAlignment,
-        renderCell: () => <PlayerOrderSelect />,
-        minWidth: 150,
-        flex: 1,
-      },
-    )
 
   return columns
 }
