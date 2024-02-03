@@ -3,9 +3,9 @@ import useSWR from 'swr'
 
 const API = '/team/'
 
-const useTeam = (team: string | undefined) => {
+const useTeamRepository = (team: string | undefined) => {
   const { data } = useSWR(team ? API + team : null, connectorAPI)
 
   return { data }
 }
-export { useTeam }
+export { useTeamRepository }
