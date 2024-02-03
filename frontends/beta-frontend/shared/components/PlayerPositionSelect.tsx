@@ -3,13 +3,13 @@ import { Select, MenuItem, FormControl, SelectChangeEvent, InputLabel } from '@m
 import { PlayerPosition } from '../models/PlayerPosition'
 
 interface PlayerPositionSelectProps {
-  onChange: (value: PlayerPosition) => void
+  onChange?: (value: PlayerPosition) => void
   value: PlayerPosition
 }
 
 const PlayerPositionSelect: React.FC<PlayerPositionSelectProps> = ({ onChange, value }) => {
   const handleChangePlayerOrder = (event: SelectChangeEvent<PlayerPosition>) => {
-    onChange(event.target.value as PlayerPosition)
+    onChange?.(event.target.value as PlayerPosition)
   }
 
   return (

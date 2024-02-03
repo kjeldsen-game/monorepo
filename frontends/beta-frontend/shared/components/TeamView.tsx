@@ -5,13 +5,15 @@ import TeamTactics from '@/shared/components/TeamTactics'
 import { teamColumn } from '@/shared/components/Grid/TeamColumn'
 import { SampleTeam } from '@/data/SampleTeam'
 import Grid from './Grid/Grid'
+import { Player } from '../models/Player'
+import { Team } from '../models/Team'
 
 interface TeamProps {
-  team: { players: unknown[] }
+  team: Team | undefined
+  handlePlayerChange?: (value: Player) => void
 }
 
-// eslint-disable-next-line react/prop-types
-const TeamView: React.FC<TeamProps> = ({ team }) => {
+const TeamView: React.FC<TeamProps> = ({ team, handlePlayerChange }: TeamProps) => {
   return (
     <>
       <Box>
@@ -20,7 +22,9 @@ const TeamView: React.FC<TeamProps> = ({ team }) => {
           <PlayerTactics />
           <TeamTactics />
         </Box>
-        <Box sx={{ minWidth: '80vw' }}>{team?.players ? <Grid rows={team?.players} columns={teamColumn(true)} /> : <CircularProgress />}</Box>
+        <Box sx={{ minWidth: '80vw' }}>
+          {team?.players ? <Grid rows={team?.players} columns={teamColumn(true, handlePlayerChange)} /> : <CircularProgress />}
+        </Box>
       </Box>
     </>
   )
