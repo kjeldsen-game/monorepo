@@ -705,6 +705,15 @@ components:
         - GOALKEEPER
       example: FORWARD
 
+    PlayerOrder:
+      type: string
+      enum:
+        - PASS_FORWARD
+        - LONG_SHOT
+        - CHANGE_FLANK
+        - NONE
+      example: FORWARD
+
     PlayerSkillRelevance:
       type: string
       enum:
@@ -877,6 +886,10 @@ components:
           example: John Doe
         position:
           $ref: "#/components/schemas/PlayerPosition"
+        playerOrder:
+          $ref: "#/components/schemas/PlayerOrder"
+        status:
+          $ref: "#/components/schemas/PlayerStatus"
         category:
           $ref: "#/components/schemas/PlayerCategory"
         actualSkills:
