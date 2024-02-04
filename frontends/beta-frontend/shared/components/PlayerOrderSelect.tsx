@@ -2,20 +2,23 @@ import React from 'react'
 import { Select, MenuItem, FormControl, SelectChangeEvent, InputLabel } from '@mui/material'
 import { PlayerOrder } from '../models/PlayerOrder'
 
-export function PlayerOrderSelect() {
-  const [playerOrder, setPlayerOrder] = React.useState('')
+interface PlayerOrderSelectProps {
+  onChange?: (value: PlayerOrder) => void
+  value: PlayerOrder
+}
 
-  const handleChangePlayerOrder = (event: SelectChangeEvent) => {
-    setPlayerOrder(event.target.value as string)
+export const PlayerOrderSelect: React.FC<PlayerOrderSelectProps> = ({ onChange, value }) => {
+  const handleChangePlayerOrder = (event: SelectChangeEvent<PlayerOrder>) => {
+    onChange?.(event.target.value as PlayerOrder)
   }
 
   return (
     <FormControl sx={{ minWidth: 140, marginTop: '16px' }} size="small">
       <InputLabel id="po1-select-label">PO</InputLabel>
-      <Select
+      <Select<PlayerOrder>
         labelId="po1-select-label"
         id="playerOrder1-select"
-        value={playerOrder}
+        value={value}
         onChange={handleChangePlayerOrder}
         sx={{ marginBottom: '1rem' }}>
         {Object.values(PlayerOrder).map((order) => {

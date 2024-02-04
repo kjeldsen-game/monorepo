@@ -58,6 +58,6 @@ export const connectorAuth = (url: string, method: Method, body?: unknown) => {
   return connector(`${API_ENDPOINT}${url}`, method, body)
 }
 
-export const connectorAPI = (url: string, method: Method = 'GET', body?: unknown) => {
+export const connectorAPI = <T>(url: string, method: Method = 'GET', body?: T) => {
   return connector(`${API_ENDPOINT}${url}`, method, body)
 }

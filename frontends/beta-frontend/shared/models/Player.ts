@@ -13,6 +13,12 @@ export interface Player {
   economy: PlayerEconomy
 }
 
+export interface PlayerAge {
+  years: number
+  months: number
+  days: number
+}
+
 export enum Category {
   Junior = 'JUNIOR',
   Senior = 'SENIOR',
