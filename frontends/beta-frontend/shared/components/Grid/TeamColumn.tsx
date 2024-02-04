@@ -6,10 +6,16 @@ import { PlayerOrderSelect } from '../PlayerOrderSelect'
 import { PlayerPositionSelect } from '../PlayerPositionSelect'
 import { PlayerPosition } from '@/shared/models/PlayerPosition'
 import { Player } from '@/shared/models/Player'
+import { Checkbox } from '@mui/material'
+import { PlayerOrder } from '@/shared/models/PlayerOrder'
 
 export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Player) => void) => {
   const handlePlayerPositionChange = (player: Player, value: PlayerPosition): void => {
     handlePlayerChange?.({ ...player, position: value })
+  }
+
+  const handlePlayerOrderChange = (player: Player, value: PlayerOrder): void => {
+    handlePlayerChange?.({ ...player, playerOrder: value })
   }
 
   const columns: GridColDef[] = [
@@ -26,7 +32,15 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
         </Link>
       ),
     },
-    { field: 'age', headerName: 'Age', headerAlign: 'center' as GridAlignment, align: 'center' as GridAlignment, minWidth: 70, flex: 1 },
+    {
+      field: 'age',
+      headerName: 'Age',
+      headerAlign: 'center' as GridAlignment,
+      align: 'center' as GridAlignment,
+      minWidth: 70,
+      flex: 1,
+      valueGetter: (params: GridValueGetterParams) => params.row.age.years,
+    },
     {
       field: 'position',
       valueFormatter: (params: GridValueFormatterParams<unknown>) => {
@@ -182,8 +196,25 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
       headerAlign: 'center' as GridAlignment,
       align: 'center' as GridAlignment,
       sortable: false,
-      renderCell: () => <PlayerOrderSelect />,
+      renderCell: (params) => (
+        <PlayerOrderSelect
+          onChange={(value) => handlePlayerOrderChange(params.row, value)}
+          value={PlayerOrder[params.row.playerOrder as keyof typeof PlayerOrder] ?? undefined}
+        />
+      ),
+      valueGetter: (params) => PlayerOrder[params.row.playerOrder as keyof typeof PlayerOrder],
       minWidth: 150,
+      flex: 1,
+      editable: isEditing,
+    },
+    {
+      field: 'playerStatus',
+      headerName: 'Status',
+      headerAlign: 'center' as GridAlignment,
+      align: 'center' as GridAlignment,
+      sortable: false,
+      renderCell: (params) => <Checkbox checked={params.row.status === 'ACTIVE'} />,
+      minWidth: 20,
       flex: 1,
       editable: isEditing,
     },
