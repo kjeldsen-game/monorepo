@@ -15,14 +15,14 @@ const useTeamRepository = (team: string | undefined) => {
     const newData: TeamPlayerPatchRequest = {
       players: oldData.map((player) => {
         if (player.id === value.id) {
-          return { id: value.id, position: value.position, status: 'ACTIVE' }
+          return { id: value.id, position: value.position, status: value.status }
         }
-        return { id: player.id, position: player.position, status: 'ACTIVE' }
+        return { id: player.id, position: player.position, status: player.status }
       }),
     }
+
     if (!team) return
-    console.log(oldData)
-    connectorAPI(API + team, 'PATCH', newData).then(() => {
+    connectorAPI<TeamPlayerPatchRequest>(API + team, 'PATCH', newData).then(() => {
       mutate()
     })
   }
