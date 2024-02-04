@@ -1,6 +1,6 @@
 export enum PlayerOrder {
-  PASS_FORWARD = 'passForward',
-  LONG_SHOT = 'longShot',
-  CHANGE_FLANK = 'changeFlank',
-  NONE = 'none',
+  PASS_FORWARD = 'PASS_FORWARD',
+  LONG_SHOT = 'LONG_SHOT',
+  CHANGE_FLANK = 'CHANGE_FLANK',
+  NONE = 'NONE',
 }
