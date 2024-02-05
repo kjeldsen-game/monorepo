@@ -1,3 +1,0 @@
-- aws sts get-caller-identity
-- aws configure get region
-- `cdk bootstrap aws://ACCOUNT-NUMBER/REGION` // generates the default infrastructure that AWS needs to work 
