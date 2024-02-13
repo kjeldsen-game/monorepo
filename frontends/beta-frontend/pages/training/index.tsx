@@ -5,6 +5,7 @@ import Box from '@mui/material/Box'
 import Grid from '@/shared/components/Grid/Grid'
 import { players } from '@/data/SamplePlayerTraining'
 import { sampleTrainingColumn } from '@/data/sampleTrainingColumn'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Training: NextPage = () => {
   return (
@@ -49,6 +50,15 @@ const Training: NextPage = () => {
       </>
     </>
   )
+}
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+      // Will be passed to the page component as props
+    },
+  }
 }
 
 export default Training
