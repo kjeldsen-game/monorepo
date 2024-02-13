@@ -11,6 +11,7 @@ import { createEmotionCache } from '@/libs/emotion/cache'
 import { theme } from '@/libs/material/theme'
 import { Layout } from '@/shared/layout'
 import { GameUser } from '@/shared/models/GameUser'
+import { appWithTranslation } from 'next-i18next'
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -25,7 +26,7 @@ interface MyAppProps<P> extends AppProps<P> {
 }
 
 interface GameSession extends Session {
-  user: GameUser;
+  user: GameUser
 }
 
 interface MyExtendedPageProps {
@@ -34,11 +35,7 @@ interface MyExtendedPageProps {
 
 const defaultGetLayout = (page: ReactElement) => <Layout>{page}</Layout>
 
-export default function MyApp({
-  Component,
-  emotionCache = clientSideEmotionCache,
-  pageProps: { session, ...pageProps },
-}: MyAppProps<MyExtendedPageProps>) {
+function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps: { session, ...pageProps } }: MyAppProps<MyExtendedPageProps>) {
   const getLayout = Component.getLayout ?? defaultGetLayout
 
   return (
@@ -57,3 +54,5 @@ export default function MyApp({
     </SessionProvider>
   )
 }
+
+export default appWithTranslation(MyApp)

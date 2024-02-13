@@ -4,6 +4,7 @@ import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import { useTeamRepository } from '../api/team/useTeamRepository'
 import { Player } from '@/shared/models/Player'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 // eslint-disable-next-line react/prop-types
 const Team: NextPage = () => {
@@ -23,6 +24,15 @@ const Team: NextPage = () => {
       <TeamView team={data} handlePlayerChange={handlePlayerChange}></TeamView>
     </>
   )
+}
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+      // Will be passed to the page component as props
+    },
+  }
 }
 
 export default Team
