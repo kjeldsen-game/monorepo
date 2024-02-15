@@ -1,4 +1,4 @@
-import { API_GATEWAY_ENDPOINT } from '@/config'
+import { API_ENDPOINT } from '@/config'
 import { stringify } from 'querystring'
 
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
@@ -23,7 +23,7 @@ export default function factory(c?: FetcherConfig) {
     const headers = { ...defaultHeaders, ...config?.headers, ...authHeaders }
 
     const body = JSON.stringify(config?.data)
-    const res = await fetch(`${API_GATEWAY_ENDPOINT}${uri}`, { body, method, headers })
+    const res = await fetch(`${API_ENDPOINT}${uri}`, { body, method, headers })
     try {
       return (await res.json()) as Result
     } catch (error) {
@@ -59,9 +59,9 @@ export const connector = async (url: string, method: string, body?: any) => {
 }
 
 export const connectorAuth = (url: string, method: string, body?: any) => {
-  return connector(`${API_GATEWAY_ENDPOINT}${url}`, method, body)
+  return connector(`${API_ENDPOINT}${url}`, method, body)
 }
 
 export const connectorAPI = (url: string, method: string, body?: any) => {
-  return connector(`${API_GATEWAY_ENDPOINT}${url}`, method, body)
+  return connector(`${API_ENDPOINT}${url}`, method, body)
 }
