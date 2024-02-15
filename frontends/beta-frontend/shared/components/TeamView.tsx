@@ -1,4 +1,4 @@
-import { Box, CircularProgress } from '@mui/material'
+import { Box, Button, CircularProgress } from '@mui/material'
 import TeamDetails from './TeamDetails'
 import PlayerTactics from './PlayerTactics'
 import TeamTactics from '@/shared/components/TeamTactics'
@@ -9,11 +9,25 @@ import { Player } from '../models/Player'
 import { Team } from '../models/Team'
 
 interface TeamProps {
+  isEditing: boolean
   team: Team | undefined
   handlePlayerChange?: (value: Player) => void
+  onTeamUpdate?: () => void
 }
 
-const TeamView: React.FC<TeamProps> = ({ team, handlePlayerChange }: TeamProps) => {
+const TeamView: React.FC<TeamProps> = ({ isEditing, team, handlePlayerChange, onTeamUpdate }: TeamProps) => {
+  const saveButton = () => {
+    if (isEditing) {
+      return (
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
+          <Button variant="contained" onClick={onTeamUpdate}>
+            Save
+          </Button>
+        </Box>
+      )
+    }
+  }
+
   return (
     <>
       <Box>
@@ -23,7 +37,9 @@ const TeamView: React.FC<TeamProps> = ({ team, handlePlayerChange }: TeamProps) 
           <TeamTactics />
         </Box>
         <Box sx={{ minWidth: '80vw' }}>
-          {team?.players ? <Grid rows={team?.players} columns={teamColumn(true, handlePlayerChange)} /> : <CircularProgress />}
+          {saveButton()}
+          {team?.players ? <Grid rows={team?.players} columns={teamColumn(isEditing, handlePlayerChange)} /> : <CircularProgress />}
+          {saveButton()}
         </Box>
       </Box>
     </>

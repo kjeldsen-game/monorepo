@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import TeamView from '@/shared/components/TeamView'
 import { CircularProgress } from '@mui/material'
 import type { NextPage } from 'next'
@@ -10,18 +11,33 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 const Team: NextPage = () => {
   const { data: userData, status: sessionStatus } = useSession({ required: true })
 
-  const { data, updateTeamPlayer } = useTeamRepository(userData?.user.teamId)
+  const { data, updateTeam } = useTeamRepository(userData?.user.teamId)
 
-  if (sessionStatus === 'loading') return <CircularProgress />
+  const [teamPlayers, setTeamPlayers] = useState<Player[]>(data?.players ?? [])
+
+  useEffect(() => {
+    setTeamPlayers(data?.players ?? [])
+  }, [data?.players])
+
+  if (sessionStatus === 'loading' || !data) return <CircularProgress />
 
   const handlePlayerChange = (value: Player) => {
     if (data === undefined) return
-    updateTeamPlayer(value)
+    setTeamPlayers((prev) => {
+      const index = prev.findIndex((p) => p.id === value.id)
+      const newPlayers = [...prev]
+      newPlayers[index] = { ...value }
+      return newPlayers
+    })
+  }
+
+  const handleTeamUpdate = () => {
+    updateTeam(teamPlayers)
   }
 
   return (
     <>
-      <TeamView team={data} handlePlayerChange={handlePlayerChange}></TeamView>
+      <TeamView isEditing team={{ ...data, players: teamPlayers }} handlePlayerChange={handlePlayerChange} onTeamUpdate={handleTeamUpdate}></TeamView>
     </>
   )
 }

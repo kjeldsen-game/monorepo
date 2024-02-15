@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import { PlayerOrderSelect } from '../PlayerOrderSelect'
 import { PlayerPositionSelect } from '../PlayerPositionSelect'
 import { PlayerPosition } from '@/shared/models/PlayerPosition'
-import { Player } from '@/shared/models/Player'
+import { Player, PlayerStatus } from '@/shared/models/Player'
 import { Checkbox } from '@mui/material'
 import { PlayerOrder } from '@/shared/models/PlayerOrder'
 
@@ -16,6 +16,10 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
 
   const handlePlayerOrderChange = (player: Player, value: PlayerOrder): void => {
     handlePlayerChange?.({ ...player, playerOrder: value })
+  }
+
+  const handlePlayerStatusChange = (player: Player): void => {
+    handlePlayerChange?.({ ...player, status: player.status === PlayerStatus.Active ? PlayerStatus.Inactive : PlayerStatus.Active })
   }
 
   const columns: GridColDef[] = [
@@ -213,7 +217,13 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
       headerAlign: 'center' as GridAlignment,
       align: 'center' as GridAlignment,
       sortable: false,
-      renderCell: (params) => <Checkbox checked={params.row.status === 'ACTIVE'} />,
+      renderCell: (params) => (
+        <Checkbox
+          color="secondary"
+          checked={params.row.status === PlayerStatus.Active}
+          onChange={() => handlePlayerStatusChange(params.row as Player)}
+        />
+      ),
       minWidth: 20,
       flex: 1,
       editable: isEditing,
