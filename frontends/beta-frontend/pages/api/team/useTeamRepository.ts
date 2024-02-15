@@ -27,6 +27,25 @@ const useTeamRepository = (team: string | undefined) => {
     })
   }
 
-  return { data, updateTeamPlayer }
+  const updateTeam = (value: Player[]): void => {
+    if (!data) return
+    const oldData = data.players
+    const newData: TeamPlayerPatchRequest = {
+      players: oldData.map((player) => {
+        const updatedPlayer = value.find((playerValue) => playerValue.id === player.id)
+        if (updatedPlayer && updatedPlayer.id === player.id) {
+          return { id: updatedPlayer.id, position: updatedPlayer.position, status: updatedPlayer.status }
+        }
+        return { id: player.id, position: player.position, status: player.status }
+      }),
+    }
+
+    if (!team) return
+    connectorAPI<TeamPlayerPatchRequest>(API + team, 'PATCH', newData).then(() => {
+      mutate()
+    })
+  }
+
+  return { data, updateTeamPlayer, updateTeam }
 }
 export { useTeamRepository }
