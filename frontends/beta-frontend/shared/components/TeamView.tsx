@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress } from '@mui/material'
+import { Box, Button, CircularProgress, Tooltip, TooltipProps, styled, tooltipClasses } from '@mui/material'
 import TeamDetails from './TeamDetails'
 import PlayerTactics from './PlayerTactics'
 import TeamTactics from '@/shared/components/TeamTactics'
@@ -7,6 +7,15 @@ import { SampleTeam } from '@/data/SampleTeam'
 import Grid from './Grid/Grid'
 import { Player } from '../models/Player'
 import { Team } from '../models/Team'
+import { useEffect, useState } from 'react'
+import checkTeamComposition from '../utils/TeamCompositionRules'
+import TeamCompositionErrors from './TeamCompositionErrors'
+
+const CompositionTooltip = styled(({ className, ...props }: TooltipProps) => <Tooltip {...props} classes={{ popper: className }} />)(() => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: 500,
+  },
+}))
 
 interface TeamProps {
   isEditing: boolean
@@ -16,13 +25,25 @@ interface TeamProps {
 }
 
 const TeamView: React.FC<TeamProps> = ({ isEditing, team, handlePlayerChange, onTeamUpdate }: TeamProps) => {
+  const [compositionErrors, setCompositionErrors] = useState<string[]>([])
+
+  useEffect(() => {
+    if (team?.players) {
+      setCompositionErrors([...checkTeamComposition(team.players)])
+    }
+  }, [team?.players])
+
   const saveButton = () => {
     if (isEditing) {
       return (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-          <Button variant="contained" onClick={onTeamUpdate}>
-            Save
-          </Button>
+          <CompositionTooltip placement={'left'} title={<TeamCompositionErrors errors={compositionErrors} />}>
+            <span>
+              <Button variant="contained" onClick={onTeamUpdate} disabled={compositionErrors.length > 0}>
+                Save
+              </Button>
+            </span>
+          </CompositionTooltip>
         </Box>
       )
     }

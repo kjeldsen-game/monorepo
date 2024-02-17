@@ -1,0 +1,18 @@
+{
+    "teamCompositionRules": {
+        "totalActivePlayers": "El equipo debe tener 11 jugadores activos",
+        "totalDefense": "Debe haber entre 3 y 5 defensores",
+        "totalSweepers": "Debe haber 1 o ningún líbero",
+        "totalLeftBacks": "Debe haber al menos un lateral izquierdo o carrilero, pero no ambos.",
+        "totalRightBacks": "Debe haber al menos un lateral derecho o carrilero, pero no ambos.",
+        "totalMidfielders": "Debe haber entre 3 y 5 centrocampistas",
+        "totalAllCenterMidfielders": "Debe haber al menos un centrocampista",
+        "totalDefensiveOffensiveMidfielders": "No debe haber más de un centrocampista defensivo u ofensivo",
+        "totalCenterMidfielders": "No debe haber más de 3 centrocampistas",
+        "totalCenterBacks": "Debe haber entre 1 y 3 defensores centrales",
+        "totalLeftMidfielders": "Debe haber al menos un centrocampista izquierdo o extremo izquierdo, pero no ambos.",
+        "totalRightMidfielders": "Debe haber al menos un centrocampista derecho o extremo derecho, pero no ambos.",
+        "totalForwards": "Debe haber entre 1 y 3 delanteros",
+        "totalStrikers": "Debe haber uno o ningún delantero centro"
+    }
+}

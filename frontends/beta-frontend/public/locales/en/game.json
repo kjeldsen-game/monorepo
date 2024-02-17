@@ -1,0 +1,18 @@
+{
+    "teamCompositionRules": {
+        "totalActivePlayers": "The team must have 11 active players",
+        "totalDefense": "Must have between 3 and 5 defenders",
+        "totalSweepers": "Must have 1 or none sweepers",
+        "totalLeftBacks": "Must at least one left back or wing back, not both.",
+        "totalRightBacks": "Must at least one right back or wing back, not both.",
+        "totalMidfielders": "Must have between 3 and 5 midfielders",
+        "totalAllCenterMidfielders": "Must have at least one midfielder",
+        "totalDefensiveOffensiveMidfielders": "Must have no more that one defensive or offensive midfielder",
+        "totalCenterMidfielders": "Must not have more that 3 center midfielders",
+        "totalCenterBacks": "Must have between 1 and 3 center backs",
+        "totalLeftMidfielders": "Must at least one left midfielder or winger, not both.",
+        "totalRightMidfielders": "Must at least one left midfielder or winger, not both.",
+        "totalForwards": "Must have between 1 and 3 forwards",
+        "totalStrikers": "Must have one ore none strikers"
+    }
+}
