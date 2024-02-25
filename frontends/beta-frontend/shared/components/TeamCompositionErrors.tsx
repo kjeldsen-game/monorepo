@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { useTranslation } from 'react-i18next'
+import { CompositionError } from '../models/CompositionError'
 
 export const ErrorsContainer = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ export const ErrorsContainer = styled.div`
 `
 
 type TeamCompositionErrorsProps = {
-  errors: string[]
+  errors: CompositionError[]
 }
 
 const TeamCompositionErrors: React.FC<TeamCompositionErrorsProps> = ({ errors }: TeamCompositionErrorsProps) => {
@@ -17,7 +18,7 @@ const TeamCompositionErrors: React.FC<TeamCompositionErrorsProps> = ({ errors }:
   return (
     <ErrorsContainer>
       {errors.map((error) => (
-        <div key={error}>- {t(`game:teamCompositionRules.${error}`)}</div>
+        <div key={error.error}>- {t(`game:teamCompositionRules.${error.error}`, { value: error.value })}</div>
       ))}
     </ErrorsContainer>
   )
