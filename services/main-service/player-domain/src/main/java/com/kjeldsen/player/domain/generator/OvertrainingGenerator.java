@@ -1,7 +1,9 @@
 package com.kjeldsen.player.domain.generator;
 
-public class PotentialRiseGenerator {
-    public static Integer generatePotentialRaise() {
+public class OvertrainingGenerator {
+
+    //! Overtraining posible way to administrate the points of the overtraining phase.
+    public static Integer generateOvertrainingRaise() {
 
         double randomProbabilityPercentage = RandomGenerator.random() * 100;
 

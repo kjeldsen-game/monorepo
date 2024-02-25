@@ -5,6 +5,7 @@ import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerAge;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
+import com.kjeldsen.player.domain.generator.OvertrainingGenerator;
 import com.kjeldsen.player.domain.generator.PointsGenerator;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
@@ -53,6 +54,8 @@ public class GenerateTrainingUseCase {
 
         if (player.isBloomActive()) {
             handleBloomEvent(player, playerTrainingEvent);
+        } else if (player.getActualSkills().get(playerSkill).getActual().equals(player.getActualSkills().get(playerSkill).getPotential())) {
+            handleOvertraining(player, playerTrainingEvent);
         } else {
             Integer points = PointsGenerator.generatePointsRise(currentDay);
             playerTrainingEvent.setPoints(points);
@@ -70,6 +73,15 @@ public class GenerateTrainingUseCase {
 
     private void handleBloomEvent(Player player, PlayerTrainingEvent playerTrainingEvent) {
         Integer points = PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay());
+        player.addSkillsPoints(playerTrainingEvent.getSkill(), points);
+        Integer pointsToRise = generatePointsBloom(player.getBloom().getBloomSpeed(), points);
+        player.addSkillsPoints(playerTrainingEvent.getSkill(), pointsToRise);
+        playerTrainingEvent.setBloom(player.getBloom());
+        playerTrainingEvent.setActualPoints(points);
+        playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
+    }
+    private void handleOvertraining(Player player, PlayerTrainingEvent playerTrainingEvent){
+        Integer points = OvertrainingGenerator.generateOvertrainingRaise();
         player.addSkillsPoints(playerTrainingEvent.getSkill(), points);
         Integer pointsToRise = generatePointsBloom(player.getBloom().getBloomSpeed(), points);
         player.addSkillsPoints(playerTrainingEvent.getSkill(), pointsToRise);
