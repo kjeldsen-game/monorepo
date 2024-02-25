@@ -7,7 +7,6 @@ import { useTeamRepository } from '../api/team/useTeamRepository'
 import { Player } from '@/shared/models/Player'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-// eslint-disable-next-line react/prop-types
 const Team: NextPage = () => {
   const { data: userData, status: sessionStatus } = useSession({ required: true })
 
