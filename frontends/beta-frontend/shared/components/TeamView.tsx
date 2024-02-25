@@ -7,7 +7,7 @@ import { SampleTeam } from '@/data/SampleTeam'
 import Grid from './Grid/Grid'
 import { Player } from '../models/Player'
 import { Team } from '../models/Team'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import checkTeamComposition from '../utils/TeamCompositionRules'
 import TeamCompositionErrors from './TeamCompositionErrors'
 
@@ -27,10 +27,15 @@ interface TeamProps {
 const TeamView: React.FC<TeamProps> = ({ isEditing, team, handlePlayerChange, onTeamUpdate }: TeamProps) => {
   const [compositionErrors, setCompositionErrors] = useState<string[]>([])
 
+  const memoizedCheck = useMemo(() => checkTeamComposition(team?.players ?? []), [team?.players])
+
+  const memoizedColumns = useMemo(() => teamColumn(isEditing, handlePlayerChange), [isEditing, handlePlayerChange])
+
   useEffect(() => {
     if (team?.players) {
-      setCompositionErrors([...checkTeamComposition(team.players)])
+      setCompositionErrors([...memoizedCheck])
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [team?.players])
 
   const saveButton = () => {
@@ -59,7 +64,7 @@ const TeamView: React.FC<TeamProps> = ({ isEditing, team, handlePlayerChange, on
         </Box>
         <Box sx={{ minWidth: '80vw' }}>
           {saveButton()}
-          {team?.players ? <Grid rows={team?.players} columns={teamColumn(isEditing, handlePlayerChange)} /> : <CircularProgress />}
+          {team?.players ? <Grid rows={team?.players} columns={memoizedColumns} /> : <CircularProgress />}
           {saveButton()}
         </Box>
       </Box>
