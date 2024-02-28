@@ -200,12 +200,14 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
       headerAlign: 'center' as GridAlignment,
       align: 'center' as GridAlignment,
       sortable: false,
-      renderCell: (params) => (
-        <PlayerOrderSelect
-          onChange={(value) => handlePlayerOrderChange(params.row, value)}
-          value={PlayerOrder[params.row.playerOrder as keyof typeof PlayerOrder] ?? undefined}
-        />
-      ),
+      renderCell: (params) => {
+        return isEditing ? (
+          <PlayerOrderSelect
+            onChange={(value) => handlePlayerOrderChange(params.row, value)}
+            value={PlayerOrder[params.row.playerOrder as keyof typeof PlayerOrder] ?? undefined}
+          />
+        ) : undefined
+      },
       valueGetter: (params) => PlayerOrder[params.row.playerOrder as keyof typeof PlayerOrder],
       minWidth: 150,
       flex: 1,
@@ -222,6 +224,7 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
           color="secondary"
           checked={params.row.status === PlayerStatus.Active}
           onChange={() => handlePlayerStatusChange(params.row as Player)}
+          readOnly={!isEditing}
         />
       ),
       minWidth: 20,
