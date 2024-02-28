@@ -6,7 +6,7 @@ import { Player } from '@/shared/models/Player'
 
 const API = '/team/'
 
-const useTeamRepository = (team: string | undefined) => {
+const useTeamRepository = (team?: string) => {
   const { data, mutate } = useSWR<Team>(team ? API + team : null, connectorAPI)
 
   const updateTeamPlayer = (value: Player): void => {
