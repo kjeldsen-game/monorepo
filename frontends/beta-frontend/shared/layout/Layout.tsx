@@ -15,7 +15,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
     { name: t('sideMenu.dashboard'), icon: 'inbox', to: '/dashboard', selected: pathname === '/dashboard' },
     { name: 'Team', icon: 'inbox', to: '/team', selected: pathname === '/team' },
     { name: 'Training', icon: 'mail', to: '/training', hasDivider: false, selected: pathname === '/training' },
-    { name: 'League', icon: 'trophy', to: '/league', hasDivider: false, selected: pathname === '/league' },
+    { name: 'League', icon: 'trophy', to: '/league', hasDivider: false, selected: /^\/league/.test(pathname) },
     // { name: 'Generate Player', icon: 'inbox', to: '/', selected: pathname === '/' },
     // { name: 'Generate Match', icon: 'mail', to: '/', selected: pathname === '/' },
   ]
