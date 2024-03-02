@@ -19,7 +19,7 @@ const leagueColumns: GridColDef[] = [
     minWidth: 70,
     flex: 1,
     renderCell: (params: GridCellParams) => (
-      <Link passHref href={`/team/${params.row.id}`}>
+      <Link passHref href={`/league/team/${params.row.id}`}>
         {params.row.name}
       </Link>
     ),

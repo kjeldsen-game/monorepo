@@ -19,7 +19,7 @@ const Team: NextPage = () => {
 
 export async function getStaticPaths() {
   return {
-    paths: ['/team/*'],
+    paths: ['/league/team/*'],
     fallback: true,
   }
 }
