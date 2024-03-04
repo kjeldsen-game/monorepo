@@ -1,7 +1,6 @@
-import { GridCellParams, GridColDef, GridValueFormatterParams, GridValueGetterParams } from '@mui/x-data-grid'
+import { GridCellParams, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import { GridAlignment } from '@mui/x-data-grid'
 import Link from 'next/link'
-import clsx from 'clsx'
 import { PlayerOrderSelect } from '../PlayerOrderSelect'
 import { PlayerPositionSelect } from '../PlayerPositionSelect'
 import { PlayerPosition } from '@/shared/models/PlayerPosition'
@@ -44,38 +43,6 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
       minWidth: 70,
       flex: 1,
       valueGetter: (params: GridValueGetterParams) => params.row.age.years,
-    },
-    {
-      field: 'position',
-      valueFormatter: (params: GridValueFormatterParams<unknown>) => {
-        switch (params.value) {
-          case 'GOALKEEPER':
-            return 'GK'
-          case 'DEFENDER':
-            return 'DF'
-          case 'MIDDLE':
-            return 'MD'
-          case 'FORWARD':
-            return 'FW'
-          default:
-            return params.value
-        }
-      },
-      headerName: 'Position',
-      headerAlign: 'center' as GridAlignment,
-      align: 'center' as GridAlignment,
-      minWidth: 70,
-      flex: 1,
-      // Assign Css class based on position
-      cellClassName: (params: GridCellParams<string>) => {
-        if (params.value == null) {
-          return ''
-        }
-
-        return clsx('super-app', {
-          [params.value.toLowerCase()]: true,
-        })
-      },
     },
     {
       field: 'DEFENSIVE_POSITIONING',
@@ -190,7 +157,7 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
         ) : undefined
       },
       valueGetter: (params) => PlayerPosition[params.row.position as keyof typeof PlayerPosition],
-      minWidth: 150,
+      minWidth: 50,
       flex: 1,
       editable: isEditing,
     },
