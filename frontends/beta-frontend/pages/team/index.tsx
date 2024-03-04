@@ -1,51 +1,54 @@
+import { useEffect, useState } from 'react'
+import TeamView from '@/shared/components/TeamView'
+import { CircularProgress } from '@mui/material'
 import type { NextPage } from 'next'
-import { Box } from '@mui/material'
-import Grid from '@/shared/components/Grid/Grid'
-import { SampleTeam } from '@/data/SampleTeam'
-import TeamDetails from '@/shared/components/TeamDetails'
-import PlayerTactics from '@/shared/components/PlayerTactics'
-import TeamTactics from '@/shared/components/TeamTactics'
-import { teamColumn } from '@/shared/components/Grid/TeamColumn'
-import useSWR from "swr"
-import { connectorAPI } from '@/libs/fetcher'
-
-const API = "/player?size=50&page=0";
-
-export async function getServerSideProps() {
-  const repoInfo = await connectorAPI(API, "GET");
-  return {
-    props: {
-      fallback: {
-        [API]: repoInfo
-      }
-    }
-  };
-}
-
-interface TeamProps {
-  fallback: () => void;
-}
+import { useSession } from 'next-auth/react'
+import { useTeamRepository } from '../api/team/useTeamRepository'
+import { Player } from '@/shared/models/Player'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 // eslint-disable-next-line react/prop-types
-const Team: NextPage<TeamProps> = ({fallback}) => {
-  const { data, error } = useSWR(API, connectorAPI, { fallback });
-  console.log(data)
-  if (error) return <div>failed to load</div>
+const Team: NextPage = () => {
+  const { data: userData, status: sessionStatus } = useSession({ required: true })
+
+  const { data, updateTeam } = useTeamRepository(userData?.user.teamId)
+
+  const [teamPlayers, setTeamPlayers] = useState<Player[]>(data?.players ?? [])
+
+  useEffect(() => {
+    setTeamPlayers(data?.players ?? [])
+  }, [data?.players])
+
+  if (sessionStatus === 'loading' || !data) return <CircularProgress />
+
+  const handlePlayerChange = (value: Player) => {
+    if (data === undefined) return
+    setTeamPlayers((prev) => {
+      const index = prev.findIndex((p) => p.id === value.id)
+      const newPlayers = [...prev]
+      newPlayers[index] = { ...value }
+      return newPlayers
+    })
+  }
+
+  const handleTeamUpdate = () => {
+    updateTeam(teamPlayers)
+  }
 
   return (
     <>
-      <Box>
-        <Box sx={{ display: 'flex', marginBottom: '2rem', alignItems: 'center' }}>
-          <TeamDetails {...SampleTeam} />
-          <PlayerTactics />
-          <TeamTactics />
-        </Box>
-        <Box sx={{ minWidth: '80vw' }}>
-          <Grid rows={data} columns={teamColumn} />
-        </Box>
-      </Box>
+      <TeamView isEditing team={{ ...data, players: teamPlayers }} handlePlayerChange={handlePlayerChange} onTeamUpdate={handleTeamUpdate}></TeamView>
     </>
   )
+}
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'game'])),
+      // Will be passed to the page component as props
+    },
+  }
 }
 
 export default Team
