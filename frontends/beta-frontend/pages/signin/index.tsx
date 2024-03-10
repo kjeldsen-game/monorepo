@@ -1,11 +1,13 @@
-import React from 'react'
-import { Box, Button, Card, CardContent, CardHeader, TextField } from '@mui/material'
+'useClient'
+import { Box, Button, Card, CardContent, CardHeader, Snackbar, TextField } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import Head from 'next/head'
 import Link from 'next/link'
 import { NextPageWithLayout } from '@/pages/_app'
 import { CenterContainer } from '@/shared/layout'
 import { apiSignIn } from '../api/auth/signup'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 interface SignInFormValues {
   username: string
@@ -13,10 +15,28 @@ interface SignInFormValues {
 }
 
 const SignInPage: NextPageWithLayout = () => {
+  const [open, setOpen] = useState(false)
+  const router = useRouter()
+
   const { handleSubmit, control } = useForm<SignInFormValues>({
     mode: 'onBlur',
     reValidateMode: 'onChange',
   })
+
+  const handleLogin = (username: string, password: string) => {
+    apiSignIn(username, password)
+      .then(() => {
+        router.push('/')
+      })
+      .catch((error) => {
+        console.error(error)
+        setOpen(true)
+      })
+  }
+
+  const handleCloseSnackBar = () => {
+    setOpen(false)
+  }
 
   return (
     <>
@@ -35,7 +55,7 @@ const SignInPage: NextPageWithLayout = () => {
               rowGap: '1rem',
             }}
             onSubmit={handleSubmit(async (data) => {
-              apiSignIn(data.username, data.password)
+              handleLogin(data.username, data.password)
             })}>
             <Controller
               name="username"
@@ -86,6 +106,7 @@ const SignInPage: NextPageWithLayout = () => {
           </Link>
         </CardContent>
       </Card>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleCloseSnackBar} message="Login failed" />
     </>
   )
 }

@@ -30,6 +30,8 @@ export default NextAuth({
           body: JSON.stringify(payload),
         })
 
+        if (res.status !== 200) throw new Error('Invalid credentials')
+
         // Returning token to set in session
         const data = await res.json()
         return data
