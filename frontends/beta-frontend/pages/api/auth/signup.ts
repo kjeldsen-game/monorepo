@@ -15,7 +15,7 @@ export async function apiSignIn(username: string, password: string): Promise<num
         reject('Invalid credentials')
       })
       .catch((error) => {
-        console.log(error)
+        console.error(error)
         reject(error)
       })
   })
