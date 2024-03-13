@@ -1,16 +1,11 @@
-import { GridCellParams, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
+import { CalendarButton } from '@/shared/components/CalendarButton'
+import { GridCellParams, GridColDef } from '@mui/x-data-grid'
 import { GridAlignment } from '@mui/x-data-grid'
+import { TFunction } from 'i18next'
+import { Moment } from 'moment'
 import Link from 'next/link'
 
-const leagueColumns: GridColDef[] = [
-  {
-    field: 'manager',
-    headerName: 'Manager',
-    headerAlign: 'center' as GridAlignment,
-    minWidth: 130,
-    flex: 1,
-    valueGetter: (params: GridValueGetterParams) => params.row.id,
-  },
+const leagueColumns = (t: TFunction, handleChallengeButtonClick: (id: number, date: Moment) => void): GridColDef[] => [
   {
     field: 'teamName',
     headerName: 'Team name',
@@ -22,6 +17,16 @@ const leagueColumns: GridColDef[] = [
       <Link passHref href={`/league/team/${params.row.id}`}>
         {params.row.name}
       </Link>
+    ),
+  },
+  {
+    field: 'manager',
+    headerName: 'Manager',
+    headerAlign: 'center' as GridAlignment,
+    minWidth: 130,
+    flex: 1,
+    renderCell: (params: GridCellParams) => (
+      <CalendarButton onDatePick={(date) => handleChallengeButtonClick(params.row.id, date)}>{t('challenge')}</CalendarButton>
     ),
   },
 ]
