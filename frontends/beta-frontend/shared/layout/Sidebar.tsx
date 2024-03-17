@@ -11,12 +11,11 @@ import ListItemText from '@mui/material/ListItemText'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
-import SportsIcon from '@mui/icons-material/Sports'
 import Link from 'next/link'
 
 const drawerWidth = '15vw'
 
-const providedIcons = { inbox: <InboxIcon />, mail: <MailIcon />, trophy: <EmojiEventsIcon />, whistle: <SportsIcon /> }
+const providedIcons = { inbox: <InboxIcon />, mail: <MailIcon />, trophy: <EmojiEventsIcon /> }
 export interface Item {
   name: string
   to: string
