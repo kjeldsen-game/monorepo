@@ -37,7 +37,7 @@ const CalendarButton: React.FC<CalendarButtonProps> = ({ onDatePick, children, d
 
   return (
     <div>
-      <Button ref={buttonRef} onClick={handleButtonClick} color="info">
+      <Button ref={buttonRef} onClick={handleButtonClick} color="info" variant="contained">
         {children}
       </Button>
       <Popover open={isCalendarOpen} onClose={handleClose} anchorEl={buttonRef.current}>
