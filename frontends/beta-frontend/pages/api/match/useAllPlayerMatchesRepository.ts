@@ -4,8 +4,8 @@ import { Match } from '@/shared/models/Match'
 
 const API = '/match/'
 
-const useAllPlayerMatchesRepository = (teamId?: string) => {
-  const { data: allMatches } = useSWR<Match[]>([API, teamId], () => connectorAPI(API + `?page=${0}&size=${99}&teamId=${teamId}`, 'GET'))
+const useAllPlayerMatchesRepository = (page: number = 0, size: number = 99, teamId?: string) => {
+  const { data: allMatches } = useSWR<Match[]>([API, teamId], () => connectorAPI(API + `?page=${page}&size=${size}&teamId=${teamId}`, 'GET'))
 
   return { allMatches }
 }
