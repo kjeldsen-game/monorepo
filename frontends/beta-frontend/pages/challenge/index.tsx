@@ -5,6 +5,7 @@ import { Box, Tab, Tabs } from '@mui/material'
 import { useState } from 'react'
 import { CustomTabPanel } from '@/shared/components/Tab/CustomTabPanel'
 import { useSession } from 'next-auth/react'
+import { InviteGrid } from './components/InviteGrid'
 
 const Team: NextPage = () => {
   useSession({ required: true })
@@ -24,6 +25,7 @@ const Team: NextPage = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
+        <InviteGrid />
         <LeagueGrid />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>

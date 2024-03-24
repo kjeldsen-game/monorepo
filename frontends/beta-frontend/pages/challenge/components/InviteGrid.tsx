@@ -1,0 +1,37 @@
+import Grid from '@/shared/components/Grid/Grid'
+import { Box } from '@mui/material'
+import { useState } from 'react'
+import { inviteColumns } from './InviteColumns'
+import { useSession } from 'next-auth/react'
+import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMatchesRepository'
+
+const PAGE_SIZE = 10
+
+interface InviteGridProps {}
+
+const InviteGrid: React.FC<InviteGridProps> = () => {
+  const [selectedPage, setSelectedPage] = useState<number>(0)
+
+  const { data: userData } = useSession({ required: true })
+
+  const { allMatches } = useAllPlayerMatchesRepository(selectedPage, 10, userData?.user.id)
+
+  return (
+    <Box sx={{ width: '100%' }}>
+      <Grid
+        isRowSelectable={() => false}
+        rows={allMatches ?? []}
+        columns={inviteColumns()}
+        paginationMode="server"
+        pagination
+        pageSize={PAGE_SIZE}
+        hideFooter={false}
+        onPageChange={(value) => setSelectedPage(value)}
+        // TODO: Get total of teams from the API
+        rowCount={10}
+      />
+    </Box>
+  )
+}
+
+export { InviteGrid }
