@@ -4,8 +4,11 @@ import { LeagueGrid } from './components/LeagueGrid'
 import { Box, Tab, Tabs } from '@mui/material'
 import { useState } from 'react'
 import { CustomTabPanel } from '@/shared/components/Tab/CustomTabPanel'
+import { useSession } from 'next-auth/react'
 
 const Team: NextPage = () => {
+  useSession({ required: true })
+
   const [value, setValue] = useState(0)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
