@@ -1,14 +1,15 @@
 import { Box, Button, Popover } from '@mui/material'
-import { StaticDateTimePicker } from '@mui/x-date-pickers'
+import { StaticDateTimePicker, StaticDateTimePickerProps } from '@mui/x-date-pickers'
 import { Moment } from 'moment'
 import { useRef, useState } from 'react'
 
 interface CalendarButtonProps {
   onDatePick: (date: Moment) => void
   children: React.ReactNode
+  datePickerProps?: StaticDateTimePickerProps<Moment> & React.RefAttributes<HTMLDivElement>
 }
 
-const CalendarButton: React.FC<CalendarButtonProps> = ({ onDatePick, children }) => {
+const CalendarButton: React.FC<CalendarButtonProps> = ({ onDatePick, children, datePickerProps }) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false)
   const buttonRef = useRef(null)
 
@@ -45,7 +46,7 @@ const CalendarButton: React.FC<CalendarButtonProps> = ({ onDatePick, children })
             display: 'flex',
             flexDirection: 'column',
           }}>
-          <StaticDateTimePicker displayStaticWrapperAs="desktop" openTo="day" onChange={handleDateChange} minutesStep={10} />
+          <StaticDateTimePicker displayStaticWrapperAs="desktop" onChange={handleDateChange} {...datePickerProps} />
           <Button color="info" disabled={selectedDate === null} onClick={handleConfirm}>
             Confirm
           </Button>
