@@ -5,15 +5,18 @@ import { leagueColumns } from './LeagueColumns'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Moment } from 'moment'
-import { Match } from '@/shared/models/Match'
+import { useSession } from 'next-auth/react'
+import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMatchesRepository'
 
 const PAGE_SIZE = 10
 
-interface LeagueGridProps {
-  playerMatches?: Match[]
-}
+interface LeagueGridProps {}
 
-const LeagueGrid: React.FC<LeagueGridProps> = ({ playerMatches }) => {
+const LeagueGrid: React.FC<LeagueGridProps> = () => {
+  const { data: userData } = useSession({ required: true })
+
+  const { allMatches } = useAllPlayerMatchesRepository(undefined, undefined, userData?.user.id)
+
   const { t } = useTranslation('common')
   const [selectedPage, setSelectedPage] = useState<number>(0)
   const { allTeams } = useAllTeamsRepository(selectedPage, PAGE_SIZE)
@@ -22,14 +25,12 @@ const LeagueGrid: React.FC<LeagueGridProps> = ({ playerMatches }) => {
     console.log(id, date.toDate())
   }
 
-  console.log(playerMatches)
-
   return (
     <Box sx={{ width: '100%' }}>
       <Grid
         isRowSelectable={() => false}
         rows={allTeams ?? []}
-        columns={leagueColumns(t, handleChallengeButtonClick, playerMatches?.map((match) => match.dateTime.getTime()) ?? [])}
+        columns={leagueColumns(t, handleChallengeButtonClick, allMatches?.map((match) => match.dateTime.getTime()) ?? [])}
         paginationMode="server"
         pagination
         pageSize={PAGE_SIZE}
