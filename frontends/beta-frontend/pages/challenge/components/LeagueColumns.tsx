@@ -5,7 +5,7 @@ import { TFunction } from 'i18next'
 import { Moment } from 'moment'
 import Link from 'next/link'
 
-const leagueColumns = (t: TFunction, handleChallengeButtonClick: (id: number, date: Moment) => void): GridColDef[] => [
+const leagueColumns = (t: TFunction, handleChallengeButtonClick: (id: number, date: Moment) => void, disabledDates: number[]): GridColDef[] => [
   {
     field: 'teamName',
     headerName: 'Team name',
@@ -26,7 +26,15 @@ const leagueColumns = (t: TFunction, handleChallengeButtonClick: (id: number, da
     minWidth: 130,
     flex: 1,
     renderCell: (params: GridCellParams) => (
-      <CalendarButton onDatePick={(date) => handleChallengeButtonClick(params.row.id, date)}>{t('challenge')}</CalendarButton>
+      <CalendarButton
+        datePickerProps={{
+          shouldDisableTime: (moment, view) => disabledDates.includes(moment.toDate().getTime()) && view === 'minutes',
+          minutesStep: 10,
+          openTo: 'day',
+        }}
+        onDatePick={(date) => handleChallengeButtonClick(params.row.id, date)}>
+        {t('challenge')}
+      </CalendarButton>
     ),
   },
 ]

@@ -5,9 +5,12 @@ import { Box, Tab, Tabs } from '@mui/material'
 import { useState } from 'react'
 import { CustomTabPanel } from '@/shared/components/Tab/CustomTabPanel'
 import { useSession } from 'next-auth/react'
+import { useAllPlayerMatchesRepository } from '../api/match/useAllPlayerMatchesRepository'
 
 const Team: NextPage = () => {
-  useSession({ required: true })
+  const { data: userData } = useSession({ required: true })
+
+  const { allMatches } = useAllPlayerMatchesRepository(userData?.user.id)
 
   const [value, setValue] = useState(0)
 
@@ -24,7 +27,7 @@ const Team: NextPage = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <LeagueGrid />
+        <LeagueGrid playerMatches={allMatches} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Item Two
