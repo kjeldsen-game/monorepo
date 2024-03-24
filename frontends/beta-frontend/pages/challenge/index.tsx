@@ -1,14 +1,17 @@
 import type { NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { LeagueGrid } from './components/LeagueGrid'
-import { Box, Tab, Tabs } from '@mui/material'
+import { Box, Tab, Tabs, Typography } from '@mui/material'
 import { useState } from 'react'
 import { CustomTabPanel } from '@/shared/components/Tab/CustomTabPanel'
 import { useSession } from 'next-auth/react'
 import { InviteGrid } from './components/InviteGrid'
+import { useTranslation } from 'next-i18next'
 
 const Team: NextPage = () => {
   useSession({ required: true })
+
+  const { t } = useTranslation('common', { keyPrefix: 'challenge' })
 
   const [value, setValue] = useState(0)
 
@@ -25,7 +28,10 @@ const Team: NextPage = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
+        <Typography variant="h5">{t('pending_challenges')}</Typography>
         <InviteGrid />
+        <Box sx={{ height: '40px' }} />
+        <Typography variant="h5">{t('challenge_team')}</Typography>
         <LeagueGrid />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>

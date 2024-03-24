@@ -33,7 +33,7 @@ const leagueColumns = (t: TFunction, handleChallengeButtonClick: (id: number, da
           openTo: 'day',
         }}
         onDatePick={(date) => handleChallengeButtonClick(params.row.id, date)}>
-        {t('challenge')}
+        {t('challenge.challenge')}
       </CalendarButton>
     ),
   },

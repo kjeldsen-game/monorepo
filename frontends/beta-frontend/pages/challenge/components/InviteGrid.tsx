@@ -4,17 +4,24 @@ import { useState } from 'react'
 import { inviteColumns } from './InviteColumns'
 import { useSession } from 'next-auth/react'
 import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMatchesRepository'
+import { useTranslation } from 'react-i18next'
 
 const PAGE_SIZE = 10
 
 interface InviteGridProps {}
 
 const InviteGrid: React.FC<InviteGridProps> = () => {
-  const [selectedPage, setSelectedPage] = useState<number>(0)
-
   const { data: userData } = useSession({ required: true })
 
-  const { allMatches } = useAllPlayerMatchesRepository(selectedPage, 10, userData?.user.id)
+  const { t } = useTranslation('common')
+
+  const [selectedPage, setSelectedPage] = useState<number>(0)
+
+  const { allMatches } = useAllPlayerMatchesRepository(selectedPage, 10, userData?.user.teamId)
+
+  if (!allMatches || allMatches.length === 0) {
+    return <Box sx={{ width: '100%' }}>{t('challenge.no_pending_challenges')}</Box>
+  }
 
   return (
     <Box sx={{ width: '100%' }}>

@@ -1,5 +1,11 @@
 {
   "sideMenu": {
     "dashboard": "Dashboard"
+  },
+  "challenge": {
+    "challenge": "Desafiar",
+    "pending_challenges": "Desafíos pendientes",
+    "challenge_team": "Desafiar equipo",
+    "no_pending_challenges": "No hay desafíos pendientes"
   }
 }
