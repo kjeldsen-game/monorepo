@@ -1,12 +1,12 @@
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { DataGrid, DataGridProps, GridColDef } from '@mui/x-data-grid'
 import Box from '@mui/material/Box'
 
 type GridProps<T> = {
   rows: T[]
   columns: GridColDef[]
-}
+} & DataGridProps
 
-function Grid<T>({ rows, columns }: GridProps<T>) {
+function Grid<T>({ rows, columns, ...props }: GridProps<T>) {
   return (
     <Box
       sx={{
@@ -29,7 +29,7 @@ function Grid<T>({ rows, columns }: GridProps<T>) {
           backgroundColor: '#E52323',
         },
       }}>
-      <DataGrid autoHeight={true} rows={rows} columns={columns} hideFooter={true} />
+      <DataGrid autoHeight={true} rows={rows} columns={columns} hideFooter={true} {...props} />
     </Box>
   )
 }

@@ -36,9 +36,7 @@ const Team: NextPage = () => {
   }
 
   return (
-    <>
-      <TeamView isEditing team={{ ...data, players: teamPlayers }} handlePlayerChange={handlePlayerChange} onTeamUpdate={handleTeamUpdate}></TeamView>
-    </>
+    <TeamView isEditing team={{ ...data, players: teamPlayers }} handlePlayerChange={handlePlayerChange} onTeamUpdate={handleTeamUpdate}></TeamView>
   )
 }
 

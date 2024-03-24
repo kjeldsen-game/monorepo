@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-import { AppBar, Box, Button, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
-import { AccountCircle as AccountCircleIcon, Login as LoginIcon, Logout as LogoutIcon, Menu as MenuIcon } from '@mui/icons-material'
+import { AppBar, Box, Button, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
+import { AccountCircle as AccountCircleIcon, Login as LoginIcon, Logout as LogoutIcon } from '@mui/icons-material'
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { User } from 'next-auth'
@@ -31,7 +31,7 @@ const SignedUser: FC<SignedUserProps> = ({ user }) => {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         variant="outlined"
-        color="inherit"
+        color="primary"
         onClick={handleClick}>
         {user?.name || 'Anonymous'}
       </Button>
@@ -73,20 +73,29 @@ export const Header: FC = () => {
           borderBottom: '4px solid #FF3F84',
           // height: SportsSoccerIcon.length * 4,
           zIndex: (theme) => theme.zIndex.drawer + 1,
+          backgroundColor: 'white',
         }}>
         <Toolbar>
-          <Link href="/">
-            <SportsSoccerIcon />
-          </Link>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Kjeldsen
+            <Link
+              href="/"
+              style={{
+                width: 'min-content',
+                color: 'black',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+              }}>
+              <SportsSoccerIcon />
+              <span>Kjeldsen</span>
+            </Link>
           </Typography>
 
           {status === 'authenticated' && !!data ? (
             <SignedUser user={data.user} />
           ) : (
             <Link href="/signin" passHref>
-              <Button startIcon={<LoginIcon />} variant="outlined" color="inherit">
+              <Button startIcon={<LoginIcon />} variant="outlined" color="primary">
                 Sign In
               </Button>
             </Link>
