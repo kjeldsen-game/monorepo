@@ -115,7 +115,6 @@ public class Player {
         return getActualSkills().get(skill).getPotential();
     }
 
-
     public void addSkillsPoints(PlayerSkill skill, Integer points) {
         PlayerSkills skillPoints = getActualSkills().get(skill);
         skillPoints.setActual(Math.min(MAX_SKILL_VALUE, skillPoints.getActual() + points));
@@ -146,10 +145,18 @@ public class Player {
         }
     }
 
+    public static void checkDifferenceOvertrainingPoints(PlayerSkill skill, Player player) {
+        Integer actualSkillPoint = getActualSkills().get(skill).getActual();
+        Integer potentialSkillPoint = getActualSkills().get(skill).getPotential();
+
+        if (actualSkillPoint > potentialSkillPoint) {
+            player.getActualSkills().get(skill).setPotential(actualSkillPoint);
+        }
+    }
+
     @Builder
     @Getter
     public static class Economy {
-
         private BigDecimal salary;
     }
 

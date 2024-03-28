@@ -9,5 +9,4 @@ public class RandomGenerator {
     public static double random() {
         return Math.random();
     }
-
 }

@@ -55,7 +55,7 @@ public class GenerateTrainingUseCase {
         if (player.isBloomActive()) {
             handleBloomEvent(player, playerTrainingEvent);
         } else if (player.getActualSkills().get(playerSkill).getActual().equals(player.getActualSkills().get(playerSkill).getPotential())) {
-            handleOvertraining(player, playerTrainingEvent, currentDay);
+            handleOvertraining(player, playerTrainingEvent, currentDay, playerSkill);
         } else {
             Integer points = PointsGenerator.generatePointsRise(currentDay);
             playerTrainingEvent.setPoints(points);
@@ -80,14 +80,14 @@ public class GenerateTrainingUseCase {
         playerTrainingEvent.setActualPoints(points);
         playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
     }
-    private void handleOvertraining(Player player, PlayerTrainingEvent playerTrainingEvent, Integer currentDay){
+    private void handleOvertraining(Player player, PlayerTrainingEvent playerTrainingEvent, Integer currentDay, PlayerSkill playerSkill){
         Integer points = OvertrainingGenerator.generateOvertrainingRaise(currentDay);
-        player.addSkillsPoints(playerTrainingEvent.getSkill(), points);
-        Integer pointsToRise = generatePointsBloom(player.getBloom().getBloomSpeed(), points);
-        player.addSkillsPoints(playerTrainingEvent.getSkill(), pointsToRise);
-        playerTrainingEvent.setBloom(player.getBloom());
-        playerTrainingEvent.setActualPoints(points);
-        playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
+        playerTrainingEvent.setPoints(points);
+        playerTrainingEvent.setActualPoints(player.getActualSkillPoints(playerSkill));
+        player.addSkillsPoints(playerSkill, points);
+        Player.checkDifferenceOvertrainingPoints(playerSkill, player);
+        playerTrainingEvent.setPotentialPoints(player.getPotentialSkillPoints(playerSkill));
+        playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
     }
 
     // TODO make private and refactor tests

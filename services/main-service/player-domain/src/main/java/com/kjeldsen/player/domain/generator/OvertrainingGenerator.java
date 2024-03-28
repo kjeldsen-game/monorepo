@@ -14,9 +14,6 @@ public class OvertrainingGenerator {
             return 0;
         }
     }
-
-    //! If the decision is to make it as training but...
-
     public static double probabilityOvertrainingRiseBasedOnCurrentDay(Integer currentDay, Float slowPercentage) {
         return switch (currentDay) {
             case 1 -> 2.03 * slowPercentage;
