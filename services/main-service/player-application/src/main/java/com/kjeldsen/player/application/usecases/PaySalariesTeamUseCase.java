@@ -1,6 +1,7 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.domain.EventId;
+import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.ExpenseEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import java.math.BigDecimal;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,9 +33,28 @@ public class PaySalariesTeamUseCase {
         Team team = teamReadRepository.findById(teamId)
             .orElseThrow(() -> new RuntimeException("Team not found"));
 
+        BigDecimal totalSalaries = playerReadRepository.findByTeamId(teamId)
+                .stream().map(player -> player.getEconomy().getSalary())
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        if(team.getEconomy().getBalance().compareTo(totalSalaries) < 0){
+            throw new IllegalStateException("Insufficient balance to pay salaries");
+        }
+
         playerReadRepository.findByTeamId(teamId)
             .forEach(player -> {
-                team.getEconomy().decreaseBalance(player.getEconomy().getSalary());
+                Optional<Player> optionalPlayer = playerReadRepository.findOneById(player.getId());
+
+                if(optionalPlayer.isEmpty()){
+                    throw new RuntimeException("Player with id" + player.getId() + "not found");
+                }
+
+                BigDecimal salary = player.getEconomy().getSalary();
+                if(salary.compareTo(BigDecimal.ZERO) < 0){
+                    throw new IllegalArgumentException("Salary can not be negative");
+                }
+
+                team.getEconomy().decreaseBalance(salary);
 
                 expenseEventWriteRepository.save(
                     ExpenseEvent.builder()
@@ -40,7 +62,7 @@ public class PaySalariesTeamUseCase {
                         .occurredAt(InstantProvider.now())
                         .teamId(teamId)
                         .playerId(player.getId())
-                        .amount(player.getEconomy().getSalary())
+                        .amount(salary)
                         .expenseType(Team.Economy.ExpenseType.PLAYER_SALARY)
                         .build());
             });
