@@ -946,6 +946,8 @@ components:
         pointsAfterTraining:
           type: integer
           format: int32
+        isOvertrainingActive:
+          type: boolean
         currentDay:
           type: integer
           format: int32

@@ -146,8 +146,8 @@ public class Player {
     }
 
     public static void checkDifferenceOvertrainingPoints(PlayerSkill skill, Player player) {
-        Integer actualSkillPoint = getActualSkills().get(skill).getActual();
-        Integer potentialSkillPoint = getActualSkills().get(skill).getPotential();
+        Integer actualSkillPoint = player.getActualSkillPoints(skill);
+        Integer potentialSkillPoint = player.getPotentialSkillPoints(skill);
 
         if (actualSkillPoint > potentialSkillPoint) {
             player.getActualSkills().get(skill).setPotential(actualSkillPoint);

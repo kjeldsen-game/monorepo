@@ -11,6 +11,7 @@ import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingEventWriteRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
+import com.kjeldsen.player.persistence.mongo.repositories.PlayerTrainingEventMongoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Range;
@@ -22,6 +23,7 @@ import static com.kjeldsen.player.domain.generator.PointsGenerator.generatePoint
 @RequiredArgsConstructor
 @Component
 public class GenerateTrainingUseCase {
+    private final PlayerTrainingEventMongoRepository playerTrainingEventMongoRepository;
 
     private static final Integer MIN_DAY = 1;
     private static final Integer MAX_DAY = 1000;
@@ -54,13 +56,14 @@ public class GenerateTrainingUseCase {
 
         if (player.isBloomActive()) {
             handleBloomEvent(player, playerTrainingEvent);
-        } else if (player.getActualSkills().get(playerSkill).getActual().equals(player.getActualSkills().get(playerSkill).getPotential())) {
+        } else if (player.getActualSkillPoints(playerSkill).equals(player.getPotentialSkillPoints(playerSkill))) {
             handleOvertraining(player, playerTrainingEvent, currentDay, playerSkill);
         } else {
             Integer points = PointsGenerator.generatePointsRise(currentDay);
             playerTrainingEvent.setPoints(points);
-            playerTrainingEvent.setActualPoints(player.getActualSkillPoints(playerSkill));
+
             player.addSkillsPoints(playerSkill, points);
+            playerTrainingEvent.setActualPoints(player.getActualSkillPoints(playerSkill));
             playerTrainingEvent.setPotentialPoints(player.getPotentialSkillPoints(playerSkill));
             playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
         }
@@ -86,6 +89,7 @@ public class GenerateTrainingUseCase {
         playerTrainingEvent.setActualPoints(player.getActualSkillPoints(playerSkill));
         player.addSkillsPoints(playerSkill, points);
         Player.checkDifferenceOvertrainingPoints(playerSkill, player);
+        playerTrainingEvent.setIsOvertrainingActive(true);
         playerTrainingEvent.setPotentialPoints(player.getPotentialSkillPoints(playerSkill));
         playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
     }

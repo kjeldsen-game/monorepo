@@ -28,6 +28,7 @@ public class PlayerTrainingEvent extends Event {
     private Integer potentialPoints;
     private Integer pointsBeforeTraining;
     private Integer pointsAfterTraining;
+    private Boolean isOvertrainingActive;
     private Integer currentDay;
 
 }
