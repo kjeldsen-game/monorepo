@@ -56,14 +56,13 @@ public class GenerateTrainingUseCase {
 
         if (player.isBloomActive()) {
             handleBloomEvent(player, playerTrainingEvent);
-        } else if (player.getActualSkillPoints(playerSkill).equals(player.getPotentialSkillPoints(playerSkill))) {
+        } else if (player.getActualSkillPoints(playerSkill) >= (player.getPotentialSkillPoints(playerSkill))) {
             handleOvertraining(player, playerTrainingEvent, currentDay, playerSkill);
         } else {
             Integer points = PointsGenerator.generatePointsRise(currentDay);
             playerTrainingEvent.setPoints(points);
-
-            player.addSkillsPoints(playerSkill, points);
             playerTrainingEvent.setActualPoints(player.getActualSkillPoints(playerSkill));
+            Player.checkDifferenceOverflowPoints(playerSkill, player, points);
             playerTrainingEvent.setPotentialPoints(player.getPotentialSkillPoints(playerSkill));
             playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
         }
@@ -84,12 +83,11 @@ public class GenerateTrainingUseCase {
         playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerTrainingEvent.getSkill()));
     }
     private void handleOvertraining(Player player, PlayerTrainingEvent playerTrainingEvent, Integer currentDay, PlayerSkill playerSkill){
+        playerTrainingEvent.setIsOvertrainingActive(true);
         Integer points = OvertrainingGenerator.generateOvertrainingRaise(currentDay);
         playerTrainingEvent.setPoints(points);
         playerTrainingEvent.setActualPoints(player.getActualSkillPoints(playerSkill));
-        player.addSkillsPoints(playerSkill, points);
-        Player.checkDifferenceOvertrainingPoints(playerSkill, player);
-        playerTrainingEvent.setIsOvertrainingActive(true);
+        Player.checkDifferenceOverflowPoints(playerSkill, player, points);
         playerTrainingEvent.setPotentialPoints(player.getPotentialSkillPoints(playerSkill));
         playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
     }
