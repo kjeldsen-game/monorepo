@@ -149,10 +149,6 @@ public class Player {
         Integer actualSkillPoint = player.getActualSkillPoints(skill);
         Integer potentialSkillPoint = player.getPotentialSkillPoints(skill);
         player.getActualSkills().get(skill).setActual(Math.min(potentialSkillPoint, actualSkillPoint + points));
-        if (actualSkillPoint+points > potentialSkillPoint) {
-            player.getActualSkills().get(skill).setPotential(potentialSkillPoint);
-        }
-
     }
 
     @Builder

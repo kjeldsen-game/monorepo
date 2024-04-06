@@ -86,8 +86,9 @@ public class GenerateTrainingUseCase {
         playerTrainingEvent.setIsOvertrainingActive(true);
         Integer points = OvertrainingGenerator.generateOvertrainingRaise(currentDay);
         playerTrainingEvent.setPoints(points);
-        playerTrainingEvent.setActualPoints(player.getActualSkillPoints(playerSkill));
+        player.getActualSkills().get(playerSkill).setActual(player.getActualSkillPoints(playerSkill)+points);
         Player.checkDifferenceOverflowPoints(playerSkill, player, points);
+        playerTrainingEvent.setActualPoints(player.getActualSkillPoints(playerSkill));
         playerTrainingEvent.setPotentialPoints(player.getPotentialSkillPoints(playerSkill));
         playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
     }
