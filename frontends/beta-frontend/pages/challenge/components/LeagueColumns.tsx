@@ -40,3 +40,4 @@ const leagueColumns = (t: TFunction, handleChallengeButtonClick: (id: number, da
 ]
 
 export { leagueColumns }
+export default leagueColumns

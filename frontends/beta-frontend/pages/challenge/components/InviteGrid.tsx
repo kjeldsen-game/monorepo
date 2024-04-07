@@ -42,3 +42,4 @@ const InviteGrid: React.FC<InviteGridProps> = () => {
 }
 
 export { InviteGrid }
+export default InviteGrid
