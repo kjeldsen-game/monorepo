@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { inviteColumns } from './InviteColumns'
 import { useSession } from 'next-auth/react'
 import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMatchesRepository'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const PAGE_SIZE = 10
 
