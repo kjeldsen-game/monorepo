@@ -5,7 +5,7 @@ import { TFunction } from 'i18next'
 import { Moment } from 'moment'
 import Link from 'next/link'
 
-const leagueColumns = (t: TFunction, handleChallengeButtonClick: (id: number, date: Moment) => void, disabledDates: number[]): GridColDef[] => [
+const leagueColumns = (t: TFunction, handleChallengeButtonClick: (id: string, date: Moment) => void, disabledDates: number[]): GridColDef[] => [
   {
     field: 'teamName',
     headerName: 'Team name',
