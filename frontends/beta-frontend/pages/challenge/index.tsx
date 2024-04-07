@@ -7,6 +7,7 @@ import { CustomTabPanel } from '@/shared/components/Tab/CustomTabPanel'
 import { useSession } from 'next-auth/react'
 import { InviteGrid } from './components/InviteGrid'
 import { useTranslation } from 'next-i18next'
+import IncomingMatchesGrid from './components/IncomingMatchesGrid'
 
 const Team: NextPage = () => {
   useSession({ required: true })
@@ -35,7 +36,7 @@ const Team: NextPage = () => {
         <LeagueGrid />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <IncomingMatchesGrid />
       </CustomTabPanel>
     </Box>
   )
