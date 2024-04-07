@@ -1,7 +1,7 @@
 import { useAllTeamsRepository } from '../../api/team/useAllTeamsRepository'
 import Grid from '@/shared/components/Grid/Grid'
 import { Box } from '@mui/material'
-import { leagueColumns } from './LeagueColumns'
+import { leagueColumns } from '../../../shared/components/Grid/Columns/LeagueColumns'
 import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Moment } from 'moment'

@@ -1,7 +1,7 @@
 import Grid from '@/shared/components/Grid/Grid'
 import { Box } from '@mui/material'
 import { useState } from 'react'
-import { inviteColumns } from './InviteColumns'
+import { inviteColumns } from '../../../shared/components/Grid/Columns/InviteColumns'
 import { useSession } from 'next-auth/react'
 import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMatchesRepository'
 import { useTranslation } from 'next-i18next'
