@@ -2,7 +2,7 @@ import { Box, Button, CircularProgress, Tooltip, TooltipProps, styled, tooltipCl
 import TeamDetails from './TeamDetails'
 import PlayerTactics from './PlayerTactics'
 import TeamTactics from '@/shared/components/TeamTactics'
-import { teamColumn } from '@/shared/components/Grid/TeamColumn'
+import { teamColumn } from '@/shared/components/Grid/Columns/TeamColumn'
 import { SampleTeam } from '@/data/SampleTeam'
 import Grid from './Grid/Grid'
 import { Player, PlayerStatus } from '../models/Player'
