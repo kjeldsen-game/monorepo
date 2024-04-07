@@ -28,7 +28,7 @@ const InviteGrid: React.FC<InviteGridProps> = () => {
       <Grid
         isRowSelectable={() => false}
         rows={allMatches ?? []}
-        columns={inviteColumns()}
+        columns={userData?.user.teamId ? inviteColumns(userData?.user.teamId) : []}
         paginationMode="server"
         pagination
         pageSize={PAGE_SIZE}
