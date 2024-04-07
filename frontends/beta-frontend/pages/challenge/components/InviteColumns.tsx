@@ -46,3 +46,4 @@ const inviteColumns = (): GridColDef[] => [
 ]
 
 export { inviteColumns }
+export default inviteColumns

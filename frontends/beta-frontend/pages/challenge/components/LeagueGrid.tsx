@@ -44,3 +44,4 @@ const LeagueGrid: React.FC<LeagueGridProps> = () => {
 }
 
 export { LeagueGrid }
+export default LeagueGrid
