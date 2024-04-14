@@ -3,7 +3,11 @@ import { GridCellParams, GridColDef } from '@mui/x-data-grid'
 import { GridAlignment } from '@mui/x-data-grid'
 import Link from 'next/link'
 
-const inviteColumns = (ownTeamId: string): GridColDef[] => [
+const inviteColumns = (
+  ownTeamId: string,
+  onChallengeAccept: (matchID: string) => void,
+  onChallengeDecline: (matchID: string) => void,
+): GridColDef[] => [
   {
     field: 'id',
     headerName: 'Match Id',
@@ -12,8 +16,8 @@ const inviteColumns = (ownTeamId: string): GridColDef[] => [
     minWidth: 70,
     flex: 1,
     renderCell: (params: GridCellParams) => (
-      <Link passHref href={`/team/${params.row.id}`}>
-        {params.row?.away?.id}
+      <Link passHref href={`/team/${params.row.away}`}>
+        {params.value}
       </Link>
     ),
   },
@@ -42,10 +46,10 @@ const inviteColumns = (ownTeamId: string): GridColDef[] => [
 
       return (
         <Box>
-          <Button variant="contained" color="info" sx={{ mx: '5px' }}>
+          <Button variant="contained" color="info" sx={{ mx: '5px' }} onClick={() => onChallengeAccept(params.row?.id)}>
             Accept
           </Button>
-          <Button variant="contained" color="error" sx={{ mx: '5px' }}>
+          <Button variant="contained" color="error" sx={{ mx: '5px' }} onClick={() => onChallengeDecline(params.row?.id)}>
             Decline
           </Button>
         </Box>
