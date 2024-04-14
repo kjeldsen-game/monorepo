@@ -5,6 +5,7 @@ import { inviteColumns } from '../../../shared/components/Grid/Columns/InviteCol
 import { useSession } from 'next-auth/react'
 import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMatchesRepository'
 import { useTranslation } from 'next-i18next'
+import { useMatchRepository } from '@/pages/api/match/useMatchRepository'
 
 const PAGE_SIZE = 10
 
@@ -19,8 +20,18 @@ const InviteGrid: React.FC<InviteGridProps> = () => {
 
   const { allMatches } = useAllPlayerMatchesRepository(selectedPage, 10, userData?.user.teamId)
 
+  const { acceptMatch, declineMatch } = useMatchRepository(userData?.user.teamId)
+
   if (!allMatches || allMatches.length === 0) {
     return <Box sx={{ width: '100%' }}>{t('challenge.no_pending_challenges')}</Box>
+  }
+
+  const handleMatchAccept = (matchId: string) => {
+    acceptMatch(matchId)
+  }
+
+  const handleMatchDecline = (matchId: string) => {
+    declineMatch(matchId)
   }
 
   return (
@@ -28,7 +39,7 @@ const InviteGrid: React.FC<InviteGridProps> = () => {
       <Grid
         isRowSelectable={() => false}
         rows={allMatches ?? []}
-        columns={userData?.user.teamId ? inviteColumns(userData?.user.teamId) : []}
+        columns={userData?.user.teamId ? inviteColumns(userData?.user.teamId, handleMatchAccept, handleMatchDecline) : []}
         paginationMode="server"
         pagination
         pageSize={PAGE_SIZE}
