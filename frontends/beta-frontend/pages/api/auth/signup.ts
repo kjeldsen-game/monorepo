@@ -21,11 +21,22 @@ export async function apiSignIn(username: string, password: string): Promise<num
   })
 }
 
-export async function apiSignup(username: string, password: string, teamName: string) {
-  await connectorAuth('/auth/sign-up', 'POST', {
-    username,
-    password,
-    teamName,
+export async function apiSignup(username: string, password: string, teamName: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    connectorAuth('/auth/register', 'POST', {
+      username,
+      password,
+      teamName,
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          resolve(res.status)
+        }
+        reject('Register failed, status: ' + res.status + ' message: ' + res.message)
+      })
+      .catch((error) => {
+        console.error(error)
+        reject('Register failed')
+      })
   })
-  return apiSignIn(username, password)
 }
