@@ -54,9 +54,11 @@ const SignUpPage: NextPageWithLayout = () => {
           onSubmit={handleSubmit(async ({ username, password, teamName }) => {
             apiSignup(username, password, teamName)
               .then(() => {
-                setTimeout(() => doAutoLogin(username, password), 1000)
+                console.log('then')
+                doAutoLogin(username, password)
               })
               .catch((err) => {
+                console.log('catch')
                 setErrorMessage(err)
                 setOpen(true)
                 console.error(err)
