@@ -21,18 +21,15 @@ export async function apiSignIn(username: string, password: string): Promise<num
   })
 }
 
-export async function apiSignup(username: string, password: string, teamName: string): Promise<string> {
+export async function apiSignup(email: string, password: string, teamName: string): Promise<string | undefined> {
   return new Promise((resolve, reject) => {
     connectorAuth('/auth/register', 'POST', {
-      username,
+      email,
       password,
       teamName,
     })
-      .then((res) => {
-        if (res.status === 200) {
-          resolve(res.status)
-        }
-        reject('Register failed, status: ' + res.status + ' message: ' + res.message)
+      .then(() => {
+        resolve(undefined)
       })
       .catch((error) => {
         console.error(error)
