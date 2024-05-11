@@ -1,13 +1,13 @@
-import { MatchEvent } from '@/shared/models/MatchEvent'
+import { MatchEventType } from '@/shared/models/MatchEvent'
 import Box from '@mui/material/Box'
 
 interface MatchReportItemProps {
   value: string
-  eventType: MatchEvent
+  eventType: MatchEventType
   sx?: React.CSSProperties
 }
 
-const styles: Record<MatchEvent, React.CSSProperties> = {
+const styles: Record<MatchEventType, React.CSSProperties> = {
   MainEvent: {
     backgroundColor: 'black',
     color: 'white',

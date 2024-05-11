@@ -1,6 +1,7 @@
 module.exports = {
   extends: ['next/core-web-vitals', 'next', 'prettier', 'plugin:react/recommended', 'plugin:react-hooks/recommended'],
   plugins: ['react', 'prettier', '@emotion'],
+  ignores: ['*.md'],
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
