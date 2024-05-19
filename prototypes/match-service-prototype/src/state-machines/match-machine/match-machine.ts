@@ -1,14 +1,19 @@
+import { ITeam } from '@/types'
+import { UUID } from 'crypto'
 import { assign, setup } from 'xstate'
 
 type MatchContext = {
   currentTick: number
   totalTicks: number
+  startingTeam: UUID
+  homeTeam: ITeam
+  awayTeam: ITeam
+  homeTeamScore: number
+  awayTeamScore: number
 }
 
 export const matchMachine = setup({
-  types: {
-    context: {} as MatchContext,
-  },
+  types: { context: {} as MatchContext },
   actions: {
     initializeMatchData: assign({ currentTick: 0, totalTicks: 90 }),
     nextTick: assign(({ context }) => ({ currentTick: context.currentTick + 1 })),
@@ -24,11 +29,16 @@ export const matchMachine = setup({
   context: {
     currentTick: 0,
     totalTicks: 90,
+    awayTeamScore: 0,
+    homeTeamScore: 0,
+    startingTeam: '0000-0000-0000-0000-0000',
+    awayTeam: {} as ITeam,
+    homeTeam: {} as ITeam,
   },
   states: {
     matchStart: {
       on: {
-        next: {
+        startGame: {
           target: 'play',
           actions: ['initializeMatchData'],
         },
@@ -58,7 +68,7 @@ export const matchMachine = setup({
     },
     halfTime: {
       on: {
-        next: {
+        resumePlay: {
           target: 'play',
           actions: ['nextTick'],
         },

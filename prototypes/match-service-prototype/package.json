@@ -22,6 +22,7 @@
     "build-storybook": "storybook build -o ./dist/storybook-static"
   },
   "dependencies": {
+    "@faker-js/faker": "^9.0.0-alpha.0",
     "@statelyai/inspect": "^0.3.0",
     "@xstate/react": "^4.1.1",
     "react": "^18.2.0",

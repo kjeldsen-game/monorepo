@@ -9,7 +9,7 @@ export const StateMachineRunnerVisualiser: FC<{ machine: AnyActorLogic }> = ({ m
   const [snapShot, send, actorRef] = useActor(machine, { inspect: inspector.inspect })
   return (
     <div>
-      {((actorRef.logic as any).events as Array<string>)
+      {((actorRef.logic as { events?: unknown })?.events as Array<string>)
         .filter((x) => actorRef.getSnapshot().can({ type: x }))
         .map((x) => (
           <button
