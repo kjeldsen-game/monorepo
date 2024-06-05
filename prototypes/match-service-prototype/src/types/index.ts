@@ -1,3 +1,4 @@
+import { ITactic } from '@/Game/tactic/tactic'
 import { type UUID } from 'crypto'
 
 type VERTICAL = 'LEFT' | 'CENTER' | 'RIGHT'
@@ -50,6 +51,7 @@ export interface ITeam {
   id: UUID
   name: string
   players: IPlayer[]
+  tactics: ITactic[]
 }
 
 export interface IMatch {

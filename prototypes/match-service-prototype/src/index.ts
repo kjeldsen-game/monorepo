@@ -1,1 +1,1 @@
-export * from './components/button';
+export { matchMachine } from './state-machines/match-machine'
