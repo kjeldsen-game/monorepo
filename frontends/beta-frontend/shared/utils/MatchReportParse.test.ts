@@ -52,6 +52,7 @@ const expectedEventPos0 = {
   eventStart: 'Amanda Spinka [STRIKER] made an awesome pass to Brendon Hermann [RIGHT_MIDFIELDER]',
   eventResponse: 'Duel challenger: Dr. Coty Johnston [CENTRE_MIDFIELDER] made a poor attempt to intercept the ball',
   eventResult: 'The pass was successful',
+  eventSide: 'HomeTeamEvent',
   actionStats: {
     player1: { skillContribution: 45, performance: 100, total: 145 },
     player2: { skillContribution: 46, performance: 25, total: 71 },
@@ -65,6 +66,7 @@ const expectedEventPos88 = {
   eventStart: 'Justice Armstrong [LEFT_WINGER] tried with an awful effort to get free',
   eventResponse: 'Duel challenger: Brendon Hermann [RIGHT_MIDFIELDER] made an awful attempt to stay close',
   eventResult: 'Justice Armstrong won, he was far',
+  eventSide: 'AwayTeamEvent',
   actionStats: {
     player1: { skillContribution: 82, performance: 9, total: 102, assistance: 11 },
     player2: { skillContribution: 73, performance: -13, total: 71, assistance: 11 },
