@@ -1,39 +1,66 @@
-import { MatchEventType } from '@/shared/models/MatchEvent'
+import { MatchActionType, MatchEvent, MatchEventSide } from '@/shared/models/MatchEvent'
+import { SportsSoccer, ArrowForward, ControlCamera, KeyboardDoubleArrowDown } from '@mui/icons-material'
 import Box from '@mui/material/Box'
-
 interface MatchReportItemProps {
-  value: string
-  eventType: MatchEventType
+  event: MatchEvent
   sx?: React.CSSProperties
 }
 
-const styles: Record<MatchEventType, React.CSSProperties> = {
+const justifyStyles: Record<MatchEventSide, React.CSSProperties> = {
   MainEvent: {
-    backgroundColor: 'black',
-    color: 'white',
-    textAlign: 'center',
+    justifyContent: 'center',
   },
   HomeTeamEvent: {
-    color: 'green',
-    textAlign: 'left',
+    justifyContent: 'left',
   },
   AwayTeamEvent: {
-    color: 'red',
-    textAlign: 'right',
+    justifyContent: 'right',
   },
 }
 
-export const MatchReportItem: React.FC<MatchReportItemProps> = ({ sx, value, eventType }) => {
+const colorStyles: Record<MatchEventSide, React.CSSProperties> = {
+  MainEvent: {
+    color: 'white',
+  },
+  HomeTeamEvent: {
+    color: 'green',
+  },
+  AwayTeamEvent: {
+    color: 'red',
+  },
+}
+
+const iconByAction: Record<MatchActionType, React.ReactNode> = {
+  PASS: <ArrowForward />,
+  POSITION: <ControlCamera />,
+  TACKLE: <KeyboardDoubleArrowDown />,
+  SHOOT: <SportsSoccer />,
+}
+
+export const MatchReportItem: React.FC<MatchReportItemProps> = ({ sx, event }) => {
+  const startCharPos = event.eventStart.indexOf(event.actionStats.player1.playerName)
+  const endCharPos = startCharPos + event.actionStats.player1.playerName.length
   return (
     <Box
       sx={{
         alignItems: 'center',
-        height: '34px',
         width: '100%',
-        ...styles[eventType],
+        display: 'flex',
+        flexDirection: 'row',
+        ...justifyStyles[event.eventSide],
         ...sx,
       }}>
-      {value}
+      {iconByAction[event.action]}
+      <span
+        style={{
+          color: 'black',
+          fontWeight: 'bold',
+          marginRight: '5px',
+          ...colorStyles[event.eventSide],
+        }}>
+        {event.eventStart.slice(startCharPos, endCharPos)}
+      </span>
+      <span>{event.eventStart.slice(endCharPos)}</span>
     </Box>
   )
 }
