@@ -1,11 +1,14 @@
 import Box from '@mui/material/Box'
 import MatchReportItem from './MatchReportItem'
+import { MatchReportType } from '@/shared/models/MatchReport'
+import { MatchEvent } from '@/shared/models/MatchEvent'
 
 interface MatchReportContentProps {
+  report: MatchReportType
   sx?: React.CSSProperties
 }
 
-export const MatchReportContent: React.FC<MatchReportContentProps> = ({ sx }) => {
+export const MatchReportContent: React.FC<MatchReportContentProps> = ({ report, sx }) => {
   return (
     <Box
       sx={{
@@ -14,14 +17,13 @@ export const MatchReportContent: React.FC<MatchReportContentProps> = ({ sx }) =>
         alignItems: 'center',
         height: '100%',
         overflow: 'auto',
+        gap: '15px',
+        padding: '0 5px 0 5px',
         ...sx,
       }}>
-      <MatchReportItem value={'MatchStarts'} eventType="MainEvent" />
-      <MatchReportItem value={'Goal'} eventType="HomeTeamEvent" />
-      <MatchReportItem value={'Goal'} eventType="HomeTeamEvent" />
-      <MatchReportItem value={'Goal'} eventType="AwayTeamEvent" />
-      <MatchReportItem value={'Goal'} eventType="HomeTeamEvent" />
-      <MatchReportItem value={'MatchEnds'} eventType="MainEvent" />
+      {report.events.map((event, index) => (
+        <MatchReportItem key={index} event={event} />
+      ))}
     </Box>
   )
 }
