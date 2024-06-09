@@ -1,10 +1,11 @@
 import { PitchArea } from './PitchArea'
 
-export type MatchEventType = 'MainEvent' | 'HomeTeamEvent' | 'AwayTeamEvent'
+export type MatchEventSide = 'MainEvent' | 'HomeTeamEvent' | 'AwayTeamEvent'
 
 export type MatchActionType = 'PASS' | 'POSITION' | 'TACKLE' | 'SHOOT'
 
 export interface PlayerEventStats {
+  playerName: string
   skillContribution?: number
   performance?: number
   assistance?: number
@@ -19,6 +20,7 @@ export interface MatchEvent {
   eventStart: string
   eventResponse: string
   eventResult: string
+  eventSide: MatchEventSide
   actionStats: {
     player1: PlayerEventStats
     player2: PlayerEventStats
