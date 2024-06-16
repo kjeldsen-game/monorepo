@@ -14,5 +14,28 @@
         "totalRightMidfielders": "Must at least have one right midfielder or winger, not both.",
         "totalForwards": "Must have between 1 and 3 forwards, you have {{value}}",
         "totalStrikers": "Must have one ore none strikers, you have {{value}}"
+    },
+    "playerValues": {
+        "positionDiminutives": {
+            "CENTRE_BACK": "CB",
+            "AERIAL_CENTRE_BACK ": "ACB",
+            "SWEEPER": "SW",
+            "LEFT_BACK": "LB",
+            "RIGHT_BACK": "RB",
+            "LEFT_WINGBACK ": "LWB",
+            "RIGHT_WINGBACK ": "RWB",
+            "DEFENSIVE_MIDFIELDER": "DM",
+            "CENTRE_MIDFIELDER": "CM",
+            "LEFT_MIDFIELDER": "LM",
+            "RIGHT_MIDFIELDER": "RM",
+            "LEFT_WINGER": "LW",
+            "OFFENSIVE_MIDFIELDER": "OM",
+            "RIGHT_WINGER": "RW",
+            "FORWARD": "FW",
+            "AERIAL_FORWARD ": "AFW",
+            "STRIKER": "ST",
+            "AERIAL_STRIKER ": "AST",
+            "GOALKEEPER": "GK"
+        }
     }
 }

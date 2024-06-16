@@ -2,7 +2,7 @@ import { Box, Button, CircularProgress, Tooltip, TooltipProps, styled, tooltipCl
 import TeamDetails from './TeamDetails'
 import PlayerTactics from './PlayerTactics'
 import TeamTactics from '@/shared/components/TeamTactics'
-import { teamColumn } from '@/shared/components/Grid/TeamColumn'
+import { teamColumn } from '@/shared/components/Grid/Columns/TeamColumn'
 import { SampleTeam } from '@/data/SampleTeam'
 import Grid from './Grid/Grid'
 import { Player, PlayerStatus } from '../models/Player'
@@ -62,20 +62,18 @@ const TeamView: React.FC<TeamProps> = ({ isEditing, team, handlePlayerChange, on
   }
 
   return (
-    <>
-      <Box>
-        <Box sx={{ display: 'flex', marginBottom: '2rem', alignItems: 'center' }}>
-          <TeamDetails {...SampleTeam} />
-          <PlayerTactics />
-          <TeamTactics />
-        </Box>
-        <Box sx={{ minWidth: '80vw' }}>
-          {saveButton()}
-          {team?.players ? <Grid rows={team?.players} columns={memoizedColumns} /> : <CircularProgress />}
-          {saveButton()}
-        </Box>
+    <Box sx={{ width: '100%' }}>
+      <Box sx={{ display: 'flex', marginBottom: '2rem', alignItems: 'center' }}>
+        <TeamDetails {...SampleTeam} />
+        <PlayerTactics />
+        <TeamTactics />
       </Box>
-    </>
+      <Box sx={{ width: '100%' }}>
+        {saveButton()}
+        {team?.players ? <Grid rows={team?.players} columns={memoizedColumns} /> : <CircularProgress />}
+        {saveButton()}
+      </Box>
+    </Box>
   )
 }
 export default TeamView

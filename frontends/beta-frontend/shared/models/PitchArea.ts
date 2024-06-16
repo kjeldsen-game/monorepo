@@ -1,0 +1,10 @@
+export type PitchArea =
+  | 'LEFT_FORWARD'
+  | 'CENTRE_FORWARD'
+  | 'RIGHT_FORWARD'
+  | 'LEFT_MIDFIELD'
+  | 'CENTRE_MIDFIELD'
+  | 'RIGHT_MIDFIELD'
+  | 'LEFT_BACK'
+  | 'CENTRE_BACK'
+  | 'RIGHT_BAC'
