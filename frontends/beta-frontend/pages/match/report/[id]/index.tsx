@@ -1,14 +1,11 @@
 import { useMatchReportRepository } from '@/pages/api/match/useMatchReportRepository'
 import MatchReportContent from '@/shared/components/MatchReport/MatchReportContent'
-import { MatchReportType } from '@/shared/models/MatchReport'
-import { parseReport } from '@/shared/utils/MatchReportParser'
+import MatchReportMetrics from '@/shared/components/MatchReport/MatchReportMetrics'
 import { Box } from '@mui/material'
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
-import { useEffect, useMemo, useState } from 'react'
-import useSWR from 'swr'
 
 // eslint-disable-next-line react/prop-types
 const MatchReport: NextPage = () => {
@@ -26,26 +23,26 @@ const MatchReport: NextPage = () => {
         width: '100%',
         height: 'calc(100vh - 64px - 42px)',
       }}>
-      <Box
+      <MatchReportMetrics
+        side="left"
         sx={{
-          width: '10%',
-        }}>
-        Left panel
-      </Box>
+          width: '20%',
+        }}
+      />
       {report ? (
         <MatchReportContent
           report={report}
           sx={{
-            width: '80%',
+            width: '60%',
           }}
         />
       ) : null}
-      <Box
+      <MatchReportMetrics
+        side="right"
         sx={{
-          width: '10%',
-        }}>
-        Right panel
-      </Box>
+          width: '20%',
+        }}
+      />
     </Box>
   )
 }

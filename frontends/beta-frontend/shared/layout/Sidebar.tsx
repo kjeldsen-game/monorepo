@@ -13,7 +13,7 @@ import MailIcon from '@mui/icons-material/Mail'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import Link from 'next/link'
 
-const drawerWidth = '15vw'
+const drawerWidth = '180px'
 
 const providedIcons = { inbox: <InboxIcon />, mail: <MailIcon />, trophy: <EmojiEventsIcon /> }
 export interface Item {
