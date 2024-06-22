@@ -1,0 +1,30 @@
+spring:
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      data-source: quartzDataSource
+    properties:
+      org:
+        quartz:
+          jobStore:
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+            isClustered: true
+            clusterCheckinInterval: 20000
+            useProperties: false
+          threadPool:
+            threadCount: 10
+
+quartz:
+  job-store-type: MongoDB
+  properties:
+    org:
+      quartz:
+        jobStore:
+          class: com.novemberain.quartz.mongodb.MongoDBJobStore
+          mongoUri: mongodb://localhost:27017/quartz
+          dbName: quartz
+          collectionPrefix: quartz_
+          isClustered: true
+        threadPool:
+          threadCount: 5

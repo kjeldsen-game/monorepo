@@ -13,6 +13,8 @@
         <module>match-adapter-rest</module>
         <module>infrastructure</module>
         <module>domain</module>
+        <module>quartz</module>
+        <module>quartz-adapter-mongodb</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -186,6 +188,11 @@
             <dependency>
                 <groupId>com.kjeldsen</groupId>
                 <artifactId>player-adapter-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>quartz</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
