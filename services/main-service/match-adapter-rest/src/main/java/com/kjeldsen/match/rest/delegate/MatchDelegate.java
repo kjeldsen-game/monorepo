@@ -13,6 +13,7 @@ import com.kjeldsen.match.rest.api.MatchApiDelegate;
 import com.kjeldsen.match.rest.model.CreateMatchRequest;
 import com.kjeldsen.match.rest.model.EditMatchRequest;
 import com.kjeldsen.match.rest.model.MatchResponse;
+import com.kjeldsen.match.rest.model.MatchResponseHome;
 import com.kjeldsen.match.rest.model.Modifiers;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.utils.JsonUtils;
@@ -108,6 +109,15 @@ public class MatchDelegate implements MatchApiDelegate {
                 MatchResponse res = new MatchResponse();
                 res.setId(match.getId());
                 res.setDateTime(match.getDateTime());
+
+                MatchResponseHome resHomeTeam = new MatchResponseHome();
+                resHomeTeam.setId(match.getHome().getId());
+                res.setHome(resHomeTeam);
+
+                MatchResponseHome resAwayTeam = new MatchResponseHome();
+                resAwayTeam.setId(match.getAway().getId());
+                res.setHome(resAwayTeam);
+
                 return res;
             })
             .toList();
