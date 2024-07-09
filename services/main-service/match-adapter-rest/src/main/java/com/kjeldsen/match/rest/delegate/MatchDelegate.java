@@ -116,7 +116,7 @@ public class MatchDelegate implements MatchApiDelegate {
 
                 MatchResponseHome resAwayTeam = new MatchResponseHome();
                 resAwayTeam.setId(match.getAway().getId());
-                res.setHome(resAwayTeam);
+                res.setAway(resAwayTeam);
 
                 return res;
             })
