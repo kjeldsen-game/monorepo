@@ -15,6 +15,7 @@ import com.kjeldsen.match.rest.model.EditMatchRequest;
 import com.kjeldsen.match.rest.model.MatchResponse;
 import com.kjeldsen.match.rest.model.MatchResponseHome;
 import com.kjeldsen.match.rest.model.Modifiers;
+import com.kjeldsen.match.rest.model.PlayerResponse;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.utils.JsonUtils;
 import com.kjeldsen.player.domain.PlayerSkill;
@@ -22,13 +23,14 @@ import com.kjeldsen.player.domain.PlayerStatus;
 import com.kjeldsen.player.domain.Team.TeamId;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -106,16 +108,15 @@ public class MatchDelegate implements MatchApiDelegate {
 
         List<MatchResponse> response = matches.stream()
             .map(match -> {
+
                 MatchResponse res = new MatchResponse();
                 res.setId(match.getId());
                 res.setDateTime(match.getDateTime());
 
-                MatchResponseHome resHomeTeam = new MatchResponseHome();
-                resHomeTeam.setId(match.getHome().getId());
+                MatchResponseHome resHomeTeam = buildMatchTeamResponse(match.getHome());
                 res.setHome(resHomeTeam);
 
-                MatchResponseHome resAwayTeam = new MatchResponseHome();
-                resAwayTeam.setId(match.getAway().getId());
+                MatchResponseHome resAwayTeam = buildMatchTeamResponse(match.getAway());
                 res.setAway(resAwayTeam);
 
                 return res;
@@ -123,6 +124,41 @@ public class MatchDelegate implements MatchApiDelegate {
             .toList();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    private MatchResponseHome buildMatchTeamResponse(Team matchTeam) {
+        MatchResponseHome res = new MatchResponseHome();
+
+        res.setId(matchTeam.getId());
+
+        TeamId teamId = TeamId.of(matchTeam.getId());
+        com.kjeldsen.player.domain.Team team = teamRepo.findById(teamId)
+                .orElseThrow(() -> new RuntimeException("Team not found"));
+        res.setName(team.getName());
+
+        List<PlayerResponse> teamPlayers = matchTeam.getPlayers().stream()
+                .map(player -> {
+                    PlayerResponse p = new PlayerResponse();
+                    p.setId(player.getId());
+                    p.setName(player.getName());
+                    p.setPosition(player.getPosition().name());
+                    return p;
+                }).collect(Collectors.toList());
+        res.setPlayers(teamPlayers);
+
+        res.setModifiers(new Modifiers());
+        if (matchTeam.getTactic() != null) {
+            res.getModifiers().setTactic(com.kjeldsen.match.rest.model.Tactic.valueOf(matchTeam.getTactic().name()));
+        }
+        if (matchTeam.getHorizontalPressure() != null) {
+            res.getModifiers().setHorizontalPressure(com.kjeldsen.match.rest.model.HorizontalPressure.valueOf(matchTeam.getHorizontalPressure().name()));
+        }
+
+        if (matchTeam.getVerticalPressure() != null) {
+            res.getModifiers().setVerticalPressure(com.kjeldsen.match.rest.model.VerticalPressure.valueOf(matchTeam.getVerticalPressure().name()));
+        }
+
+        return res;
     }
 
     private Team buildTeam(com.kjeldsen.player.domain.Team home, Modifiers modifiers) {

@@ -32,7 +32,7 @@ paths:
         - name: teamId
           in: query
           description: Team id to filter by
-          required: false
+          required: true
           schema:
             type: string
         - name: size
@@ -222,15 +222,27 @@ components:
           properties:
             id:
               type: string
+            name:
+              type: string
             modifiers:
               $ref: "#/components/schemas/Modifiers"
+            players:
+              type: array
+              items:
+                $ref: "#/components/schemas/PlayerResponse"
         away:
           type: object
           properties:
             id:
               type: string
+            name:
+              type: string
             modifiers:
               $ref: "#/components/schemas/Modifiers"
+            players:
+              type: array
+              items:
+                $ref: "#/components/schemas/PlayerResponse"
         dateTime:
           type: string
           format: date-time
@@ -247,3 +259,37 @@ components:
           $ref: "#/components/schemas/HorizontalPressure"
         verticalPressure:
           $ref: "#/components/schemas/VerticalPressure"
+
+    PlayerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        position:
+          $ref: "#/components/schemas/PlayerPositionResponse"
+
+    PlayerPositionResponse:
+      type: string
+      example: CENTRE_BACK
+      enum:
+        - CENTRE_BACK
+        - AERIAL_CENTRE_BACK
+        - SWEEPER
+        - LEFT_BACK
+        - RIGHT_BACK
+        - LEFT_WINGBACK
+        - RIGHT_WINGBACK
+        - DEFENSIVE_MIDFIELDER
+        - CENTRE_MIDFIELDER
+        - LEFT_MIDFIELDER
+        - RIGHT_MIDFIELDER
+        - LEFT_WINGER
+        - OFFENSIVE_MIDFIELDER
+        - RIGHT_WINGER
+        - FORWARD
+        - AERIAL_FORWARD
+        - STRIKER
+        - AERIAL_STRIKER
+        - GOALKEEPER
