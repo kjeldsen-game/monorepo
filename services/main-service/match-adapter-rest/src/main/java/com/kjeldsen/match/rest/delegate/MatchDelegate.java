@@ -15,6 +15,7 @@ import com.kjeldsen.match.rest.model.EditMatchRequest;
 import com.kjeldsen.match.rest.model.MatchResponse;
 import com.kjeldsen.match.rest.model.MatchResponseHome;
 import com.kjeldsen.match.rest.model.Modifiers;
+import com.kjeldsen.match.rest.model.PlayerPositionResponse;
 import com.kjeldsen.match.rest.model.PlayerResponse;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.utils.JsonUtils;
@@ -141,7 +142,7 @@ public class MatchDelegate implements MatchApiDelegate {
                     PlayerResponse p = new PlayerResponse();
                     p.setId(player.getId());
                     p.setName(player.getName());
-                    p.setPosition(player.getPosition().name());
+                    p.setPosition(PlayerPositionResponse.valueOf(player.getPosition().name()));
                     return p;
                 }).collect(Collectors.toList());
         res.setPlayers(teamPlayers);
