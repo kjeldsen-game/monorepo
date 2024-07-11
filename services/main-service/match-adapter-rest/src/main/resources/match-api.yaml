@@ -66,6 +66,27 @@ paths:
           $ref: "#/components/responses/DefaultErrorResponse"
 
   /match/{matchId}:
+    get:
+      summary: Get a match
+      operationId: getMatch
+      tags:
+        - match
+      parameters:
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+      responses:
+        "200":
+          description: Match was retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/MatchResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
     patch:
       summary: Edit a match
       operationId: editMatch
@@ -209,6 +230,7 @@ components:
       type: string
       example: ACCEPTED
       enum:
+        - PENDING
         - ACCEPTED
         - REJECTED
 
@@ -218,37 +240,31 @@ components:
         id:
           type: string
         home:
-          type: object
-          properties:
-            id:
-              type: string
-            name:
-              type: string
-            modifiers:
-              $ref: "#/components/schemas/Modifiers"
-            players:
-              type: array
-              items:
-                $ref: "#/components/schemas/PlayerResponse"
+          $ref: "#/components/schemas/TeamResponse"
         away:
-          type: object
-          properties:
-            id:
-              type: string
-            name:
-              type: string
-            modifiers:
-              $ref: "#/components/schemas/Modifiers"
-            players:
-              type: array
-              items:
-                $ref: "#/components/schemas/PlayerResponse"
+          $ref: "#/components/schemas/TeamResponse"
         dateTime:
           type: string
           format: date-time
           example: 2020-01-01T00:00:00Z
         status:
           $ref: "#/components/schemas/Status"
+        matchReport:
+          $ref: "#/components/schemas/MatchReportResponse"
+
+    TeamResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        modifiers:
+          $ref: "#/components/schemas/Modifiers"
+        players:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerResponse"
 
     Modifiers:
       type: object
@@ -293,3 +309,57 @@ components:
         - STRIKER
         - AERIAL_STRIKER
         - GOALKEEPER
+
+    MatchReportResponse:
+      type: object
+      properties:
+        home:
+          $ref: "#/components/schemas/TeamResponse"
+        away:
+          $ref: "#/components/schemas/TeamResponse"
+        homeScore:
+          type: integer
+        awayScore:
+          type: integer
+        plays:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayResponse"
+
+    PlayResponse:
+      type: object
+      properties:
+          clock:
+            type: integer
+          action:
+            $ref: "#/components/schemas/ActionResponse"
+          duel:
+            $ref: "#/components/schemas/DuelResponse"
+
+    ActionResponse:
+      type: string
+      example: PASS
+      enum:
+      - PASS
+      - POSITION
+      - TACKLE
+      - SHOOT
+
+    DuelResponse:
+      type: object
+      properties:
+        initiator:
+          $ref: "#/components/schemas/PlayerResponse"
+        challenger:
+          $ref: "#/components/schemas/PlayerResponse"
+        receiver:
+          $ref: "#/components/schemas/PlayerResponse"
+        result:
+          $ref: "#/components/schemas/DuelResultResponse"
+
+    DuelResultResponse:
+      type: string
+      example: WIN
+      enum:
+      - WIN
+      - LOSE
