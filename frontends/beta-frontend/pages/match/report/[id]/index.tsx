@@ -26,21 +26,21 @@ const MatchReport: NextPage = () => {
       <MatchReportMetrics
         side="left"
         sx={{
-          width: '20%',
+          width: '25%',
         }}
       />
       {report ? (
         <MatchReportContent
           report={report}
           sx={{
-            width: '60%',
+            width: '50%',
           }}
         />
       ) : null}
       <MatchReportMetrics
         side="right"
         sx={{
-          width: '20%',
+          width: '25%',
         }}
       />
     </Box>
