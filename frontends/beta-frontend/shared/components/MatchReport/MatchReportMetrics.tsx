@@ -1,14 +1,24 @@
-import { ExpandLess, HealthAndSafety } from '@mui/icons-material'
+import { useTeamRepository } from '@/pages/api/team/useTeamRepository'
+import { HealthAndSafety } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Image from 'next/image'
+import Grid from '../Grid/Grid'
+import { useMemo } from 'react'
+import { simpleTeamColumn } from '../Grid/Columns/SimpleTeamColumn'
 
 interface MatchReportMetricsProps {
   sx?: React.CSSProperties
   side: 'left' | 'right'
 }
 
+const teamId = 'f57a4610-71e5-42b0-bd0c-5fbd761af6c5'
+
 export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({ sx }) => {
+  const { data } = useTeamRepository(teamId)
+
+  const memoizedColumns = useMemo(() => simpleTeamColumn(), [teamId])
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', ...sx }}>
       <Box
@@ -18,53 +28,37 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({ sx }) =>
           borderColor: '#A4BC10',
           width: '100%',
           height: '120px',
-          display: 'grid',
-          gridTemplateColumns: '120px auto',
-          gridTemplateRows: 'auto 25px 40px',
+          display: 'flex',
+          flexFlow: 'column wrap',
+          justifyContent: 'space-around',
         }}>
-        <Box sx={{ gridRow: 'span 3', gridColumn: 1 }}>
-          <Image width={120} height={120} alt="team" src="/profile.png" />
-        </Box>
         <Typography
           sx={{
-            fontSize: '1.5rem',
-            gridRow: 1,
-            gridColumn: 2,
-            padding: '0 1rem 0 1rem',
-            display: 'flex',
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
+            fontSize: '22px',
             color: '#A4BC10',
+            overflow: 'clip',
+            height: '20px',
+            lineHeight: '20px',
+            width: '100px',
           }}>
-          Team name
+          {data?.name}
         </Typography>
-        <Typography
-          sx={{
-            gridRow: 2,
-            gridColumn: 2,
-            padding: '0 1rem 0 1rem',
-            display: 'flex',
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-            color: '#A4BC10',
-          }}>
-          <ExpandLess />
-          League position
-        </Typography>
-        <Box sx={{ gridRow: '3', gridColumn: '2', display: 'flex', justifyContent: 'space-between', padding: '0 1rem 1rem 1rem' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <HealthAndSafety />
-            <Typography fontSize="20px">0</Typography>
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <HealthAndSafety />
-            <Typography fontSize="20px">0</Typography>
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <HealthAndSafety />
-            <Typography fontSize="20px">0</Typography>
-          </Box>
+        <Image width={100} height={100} alt="team logo" src="/profile.png" />
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <HealthAndSafety />
+          <Typography fontSize="20px">Swarm centre</Typography>
         </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <HealthAndSafety />
+          <Typography fontSize="20px">Vertical pressure</Typography>
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <HealthAndSafety />
+          <Typography fontSize="20px">Tiki Taka</Typography>
+        </Box>
+      </Box>
+      <Box>
+        <Grid rows={data?.players ?? []} columns={memoizedColumns} />
       </Box>
     </Box>
   )
