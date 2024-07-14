@@ -1,13 +1,13 @@
-import { GridCellParams, GridColDef, GridValueFormatterParams, GridValueGetterParams } from '@mui/x-data-grid'
+import { GridCellParams, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import { GridAlignment } from '@mui/x-data-grid'
 import Link from 'next/link'
-import clsx from 'clsx'
-import { PlayerOrderSelect } from '../PlayerOrderSelect'
-import { PlayerPositionSelect } from '../PlayerPositionSelect'
+import { PlayerOrderSelect } from '../../PlayerOrderSelect'
+import { PlayerPositionSelect } from '../../PlayerPositionSelect'
 import { PlayerPosition } from '@/shared/models/PlayerPosition'
-import { Player, PlayerStatus } from '@/shared/models/Player'
-import { Checkbox } from '@mui/material'
+import { Player } from '@/shared/models/Player'
 import { PlayerOrder } from '@/shared/models/PlayerOrder'
+import { PlayerStatusSelect } from '../../PlayerStatusSelect'
+import { PlayerLineupStatus } from '@/shared/models/PlayerLineupStatus'
 
 export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Player) => void) => {
   const handlePlayerPositionChange = (player: Player, value: PlayerPosition): void => {
@@ -18,8 +18,8 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
     handlePlayerChange?.({ ...player, playerOrder: value })
   }
 
-  const handlePlayerStatusChange = (player: Player): void => {
-    handlePlayerChange?.({ ...player, status: player.status === PlayerStatus.Active ? PlayerStatus.Inactive : PlayerStatus.Active })
+  const handlePlayerStatusChange = (player: Player, value: PlayerLineupStatus): void => {
+    handlePlayerChange?.({ ...player, status: value })
   }
 
   const columns: GridColDef[] = [
@@ -44,38 +44,6 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
       minWidth: 70,
       flex: 1,
       valueGetter: (params: GridValueGetterParams) => params.row.age.years,
-    },
-    {
-      field: 'position',
-      valueFormatter: (params: GridValueFormatterParams<unknown>) => {
-        switch (params.value) {
-          case 'GOALKEEPER':
-            return 'GK'
-          case 'DEFENDER':
-            return 'DF'
-          case 'MIDDLE':
-            return 'MD'
-          case 'FORWARD':
-            return 'FW'
-          default:
-            return params.value
-        }
-      },
-      headerName: 'Position',
-      headerAlign: 'center' as GridAlignment,
-      align: 'center' as GridAlignment,
-      minWidth: 70,
-      flex: 1,
-      // Assign Css class based on position
-      cellClassName: (params: GridCellParams<string>) => {
-        if (params.value == null) {
-          return ''
-        }
-
-        return clsx('super-app', {
-          [params.value.toLowerCase()]: true,
-        })
-      },
     },
     {
       field: 'DEFENSIVE_POSITIONING',
@@ -190,7 +158,7 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
         ) : undefined
       },
       valueGetter: (params) => PlayerPosition[params.row.position as keyof typeof PlayerPosition],
-      minWidth: 150,
+      minWidth: 50,
       flex: 1,
       editable: isEditing,
     },
@@ -200,12 +168,14 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
       headerAlign: 'center' as GridAlignment,
       align: 'center' as GridAlignment,
       sortable: false,
-      renderCell: (params) => (
-        <PlayerOrderSelect
-          onChange={(value) => handlePlayerOrderChange(params.row, value)}
-          value={PlayerOrder[params.row.playerOrder as keyof typeof PlayerOrder] ?? undefined}
-        />
-      ),
+      renderCell: (params) => {
+        return isEditing ? (
+          <PlayerOrderSelect
+            onChange={(value) => handlePlayerOrderChange(params.row, value)}
+            value={PlayerOrder[params.row.playerOrder as keyof typeof PlayerOrder] ?? undefined}
+          />
+        ) : undefined
+      },
       valueGetter: (params) => PlayerOrder[params.row.playerOrder as keyof typeof PlayerOrder],
       minWidth: 150,
       flex: 1,
@@ -218,10 +188,9 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
       align: 'center' as GridAlignment,
       sortable: false,
       renderCell: (params) => (
-        <Checkbox
-          color="secondary"
-          checked={params.row.status === PlayerStatus.Active}
-          onChange={() => handlePlayerStatusChange(params.row as Player)}
+        <PlayerStatusSelect
+          value={params.row.status}
+          onChange={(value) => handlePlayerStatusChange(params.row as Player, value)}
         />
       ),
       minWidth: 20,
