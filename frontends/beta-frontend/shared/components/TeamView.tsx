@@ -5,12 +5,13 @@ import TeamTactics from '@/shared/components/TeamTactics'
 import { teamColumn } from '@/shared/components/Grid/Columns/TeamColumn'
 import { SampleTeam } from '@/data/SampleTeam'
 import Grid from './Grid/Grid'
-import { Player, PlayerStatus } from '../models/Player'
+import { Player } from '../models/Player'
 import { Team } from '../models/Team'
 import { useEffect, useMemo, useState } from 'react'
 import checkTeamComposition from '../utils/TeamCompositionRules'
 import TeamCompositionErrors from './TeamCompositionErrors'
 import { CompositionError } from '../models/CompositionError'
+import { PlayerLineupStatus } from '../models/PlayerLineupStatus'
 
 const CompositionTooltip = styled(({ className, ...props }: TooltipProps) => <Tooltip {...props} classes={{ popper: className }} />)(() => ({
   [`& .${tooltipClasses.tooltip}`]: {
@@ -29,7 +30,7 @@ const TeamView: React.FC<TeamProps> = ({ isEditing, team, handlePlayerChange, on
   const [compositionErrors, setCompositionErrors] = useState<CompositionError[]>([])
 
   const memoizedCheck = useMemo(
-    () => checkTeamComposition(team?.players.filter((player) => player.status === PlayerStatus.Active) ?? []),
+    () => checkTeamComposition(team?.players.filter((player) => player.status === PlayerLineupStatus.Active) ?? []),
     [team?.players],
   )
 

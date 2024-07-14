@@ -1,3 +1,4 @@
+import { PlayerLineupStatus } from './PlayerLineupStatus'
 import { PlayerOrder } from './PlayerOrder'
 import { PlayerPosition } from './PlayerPosition'
 
@@ -8,7 +9,7 @@ export interface Player {
   position: PlayerPosition
   category: Category
   playerOrder: PlayerOrder
-  status: PlayerStatus
+  status: PlayerLineupStatus
   actualSkills: { [key: string]: ActualSkill }
   economy: PlayerEconomy
 }
@@ -22,11 +23,6 @@ export interface PlayerAge {
 export enum Category {
   Junior = 'JUNIOR',
   Senior = 'SENIOR',
-}
-
-export enum PlayerStatus {
-  Active = 'ACTIVE',
-  Inactive = 'INACTIVE',
 }
 
 export interface PlayerEconomy {

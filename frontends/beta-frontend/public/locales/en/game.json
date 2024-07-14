@@ -36,6 +36,11 @@
             "STRIKER": "ST",
             "AERIAL_STRIKER ": "AST",
             "GOALKEEPER": "GK"
+        },
+        "lineupStatus": {
+            "ACTIVE": "Active",
+            "SUBSTITUTE": "Substitute",
+            "INACTIVE": "Inactive"
         }
     }
 }

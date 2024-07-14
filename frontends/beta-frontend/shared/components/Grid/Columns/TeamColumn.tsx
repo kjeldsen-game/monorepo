@@ -4,9 +4,10 @@ import Link from 'next/link'
 import { PlayerOrderSelect } from '../../PlayerOrderSelect'
 import { PlayerPositionSelect } from '../../PlayerPositionSelect'
 import { PlayerPosition } from '@/shared/models/PlayerPosition'
-import { Player, PlayerStatus } from '@/shared/models/Player'
-import { Checkbox } from '@mui/material'
+import { Player } from '@/shared/models/Player'
 import { PlayerOrder } from '@/shared/models/PlayerOrder'
+import { PlayerStatusSelect } from '../../PlayerStatusSelect'
+import { PlayerLineupStatus } from '@/shared/models/PlayerLineupStatus'
 
 export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Player) => void) => {
   const handlePlayerPositionChange = (player: Player, value: PlayerPosition): void => {
@@ -17,8 +18,8 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
     handlePlayerChange?.({ ...player, playerOrder: value })
   }
 
-  const handlePlayerStatusChange = (player: Player): void => {
-    handlePlayerChange?.({ ...player, status: player.status === PlayerStatus.Active ? PlayerStatus.Inactive : PlayerStatus.Active })
+  const handlePlayerStatusChange = (player: Player, value: PlayerLineupStatus): void => {
+    handlePlayerChange?.({ ...player, status: value })
   }
 
   const columns: GridColDef[] = [
@@ -187,11 +188,9 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
       align: 'center' as GridAlignment,
       sortable: false,
       renderCell: (params) => (
-        <Checkbox
-          color="secondary"
-          checked={params.row.status === PlayerStatus.Active}
-          onChange={() => handlePlayerStatusChange(params.row as Player)}
-          readOnly={!isEditing}
+        <PlayerStatusSelect
+          value={params.row.status}
+          onChange={(value) => handlePlayerStatusChange(params.row as Player, value)}
         />
       ),
       minWidth: 20,
