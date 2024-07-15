@@ -10,6 +10,8 @@ import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerSkill;
 import java.util.Map;
 import java.util.Optional;
+
+import com.kjeldsen.player.domain.PlayerStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +32,7 @@ public class Player {
 
     String name;
     PlayerPosition position;
+    PlayerStatus status;
     Map<PlayerSkill, Integer> skills;
     PlayerOrder playerOrder;
 
