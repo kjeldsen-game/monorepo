@@ -1,23 +1,24 @@
 package com.kjeldsen.match.selection;
 
-import static com.kjeldsen.match.engine.RandomHelper.genPlayerWithPosition;
-import static com.kjeldsen.match.selection.ReceiverSelection.selectFromForward;
-import static com.kjeldsen.match.selection.ReceiverSelection.selectFromMidfield;
-
 import com.kjeldsen.match.engine.RandomHelper;
+import com.kjeldsen.match.entities.Match;
+import com.kjeldsen.match.entities.Player;
+import com.kjeldsen.match.entities.Team;
 import com.kjeldsen.match.state.BallState;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.TeamState;
-import com.kjeldsen.match.entities.Match;
-import com.kjeldsen.match.entities.Team;
-import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerPosition;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+
+import static com.kjeldsen.match.engine.RandomHelper.genActivePlayerWithPosition;
+import static com.kjeldsen.match.selection.ReceiverSelection.selectFromForward;
+import static com.kjeldsen.match.selection.ReceiverSelection.selectFromMidfield;
 
 public class ReceiverSelectionTest {
 
@@ -33,13 +34,13 @@ public class ReceiverSelectionTest {
     @Disabled
     void selectMidfieldReceiverDistribution() {
         Team team = RandomHelper.genTeam();
-        Player initiator = genPlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER);
+        Player initiator = genActivePlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER);
 
         List<Player> players = List.of(
-            genPlayerWithPosition(team, PlayerPosition.LEFT_MIDFIELDER),
-            genPlayerWithPosition(team, PlayerPosition.DEFENSIVE_MIDFIELDER),
-            genPlayerWithPosition(team, PlayerPosition.RIGHT_WINGER),
-            genPlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER));
+            genActivePlayerWithPosition(team, PlayerPosition.LEFT_MIDFIELDER),
+            genActivePlayerWithPosition(team, PlayerPosition.DEFENSIVE_MIDFIELDER),
+            genActivePlayerWithPosition(team, PlayerPosition.RIGHT_WINGER),
+            genActivePlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER));
 
         Map<PlayerPosition, Integer> selections = new HashMap<>();
         selections.put(PlayerPosition.LEFT_MIDFIELDER, 0);
@@ -47,7 +48,7 @@ public class ReceiverSelectionTest {
         selections.put(PlayerPosition.RIGHT_WINGER, 0);
         selections.put(PlayerPosition.CENTRE_MIDFIELDER, 0);
 
-        Team home = Team.builder().players(players).build();
+        Team home = Team.builder().players(players).tactic(team.getTactic()).build();
         Match match = Match.builder()
             .home(home)
             .away(RandomHelper.genTeam())
@@ -83,12 +84,12 @@ public class ReceiverSelectionTest {
     @Disabled
     void selectForwardReceiverDistribution() {
         Team team = RandomHelper.genTeam();
-        Player initiator = genPlayerWithPosition(team, PlayerPosition.FORWARD);
+        Player initiator = genActivePlayerWithPosition(team, PlayerPosition.FORWARD);
 
         List<Player> players = List.of(
-            genPlayerWithPosition(team, PlayerPosition.FORWARD),
-            genPlayerWithPosition(team, PlayerPosition.RIGHT_WINGER),
-            genPlayerWithPosition(team, PlayerPosition.OFFENSIVE_MIDFIELDER));
+            genActivePlayerWithPosition(team, PlayerPosition.FORWARD),
+            genActivePlayerWithPosition(team, PlayerPosition.RIGHT_WINGER),
+            genActivePlayerWithPosition(team, PlayerPosition.OFFENSIVE_MIDFIELDER));
 
         Map<PlayerPosition, Integer> selections = new HashMap<>();
         selections.put(PlayerPosition.FORWARD, 0);

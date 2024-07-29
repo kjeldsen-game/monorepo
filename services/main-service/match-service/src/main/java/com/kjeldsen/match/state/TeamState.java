@@ -1,13 +1,14 @@
 package com.kjeldsen.match.state;
 
+import com.kjeldsen.match.entities.Player;
+import com.kjeldsen.match.entities.Team;
 import com.kjeldsen.match.modifers.HorizontalPressure;
 import com.kjeldsen.match.modifers.Tactic;
 import com.kjeldsen.match.modifers.VerticalPressure;
-import com.kjeldsen.match.entities.Player;
-import com.kjeldsen.match.entities.Team;
-import java.util.List;
 import lombok.Builder;
 import lombok.Value;
+
+import java.util.List;
 
 @Value
 @Builder
@@ -19,6 +20,7 @@ public class TeamState {
 
     String id;
     List<Player> players;
+    List<Player> bench;
     int score;
 
     Tactic tactic;
@@ -29,10 +31,12 @@ public class TeamState {
         return TeamState.builder()
             .id(team.getId())
             .players(team.getPlayers())
+            .bench(team.getBench())
             .score(0)
             .tactic(team.getTactic())
             .verticalPressure(team.getVerticalPressure())
             .horizontalPressure(team.getHorizontalPressure())
             .build();
     }
+
 }

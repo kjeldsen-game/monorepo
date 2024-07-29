@@ -237,6 +237,7 @@ public class Game {
             .map((before) ->
                 TeamState.builder()
                     .players(before.getPlayers())
+                    .bench(before.getBench())
                     .tactic(before.getTactic())
                     .verticalPressure(before.getVerticalPressure())
                     .horizontalPressure(before.getHorizontalPressure())

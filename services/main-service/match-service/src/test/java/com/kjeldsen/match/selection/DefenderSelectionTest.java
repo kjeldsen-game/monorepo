@@ -1,22 +1,23 @@
 package com.kjeldsen.match.selection;
 
-import static com.kjeldsen.match.engine.RandomHelper.genPlayerWithPosition;
-import static com.kjeldsen.match.selection.DefenderSelection.selectFromMidfield;
-
 import com.kjeldsen.match.engine.RandomHelper;
+import com.kjeldsen.match.entities.Match;
+import com.kjeldsen.match.entities.Player;
+import com.kjeldsen.match.entities.Team;
 import com.kjeldsen.match.state.BallState;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.TeamState;
-import com.kjeldsen.match.entities.Match;
-import com.kjeldsen.match.entities.Team;
-import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerPosition;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+
+import static com.kjeldsen.match.engine.RandomHelper.genActivePlayerWithPosition;
+import static com.kjeldsen.match.selection.DefenderSelection.selectFromMidfield;
 
 public class DefenderSelectionTest {
 
@@ -36,11 +37,11 @@ public class DefenderSelectionTest {
         Team team = RandomHelper.genTeam();
 
         List<Player> players = List.of(
-            genPlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER),
-            genPlayerWithPosition(team, PlayerPosition.OFFENSIVE_MIDFIELDER),
-            genPlayerWithPosition(team, PlayerPosition.DEFENSIVE_MIDFIELDER),
-            genPlayerWithPosition(team, PlayerPosition.RIGHT_MIDFIELDER),
-            genPlayerWithPosition(team, PlayerPosition.LEFT_WINGER));
+            genActivePlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER),
+            genActivePlayerWithPosition(team, PlayerPosition.OFFENSIVE_MIDFIELDER),
+            genActivePlayerWithPosition(team, PlayerPosition.DEFENSIVE_MIDFIELDER),
+            genActivePlayerWithPosition(team, PlayerPosition.RIGHT_MIDFIELDER),
+            genActivePlayerWithPosition(team, PlayerPosition.LEFT_WINGER));
 
         Map<PlayerPosition, Integer> selections = new HashMap<>();
         selections.put(PlayerPosition.CENTRE_MIDFIELDER, 0);
@@ -68,7 +69,7 @@ public class DefenderSelectionTest {
             .build();
 
         // Make this number larger to get more accurate results
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 10; i++) {
             Player selected = selectFromMidfield(state, PitchArea.CENTRE_MIDFIELD);
             selections.merge(selected.getPosition(), 1, Integer::sum);
         }

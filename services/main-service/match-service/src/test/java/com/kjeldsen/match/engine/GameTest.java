@@ -1,18 +1,16 @@
 package com.kjeldsen.match.engine;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.kjeldsen.match.Game;
 import com.kjeldsen.match.entities.Action;
-import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.MatchReport;
 import com.kjeldsen.match.entities.Team;
-import java.util.Random;
+import com.kjeldsen.match.state.GameState;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.util.StringUtils;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RequiredArgsConstructor
 class GameTest {

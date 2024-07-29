@@ -265,6 +265,10 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/PlayerResponse"
+        bench:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerResponse"
 
     Modifiers:
       type: object
@@ -329,21 +333,21 @@ components:
     PlayResponse:
       type: object
       properties:
-          clock:
-            type: integer
-          action:
-            $ref: "#/components/schemas/ActionResponse"
-          duel:
-            $ref: "#/components/schemas/DuelResponse"
+        clock:
+          type: integer
+        action:
+          $ref: "#/components/schemas/ActionResponse"
+        duel:
+          $ref: "#/components/schemas/DuelResponse"
 
     ActionResponse:
       type: string
       example: PASS
       enum:
-      - PASS
-      - POSITION
-      - TACKLE
-      - SHOOT
+        - PASS
+        - POSITION
+        - TACKLE
+        - SHOOT
 
     DuelResponse:
       type: object
@@ -361,5 +365,5 @@ components:
       type: string
       example: WIN
       enum:
-      - WIN
-      - LOSE
+        - WIN
+        - LOSE
