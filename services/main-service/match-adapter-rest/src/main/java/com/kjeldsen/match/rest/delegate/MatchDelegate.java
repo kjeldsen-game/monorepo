@@ -10,13 +10,18 @@ import com.kjeldsen.match.modifers.HorizontalPressure;
 import com.kjeldsen.match.modifers.Tactic;
 import com.kjeldsen.match.modifers.VerticalPressure;
 import com.kjeldsen.match.rest.api.MatchApiDelegate;
+import com.kjeldsen.match.rest.model.ActionResponse;
 import com.kjeldsen.match.rest.model.CreateMatchRequest;
+import com.kjeldsen.match.rest.model.DuelResponse;
+import com.kjeldsen.match.rest.model.DuelResultResponse;
 import com.kjeldsen.match.rest.model.EditMatchRequest;
+import com.kjeldsen.match.rest.model.MatchReportResponse;
 import com.kjeldsen.match.rest.model.MatchResponse;
-import com.kjeldsen.match.rest.model.MatchResponseHome;
 import com.kjeldsen.match.rest.model.Modifiers;
+import com.kjeldsen.match.rest.model.PlayResponse;
 import com.kjeldsen.match.rest.model.PlayerPositionResponse;
 import com.kjeldsen.match.rest.model.PlayerResponse;
+import com.kjeldsen.match.rest.model.TeamResponse;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.utils.JsonUtils;
 import com.kjeldsen.player.domain.PlayerSkill;
@@ -86,6 +91,7 @@ public class MatchDelegate implements MatchApiDelegate {
 
         // TODO - if challenge request is accepted schedule the match to be played at the given date
         //  time, but for now just play it immediately
+
         if (status == Status.ACCEPTED) {
             GameState state = Game.play(match);
             MatchReport report = new MatchReport(state, state.getPlays(), match.getHome(),
@@ -114,10 +120,10 @@ public class MatchDelegate implements MatchApiDelegate {
                     res.setId(match.getId());
                     res.setDateTime(match.getDateTime());
 
-                    MatchResponseHome resHomeTeam = buildMatchTeamResponse(match.getHome());
+                    TeamResponse resHomeTeam = buildMatchTeamResponse(match.getHome());
                     res.setHome(resHomeTeam);
 
-                    MatchResponseHome resAwayTeam = buildMatchTeamResponse(match.getAway());
+                    TeamResponse resAwayTeam = buildMatchTeamResponse(match.getAway());
                     res.setAway(resAwayTeam);
 
                     return res;
@@ -127,8 +133,75 @@ public class MatchDelegate implements MatchApiDelegate {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    private MatchResponseHome buildMatchTeamResponse(Team matchTeam) {
-        MatchResponseHome res = new MatchResponseHome();
+    public ResponseEntity<MatchResponse> getMatch(String matchId) {
+        Match match = matchRepo.findOneById(matchId)
+                .orElseThrow(() -> new RuntimeException("Match not found"));
+
+        MatchResponse response = this.buildMatchResponse(match);
+
+        if (match.getMatchReport() != null) {
+            MatchReportResponse report = this.buildMatchReportResponse(match.getMatchReport());
+            response.setMatchReport(report);
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    private MatchReportResponse buildMatchReportResponse(MatchReport matchReport) {
+        MatchReportResponse result = new MatchReportResponse();
+
+        result.setHomeScore(matchReport.getHomeScore());
+        result.setAwayScore(matchReport.getAwayScore());
+        result.setHome(this.buildMatchTeamResponse(matchReport.getHome()));
+        result.setAway(this.buildMatchTeamResponse(matchReport.getAway()));
+        List<PlayResponse> playsResponse = matchReport.getPlays().stream().map(play -> {
+            PlayResponse res = new PlayResponse();
+            res.setClock(play.getClock());
+            res.setAction(ActionResponse.valueOf(play.getAction().name()));
+
+            DuelResponse duelResponse = new DuelResponse();
+
+            duelResponse.setResult(DuelResultResponse.valueOf(play.getDuel().getResult().name()));
+            PlayerResponse initiator = this.buildPlayerResponse(play.getDuel().getInitiator());
+            duelResponse.setInitiator(initiator);
+
+            if (play.getDuel().getChallenger() != null) {
+                PlayerResponse challenger = this.buildPlayerResponse(play.getDuel().getChallenger());
+                duelResponse.setChallenger(challenger);
+            }
+
+            if (play.getDuel().getReceiver() != null) {
+                PlayerResponse receiver = this.buildPlayerResponse(play.getDuel().getReceiver());
+                duelResponse.setReceiver(receiver);
+            }
+
+            res.setDuel(duelResponse);
+
+            return res;
+        }).toList();
+        result.setPlays(playsResponse);
+
+        return result;
+    }
+
+    private MatchResponse buildMatchResponse(Match match) {
+        MatchResponse res = new MatchResponse();
+
+        res.setId(match.getId());
+        res.setDateTime(match.getDateTime());
+        res.setStatus(com.kjeldsen.match.rest.model.Status.valueOf(match.getStatus().name()));
+
+        TeamResponse resHomeTeam = buildMatchTeamResponse(match.getHome());
+        res.setHome(resHomeTeam);
+
+        TeamResponse resAwayTeam = buildMatchTeamResponse(match.getAway());
+        res.setAway(resAwayTeam);
+
+        return res;
+    }
+
+    private TeamResponse buildMatchTeamResponse(Team matchTeam) {
+        TeamResponse res = new TeamResponse();
 
         res.setId(matchTeam.getId());
 
@@ -137,14 +210,7 @@ public class MatchDelegate implements MatchApiDelegate {
                 .orElseThrow(() -> new RuntimeException("Team not found"));
         res.setName(team.getName());
 
-        List<PlayerResponse> teamPlayers = matchTeam.getPlayers().stream()
-                .map(player -> {
-                    PlayerResponse p = new PlayerResponse();
-                    p.setId(player.getId());
-                    p.setName(player.getName());
-                    p.setPosition(PlayerPositionResponse.valueOf(player.getPosition().name()));
-                    return p;
-                }).collect(Collectors.toList());
+        List<PlayerResponse> teamPlayers = matchTeam.getPlayers().stream().map(this::buildPlayerResponse).collect(Collectors.toList());
         res.setPlayers(teamPlayers);
 
         if (matchTeam.getBench() != null) {
@@ -172,6 +238,14 @@ public class MatchDelegate implements MatchApiDelegate {
         }
 
         return res;
+    }
+
+    private PlayerResponse buildPlayerResponse(Player player) {
+        PlayerResponse result = new PlayerResponse();
+        result.setId(player.getId());
+        result.setName(player.getName());
+        result.setPosition(PlayerPositionResponse.valueOf(player.getPosition().name()));
+        return result;
     }
 
     private Team buildTeam(com.kjeldsen.player.domain.Team home, Modifiers modifiers) {
