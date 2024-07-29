@@ -147,6 +147,18 @@ public class MatchDelegate implements MatchApiDelegate {
                 }).collect(Collectors.toList());
         res.setPlayers(teamPlayers);
 
+        if (matchTeam.getBench() != null) {
+            List<PlayerResponse> benchPlayers = matchTeam.getBench().stream()
+                    .map(player -> {
+                        PlayerResponse p = new PlayerResponse();
+                        p.setId(player.getId());
+                        p.setName(player.getName());
+                        p.setPosition(PlayerPositionResponse.valueOf(player.getPosition().name()));
+                        return p;
+                    }).collect(Collectors.toList());
+            res.setBench(benchPlayers);
+        }
+
         res.setModifiers(new Modifiers());
         if (matchTeam.getTactic() != null) {
             res.getModifiers().setTactic(com.kjeldsen.match.rest.model.Tactic.valueOf(matchTeam.getTactic().name()));
@@ -163,14 +175,20 @@ public class MatchDelegate implements MatchApiDelegate {
     }
 
     private Team buildTeam(com.kjeldsen.player.domain.Team home, Modifiers modifiers) {
-        List<Player> enginePlayers = playerRepo.findByTeamId(home.getId()).stream()
-                .filter(player -> player.getStatus() == PlayerStatus.ACTIVE || player.getStatus() == PlayerStatus.BENCH)
+        List<Player> activePlayers = playerRepo.findByTeamId(home.getId()).stream()
+                .filter(player -> player.getStatus() == PlayerStatus.ACTIVE)
+                .map(this::buildPlayer)
+                .toList();
+
+        List<Player> benchPlayers = playerRepo.findByTeamId(home.getId()).stream()
+                .filter(player -> player.getStatus() == PlayerStatus.BENCH)
                 .map(this::buildPlayer)
                 .toList();
 
         return Team.builder()
                 .id(home.getId().value())
-                .players(enginePlayers)
+                .players(activePlayers)
+                .bench(benchPlayers)
                 .tactic(Tactic.valueOf(modifiers.getTactic().getValue()))
                 .verticalPressure(VerticalPressure.valueOf(modifiers.getVerticalPressure().getValue()))
                 .horizontalPressure(

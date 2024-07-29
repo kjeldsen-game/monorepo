@@ -1,6 +1,7 @@
 package com.kjeldsen.match.selection;
 
-import static com.kjeldsen.match.engine.RandomHelper.genPlayers;
+import static com.kjeldsen.match.engine.RandomHelper.genActivePlayers;
+import static com.kjeldsen.match.engine.RandomHelper.genBenchPlayers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -68,12 +69,14 @@ class ActionSelectionTest {
         Team home = Team.builder()
             .id(RandomStringUtils.random(5))
             .build();
-        List<Player> players = genPlayers(home);
+        List<Player> players = genActivePlayers(home);
+        List<Player> bench = genBenchPlayers(home);
         players.remove(1);
         players.add(player);
         home = Team.builder()
             .id(home.getId())
             .players(players)
+            .bench(bench)
             .rating(1)
             .build();
 

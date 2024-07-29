@@ -230,6 +230,10 @@ components:
               type: array
               items:
                 $ref: "#/components/schemas/PlayerResponse"
+            bench:
+              type: array
+              items:
+                $ref: "#/components/schemas/PlayerResponse"
         away:
           type: object
           properties:
@@ -240,6 +244,10 @@ components:
             modifiers:
               $ref: "#/components/schemas/Modifiers"
             players:
+              type: array
+              items:
+                $ref: "#/components/schemas/PlayerResponse"
+            bench:
               type: array
               items:
                 $ref: "#/components/schemas/PlayerResponse"

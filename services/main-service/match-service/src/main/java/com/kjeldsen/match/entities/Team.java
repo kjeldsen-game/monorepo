@@ -18,6 +18,7 @@ public class Team {
 
     String id;
     List<Player> players;
+    List<Player> bench;
 
     Integer rating;
 

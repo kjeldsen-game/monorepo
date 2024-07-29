@@ -16,7 +16,7 @@ class PlayerSelectionTest {
     @Test
     void noStrikerOnTeam() {
         Team team = RandomHelper.genTeam();
-        List<Player> players = RandomHelper.genPlayers(team).stream()
+        List<Player> players = RandomHelper.genActivePlayers(team).stream()
             .filter(p -> !p.getPosition().isForward())
             .toList();
 
