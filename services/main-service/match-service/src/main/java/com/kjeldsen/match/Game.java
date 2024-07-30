@@ -1,15 +1,15 @@
 package com.kjeldsen.match;
 
 import com.kjeldsen.match.entities.Action;
+import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Play;
+import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.duel.Duel;
 import com.kjeldsen.match.entities.duel.DuelOrigin;
 import com.kjeldsen.match.entities.duel.DuelType;
 import com.kjeldsen.match.execution.DuelDTO;
 import com.kjeldsen.match.execution.DuelExecution;
 import com.kjeldsen.match.execution.DuelParams;
-import com.kjeldsen.match.modifers.Orders;
-import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.match.selection.ActionSelection;
 import com.kjeldsen.match.selection.ChallengerSelection;
 import com.kjeldsen.match.selection.KickOffSelection;
@@ -20,12 +20,12 @@ import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.GameState.Turn;
 import com.kjeldsen.match.state.GameStateException;
 import com.kjeldsen.match.state.TeamState;
-import com.kjeldsen.match.entities.Match;
-import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.player.domain.PitchArea;
-import java.util.Optional;
+import com.kjeldsen.player.domain.PlayerOrder;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Optional;
 
 @Slf4j
 @Value
@@ -128,18 +128,10 @@ public class Game {
             .origin(DuelOrigin.DEFAULT)
             .build();
 
-        DuelParams duelParams = params;
-        if (duelType.equals(DuelType.PASSING)) {
-            // Before we execute the passing duel, player orders are given the opportunity to change of the
-            // parameters for execution - the action (duelType) and challenger - as well as the skill
-            // points of players involved (this is only temporary).
-            duelParams = Orders.apply(params, params.getInitiator().getPlayerOrder());
-        }
-
         // The duel can be created once its result is determined. Any details about the duel that
         // need to be stored for future analysis should be set in the duel DTO and saved as part of
         // the duel here.
-        DuelDTO outcome = DuelExecution.executeDuel(duelParams);
+        DuelDTO outcome = DuelExecution.executeDuel(params);
 
         Duel duel = Duel.builder()
             .type(outcome.getParams().getDuelType())
