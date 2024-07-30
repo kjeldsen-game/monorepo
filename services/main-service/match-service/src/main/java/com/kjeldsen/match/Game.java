@@ -8,6 +8,7 @@ import com.kjeldsen.match.entities.duel.DuelType;
 import com.kjeldsen.match.execution.DuelDTO;
 import com.kjeldsen.match.execution.DuelExecution;
 import com.kjeldsen.match.execution.DuelParams;
+import com.kjeldsen.match.modifers.Orders;
 import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.match.selection.ActionSelection;
 import com.kjeldsen.match.selection.ChallengerSelection;
@@ -127,10 +128,18 @@ public class Game {
             .origin(DuelOrigin.DEFAULT)
             .build();
 
+        DuelParams duelParams = params;
+        if (duelType.equals(DuelType.PASSING)) {
+            // Before we execute the passing duel, player orders are given the opportunity to change of the
+            // parameters for execution - the action (duelType) and challenger - as well as the skill
+            // points of players involved (this is only temporary).
+            duelParams = Orders.apply(params, params.getInitiator().getPlayerOrder());
+        }
+
         // The duel can be created once its result is determined. Any details about the duel that
         // need to be stored for future analysis should be set in the duel DTO and saved as part of
         // the duel here.
-        DuelDTO outcome = DuelExecution.executeDuel(params);
+        DuelDTO outcome = DuelExecution.executeDuel(duelParams);
 
         Duel duel = Duel.builder()
             .type(outcome.getParams().getDuelType())

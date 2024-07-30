@@ -21,16 +21,11 @@ public class DuelExecution {
      */
 
     public static DuelDTO executeDuel(DuelParams params) {
-        // Before we execute the duel, player orders are given the opportunity to change of the
-        // parameters for execution - the action (duelType) and challenger - as well as the skill
-        // points of players involved (this is only temporary).
-        DuelParams modifiedParams = Orders.apply(params, params.getInitiator().getPlayerOrder());
-
-        return switch (modifiedParams.getDuelType()) {
-            case POSITIONAL -> handlePositionalDuel(modifiedParams);
-            case BALL_CONTROL -> handleBallControlDuel(modifiedParams);
-            case PASSING -> handlePassDuel(modifiedParams);
-            case SHOT -> handleShotDuel(modifiedParams);
+        return switch (params.getDuelType()) {
+            case POSITIONAL -> handlePositionalDuel(params);
+            case BALL_CONTROL -> handleBallControlDuel(params);
+            case PASSING -> handlePassDuel(params);
+            case SHOT -> handleShotDuel(params);
         };
     }
 
