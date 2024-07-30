@@ -151,6 +151,7 @@ public class Game {
             .initiatorStats(outcome.getInitiatorStats())
             .challengerStats(outcome.getChallengerStats())
             .origin(outcome.getOrigin())
+            .appliedPlayerOrder(outcome.getParams().getAppliedPlayerOrder())
             .build();
 
         // The play is now over. It is saved and the state is transitioned depending on the result.
@@ -184,7 +185,11 @@ public class Game {
 
         PitchArea playerArea;
         if (play.getDuel().getType().movesBall()) {
-            playerArea = PitchAreaSelection.select(currentArea, player)
+
+            // If the change flank order was applied, then ball can move outisde nearby areas.
+            Boolean nearbyOnly = ! PlayerOrder.CHANGE_FLANK.equals(play.getDuel().getAppliedPlayerOrder());
+
+            playerArea = PitchAreaSelection.select(currentArea, player, nearbyOnly)
                 .orElseThrow(() -> new GameStateException(state, "No pitch area to select from"));
         } else {
             playerArea = currentArea;
@@ -218,7 +223,11 @@ public class Game {
         } else {
             PitchArea playerArea;
             if (play.getDuel().getType().movesBall()) {
-                playerArea = PitchAreaSelection.select(currentArea, play.getDuel().getChallenger())
+
+                // If the change flank order was applied, then ball can move outisde nearby areas.
+                Boolean nearbyOnly = ! PlayerOrder.CHANGE_FLANK.equals(play.getDuel().getAppliedPlayerOrder());
+
+                playerArea = PitchAreaSelection.select(currentArea, play.getDuel().getChallenger(), nearbyOnly)
                     .orElseThrow(
                         () -> new GameStateException(state, "No pitch area to select from"));
             } else {
