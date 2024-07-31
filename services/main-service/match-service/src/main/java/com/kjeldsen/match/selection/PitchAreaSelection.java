@@ -13,10 +13,9 @@ public class PitchAreaSelection {
      * be assumed by each player when they are involved in a duel. From a list of possible pitch
      * area they are allowed to play in, this class selects a single pitch area for each player.
      */
-
-    public static Optional<PitchArea> select(PitchArea ballArea, Player player) {
+    public static Optional<PitchArea> select(PitchArea ballArea, Player player, Boolean nearbyOnly) {
         List<PitchArea> areas = player.getPosition().coverage().stream()
-            .filter(ballArea::teammateIsNearby)
+            .filter(coverage -> !nearbyOnly || coverage.teammateIsNearby(ballArea))
             .toList();
 
         if (!areas.isEmpty()) {

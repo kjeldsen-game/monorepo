@@ -3,6 +3,7 @@ package com.kjeldsen.match.entities.duel;
 import com.kjeldsen.match.entities.DuelStats;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.player.domain.PitchArea;
+import com.kjeldsen.player.domain.PlayerOrder;
 import lombok.Builder;
 import lombok.Value;
 
@@ -29,4 +30,6 @@ public class Duel {
     DuelStats challengerStats;
     // Whether the duel originates from anything other than default play
     DuelOrigin origin;
+    // If a player order is applied, record it
+    PlayerOrder appliedPlayerOrder;
 }

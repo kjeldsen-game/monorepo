@@ -59,6 +59,7 @@ public class Orders {
             .challenger(params.getChallenger())
             .receiver(receiver.get())
             .origin(DuelOrigin.PLAYER_ORDER)
+            .appliedPlayerOrder(PlayerOrder.PASS_FORWARD)
             .build();
     }
 
@@ -84,6 +85,7 @@ public class Orders {
             .initiator(params.getInitiator())
             .challenger(goalkeeper)
             .origin(DuelOrigin.PLAYER_ORDER)
+            .appliedPlayerOrder(PlayerOrder.LONG_SHOT)
             .build();
     }
 
@@ -112,6 +114,7 @@ public class Orders {
             .challenger(params.getChallenger())
             .receiver(receiver.get())
             .origin(DuelOrigin.PLAYER_ORDER)
+            .appliedPlayerOrder(PlayerOrder.CHANGE_FLANK)
             .build();
     }
 }

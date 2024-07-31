@@ -92,9 +92,7 @@ public final class RandomHelper {
     }
 
     private static PlayerOrder genPlayerOrder() {
-        return PlayerOrder.NONE;
-        // TODO Disabled until all Player Orders are fixed on Duel Execution.
-        // return PlayerOrder.values()[new Random().nextInt(PlayerOrder.values().length)];
+        return PlayerOrder.values()[new Random().nextInt(PlayerOrder.values().length)];
     }
 
     public static int genAttributeRating() {
