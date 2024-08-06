@@ -3,17 +3,30 @@ import { GridCellParams, GridColDef } from '@mui/x-data-grid'
 import { GridAlignment } from '@mui/x-data-grid'
 import Link from 'next/link'
 
-const incomingMatchesColumns = (): GridColDef[] => [
+const incomingMatchesColumns = (handleLineupChange: (value: number, teamId: string) => void): GridColDef[] => [
   {
-    field: 'id',
-    headerName: 'Match Id',
+    field: 'away',
+    headerName: 'away',
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 70,
     flex: 1,
     renderCell: (params: GridCellParams) => (
-      <Link passHref href={`/team/${params.row.id}`}>
-        {params.row?.away?.id}
+      <Link passHref href={`/team/${params.row.away.id}`}>
+        {params.row.away.name}
+      </Link>
+    ),
+  },
+  {
+    field: 'home',
+    headerName: 'home',
+    headerAlign: 'center' as GridAlignment,
+    align: 'center' as GridAlignment,
+    minWidth: 70,
+    flex: 1,
+    renderCell: (params: GridCellParams) => (
+      <Link passHref href={`/team/${params.row.home.id}`}>
+        {params.row.home.name}
       </Link>
     ),
   },
@@ -32,7 +45,8 @@ const incomingMatchesColumns = (): GridColDef[] => [
     align: 'center' as GridAlignment,
     minWidth: 70,
     flex: 1,
-    renderCell: () => {
+    renderCell: (val) => {
+      console.log(val.row)
       return (
         <Select
           variant="standard"
@@ -41,7 +55,8 @@ const incomingMatchesColumns = (): GridColDef[] => [
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           label="Lineup"
-          value={0}>
+          value={0}
+          onChange={(item) => handleLineupChange(item.target.value as number, val.row.id)}>
           <MenuItem value={0}>Default</MenuItem>
           <MenuItem value={1}>Specific lineup...</MenuItem>
         </Select>
