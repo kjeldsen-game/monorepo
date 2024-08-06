@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react'
 import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMatchesRepository'
 import { useTranslation } from 'next-i18next'
 import incomingMatchesColumns from '@/shared/components/Grid/Columns/IncomingMatchesColumns'
+import { useRouter } from 'next/navigation'
 
 const PAGE_SIZE = 10
 
@@ -15,6 +16,8 @@ const IncomingMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
 
   const { t } = useTranslation('common')
 
+  const router = useRouter()
+
   const [selectedPage, setSelectedPage] = useState<number>(0)
 
   const { allMatches } = useAllPlayerMatchesRepository(selectedPage, 10, userData?.user.teamId)
@@ -23,12 +26,17 @@ const IncomingMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
     return <Box sx={{ width: '100%' }}>{t('challenge.no_incoming_matches')}</Box>
   }
 
+  const handleLineupChange = (value: number, matchId: string) => {
+    if (value === 0) return
+    router.push(`/match/lineup/${matchId}`)
+  }
+
   return (
     <Box sx={{ width: '100%' }}>
       <Grid
         isRowSelectable={() => false}
         rows={allMatches ?? []}
-        columns={userData?.user.teamId ? incomingMatchesColumns() : []}
+        columns={userData?.user.teamId ? incomingMatchesColumns(handleLineupChange) : []}
         paginationMode="server"
         pagination
         pageSize={PAGE_SIZE}
