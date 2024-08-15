@@ -33,7 +33,7 @@ const SignedUser: FC<SignedUserProps> = ({ user }) => {
         variant="outlined"
         color="primary"
         onClick={handleClick}>
-        {user?.name || 'Anonymous'}
+        {user?.email ?? 'Anonymous'}
       </Button>
       <Menu
         sx={{ marginTop: 1 }}
