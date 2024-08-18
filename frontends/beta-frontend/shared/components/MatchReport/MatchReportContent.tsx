@@ -1,10 +1,9 @@
 import Box from '@mui/material/Box'
 import MatchReportItem from './MatchReportItem'
-import { MatchReportType } from '@/shared/models/MatchReport'
-import { MatchEvent } from '@/shared/models/MatchEvent'
+import { MatchReport } from '@/shared/models/MatchReport'
 
 interface MatchReportContentProps {
-  report: MatchReportType
+  report: MatchReport
   sx?: React.CSSProperties
 }
 
@@ -21,7 +20,7 @@ export const MatchReportContent: React.FC<MatchReportContentProps> = ({ report, 
         padding: '0 5px 0 5px',
         ...sx,
       }}>
-      {report.events.map((event, index) => (
+      {report.plays.map((event, index) => (
         <MatchReportItem key={index} event={event} />
       ))}
     </Box>

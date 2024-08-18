@@ -1,8 +1,4 @@
-import { PlayerOrder } from './PlayerOrder'
-
-export interface MatchReport {
-  awayId: string
-  homeId: string
+export interface MatchReportResponse {
   plays: Play[]
   homeScore: number
   awayScore: number
@@ -20,12 +16,15 @@ export interface Play {
   clock: number
 }
 
-export type Action = 'PASS' | 'POSITION' | 'SHOOT'
+export enum Action {
+  Pass = 'PASS',
+  Position = 'POSITION',
+  Shoot = 'SHOOT',
+}
 
 export interface Duel {
   type: MatchActionType
   pitchArea: string
-  side: MatchEventSide
   initiator: Initiator
   challenger: Initiator | null
   receiver: Receiver | null
@@ -96,5 +95,3 @@ export enum MatchActionType {
   Tackle = 'TACKLE',
   Shot = 'SHOT',
 }
-
-export type MatchEventSide = 'MainEvent' | 'HomeTeamEvent' | 'AwayTeamEvent'

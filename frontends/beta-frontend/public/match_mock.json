@@ -1,0 +1,730 @@
+{
+    "awayId": "3436e81f-d00c-4094-8123-fb7cc927c196",
+    "homeId": "9002e750-366c-43da-8938-38a6e82b54af",
+    "plays": [
+        {
+            "action": "PASS",
+            "duel": {
+                "type": "PASSING",
+                "pitchArea": "CENTRE_MIDFIELD",
+                "initiator": {
+                    "id": "bbec8795-cb82-4999-8aac-ddc9e1dc548f",
+                    "teamId": "9002e750-366c-43da-8938-38a6e82b54af",
+                    "name": "Roscoe Howell",
+                    "position": "FORWARD",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 32,
+                        "DEFENSIVE_POSITIONING": 6,
+                        "PASSING": 15,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 7,
+                        "AERIAL": 27,
+                        "SCORING": 49,
+                        "OFFENSIVE_POSITIONING": 42,
+                        "CONSTITUTION": 22
+                    },
+                    "playerOrder": "NONE"
+                },
+                "challenger": {
+                    "id": "8b3b2859-b34f-495c-acd8-3dba85f4f9f0",
+                    "teamId": "3436e81f-d00c-4094-8123-fb7cc927c196",
+                    "name": "Judson Stanton",
+                    "position": "CENTRE_MIDFIELDER",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 39,
+                        "DEFENSIVE_POSITIONING": 5,
+                        "PASSING": 39,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 10,
+                        "AERIAL": 11,
+                        "SCORING": 28,
+                        "OFFENSIVE_POSITIONING": 48,
+                        "CONSTITUTION": 20
+                    },
+                    "playerOrder": "NONE"
+                },
+                "receiver": {
+                    "id": "eb95ba4e-0f39-4710-87bf-8c402924702c",
+                    "teamId": "9002e750-366c-43da-8938-38a6e82b54af",
+                    "name": "Gabrielle O'Kon",
+                    "position": "RIGHT_WINGER",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 33,
+                        "DEFENSIVE_POSITIONING": 6,
+                        "PASSING": 39,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 7,
+                        "AERIAL": 6,
+                        "SCORING": 24,
+                        "OFFENSIVE_POSITIONING": 58,
+                        "CONSTITUTION": 27
+                    },
+                    "playerOrder": "NONE"
+                },
+                "result": "WIN",
+                "initiatorStats": {
+                    "total": 25,
+                    "performance": 10,
+                    "skillPoints": 15,
+                    "carryover": 0
+                },
+                "challengerStats": {
+                    "total": -10,
+                    "performance": -10,
+                    "skillPoints": 0,
+                    "carryover": 0
+                },
+                "origin": "DEFAULT",
+                "appliedPlayerOrder": null
+            },
+            "clock": 1
+        },
+        {
+            "action": "POSITION",
+            "duel": {
+                "type": "POSITIONAL",
+                "pitchArea": "RIGHT_MIDFIELD",
+                "initiator": {
+                    "id": "eb95ba4e-0f39-4710-87bf-8c402924702c",
+                    "teamId": "9002e750-366c-43da-8938-38a6e82b54af",
+                    "name": "Gabrielle O'Kon",
+                    "position": "RIGHT_WINGER",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 33,
+                        "DEFENSIVE_POSITIONING": 6,
+                        "PASSING": 39,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 7,
+                        "AERIAL": 6,
+                        "SCORING": 24,
+                        "OFFENSIVE_POSITIONING": 58,
+                        "CONSTITUTION": 27
+                    },
+                    "playerOrder": "NONE"
+                },
+                "challenger": null,
+                "receiver": null,
+                "result": "WIN",
+                "initiatorStats": {
+                    "total": 57,
+                    "performance": -1,
+                    "skillPoints": 58,
+                    "teamAssistance": {
+                        "Deedra Pacocha": 68,
+                        "Quentin Brakus": 31,
+                        "Evan Lakin": 14,
+                        "Garfield Shields": 11,
+                        "Ms. Eulalia Feeney": 50,
+                        "Arnulfo Stanton": 64
+                    },
+                    "assistance": 0
+                },
+                "challengerStats": {
+                    "total": 50,
+                    "performance": 0,
+                    "skillPoints": 0,
+                    "teamAssistance": {
+                        "Shalonda White": 79,
+                        "Vernon Hansen": 53,
+                        "Judson Stanton": 7,
+                        "Lincoln Williamson II": 67,
+                        "Rodney Waelchi": 7,
+                        "Lavenia Walter": 57
+                    },
+                    "assistance": 9
+                },
+                "origin": "DEFAULT",
+                "appliedPlayerOrder": null
+            },
+            "clock": 2
+        },
+        {
+            "action": "PASS",
+            "duel": {
+                "type": "PASSING",
+                "pitchArea": "RIGHT_MIDFIELD",
+                "initiator": {
+                    "id": "eb95ba4e-0f39-4710-87bf-8c402924702c",
+                    "teamId": "9002e750-366c-43da-8938-38a6e82b54af",
+                    "name": "Gabrielle O'Kon",
+                    "position": "RIGHT_WINGER",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 33,
+                        "DEFENSIVE_POSITIONING": 6,
+                        "PASSING": 39,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 7,
+                        "AERIAL": 6,
+                        "SCORING": 24,
+                        "OFFENSIVE_POSITIONING": 58,
+                        "CONSTITUTION": 27
+                    },
+                    "playerOrder": "NONE"
+                },
+                "challenger": {
+                    "id": "34634da8-ad18-4c54-a4e9-6a25d680778b",
+                    "teamId": "3436e81f-d00c-4094-8123-fb7cc927c196",
+                    "name": "Rodney Waelchi",
+                    "position": "LEFT_WINGER",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 40,
+                        "DEFENSIVE_POSITIONING": 5,
+                        "PASSING": 30,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 6,
+                        "AERIAL": 11,
+                        "SCORING": 28,
+                        "OFFENSIVE_POSITIONING": 56,
+                        "CONSTITUTION": 24
+                    },
+                    "playerOrder": "NONE"
+                },
+                "receiver": {
+                    "id": "2d2d7015-348d-475c-954c-5123b6a7d497",
+                    "teamId": "9002e750-366c-43da-8938-38a6e82b54af",
+                    "name": "Ms. Eulalia Feeney",
+                    "position": "RIGHT_WINGER",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 34,
+                        "DEFENSIVE_POSITIONING": 19,
+                        "PASSING": 32,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 41,
+                        "AERIAL": 17,
+                        "SCORING": 5,
+                        "OFFENSIVE_POSITIONING": 20,
+                        "CONSTITUTION": 32
+                    },
+                    "playerOrder": "NONE"
+                },
+                "result": "WIN",
+                "initiatorStats": {
+                    "total": 37,
+                    "performance": -5,
+                    "skillPoints": 39,
+                    "carryover": 3
+                },
+                "challengerStats": {
+                    "total": 5,
+                    "performance": 5,
+                    "skillPoints": 0,
+                    "carryover": 0
+                },
+                "origin": "DEFAULT",
+                "appliedPlayerOrder": null
+            },
+            "clock": 3
+        },
+        {
+            "action": "POSITION",
+            "duel": {
+                "type": "POSITIONAL",
+                "pitchArea": "RIGHT_FORWARD",
+                "initiator": {
+                    "id": "2d2d7015-348d-475c-954c-5123b6a7d497",
+                    "teamId": "9002e750-366c-43da-8938-38a6e82b54af",
+                    "name": "Ms. Eulalia Feeney",
+                    "position": "RIGHT_WINGER",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 34,
+                        "DEFENSIVE_POSITIONING": 19,
+                        "PASSING": 32,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 41,
+                        "AERIAL": 17,
+                        "SCORING": 5,
+                        "OFFENSIVE_POSITIONING": 20,
+                        "CONSTITUTION": 32
+                    },
+                    "playerOrder": "NONE"
+                },
+                "challenger": {
+                    "id": "e9a8ce59-280a-4466-8387-bd5650df9c00",
+                    "teamId": "3436e81f-d00c-4094-8123-fb7cc927c196",
+                    "name": "Shalonda White",
+                    "position": "LEFT_BACK",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 17,
+                        "DEFENSIVE_POSITIONING": 34,
+                        "PASSING": 29,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 50,
+                        "AERIAL": 12,
+                        "SCORING": 5,
+                        "OFFENSIVE_POSITIONING": 19,
+                        "CONSTITUTION": 34
+                    },
+                    "playerOrder": "NONE"
+                },
+                "receiver": null,
+                "result": "WIN",
+                "initiatorStats": {
+                    "total": 41,
+                    "performance": 12,
+                    "skillPoints": 20,
+                    "teamAssistance": {
+                        "Deedra Pacocha": 51,
+                        "Quentin Brakus": 20,
+                        "Garfield Shields": 7,
+                        "Gabrielle O'Kon": 87,
+                        "Arnulfo Stanton": 48,
+                        "Roscoe Howell": 35
+                    },
+                    "assistance": 9
+                },
+                "challengerStats": {
+                    "total": 35,
+                    "performance": 1,
+                    "skillPoints": 34,
+                    "teamAssistance": {
+                        "Vernon Hansen": 18,
+                        "Judson Stanton": 4,
+                        "Lincoln Williamson II": 50,
+                        "Rodney Waelchi": 3,
+                        "Mr. Solomon Reichel": 47,
+                        "Lavenia Walter": 38
+                    },
+                    "assistance": 0
+                },
+                "origin": "DEFAULT",
+                "appliedPlayerOrder": null
+            },
+            "clock": 4
+        },
+        {
+            "action": "PASS",
+            "duel": {
+                "type": "PASSING",
+                "pitchArea": "RIGHT_FORWARD",
+                "initiator": {
+                    "id": "2d2d7015-348d-475c-954c-5123b6a7d497",
+                    "teamId": "9002e750-366c-43da-8938-38a6e82b54af",
+                    "name": "Ms. Eulalia Feeney",
+                    "position": "RIGHT_WINGER",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 34,
+                        "DEFENSIVE_POSITIONING": 19,
+                        "PASSING": 32,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 41,
+                        "AERIAL": 17,
+                        "SCORING": 5,
+                        "OFFENSIVE_POSITIONING": 20,
+                        "CONSTITUTION": 32
+                    },
+                    "playerOrder": "NONE"
+                },
+                "challenger": {
+                    "id": "e9a8ce59-280a-4466-8387-bd5650df9c00",
+                    "teamId": "3436e81f-d00c-4094-8123-fb7cc927c196",
+                    "name": "Shalonda White",
+                    "position": "LEFT_BACK",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 17,
+                        "DEFENSIVE_POSITIONING": 34,
+                        "PASSING": 29,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 50,
+                        "AERIAL": 12,
+                        "SCORING": 5,
+                        "OFFENSIVE_POSITIONING": 19,
+                        "CONSTITUTION": 34
+                    },
+                    "playerOrder": "NONE"
+                },
+                "receiver": {
+                    "id": "6800c15b-e325-4faa-8529-16e712859876",
+                    "teamId": "9002e750-366c-43da-8938-38a6e82b54af",
+                    "name": "Mr. Kyoko Bashirian",
+                    "position": "AERIAL_FORWARD",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 26,
+                        "DEFENSIVE_POSITIONING": 6,
+                        "PASSING": 11,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 10,
+                        "AERIAL": 57,
+                        "SCORING": 30,
+                        "OFFENSIVE_POSITIONING": 35,
+                        "CONSTITUTION": 25
+                    },
+                    "playerOrder": "NONE"
+                },
+                "result": "WIN",
+                "initiatorStats": {
+                    "total": 50,
+                    "performance": 15,
+                    "skillPoints": 32,
+                    "carryover": 3
+                },
+                "challengerStats": {
+                    "total": 1,
+                    "performance": 1,
+                    "skillPoints": 0,
+                    "carryover": 0
+                },
+                "origin": "DEFAULT",
+                "appliedPlayerOrder": null
+            },
+            "clock": 5
+        },
+        {
+            "action": "POSITION",
+            "duel": {
+                "type": "POSITIONAL",
+                "pitchArea": "RIGHT_FORWARD",
+                "initiator": {
+                    "id": "6800c15b-e325-4faa-8529-16e712859876",
+                    "teamId": "9002e750-366c-43da-8938-38a6e82b54af",
+                    "name": "Mr. Kyoko Bashirian",
+                    "position": "AERIAL_FORWARD",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 26,
+                        "DEFENSIVE_POSITIONING": 6,
+                        "PASSING": 11,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 10,
+                        "AERIAL": 57,
+                        "SCORING": 30,
+                        "OFFENSIVE_POSITIONING": 35,
+                        "CONSTITUTION": 25
+                    },
+                    "playerOrder": "NONE"
+                },
+                "challenger": null,
+                "receiver": null,
+                "result": "WIN",
+                "initiatorStats": {
+                    "total": 47,
+                    "performance": 5,
+                    "skillPoints": 35,
+                    "teamAssistance": {
+                        "Deedra Pacocha": 51,
+                        "Quentin Brakus": 20,
+                        "Garfield Shields": 7,
+                        "Gabrielle O'Kon": 87,
+                        "Ms. Eulalia Feeney": 50,
+                        "Arnulfo Stanton": 48,
+                        "Roscoe Howell": 35
+                    },
+                    "assistance": 7
+                },
+                "challengerStats": {
+                    "total": 50,
+                    "performance": 0,
+                    "skillPoints": 0,
+                    "teamAssistance": {
+                        "Shalonda White": 79,
+                        "Vernon Hansen": 18,
+                        "Judson Stanton": 4,
+                        "Lincoln Williamson II": 50,
+                        "Rodney Waelchi": 3,
+                        "Mr. Solomon Reichel": 47,
+                        "Lavenia Walter": 38
+                    },
+                    "assistance": 0
+                },
+                "origin": "DEFAULT",
+                "appliedPlayerOrder": null
+            },
+            "clock": 6
+        },
+        {
+            "action": "SHOOT",
+            "duel": {
+                "type": "SHOT",
+                "pitchArea": "RIGHT_FORWARD",
+                "initiator": {
+                    "id": "6800c15b-e325-4faa-8529-16e712859876",
+                    "teamId": "9002e750-366c-43da-8938-38a6e82b54af",
+                    "name": "Mr. Kyoko Bashirian",
+                    "position": "AERIAL_FORWARD",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 26,
+                        "DEFENSIVE_POSITIONING": 6,
+                        "PASSING": 11,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 10,
+                        "AERIAL": 57,
+                        "SCORING": 30,
+                        "OFFENSIVE_POSITIONING": 35,
+                        "CONSTITUTION": 25
+                    },
+                    "playerOrder": "NONE"
+                },
+                "challenger": {
+                    "id": "a77fdfe2-71a6-4251-be20-35fef568d050",
+                    "teamId": "3436e81f-d00c-4094-8123-fb7cc927c196",
+                    "name": "Darci Wiegand",
+                    "position": "GOALKEEPER",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "ORGANIZATION": 25,
+                        "INTERCEPTIONS": 14,
+                        "INTERCEPTING": 0,
+                        "ONE_ON_ONE": 50,
+                        "GOALKEEPER_POSITIONING": 37,
+                        "REFLEXES": 52,
+                        "CONTROL": 22
+                    },
+                    "playerOrder": "NONE"
+                },
+                "receiver": null,
+                "result": "LOSE",
+                "initiatorStats": {
+                    "total": 45,
+                    "performance": 15,
+                    "skillPoints": 30,
+                    "carryover": 0
+                },
+                "challengerStats": {
+                    "total": 56,
+                    "performance": 3,
+                    "skillPoints": 52,
+                    "carryover": 1
+                },
+                "origin": "DEFAULT",
+                "appliedPlayerOrder": null
+            },
+            "clock": 7
+        },
+        {
+            "action": "PASS",
+            "duel": {
+                "type": "PASSING",
+                "pitchArea": "CENTRE_BACK",
+                "initiator": {
+                    "id": "a77fdfe2-71a6-4251-be20-35fef568d050",
+                    "teamId": "3436e81f-d00c-4094-8123-fb7cc927c196",
+                    "name": "Darci Wiegand",
+                    "position": "GOALKEEPER",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "ORGANIZATION": 25,
+                        "INTERCEPTIONS": 14,
+                        "INTERCEPTING": 0,
+                        "ONE_ON_ONE": 50,
+                        "GOALKEEPER_POSITIONING": 37,
+                        "REFLEXES": 52,
+                        "CONTROL": 22
+                    },
+                    "playerOrder": "NONE"
+                },
+                "challenger": {
+                    "id": "bbec8795-cb82-4999-8aac-ddc9e1dc548f",
+                    "teamId": "9002e750-366c-43da-8938-38a6e82b54af",
+                    "name": "Roscoe Howell",
+                    "position": "FORWARD",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 32,
+                        "DEFENSIVE_POSITIONING": 6,
+                        "PASSING": 15,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 7,
+                        "AERIAL": 27,
+                        "SCORING": 49,
+                        "OFFENSIVE_POSITIONING": 42,
+                        "CONSTITUTION": 22
+                    },
+                    "playerOrder": "NONE"
+                },
+                "receiver": {
+                    "id": "34634da8-ad18-4c54-a4e9-6a25d680778b",
+                    "teamId": "3436e81f-d00c-4094-8123-fb7cc927c196",
+                    "name": "Rodney Waelchi",
+                    "position": "LEFT_WINGER",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 40,
+                        "DEFENSIVE_POSITIONING": 5,
+                        "PASSING": 30,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 6,
+                        "AERIAL": 11,
+                        "SCORING": 28,
+                        "OFFENSIVE_POSITIONING": 56,
+                        "CONSTITUTION": 24
+                    },
+                    "playerOrder": "NONE"
+                },
+                "result": "WIN",
+                "initiatorStats": {
+                    "total": 15,
+                    "performance": -10,
+                    "skillPoints": 25,
+                    "carryover": 0
+                },
+                "challengerStats": {
+                    "total": 10,
+                    "performance": 5,
+                    "skillPoints": 0,
+                    "carryover": 5
+                },
+                "origin": "DEFAULT",
+                "appliedPlayerOrder": null
+            },
+            "clock": 8
+        },
+        {
+            "action": "POSITION",
+            "duel": {
+                "type": "POSITIONAL",
+                "pitchArea": "LEFT_MIDFIELD",
+                "initiator": {
+                    "id": "34634da8-ad18-4c54-a4e9-6a25d680778b",
+                    "teamId": "3436e81f-d00c-4094-8123-fb7cc927c196",
+                    "name": "Rodney Waelchi",
+                    "position": "LEFT_WINGER",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 40,
+                        "DEFENSIVE_POSITIONING": 5,
+                        "PASSING": 30,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 6,
+                        "AERIAL": 11,
+                        "SCORING": 28,
+                        "OFFENSIVE_POSITIONING": 56,
+                        "CONSTITUTION": 24
+                    },
+                    "playerOrder": "NONE"
+                },
+                "challenger": null,
+                "receiver": null,
+                "result": "WIN",
+                "initiatorStats": {
+                    "total": 57,
+                    "performance": 1,
+                    "skillPoints": 56,
+                    "teamAssistance": {
+                        "Shalonda White": 25,
+                        "Vernon Hansen": 56,
+                        "Judson Stanton": 41,
+                        "Lincoln Williamson II": 49,
+                        "Lavenia Walter": 15
+                    },
+                    "assistance": 0
+                },
+                "challengerStats": {
+                    "total": 50,
+                    "performance": 0,
+                    "skillPoints": 0,
+                    "teamAssistance": {
+                        "Deedra Pacocha": 38,
+                        "Quentin Brakus": 77,
+                        "Evan Lakin": 63,
+                        "Garfield Shields": 84,
+                        "Gabrielle O'Kon": 9,
+                        "Ms. Eulalia Feeney": 41,
+                        "Arnulfo Stanton": 35
+                    },
+                    "assistance": 23
+                },
+                "origin": "DEFAULT",
+                "appliedPlayerOrder": null
+            },
+            "clock": 9
+        },
+        {
+            "action": "PASS",
+            "duel": {
+                "type": "PASSING",
+                "pitchArea": "LEFT_MIDFIELD",
+                "initiator": {
+                    "id": "34634da8-ad18-4c54-a4e9-6a25d680778b",
+                    "teamId": "3436e81f-d00c-4094-8123-fb7cc927c196",
+                    "name": "Rodney Waelchi",
+                    "position": "LEFT_WINGER",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 40,
+                        "DEFENSIVE_POSITIONING": 5,
+                        "PASSING": 30,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 6,
+                        "AERIAL": 11,
+                        "SCORING": 28,
+                        "OFFENSIVE_POSITIONING": 56,
+                        "CONSTITUTION": 24
+                    },
+                    "playerOrder": "NONE"
+                },
+                "challenger": {
+                    "id": "eb95ba4e-0f39-4710-87bf-8c402924702c",
+                    "teamId": "9002e750-366c-43da-8938-38a6e82b54af",
+                    "name": "Gabrielle O'Kon",
+                    "position": "RIGHT_WINGER",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 33,
+                        "DEFENSIVE_POSITIONING": 6,
+                        "PASSING": 39,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 7,
+                        "AERIAL": 6,
+                        "SCORING": 24,
+                        "OFFENSIVE_POSITIONING": 58,
+                        "CONSTITUTION": 27
+                    },
+                    "playerOrder": "NONE"
+                },
+                "receiver": {
+                    "id": "fb4f715e-0276-4025-996f-0ecb08d37af1",
+                    "teamId": "3436e81f-d00c-4094-8123-fb7cc927c196",
+                    "name": "Lavenia Walter",
+                    "position": "DEFENSIVE_MIDFIELDER",
+                    "status": "ACTIVE",
+                    "skills": {
+                        "BALL_CONTROL": 30,
+                        "DEFENSIVE_POSITIONING": 33,
+                        "PASSING": 24,
+                        "INTERCEPTING": 0,
+                        "TACKLING": 49,
+                        "AERIAL": 16,
+                        "SCORING": 4,
+                        "OFFENSIVE_POSITIONING": 17,
+                        "CONSTITUTION": 27
+                    },
+                    "playerOrder": "NONE"
+                },
+                "result": "WIN",
+                "initiatorStats": {
+                    "total": 44,
+                    "performance": 11,
+                    "skillPoints": 30,
+                    "carryover": 3
+                },
+                "challengerStats": {
+                    "total": -9,
+                    "performance": -9,
+                    "skillPoints": 0,
+                    "carryover": 0
+                },
+                "origin": "DEFAULT",
+                "appliedPlayerOrder": null
+            },
+            "clock": 10
+        }
+    ],
+    "homeScore": 0,
+    "awayScore": 0,
+    "gameStats": {
+        "homeRating": 0,
+        "awayRating": 0
+    }
+}

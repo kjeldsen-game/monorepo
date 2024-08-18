@@ -1,15 +1,11 @@
 import useSWR from 'swr'
-import { parseReport } from '../../../shared/utils/MatchReportParser'
-import { MatchReportType } from '@/shared/models/MatchReport'
+import { MatchReport } from '@/shared/models/MatchReport'
+import { MatchReportResponse } from './models/MAtchReportresponse'
 
 const API = '/'
 
 const useMatchReportRepository = (matchId: number) => {
-  const { data, isLoading } = useSWR<MatchReportType | undefined>(
-    ['match_mock'],
-    () => fetch('/match_mock.md').then((response) => response.text().then((text) => parseReport(text))),
-    {},
-  )
+  const { data, isLoading } = useSWR<MatchReport | undefined>(['match_mock'], () => fetch('/match_mock.json').then((response) => response.json()), {})
 
   return { report: data, isLoading }
 }

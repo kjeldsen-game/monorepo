@@ -1,8 +1,8 @@
-import { MatchActionType, MatchEvent, MatchEventSide } from '@/shared/models/MatchEvent'
+import { MatchActionType, MatchEventSide, Play } from '@/shared/models/MatchReport'
 import { SportsSoccer, ArrowForward, ControlCamera, KeyboardDoubleArrowDown } from '@mui/icons-material'
 import Box from '@mui/material/Box'
 interface MatchReportItemProps {
-  event: MatchEvent
+  event: Play
   sx?: React.CSSProperties
 }
 
@@ -31,15 +31,13 @@ const colorStyles: Record<MatchEventSide, React.CSSProperties> = {
 }
 
 const iconByAction: Record<MatchActionType, React.ReactNode> = {
-  PASS: <ArrowForward />,
-  POSITION: <ControlCamera />,
+  PASSING: <ArrowForward />,
+  POSITIONAL: <ControlCamera />,
   TACKLE: <KeyboardDoubleArrowDown />,
-  SHOOT: <SportsSoccer />,
+  SHOT: <SportsSoccer />,
 }
 
 export const MatchReportItem: React.FC<MatchReportItemProps> = ({ sx, event }) => {
-  const startCharPos = event.eventStart.indexOf(event.actionStats.player1.playerName)
-  const endCharPos = startCharPos + event.actionStats.player1.playerName.length
   return (
     <Box
       sx={{
@@ -47,20 +45,22 @@ export const MatchReportItem: React.FC<MatchReportItemProps> = ({ sx, event }) =
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
-        ...justifyStyles[event.eventSide],
+        ...justifyStyles[event.duel.side],
         ...sx,
       }}>
-      {iconByAction[event.action]}
+      {iconByAction[event.duel.type]}
       <span
         style={{
           color: 'black',
           fontWeight: 'bold',
           marginRight: '5px',
-          ...colorStyles[event.eventSide],
+          ...colorStyles[event.duel.side],
         }}>
-        {event.eventStart.slice(startCharPos, endCharPos)}
+        {event.duel.initiator.name}
+        {event.duel.type}
       </span>
-      <span>{event.eventStart.slice(endCharPos)}</span>
+      <span>{event.duel.challenger?.name}</span>
+      <span>{event.duel.receiver?.name}</span>
     </Box>
   )
 }
