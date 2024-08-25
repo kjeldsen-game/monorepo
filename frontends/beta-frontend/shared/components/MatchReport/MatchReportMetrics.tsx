@@ -41,11 +41,11 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({ sx, team
             overflow: 'clip',
             height: '20px',
             lineHeight: '20px',
-            width: '100px',
+            maxWidth: '50%',
           }}>
           {data?.name}
         </Typography>
-        <Image width={100} height={100} alt="team logo" src="/profile.png" />
+        <Image width={90} height={90} alt="team logo" src="/profile.png" />
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <HealthAndSafety />
           <Typography fontSize="20px">Swarm centre</Typography>
