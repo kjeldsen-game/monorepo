@@ -13,7 +13,8 @@
         "totalLeftMidfielders": "Debe haber al menos un centrocampista izquierdo o extremo izquierdo, pero no ambos.",
         "totalRightMidfielders": "Debe haber al menos un centrocampista derecho o extremo derecho, pero no ambos.",
         "totalForwards": "Debe haber entre 1 y 3 delanteros, hay {{value}}",
-        "totalStrikers": "Debe haber uno o ningún delantero centro, hay {{value}}"
+        "totalStrikers": "Debe haber uno o ningún delantero centro, hay {{value}}",
+        "totalGoalkeepers": "Debe haber un portero, hay {{value}}"
     },
     "playerValues": {
         "positionDiminutives": {

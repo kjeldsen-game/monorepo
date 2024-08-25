@@ -105,6 +105,11 @@ const checkTeamComposition = (teamPlayers: Player[]): CompositionError[] => {
     errors.push({ error: 'totalStrikers', value: totalStrikers })
   }
 
+  const totalGoalkeepers = teamPlayers.filter((player) => player.position === PlayerPosition.GOALKEEPER).length
+  if (totalGoalkeepers !== 1) {
+    errors.push({ error: 'totalGoalkeepers', value: totalGoalkeepers })
+  }
+
   return errors
 }
 
