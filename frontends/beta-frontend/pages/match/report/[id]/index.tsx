@@ -15,6 +15,9 @@ const MatchReport: NextPage = () => {
 
   const { report } = useMatchReportRepository(Number(router.query.id))
 
+  if (!report) {
+    return <></>
+  }
   return (
     <Box
       sx={{
@@ -24,6 +27,7 @@ const MatchReport: NextPage = () => {
         height: 'calc(100vh - 64px - 42px)',
       }}>
       <MatchReportMetrics
+        teamId={report.awayId}
         side="left"
         sx={{
           width: '25%',
@@ -38,6 +42,7 @@ const MatchReport: NextPage = () => {
         />
       ) : null}
       <MatchReportMetrics
+        teamId={report.homeId}
         side="right"
         sx={{
           width: '25%',

@@ -9,12 +9,11 @@ import { simpleTeamColumn } from '../Grid/Columns/SimpleTeamColumn'
 
 interface MatchReportMetricsProps {
   sx?: React.CSSProperties
+  teamId: string
   side: 'left' | 'right'
 }
 
-const teamId = 'f57a4610-71e5-42b0-bd0c-5fbd761af6c5'
-
-export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({ sx }) => {
+export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({ sx, teamId }) => {
   const { data } = useTeamRepository(teamId)
 
   const memoizedColumns = useMemo(() => simpleTeamColumn(), [teamId])
