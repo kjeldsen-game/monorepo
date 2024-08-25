@@ -1,9 +1,9 @@
 import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import { GridAlignment } from '@mui/x-data-grid'
 import { PlayerPosition } from '@/shared/models/PlayerPosition'
-import { PlayerStatus } from '@/shared/models/Player'
 import { Checkbox } from '@mui/material'
 import { PlayerOrder } from '@/shared/models/PlayerOrder'
+import { PlayerLineupStatus } from '@/shared/models/PlayerLineupStatus'
 
 export const simpleTeamColumn = () => {
   const columns: GridColDef[] = [
@@ -131,7 +131,7 @@ export const simpleTeamColumn = () => {
       headerAlign: 'center' as GridAlignment,
       align: 'center' as GridAlignment,
       sortable: false,
-      renderCell: (params) => <Checkbox color="secondary" checked={params.row.status === PlayerStatus.Active} />,
+      renderCell: (params) => <Checkbox color="secondary" checked={params.row.status === PlayerLineupStatus.Active} />,
       minWidth: 20,
       flex: 1,
     },
