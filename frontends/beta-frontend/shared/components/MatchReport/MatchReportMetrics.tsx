@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Grid from '../Grid/Grid'
 import { useMemo } from 'react'
 import { simpleTeamColumn } from '../Grid/Columns/SimpleTeamColumn'
+import { useTranslation } from 'react-i18next'
 
 interface MatchReportMetricsProps {
   sx?: React.CSSProperties
@@ -16,7 +17,9 @@ interface MatchReportMetricsProps {
 export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({ sx, teamId }) => {
   const { data } = useTeamRepository(teamId)
 
-  const memoizedColumns = useMemo(() => simpleTeamColumn(), [teamId])
+  const { t } = useTranslation(['game'])
+
+  const memoizedColumns = useMemo(() => simpleTeamColumn(t), [teamId])
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', ...sx }}>
