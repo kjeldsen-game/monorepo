@@ -3,7 +3,9 @@ package com.kjeldsen.match.modifers;
 import com.kjeldsen.match.entities.Action;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.duel.DuelOrigin;
+import com.kjeldsen.match.entities.duel.DuelType;
 import com.kjeldsen.match.execution.DuelParams;
+import com.kjeldsen.match.selection.DuelTypeSelection;
 import com.kjeldsen.match.selection.ReceiverSelection;
 import com.kjeldsen.match.state.GameStateException;
 import com.kjeldsen.player.domain.PitchArea;
@@ -52,9 +54,12 @@ public class Orders {
         if (receiver.isEmpty()) {
             return params;
         }
+
+        DuelType duelType = DuelTypeSelection.select(Action.PASS, receiver.get());
+
         return DuelParams.builder()
             .state(params.getState())
-            .duelType(Action.PASS.getDuelType())
+            .duelType(duelType)
             .initiator(params.getInitiator())
             .challenger(params.getChallenger())
             .receiver(receiver.get())
@@ -79,9 +84,11 @@ public class Orders {
         skills.put(PlayerSkill.REFLEXES, skills.get(PlayerSkill.REFLEXES) + bonus);
         goalkeeper.setSkills(skills);
 
+        DuelType duelType = DuelTypeSelection.select(Action.SHOOT, null);
+
         return DuelParams.builder()
             .state(params.getState())
-            .duelType(Action.SHOOT.getDuelType())
+            .duelType(duelType)
             .initiator(params.getInitiator())
             .challenger(goalkeeper)
             .origin(DuelOrigin.PLAYER_ORDER)
@@ -107,9 +114,13 @@ public class Orders {
         if (receiver.isEmpty()) {
             return params;
         }
+
+        // TODO change flank should allways be high pass
+        DuelType duelType = DuelTypeSelection.select(Action.PASS, receiver.get());
+
         return DuelParams.builder()
             .state(params.getState())
-            .duelType(Action.PASS.getDuelType())
+            .duelType(duelType)
             .initiator(params.getInitiator())
             .challenger(params.getChallenger())
             .receiver(receiver.get())

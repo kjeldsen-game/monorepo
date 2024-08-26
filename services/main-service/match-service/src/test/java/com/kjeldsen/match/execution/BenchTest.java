@@ -32,7 +32,7 @@ class BenchTest {
             if (play.getDuel().getChallenger() != null) {
                 assertNotEquals(play.getDuel().getChallenger().getStatus(), PlayerStatus.BENCH);
             }
-            if (play.getDuel().getType().requiresReceiver()) {
+            if (play.getAction().requiresReceiver()) {
                 assertNotEquals(play.getDuel().getReceiver().getStatus(), PlayerStatus.BENCH);
             }
         }));

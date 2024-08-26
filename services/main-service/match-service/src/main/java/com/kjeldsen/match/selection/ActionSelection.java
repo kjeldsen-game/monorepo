@@ -42,7 +42,7 @@ public class ActionSelection {
             .filter(action -> !(action == Action.POSITION && pitchArea.rank() == PitchRank.BACK))
             // Prevents forwards from passing the ball
             .filter(action ->
-                !(action == Action.PASS && player.getPosition() == PlayerPosition.FORWARD))
+                !(action == Action.PASS && player.getPosition() == PlayerPosition.FORWARD && pitchArea.rank() == PitchRank.FORWARD))
             // Prevents certain players from shooting
             .filter(action -> !(action == Action.SHOOT && shootingProhibited(player, pitchArea)))
             .toList();

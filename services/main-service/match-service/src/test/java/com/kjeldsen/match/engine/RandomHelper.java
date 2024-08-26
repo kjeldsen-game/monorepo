@@ -8,6 +8,7 @@ import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.match.modifers.Tactic;
 import com.kjeldsen.match.modifers.VerticalPressure;
 import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.domain.PlayerReceptionPreference;
 import com.kjeldsen.player.domain.PlayerSkill;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,6 +73,7 @@ public final class RandomHelper {
                 .status(status)
                 .position(position)
                 .playerOrder(genPlayerOrder())
+                .receptionPreference(genPlayerReceptionPreference())
                 .skills(genSkillSet()).build();
     }
 
@@ -82,6 +84,7 @@ public final class RandomHelper {
             .name(faker.name().fullName())
             .status(PlayerStatus.ACTIVE)
             .position(PlayerPosition.values()[new Random().nextInt(PlayerPosition.values().length)])
+            .receptionPreference(genPlayerReceptionPreference())
             .skills(genSkillSet()).build();
     }
 
@@ -93,6 +96,10 @@ public final class RandomHelper {
 
     private static PlayerOrder genPlayerOrder() {
         return PlayerOrder.values()[new Random().nextInt(PlayerOrder.values().length)];
+    }
+
+    private static PlayerReceptionPreference genPlayerReceptionPreference() {
+        return PlayerReceptionPreference.values()[new Random().nextInt(PlayerReceptionPreference.values().length)];
     }
 
     public static int genAttributeRating() {

@@ -12,9 +12,11 @@ import com.kjeldsen.match.execution.DuelExecution;
 import com.kjeldsen.match.execution.DuelParams;
 import com.kjeldsen.match.selection.ActionSelection;
 import com.kjeldsen.match.selection.ChallengerSelection;
+import com.kjeldsen.match.selection.DuelTypeSelection;
 import com.kjeldsen.match.selection.KickOffSelection;
 import com.kjeldsen.match.selection.PitchAreaSelection;
 import com.kjeldsen.match.selection.ReceiverSelection;
+import com.kjeldsen.match.state.BallHeight;
 import com.kjeldsen.match.state.BallState;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.GameState.Turn;
@@ -69,6 +71,7 @@ public class Game {
         log.info(
             "Match ended. Result: {}",
             state.getHome().getScore() + " - " + state.getAway().getScore());
+
         return state;
     }
 
@@ -84,7 +87,7 @@ public class Game {
                     .clock(before.getClock() + Action.PASS.getDuration())
                     .home(before.getHome())
                     .away(before.getAway())
-                    .ballState((new BallState(starting, PitchArea.CENTRE_MIDFIELD)))
+                    .ballState((new BallState(starting, PitchArea.CENTRE_MIDFIELD, BallHeight.GROUND)))
                     .plays(before.getPlays())
                     .build())
             .orElseThrow();
@@ -102,21 +105,22 @@ public class Game {
         // users (e.g. strategies) and by rules to improve gameplay.
         Action action = ActionSelection.selectAction(state, initiator);
 
+        // For duels that require a receiver always wrap this variable with an Optional and check
+        // that an actual player is present.
+        Player receiver = null;
+        if (action.requiresReceiver()) {
+            receiver = ReceiverSelection.select(state, initiator);
+        }
+
         // Generate a duel based on the action of the play. This requires a challenger - the person
         // to defend against the action by engaging in the duel - and for some actions (e.g. pass)
         // also a receiver. Player selection is also delegated to the selection module.
-        DuelType duelType = action.getDuelType();
+        DuelType duelType = DuelTypeSelection.select(action, receiver);
         // In some cases it's possible that there is no challenger. This may be an exception (e.g.
         // if no goalkeeper is present) or permitted behaviour (e.g. if a team doesn't have a
         // defender to challenger an attacker in a particular area). Handling of null pointers in
         // this area needs to be improved when rules are clarified.
         Player challenger = ChallengerSelection.selectChallenger(state, duelType);
-        // For duels that require a receiver always wrap this variable with an Optional and check
-        // that an actual player is present.
-        Player receiver = null;
-        if (duelType.requiresReceiver()) {
-            receiver = ReceiverSelection.select(state, initiator);
-        }
 
         // Duel parameters may be amended by tactics, player orders and other modifiers.
         DuelParams params = DuelParams.builder()
@@ -151,6 +155,7 @@ public class Game {
             .duel(duel)
             .action(outcome.getParams().getDuelType().getAction())
             .clock(state.getClock())
+            .ballState(outcome.getParams().getState().getBallState())
             .build();
 
         log.info("Play complete:\n{}", play);
@@ -176,7 +181,14 @@ public class Game {
         PitchArea currentArea = state.getBallState().getArea();
 
         PitchArea playerArea;
+
+        BallHeight ballHeight = state.getBallState().getHeight();
         if (play.getDuel().getType().movesBall()) {
+
+            if (play.getDuel().getType().equals(DuelType.PASSING_HIGH)) {
+                ballHeight = BallHeight.HIGH;
+            }
+            if (play.getDuel().getType().equals(DuelType.PASSING_LOW)) ballHeight = BallHeight.LOW;
 
             // If the change flank order was applied, then ball can move outisde nearby areas.
             Boolean nearbyOnly = ! PlayerOrder.CHANGE_FLANK.equals(play.getDuel().getAppliedPlayerOrder());
@@ -186,7 +198,7 @@ public class Game {
         } else {
             playerArea = currentArea;
         }
-        BallState newBallState = new BallState(player, playerArea);
+        BallState newBallState = new BallState(player, playerArea, ballHeight);
 
         return Optional.of(state)
             .map((before) ->
@@ -225,7 +237,7 @@ public class Game {
             } else {
                 playerArea = currentArea;
             }
-            newBallState = new BallState(play.getDuel().getChallenger(), playerArea);
+            newBallState = new BallState(play.getDuel().getChallenger(), playerArea, state.getBallState().getHeight());
         }
 
         return Optional.of(state)
@@ -258,7 +270,7 @@ public class Game {
         // Give the ball to the kick-off player from the team that conceded the goal
         BallState newBallState = new BallState(
             KickOffSelection.selectPlayer(state, state.defendingTeam()),
-            PitchArea.CENTRE_MIDFIELD);
+            PitchArea.CENTRE_MIDFIELD, BallHeight.GROUND);
 
         return Optional.of(state)
             .map((before) ->
@@ -284,7 +296,8 @@ public class Game {
         if (order == PlayerOrder.CHANGE_FLANK) {
             PitchArea newArea = play.getDuel().getPitchArea().switchFile();
             Player receiver = play.getDuel().getReceiver();
-            BallState newBallState = new BallState(receiver, newArea);
+            // For now, change flank
+            BallState newBallState = new BallState(receiver, newArea, BallHeight.HIGH);
             return Optional.of(newBallState);
         }
 

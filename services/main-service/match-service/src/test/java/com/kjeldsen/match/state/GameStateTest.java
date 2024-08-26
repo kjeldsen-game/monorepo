@@ -66,7 +66,7 @@ class GameStateTest {
                         .clock(1)
                         .home(before.getHome())
                         .away(before.getAway())
-                        .ballState((new BallState(null, PitchArea.CENTRE_MIDFIELD)))
+                        .ballState((new BallState(null, PitchArea.CENTRE_MIDFIELD, BallHeight.GROUND)))
                         .plays(before.getPlays())
                         .build())
                 .orElse(state));

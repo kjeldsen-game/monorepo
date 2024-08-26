@@ -22,7 +22,8 @@ public class ChallengerSelection {
         // correctly oriented pitch area must be passed down through the selection methods.
         PitchArea pitchArea = state.getBallState().getArea().flipPerspective();
         return switch (duelType) {
-            case PASSING -> passingDuelChallenger(state, pitchArea);
+            case PASSING_LOW -> passingDuelChallenger(state, pitchArea);
+            case PASSING_HIGH -> passingDuelChallenger(state, pitchArea);
             case BALL_CONTROL -> ballControlDuelChallenger(state);
             case POSITIONAL -> positionalDuelChallenger(state, pitchArea);
             case SHOT -> players.stream()

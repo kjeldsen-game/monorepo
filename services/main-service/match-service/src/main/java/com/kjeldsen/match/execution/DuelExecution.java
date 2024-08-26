@@ -10,6 +10,8 @@ import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.GameStateException;
 import com.kjeldsen.match.entities.DuelStats;
 import com.kjeldsen.match.entities.Player;
+import com.kjeldsen.player.domain.PlayerPosition;
+
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
@@ -23,7 +25,8 @@ public class DuelExecution {
     public static DuelDTO executeDuel(DuelParams params) {
 
         DuelParams duelParams = params;
-        if (params.getDuelType().equals(DuelType.PASSING) && params.getState().getClock() != 1) {
+        final boolean isPassing = params.getDuelType().equals(DuelType.PASSING_LOW)  || params.getDuelType().equals(DuelType.PASSING_HIGH);
+        if (isPassing && params.getState().getClock() != 1) {
             // Before we execute a passing duel (besides kickoff), player orders are given the opportunity
             // to change of the parameters for execution - the action (duelType) and challenger - as well
             // as the skill points of players involved (this is only temporary).
@@ -33,7 +36,8 @@ public class DuelExecution {
         return switch (duelParams.getDuelType()) {
             case POSITIONAL -> handlePositionalDuel(duelParams);
             case BALL_CONTROL -> handleBallControlDuel(duelParams);
-            case PASSING -> handlePassDuel(duelParams);
+            case PASSING_LOW -> handlePassDuel(duelParams);
+            case PASSING_HIGH -> handlePassDuel(duelParams);
             case SHOT -> handleShotDuel(duelParams);
         };
     }
@@ -113,7 +117,7 @@ public class DuelExecution {
         Map<String, Integer> teamAssistance,
         Map<DuelRole, Integer> adjustedAssistance) {
 
-        int skillPoints = player.duelSkill(DuelType.POSITIONAL, role);
+        int skillPoints = player.duelSkill(DuelType.POSITIONAL, role, state.getBallState());
         int performance =
             DuelRandomization.performance(state, player, DuelType.POSITIONAL, role);
 
@@ -178,13 +182,13 @@ public class DuelExecution {
         DuelStats initiatorStats = buildDuelStats(
             state,
             initiator,
-            DuelType.PASSING,
+            params.getDuelType(),
             DuelRole.INITIATOR);
 
         DuelStats challengerStats = buildDuelStats(
             state,
             challenger,
-            DuelType.PASSING,
+            params.getDuelType(),
             DuelRole.CHALLENGER);
 
         DuelResult result = DuelResult.WIN;
@@ -210,6 +214,10 @@ public class DuelExecution {
             initiator,
             DuelType.SHOT,
             DuelRole.INITIATOR);
+
+        if (challenger.getPosition() != PlayerPosition.GOALKEEPER) {
+            throw new IllegalStateException("Player defending shot is not a GOALKEEPER.");
+        }
 
         DuelStats challengerStats = buildDuelStats(
             state,
@@ -239,7 +247,7 @@ public class DuelExecution {
         DuelType type,
         DuelRole role) {
 
-        int skillPoints = player.duelSkill(type, role);
+        int skillPoints = player.duelSkill(type, role, state.getBallState());
         int performance = DuelRandomization.performance(state, player, type, role);
 
         if (type == DuelType.POSITIONAL) {
