@@ -287,6 +287,8 @@ components:
           type: string
         name:
           type: string
+        teamId:
+          type: string
         position:
           $ref: "#/components/schemas/PlayerPositionResponse"
 

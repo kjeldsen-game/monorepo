@@ -214,14 +214,7 @@ public class MatchDelegate implements MatchApiDelegate {
         res.setPlayers(teamPlayers);
 
         if (matchTeam.getBench() != null) {
-            List<PlayerResponse> benchPlayers = matchTeam.getBench().stream()
-                    .map(player -> {
-                        PlayerResponse p = new PlayerResponse();
-                        p.setId(player.getId());
-                        p.setName(player.getName());
-                        p.setPosition(PlayerPositionResponse.valueOf(player.getPosition().name()));
-                        return p;
-                    }).collect(Collectors.toList());
+            List<PlayerResponse> benchPlayers = matchTeam.getBench().stream().map(this::buildPlayerResponse).collect(Collectors.toList());
             res.setBench(benchPlayers);
         }
 
@@ -244,6 +237,7 @@ public class MatchDelegate implements MatchApiDelegate {
         PlayerResponse result = new PlayerResponse();
         result.setId(player.getId());
         result.setName(player.getName());
+        result.setTeamId(player.getTeamId());
         result.setPosition(PlayerPositionResponse.valueOf(player.getPosition().name()));
         return result;
     }
