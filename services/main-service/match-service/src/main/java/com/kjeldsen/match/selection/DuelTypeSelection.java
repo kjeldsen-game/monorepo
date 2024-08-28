@@ -15,18 +15,20 @@ public class DuelTypeSelection {
     public static DuelType select(Action action, Player receiver) {
         return switch (action) {
             case PASS -> {
-                if (receiver.getReceptionPreference().equals(PlayerReceptionPreference.MIXED)) {
-                    int lowChance = new Random().nextInt(0, 100);
-                    if (lowChance < 50) {
-                        yield DuelType.PASSING_LOW;
-                    } else {
-                        yield DuelType.PASSING_HIGH;
-                    }
+                if (PlayerReceptionPreference.DEMAND_LOW.equals(receiver.getReceptionPreference())) {
+                    yield DuelType.PASSING_LOW;
                 }
-                if (receiver.getReceptionPreference().equals(PlayerReceptionPreference.DEMAND_HIGH)) {
+                if (PlayerReceptionPreference.DEMAND_HIGH.equals(receiver.getReceptionPreference())) {
                     yield DuelType.PASSING_HIGH;
                 }
-                yield DuelType.PASSING_LOW;
+                // PlayerReceptionPreference.MIXED
+                // If there is no player preference, default to MIXED.
+                int lowChance = new Random().nextInt(0, 100);
+                if (lowChance < 50) {
+                    yield DuelType.PASSING_LOW;
+                } else {
+                    yield DuelType.PASSING_HIGH;
+                }
             }
             case POSITION -> DuelType.POSITIONAL;
             // TACKLE is the ball control action: if the challenger of the preceding positional duel
