@@ -4,6 +4,7 @@ import com.kjeldsen.match.engine.RandomHelper;
 import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.match.state.BallHeight;
 import com.kjeldsen.match.state.BallState;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.TeamState;
@@ -55,7 +56,7 @@ public class ReceiverSelectionTest {
             .build();
 
         BallState ballState =
-            new BallState(home.getPlayers().get(0), PitchArea.CENTRE_MIDFIELD);
+            new BallState(home.getPlayers().get(0), PitchArea.CENTRE_MIDFIELD, BallHeight.GROUND);
 
         GameState state = GameState.builder()
             .turn(GameState.Turn.HOME)
@@ -103,7 +104,7 @@ public class ReceiverSelectionTest {
             .build();
 
         BallState ballState =
-            new BallState(home.getPlayers().get(0), PitchArea.CENTRE_MIDFIELD);
+            new BallState(home.getPlayers().get(0), PitchArea.CENTRE_MIDFIELD, BallHeight.GROUND);
 
         GameState state = GameState.builder()
             .turn(GameState.Turn.HOME)

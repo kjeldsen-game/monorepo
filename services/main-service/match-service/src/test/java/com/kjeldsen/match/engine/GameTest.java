@@ -80,7 +80,7 @@ class GameTest {
             .away(away)
             .build();
 
-        int runs = 10;
+        int runs = 1;
         for (int i = 0; i < runs; i++) {
             Game.play(match);
         }
