@@ -4,14 +4,14 @@ import { useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMatchesRepository'
 import { useTranslation } from 'next-i18next'
-import incomingMatchesColumns from '@/shared/components/Grid/Columns/IncomingMatchesColumns'
 import { useRouter } from 'next/navigation'
+import pastMatchesColumns from '@/shared/components/Grid/Columns/PastMatchesColumns'
 
 const PAGE_SIZE = 10
 
 interface IncomingMatchesGridProps {}
 
-const IncomingMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
+const PastMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
   const { data: userData } = useSession({ required: true })
 
   const { t } = useTranslation('common')
@@ -20,23 +20,22 @@ const IncomingMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
 
   const [selectedPage, setSelectedPage] = useState<number>(0)
 
-  const { acceptedMatches } = useAllPlayerMatchesRepository(selectedPage, 10, userData?.user.teamId)
+  const { pastMatches } = useAllPlayerMatchesRepository(selectedPage, 10, userData?.user.teamId)
 
-  if (!acceptedMatches || acceptedMatches.length === 0) {
-    return <Box sx={{ width: '100%' }}>{t('challenge.no_incoming_challenges')}</Box>
+  if (!pastMatches || pastMatches.length === 0) {
+    return <Box sx={{ width: '100%' }}>{t('challenge.no_past_matches')}</Box>
   }
 
-  const handleLineupChange = (value: number, matchId: string) => {
-    if (value === 0) return
-    router.push(`/match/lineup/${matchId}`)
+  const handleReportView = (matchId: string) => {
+    router.push(`/match/report/${matchId}`)
   }
 
   return (
     <Box sx={{ width: '100%' }}>
       <Grid
         isRowSelectable={() => false}
-        rows={acceptedMatches ?? []}
-        columns={userData?.user.teamId ? incomingMatchesColumns(handleLineupChange) : []}
+        rows={pastMatches ?? []}
+        columns={userData?.user.teamId ? pastMatchesColumns(handleReportView) : []}
         paginationMode="server"
         pagination
         pageSize={PAGE_SIZE}
@@ -49,5 +48,5 @@ const IncomingMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
   )
 }
 
-export { IncomingMatchesGrid }
-export default IncomingMatchesGrid
+export { PastMatchesGrid as IncomingMatchesGrid }
+export default PastMatchesGrid

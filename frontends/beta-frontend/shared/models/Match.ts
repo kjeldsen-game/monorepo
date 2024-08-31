@@ -2,7 +2,7 @@ export interface Match {
   id: string
   home: MatchTeam
   away: MatchTeam
-  dateTime: Date
+  dateTime: string
   status: MatchStatus
 }
 

@@ -2,6 +2,7 @@ import { Box, Button } from '@mui/material'
 import { GridCellParams, GridColDef } from '@mui/x-data-grid'
 import { GridAlignment } from '@mui/x-data-grid'
 import Link from 'next/link'
+import { sampleColumns } from '../PlayerGrid'
 
 const inviteColumns = (
   ownTeamId: string,
@@ -41,6 +42,13 @@ const inviteColumns = (
         return (
           <Button variant="contained" disabled color="info" sx={{ mx: '5px' }}>
             Pending confirmation
+          </Button>
+        )
+
+      if (params.row?.status === 'ACCEPTED')
+        return (
+          <Button variant="contained" disabled color="success" sx={{ mx: '5px' }}>
+            Accepted
           </Button>
         )
 

@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react'
 import { InviteGrid } from './components/InviteGrid'
 import { useTranslation } from 'next-i18next'
 import IncomingMatchesGrid from './components/IncomingMatchesGrid'
+import PastMatchesGrid from './components/PastMatchesGrid'
 
 const Team: NextPage = () => {
   useSession({ required: true })
@@ -26,6 +27,7 @@ const Team: NextPage = () => {
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Challenge" />
           <Tab label="Accepted challenges" />
+          <Tab label="Past matches" />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -37,6 +39,9 @@ const Team: NextPage = () => {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <IncomingMatchesGrid />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={2}>
+        <PastMatchesGrid />
       </CustomTabPanel>
     </Box>
   )

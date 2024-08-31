@@ -1,9 +1,9 @@
-import { MenuItem, Select } from '@mui/material'
+import { Button, MenuItem, Select } from '@mui/material'
 import { GridCellParams, GridColDef } from '@mui/x-data-grid'
 import { GridAlignment } from '@mui/x-data-grid'
 import Link from 'next/link'
 
-const incomingMatchesColumns = (handleLineupChange: (value: number, teamId: string) => void): GridColDef[] => [
+const pastMatchesColumns = (onReportSelect: (matchId: string) => void): GridColDef[] => [
   {
     field: 'away',
     headerName: 'away',
@@ -39,30 +39,22 @@ const incomingMatchesColumns = (handleLineupChange: (value: number, teamId: stri
     flex: 1,
   },
   {
-    field: 'lineupButton',
-    headerName: 'Lineup',
+    field: 'reportButton',
+    headerName: 'Report',
     headerAlign: 'center' as GridAlignment,
     align: 'center' as GridAlignment,
     minWidth: 70,
     flex: 1,
     renderCell: (val) => {
+      console.log(val.row)
       return (
-        <Select
-          variant="standard"
-          color="info"
-          sx={{ mx: '5px', height: '40px' }}
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          label="Lineup"
-          value={0}
-          onChange={(item) => handleLineupChange(item.target.value as number, val.row.id)}>
-          <MenuItem value={0}>Default</MenuItem>
-          <MenuItem value={1}>Specific lineup...</MenuItem>
-        </Select>
+        <Button variant="contained" color="primary" onClick={() => onReportSelect(val.row.id)}>
+          Report
+        </Button>
       )
     },
   },
 ]
 
-export { incomingMatchesColumns }
-export default incomingMatchesColumns
+export { pastMatchesColumns }
+export default pastMatchesColumns

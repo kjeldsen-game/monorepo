@@ -6,6 +6,8 @@
     "challenge": "Challenge",
     "pending_challenges": "Pending challenges",
     "challenge_team": "Challenge a team",
-    "no_pending_challenges": "No pending challenges"
+    "no_pending_challenges": "No pending challenges",
+    "no_incoming_challenges": "No incoming challenges",
+    "no_past_matches": "No past matches"
   }
 }
