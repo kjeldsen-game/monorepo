@@ -15,11 +15,12 @@ import com.kjeldsen.match.rest.model.CreateMatchRequest;
 import com.kjeldsen.match.rest.model.DuelResponse;
 import com.kjeldsen.match.rest.model.DuelResultResponse;
 import com.kjeldsen.match.rest.model.EditMatchRequest;
+import com.kjeldsen.match.rest.model.EditPlayerRequest;
 import com.kjeldsen.match.rest.model.MatchReportResponse;
 import com.kjeldsen.match.rest.model.MatchResponse;
 import com.kjeldsen.match.rest.model.Modifiers;
 import com.kjeldsen.match.rest.model.PlayResponse;
-import com.kjeldsen.match.rest.model.PlayerPositionResponse;
+import com.kjeldsen.match.rest.model.PlayerPosition;
 import com.kjeldsen.match.rest.model.PlayerResponse;
 import com.kjeldsen.match.rest.model.TeamResponse;
 import com.kjeldsen.match.state.GameState;
@@ -147,6 +148,13 @@ public class MatchDelegate implements MatchApiDelegate {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<String> editPlayer(String matchId, String teamId, String playerId, EditPlayerRequest playerRequest) {
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
     private MatchReportResponse buildMatchReportResponse(MatchReport matchReport) {
         MatchReportResponse result = new MatchReportResponse();
 
@@ -238,7 +246,7 @@ public class MatchDelegate implements MatchApiDelegate {
         result.setId(player.getId());
         result.setName(player.getName());
         result.setTeamId(player.getTeamId());
-        result.setPosition(PlayerPositionResponse.valueOf(player.getPosition().name()));
+        result.setPosition(PlayerPosition.valueOf(player.getPosition().name()));
         return result;
     }
 
