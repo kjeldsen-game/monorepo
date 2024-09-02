@@ -77,6 +77,11 @@ public class TeamDelegate implements TeamApiDelegate {
         playerUpdates.forEach(update -> {
             Player player = players.stream().filter(p ->
                 Objects.equals(p.getId().value(), update.getId())).findAny().orElseThrow();
+
+            boolean playerChangingPositionFromGoalkeeper = PlayerPosition.GOALKEEPER.equals(player.getPosition()) && !PlayerPosition.GOALKEEPER.equals(PlayerPosition.valueOf(update.getPosition().getValue()));
+            boolean playerChangingPositionToGoalkeeper = !PlayerPosition.GOALKEEPER.equals(player.getPosition()) && PlayerPosition.GOALKEEPER.equals(PlayerPosition.valueOf(update.getPosition().getValue()));
+            if (playerChangingPositionFromGoalkeeper || playerChangingPositionToGoalkeeper) throw new RuntimeException(player.getName() + ": GOALKEEPER position is not changeable.");
+
             player.setPosition(PlayerPosition.valueOf(update.getPosition().name()));
             player.setStatus(PlayerStatus.valueOf(update.getStatus().name()));
             playerWriteRepository.save(player);

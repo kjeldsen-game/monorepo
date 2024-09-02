@@ -45,43 +45,48 @@ public class Player {
     // skill level of the player via the duel logic
     public Integer duelSkill(DuelType duelType, DuelRole role, BallState ballState) {
         List<PlayerSkill> requiredSkills = duelType.requiredSkills(role, ballState);
+        Integer skillValue = 0;
 
-        if (requiredSkills.size() == 1) {
-            PlayerSkill requiredSkill = requiredSkills.get(0);
-            Optional<Integer> value = Optional.ofNullable(skills.get(requiredSkill));
-            if (value.isPresent()) {
-                return value.get();
-            }
-        } else {
-            // If more than one player skill is used on the calculation, for now just get the average.
-            int average = 0;
-            int consideredSkillsCounter = 0;
-            for (PlayerSkill requiredSkill : requiredSkills) {
+        if (!PlayerPosition.GOALKEEPER.equals(this.getPosition())) {
+            if (requiredSkills.size() == 1) {
+                PlayerSkill requiredSkill = requiredSkills.get(0);
                 Optional<Integer> value = Optional.ofNullable(skills.get(requiredSkill));
                 if (value.isPresent()) {
-                    average += value.get();
-                    consideredSkillsCounter++;
+                    skillValue = value.get();
+                }
+            } else {
+                // If more than one player skill is used on the calculation, for now just get the average.
+                int average = 0;
+                int consideredSkillsCounter = 0;
+                for (PlayerSkill requiredSkill : requiredSkills) {
+                    Optional<Integer> value = Optional.ofNullable(skills.get(requiredSkill));
+                    if (value.isPresent()) {
+                        average += value.get();
+                        consideredSkillsCounter++;
+                    }
+                }
+                if (consideredSkillsCounter > 0) {
+                    skillValue = average / consideredSkillsCounter;
                 }
             }
-            if (consideredSkillsCounter > 0) {
-                return average / consideredSkillsCounter;
+        } else {
+            // A value may not be present if the player is a goalkeeper, since goalkeepers have a
+            // different set of skills.
+            // TOD - refactor when implementing goalkeeper skills properly
+            if ((duelType == DuelType.PASSING_LOW || duelType == DuelType.PASSING_HIGH) && role == DuelRole.INITIATOR) {
+                // Here the goalkeeper is attempting to pass the ball, but does not have the passing
+                // skill. In this case, use the `organization` skill.
+                skillValue = skills.get(PlayerSkill.ORGANIZATION);
+            } else if (duelType == DuelType.SHOT && role == DuelRole.CHALLENGER) {
+                // Here the goalkeeper is attempting to save a shot - this requires the reflexes`
+                // skill.
+                skillValue = skills.get(PlayerSkill.REFLEXES);
             }
         }
 
-        // A value may not be present if the player is a goalkeeper, since goalkeepers have a
-        // different set of skills.
-        // TOD - refactor when implementing goalkeeper skills properly
-        if ((duelType == DuelType.PASSING_LOW || duelType == DuelType.PASSING_HIGH) && role == DuelRole.INITIATOR) {
-            // Here the goalkeeper is attempting to pass the ball, but does not have the passing
-            // skill. In this case, use the `organization` skill.
-            return skills.get(PlayerSkill.ORGANIZATION);
-        } else if (duelType == DuelType.SHOT && role == DuelRole.CHALLENGER) {
-            // Here the goalkeeper is attempting to save a shot - this requires the reflexes`
-            // skill.
-            return skills.get(PlayerSkill.REFLEXES);
-        } else {
-            throw new RuntimeException("Player does not have any of the required skills: " + requiredSkills);
-        }
+        if (skillValue == null) throw new RuntimeException("Player " + this.getName() + " does not have any of the required skills: " + requiredSkills);
+
+        return skillValue;
     }
 
 
