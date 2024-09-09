@@ -34,14 +34,22 @@ public final class RandomHelper {
         players.add(genActivePlayerWithPosition(team, PlayerPosition.RIGHT_BACK));
         players.add(genActivePlayerWithPosition(team, PlayerPosition.CENTRE_BACK));
         players.add(genActivePlayerWithPosition(team, PlayerPosition.LEFT_BACK));
-        players.add(genActivePlayerWithPosition(team, PlayerPosition.RIGHT_MIDFIELDER));
         players.add(genActivePlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER));
-        players.add(genActivePlayerWithPosition(team, PlayerPosition.LEFT_MIDFIELDER));
-        players.add(genActivePlayerWithPosition(team, PlayerPosition.RIGHT_WINGER));
-        players.add(genActivePlayerWithPosition(team, PlayerPosition.LEFT_WINGER));
+        players.add(genActivePlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER));
+        players.add(genActivePlayerWithPosition(team, PlayerPosition.FORWARD));
         players.add(genActivePlayerWithPosition(team, PlayerPosition.FORWARD));
         players.add(genActivePlayerWithPosition(team, PlayerPosition.STRIKER));
         players.add(genActivePlayerWithPosition(team, PlayerPosition.GOALKEEPER));
+
+        double random = Math.random();
+        if (random > 0.5) {
+            players.add(genActivePlayerWithPosition(team, PlayerPosition.RIGHT_WINGER));
+            players.add(genActivePlayerWithPosition(team, PlayerPosition.LEFT_WINGER));
+        } else {
+            players.add(genActivePlayerWithPosition(team, PlayerPosition.RIGHT_MIDFIELDER));
+            players.add(genActivePlayerWithPosition(team, PlayerPosition.LEFT_MIDFIELDER));
+        }
+
         return players;
     }
 
