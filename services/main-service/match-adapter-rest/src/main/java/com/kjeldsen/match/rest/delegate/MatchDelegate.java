@@ -15,27 +15,33 @@ import com.kjeldsen.match.rest.model.CreateMatchRequest;
 import com.kjeldsen.match.rest.model.DuelResponse;
 import com.kjeldsen.match.rest.model.DuelResultResponse;
 import com.kjeldsen.match.rest.model.EditMatchRequest;
+import com.kjeldsen.match.rest.model.EditPlayerRequest;
 import com.kjeldsen.match.rest.model.MatchReportResponse;
 import com.kjeldsen.match.rest.model.MatchResponse;
 import com.kjeldsen.match.rest.model.Modifiers;
 import com.kjeldsen.match.rest.model.PlayResponse;
-import com.kjeldsen.match.rest.model.PlayerPositionResponse;
 import com.kjeldsen.match.rest.model.PlayerResponse;
 import com.kjeldsen.match.rest.model.TeamResponse;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.utils.JsonUtils;
+import com.kjeldsen.match.validation.TeamFormationValidationResult;
+import com.kjeldsen.match.validation.TeamFormationValidator;
+import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.PlayerStatus;
 import com.kjeldsen.player.domain.Team.TeamId;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
+import io.swagger.v3.core.util.Json;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -45,6 +51,7 @@ public class MatchDelegate implements MatchApiDelegate {
     private final TeamReadRepository teamRepo;
     private final PlayerReadRepository playerRepo;
     private final MatchRepository matchRepo;
+    private final MatchService matchService;
 
     /*
      * The match service uses a different internal representation of teams and players so here
@@ -91,7 +98,6 @@ public class MatchDelegate implements MatchApiDelegate {
 
         // TODO - if challenge request is accepted schedule the match to be played at the given date
         //  time, but for now just play it immediately
-
         if (status == Status.ACCEPTED) {
             GameState state = Game.play(match);
             MatchReport report = new MatchReport(state, state.getPlays(), match.getHome(),
@@ -143,6 +149,62 @@ public class MatchDelegate implements MatchApiDelegate {
             MatchReportResponse report = this.buildMatchReportResponse(match.getMatchReport());
             response.setMatchReport(report);
         }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<String> editPlayer(String matchId, String teamId, EditPlayerRequest playerRequest) {
+        Match match = matchRepo.findOneById(matchId)
+                .orElseThrow(() -> new RuntimeException("Match not found"));
+
+        // TODO Permission check. Managers should edit only own team's players.
+        // TODO Partial edit or single player instead of full match save.
+        // TODO Extract to a Service.
+
+        List<Player> matchPlayers = new ArrayList<>();
+        matchPlayers.addAll(match.getHome().getPlayers());
+        matchPlayers.addAll(match.getHome().getBench());
+        matchPlayers.addAll(match.getAway().getPlayers());
+        matchPlayers.addAll(match.getAway().getBench());
+
+        String playerId = playerRequest.getId();
+        Optional<Player> optionalPlayer = matchPlayers.stream().filter(p -> p.getId().equals(playerId)).findAny();
+
+        if (optionalPlayer.isPresent()) {
+
+            Player player = optionalPlayer.get();
+            player.setStatus(PlayerStatus.valueOf(playerRequest.getStatus().getValue()));
+            player.setPosition(PlayerPosition.valueOf(playerRequest.getPosition().getValue()));
+
+            matchRepo.save(match);
+
+        } else {
+            throw new RuntimeException("Player not found");
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    public ResponseEntity<String> validate(String matchId,
+                                            String teamId) {
+
+        Match match = matchRepo.findOneById(matchId)
+                .orElseThrow(() -> new RuntimeException("Match not found"));
+
+        Team team = null;
+        if (match.getHome().getId().equals(teamId)) {
+            team = match.getHome();
+        } else if (match.getAway().getId().equals(teamId)) {
+            team = match.getAway();
+        } else {
+            new RuntimeException("Team not found");
+        }
+
+        TeamFormationValidationResult validationResult = TeamFormationValidator.validate(team);
+
+        String response = JsonUtils.prettyPrint(validationResult);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -238,7 +300,7 @@ public class MatchDelegate implements MatchApiDelegate {
         result.setId(player.getId());
         result.setName(player.getName());
         result.setTeamId(player.getTeamId());
-        result.setPosition(PlayerPositionResponse.valueOf(player.getPosition().name()));
+        result.setPosition(com.kjeldsen.match.rest.model.PlayerPosition.valueOf(player.getPosition().name()));
         return result;
     }
 
