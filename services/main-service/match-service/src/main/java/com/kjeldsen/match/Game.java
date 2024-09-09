@@ -22,6 +22,7 @@ import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.GameState.Turn;
 import com.kjeldsen.match.state.GameStateException;
 import com.kjeldsen.match.state.TeamState;
+import com.kjeldsen.match.validation.TeamFormationValidator;
 import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerOrder;
 import lombok.Value;
@@ -45,6 +46,10 @@ public class Game {
     // be passed to this method as part of the match. It returns the final game state with a list
     // of every play that was executed during the match.
     public static GameState play(Match match) {
+
+        if (!TeamFormationValidator.validate(match.getHome()).getValid()) throw new RuntimeException("Home team formation is invalid.");
+        if (!TeamFormationValidator.validate(match.getAway()).getValid()) throw new RuntimeException("Away team formation is invalid.");
+
         // The game state is initialised to a pre-kick-off state based on the team data.
         // At this state no player is in possession of the ball but a team has been randomly
         // selected to start the game.
