@@ -1,7 +1,7 @@
 package com.kjeldsen.match.execution;
 
 import com.kjeldsen.match.Game;
-import com.kjeldsen.match.engine.RandomHelper;
+import com.kjeldsen.match.common.RandomHelper;
 import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Play;
 import com.kjeldsen.match.entities.Player;

@@ -2,7 +2,7 @@ package com.kjeldsen.match.selection;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.kjeldsen.match.engine.RandomHelper;
+import com.kjeldsen.match.common.RandomHelper;
 import com.kjeldsen.match.state.GameStateException;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.TeamState;
