@@ -1,24 +1,24 @@
-package com.kjeldsen.match.engine;
+package com.kjeldsen.match.common;
 
 import com.github.javafaker.Faker;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.Team;
 import com.kjeldsen.match.modifers.HorizontalPressure;
-import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.match.modifers.Tactic;
 import com.kjeldsen.match.modifers.VerticalPressure;
+import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerReceptionPreference;
 import com.kjeldsen.player.domain.PlayerSkill;
+import com.kjeldsen.player.domain.PlayerStatus;
+import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
-
-import com.kjeldsen.player.domain.PlayerStatus;
-import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
 
 public final class RandomHelper {
 

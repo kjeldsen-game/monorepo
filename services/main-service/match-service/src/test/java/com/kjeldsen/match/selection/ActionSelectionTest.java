@@ -1,12 +1,12 @@
 package com.kjeldsen.match.selection;
 
-import static com.kjeldsen.match.engine.RandomHelper.genActivePlayers;
-import static com.kjeldsen.match.engine.RandomHelper.genBenchPlayers;
+import static com.kjeldsen.match.common.RandomHelper.genActivePlayers;
+import static com.kjeldsen.match.common.RandomHelper.genBenchPlayers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.kjeldsen.match.engine.RandomHelper;
+import com.kjeldsen.match.common.RandomHelper;
 import com.kjeldsen.match.entities.Action;
 import com.kjeldsen.match.entities.Play;
 import com.kjeldsen.match.entities.duel.Duel;

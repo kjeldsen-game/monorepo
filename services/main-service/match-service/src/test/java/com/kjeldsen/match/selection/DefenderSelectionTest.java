@@ -1,6 +1,6 @@
 package com.kjeldsen.match.selection;
 
-import com.kjeldsen.match.engine.RandomHelper;
+import com.kjeldsen.match.common.RandomHelper;
 import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.Team;
@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.kjeldsen.match.engine.RandomHelper.genActivePlayerWithPosition;
+import static com.kjeldsen.match.common.RandomHelper.genActivePlayerWithPosition;
 import static com.kjeldsen.match.selection.DefenderSelection.selectFromMidfield;
 
 public class DefenderSelectionTest {
