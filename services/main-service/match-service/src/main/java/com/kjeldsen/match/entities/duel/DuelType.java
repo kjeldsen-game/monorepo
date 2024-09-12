@@ -13,7 +13,9 @@ public enum DuelType {
     PASSING_HIGH,
     POSITIONAL,
     BALL_CONTROL,
-    SHOT;
+    LOW_SHOT,
+    ONE_TO_ONE_SHOT,
+    HEADER_SHOT;
 
     // Future duels
     // AGGRESSION,
@@ -32,7 +34,9 @@ public enum DuelType {
             case PASSING_HIGH -> List.of(Action.POSITION);
             case POSITIONAL -> List.of(Action.PASS, Action.SHOOT);
             case BALL_CONTROL -> List.of(Action.PASS, Action.SHOOT);
-            case SHOT -> List.of(); // Goal - no valid actions available after scoring
+            case LOW_SHOT -> List.of(); // Goal - no valid actions available after scoring
+            case ONE_TO_ONE_SHOT -> List.of(); // Goal - no valid actions available after scoring
+            case HEADER_SHOT -> List.of(); // Goal - no valid actions available after scoring
         };
     }
 
@@ -45,7 +49,9 @@ public enum DuelType {
             case PASSING_HIGH -> List.of(Action.PASS);
             case POSITIONAL -> List.of(Action.TACKLE);
             case BALL_CONTROL -> List.of(Action.PASS, Action.SHOOT);
-            case SHOT -> List.of(Action.PASS); // Goalkeeper save
+            case LOW_SHOT -> List.of(Action.PASS); // Goalkeeper save
+            case ONE_TO_ONE_SHOT -> List.of(Action.PASS); // Goalkeeper save
+            case HEADER_SHOT -> List.of(Action.PASS); // Goalkeeper save
         };
     }
 
@@ -59,7 +65,9 @@ public enum DuelType {
                 case POSITIONAL -> List.of(PlayerSkill.OFFENSIVE_POSITIONING);
                 case BALL_CONTROL -> ballState.getHeight().equals(BallHeight.HIGH) ?
                     List.of(PlayerSkill.TACKLING, PlayerSkill.AERIAL): List.of(PlayerSkill.TACKLING);
-                case SHOT -> List.of(PlayerSkill.SCORING);
+                case LOW_SHOT -> List.of(PlayerSkill.SCORING);
+                case ONE_TO_ONE_SHOT -> List.of(PlayerSkill.SCORING);
+                case HEADER_SHOT -> List.of(PlayerSkill.SCORING, PlayerSkill.AERIAL);
             };
         } else {
             return switch (this) {
@@ -68,7 +76,9 @@ public enum DuelType {
                 case POSITIONAL -> List.of(PlayerSkill.DEFENSIVE_POSITIONING);
                 case BALL_CONTROL -> ballState.getHeight().equals(BallHeight.HIGH) ?
                         List.of(PlayerSkill.BALL_CONTROL, PlayerSkill.AERIAL): List.of(PlayerSkill.BALL_CONTROL);
-                case SHOT -> List.of(PlayerSkill.REFLEXES);
+                case LOW_SHOT -> List.of(PlayerSkill.REFLEXES);
+                case ONE_TO_ONE_SHOT -> List.of(PlayerSkill.REFLEXES);
+                case HEADER_SHOT -> List.of(PlayerSkill.REFLEXES);
             };
 
         }
@@ -80,12 +90,14 @@ public enum DuelType {
             case PASSING_HIGH -> Action.PASS;
             case POSITIONAL -> Action.POSITION;
             case BALL_CONTROL -> Action.TACKLE;
-            case SHOT -> Action.SHOOT;
+            case LOW_SHOT -> Action.SHOOT;
+            case ONE_TO_ONE_SHOT -> Action.SHOOT;
+            case HEADER_SHOT -> Action.SHOOT;
         };
     }
 
     // Certain duels involve the movement of the ball whereas others occur in the same area
     public boolean movesBall() {
-        return List.of(DuelType.PASSING_LOW, DuelType.PASSING_HIGH, DuelType.SHOT).contains(this);
+        return List.of(DuelType.PASSING_LOW, DuelType.PASSING_HIGH, DuelType.LOW_SHOT, DuelType.ONE_TO_ONE_SHOT, DuelType.HEADER_SHOT).contains(this);
     }
 }

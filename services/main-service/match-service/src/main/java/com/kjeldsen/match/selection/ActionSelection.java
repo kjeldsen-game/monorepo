@@ -25,7 +25,9 @@ public class ActionSelection {
         List<Action> legalActions = state.legalActions();
         List<Action> actions = filterActions(legalActions, state, player);
         int size = actions.size();
-        return actions.get(new Random().nextInt(size));
+        Action selectedAction = actions.get(new Random().nextInt(size));
+        log.info("Valid actions: {}, selected action:: {}", actions, selectedAction);
+        return selectedAction;
     }
 
     static List<Action> filterActions(List<Action> legalActions, GameState state, Player player) {

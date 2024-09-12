@@ -1,8 +1,11 @@
 package com.kjeldsen.match.selection;
 
 import com.kjeldsen.match.entities.Action;
+import com.kjeldsen.match.entities.Play;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.duel.DuelType;
+import com.kjeldsen.match.state.BallHeight;
+import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.player.domain.PlayerReceptionPreference;
 
 import java.util.Random;
@@ -12,7 +15,8 @@ public class DuelTypeSelection {
     /*
      * Selects duel type for and action.
      */
-    public static DuelType select(Action action, Player receiver) {
+    public static DuelType select(GameState state, Action action, Player receiver) {
+
         return switch (action) {
             case PASS -> {
                 if (PlayerReceptionPreference.DEMAND_LOW.equals(receiver.getReceptionPreference())) {
@@ -35,7 +39,25 @@ public class DuelTypeSelection {
             // won, then they initiate the following ball control duel, so the action is a tackle
             // and not a dribble since actions are framed from the perspective of the initiator.
             case TACKLE -> DuelType.BALL_CONTROL;
-            case SHOOT -> DuelType.SHOT;
+            case SHOOT -> {
+                DuelType result = DuelType.LOW_SHOT;
+
+                Play lastPlay = null;
+                if (state.lastPlay().isPresent()) {
+                    lastPlay = state.lastPlay().get();
+                    if (BallHeight.HIGH.equals(lastPlay.getBallState().getHeight())) {
+                        yield DuelType.HEADER_SHOT;
+                    }
+                    if (DuelType.POSITIONAL.equals(lastPlay.getDuel().getType())) {
+                        yield DuelType.ONE_TO_ONE_SHOT;
+                    }
+                    if (DuelType.BALL_CONTROL.equals(lastPlay.getDuel().getType())) {
+                        yield DuelType.LOW_SHOT;
+                    }
+                }
+
+                yield result;
+            }
         };
 
     }

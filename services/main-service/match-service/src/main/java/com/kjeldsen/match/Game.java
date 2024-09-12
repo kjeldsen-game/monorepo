@@ -120,7 +120,8 @@ public class Game {
         // Generate a duel based on the action of the play. This requires a challenger - the person
         // to defend against the action by engaging in the duel - and for some actions (e.g. pass)
         // also a receiver. Player selection is also delegated to the selection module.
-        DuelType duelType = DuelTypeSelection.select(action, receiver);
+        DuelType duelType = DuelTypeSelection.select(state, action, receiver);
+
         // In some cases it's possible that there is no challenger. This may be an exception (e.g.
         // if no goalkeeper is present) or permitted behaviour (e.g. if a team doesn't have a
         // defender to challenger an attacker in a particular area). Handling of null pointers in
@@ -140,7 +141,7 @@ public class Game {
         // The duel can be created once its result is determined. Any details about the duel that
         // need to be stored for future analysis should be set in the duel DTO and saved as part of
         // the duel here.
-        DuelDTO outcome = DuelExecution.executeDuel(params);
+        DuelDTO outcome = DuelExecution.executeDuel(state, params);
 
         Duel duel = Duel.builder()
             .type(outcome.getParams().getDuelType())

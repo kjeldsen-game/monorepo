@@ -7,6 +7,7 @@ import com.kjeldsen.match.entities.duel.DuelType;
 import com.kjeldsen.match.execution.DuelParams;
 import com.kjeldsen.match.selection.DuelTypeSelection;
 import com.kjeldsen.match.selection.ReceiverSelection;
+import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.GameStateException;
 import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PitchArea.PitchFile;
@@ -24,7 +25,7 @@ public class Orders {
      * Applies player orders by modifying duel parameters
      */
 
-    public static DuelParams apply(DuelParams params, PlayerOrder order) {
+    public static DuelParams apply(GameState state, DuelParams params, PlayerOrder order) {
         // Player orders are not applied to every single play. For now whether a player order is
         // applied is randomly determined.
         double playerOrderProbability = 0.5;
@@ -37,15 +38,15 @@ public class Orders {
             return params;
         }
         return switch (order) {
-            case PASS_FORWARD -> passForward(params);
-            case LONG_SHOT -> longShot(params);
-            case CHANGE_FLANK -> changeFlank(params);
+            case PASS_FORWARD -> passForward(state, params);
+            case LONG_SHOT -> longShot(state, params);
+            case CHANGE_FLANK -> changeFlank(state, params);
             case NONE -> params;
         };
     }
 
     // Moves the ball forward from the midfield by passing to a forward player, if there is one
-    private static DuelParams passForward(DuelParams params) {
+    private static DuelParams passForward(GameState state, DuelParams params) {
         if (params.getState().getBallState().getArea().rank() != PitchRank.MIDDLE) {
             return params;
         }
@@ -55,7 +56,7 @@ public class Orders {
             return params;
         }
 
-        DuelType duelType = DuelTypeSelection.select(Action.PASS, receiver.get());
+        DuelType duelType = DuelTypeSelection.select(state, Action.PASS, receiver.get());
 
         return DuelParams.builder()
             .state(params.getState())
@@ -69,7 +70,7 @@ public class Orders {
     }
 
     // Shoots from midfield
-    private static DuelParams longShot(DuelParams params) {
+    private static DuelParams longShot(GameState state, DuelParams params) {
         if (params.getState().getBallState().getArea().rank() != PitchRank.MIDDLE) {
             return params;
         }
@@ -84,7 +85,7 @@ public class Orders {
         skills.put(PlayerSkill.REFLEXES, skills.get(PlayerSkill.REFLEXES) + bonus);
         goalkeeper.setSkills(skills);
 
-        DuelType duelType = DuelTypeSelection.select(Action.SHOOT, null);
+        DuelType duelType = DuelTypeSelection.select(state, Action.SHOOT, null);
 
         return DuelParams.builder()
             .state(params.getState())
@@ -96,7 +97,7 @@ public class Orders {
             .build();
     }
 
-    private static DuelParams changeFlank(DuelParams params) {
+    private static DuelParams changeFlank(GameState state, DuelParams params) {
         PitchFile file = params.getState().getBallState().getArea().file();
         PitchRank rank = params.getState().getBallState().getArea().rank();
 
@@ -116,7 +117,7 @@ public class Orders {
         }
 
         // TODO change flank should allways be high pass
-        DuelType duelType = DuelTypeSelection.select(Action.PASS, receiver.get());
+        DuelType duelType = DuelTypeSelection.select(state, Action.PASS, receiver.get());
 
         return DuelParams.builder()
             .state(params.getState())

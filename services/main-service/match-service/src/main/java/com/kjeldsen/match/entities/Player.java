@@ -77,7 +77,7 @@ public class Player {
                 // Here the goalkeeper is attempting to pass the ball, but does not have the passing
                 // skill. In this case, use the `organization` skill.
                 skillValue = skills.get(PlayerSkill.ORGANIZATION);
-            } else if (duelType == DuelType.SHOT && role == DuelRole.CHALLENGER) {
+            } else if (duelType == DuelType.LOW_SHOT && role == DuelRole.CHALLENGER) {
                 // Here the goalkeeper is attempting to save a shot - this requires the reflexes`
                 // skill.
                 skillValue = skills.get(PlayerSkill.REFLEXES);
