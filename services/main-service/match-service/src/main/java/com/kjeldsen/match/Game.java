@@ -80,8 +80,8 @@ public class Game {
         log.info("Initialising game state for match {}", match.getId());
         GameState state = GameState.init(match);
 
-        log.info("Home team:\n{}", match.getHome());
-        log.info("Away team:\n{}", match.getAway());
+        //log.info("Home team:\n{}", match.getHome());
+        //log.info("Away team:\n{}", match.getAway());
 
         return state;
     }

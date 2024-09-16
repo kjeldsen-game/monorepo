@@ -42,9 +42,9 @@ public class ActionSelection {
             // Prevents players in back area from positioning - this is required to force defensive
             // midfielders (who have receded into the back area) to pass the ball forward.
             .filter(action -> !(action == Action.POSITION && pitchArea.rank() == PitchRank.BACK))
-            // Prevents forwards from passing the ball
+            // Prevents forwards from passing the ball when in penalty box
             .filter(action ->
-                !(action == Action.PASS && player.getPosition() == PlayerPosition.FORWARD && pitchArea.rank() == PitchRank.FORWARD))
+                !(action == Action.PASS && player.getPosition() == PlayerPosition.FORWARD && pitchArea.rank() == PitchRank.FORWARD && pitchArea.file() == PitchArea.PitchFile.CENTRE))
             // Prevents certain players from shooting
             .filter(action -> !(action == Action.SHOOT && shootingProhibited(player, pitchArea)))
             .toList();
@@ -60,6 +60,6 @@ public class ActionSelection {
     }
 
     private static boolean shootingProhibited(Player player, PitchArea pitchArea) {
-        return !player.getPosition().isForward() || pitchArea.rank() != PitchRank.FORWARD;
+        return !player.getPosition().isForward() || pitchArea.rank() != PitchRank.FORWARD || pitchArea.file() != PitchArea.PitchFile.CENTRE;
     }
 }

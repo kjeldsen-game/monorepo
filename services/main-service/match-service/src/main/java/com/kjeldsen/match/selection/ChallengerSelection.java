@@ -25,7 +25,7 @@ public class ChallengerSelection {
             case PASSING_LOW, PASSING_HIGH -> passingDuelChallenger(state, pitchArea);
             case BALL_CONTROL -> ballControlDuelChallenger(state);
             case POSITIONAL -> positionalDuelChallenger(state, pitchArea);
-            case LOW_SHOT, ONE_TO_ONE_SHOT, HEADER_SHOT -> players.stream()
+            case LOW_SHOT, ONE_TO_ONE_SHOT, HEADER_SHOT, LONG_SHOT -> players.stream()
                 .filter(p -> p.getPosition() == PlayerPosition.GOALKEEPER)
                 .findAny()
                 .orElseThrow(() -> new GameStateException(state, "No goalkeeper found"));

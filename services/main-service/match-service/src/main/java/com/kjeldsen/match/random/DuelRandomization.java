@@ -44,7 +44,7 @@ public class DuelRandomization {
     // smaller and higher range of performance values. This value is also adjusted based on their
     // performance in previous duels to avoid too many consecutive wins/losses.
     public static int performance(GameState state, Player player, DuelType type, DuelRole role) {
-        List<PlayerSkill> requiredSkills = type.requiredSkills(role, state.getBallState());
+        List<PlayerSkill> requiredSkills = type.requiredSkills(role, state.getBallState().getHeight());
         // TODO - experience adjustment
         int adjustment = previousDuel(state, player, requiredSkills, state.getBallState())
             .map(duel -> {
@@ -67,11 +67,11 @@ public class DuelRandomization {
             .map(Play::getDuel)
             .filter(duel -> {
                 if (Objects.equals(duel.getInitiator().getId(), player.getId())) {
-                    return duel.getType().requiredSkills(DuelRole.INITIATOR, ballState).containsAll(skills);
+                    return duel.getType().requiredSkills(DuelRole.INITIATOR, ballState.getHeight()).containsAll(skills);
                 }
                 if (duel.getChallenger() != null) {
                     if (Objects.equals(duel.getChallenger().getId(), player.getId())) {
-                        return duel.getType().requiredSkills(DuelRole.CHALLENGER, ballState).containsAll(skills);
+                        return duel.getType().requiredSkills(DuelRole.CHALLENGER, ballState.getHeight()).containsAll(skills);
                     }
                 }
                 return false;

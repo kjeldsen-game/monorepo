@@ -37,7 +37,7 @@ public class DuelExecution {
             case POSITIONAL -> handlePositionalDuel(duelParams);
             case BALL_CONTROL -> handleBallControlDuel(duelParams);
             case PASSING_LOW, PASSING_HIGH -> handlePassDuel(duelParams);
-            case LOW_SHOT, ONE_TO_ONE_SHOT, HEADER_SHOT -> handleShotDuel(duelParams);
+            case LOW_SHOT, ONE_TO_ONE_SHOT, HEADER_SHOT, LONG_SHOT -> handleShotDuel(duelParams);
         };
     }
 
@@ -116,7 +116,7 @@ public class DuelExecution {
         Map<String, Integer> teamAssistance,
         Map<DuelRole, Integer> adjustedAssistance) {
 
-        int skillPoints = player.duelSkill(DuelType.POSITIONAL, role, state.getBallState());
+        int skillPoints = player.duelSkill(DuelType.POSITIONAL, role, state.getBallState().getHeight());
         int performance =
             DuelRandomization.performance(state, player, DuelType.POSITIONAL, role);
 
@@ -211,7 +211,7 @@ public class DuelExecution {
         DuelStats initiatorStats = buildDuelStats(
             state,
             initiator,
-            DuelType.LOW_SHOT,
+            params.getDuelType(),
             DuelRole.INITIATOR);
 
         if (challenger.getPosition() != PlayerPosition.GOALKEEPER) {
@@ -221,7 +221,7 @@ public class DuelExecution {
         DuelStats challengerStats = buildDuelStats(
             state,
             challenger,
-            DuelType.LOW_SHOT,
+            params.getDuelType(),
             DuelRole.CHALLENGER);
 
         DuelResult result =
@@ -246,7 +246,7 @@ public class DuelExecution {
         DuelType type,
         DuelRole role) {
 
-        int skillPoints = player.duelSkill(type, role, state.getBallState());
+        int skillPoints = player.duelSkill(type, role, state.getBallState().getHeight());
         int performance = DuelRandomization.performance(state, player, type, role);
 
         if (type == DuelType.POSITIONAL) {

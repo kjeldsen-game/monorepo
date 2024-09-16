@@ -16,7 +16,8 @@ public enum DuelType {
     BALL_CONTROL,
     LOW_SHOT,
     ONE_TO_ONE_SHOT,
-    HEADER_SHOT;
+    HEADER_SHOT,
+    LONG_SHOT;
 
     // Future duels
     // AGGRESSION,
@@ -34,7 +35,7 @@ public enum DuelType {
             case PASSING_LOW, PASSING_HIGH -> List.of(Action.POSITION);
             case POSITIONAL -> List.of(Action.PASS, Action.SHOOT);
             case BALL_CONTROL -> List.of(Action.PASS, Action.SHOOT);
-            case LOW_SHOT, ONE_TO_ONE_SHOT, HEADER_SHOT -> List.of(); // Goal - no valid actions available after scoring
+            case LOW_SHOT, ONE_TO_ONE_SHOT, HEADER_SHOT, LONG_SHOT -> List.of(); // Goal - no valid actions available after scoring
         };
     }
 
@@ -46,34 +47,36 @@ public enum DuelType {
             case PASSING_LOW, PASSING_HIGH -> List.of(Action.PASS);
             case POSITIONAL -> List.of(Action.TACKLE);
             case BALL_CONTROL -> List.of(Action.PASS, Action.SHOOT);
-            case LOW_SHOT, ONE_TO_ONE_SHOT, HEADER_SHOT -> List.of(Action.PASS); // Goalkeeper save
+            case LOW_SHOT, ONE_TO_ONE_SHOT, HEADER_SHOT, LONG_SHOT -> List.of(Action.PASS); // Goalkeeper save
         };
     }
 
     // The skills involved in the particular duel type. This depends on whether the player in the
     // duel is the initiator or challenger.
-    public List<PlayerSkill> requiredSkills(DuelRole role, BallState ballState) {
+    public List<PlayerSkill> requiredSkills(DuelRole role, BallHeight ballHeight) {
         if (role == DuelRole.INITIATOR) {
             return switch (this) {
                 case PASSING_LOW -> List.of(PlayerSkill.PASSING);
                 case PASSING_HIGH -> List.of(PlayerSkill.PASSING);
                 case POSITIONAL -> List.of(PlayerSkill.OFFENSIVE_POSITIONING);
-                case BALL_CONTROL -> ballState.getHeight().equals(BallHeight.HIGH) ?
+                case BALL_CONTROL -> BallHeight.HIGH.equals(ballHeight) ?
                     List.of(PlayerSkill.TACKLING, PlayerSkill.AERIAL): List.of(PlayerSkill.TACKLING);
                 case LOW_SHOT -> List.of(PlayerSkill.SCORING);
                 case ONE_TO_ONE_SHOT -> List.of(PlayerSkill.SCORING);
                 case HEADER_SHOT -> List.of(PlayerSkill.SCORING, PlayerSkill.AERIAL);
+                case LONG_SHOT -> List.of(PlayerSkill.SCORING, PlayerSkill.PASSING);
             };
         } else {
             return switch (this) {
                 case PASSING_LOW -> List.of(PlayerSkill.INTERCEPTING);
                 case PASSING_HIGH -> List.of(PlayerSkill.INTERCEPTING);
                 case POSITIONAL -> List.of(PlayerSkill.DEFENSIVE_POSITIONING);
-                case BALL_CONTROL -> ballState.getHeight().equals(BallHeight.HIGH) ?
+                case BALL_CONTROL -> BallHeight.HIGH.equals(ballHeight) ?
                         List.of(PlayerSkill.BALL_CONTROL, PlayerSkill.AERIAL): List.of(PlayerSkill.BALL_CONTROL);
                 case LOW_SHOT -> List.of(PlayerSkill.REFLEXES);
-                case ONE_TO_ONE_SHOT -> List.of(PlayerSkill.REFLEXES);
+                case ONE_TO_ONE_SHOT -> List.of(PlayerSkill.ONE_ON_ONE);
                 case HEADER_SHOT -> List.of(PlayerSkill.REFLEXES);
+                case LONG_SHOT -> List.of(PlayerSkill.REFLEXES);
             };
 
         }
@@ -81,13 +84,10 @@ public enum DuelType {
 
     public Action getAction() {
         return switch (this) {
-            case PASSING_LOW -> Action.PASS;
-            case PASSING_HIGH -> Action.PASS;
+            case PASSING_LOW, PASSING_HIGH -> Action.PASS;
             case POSITIONAL -> Action.POSITION;
             case BALL_CONTROL -> Action.TACKLE;
-            case LOW_SHOT -> Action.SHOOT;
-            case ONE_TO_ONE_SHOT -> Action.SHOOT;
-            case HEADER_SHOT -> Action.SHOOT;
+            case LOW_SHOT, ONE_TO_ONE_SHOT, HEADER_SHOT, LONG_SHOT -> Action.SHOOT;
         };
     }
 
@@ -107,7 +107,8 @@ public enum DuelType {
         return List.of(
                         DuelType.LOW_SHOT,
                         DuelType.ONE_TO_ONE_SHOT,
-                        DuelType.HEADER_SHOT)
+                        DuelType.HEADER_SHOT,
+                        DuelType.LONG_SHOT)
                 .contains(this);
     }
 

@@ -38,6 +38,7 @@ public class MatchDelegateTest {
     private Match match;
 
     private static final String TEST_PLAYER_ID = "1";
+
     @BeforeEach
     void setUp() {
 

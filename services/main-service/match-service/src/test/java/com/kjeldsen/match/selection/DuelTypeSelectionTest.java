@@ -1,6 +1,6 @@
 package com.kjeldsen.match.selection;
 
-import com.kjeldsen.match.engine.RandomHelper;
+import com.kjeldsen.match.common.RandomHelper;
 import com.kjeldsen.match.entities.Action;
 import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Play;
@@ -22,11 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.kjeldsen.match.engine.RandomHelper.genActivePlayers;
-import static com.kjeldsen.match.engine.RandomHelper.genBenchPlayers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DuelTypeSelectionTest {
 
@@ -119,8 +115,8 @@ class DuelTypeSelectionTest {
         Team home = Team.builder()
             .id(RandomStringUtils.random(5))
             .build();
-        List<Player> players = genActivePlayers(home);
-        List<Player> bench = genBenchPlayers(home);
+        List<Player> players = RandomHelper.genActivePlayers(home);
+        List<Player> bench = RandomHelper.genBenchPlayers(home);
         players.remove(1);
         players.add(player);
         home = Team.builder()

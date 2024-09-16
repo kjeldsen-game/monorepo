@@ -3,9 +3,11 @@ package com.kjeldsen.match.selection;
 import com.kjeldsen.match.entities.Action;
 import com.kjeldsen.match.entities.Play;
 import com.kjeldsen.match.entities.Player;
+import com.kjeldsen.match.entities.duel.DuelOrigin;
 import com.kjeldsen.match.entities.duel.DuelType;
 import com.kjeldsen.match.state.BallHeight;
 import com.kjeldsen.match.state.GameState;
+import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.player.domain.PlayerReceptionPreference;
 
 import java.util.Random;
@@ -45,6 +47,10 @@ public class DuelTypeSelection {
                 Play lastPlay = null;
                 if (state.lastPlay().isPresent()) {
                     lastPlay = state.lastPlay().get();
+                    // does not work with last play, as player order y being set at this moment.
+//                    if (DuelOrigin.PLAYER_ORDER.equals(lastPlay.getDuel().getOrigin())) {
+//                        yield DuelType.LONG_SHOT;
+//                    }
                     if (BallHeight.HIGH.equals(lastPlay.getBallState().getHeight())) {
                         yield DuelType.HEADER_SHOT;
                     }

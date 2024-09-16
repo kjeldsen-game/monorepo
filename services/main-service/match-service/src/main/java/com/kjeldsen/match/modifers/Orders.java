@@ -85,7 +85,7 @@ public class Orders {
         skills.put(PlayerSkill.REFLEXES, skills.get(PlayerSkill.REFLEXES) + bonus);
         goalkeeper.setSkills(skills);
 
-        DuelType duelType = DuelTypeSelection.select(state, Action.SHOOT, null);
+        DuelType duelType = DuelType.LONG_SHOT;
 
         return DuelParams.builder()
             .state(params.getState())
