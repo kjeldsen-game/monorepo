@@ -75,7 +75,7 @@ public final class RandomHelper {
 
     private static Player genPlayerWithPosition(Team team, PlayerStatus status, PlayerPosition position) {
         return Player.builder()
-                .id(RandomStringUtils.random(5))
+                .id(RandomStringUtils.randomNumeric(5))
                 .teamId(team.getId())
                 .name(faker.name().fullName())
                 .status(status)
@@ -87,7 +87,7 @@ public final class RandomHelper {
 
     public static Player genPlayer(Team team) {
         return Player.builder()
-            .id(RandomStringUtils.random(5))
+            .id(RandomStringUtils.randomNumeric(5))
             .teamId(team.getId())
             .name(faker.name().fullName())
             .status(PlayerStatus.ACTIVE)
@@ -116,7 +116,7 @@ public final class RandomHelper {
 
     public static Team genTeam() {
         Team team = Team.builder()
-            .id(RandomStringUtils.random(5))
+            .id(RandomStringUtils.randomNumeric(5))
             .build();
         List<Player> players = genActivePlayers(team);
         List<Player> bench = genBenchPlayers(team);

@@ -84,7 +84,7 @@ public class GameState {
             .map(Play::getDuel)
             .map(lastDuel -> {
                 // After a goal the only valid action is a goal-kick (treated as a pass)
-                if (lastDuel.getType() == DuelType.SHOT) {
+                if (lastDuel.getType().isShot()) {
                     return List.of(Action.PASS);
                 }
                 // For all other cases we consult the duel type to determine what is allowed next.

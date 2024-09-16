@@ -47,17 +47,7 @@ public class Game {
     // of every play that was executed during the match.
     public static GameState play(Match match) {
 
-        if (!TeamFormationValidator.validate(match.getHome()).getValid()) throw new RuntimeException("Home team formation is invalid.");
-        if (!TeamFormationValidator.validate(match.getAway()).getValid()) throw new RuntimeException("Away team formation is invalid.");
-
-        // The game state is initialised to a pre-kick-off state based on the team data.
-        // At this state no player is in possession of the ball but a team has been randomly
-        // selected to start the game.
-        log.info("Initialising game state for match {}", match.getId());
-        GameState state = GameState.init(match);
-
-        log.info("Home team:\n{}", match.getHome());
-        log.info("Away team:\n{}", match.getAway());
+        GameState state = init(match);
 
         state = kickOff(state);
 
@@ -76,6 +66,22 @@ public class Game {
         log.info(
             "Match ended. Result: {}",
             state.getHome().getScore() + " - " + state.getAway().getScore());
+
+        return state;
+    }
+
+    public static GameState init(Match match) {
+        if (!TeamFormationValidator.validate(match.getHome()).getValid()) throw new RuntimeException("Home team formation is invalid.");
+        if (!TeamFormationValidator.validate(match.getAway()).getValid()) throw new RuntimeException("Away team formation is invalid.");
+
+        // The game state is initialised to a pre-kick-off state based on the team data.
+        // At this state no player is in possession of the ball but a team has been randomly
+        // selected to start the game.
+        log.info("Initialising game state for match {}", match.getId());
+        GameState state = GameState.init(match);
+
+        //log.info("Home team:\n{}", match.getHome());
+        //log.info("Away team:\n{}", match.getAway());
 
         return state;
     }
@@ -120,7 +126,8 @@ public class Game {
         // Generate a duel based on the action of the play. This requires a challenger - the person
         // to defend against the action by engaging in the duel - and for some actions (e.g. pass)
         // also a receiver. Player selection is also delegated to the selection module.
-        DuelType duelType = DuelTypeSelection.select(action, receiver);
+        DuelType duelType = DuelTypeSelection.select(state, action, receiver);
+
         // In some cases it's possible that there is no challenger. This may be an exception (e.g.
         // if no goalkeeper is present) or permitted behaviour (e.g. if a team doesn't have a
         // defender to challenger an attacker in a particular area). Handling of null pointers in
@@ -140,7 +147,7 @@ public class Game {
         // The duel can be created once its result is determined. Any details about the duel that
         // need to be stored for future analysis should be set in the duel DTO and saved as part of
         // the duel here.
-        DuelDTO outcome = DuelExecution.executeDuel(params);
+        DuelDTO outcome = DuelExecution.executeDuel(state, params);
 
         Duel duel = Duel.builder()
             .type(outcome.getParams().getDuelType())

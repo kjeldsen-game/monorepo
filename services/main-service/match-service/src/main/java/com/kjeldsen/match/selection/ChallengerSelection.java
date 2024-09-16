@@ -22,11 +22,10 @@ public class ChallengerSelection {
         // correctly oriented pitch area must be passed down through the selection methods.
         PitchArea pitchArea = state.getBallState().getArea().flipPerspective();
         return switch (duelType) {
-            case PASSING_LOW -> passingDuelChallenger(state, pitchArea);
-            case PASSING_HIGH -> passingDuelChallenger(state, pitchArea);
+            case PASSING_LOW, PASSING_HIGH -> passingDuelChallenger(state, pitchArea);
             case BALL_CONTROL -> ballControlDuelChallenger(state);
             case POSITIONAL -> positionalDuelChallenger(state, pitchArea);
-            case SHOT -> players.stream()
+            case LOW_SHOT, ONE_TO_ONE_SHOT, HEADER_SHOT, LONG_SHOT -> players.stream()
                 .filter(p -> p.getPosition() == PlayerPosition.GOALKEEPER)
                 .findAny()
                 .orElseThrow(() -> new GameStateException(state, "No goalkeeper found"));

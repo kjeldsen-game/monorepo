@@ -2,8 +2,10 @@ package com.kjeldsen.match.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.kjeldsen.match.entities.duel.Duel;
 import com.kjeldsen.match.entities.duel.DuelRole;
 import com.kjeldsen.match.entities.duel.DuelType;
+import com.kjeldsen.match.state.BallHeight;
 import com.kjeldsen.match.state.BallState;
 import com.kjeldsen.match.utils.JsonUtils;
 import com.kjeldsen.player.domain.PlayerOrder;
@@ -43,8 +45,8 @@ public class Player {
 
     // Instead of accessing the skill points directly, this method should be used to determine the
     // skill level of the player via the duel logic
-    public Integer duelSkill(DuelType duelType, DuelRole role, BallState ballState) {
-        List<PlayerSkill> requiredSkills = duelType.requiredSkills(role, ballState);
+    public Integer duelSkill(DuelType duelType, DuelRole role, BallHeight ballHeight) {
+        List<PlayerSkill> requiredSkills = duelType.requiredSkills(role, ballHeight);
         Integer skillValue = 0;
 
         if (!PlayerPosition.GOALKEEPER.equals(this.getPosition())) {
@@ -68,19 +70,42 @@ public class Player {
                 if (consideredSkillsCounter > 0) {
                     skillValue = average / consideredSkillsCounter;
                 }
+
+                // TODO this logic should not be hardcoded. design needed.
+                if (duelType.equals(DuelType.HEADER_SHOT)) {
+                    int aerialSkill = skills.get(PlayerSkill.AERIAL);
+                    if (skillValue > aerialSkill + 10) skillValue = aerialSkill + 10;
+                }
+
+                // TODO this logic should not be hardcoded. design needed.
+                if (duelType.equals(DuelType.LONG_SHOT)) {
+                    int passingSkill = skills.get(PlayerSkill.PASSING);
+                    if (skillValue > passingSkill + 10) skillValue = passingSkill + 10;
+                }
+
             }
         } else {
             // A value may not be present if the player is a goalkeeper, since goalkeepers have a
             // different set of skills.
             // TOD - refactor when implementing goalkeeper skills properly
-            if ((duelType == DuelType.PASSING_LOW || duelType == DuelType.PASSING_HIGH) && role == DuelRole.INITIATOR) {
+            if (duelType.isPassing() && role == DuelRole.INITIATOR) {
                 // Here the goalkeeper is attempting to pass the ball, but does not have the passing
                 // skill. In this case, use the `organization` skill.
                 skillValue = skills.get(PlayerSkill.ORGANIZATION);
-            } else if (duelType == DuelType.SHOT && role == DuelRole.CHALLENGER) {
+            } else if (duelType.isShot() && role == DuelRole.CHALLENGER) {
                 // Here the goalkeeper is attempting to save a shot - this requires the reflexes`
                 // skill.
-                skillValue = skills.get(PlayerSkill.REFLEXES);
+                switch (duelType) {
+                    case LOW_SHOT, LONG_SHOT:
+                        skillValue = skills.get(PlayerSkill.REFLEXES);
+                        break;
+                    case ONE_TO_ONE_SHOT:
+                        skillValue = skills.get(PlayerSkill.ONE_ON_ONE);
+                        break;
+                    case HEADER_SHOT:
+                        skillValue = skills.get(PlayerSkill.REFLEXES);
+                        break;
+                }
             }
         }
 
@@ -89,6 +114,9 @@ public class Player {
         return skillValue;
     }
 
+    public Integer getSkillValue(PlayerSkill skill) {
+        return this.getSkills().get(skill);
+    }
 
     @Override
     public String toString() {
