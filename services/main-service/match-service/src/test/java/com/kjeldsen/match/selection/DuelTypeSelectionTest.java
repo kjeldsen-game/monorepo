@@ -38,7 +38,7 @@ class DuelTypeSelectionTest {
         Play passPlay = Play.builder().duel(Duel.builder().build()).action(Action.PASS).build();
         List<Play> previousPlays = List.of(passPlay);
 
-        Player forward = Player.builder().position(PlayerPosition.FORWARD).build();
+        Player forward = Player.builder().position(PlayerPosition.FORWARD).receptionPreference(PlayerReceptionPreference.DEMAND_LOW).build();
         BallState ballState = new BallState(forward, PitchArea.CENTRE_FORWARD, BallHeight.GROUND);
         GameState state = setGameState(previousPlays, forward, ballState);
 
@@ -51,7 +51,7 @@ class DuelTypeSelectionTest {
         Play passPlay = Play.builder().duel(Duel.builder().build()).action(Action.PASS).build();
         List<Play> previousPlays = List.of(passPlay);
 
-        Player forward = Player.builder().position(PlayerPosition.FORWARD).build();
+        Player forward = Player.builder().position(PlayerPosition.FORWARD).receptionPreference(PlayerReceptionPreference.DEMAND_HIGH).build();
         BallState ballState = new BallState(forward, PitchArea.CENTRE_FORWARD, BallHeight.GROUND);
         GameState state = setGameState(previousPlays, forward, ballState);
 
@@ -61,9 +61,16 @@ class DuelTypeSelectionTest {
 
     @Test
     void lowShotAfterBallControlWin() {
-        Play passPlay = Play.builder().duel(Duel.builder().build()).action(Action.PASS).build();
-        Play positionalPlay = Play.builder().duel(Duel.builder().build()).action(Action.POSITION).build();
-        Play tacklePlay = Play.builder().duel(Duel.builder().build()).action(Action.TACKLE).build();
+
+        Player midfielder = Player.builder().position(PlayerPosition.CENTRE_MIDFIELDER).build();
+        BallState lastPlayBallState = new BallState(midfielder, PitchArea.CENTRE_FORWARD, BallHeight.GROUND);
+
+        Play passPlay = Play.builder().duel(Duel.builder().type(DuelType.PASSING_LOW).build())
+                .ballState(lastPlayBallState).action(Action.PASS).build();
+        Play positionalPlay = Play.builder().duel(Duel.builder().type(DuelType.POSITIONAL).build())
+                .ballState(lastPlayBallState).action(Action.POSITION).build();
+        Play tacklePlay = Play.builder().duel(Duel.builder().type(DuelType.BALL_CONTROL).build())
+                .ballState(lastPlayBallState).action(Action.TACKLE).build();
         List<Play> previousPlays = List.of(passPlay, positionalPlay, tacklePlay);
 
         Player forward = Player.builder().position(PlayerPosition.FORWARD).build();
@@ -76,8 +83,13 @@ class DuelTypeSelectionTest {
 
     @Test
     void oneToOneShotAfterPositionalWin() {
-        Play passPlay = Play.builder().duel(Duel.builder().build()).action(Action.PASS).build();
-        Play positionalPlay = Play.builder().duel(Duel.builder().build()).action(Action.POSITION).build();
+        Player midfielder = Player.builder().position(PlayerPosition.CENTRE_MIDFIELDER).build();
+        BallState lastPlayBallState = new BallState(midfielder, PitchArea.CENTRE_FORWARD, BallHeight.GROUND);
+
+        Play passPlay = Play.builder().duel(Duel.builder().type(DuelType.PASSING_LOW).build())
+                .ballState(lastPlayBallState).action(Action.PASS).build();
+        Play positionalPlay = Play.builder().duel(Duel.builder().type(DuelType.POSITIONAL).build())
+                .ballState(lastPlayBallState).action(Action.POSITION).build();
         List<Play> previousPlays = List.of(passPlay, positionalPlay);
 
         Player forward = Player.builder().position(PlayerPosition.FORWARD).build();

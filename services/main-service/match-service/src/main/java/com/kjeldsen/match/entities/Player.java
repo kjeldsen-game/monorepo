@@ -73,11 +73,11 @@ public class Player {
             // A value may not be present if the player is a goalkeeper, since goalkeepers have a
             // different set of skills.
             // TOD - refactor when implementing goalkeeper skills properly
-            if ((duelType == DuelType.PASSING_LOW || duelType == DuelType.PASSING_HIGH) && role == DuelRole.INITIATOR) {
+            if (duelType.isPassing() && role == DuelRole.INITIATOR) {
                 // Here the goalkeeper is attempting to pass the ball, but does not have the passing
                 // skill. In this case, use the `organization` skill.
                 skillValue = skills.get(PlayerSkill.ORGANIZATION);
-            } else if (duelType == DuelType.LOW_SHOT && role == DuelRole.CHALLENGER) {
+            } else if (duelType.isShot() && role == DuelRole.CHALLENGER) {
                 // Here the goalkeeper is attempting to save a shot - this requires the reflexes`
                 // skill.
                 skillValue = skills.get(PlayerSkill.REFLEXES);

@@ -3,6 +3,7 @@ package com.kjeldsen.match.entities.duel;
 import com.kjeldsen.match.entities.Action;
 import com.kjeldsen.match.state.BallHeight;
 import com.kjeldsen.match.state.BallState;
+import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerSkill;
 import java.util.List;
 
@@ -30,13 +31,10 @@ public enum DuelType {
     // who receives the ball is the one who can take one of the actions here.
     public List<Action> winActions() {
         return switch (this) {
-            case PASSING_LOW -> List.of(Action.POSITION);
-            case PASSING_HIGH -> List.of(Action.POSITION);
+            case PASSING_LOW, PASSING_HIGH -> List.of(Action.POSITION);
             case POSITIONAL -> List.of(Action.PASS, Action.SHOOT);
             case BALL_CONTROL -> List.of(Action.PASS, Action.SHOOT);
-            case LOW_SHOT -> List.of(); // Goal - no valid actions available after scoring
-            case ONE_TO_ONE_SHOT -> List.of(); // Goal - no valid actions available after scoring
-            case HEADER_SHOT -> List.of(); // Goal - no valid actions available after scoring
+            case LOW_SHOT, ONE_TO_ONE_SHOT, HEADER_SHOT -> List.of(); // Goal - no valid actions available after scoring
         };
     }
 
@@ -45,13 +43,10 @@ public enum DuelType {
     // and loses, then the opposing player (the goalkeeper) only has a pass action available.
     public List<Action> loseActions() {
         return switch (this) {
-            case PASSING_LOW -> List.of(Action.PASS);
-            case PASSING_HIGH -> List.of(Action.PASS);
+            case PASSING_LOW, PASSING_HIGH -> List.of(Action.PASS);
             case POSITIONAL -> List.of(Action.TACKLE);
             case BALL_CONTROL -> List.of(Action.PASS, Action.SHOOT);
-            case LOW_SHOT -> List.of(Action.PASS); // Goalkeeper save
-            case ONE_TO_ONE_SHOT -> List.of(Action.PASS); // Goalkeeper save
-            case HEADER_SHOT -> List.of(Action.PASS); // Goalkeeper save
+            case LOW_SHOT, ONE_TO_ONE_SHOT, HEADER_SHOT -> List.of(Action.PASS); // Goalkeeper save
         };
     }
 
@@ -100,4 +95,20 @@ public enum DuelType {
     public boolean movesBall() {
         return List.of(DuelType.PASSING_LOW, DuelType.PASSING_HIGH, DuelType.LOW_SHOT, DuelType.ONE_TO_ONE_SHOT, DuelType.HEADER_SHOT).contains(this);
     }
+
+    public boolean isPassing() {
+        return List.of(
+                        DuelType.PASSING_LOW,
+                        DuelType.PASSING_HIGH)
+                .contains(this);
+    }
+
+    public boolean isShot() {
+        return List.of(
+                        DuelType.LOW_SHOT,
+                        DuelType.ONE_TO_ONE_SHOT,
+                        DuelType.HEADER_SHOT)
+                .contains(this);
+    }
+
 }

@@ -47,17 +47,7 @@ public class Game {
     // of every play that was executed during the match.
     public static GameState play(Match match) {
 
-        if (!TeamFormationValidator.validate(match.getHome()).getValid()) throw new RuntimeException("Home team formation is invalid.");
-        if (!TeamFormationValidator.validate(match.getAway()).getValid()) throw new RuntimeException("Away team formation is invalid.");
-
-        // The game state is initialised to a pre-kick-off state based on the team data.
-        // At this state no player is in possession of the ball but a team has been randomly
-        // selected to start the game.
-        log.info("Initialising game state for match {}", match.getId());
-        GameState state = GameState.init(match);
-
-        log.info("Home team:\n{}", match.getHome());
-        log.info("Away team:\n{}", match.getAway());
+        GameState state = init(match);
 
         state = kickOff(state);
 
@@ -76,6 +66,22 @@ public class Game {
         log.info(
             "Match ended. Result: {}",
             state.getHome().getScore() + " - " + state.getAway().getScore());
+
+        return state;
+    }
+
+    public static GameState init(Match match) {
+        if (!TeamFormationValidator.validate(match.getHome()).getValid()) throw new RuntimeException("Home team formation is invalid.");
+        if (!TeamFormationValidator.validate(match.getAway()).getValid()) throw new RuntimeException("Away team formation is invalid.");
+
+        // The game state is initialised to a pre-kick-off state based on the team data.
+        // At this state no player is in possession of the ball but a team has been randomly
+        // selected to start the game.
+        log.info("Initialising game state for match {}", match.getId());
+        GameState state = GameState.init(match);
+
+        log.info("Home team:\n{}", match.getHome());
+        log.info("Away team:\n{}", match.getAway());
 
         return state;
     }

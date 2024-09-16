@@ -5,11 +5,14 @@ import com.kjeldsen.match.common.RandomHelper;
 import com.kjeldsen.match.entities.Action;
 import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.MatchReport;
+import com.kjeldsen.match.entities.Play;
 import com.kjeldsen.match.entities.Team;
 import com.kjeldsen.match.state.GameState;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -81,11 +84,67 @@ class GameTest {
             .away(away)
             .build();
 
-        int runs = 1;
+        int runs = 100;
         for (int i = 0; i < runs; i++) {
             Game.play(match);
         }
         long duration = System.nanoTime() - start;
         System.out.printf("Duration: %d ms%n", duration / 1000000);
     }
+
+    @Test
+    @Disabled
+    void playSequence() {
+        long start = System.nanoTime();
+        Team home = RandomHelper.genTeam();
+        Team away = RandomHelper.genTeam();
+        Match match = Match.builder()
+                .id(java.util.UUID.randomUUID().toString())
+                .home(home)
+                .away(away)
+                .build();
+
+        int minutes = 90;
+        GameState state = Game.init(match);
+        state = Game.kickOff(state);
+
+        for (int i = 0; i < minutes; i++) {
+            state = Game.nextPlay(state);
+        }
+
+        System.out.println("Game finished: [" + state.getHome().getScore() + "-" + state.getAway().getScore() + "]");
+
+    }
+
+    @Test
+    @Disabled
+    void printMatchBallHight() {
+        long start = System.nanoTime();
+        Team home = RandomHelper.genTeam();
+        Team away = RandomHelper.genTeam();
+        Match match = Match.builder()
+                .id(java.util.UUID.randomUUID().toString())
+                .home(home)
+                .away(away)
+                .build();
+
+        int minutes = 90;
+        GameState state = Game.init(match);
+        state = Game.kickOff(state);
+
+        for (int i = 0; i < minutes; i++) {
+            state = Game.nextPlay(state);
+        }
+
+        List<Play> plays = state.getPlays();
+
+        System.out.println("");
+        plays.stream().forEach(p -> { System.out.print(p.getBallState().getHeight().isHigh() ? "-" : "_");});
+        System.out.println("");
+
+        System.out.println("Game finished: [" + state.getHome().getScore() + "-" + state.getAway().getScore() + "]");
+        System.out.println("");
+
+    }
+
 }
