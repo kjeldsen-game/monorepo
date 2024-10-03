@@ -40,7 +40,7 @@
         },
         "lineupStatus": {
             "ACTIVE": "Active",
-            "SUBSTITUTE": "Substitute",
+            "BENCH": "Bench",
             "INACTIVE": "Inactive"
         }
     }

@@ -1,5 +1,5 @@
 export enum PlayerLineupStatus {
-    Active = 'ACTIVE',
-    Substitute = 'SUBSTITUTE',
-    Inactive = 'INACTIVE',
+  Active = 'ACTIVE',
+  Bench = 'BENCH',
+  Inactive = 'INACTIVE',
 }
