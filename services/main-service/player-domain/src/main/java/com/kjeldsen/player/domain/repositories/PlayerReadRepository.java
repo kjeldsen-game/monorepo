@@ -13,4 +13,5 @@ public interface PlayerReadRepository {
 
     List<Player> findByTeamId(Team.TeamId teamId);
 
+    List<Player> findByPlayersIds(List<String> playersIds);
 }

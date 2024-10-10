@@ -15,10 +15,9 @@ import java.math.BigDecimal;
 @SuperBuilder
 @Document(collection = "IncomeEvent")
 @TypeAlias("IncomeEvent")
-public class IncomeEvent extends Event {
+public class IncomeEvent extends Event { // TODO remove replaces by TransactionEvent
 
     private Team.TeamId teamId;
-    private Team.Economy.IncomeType incomeType;
     private Team.Economy.IncomePeriodicity incomePeriodicity;
     private Team.Economy.IncomeMode incomeMode;
     private BigDecimal amount;

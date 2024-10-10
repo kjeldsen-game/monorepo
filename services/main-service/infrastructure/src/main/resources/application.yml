@@ -8,11 +8,30 @@ spring:
     name: main-service
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      username: admin
-      password: root
-      database: admin
+      uri: mongodb://admin:root@localhost:27017/admin
+  datasource:
+    url: jdbc:postgresql://localhost:5432/quartz
+    username: root
+    password: secret
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: never
+    properties:
+      org:
+        quartz:
+          jobStore:
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+            dataSource: quartzDataSource
+          dataSource:
+            quartzDataSource:
+              URL: jdbc:postgresql://localhost:5432/quartz
+              user: root
+              password: secret
+              driver: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
 
 springdoc:
   version: '@springdoc.version@'

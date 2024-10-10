@@ -5,14 +5,27 @@
     <packaging>pom</packaging>
     <modules>
         <module>auth-service</module>
+        <module>domain</module>
+        <module>infrastructure</module>
+
+        <module>player-adapter-listener</module>
         <module>player-adapter-persistence</module>
         <module>player-adapter-rest</module>
         <module>player-application</module>
         <module>player-domain</module>
+        <module>player-adapter-publisher</module>
+
         <module>match-service</module>
         <module>match-adapter-rest</module>
-        <module>infrastructure</module>
-        <module>domain</module>
+        <module>match-adapter-publisher</module>
+        <module>match-adapter-persistence</module>
+
+        <module>market-domain</module>
+        <module>market-application</module>
+        <module>market-adapter-persistence</module>
+        <module>market-adapter-listener</module>
+        <module>market-adapter-rest</module>
+        <module>market-adapter-publisher</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -26,11 +39,23 @@
     <name>main-service</name>
     <description>Demo project for Spring Boot</description>
     <properties>
+        <!--    Project Java version    -->
         <java.version>17</java.version>
-        <openapi-generator-maven-plugin.version>6.1.0</openapi-generator-maven-plugin.version>
-        <springdoc-openapi-maven-plugin.version>1.4</springdoc-openapi-maven-plugin.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <!--    Plugin variables     -->
+        <skipTests>false</skipTests>
+        <skipTestsIT>true</skipTestsIT>
+
+        <!--    SonarQube properties    -->
+        <sonar.sources>src</sonar.sources>
+        <sonar.exclusions>src/test/**/*</sonar.exclusions>
+        <jacoco.version>0.8.12</jacoco.version>
+
+        <!--    Dependencies versions    -->
+        <openapi-generator-maven-plugin.version>6.1.0</openapi-generator-maven-plugin.version>
+        <springdoc-openapi-maven-plugin.version>1.4</springdoc-openapi-maven-plugin.version>
         <spring-boot-starter.version>2.7.2</spring-boot-starter.version>
         <mockito.version>4.7.0</mockito.version>
         <lombok.version>1.18.24</lombok.version>
@@ -79,6 +104,7 @@
         <spring-security-oauth2.version>2.5.2.RELEASE</spring-security-oauth2.version>
         <spring-boot-starter-json.version>3.1.2</spring-boot-starter-json.version>
     </properties>
+
     <build>
         <finalName>main-service</finalName>
         <pluginManagement>
@@ -93,14 +119,142 @@
                     <artifactId>springdoc-openapi-maven-plugin</artifactId>
                     <version>${springdoc-openapi-maven-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.4.0</version>
+                    <configuration>
+                        <skipTests>${skipTests}</skipTests>
+                        <testFailureIgnore>false</testFailureIgnore>
+                        <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                        <printSummary>true</printSummary>
+                        <includes>
+                            <include>**/*Test.java</include>
+                        </includes>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>3.4.0</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                        <includes>
+                            <include>**/*IT.java</include>
+                        </includes>
+                        <skipTests>${skipTestsIT}</skipTests>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.9.1.2184</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <id>jacoco-initialize</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>sonarReports</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <version>6.5.3</version>
+                        <configuration>
+                            <mavenSettingsProxyId>https-p</mavenSettingsProxyId>
+                            <outputDirectory>${sonar.dependencyCheck.basePath}</outputDirectory>
+                            <formats>
+                                <format>html</format>
+                                <format>json</format>
+                            </formats>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>generate-dependency-check-report</id>
+                                <goals>
+                                    <goal>aggregate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <dependencies>
+
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+            <version>3.3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.4</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.4.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -160,27 +314,12 @@
             <!-- Modules -->
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>auth-adapter-mongodb</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.kjeldsen</groupId>
                 <artifactId>auth-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>auth-domain</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.kjeldsen</groupId>
-                <artifactId>auth-persistence</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.kjeldsen</groupId>
-                <artifactId>auth-application</artifactId>
+                <artifactId>domain</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -210,18 +349,49 @@
             </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>domain</artifactId>
+                <artifactId>match-adapter-publisher</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>security-config</artifactId>
+                <artifactId>player-adapter-listener</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>security-tools</artifactId>
+                <artifactId>player-adapter-publisher</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>market-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>market-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>market-adapter-persistence</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>market-adapter-listener</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>market-adapter-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>market-adapter-publisher</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <!-- Others -->
             <dependency>

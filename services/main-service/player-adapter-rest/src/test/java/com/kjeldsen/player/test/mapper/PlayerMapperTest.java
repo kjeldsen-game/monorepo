@@ -19,9 +19,7 @@ class PlayerMapperTest {
     void mapPlayerToPlayerResponse() {
 
         Player.PlayerId playerId = Player.PlayerId.generate();
-        PlayerAge playerAge = PlayerAge.builder()
-                .years(25)
-                .build();
+        PlayerAge playerAge = PlayerAge.generateAgeOfAPlayer();
         String playerName = PlayerProvider.name();
 
         Player player = Player.builder()

@@ -9,7 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -36,8 +38,39 @@ public class CreateTeamUseCase {
                 .buildingsLevel(0)
                 .build())
             .economy(Team.Economy.builder()
-                .balance(BigDecimal.ZERO)
+                .balance(BigDecimal.valueOf(1_000_000))
+                .prices( new HashMap<>(Map.of(
+                    Team.Economy.PricingType.SEASON_TICKET, 14,
+                    Team.Economy.PricingType.DAY_TICKET, 14,
+                    Team.Economy.PricingType.MERCHANDISE, 25,
+                    Team.Economy.PricingType.RESTAURANT, 10
+                )))
+                .sponsors(new HashMap<>() {{
+                    put(Team.Economy.IncomePeriodicity.WEEKLY, null);
+                    put(Team.Economy.IncomePeriodicity.ANNUAL, null);
+                }})
+                .billboards(new HashMap<>() {{
+                    put(Team.Economy.IncomePeriodicity.WEEKLY, null);
+                    put(Team.Economy.IncomePeriodicity.ANNUAL, null);
+                }})
                 .build())
+            .fans(Team.Fans.builder()
+                .totalFans(10000)
+                .loyalty(50).build())
+            .buildings(Team.Buildings.builder()
+                .stadium(new Team.Buildings.Stadium())
+                .freeSlots(25)
+                .facilities(new HashMap<>(Map.of(
+                    Team.Buildings.Facility.TRAINING_CENTER, new Team.Buildings.FacilityData(),
+                    Team.Buildings.Facility.YOUTH_PITCH, new Team.Buildings.FacilityData(),
+                    Team.Buildings.Facility.SPORTS_DOCTORS, new Team.Buildings.FacilityData(),
+                    Team.Buildings.Facility.VIDEO_ROOM, new Team.Buildings.FacilityData(),
+                    Team.Buildings.Facility.SCOUTS, new Team.Buildings.FacilityData()
+                    )))
+                .build())
+            .leagueStats(new HashMap<>(Map.of(
+            1, Team.LeagueStats.builder().tablePosition(12).points(0).build()
+            )))
             .build();
         // TODO apart from saving the team aggregate/projection, we need to store a created_team_event. Then Team domain object should have a
         //  method like

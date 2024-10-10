@@ -7,11 +7,19 @@ spring:
       active: 'local'
   data:
     mongodb:
-      host: ${DB_HOST}
-      port: ${DB_PORT}
-      username: ${DB_USERNAME}
-      password: ${DB_PASSWORD}
-      database: ${DB_DATABASE}
+      uri: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  quartz:
+    properties:
+      org:
+        quartz:
+            quartzDataSource:
+              URL: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}
+              user: ${POSTGRES_USER}
+              password: ${POSTGRES_PASSWORD}
 
 security:
   oauth2:

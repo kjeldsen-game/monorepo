@@ -16,6 +16,11 @@
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
+            <artifactId>market-domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
             <artifactId>player-adapter-persistence</artifactId>
         </dependency>
         <dependency>

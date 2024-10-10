@@ -21,6 +21,11 @@ public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
     private final PlayerMongoRepository playerMongoRepository;
 
     @Override
+    public List<Player> findByPlayersIds(List<String> playersIds) {
+        return playerMongoRepository.findByPlayerIds(playersIds);
+    }
+
+    @Override
     public Optional<Player> findOneById(Player.PlayerId id) {
         return playerMongoRepository.findById(id);
     }

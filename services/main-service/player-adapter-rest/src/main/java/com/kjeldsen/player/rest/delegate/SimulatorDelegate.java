@@ -32,14 +32,21 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final FindAndProcessScheduledTrainingUseCase findAndProcessScheduledTrainingUseCase;
     private final FindAndProcessScheduledPotentialUseCase findAndProcessScheduledPotentialRiseUseCase;
     private final GenerateSingleDeclineTrainingUseCase generateSingleDeclineTrainingUseCase;
-    private final CanteraEconomyInvestmentUsecase canteraEconomyInvestmentUsecase;
-    private final CanteraTraditionInvestmentUsecase canteraTraditionInvestmentUsecase;
-    private final CanteraBuildingsInvestmentUsecase canteraBuildingsInvestmentUsecase;
+    private final CanteraInvestmentUsecase canteraInvestmentUsecase;
     private final EconomyInvestmentUsecase economyInvestmentUsecase;
-    private final AnnualIncomeSponsorUsecase annualIncomeSponsorUsecase;
-    private final WeeklyIncomeSponsorUsecase weeklyIncomeSponsorUsecase;
+    private final SponsorIncomeUsecase sponsorIncomeUsecase;
     private final PaySalariesTeamUseCase paySalariesTeamUseCase;
     private final UpdateSalariesTeamUseCase updateSalariesTeamUseCase;
+    private final MatchAttendanceIncomeUsecase matchAttendanceIncomeUsecase;
+    private final RestaurantIncomeUseCase restaurantIncomeUseCase;
+    private final MerchandiseIncomeUseCase merchandiseIncomeUseCase;
+    private final FansManagementUsecase fansManagementUsecase;
+    private final UpdateTeamPricingUsecase updateTeamPricingUsecase;
+    private final UpgradeBuildingUseCase upgradeBuildingUseCase;
+    private final BuildingMaintenanceExpenseUseCase buildingMaintenanceExpenseUseCase;
+    private final BillboardIncomeUseCase billboardIncomeUseCase;
+    private final UpdateLoyaltyUseCase updateLoyaltyUseCase;
+
     @Override
     public ResponseEntity<PlayerHistoricalPotentialRiseResponse> registerSimulatedScheduledPotentialRise(
                 String playerId,
@@ -114,19 +121,8 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     @Override
     public ResponseEntity<Void> registerInvestmentOnCantera(String teamId, RegisterInvestmentOnCanteraRequest registerInvestmentOnCanteraRequest) {
         Team.TeamId id = Team.TeamId.of(teamId);
-        switch (registerInvestmentOnCanteraRequest.getInvestment()) {
-            case ECONOMY:
-                canteraEconomyInvestmentUsecase.invest(id, registerInvestmentOnCanteraRequest.getPoints());
-                break;
-            case TRADITION:
-                canteraTraditionInvestmentUsecase.invest(id, registerInvestmentOnCanteraRequest.getPoints());
-                break;
-            case BUILDING:
-                canteraBuildingsInvestmentUsecase.invest(id, registerInvestmentOnCanteraRequest.getPoints());
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid investment type");
-        }
+        canteraInvestmentUsecase.investToCanteraCategory(id, Team.Cantera.Investment.valueOf(registerInvestmentOnCanteraRequest.getInvestment().name()),
+                registerInvestmentOnCanteraRequest.getPoints());
         return ResponseEntity.ok().build();
     }
 
@@ -147,7 +143,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
             .filter(sponsor -> SponsorPeriodicity.WEEKLY.equals(sponsor.getPeriodicity()))
             .forEach(sponsor -> {
                 Team.Economy.IncomeMode mode = Team.Economy.IncomeMode.valueOf(sponsor.getMode().name());
-                weeklyIncomeSponsorUsecase.income(Team.TeamId.of(teamId), mode, wins);
+                sponsorIncomeUsecase.incomeWeekly(Team.TeamId.of(teamId), mode, wins);
             }));
 
         int years = weeks / 13; // 13 weeks in a season
@@ -156,7 +152,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
             .filter(sponsor -> SponsorPeriodicity.ANNUAL.equals(sponsor.getPeriodicity()))
             .forEach(sponsor -> {
                 Team.Economy.IncomeMode mode = Team.Economy.IncomeMode.valueOf(sponsor.getMode().name());
-                annualIncomeSponsorUsecase.income(Team.TeamId.of(teamId), mode, wins);
+                sponsorIncomeUsecase.incomeAnnual(Team.TeamId.of(teamId), mode, wins);
             }));
 
         return ResponseEntity.ok().build();
@@ -170,9 +166,74 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     }
 
     @Override
+    public ResponseEntity<Void> simulateMatchIncome(String teamId, SimulateMatchIncomeRequest simulateMatchIncomeRequest) {
+        Integer matchAttendance = simulateMatchIncomeRequest.getAwayAttendance() + simulateMatchIncomeRequest.getHomeAttendance();
+        matchAttendanceIncomeUsecase.income(Team.TeamId.of(teamId), matchAttendance);
+        merchandiseIncomeUseCase.income(Team.TeamId.of(teamId), simulateMatchIncomeRequest.getHomeAttendance());
+        restaurantIncomeUseCase.income(Team.TeamId.of(teamId), matchAttendance);
+        billboardIncomeUseCase.incomeWinBonus(Team.TeamId.of(teamId), 1);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
     public ResponseEntity<Void> simulateSalaryIncrease(String teamId) {
         updateSalariesTeamUseCase.update(Team.TeamId.of(teamId));
         return ResponseEntity.ok().build();
     }
 
+    @Override
+    public ResponseEntity<Void> simulateFansUpdate(String teamId, SimulateFansUpdateRequest simulateFansUpdateRequest) {
+        Team.Fans.ImpactType fansImpactType = Team.Fans.ImpactType.valueOf(simulateFansUpdateRequest.getImpactType().name());
+        Team.TeamId id = Team.TeamId.of(teamId);
+
+        fansManagementUsecase.update(id, fansImpactType);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> simulatePricingUpdate(String teamId, SimulatePricingUpdateRequest simulatePricingUpdateRequest) {
+        Team.TeamId id = Team.TeamId.of(teamId);
+        Team.Economy.PricingType pricingType = Team.Economy.PricingType.valueOf(
+                simulatePricingUpdateRequest.getPricingType().name());
+        updateTeamPricingUsecase.update(id, simulatePricingUpdateRequest.getPrice(), pricingType);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> simulateBuildingUpgrade(String teamId, SimulateBuildingUpgradeRequest simulateBuildingUpgradeRequest) {
+        Team.TeamId id = Team.TeamId.of(teamId);
+        Team.Buildings.Facility facility = Team.Buildings.Facility.valueOf(simulateBuildingUpgradeRequest.getFacility().name());
+        upgradeBuildingUseCase.upgrade(id, facility);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> simulateBuildingMaintenanceExpense(String teamId) {
+        buildingMaintenanceExpenseUseCase.expense(Team.TeamId.of(teamId));
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> simulateBillboardSelection(String teamId, SimulateBillboardSelectionRequest simulateBillboardSelectionRequest) {
+        Team.Economy.IncomeMode mode = Team.Economy.IncomeMode.valueOf(simulateBillboardSelectionRequest
+            .getMode().name());
+        Team.Economy.IncomePeriodicity periodicity = Team.Economy.IncomePeriodicity.valueOf(simulateBillboardSelectionRequest
+            .getPeriodicity().name());
+        billboardIncomeUseCase.incomeSelection(Team.TeamId.of(teamId), mode, periodicity);
+        return  ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> simulateLoyaltyUpdate(String teamId, SimulateLoyaltyUpdateRequest simulateLoyaltyUpdateRequest) {
+        Team.TeamId id = Team.TeamId.of(teamId);
+        Team.Fans.LoyaltyImpactType loyaltyImpactType = Team.Fans.LoyaltyImpactType.valueOf(simulateLoyaltyUpdateRequest.getLoyaltyImpactType().name());
+        if (loyaltyImpactType == Team.Fans.LoyaltyImpactType.SEASON_START)
+            updateLoyaltyUseCase.resetLoyalty(id);
+        else if (loyaltyImpactType == Team.Fans.LoyaltyImpactType.SEASON_END)
+            updateLoyaltyUseCase.updateLoyaltySeason(id);
+        else
+            updateLoyaltyUseCase.updateLoyaltyMatch(id, simulateLoyaltyUpdateRequest.getGoals(), loyaltyImpactType);
+        return ResponseEntity.ok().build();
+    }
 }

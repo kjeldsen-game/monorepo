@@ -15,7 +15,7 @@ public class PlayerProvider {
 
     public static String name() {
         Faker faker = new Faker();
-        return faker.name().fullName();
+        return faker.name().firstName() + " " + faker.name().lastName();
     }
 
 
@@ -30,7 +30,6 @@ public class PlayerProvider {
                         .potential(0)
                         .playerSkillRelevance(getSkillRelevanceBasedOnPositionAndSkill(positionTendencies.getPosition(), skill))
                         .build()), HashMap::putAll);
-                ;
 
         Set<PlayerSkill> excludedSkills = new HashSet<>();
 
@@ -122,12 +121,6 @@ public class PlayerProvider {
                     .build();
         player.negotiateSalary();
         return player;
-    }
-
-    public static PlayerSkill randomSkill() {
-        PlayerSkill[] allSkills = PlayerSkill.values();
-        int random = (int) (Math.random() * allSkills.length);
-        return allSkills[random];
     }
 
     public static PlayerSkill randomSkillForSpecificPlayer(Optional<Player> player) {

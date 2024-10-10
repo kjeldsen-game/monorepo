@@ -7,6 +7,7 @@ public enum PlayerStatus {
 
     ACTIVE,
     INACTIVE,
-    BENCH
+    BENCH,
+    FOR_SALE
 }
 

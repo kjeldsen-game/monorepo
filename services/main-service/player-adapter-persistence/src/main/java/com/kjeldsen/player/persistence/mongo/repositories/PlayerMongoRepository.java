@@ -2,7 +2,9 @@ package com.kjeldsen.player.persistence.mongo.repositories;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
+import org.aspectj.weaver.ast.Literal;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,4 +14,6 @@ public interface PlayerMongoRepository extends MongoRepository<Player, Player.Pl
 
     List<Player> findByTeamId(Team.TeamId teamId);
 
+    @Query("{ '_id.value' : { '$in' : ?0 } }") // TODO switch from String to PlayerId
+    List<Player> findByPlayerIds(List<String> playerIds);
 }
