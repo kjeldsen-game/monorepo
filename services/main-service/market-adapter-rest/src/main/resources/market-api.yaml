@@ -3,6 +3,11 @@ info:
   version: 1.0.0
   title: Markets Service API
 
+servers:
+#  - url: http://localhost:8081/api
+#  - url: https://actively-accurate-platypus.ngrok-free.app/api
+  - url: http://localhost:8081/v1
+  - url: https://actively-accurate-platypus.ngrok-free.app/v1
 tags:
   - name: market
 
@@ -30,43 +35,47 @@ paths:
             default: 0
             type: integer
             format: int32
-#        - name: skill
-#          in: query
-#          description: List of player skills with min and max values
-#          required: false
-#          schema:
-#            type: array
-#            items:
-#              type: string
-#              example: 'SCORING:50:100'
-#        - name: minAge
-#          in: query
-#          description: Minimum age of players
-#          required: false
-#          schema:
-#            type: integer
-#            format: int32
-#        - name: maxAge
-#          in: query
-#          description: Maximum age of players
-#          required: false
-#          schema:
-#            type: integer
-#            format: int32
-#        - name: minBid
-#          in: query
-#          description: Minimum bid amount
-#          required: false
-#          schema:
-#            type: number
-#            format: double
-#        - name: maxBid
-#          in: query
-#          description: Maximum bid amount
-#          required: false
-#          schema:
-#            type: number
-#            format: double
+        - name: position
+          in: query
+          description: Position of the player
+          required: false
+          schema:
+            $ref: "#/components/schemas/PlayerPosition"
+        - name: skills
+          in: query
+          description: List of player skills with min and max values
+          required: false
+          schema:
+            type: string
+            example: 'SCORING:50:100,BALL_CONTROL:50:100'
+        - name: minAge
+          in: query
+          description: Minimum age of players
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: maxAge
+          in: query
+          description: Maximum age of players
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: minBid
+          in: query
+          description: Minimum bid amount
+          required: false
+          schema:
+            type: number
+            format: double
+        - name: maxBid
+          in: query
+          description: Maximum bid amount
+          required: false
+          schema:
+            type: number
+            format: double
       responses:
           '200':
             description: List of filtered players
@@ -277,9 +286,9 @@ components:
           type: number
           example: 500000
         player:
-          $ref: "#/components/schemas/PlayerResponse"
+          $ref: "#/components/schemas/MarketPlayerResponse"
 
-    PlayerResponse:
+    MarketPlayerResponse:
       type: object
       properties:
         id:
@@ -339,7 +348,6 @@ components:
         timestamp:
           type: string
           example: TODO
-
 
     AuctionStatus:
       type: string

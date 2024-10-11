@@ -6,11 +6,11 @@ import com.kjeldsen.player.domain.events.PricingEvent;
 import lombok.*;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Data
 @Builder
@@ -47,13 +47,35 @@ public class Team {
         // TODO wins, losses, draw, cards, etc ....
     }
 
+    public Integer getActualSeason() {
+        try {
+            return Collections.max(leagueStats.keySet());
+        } catch (NullPointerException e) {
+            return -1;
+        }
+    }
+
+    public Integer getActualSeasonTablePosition () {
+        try {
+            return leagueStats.get(Collections.max(leagueStats.keySet())).getTablePosition();
+        } catch (NullPointerException e) {
+            return 12;
+        }
+    }
+
+    public Integer getLastSeasonPosition() {
+        Integer seasonNumber = Collections.max(leagueStats.keySet());
+        try {
+            return leagueStats.get(seasonNumber-1).getTablePosition();
+        } catch (Exception e) {
+            return  12;
+        }
+    }
+
     @Builder
     @Getter
     @Setter
     public static class Fans {
-        private Integer totalFans; // TODO remove
-        private int loyalty;       // TODO remove
-
         @Builder.Default
         private Map<Integer, FanTier> fanTiers = new HashMap<>() {{
             put(1, FanTier.builder().totalFans(10000).loyalty(50.0).build());
@@ -65,6 +87,10 @@ public class Team {
                 fanTier.setLoyalty(newLoyalty);
                 return fanTier;
             });
+        }
+
+        public Integer getTotalFans() {
+            return this.fanTiers.values().stream().mapToInt(FanTier::getTotalFans).sum();
         }
 
         public void updateAllLoyaltyTiers(List<Double> tiers) {
@@ -103,13 +129,6 @@ public class Team {
             this.fanTiers.forEach((tier, fanTier) -> {
                 fanTier.setLoyalty(50.0);
             });
-        }
-
-        public void updateTotalFans(FansEvent fansEvent) { // TODO remove
-            this.totalFans += fansEvent.getFans();
-            if (totalFans < 0) {
-                totalFans = 0;
-            }
         }
 
         @Builder
@@ -194,15 +213,20 @@ public class Team {
             private Integer seats;
 
             public Stadium() {
-                seats = 10000;
+                seats = 5000;
                 this.setMaintenanceCost(BigDecimal.valueOf(seats));
             }
 
             @Override
             public void increaseLevel() {
+                if (this.getSeats() == 100000) {
+                    throw new RuntimeException("Stadium already have maximum level");
+                }
                 this.setLevel(this.getLevel() + 1);
                 seats += 1000;
-                setMaintenanceCost(BigDecimal.valueOf(seats)); // Maintenance cost per seat is 1$
+                // If the max seats are reached maintenance cost * 3
+                setMaintenanceCost(getSeats() != 100000 ? BigDecimal.valueOf(seats) :
+                    BigDecimal.valueOf(seats).multiply(BigDecimal.valueOf(3)));
             }
         }
 
@@ -228,10 +252,21 @@ public class Team {
     @Setter
     public static class Economy {
 
+        @Field(targetType = FieldType.DECIMAL128)
         private BigDecimal balance;
         private Map<PricingType, Integer> prices;
         private Map<IncomePeriodicity, IncomeMode> sponsors;
-        private Map<IncomePeriodicity, IncomeMode> billboards;
+        private BillboardDeal billboardDeal;
+
+        @Builder
+        @Getter
+        @Setter
+        public static class BillboardDeal {
+            private Integer startSeason;
+            private Integer endSeason;
+            private BillboardIncomeType type;
+            private BigDecimal offer;
+        }
 
         @Getter
         public enum PricingType {
@@ -256,9 +291,8 @@ public class Team {
             prices.put(pricingEvent.getPricingType(), pricingEvent.getPrice());
         }
 
-        public void resetIncomeModes(IncomePeriodicity periodicity) {
+        public void resetSponsorIncome(IncomePeriodicity periodicity) {
             this.getSponsors().put(periodicity, null);
-            this.getBillboards().put(periodicity, null);
         }
 
         public enum IncomePeriodicity {
@@ -270,6 +304,19 @@ public class Team {
             CONSERVATIVE,
             MODERATE,
             AGGRESSIVE
+        }
+
+        @Getter
+        public enum BillboardIncomeType {
+            SHORT(1),
+            MEDIUM(2),
+            LONG(3);
+
+            private final int seasonLength;
+
+            BillboardIncomeType(int length) {
+                this.seasonLength = length;
+            }
         }
 
         public void updateBalance(BigDecimal amount) {

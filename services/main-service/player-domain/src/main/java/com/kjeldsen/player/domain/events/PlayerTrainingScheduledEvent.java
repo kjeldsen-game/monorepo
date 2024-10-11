@@ -22,8 +22,13 @@ public class PlayerTrainingScheduledEvent extends Event {
 
     private Player.PlayerId playerId;
     private PlayerSkill skill;
-    private Integer trainingDays;
-    private Instant startDate;
-    private Instant endDate;
+    private Integer trainingDays; // TODO only for simulation
+    private Instant startDate;  // TODO remove in future not needed
+    private Instant endDate; // TODO remove in future not needed end date
+    private Status status;
 
+    public enum Status {
+        ACTIVE,
+        INACTIVE
+    }
 }

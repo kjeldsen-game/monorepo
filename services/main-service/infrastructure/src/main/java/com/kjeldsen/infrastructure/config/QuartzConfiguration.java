@@ -1,7 +1,6 @@
 package com.kjeldsen.infrastructure.config;
 
-import com.kjeldsen.player.rest.quartzTestTODORemove.EveryMinuteJob;
-import com.kjeldsen.player.rest.quartzTestTODORemove.NewWeekJob;
+import com.kjeldsen.player.quartz.*;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +18,36 @@ public class QuartzConfiguration {
     @PostConstruct
     public void setupQuartz() {
         try {
-            // Schedule EveryMinuteJob
-//            scheduleJob(EveryMinuteJob.class, "everyMinuteJob", "everyMinuteTrigger",
-//                    SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(10).repeatForever());
-
-            scheduleJob(NewWeekJob.class, "newWeekJob", "newWeekTrigger",
-                    SimpleScheduleBuilder.simpleSchedule()
-                            .withIntervalInMinutes(1)  // Schedule to run every minute
-                            .repeatForever());         // Repeat indefinitely
-
+//            scheduleJob(NewDayJob.class, "newDayJob", "newDayJob",
+//                SimpleScheduleBuilder.simpleSchedule()
+//                    .withIntervalInMinutes(617)  //617 10.28 hours = 617 minutes
+//                    .repeatForever()
+//                    .withMisfireHandlingInstructionFireNow());
+//
 //            scheduleJob(NewWeekJob.class, "newWeekJob", "newWeekTrigger",
-//                    CalendarIntervalScheduleBuilder.calendarIntervalSchedule().withIntervalInWeeks(1));
-
-//            // Schedule NewSeasonJob
+//                SimpleScheduleBuilder.simpleSchedule()
+//                    .withIntervalInHours(72)  // One week in Kjeldsen is 3 days in real life
+//                    .repeatForever()
+//                    .withMisfireHandlingInstructionFireNow());
+//
+//
+//            scheduleJob(EndSeasonJob.class, "endSeasonJob", "endSeasonTrigger",
+//                SimpleScheduleBuilder.simpleSchedule()
+//                    .withIntervalInHours(13 * 7 * 24) // 13 weeks in real life
+//                    .repeatForever()
+//                    .withMisfireHandlingInstructionFireNow());
+//
 //            scheduleJob(NewSeasonJob.class, "newSeasonJob", "newSeasonTrigger",
-//                    CalendarIntervalScheduleBuilder.calendarIntervalSchedule().withIntervalInMonths(3));
+//                SimpleScheduleBuilder.simpleSchedule()
+//                    .withIntervalInHours(13 * 7 * 24 + 1) // 13 weeks in real life -> one hour after seasonEnd
+//                    .repeatForever()
+//                    .withMisfireHandlingInstructionFireNow());
+
+            scheduleJob(TestJob.class, "testJob", "testJob",
+                SimpleScheduleBuilder.simpleSchedule()
+                    .withIntervalInMinutes(1)  //617 10.28 hours = 617 minutes
+                    .repeatForever()
+                    .withMisfireHandlingInstructionFireNow());
 
         } catch (SchedulerException e) {
             e.printStackTrace();  // Handle exceptions

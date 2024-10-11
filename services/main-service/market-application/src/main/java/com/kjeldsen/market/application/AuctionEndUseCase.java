@@ -44,9 +44,6 @@ public class AuctionEndUseCase {
             returnMoneyToNotWinningTeams(auction.getBids(), highestBid.getTeamId());
         }
 
-        // TODO publish the event and listen in the player module to to the player team modification
-        //  if necessary and create a Transaction
-
         auction.setStatus(Auction.AuctionStatus.COMPLETED);
         auctionWriteRepository.save(auction);
 

@@ -25,6 +25,7 @@ import com.kjeldsen.match.rest.model.PlayResponse;
 import com.kjeldsen.match.rest.model.PlayerPositionResponse;
 import com.kjeldsen.match.rest.model.PlayerResponse;
 import com.kjeldsen.match.rest.model.TeamResponse;
+import com.kjeldsen.match.schedulers.MatchScheduler;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.utils.JsonUtils;
 import com.kjeldsen.player.domain.PlayerSkill;
@@ -39,6 +40,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -52,6 +54,7 @@ public class MatchDelegate implements MatchApiDelegate {
     private final MatchRepository matchRepo;
     private final MatchEventPublisher matchEventPublisher;
     private final MatchEventWriteRepository matchEventWriteRepository;
+    private final MatchScheduler matchScheduler;
 
     /*
      * The match service uses a different internal representation of teams and players so here
@@ -100,6 +103,10 @@ public class MatchDelegate implements MatchApiDelegate {
         //  time, but for now just play it immediately
 
         if (status == Status.ACCEPTED) {
+
+            matchScheduler.scheduleMatch(matchId, Instant.from(match.getDateTime()));
+
+            // TODO remove this part once we start using scheduling
             GameState state = Game.play(match);
             Map<String, Integer> attendance = getMatchAttendance(match);
             MatchReport report = new MatchReport(state, state.getPlays(), match.getHome(),
@@ -136,14 +143,12 @@ public class MatchDelegate implements MatchApiDelegate {
     private Map<String, Integer> getMatchAttendance(Match match) {
         com.kjeldsen.player.domain.Team homeTeam = teamRepo.findById(TeamId.of(match.getHome().getId()))
                 .orElseThrow(() -> new RuntimeException("Team not found"));
-
         Integer capacity = homeTeam.getBuildings().getStadium().getSeats();
-        Integer homeAttendance = Math.round(homeTeam.getFans().getTotalFans() * 0.8f);
-        Integer awayAttendance = teamRepo.findById(TeamId.of(match.getAway().getId()))
-                .map(com.kjeldsen.player.domain.Team::getFans)
-                .map(com.kjeldsen.player.domain.Team.Fans::getTotalFans)
-                .map(fans -> (int) (fans * 0.4) )
-                .orElseThrow(() -> new RuntimeException("Team not found"));
+        int homeAttendance = Math.round(homeTeam.getFans().getTotalFans() * 0.8f);
+
+        com.kjeldsen.player.domain.Team awayTeam = teamRepo.findById(TeamId.of(match.getAway().getId()))
+            .orElseThrow(() -> new RuntimeException("Team not found"));
+        Integer awayAttendance = awayTeam.getFans().getTotalFans();
 
         if (homeAttendance + awayAttendance > capacity) {
             float scaleFactor = (float) (homeAttendance + awayAttendance) / capacity;

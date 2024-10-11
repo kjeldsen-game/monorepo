@@ -2,6 +2,28 @@
 
 This repository is a quick way of having a development environment ready to work on local.
 
+## Requirements
+- Docker
+- Terminal
+- Studio3T (MongoDB client)
+
+## Setting up environment
+To setup and run up Kjeldsen locally w Docker follow these steps:
+1. Open the `/local-env/config/beta-frontend.env` file and in **Docker run** section uncomment environment variables
+and comment the ones under **Ngrok Hosting**
+2. Once config file set up properly go back to the `/local-env` directory and run docker compose file
+3. `docker compose up -d --build`
+
+## MongoDB
+To access the database and see collections follow these steps:
+1. Make sure you have downloaded and installed Studio3T and MongoDB container is running
+2. Start up the Studio3T
+3. Click on the **Connect** on left top corner, after window pop up click **New Connection**
+4. Once **New Connection** window pop up, paste `mongodb://admin:root@localhost:27017/admin` as URI and click **Next**
+5. Then write out **Connection Name** ex. **Kjeldsen_local**,
+6. Optionally you can click on **Test Connection**, if status is OK connection is well configured
+7. Click on **Save** button
+
 ## SonarQube 
 To setup the SonarQube locally follow these steps:
 1. Go to the directory with docker-compose files`/local-env`

@@ -99,11 +99,12 @@ public class Player {
         throwIfNot(Range.between(MIN_DECLINE_PLAYER_AGE, MAX_DECLINE_PLAYER_AGE).contains(age.getYears()), DECLINE_PLAYER_AGE_INVALID_RANGE);
         throwIfNot(Range.between(MIN_DECLINE_SPEED, MAX_DECLINE_SPEED).contains(playerTrainingDeclineEvent.getDeclineSpeed()), DECLINE_SPEED_INVALID_RANGE);
 
+        // TODO ?? Why points were calculated again
         final int decreasePoints = PointsGenerator.generateDecreasePoints(
             playerTrainingDeclineEvent.getDeclineSpeed(),
             playerTrainingDeclineEvent.getPointsToSubtract());
 
-        subtractSkillPoints(playerTrainingDeclineEvent.getSkill(), decreasePoints);
+        subtractSkillPoints(playerTrainingDeclineEvent.getSkill(), playerTrainingDeclineEvent.getPointsToSubtract());
         this.decline = playerTrainingDeclineEvent;
     }
 

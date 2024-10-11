@@ -1,11 +1,14 @@
 package com.kjeldsen.player.listener;
 
-import com.kjeldsen.player.application.usecases.*;
+import com.kjeldsen.player.application.usecases.economy.MatchAttendanceIncomeUsecase;
+import com.kjeldsen.player.application.usecases.economy.MerchandiseIncomeUseCase;
+import com.kjeldsen.player.application.usecases.economy.RestaurantIncomeUseCase;
+import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
+import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.MatchEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.sql.Update;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +21,6 @@ public class MatchEventListener {
     private final FansManagementUsecase fansManagementUsecase;
     private final MerchandiseIncomeUseCase merchandiseIncomeUseCase;
     private final RestaurantIncomeUseCase restaurantIncomeUseCase;
-    private final BillboardIncomeUseCase billboardIncomeUseCase;
     private final UpdateLoyaltyUseCase updateLoyaltyUseCase;
 
     @EventListener
@@ -34,10 +36,10 @@ public class MatchEventListener {
       merchandiseIncomeUseCase.income(homeTeamId, matchEvent.getHomeAttendance());
       restaurantIncomeUseCase.income(homeTeamId, totalMatchAttendance);
 
-      // Match bonus income UseCases
+      // SponsorIncome per match win income
       Team.TeamId winningTeamId = getWinningTeam(matchEvent);
       if (winningTeamId != null) {
-          billboardIncomeUseCase.incomeWinBonus(winningTeamId,1);
+          // TODO missing per win income Sponsor
       }
 
 

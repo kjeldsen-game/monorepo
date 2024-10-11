@@ -6,6 +6,7 @@ import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class ScheduleTrainingUseCase {
     private final PlayerReadRepository playerReadRepository;
 
     public void generate(Player.PlayerId playerId, PlayerSkill skill, Integer trainingDays) {
-        log.info("Generating training");
+        log.info("Scheduling training");
 
         validateDays(trainingDays);
 

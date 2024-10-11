@@ -54,13 +54,14 @@ public class SimulatedApiIT extends AbstractIT {
 
             playerWriteRepository.save(Player.builder()
                 .id(Player.PlayerId.of(playerId))
+                .age(com.kjeldsen.player.domain.PlayerAge.generateAgeOfAPlayer())
                 .actualSkills(Map.of(
                     com.kjeldsen.player.domain.PlayerSkill.CONSTITUTION, new com.kjeldsen.player.domain.PlayerSkills(1, 0, com.kjeldsen.player.domain.PlayerSkillRelevance.SECONDARY),
                     com.kjeldsen.player.domain.PlayerSkill.SCORING, new com.kjeldsen.player.domain.PlayerSkills(2, 0, com.kjeldsen.player.domain.PlayerSkillRelevance.SECONDARY)
                 ))
                 .build());
 
-            MvcResult mvcResult = mockMvc.perform(post("/simulator/training/" + playerId)
+            MvcResult mvcResult = mockMvc.perform(post("/api/simulator/training/" + playerId)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -105,7 +106,7 @@ public class SimulatedApiIT extends AbstractIT {
             Player player = playerWriteRepository.save(PlayerProvider.generateDefault());
 
 
-            MvcResult mvcResult = mockMvc.perform(post("/simulator/decline/" + player.getId().value())
+            MvcResult mvcResult = mockMvc.perform(post("/api/simulator/decline/" + player.getId().value())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())

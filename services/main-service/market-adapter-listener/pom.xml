@@ -23,6 +23,11 @@
             <artifactId>market-application</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>market-adapter-quartz</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

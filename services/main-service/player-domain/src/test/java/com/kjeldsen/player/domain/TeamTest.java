@@ -4,9 +4,14 @@ import com.kjeldsen.player.domain.events.FansEvent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import javax.swing.text.TabExpander;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TeamTest {
 
@@ -73,6 +78,70 @@ public class TeamTest {
         team.getFans().getFanTiers().put(10, Team.Fans.FanTier.builder().loyalty(100.0).build());
         team.getFans().resetLoyalty();
         assertThat(team.getFans().getFanTiers().get(1).getLoyalty()).isEqualTo(50.0);
+    }
 
+    @Test
+    public void should_throw_error_if_stadium_have_max_seats() {
+        Team team = Team.builder().buildings(Team.Buildings.builder().stadium(
+            new Team.Buildings.Stadium()).build()).build();
+        team.getBuildings().getStadium().setSeats(100000);
+
+        assertEquals("Stadium already have maximum level", assertThrows(RuntimeException.class, () -> {
+            team.getBuildings().getStadium().increaseLevel();
+        }).getMessage());
+    }
+
+    @Test
+    public void should_set_maintenance_cost_maximum() {
+        Team team = Team.builder().buildings(Team.Buildings.builder().stadium(
+            new Team.Buildings.Stadium()).build()).build();
+        team.getBuildings().getStadium().setSeats(99000);
+        team.getBuildings().getStadium().increaseLevel();
+        assertEquals(BigDecimal.valueOf(300000), team.getBuildings().getStadium().getMaintenanceCost());
+    }
+
+    @Test
+    public void should_update_seats_and_cost() {
+        Team team = Team.builder().buildings(Team.Buildings.builder().stadium(
+            new Team.Buildings.Stadium()).build()).build();
+        team.getBuildings().getStadium().increaseLevel();
+        assertEquals(BigDecimal.valueOf(6000), team.getBuildings().getStadium().getMaintenanceCost());
+        assertEquals(6000, team.getBuildings().getStadium().getSeats());
+    }
+
+    @Test
+    void should_get_highest_season_number() {
+        Team team = Team.builder().leagueStats(Map.of(
+            1, Team.LeagueStats.builder().build(),
+            4, Team.LeagueStats.builder().build(),
+             5, Team.LeagueStats.builder().build()
+        )).build();
+        assertEquals(5, team.getActualSeason());
+    }
+
+    @Test
+    void should_get_actual_season_position() {
+        Team team = Team.builder().leagueStats(Map.of(
+            1, Team.LeagueStats.builder().tablePosition(2).build(),
+            4, Team.LeagueStats.builder().tablePosition(6).build()
+        )).build();
+        assertEquals(6, team.getActualSeasonTablePosition());
+    }
+
+    @Test
+    void should_get_previous_season_position() {
+        Team team = Team.builder().leagueStats(Map.of(
+            3, Team.LeagueStats.builder().tablePosition(2).build(),
+            4, Team.LeagueStats.builder().tablePosition(6).build()
+        )).build();
+        assertEquals(2, team.getLastSeasonPosition());
+    }
+
+    @Test
+    void should_get_last_table_position_when_prev_season_missing() {
+        Team team = Team.builder().leagueStats(Map.of(
+            3, Team.LeagueStats.builder().tablePosition(2).build()
+        )).build();
+        assertEquals(12, team.getLastSeasonPosition());
     }
 }

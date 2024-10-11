@@ -1,6 +1,7 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.application.testdata.TestData;
+import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.FansEventWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
@@ -60,7 +61,7 @@ class FansManagementUsecaseTest {
         when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
 
         fansManagementUsecase.update(mockedTeamId, Team.Fans.ImpactType.MATCH_WIN);
-        assertEquals(1100, mockedTeam.getFans().getTotalFans());
+        assertEquals(10100, mockedTeam.getFans().getTotalFans());
         verify(mockedTeamReadRepository).findById(mockedTeamId);
         verifyNoMoreInteractions(mockedTeamReadRepository);
     }
@@ -73,7 +74,7 @@ class FansManagementUsecaseTest {
         when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
 
         fansManagementUsecase.update(mockedTeamId, Team.Fans.ImpactType.MATCH_DRAW);
-        assertEquals(1050, mockedTeam.getFans().getTotalFans());
+        assertEquals(10050, mockedTeam.getFans().getTotalFans());
         verify(mockedTeamReadRepository).findById(mockedTeamId);
         verifyNoMoreInteractions(mockedTeamReadRepository);
     }
@@ -86,7 +87,7 @@ class FansManagementUsecaseTest {
         when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
 
         fansManagementUsecase.update(mockedTeamId, Team.Fans.ImpactType.MATCH_LOSS);
-        assertEquals(900, mockedTeam.getFans().getTotalFans());
+        assertEquals(9900, mockedTeam.getFans().getTotalFans());
         verify(mockedTeamReadRepository).findById(mockedTeamId);
         verifyNoMoreInteractions(mockedTeamReadRepository);
     }

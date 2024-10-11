@@ -44,12 +44,8 @@ public class TestData {
                     put(Team.Economy.IncomePeriodicity.WEEKLY, null);
                     put(Team.Economy.IncomePeriodicity.ANNUAL, null);
                 }})
-                .billboards(new HashMap<>() {{
-                    put(Team.Economy.IncomePeriodicity.WEEKLY, null);
-                    put(Team.Economy.IncomePeriodicity.ANNUAL, null);
-                }})
                 .build())
-            .fans(Team.Fans.builder().totalFans(1000).build())
+            .fans(Team.Fans.builder().build())
             .leagueStats(generateLeagueStatsMap())
             .buildings(Team.Buildings.builder()
                 .stadium(new Team.Buildings.Stadium())

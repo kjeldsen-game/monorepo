@@ -1,11 +1,15 @@
 package com.kjeldsen.integration.events;
 
 import com.kjeldsen.domain.EventId;
-import com.kjeldsen.player.application.usecases.*;
+import com.kjeldsen.player.application.usecases.economy.BillboardIncomeUseCase;
+import com.kjeldsen.player.application.usecases.economy.MatchAttendanceIncomeUsecase;
+import com.kjeldsen.player.application.usecases.economy.MerchandiseIncomeUseCase;
+import com.kjeldsen.player.application.usecases.economy.RestaurantIncomeUseCase;
+import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
+import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.MatchEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
-import org.hibernate.sql.Update;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -48,7 +52,6 @@ public class MatchEventListenerIT extends AbstractEventIT {
         verify(matchAttendanceIncomeUsecase).income(any(), eq(200));
         verify(merchandiseIncomeUseCase).income(any(), eq(100));
         verify(restaurantIncomeUseCase).income(any(), eq(200));
-        verify(billboardIncomeUseCase).incomeWinBonus(any(), any());
         verify(fansManagementUsecase).update(eq(Team.TeamId.of("homeTeamId")), any());
         verify(fansManagementUsecase).update(eq(Team.TeamId.of("awayTeamId")), any());
         verify(updateLoyaltyUseCase).updateLoyaltyMatch(eq(Team.TeamId.of("homeTeamId")), any(), any());

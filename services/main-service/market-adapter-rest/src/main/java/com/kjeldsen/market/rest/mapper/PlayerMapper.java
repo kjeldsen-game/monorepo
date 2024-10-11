@@ -13,7 +13,7 @@ public interface PlayerMapper {
 
     PlayerMapper INSTANCE = Mappers.getMapper(PlayerMapper.class);
 
-    PlayerResponse playerResponseMap(Player player);
+    MarketPlayerResponse playerResponseMap(Player player);
 
     default PlayerPosition playerPositionMap(com.kjeldsen.market.rest.model.PlayerPosition position) {
         return PlayerPosition.valueOf(position.name());

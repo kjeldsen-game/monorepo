@@ -1,6 +1,10 @@
 package com.kjeldsen.player.rest.delegate;
 
 import com.kjeldsen.player.application.usecases.*;
+import com.kjeldsen.player.application.usecases.economy.*;
+import com.kjeldsen.player.application.usecases.facilities.UpgradeBuildingUseCase;
+import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
+import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.PlayerPotentialRiseEvent;
@@ -19,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
@@ -44,8 +49,8 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final UpdateTeamPricingUsecase updateTeamPricingUsecase;
     private final UpgradeBuildingUseCase upgradeBuildingUseCase;
     private final BuildingMaintenanceExpenseUseCase buildingMaintenanceExpenseUseCase;
-    private final BillboardIncomeUseCase billboardIncomeUseCase;
     private final UpdateLoyaltyUseCase updateLoyaltyUseCase;
+    private final SignBillboardIncomeUseCase signBillboardIncomeUseCase;
 
     @Override
     public ResponseEntity<PlayerHistoricalPotentialRiseResponse> registerSimulatedScheduledPotentialRise(
@@ -81,17 +86,18 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
                         registerSimulatedScheduledTrainingRequest.getDays()
                 ));
 
-        List<PlayerTrainingEvent> trainings = findAndProcessScheduledTrainingUseCase.findAndProcess(InstantProvider.nowAsLocalDate())
-                .stream()
-                .filter(playerTrainingEvent -> playerTrainingEvent.getPlayerId().equals(Player.PlayerId.of(playerId)))
-                .toList();
+//        List<PlayerTrainingEvent> trainings = findAndProcessScheduledTrainingUseCase.findAndProcess(InstantProvider.nowAsLocalDate())
+//                .stream()
+//                .filter(playerTrainingEvent -> playerTrainingEvent.getPlayerId().equals(Player.PlayerId.of(playerId)))
+//                .toList();
 
         return ResponseEntity.ok(new PlayerHistoricalTrainingResponse()
                 .playerId(playerId)
-                .trainings(trainings.stream()
-                        .map(PlayerTrainingResponseMapper.INSTANCE::fromPlayerTrainingEvent)
-                        .toList()
-                ));
+                .trainings(Collections.EMPTY_LIST)
+//                .trainings(trainings.stream()
+//                        .map(PlayerTrainingResponseMapper.INSTANCE::fromPlayerTrainingEvent)
+//                        .toList()
+                );
     }
 
     @Override
@@ -171,7 +177,6 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         matchAttendanceIncomeUsecase.income(Team.TeamId.of(teamId), matchAttendance);
         merchandiseIncomeUseCase.income(Team.TeamId.of(teamId), simulateMatchIncomeRequest.getHomeAttendance());
         restaurantIncomeUseCase.income(Team.TeamId.of(teamId), matchAttendance);
-        billboardIncomeUseCase.incomeWinBonus(Team.TeamId.of(teamId), 1);
         return ResponseEntity.ok().build();
     }
 
@@ -216,11 +221,9 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
 
     @Override
     public ResponseEntity<Void> simulateBillboardSelection(String teamId, SimulateBillboardSelectionRequest simulateBillboardSelectionRequest) {
-        Team.Economy.IncomeMode mode = Team.Economy.IncomeMode.valueOf(simulateBillboardSelectionRequest
-            .getMode().name());
-        Team.Economy.IncomePeriodicity periodicity = Team.Economy.IncomePeriodicity.valueOf(simulateBillboardSelectionRequest
-            .getPeriodicity().name());
-        billboardIncomeUseCase.incomeSelection(Team.TeamId.of(teamId), mode, periodicity);
+        Team.Economy.BillboardIncomeType mode = Team.Economy.BillboardIncomeType.valueOf(
+            simulateBillboardSelectionRequest.getMode().name());
+        signBillboardIncomeUseCase.sign(Team.TeamId.of(teamId), mode);
         return  ResponseEntity.ok().build();
     }
 

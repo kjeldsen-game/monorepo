@@ -5,6 +5,8 @@ import com.kjeldsen.player.domain.Team;
 import lombok.*;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -21,6 +23,7 @@ public class Auction {
     AuctionId id;
     Player.PlayerId playerId;
     Team.TeamId teamId;
+    @Field(targetType = FieldType.DECIMAL128)
     BigDecimal averageBid;
     AuctionStatus status;
     Instant startedAt;
@@ -48,6 +51,7 @@ public class Auction {
     @ToString
     public static class Bid {
         Team.TeamId teamId;
+        @Field(targetType = FieldType.DECIMAL128)
         BigDecimal amount;
         Instant timestamp;
     }

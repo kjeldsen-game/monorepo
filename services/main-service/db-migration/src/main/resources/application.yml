@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: db-migration
+  data:
+    mongodb:
+      uri: mongodb://admin:root@localhost:27017/admin
+  quartz:
+    auto-startup: false
+mongock:
+  change-logs-scan-package: com.kjeldsen.db.migration.dbmigrations

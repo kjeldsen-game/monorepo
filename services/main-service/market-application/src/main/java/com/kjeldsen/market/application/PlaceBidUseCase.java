@@ -26,7 +26,7 @@ public class PlaceBidUseCase {
     private final TeamWriteRepository teamWriteRepository;
     private static final Integer AUCTION_BID_REDUCE_TIME = 30;
 
-    public void placeBid(Auction.AuctionId auctionId, BigDecimal amount, String userId) {
+    public Auction placeBid(Auction.AuctionId auctionId, BigDecimal amount, String userId) {
         log.info("PlaceBidUseCase for auction {}", auctionId);
 
         Auction auction = auctionReadRepository.findById(auctionId).orElseThrow(
@@ -65,8 +65,8 @@ public class PlaceBidUseCase {
         auction.getBids().add(bid);
         auction.setAverageBid(getAverageBid(auction.getBids()));
 
-        auctionWriteRepository.save(auction);
         teamWriteRepository.save(team);
+        return auctionWriteRepository.save(auction);
     }
 
     private BigDecimal getDifferenceBetweenBids(BigDecimal newBid, BigDecimal oldBid) {

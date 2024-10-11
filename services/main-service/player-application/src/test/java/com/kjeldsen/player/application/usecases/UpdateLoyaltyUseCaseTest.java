@@ -1,13 +1,13 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.application.testdata.TestData;
+import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.HashMap;

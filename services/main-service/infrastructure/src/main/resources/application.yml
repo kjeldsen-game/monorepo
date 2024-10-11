@@ -2,6 +2,7 @@ server:
   port: 8081
   error:
     include-message: always
+  forward-headers-strategy: framework
 
 spring:
   application:
@@ -9,29 +10,41 @@ spring:
   data:
     mongodb:
       uri: mongodb://admin:root@localhost:27017/admin
-  datasource:
-    url: jdbc:postgresql://localhost:5432/quartz
-    username: root
-    password: secret
-  flyway:
-    enabled: true
-    locations: classpath:db/migration
   quartz:
-    job-store-type: jdbc
-    jdbc:
-      initialize-schema: never
     properties:
       org:
         quartz:
           jobStore:
-            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
-            dataSource: quartzDataSource
-          dataSource:
-            quartzDataSource:
-              URL: jdbc:postgresql://localhost:5432/quartz
-              user: root
-              password: secret
-              driver: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+            class: com.novemberain.quartz.mongodb.MongoDBJobStore
+            mongoUri: mongodb://admin:root@localhost:27017/admin
+            collectionPrefix: quartz_
+            dbName: quartz_db
+
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/quartz
+#    username: root
+#    password: secret
+#  flyway:
+#    enabled: true
+#    locations: classpath:db/migration
+#  quartz:
+#    job-store-type: jdbc
+#    jdbc:
+#      initialize-schema: never
+#    properties:
+#      org:
+#        quartz:
+#          jobStore:
+#            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+#            dataSource: quartzDataSource
+#          dataSource:
+#            quartzDataSource:
+#              URL: jdbc:postgresql://localhost:5432/quartz
+#              user: root
+#              password: secret
+#              driver: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+#    auto-startup: false
+
 
 springdoc:
   version: '@springdoc.version@'
@@ -83,3 +96,11 @@ security:
       DDEH2BHz/eyCep6OcIsfeCTNDqlnQgB0ZEpHBPYMSQ2a1RasFmcmB0dy3kU7X1MS
       Mj3zZSFV5VuaPhjbk4mZIzGi/34o4BBVnZNJNuk4xvgRR6Qn3+lqRvQ=
       -----END RSA PRIVATE KEY-----
+
+
+#org:
+#  jobrunr:
+#    dashboard:
+#      enabled: true
+#    background-job-server:
+#      enabled: true

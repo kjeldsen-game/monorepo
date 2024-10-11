@@ -1,6 +1,8 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
+import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
+import com.kjeldsen.player.domain.repositories.PlayerTrainingEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventReadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
@@ -37,8 +40,6 @@ public class FindAndProcessScheduledTrainingUseCase {
                         }
                     });
             });
-
         return playerTrainingEvents;
     }
-
 }

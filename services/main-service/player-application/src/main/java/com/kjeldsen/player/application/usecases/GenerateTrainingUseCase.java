@@ -30,6 +30,16 @@ public class GenerateTrainingUseCase {
     private final PlayerReadRepository playerReadRepository;
     private final PlayerWriteRepository playerWriteRepository;
 
+    public PlayerTrainingEvent generate2(Player.PlayerId playerId, PlayerSkill skill, Integer currentDay, String eventId) {
+        log.info("Generating training v2");
+
+        validateDays(currentDay);
+
+        Player player = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
+        playerWriteRepository.save(playerAging(player));
+        return generateAndStoreEvent(player, skill, currentDay, eventId);
+    }
+
     public PlayerTrainingEvent generate(Player.PlayerId playerId, PlayerSkill skill, Integer currentDay) {
         log.info("Generating training");
 
@@ -37,14 +47,15 @@ public class GenerateTrainingUseCase {
 
         Player player = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
         playerAging(player);
-        return generateAndStoreEvent(player, skill, currentDay);
+        return generateAndStoreEvent(player, skill, currentDay, "none");
     }
 
-    private PlayerTrainingEvent generateAndStoreEvent(Player player, PlayerSkill playerSkill, Integer currentDay) {
+    private PlayerTrainingEvent generateAndStoreEvent(Player player, PlayerSkill playerSkill, Integer currentDay, String eventId) {
 
         PlayerTrainingEvent playerTrainingEvent = PlayerTrainingEvent.builder()
             .id(EventId.generate())
             .occurredAt(InstantProvider.now())
+            .scheduledTrainingId(eventId)
             .playerId(player.getId())
             .skill(playerSkill)
             .currentDay(currentDay)
@@ -55,6 +66,16 @@ public class GenerateTrainingUseCase {
             handleBloomEvent(player, playerTrainingEvent);
         } else {
             Integer points = PointsGenerator.generatePointsRise(currentDay);
+
+            // Old potential of Skill + new points is greater than potential
+            if (player.getActualSkillPoints(playerSkill) + points > player.getPotentialSkillPoints(playerSkill)) {
+                player.addSkillsPotentialRisePoints(playerSkill, 1); // Set new potential rise
+                player.addSkillsPoints(playerSkill, player.getPotentialSkillPoints(playerSkill)); // Set actual to new potential
+            } else {
+                // TODO
+                
+            }
+
             playerTrainingEvent.setPoints(points);
             playerTrainingEvent.setActualPoints(player.getActualSkillPoints(playerSkill));
             player.addSkillsPoints(playerSkill, points);

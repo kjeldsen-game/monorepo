@@ -1,6 +1,7 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.application.testdata.TestData;
+import com.kjeldsen.player.application.usecases.economy.RestaurantIncomeUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;

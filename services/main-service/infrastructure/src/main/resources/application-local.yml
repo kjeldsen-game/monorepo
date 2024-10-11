@@ -8,18 +8,15 @@ spring:
   data:
     mongodb:
       uri: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}
-  datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
   quartz:
     properties:
       org:
         quartz:
-            quartzDataSource:
-              URL: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}
-              user: ${POSTGRES_USER}
-              password: ${POSTGRES_PASSWORD}
+          jobStore:
+            class: com.novemberain.quartz.mongodb.MongoDBJobStore
+            mongoUri: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}
+            collectionPrefix: quartz_
+            dbName: quartz_db
 
 security:
   oauth2:

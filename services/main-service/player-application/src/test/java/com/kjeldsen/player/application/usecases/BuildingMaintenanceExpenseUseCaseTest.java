@@ -1,13 +1,13 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.application.testdata.TestData;
+import com.kjeldsen.player.application.usecases.economy.BuildingMaintenanceExpenseUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;

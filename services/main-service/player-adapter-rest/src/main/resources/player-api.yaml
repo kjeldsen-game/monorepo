@@ -3,6 +3,12 @@ info:
   version: 1.0.0
   title: Players Service API
 
+servers:
+  #  - url: http://localhost:8081/api
+  #  - url: https://actively-accurate-platypus.ngrok-free.app/api
+  - url: http://localhost:8081/v1
+  - url: https://actively-accurate-platypus.ngrok-free.app/v1
+
 tags:
   - name: team
   - name: player
@@ -289,6 +295,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/PlayerHistoricalTrainingResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+    post:
+      summary: Schedule training of a player
+      operationId: schedulePlayerTraining
+      tags:
+        - training
+      parameters:
+        - $ref: '#/components/parameters/PlayerIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/SchedulePlayerTrainingRequest"
+      responses:
+        "200":
+          description: PlayerTrainingScheduled
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -636,6 +660,13 @@ components:
 
   requestBodies:
 
+    SchedulePlayerTrainingRequest:
+      description: Schedule player training request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SchedulePlayerTrainingRequest"
+
     EditTeamRequest:
       description: Edit team request
       content:
@@ -810,6 +841,7 @@ components:
         - INACTIVE
         - BENCH
         - FOR_SALE
+        - RETIRED
 
     PlayerSkill:
       type: string
@@ -950,6 +982,13 @@ components:
         - RESIDUAL
       example: CORE
 
+    PlayerTrainingStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
+      example: ACTIVE
+
     PlayerCategory:
       type: string
       enum:
@@ -979,6 +1018,23 @@ components:
         - MODERATE
         - AGGRESSIVE
       example: MODERATE
+
+    BillboardMode:
+      type: string
+      enum:
+        - SHORT
+        - MEDIUM
+        - LONG
+      example: SHORT
+
+    SchedulePlayerTrainingRequest:
+      type: object
+      properties:
+        skills:
+          type: array
+          example: [ PASSING , SCORING ]
+          items:
+            $ref: "#/components/schemas/PlayerSkill"
 
     CreatePlayerRequest:
       type: object
@@ -1338,12 +1394,10 @@ components:
 
     SimulateBillboardSelectionRequest:
       type: object
-      example: { "periodicity": "ANNUAL", "mode": "CONSERVATIVE" }
+      example: { "mode": "SHORT" }
       properties:
-        periodicity:
-          $ref: "#/components/schemas/SponsorPeriodicity"
         mode:
-          $ref: "#/components/schemas/SponsorMode"
+          $ref: "#/components/schemas/BillboardMode"
 
     SimulateLoyaltyUpdateRequest:
       type: object

@@ -22,6 +22,7 @@ public class ProcessPlayerTransferUseCase {
     private final CreateTransactionUseCase createTransactionUseCase;
 
     public void process(Player.PlayerId playerId, BigDecimal amount, Team.TeamId winner, Team.TeamId creator) {
+        log.info("ProcessPlayerTransferUseCase for player {}, winner {}, creator {}, amount {}", playerId, winner, creator, amount);
 
         Player player = playerReadRepository.findOneById(playerId).orElseThrow(
             () -> new RuntimeException("Player not found"));

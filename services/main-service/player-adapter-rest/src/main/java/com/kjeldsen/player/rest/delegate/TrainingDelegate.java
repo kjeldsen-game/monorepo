@@ -2,19 +2,22 @@ package com.kjeldsen.player.rest.delegate;
 
 import com.kjeldsen.player.application.usecases.GenerateBloomPhaseUseCase;
 import com.kjeldsen.player.application.usecases.GetHistoricalTrainingUseCase;
+import com.kjeldsen.player.application.usecases.ScheduleTrainingUseCase;
+import com.kjeldsen.player.application.usecases.player.SchedulePlayerTrainingUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
+import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
 import com.kjeldsen.player.rest.api.TrainingApiDelegate;
-import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
-import com.kjeldsen.player.rest.model.PlayerSkill;
-import com.kjeldsen.player.rest.model.PlayerTrainingResponse;
-import com.kjeldsen.player.rest.model.RegisterBloomPhaseRequest;
+import com.kjeldsen.player.rest.mapper.PlayerMapper;
+import com.kjeldsen.player.rest.model.*;
 import lombok.RequiredArgsConstructor;
+import org.assertj.core.util.CanIgnoreReturnValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -22,6 +25,17 @@ public class TrainingDelegate implements TrainingApiDelegate {
 
     private final GetHistoricalTrainingUseCase getHistoricalTrainingUseCase;
     private final GenerateBloomPhaseUseCase generateBloomPhaseUseCase;
+    private final SchedulePlayerTrainingUseCase schedulePlayerTrainingUseCase;
+
+    @Override
+    public ResponseEntity<Void> schedulePlayerTraining(String playerId, SchedulePlayerTrainingRequest schedulePlayerTrainingRequest) {
+        List<com.kjeldsen.player.domain.PlayerSkill> skills = schedulePlayerTrainingRequest.getSkills().stream()
+            .map(playerSkill -> PlayerMapper.INSTANCE.map(playerSkill.getValue()))
+            .toList();
+
+        schedulePlayerTrainingUseCase.schedule(Player.PlayerId.of(playerId), skills);
+        return ResponseEntity.ok().build();
+    }
 
     @Override
     public ResponseEntity<PlayerHistoricalTrainingResponse> getHistoricalTraining(String playerId) {

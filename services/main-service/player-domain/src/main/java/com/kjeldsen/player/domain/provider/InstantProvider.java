@@ -14,6 +14,10 @@ public class InstantProvider {
         return Instant.now().plus(days, ChronoUnit.DAYS);
     }
 
+    public static Instant nowPlusMinutes(int minutes) {
+        return Instant.now().plus(minutes, ChronoUnit.MINUTES);
+    }
+
     public static LocalDate nowAsLocalDate() {
         return LocalDate.now();
     }

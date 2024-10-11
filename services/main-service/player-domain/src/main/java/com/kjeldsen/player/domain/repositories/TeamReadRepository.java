@@ -16,4 +16,6 @@ public interface TeamReadRepository {
     List<Team> find(FindTeamsQuery query);
 
     List<Team> findAll();
+
+    List<TeamId> findAllTeamIds();
 }

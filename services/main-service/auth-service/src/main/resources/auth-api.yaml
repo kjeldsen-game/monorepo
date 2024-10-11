@@ -3,6 +3,11 @@ info:
   version: 1.0.0
   title: Auth API
 
+servers:
+#  - url: http://localhost:8081/api
+#  - url: https://actively-accurate-platypus.ngrok-free.app/api
+  - url: http://localhost:8081/v1
+  - url: https://actively-accurate-platypus.ngrok-free.app/v1
 tags:
   - name: auth
 

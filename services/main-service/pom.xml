@@ -26,6 +26,10 @@
         <module>market-adapter-listener</module>
         <module>market-adapter-rest</module>
         <module>market-adapter-publisher</module>
+        <module>market-adapter-quartz</module>
+        <module>player-adapter-quartz</module>
+        <module>match-adapter-quartz</module>
+        <module>db-migration</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -38,6 +42,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>main-service</name>
     <description>Demo project for Spring Boot</description>
+
     <properties>
         <!--    Project Java version    -->
         <java.version>17</java.version>
@@ -219,7 +224,31 @@
     </profiles>
 
     <dependencies>
+        <dependency>
+            <groupId>io.fluidsonic.mirror</groupId>
+            <artifactId>quartz-mongodb</artifactId>
+            <version>2.2.0-rc2</version>
+        </dependency>
 
+        <!-- JobRunr -->
+<!--        <dependency>-->
+<!--            <groupId>org.jobrunr</groupId>-->
+<!--            <artifactId>jobrunr</artifactId>-->
+<!--            <version>7.3.0</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.jobrunr</groupId>-->
+<!--            <artifactId>jobrunr-spring-boot-starter</artifactId>-->
+<!--            <version>5.3.3</version>-->
+<!--        </dependency>-->
+
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>1.20.1</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
@@ -362,6 +391,11 @@
                 <artifactId>player-adapter-publisher</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>player-adapter-quartz</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.kjeldsen</groupId>
@@ -391,7 +425,12 @@
             <dependency>
                 <groupId>com.kjeldsen</groupId>
                 <artifactId>market-adapter-publisher</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>market-adapter-quartz</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <!-- Others -->
             <dependency>

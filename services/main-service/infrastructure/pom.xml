@@ -42,6 +42,10 @@
             <groupId>com.kjeldsen</groupId>
             <artifactId>player-adapter-publisher</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>player-adapter-quartz</artifactId>
+        </dependency>
 
         <!-- Market modules -->
         <dependency>
@@ -60,7 +64,10 @@
             <groupId>com.kjeldsen</groupId>
             <artifactId>market-adapter-publisher</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>market-adapter-quartz</artifactId>
+        </dependency>
 
         <!-- Others -->
         <dependency>

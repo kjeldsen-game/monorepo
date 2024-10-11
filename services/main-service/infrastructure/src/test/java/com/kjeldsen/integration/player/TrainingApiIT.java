@@ -55,7 +55,7 @@ public class TrainingApiIT extends AbstractIT {
                 .age(age)
                 .build());
 
-            mockMvc.perform(post("/training/{playerId}/bloom", playerId)
+            mockMvc.perform(post("/api/training/{playerId}/bloom", playerId)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())

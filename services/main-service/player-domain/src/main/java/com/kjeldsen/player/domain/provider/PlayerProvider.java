@@ -108,19 +108,26 @@ public class PlayerProvider {
 
     public static Player generate(Team.TeamId teamId, PlayerPositionTendency positionTendencies, PlayerCategory playerCategory, int totalPoints) {
         Player player = Player.builder()
-                    .id(Player.PlayerId.generate())
-                    .name(name())
-                    .age(PlayerAge.generateAgeOfAPlayer(playerCategory))
-                    .position(positionTendencies.getPosition())
-                    .status(PlayerStatus.INACTIVE)
-                    .playerOrder(PlayerOrder.NONE)
-                    .actualSkills(skillsBasedOnTendency(positionTendencies, totalPoints))
-                    .teamId(teamId)
-                    .category(playerCategory == PlayerCategory.JUNIOR ? PlayerCategory.JUNIOR : PlayerCategory.SENIOR)
-                    .economy(Player.Economy.builder().build())
-                    .build();
+            .id(Player.PlayerId.generate())
+            .name(name())
+            .age(PlayerAge.generateAgeOfAPlayer(playerCategory))
+            .position(positionTendencies.getPosition())
+            .status(PlayerStatus.INACTIVE)
+            .playerOrder(PlayerOrder.NONE)
+            .actualSkills(skillsBasedOnTendency(positionTendencies, totalPoints))
+            .teamId(teamId)
+            .category(playerCategory == PlayerCategory.JUNIOR ? PlayerCategory.JUNIOR : PlayerCategory.SENIOR)
+            .economy(Player.Economy.builder().build())
+            .build();
         player.negotiateSalary();
         return player;
+    }
+
+    public static PlayerSkill randomSkillForSpecificPlayer(Player player) {
+        Map<PlayerSkill, PlayerSkills> skills = player.getActualSkills();
+        List<PlayerSkill> allSkills = skills.keySet().stream().toList();
+        int random = (int) (Math.random() * allSkills.size());
+        return allSkills.get(random);
     }
 
     public static PlayerSkill randomSkillForSpecificPlayer(Optional<Player> player) {

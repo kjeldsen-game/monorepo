@@ -1,6 +1,7 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.application.testdata.TestData;
+import com.kjeldsen.player.application.usecases.economy.SponsorIncomeUsecase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
 import org.junit.jupiter.api.BeforeAll;

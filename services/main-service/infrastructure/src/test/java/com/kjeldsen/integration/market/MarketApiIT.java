@@ -42,7 +42,7 @@ public class MarketApiIT extends AbstractIT {
         AuctionResponse response = new AuctionResponse().playerId("player")
             .id("auction").bids(new ArrayList<>()).teamId("team");
 
-        mockMvc.perform(get("/market/auction/{marketId}", exampleAuction.getId().value()))
+        mockMvc.perform(get("/api/market/auction/{marketId}", exampleAuction.getId().value()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(content().json(objectMapper.writeValueAsString(response)));

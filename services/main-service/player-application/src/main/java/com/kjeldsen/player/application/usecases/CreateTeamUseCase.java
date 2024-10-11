@@ -49,14 +49,8 @@ public class CreateTeamUseCase {
                     put(Team.Economy.IncomePeriodicity.WEEKLY, null);
                     put(Team.Economy.IncomePeriodicity.ANNUAL, null);
                 }})
-                .billboards(new HashMap<>() {{
-                    put(Team.Economy.IncomePeriodicity.WEEKLY, null);
-                    put(Team.Economy.IncomePeriodicity.ANNUAL, null);
-                }})
                 .build())
-            .fans(Team.Fans.builder()
-                .totalFans(10000)
-                .loyalty(50).build())
+            .fans(Team.Fans.builder().build())
             .buildings(Team.Buildings.builder()
                 .stadium(new Team.Buildings.Stadium())
                 .freeSlots(25)

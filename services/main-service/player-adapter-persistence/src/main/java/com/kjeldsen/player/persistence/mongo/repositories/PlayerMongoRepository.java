@@ -14,6 +14,12 @@ public interface PlayerMongoRepository extends MongoRepository<Player, Player.Pl
 
     List<Player> findByTeamId(Team.TeamId teamId);
 
-    @Query("{ '_id.value' : { '$in' : ?0 } }") // TODO switch from String to PlayerId
+    @Query("{ '_id.value' : { '$in' : ?0 } }")
     List<Player> findByPlayerIds(List<String> playerIds);
+
+    @Query(value = "{ 'age.years': { $lt: ?0 } }")
+    List<Player> findPlayerUnderAge(Integer age);
+
+    @Query(value = "{ 'age.years': { $gte: ?0 }, 'status': { $ne: 'RETIRED' } }")
+    List<Player> findPlayerOverAge(Integer age);
 }

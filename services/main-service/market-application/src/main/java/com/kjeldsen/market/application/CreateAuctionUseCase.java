@@ -21,7 +21,7 @@ public class CreateAuctionUseCase {
     private final AuctionWriteRepository auctionWriteRepository;
     private static final int AUCTION_LENGTH = 3;
 
-    public void create(Player.PlayerId playerId, Team.TeamId teamId) {
+    public Auction create(Player.PlayerId playerId, Team.TeamId teamId) {
         log.info("CreateAuctionUseCase for player {} team {}", playerId, teamId);
 
         Auction auction = Auction.builder()
@@ -41,6 +41,6 @@ public class CreateAuctionUseCase {
             .endedAt(InstantProvider.nowPlusDays(AUCTION_LENGTH))
             .build();
 
-        auctionWriteRepository.save(auction);
+        return auctionWriteRepository.save(auction);
     }
 }
