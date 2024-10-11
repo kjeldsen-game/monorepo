@@ -10,6 +10,10 @@ import { Session } from 'next-auth'
 import { createEmotionCache } from '@/libs/emotion/cache'
 import { theme } from '@/libs/material/theme'
 import { Layout } from '@/shared/layout'
+import { GameUser } from '@/shared/models/GameUser'
+import { appWithTranslation } from 'next-i18next'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -23,32 +27,36 @@ interface MyAppProps<P> extends AppProps<P> {
   emotionCache?: EmotionCache
 }
 
+interface GameSession extends Session {
+  user: GameUser
+}
+
 interface MyExtendedPageProps {
-  session: Session
+  session: GameSession
 }
 
 const defaultGetLayout = (page: ReactElement) => <Layout>{page}</Layout>
 
-export default function MyApp({
-  Component,
-  emotionCache = clientSideEmotionCache,
-  pageProps: { session, ...pageProps },
-}: MyAppProps<MyExtendedPageProps>) {
+function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps: { session, ...pageProps } }: MyAppProps<MyExtendedPageProps>) {
   const getLayout = Component.getLayout ?? defaultGetLayout
 
   return (
     <SessionProvider session={session}>
-      <CacheProvider value={emotionCache}>
-        <Head>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-          <title>Kjeldsen</title>
-        </Head>
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          {getLayout(<Component {...pageProps} />)}
-        </ThemeProvider>
-      </CacheProvider>
+      <LocalizationProvider dateAdapter={AdapterMoment}>
+        <CacheProvider value={emotionCache}>
+          <Head>
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
+            <title>Kjeldsen</title>
+          </Head>
+          <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            {getLayout(<Component {...pageProps} />)}
+          </ThemeProvider>
+        </CacheProvider>
+      </LocalizationProvider>
     </SessionProvider>
   )
 }
+
+export default appWithTranslation(MyApp)

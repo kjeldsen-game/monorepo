@@ -1,9 +1,10 @@
 package com.kjeldsen.match.selection;
 
-import com.kjeldsen.match.engine.RandomHelper;
+import com.kjeldsen.match.common.RandomHelper;
 import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.match.state.BallHeight;
 import com.kjeldsen.match.state.BallState;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.TeamState;
@@ -16,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.kjeldsen.match.engine.RandomHelper.genActivePlayerWithPosition;
+import static com.kjeldsen.match.common.RandomHelper.genActivePlayerWithPosition;
 import static com.kjeldsen.match.selection.ReceiverSelection.selectFromForward;
 import static com.kjeldsen.match.selection.ReceiverSelection.selectFromMidfield;
 
@@ -55,7 +56,7 @@ public class ReceiverSelectionTest {
             .build();
 
         BallState ballState =
-            new BallState(home.getPlayers().get(0), PitchArea.CENTRE_MIDFIELD);
+            new BallState(home.getPlayers().get(0), PitchArea.CENTRE_MIDFIELD, BallHeight.GROUND);
 
         GameState state = GameState.builder()
             .turn(GameState.Turn.HOME)
@@ -103,7 +104,7 @@ public class ReceiverSelectionTest {
             .build();
 
         BallState ballState =
-            new BallState(home.getPlayers().get(0), PitchArea.CENTRE_MIDFIELD);
+            new BallState(home.getPlayers().get(0), PitchArea.CENTRE_MIDFIELD, BallHeight.GROUND);
 
         GameState state = GameState.builder()
             .turn(GameState.Turn.HOME)

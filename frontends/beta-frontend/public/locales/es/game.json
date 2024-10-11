@@ -1,0 +1,47 @@
+{
+    "teamCompositionRules": {
+        "totalActivePlayers": "El equipo debe tener 11 jugadores activos, hay {{value}}",
+        "totalDefense": "Debe haber entre 3 y 5 defensores, hay {{value}}",
+        "totalSweepers": "Debe haber 1 o ningún líbero, hay {{value}}",
+        "totalLeftBacks": "Debe haber al menos un lateral izquierdo o carrilero, pero no ambos.",
+        "totalRightBacks": "Debe haber al menos un lateral derecho o carrilero, pero no ambos.",
+        "totalMidfielders": "Debe haber entre 3 y 5 centrocampistas, hay {{value}}",
+        "totalAllCenterMidfielders": "Debe haber al menos un centrocampista, hay {{value}}",
+        "totalDefensiveOffensiveMidfielders": "No debe haber más de un centrocampista defensivo u ofensivo, hay {{value}}",
+        "totalCenterMidfielders": "No debe haber más de 3 centrocampistas, hay {{value}}",
+        "totalCenterBacks": "Debe haber entre 1 y 3 defensores centrales, hay {{value}}",
+        "totalLeftMidfielders": "Debe haber al menos un centrocampista izquierdo o extremo izquierdo, pero no ambos.",
+        "totalRightMidfielders": "Debe haber al menos un centrocampista derecho o extremo derecho, pero no ambos.",
+        "totalForwards": "Debe haber entre 1 y 3 delanteros, hay {{value}}",
+        "totalStrikers": "Debe haber uno o ningún delantero centro, hay {{value}}",
+        "totalGoalkeepers": "Debe haber un portero, hay {{value}}"
+    },
+    "playerValues": {
+        "positionDiminutives": {
+            "CENTRE_BACK": "CB",
+            "AERIAL_CENTRE_BACK ": "ACB",
+            "SWEEPER": "SW",
+            "LEFT_BACK": "LB",
+            "RIGHT_BACK": "RB",
+            "LEFT_WINGBACK ": "LWB",
+            "RIGHT_WINGBACK ": "RWB",
+            "DEFENSIVE_MIDFIELDER": "DM",
+            "CENTRE_MIDFIELDER": "CM",
+            "LEFT_MIDFIELDER": "LM",
+            "RIGHT_MIDFIELDER": "RM",
+            "LEFT_WINGER": "LW",
+            "OFFENSIVE_MIDFIELDER": "OM",
+            "RIGHT_WINGER": "RW",
+            "FORWARD": "FW",
+            "AERIAL_FORWARD ": "AFW",
+            "STRIKER": "ST",
+            "AERIAL_STRIKER ": "AST",
+            "GOALKEEPER": "GK"
+        },
+        "lineupStatus": {
+            "ACTIVE": "Activo",
+            "BENCH": "Banquillo",
+            "INACTIVE": "Inactivo"
+        }
+    }
+}

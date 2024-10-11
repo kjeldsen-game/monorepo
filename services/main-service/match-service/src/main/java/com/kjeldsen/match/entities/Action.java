@@ -1,7 +1,5 @@
 package com.kjeldsen.match.entities;
 
-import com.kjeldsen.match.entities.duel.DuelType;
-
 public enum Action {
 
     /*
@@ -26,15 +24,11 @@ public enum Action {
     // GOAL_KICK,
     // PENALTY_KICK;
 
-    public DuelType getDuelType() {
+    // Some actions require a teammate to be selected to receive the ball.
+    public boolean requiresReceiver() {
         return switch (this) {
-            case PASS -> DuelType.PASSING;
-            case POSITION -> DuelType.POSITIONAL;
-            // TACKLE is the ball control action: if the challenger of the preceding positional duel
-            // won, then they initiate the following ball control duel, so the action is a tackle
-            // and not a dribble since actions are framed from the perspective of the initiator.
-            case TACKLE -> DuelType.BALL_CONTROL;
-            case SHOOT -> DuelType.SHOT;
+            case PASS -> true;
+            case POSITION, TACKLE, SHOOT -> false;
         };
     }
 

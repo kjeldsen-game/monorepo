@@ -1,6 +1,6 @@
-import NextAuth, { User } from 'next-auth'
+import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { API_GATEWAY_ENDPOINT, AUTH_CLIENT_ID, AUTH_CLIENT_SECRET } from '@/config'
+import { API_ENDPOINT, AUTH_CLIENT_ID, AUTH_CLIENT_SECRET } from '@/config'
 
 export default NextAuth({
   providers: [
@@ -20,9 +20,9 @@ export default NextAuth({
           password: credentials?.password || '',
           client_id: AUTH_CLIENT_ID,
           client_secret: AUTH_CLIENT_SECRET,
-        };
+        }
 
-        const res = await fetch(`${API_GATEWAY_ENDPOINT}/auth/login`, {
+        const res = await fetch(`${API_ENDPOINT}/auth/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -30,21 +30,11 @@ export default NextAuth({
           body: JSON.stringify(payload),
         })
 
-      
-
-        // TODO: Get data from the backend, at the moment it returns a plain string
-        const mockData: User = {
-          id: '1',
-          name: 'user',
-          email: credentials?.username,
-        }
+        if (res.status !== 200) throw new Error('Invalid credentials')
 
         // Returning token to set in session
-        if (res.ok) {
-          return mockData;
-        }
-
-        return null;
+        const data = await res.json()
+        return data
       },
     }),
   ],
@@ -59,7 +49,8 @@ export default NextAuth({
       return token
     },
     session: async ({ session, token }) => {
-      session.user = token.user // Setting token in session
+      session.user = token.user
+
       return session
     },
   },

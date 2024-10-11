@@ -122,6 +122,129 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
+  /match/{matchId}/teams/{teamId}/players:
+    post:
+      summary: Add player to the lineup
+      operationId: addPlayer
+      parameters:
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+        - name: teamId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/EditPlayerRequest"
+      responses:
+        "201":
+          description: Player was added
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+    patch:
+      summary: Edit specific player in a lineup
+      operationId: editPlayer
+      tags:
+        - lineup
+      parameters:
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+        - name: teamId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/EditPlayerRequest"
+      responses:
+        "200":
+          description: Player was edited successfully
+          # Returning the match report as string for testing
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /match/{matchId}/teams/{teamId}/players/{playerId}:
+    delete:
+      summary: Delete player from lineup.
+      operationId: deletePlayer
+      tags:
+        - lineup
+      parameters:
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+        - name: teamId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+        - name: playerId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+      responses:
+        '200':
+          description: Player was removed successfully
+        '404':
+          description: Player not found
+
+  /match/{matchId}/teams/{teamId}/validate:
+    get:
+      summary: Validate the formation of a team in a match
+      operationId: validate
+      tags:
+        - lineup
+      parameters:
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+        - name: teamId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+      responses:
+        "200":
+          description: Team was validated
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
 components:
 
   requestBodies:
@@ -139,6 +262,13 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/EditMatchRequest"
+
+    EditPlayerRequest:
+      description: Edit player request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EditPlayerRequest"
 
   responses:
 
@@ -240,6 +370,17 @@ components:
         - ACCEPTED
         - REJECTED
 
+    EditPlayerRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        status:
+          $ref: "#/components/schemas/PlayerStatus"
+        position:
+          $ref: "#/components/schemas/PlayerPosition"
+
     MatchResponse:
       type: object
       properties:
@@ -293,10 +434,19 @@ components:
           type: string
         name:
           type: string
+        teamId:
+          type: string
         position:
-          $ref: "#/components/schemas/PlayerPositionResponse"
+          $ref: "#/components/schemas/PlayerPosition"
 
-    PlayerPositionResponse:
+    PlayerStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
+        - BENCH
+
+    PlayerPosition:
       type: string
       example: CENTRE_BACK
       enum:

@@ -1,15 +1,16 @@
 package com.kjeldsen.match.selection;
 
-import static com.kjeldsen.match.engine.RandomHelper.genActivePlayers;
-import static com.kjeldsen.match.engine.RandomHelper.genBenchPlayers;
+import static com.kjeldsen.match.common.RandomHelper.genActivePlayers;
+import static com.kjeldsen.match.common.RandomHelper.genBenchPlayers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.kjeldsen.match.engine.RandomHelper;
+import com.kjeldsen.match.common.RandomHelper;
 import com.kjeldsen.match.entities.Action;
 import com.kjeldsen.match.entities.Play;
 import com.kjeldsen.match.entities.duel.Duel;
+import com.kjeldsen.match.state.BallHeight;
 import com.kjeldsen.match.state.BallState;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.GameState.Turn;
@@ -86,7 +87,7 @@ class ActionSelectionTest {
             .build();
 
         Team away = RandomHelper.genTeam();
-        BallState ballState = new BallState(player, area);
+        BallState ballState = new BallState(player, area, BallHeight.GROUND);
         GameState state = GameState.init(Match.builder().home(home).away(away).build());
         return Optional.of(state)
             .map((before) ->

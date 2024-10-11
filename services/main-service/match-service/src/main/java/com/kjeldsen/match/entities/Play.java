@@ -1,6 +1,7 @@
 package com.kjeldsen.match.entities;
 
 import com.kjeldsen.match.entities.duel.Duel;
+import com.kjeldsen.match.state.BallState;
 import com.kjeldsen.match.utils.JsonUtils;
 import lombok.Builder;
 import lombok.Value;
@@ -12,6 +13,7 @@ public class Play {
     Action action;
     Duel duel;
     Integer clock;
+    BallState ballState;
 
     @Override
     public String toString() {

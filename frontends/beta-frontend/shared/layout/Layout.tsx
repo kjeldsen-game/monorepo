@@ -4,13 +4,18 @@ import { Main } from '@/shared/layout/Main'
 import { Item, Sidebar } from '@/shared/layout/Sidebar'
 import Box from '@mui/material/Box'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
   const { pathname } = useRouter()
+
+  const { t } = useTranslation('common')
+
   const items: Item[] = [
-    { name: 'Dashboard', icon: 'inbox', to: '/dashboard', selected: pathname === '/dashboard' },
-    { name: 'Team', icon: 'inbox', to: '/team', selected: pathname === '/team' },
+    { name: t('sideMenu.dashboard'), icon: 'inbox', to: '/dashboard', selected: pathname === '/dashboard' },
+    { name: 'Team', icon: 'inbox', to: '/team', selected: /^\/team/.test(pathname) },
     { name: 'Training', icon: 'mail', to: '/training', hasDivider: false, selected: pathname === '/training' },
+    { name: 'Challenge', icon: 'trophy', to: '/challenge', hasDivider: false, selected: /^\/challenge/.test(pathname) },
     // { name: 'Generate Player', icon: 'inbox', to: '/', selected: pathname === '/' },
     // { name: 'Generate Match', icon: 'mail', to: '/', selected: pathname === '/' },
   ]
