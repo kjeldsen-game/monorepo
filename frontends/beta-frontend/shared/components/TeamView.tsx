@@ -72,7 +72,6 @@ const TeamView: React.FC<TeamProps> = ({ isEditing, team, handlePlayerChange, on
       <Box sx={{ width: '100%' }}>
         {saveButton()}
         {team?.players ? <Grid rows={team?.players} columns={memoizedColumns} /> : <CircularProgress />}
-        {saveButton()}
       </Box>
     </Box>
   )

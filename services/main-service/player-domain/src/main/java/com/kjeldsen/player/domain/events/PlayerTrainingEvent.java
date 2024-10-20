@@ -20,6 +20,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class PlayerTrainingEvent extends Event {
 
+    private String scheduledTrainingId;
     private Player.PlayerId playerId;
     private PlayerSkill skill;
     private PlayerTrainingBloomEvent bloom;

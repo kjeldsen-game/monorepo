@@ -34,13 +34,14 @@ export default function factory(c?: FetcherConfig) {
 }
 
 //create Auth Connector function to connect REST API with fetch with error handling
-export const connector = async (url: string, method: Method, body?: unknown) => {
+export const connector = async (url: string, method: Method, body?: unknown, creds?: RequestCredentials) => {
   const response = await fetch(`${url}`, {
     method: method,
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
+    credentials: creds
   })
 
   try {
@@ -58,6 +59,6 @@ export const connectorAuth = (url: string, method: Method, body?: unknown) => {
   return connector(`${API_ENDPOINT}${url}`, method, body)
 }
 
-export const connectorAPI = <T>(url: string, method: Method = 'GET', body?: T) => {
-  return connector(`${API_ENDPOINT}${url}`, method, body)
+export const connectorAPI = <T>(url: string, method: Method = 'GET', body?: T, creds?: RequestCredentials) => {
+  return connector(`${API_ENDPOINT}${url}`, method, body, creds)
 }

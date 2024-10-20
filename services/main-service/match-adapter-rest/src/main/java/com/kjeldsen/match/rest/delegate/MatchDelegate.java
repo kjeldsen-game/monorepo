@@ -1,5 +1,6 @@
 package com.kjeldsen.match.rest.delegate;
 
+import com.kjeldsen.domain.EventId;
 import com.kjeldsen.match.Game;
 import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Match.Status;
@@ -9,6 +10,8 @@ import com.kjeldsen.match.entities.Team;
 import com.kjeldsen.match.modifers.HorizontalPressure;
 import com.kjeldsen.match.modifers.Tactic;
 import com.kjeldsen.match.modifers.VerticalPressure;
+import com.kjeldsen.match.publisher.MatchEventPublisher;
+import com.kjeldsen.match.repositories.MatchEventWriteRepository;
 import com.kjeldsen.match.rest.api.MatchApiDelegate;
 import com.kjeldsen.match.rest.model.ActionResponse;
 import com.kjeldsen.match.rest.model.CreateMatchRequest;
@@ -22,6 +25,7 @@ import com.kjeldsen.match.rest.model.Modifiers;
 import com.kjeldsen.match.rest.model.PlayResponse;
 import com.kjeldsen.match.rest.model.PlayerResponse;
 import com.kjeldsen.match.rest.model.TeamResponse;
+import com.kjeldsen.match.schedulers.MatchScheduler;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.utils.JsonUtils;
 import com.kjeldsen.match.validation.TeamFormationValidationResult;
@@ -30,6 +34,8 @@ import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.PlayerStatus;
 import com.kjeldsen.player.domain.Team.TeamId;
+import com.kjeldsen.player.domain.events.MatchEvent;
+import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +43,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -50,6 +57,9 @@ public class MatchDelegate implements MatchApiDelegate {
     private final TeamReadRepository teamRepo;
     private final PlayerReadRepository playerRepo;
     private final MatchRepository matchRepo;
+    private final MatchEventPublisher matchEventPublisher;
+    private final MatchEventWriteRepository matchEventWriteRepository;
+    private final MatchScheduler matchScheduler;
 
     /*
      * The match service uses a different internal representation of teams and players so here
@@ -97,10 +107,32 @@ public class MatchDelegate implements MatchApiDelegate {
         // TODO - if challenge request is accepted schedule the match to be played at the given date
         //  time, but for now just play it immediately
         if (status == Status.ACCEPTED) {
+
+//            matchScheduler.scheduleMatch(matchId, Instant.from(match.getDateTime()));
+
+            // TODO remove this part once we start using scheduling
             GameState state = Game.play(match);
+            Map<String, Integer> attendance = getMatchAttendance(match);
             MatchReport report = new MatchReport(state, state.getPlays(), match.getHome(),
-                    match.getAway());
+                match.getAway(), attendance.get("homeAttendance"), attendance.get("awayAttendance"));
+
             match.setMatchReport(report);
+
+            MatchEvent matchEvent = MatchEvent.builder()
+                .id(EventId.generate())
+                .occurredAt(InstantProvider.now())
+                .matchId(match.getId())
+                .homeTeamId(match.getHome().getId())
+                .awayTeamId(match.getAway().getId())
+                .homeScore(match.getMatchReport().getHomeScore())
+                .awayScore(match.getMatchReport().getAwayScore())
+                .homeAttendance(match.getMatchReport().getHomeAttendance())
+                .awayAttendance(match.getMatchReport().getAwayAttendance())
+                .build();
+
+            matchEventWriteRepository.save(matchEvent);
+            matchEventPublisher.publishMatchEvent(matchEvent);
+
             matchRepo.save(match);
 
             String json = JsonUtils.exclude(
@@ -110,6 +142,27 @@ public class MatchDelegate implements MatchApiDelegate {
 
         matchRepo.save(match);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private Map<String, Integer> getMatchAttendance(Match match) {
+        com.kjeldsen.player.domain.Team homeTeam = teamRepo.findById(TeamId.of(match.getHome().getId()))
+                .orElseThrow(() -> new RuntimeException("Team not found"));
+        Integer capacity = homeTeam.getBuildings().getStadium().getSeats();
+        int homeAttendance = Math.round(homeTeam.getFans().getTotalFans() * 0.8f);
+
+        com.kjeldsen.player.domain.Team awayTeam = teamRepo.findById(TeamId.of(match.getAway().getId()))
+            .orElseThrow(() -> new RuntimeException("Team not found"));
+        Integer awayAttendance = awayTeam.getFans().getTotalFans();
+
+        if (homeAttendance + awayAttendance > capacity) {
+            float scaleFactor = (float) (homeAttendance + awayAttendance) / capacity;
+            homeAttendance = Math.round(homeAttendance * scaleFactor);
+            awayAttendance = Math.round(awayAttendance * scaleFactor);
+        }
+        return Map.of(
+                "homeAttendance", homeAttendance,
+                "awayAttendance", awayAttendance
+        );
     }
 
     @Override

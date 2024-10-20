@@ -14,18 +14,61 @@
             <groupId>com.kjeldsen</groupId>
             <artifactId>auth-service</artifactId>
         </dependency>
+
+        <!-- Match modules -->
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>match-adapter-publisher</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>match-adapter-rest</artifactId>
+        </dependency>
+
+        <!-- Player modules -->
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>player-adapter-rest</artifactId>
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
-            <artifactId>match-adapter-rest</artifactId>
+            <artifactId>player-adapter-persistence</artifactId>
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
-            <artifactId>player-adapter-persistence</artifactId>
+            <artifactId>player-adapter-listener</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>player-adapter-publisher</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>player-adapter-quartz</artifactId>
+        </dependency>
+
+        <!-- Market modules -->
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>market-adapter-persistence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>market-adapter-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>market-adapter-listener</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>market-adapter-publisher</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>market-adapter-quartz</artifactId>
+        </dependency>
+
         <!-- Others -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -16,4 +16,5 @@
     <toc-element topic="Release.md"/>
     <toc-element topic="MatchService.md"/>
     <toc-element topic="MatchService.es.md"/>
+    <toc-element topic="HostingFromMachine.md"/>
 </instance-profile>

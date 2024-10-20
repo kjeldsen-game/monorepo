@@ -1,20 +1,16 @@
-version: '3'
-
 services:
+    ###################
+    ## Beta Frontend ##
+    ###################
 
-  ###################
-  ## Beta Frontend ##
-  ###################
-
-  beta-frontend:
-    # image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/beta-frontend:latest
-    build:
-      context: ../frontends/beta-frontend
-      dockerfile: ./Dockerfile
-    ports:
-      - 3000:3000
-    container_name: beta-frontend
-    env_file:
-      - ./config/common.env
-      - ./config/beta-frontend.env
-
+    beta-frontend:
+        # image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/beta-frontend:latest
+        build:
+            context: ../frontends/beta-frontend
+            dockerfile: ./Dockerfile
+        ports:
+            - 3000:3000
+        container_name: beta-frontend
+        env_file:
+            - ./config/common.env
+            - ./config/beta-frontend.env

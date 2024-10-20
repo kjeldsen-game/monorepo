@@ -33,17 +33,22 @@ public class MatchReport {
 
     Integer homeScore;
     Integer awayScore;
+    Integer homeAttendance;
+    Integer awayAttendance;
 
     GameStats gameStats; // Illustration of how to add additional information to the report
 
     public MatchReport(
-        GameState state, List<Play> plays, Team home, Team away) {
+        GameState state, List<Play> plays, Team home, Team away,
+        Integer homeAttendance, Integer awayAttendance) {
 
         this.home = home;
         this.away = away;
         this.plays = plays;
         this.homeScore = state.getHome().getScore();
         this.awayScore = state.getAway().getScore();
+        this.homeAttendance = homeAttendance;
+        this.awayAttendance = awayAttendance;
 
         MatchResult result;
         if (homeScore > awayScore) {

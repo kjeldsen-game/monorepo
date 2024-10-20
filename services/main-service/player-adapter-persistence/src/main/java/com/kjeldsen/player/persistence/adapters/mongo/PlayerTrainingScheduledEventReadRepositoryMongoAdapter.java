@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -20,4 +21,8 @@ public class PlayerTrainingScheduledEventReadRepositoryMongoAdapter implements P
         return playerTrainingScheduledEventMongoRepository.findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(date);
     }
 
+    @Override
+    public List<PlayerTrainingScheduledEvent> findAllActiveScheduledTrainings() {
+        return playerTrainingScheduledEventMongoRepository.findAllWhereStatusIsActive();
+    }
 }

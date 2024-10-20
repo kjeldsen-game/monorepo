@@ -1,6 +1,7 @@
 package com.kjeldsen.player.domain.repositories;
 
 import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.domain.PlayerStatus;
 import com.kjeldsen.player.domain.Team.TeamId;
 import lombok.Builder;
 import lombok.Getter;

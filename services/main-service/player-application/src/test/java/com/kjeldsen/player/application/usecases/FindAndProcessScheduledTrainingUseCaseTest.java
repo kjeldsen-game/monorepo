@@ -4,6 +4,7 @@ import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
+import com.kjeldsen.player.domain.repositories.PlayerTrainingEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventReadRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,8 @@ public class FindAndProcessScheduledTrainingUseCaseTest {
     private final PlayerTrainingScheduledEventReadRepository mockPlayerTrainingScheduledEventReadRepository = Mockito.mock(PlayerTrainingScheduledEventReadRepository.class);
     private final GenerateTrainingUseCase generateTrainingUseCase = Mockito.mock(GenerateTrainingUseCase.class);
 
-    private final FindAndProcessScheduledTrainingUseCase findAndProcessScheduledTrainingUseCase = new FindAndProcessScheduledTrainingUseCase(mockPlayerTrainingScheduledEventReadRepository, generateTrainingUseCase);
+    private final FindAndProcessScheduledTrainingUseCase findAndProcessScheduledTrainingUseCase = new FindAndProcessScheduledTrainingUseCase(mockPlayerTrainingScheduledEventReadRepository,
+        generateTrainingUseCase);
 
     @Test
     void should_generate_training_events_per_day() {

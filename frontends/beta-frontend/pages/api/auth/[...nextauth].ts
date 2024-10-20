@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { API_ENDPOINT, AUTH_CLIENT_ID, AUTH_CLIENT_SECRET } from '@/config'
+import { AUTH_CLIENT_ID, AUTH_CLIENT_SECRET, API_AUTH_ENDPOINT } from '@/config'
 
 export default NextAuth({
   providers: [
@@ -22,14 +22,13 @@ export default NextAuth({
           client_secret: AUTH_CLIENT_SECRET,
         }
 
-        const res = await fetch(`${API_ENDPOINT}/auth/login`, {
+        const res = await fetch(`${API_AUTH_ENDPOINT}/auth/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(payload),
         })
-
         if (res.status !== 200) throw new Error('Invalid credentials')
 
         // Returning token to set in session

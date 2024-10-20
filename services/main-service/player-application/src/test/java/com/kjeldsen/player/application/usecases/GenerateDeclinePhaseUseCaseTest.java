@@ -71,8 +71,8 @@ class GenerateDeclinePhaseUseCaseTest {
         ) {
             eventIdMockedStatic.when(EventId::generate).thenReturn(EVENT_ID);
             instantMockedStatic.when(InstantProvider::now).thenReturn(NOW);
-            playerProviderMockedStatic.when(PlayerProvider::randomSkill).thenReturn(PLAYER_SKILL);
-
+            playerProviderMockedStatic.when(() -> PlayerProvider.randomSkillForSpecificPlayer(Optional.of(playerMock)))
+                .thenReturn(PLAYER_SKILL);
             // Act
             generateDeclinePhaseUseCase.generate(PLAYER_ID, CURRENT_DAY, DECLINE_SPEED);
 
@@ -80,7 +80,8 @@ class GenerateDeclinePhaseUseCaseTest {
             eventIdMockedStatic.verifyNoMoreInteractions();
             instantMockedStatic.verify(InstantProvider::now);
             instantMockedStatic.verifyNoMoreInteractions();
-            playerProviderMockedStatic.verify(PlayerProvider::randomSkill);
+            playerProviderMockedStatic.verify(() -> PlayerProvider.randomSkillForSpecificPlayer(
+                Optional.of(playerMock)));
             playerProviderMockedStatic.verifyNoMoreInteractions();
         }
 

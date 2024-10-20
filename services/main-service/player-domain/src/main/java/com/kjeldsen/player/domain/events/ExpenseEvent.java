@@ -16,11 +16,10 @@ import java.math.BigDecimal;
 @SuperBuilder
 @Document(collection = "ExpenseEvent")
 @TypeAlias("ExpenseEvent")
-public class ExpenseEvent extends Event {
+public class ExpenseEvent extends Event { // TODO remove replaces by TransactionEvent
 
     private Team.TeamId teamId;
     private Player.PlayerId playerId;
     private BigDecimal amount;
-    private Team.Economy.ExpenseType expenseType;
 
 }
