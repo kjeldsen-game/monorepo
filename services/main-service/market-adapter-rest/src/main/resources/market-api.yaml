@@ -48,6 +48,13 @@ paths:
           schema:
             type: string
             example: 'SCORING:50:100,BALL_CONTROL:50:100'
+        - name: potentialSkill
+          in: query
+          description: List of player potential values for skill min and max values
+          required: false
+          schema:
+            type: string
+            example: 'SCORING:50:100,BALL_CONTROL:50:100'
         - name: minAge
           in: query
           description: Minimum age of players
@@ -76,6 +83,12 @@ paths:
           schema:
             type: number
             format: double
+        - name: playerId
+          in: query
+          description: PlayerId
+          required: false
+          schema:
+            type: string
       responses:
           '200':
             description: List of filtered players
@@ -287,6 +300,9 @@ components:
           example: 500000
         player:
           $ref: "#/components/schemas/MarketPlayerResponse"
+        bids:
+          type: integer
+          example: 2
 
     MarketPlayerResponse:
       type: object

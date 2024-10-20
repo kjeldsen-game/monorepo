@@ -64,10 +64,11 @@ public class MarketDelegate implements MarketApiDelegate {
 
     @Override
     public ResponseEntity<List<MarketAuctionResponse>> getAllAuctions(Integer size, Integer page,
-        PlayerPosition position, String skills, Integer minAge, Integer maxAge, Double minBid, Double maxBid) {
+        PlayerPosition position, String skills, String potentialSkills,  Integer minAge, Integer maxAge, Double minBid, Double maxBid, String playerId) {
 
         Map<Auction, Player> auctionPlayerMap = getMarketAuctionsUseCase.getAuctions(maxBid, minBid, maxAge, minAge,
-            PlayerMapper.INSTANCE.playerPositionMap(position), skills);
+            position != null ? PlayerMapper.INSTANCE.playerPositionMap(position) : null, skills, potentialSkills,
+            playerId);
 
         List<MarketAuctionResponse> marketAuctionResponses = auctionPlayerMap.entrySet().stream()
             .map(entry -> {
@@ -78,6 +79,7 @@ public class MarketDelegate implements MarketApiDelegate {
                 return new MarketAuctionResponse().auctionId(
                     auction.getId().value()).averageBid(auction.getAverageBid())
                     .averageBid(auction.getAverageBid())
+                    .bids(auction.getBids().size())
                     .player(playerResponse);
             })
             .toList();

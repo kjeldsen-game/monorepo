@@ -26,6 +26,9 @@ public class AuctionReadRepositoryMongoAdapter implements AuctionReadRepository 
     @Override
     public List<Auction> findAllByQuery(FindAuctionsQuery inputQuery) {
         Query query = new Query();
+        if (inputQuery.getPlayerId().value() != null) {
+            query.addCriteria(Criteria.where("playerId").is(inputQuery.getPlayerId()));
+        }
         if (inputQuery.getMinAverageBid() != null || inputQuery.getMaxAverageBid() != null) {
             Criteria averageBidCriteria = Criteria.where("averageBid");
             if (inputQuery.getMinAverageBid() != null) {

@@ -82,6 +82,35 @@ public class PlayerReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
             assertThat(readPlayers.size()).isEqualTo(2);
             assertThat(readPlayers).isNotEmpty();
         }
+
+        @Test
+        @DisplayName("Return players based on skill filter")
+        public void should_return_players_based_on_skill_filter() {
+            Player testPlayer = createTestPlayer();
+            testPlayer.setId(Player.PlayerId.of("player1"));
+            playerMongoRepository.save(testPlayer);
+            List<Player> readPlayerList = playerReadRepository.filterMarketPlayers(FilterMarketPlayersQuery.builder()
+                .playerIds(List.of(Player.PlayerId.of("player1"))).minAge(19).skills(
+                    List.of(FilterMarketPlayersQuery.PlayerSkillFilter.builder().minValue(12).playerSkill(PlayerSkill.SCORING).build())
+                ).build());
+
+            assertThat(readPlayerList).isNotEmpty();
+            assertThat(readPlayerList).usingRecursiveComparison().isEqualTo(List.of(testPlayer));
+        }
+
+        @Test
+        @DisplayName("Return mot return players because of skill filter")
+        public void should_not_return_player_because_of_skill_filter() {
+            Player testPlayer = createTestPlayer();
+            testPlayer.setId(Player.PlayerId.of("player1"));
+            playerMongoRepository.save(testPlayer);
+            List<Player> readPlayerList = playerReadRepository.filterMarketPlayers(FilterMarketPlayersQuery.builder()
+                .playerIds(List.of(Player.PlayerId.of("player1"))).minAge(19).skills(
+                    List.of(FilterMarketPlayersQuery.PlayerSkillFilter.builder().minValue(55).playerSkill(PlayerSkill.SCORING).build())
+                ).build());
+
+            assertThat(readPlayerList).isEmpty();
+        }
     }
 
     private Player createTestPlayer() {

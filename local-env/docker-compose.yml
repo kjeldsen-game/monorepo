@@ -28,8 +28,8 @@ services:
             MONGO_INITDB_ROOT_PASSWORD: root
             MONGO_INITDB_DATABASE: admin
         volumes: # Uncomment to persist data locally if container removed
-            - ./.mongo_data:/data/db # Uncomment to persist data locally if container removed
-            #- ./mongodb_init/mongo-init.js:/docker-entrypoint-initdb.d/init-mongo.js
+#            - ./.mongo_data:/data/db # Uncomment to persist data locally if container removed
+            - ./mongodb_init:/docker-entrypoint-initdb.d
         healthcheck:
             test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
             interval: 10s
@@ -72,27 +72,26 @@ services:
     ######################
 
     # TODO change the context + variables to this file once UI is merged to main
-    beta-frontend:
-        # image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/beta-frontend:latest
-        build:
-            context: ../../kjeldsen_2/frontends/beta-frontend
-            dockerfile: ./Dockerfile
-        ports:
-            - 3000:3000
-        container_name: beta-frontend
-        env_file:
-            - ../../kjeldsen_2/local-env/config/common.env
-            - ../../kjeldsen_2/local-env/config/beta-frontend.env
-        labels:
-            - "traefik.enable=true"
-            - "traefik.http.routers.beta-frontend.rule=PathPrefix(`/`)"
-            - "traefik.http.routers.beta-frontend.priority=1"
-            - "traefik.http.services.beta-frontend.loadbalancer.server.port=3000"
+    # beta-frontend:
+    #     # image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/beta-frontend:latest
+    #     build:
+    #         context: ../frontends/beta-frontend
+    #         dockerfile: ./Dockerfile
+    #     ports:
+    #         - 3000:3000
+    #     container_name: beta-frontend
+    #     env_file:
+    #         - ./config/common.env
+    #         - ./config/beta-frontend.env
+    #     labels:
+    #         - "traefik.enable=true"
+    #         - "traefik.http.routers.beta-frontend.rule=PathPrefix(`/`)"
+    #         - "traefik.http.routers.beta-frontend.priority=1"
+    #         - "traefik.http.services.beta-frontend.loadbalancer.server.port=3000"
 
     #############
     ## Routing ##
     #############
-
 #    traefik:
 #        image: traefik:v2.10
 #        container_name: traefik
@@ -106,9 +105,9 @@ services:
 #        volumes:
 #            - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
-    #####################################
-    ## Hosting from machine to network ##
-    #####################################
+#####################################
+## Hosting from machine to network ##
+#####################################
 
 #    ngrok:
 #        container_name: ngrok

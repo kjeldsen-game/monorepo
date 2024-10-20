@@ -6,6 +6,8 @@ import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.Team;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -21,10 +23,18 @@ public class FilterMarketPlayersQuery {
 
     @Getter
     @Builder
+    @Setter
+    @ToString
     public static class PlayerSkillFilter {
-        PlayerSkill playerSkill;
-        Integer minValue;
-        Integer maxValue;
-    }
+        private PlayerSkill playerSkill;
 
+        @Builder.Default
+        private Integer minValue = 0;
+        @Builder.Default
+        private Integer maxValue = 100;
+        @Builder.Default
+        private Integer minPotentialValue = 0;
+        @Builder.Default
+        private Integer maxPotentialValue = 100;
+    }
 }

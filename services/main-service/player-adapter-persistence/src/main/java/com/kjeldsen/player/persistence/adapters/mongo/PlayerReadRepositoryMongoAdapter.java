@@ -73,14 +73,22 @@ public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
             query.addCriteria(Criteria.where("_id").in(inputQuery.getPlayerIds()));
         }
 
-        // Filter by Player skills
         if (inputQuery.getSkills() != null) {
             List<Criteria> criteriaList = inputQuery.getSkills().stream()
-                .map(filter -> {
-                    Criteria skillCriteria = Criteria.where("actualSkills." + filter.getPlayerSkill() + ".actual");
-                    if (filter.getMinValue() != null ) { skillCriteria.gte(filter.getMinValue()); }
-                    if (filter.getMaxValue() != null ) { skillCriteria.lte(filter.getMaxValue()); }
-                    return skillCriteria;
+                .flatMap(filter -> {
+                    List<Criteria> skillCriteriaList = new ArrayList<>();
+
+                    Criteria actualCriteria = Criteria.where("actualSkills." + filter.getPlayerSkill() + ".actual");
+                    if (filter.getMinValue() != null) { actualCriteria.gte(filter.getMinValue()); }
+                    if (filter.getMaxValue() != null) { actualCriteria.lte(filter.getMaxValue()); }
+                    skillCriteriaList.add(actualCriteria);
+
+                    Criteria potentialCriteria = Criteria.where("actualSkills." + filter.getPlayerSkill() + ".potential");
+                    if (filter.getMinPotentialValue() != null) { potentialCriteria.gte(filter.getMinPotentialValue()); }
+                    if (filter.getMaxPotentialValue() != null) { potentialCriteria.lte(filter.getMaxPotentialValue()); }
+                    skillCriteriaList.add(potentialCriteria);
+
+                    return skillCriteriaList.stream();
                 }).toList();
 
             if (!criteriaList.isEmpty()) {

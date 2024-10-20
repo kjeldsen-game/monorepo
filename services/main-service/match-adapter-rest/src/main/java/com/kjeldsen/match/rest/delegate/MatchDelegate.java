@@ -108,7 +108,7 @@ public class MatchDelegate implements MatchApiDelegate {
         //  time, but for now just play it immediately
         if (status == Status.ACCEPTED) {
 
-            matchScheduler.scheduleMatch(matchId, Instant.from(match.getDateTime()));
+//            matchScheduler.scheduleMatch(matchId, Instant.from(match.getDateTime()));
 
             // TODO remove this part once we start using scheduling
             GameState state = Game.play(match);

@@ -1,6 +1,6 @@
 import useSWR from 'swr'
 import { MatchReport } from '@/shared/models/MatchReport'
-import { MatchReportResponse } from './models/MAtchReportresponse'
+import { MatchReportResponse } from './models/MatchReportresponse'
 
 const API = '/'
 

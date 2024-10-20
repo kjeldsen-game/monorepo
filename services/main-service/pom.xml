@@ -29,7 +29,6 @@
         <module>market-adapter-quartz</module>
         <module>player-adapter-quartz</module>
         <module>match-adapter-quartz</module>
-        <module>db-migration</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

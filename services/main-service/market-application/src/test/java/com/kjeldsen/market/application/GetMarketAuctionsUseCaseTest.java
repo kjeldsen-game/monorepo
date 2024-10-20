@@ -36,7 +36,7 @@ class GetMarketAuctionsUseCaseTest {
         when(mockedPlayerReadRepository.filterMarketPlayers(any())).thenReturn(List.of(mockedPlayer));
 
         Map<Auction, Player> result = getMarketAuctionsUseCase.getAuctions(
-            10.0, 5.0, 40, 5, null, null);
+            10.0, 5.0, 40, 5, null, null, null, null);
 
         assertEquals(1, result.size());
         assertThat(result).containsKey(mockedAuction);
@@ -53,7 +53,7 @@ class GetMarketAuctionsUseCaseTest {
         when(mockedPlayerReadRepository.filterMarketPlayers(any())).thenReturn(Collections.emptyList());
 
         Map<Auction, Player> result = getMarketAuctionsUseCase.getAuctions(
-            10.0, 5.0, 40, 5, null, null);
+            10.0, 5.0, 40, 5, null, null, null, null);
 
         assertEquals(0, result.size());
     }

@@ -188,10 +188,7 @@ export const teamColumn = (isEditing: boolean, handlePlayerChange?: (value: Play
       align: 'center' as GridAlignment,
       sortable: false,
       renderCell: (params) => (
-        <PlayerStatusSelect
-          value={params.row.status}
-          onChange={(value) => handlePlayerStatusChange(params.row as Player, value)}
-        />
+        <PlayerStatusSelect value={params.row.status} onChange={(value) => handlePlayerStatusChange(params.row as Player, value)} />
       ),
       minWidth: 20,
       flex: 1,
