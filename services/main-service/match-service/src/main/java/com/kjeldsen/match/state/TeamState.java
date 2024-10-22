@@ -2,6 +2,7 @@ package com.kjeldsen.match.state;
 
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.match.entities.TeamRole;
 import com.kjeldsen.match.modifers.HorizontalPressure;
 import com.kjeldsen.match.modifers.Tactic;
 import com.kjeldsen.match.modifers.VerticalPressure;
@@ -19,6 +20,7 @@ public class TeamState {
      */
 
     String id;
+    TeamRole role;
     List<Player> players;
     List<Player> bench;
     int score;
@@ -30,6 +32,7 @@ public class TeamState {
     public static TeamState init(Team team) {
         return TeamState.builder()
             .id(team.getId())
+            .role(team.getRole())
             .players(team.getPlayers())
             .bench(team.getBench())
             .score(0)

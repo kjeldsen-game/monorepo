@@ -4,6 +4,7 @@ import com.kjeldsen.match.common.RandomHelper;
 import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.match.entities.TeamRole;
 import com.kjeldsen.match.state.BallHeight;
 import com.kjeldsen.match.state.BallState;
 import com.kjeldsen.match.state.GameState;
@@ -34,7 +35,7 @@ public class ReceiverSelectionTest {
     @Test
     @Disabled
     void selectMidfieldReceiverDistribution() {
-        Team team = RandomHelper.genTeam();
+        Team team = RandomHelper.genTeam(TeamRole.HOME);
         Player initiator = genActivePlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER);
 
         List<Player> players = List.of(
@@ -49,10 +50,10 @@ public class ReceiverSelectionTest {
         selections.put(PlayerPosition.RIGHT_WINGER, 0);
         selections.put(PlayerPosition.CENTRE_MIDFIELDER, 0);
 
-        Team home = Team.builder().players(players).tactic(team.getTactic()).build();
+        Team home = Team.builder().role(TeamRole.HOME).players(players).tactic(team.getTactic()).build();
         Match match = Match.builder()
             .home(home)
-            .away(RandomHelper.genTeam())
+            .away(RandomHelper.genTeam(TeamRole.AWAY))
             .build();
 
         BallState ballState =
@@ -84,7 +85,7 @@ public class ReceiverSelectionTest {
     @Test
     @Disabled
     void selectForwardReceiverDistribution() {
-        Team team = RandomHelper.genTeam();
+        Team team = RandomHelper.genTeam(TeamRole.HOME);
         Player initiator = genActivePlayerWithPosition(team, PlayerPosition.FORWARD);
 
         List<Player> players = List.of(
@@ -97,10 +98,10 @@ public class ReceiverSelectionTest {
         selections.put(PlayerPosition.RIGHT_WINGER, 0);
         selections.put(PlayerPosition.OFFENSIVE_MIDFIELDER, 0);
 
-        Team home = Team.builder().players(players).build();
+        Team home = Team.builder().role(TeamRole.HOME).players(players).build();
         Match match = Match.builder()
             .home(home)
-            .away(RandomHelper.genTeam())
+            .away(RandomHelper.genTeam(TeamRole.AWAY))
             .build();
 
         BallState ballState =

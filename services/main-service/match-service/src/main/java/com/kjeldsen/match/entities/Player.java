@@ -2,26 +2,24 @@ package com.kjeldsen.match.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.kjeldsen.match.entities.duel.Duel;
 import com.kjeldsen.match.entities.duel.DuelRole;
 import com.kjeldsen.match.entities.duel.DuelType;
-import com.kjeldsen.match.state.BallHeight;
-import com.kjeldsen.match.state.BallState;
+import com.kjeldsen.match.recorder.GameProgressRecord;
+import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.utils.JsonUtils;
 import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerReceptionPreference;
 import com.kjeldsen.player.domain.PlayerSkill;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import com.kjeldsen.player.domain.PlayerStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Builder
 @Data
@@ -35,6 +33,7 @@ public class Player {
 
     String id;
     String teamId;
+    TeamRole teamRole;
 
     String name;
     PlayerPosition position;
@@ -45,8 +44,8 @@ public class Player {
 
     // Instead of accessing the skill points directly, this method should be used to determine the
     // skill level of the player via the duel logic
-    public Integer duelSkill(DuelType duelType, DuelRole role, BallHeight ballHeight) {
-        List<PlayerSkill> requiredSkills = duelType.requiredSkills(role, ballHeight);
+    public Integer duelSkill(DuelType duelType, DuelRole role, GameState state) {
+        List<PlayerSkill> requiredSkills = duelType.requiredSkills(role, state.getBallState().getHeight());
         Integer skillValue = 0;
 
         if (!PlayerPosition.GOALKEEPER.equals(this.getPosition())) {
@@ -95,17 +94,40 @@ public class Player {
             } else if (duelType.isShot() && role == DuelRole.CHALLENGER) {
                 // Here the goalkeeper is attempting to save a shot - this requires the reflexes`
                 // skill.
+                Integer goalkeepingSkill = 0;
                 switch (duelType) {
                     case LOW_SHOT, LONG_SHOT:
-                        skillValue = skills.get(PlayerSkill.REFLEXES);
+                        goalkeepingSkill = skills.get(PlayerSkill.REFLEXES);
                         break;
                     case ONE_TO_ONE_SHOT:
-                        skillValue = skills.get(PlayerSkill.ONE_ON_ONE);
+                        goalkeepingSkill = skills.get(PlayerSkill.ONE_ON_ONE);
+
+                        String detail = "Goalkeeper used it's one to one skills: " + goalkeepingSkill + " instead of reflexes: " + skills.get(PlayerSkill.REFLEXES);
+                        state.getRecorder().record(detail, state, GameProgressRecord.Type.ENTITY_BEHAVIOUR, GameProgressRecord.DuelStage.DURING);
+
                         break;
                     case HEADER_SHOT:
-                        skillValue = skills.get(PlayerSkill.REFLEXES);
+                        goalkeepingSkill = skills.get(PlayerSkill.REFLEXES);
                         break;
                 }
+
+                // TODO refactor this
+                // Goalkeeper Positioning affects all types of shot.
+                Integer diceRoll = (int) (Math.random() * 100);
+                Integer goalkeepingPositioningSkill = skills.get(PlayerSkill.GOALKEEPER_POSITIONING);
+                Integer goalkeepingPositioningModifier = goalkeepingPositioningSkill - diceRoll;
+
+                StringBuilder detail = new StringBuilder("Applying goalkeeper positioning: ")
+                        .append("Goalkeeper skill (RE/OTO): ").append(goalkeepingSkill)
+                        .append(", Goalkeeper positioning: ").append(goalkeepingPositioningSkill)
+                        .append(", Dice roll: ").append(diceRoll)
+                        .append(", Goalkeeper skill (RE/OTO) modified with the addition of: ").append(goalkeepingPositioningModifier);
+                state.getRecorder().record(detail.toString(), state, GameProgressRecord.Type.CALCULATION, GameProgressRecord.DuelStage.DURING);
+
+                goalkeepingSkill += goalkeepingPositioningModifier;
+
+                skillValue = goalkeepingSkill;;
+
             }
         }
 
@@ -117,6 +139,8 @@ public class Player {
     public Integer getSkillValue(PlayerSkill skill) {
         return this.getSkills().get(skill);
     }
+
+    public void setSkillValue(PlayerSkill skill, Integer value) { this.getSkills().put(skill, value); }
 
     @Override
     public String toString() {

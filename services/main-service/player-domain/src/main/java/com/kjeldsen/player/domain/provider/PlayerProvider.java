@@ -15,7 +15,7 @@ public class PlayerProvider {
 
     public static String name() {
         Faker faker = new Faker();
-        return faker.name().fullName();
+        return faker.name().firstName() + " " + faker.name().lastName();
     }
 
 

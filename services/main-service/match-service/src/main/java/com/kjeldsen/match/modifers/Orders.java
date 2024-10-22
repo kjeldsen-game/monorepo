@@ -6,6 +6,7 @@ import com.kjeldsen.match.entities.duel.DuelOrigin;
 import com.kjeldsen.match.entities.duel.DuelType;
 import com.kjeldsen.match.execution.DuelParams;
 import com.kjeldsen.match.selection.DuelTypeSelection;
+import com.kjeldsen.match.selection.PitchAreaSelection;
 import com.kjeldsen.match.selection.ReceiverSelection;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.GameStateException;
@@ -56,6 +57,10 @@ public class Orders {
             return params;
         }
 
+        Boolean nearbyOnly = true;
+        PitchArea destinationPitchArea = PitchAreaSelection.select(state.getBallState().getArea(), receiver.get(), false)
+                .orElseThrow(() -> new GameStateException(state, "No pitch area to select from"));
+
         DuelType duelType = DuelTypeSelection.select(state, Action.PASS, receiver.get());
 
         return DuelParams.builder()
@@ -65,7 +70,9 @@ public class Orders {
             .challenger(params.getChallenger())
             .receiver(receiver.get())
             .origin(DuelOrigin.PLAYER_ORDER)
+            .disruptor(params.getDisruptor())
             .appliedPlayerOrder(PlayerOrder.PASS_FORWARD)
+            .destinationPitchArea(destinationPitchArea)
             .build();
     }
 
@@ -93,7 +100,9 @@ public class Orders {
             .initiator(params.getInitiator())
             .challenger(goalkeeper)
             .origin(DuelOrigin.PLAYER_ORDER)
+            .disruptor(params.getDisruptor())
             .appliedPlayerOrder(PlayerOrder.LONG_SHOT)
+            .destinationPitchArea(PitchArea.CENTRE_FORWARD)
             .build();
     }
 
@@ -106,11 +115,11 @@ public class Orders {
         }
         // At this point the rank must be middle and the file is the opposite of the current one,
         // so we can deduce the area from which to select a player.
-        PitchArea area =
+        PitchArea destinationArea =
             file == PitchFile.LEFT ? PitchArea.RIGHT_MIDFIELD : PitchArea.LEFT_MIDFIELD;
 
         Optional<Player> receiver = ReceiverSelection.selectFromArea(
-            params.getState(), params.getInitiator(), area);
+            params.getState(), params.getInitiator(), destinationArea);
 
         if (receiver.isEmpty()) {
             return params;
@@ -126,7 +135,9 @@ public class Orders {
             .challenger(params.getChallenger())
             .receiver(receiver.get())
             .origin(DuelOrigin.PLAYER_ORDER)
+            .disruptor(params.getDisruptor())
             .appliedPlayerOrder(PlayerOrder.CHANGE_FLANK)
+            .destinationPitchArea(destinationArea)
             .build();
     }
 }
