@@ -4,11 +4,13 @@ import com.kjeldsen.match.modifers.HorizontalPressure;
 import com.kjeldsen.match.modifers.Tactic;
 import com.kjeldsen.match.modifers.VerticalPressure;
 import com.kjeldsen.match.utils.JsonUtils;
-import java.util.List;
+import com.kjeldsen.player.domain.PlayerPosition;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Builder
 @Data
@@ -17,6 +19,7 @@ import lombok.NoArgsConstructor;
 public class Team {
 
     String id;
+    TeamRole role;
     List<Player> players;
     List<Player> bench;
 
@@ -25,6 +28,10 @@ public class Team {
     Tactic tactic;
     VerticalPressure verticalPressure;
     HorizontalPressure horizontalPressure;
+
+    public List<Player> getPlayers(PlayerPosition position) {
+        return this.players.stream().filter(p -> position.equals(p.getPosition())).toList();
+    }
 
     @Override
     public String toString() {

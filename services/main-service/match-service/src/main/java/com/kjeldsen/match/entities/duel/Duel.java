@@ -30,6 +30,11 @@ public class Duel {
     DuelStats challengerStats;
     // Whether the duel originates from anything other than default play
     DuelOrigin origin;
+    // Any event which affected the normal flow of the duel. For instance a goalkeeper interception or an injury.
+    DuelDisruptor disruptor;
     // If a player order is applied, record it
     PlayerOrder appliedPlayerOrder;
+    // If the play requires the ball to be moved to a new area (a pass), we should know where it's intended destination.
+    PitchArea destinationPitchArea;
+
 }

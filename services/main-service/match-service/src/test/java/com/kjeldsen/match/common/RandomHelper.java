@@ -3,6 +3,7 @@ package com.kjeldsen.match.common;
 import com.github.javafaker.Faker;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.match.entities.TeamRole;
 import com.kjeldsen.match.modifers.HorizontalPressure;
 import com.kjeldsen.match.modifers.Tactic;
 import com.kjeldsen.match.modifers.VerticalPressure;
@@ -31,9 +32,7 @@ public final class RandomHelper {
     // Returns 11 random players including goalkeeper and a striker
     public static List<Player> genActivePlayers(Team team) {
         List<Player> players = new ArrayList<>(11);
-        players.add(genActivePlayerWithPosition(team, PlayerPosition.RIGHT_BACK));
         players.add(genActivePlayerWithPosition(team, PlayerPosition.CENTRE_BACK));
-        players.add(genActivePlayerWithPosition(team, PlayerPosition.LEFT_BACK));
         players.add(genActivePlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER));
         players.add(genActivePlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER));
         players.add(genActivePlayerWithPosition(team, PlayerPosition.FORWARD));
@@ -43,9 +42,13 @@ public final class RandomHelper {
 
         double random = Math.random();
         if (random > 0.5) {
+            players.add(genActivePlayerWithPosition(team, PlayerPosition.RIGHT_BACK));
+            players.add(genActivePlayerWithPosition(team, PlayerPosition.LEFT_BACK));
             players.add(genActivePlayerWithPosition(team, PlayerPosition.RIGHT_WINGER));
             players.add(genActivePlayerWithPosition(team, PlayerPosition.LEFT_WINGER));
         } else {
+            players.add(genActivePlayerWithPosition(team, PlayerPosition.RIGHT_WINGBACK));
+            players.add(genActivePlayerWithPosition(team, PlayerPosition.LEFT_WINGBACK));
             players.add(genActivePlayerWithPosition(team, PlayerPosition.RIGHT_MIDFIELDER));
             players.add(genActivePlayerWithPosition(team, PlayerPosition.LEFT_MIDFIELDER));
         }
@@ -77,7 +80,8 @@ public final class RandomHelper {
         return Player.builder()
                 .id(RandomStringUtils.randomNumeric(5))
                 .teamId(team.getId())
-                .name(faker.name().fullName())
+                .teamRole(team.getRole())
+                .name(faker.name().firstName() + " " + faker.name().lastName()) // Avoid title ie Miss
                 .status(status)
                 .position(position)
                 .playerOrder(genPlayerOrder())
@@ -89,7 +93,8 @@ public final class RandomHelper {
         return Player.builder()
             .id(RandomStringUtils.randomNumeric(5))
             .teamId(team.getId())
-            .name(faker.name().fullName())
+            .teamRole(team.getRole())
+            .name(faker.name().firstName() + " " + faker.name().lastName()) // Avoid title ie Miss
             .status(PlayerStatus.ACTIVE)
             .position(PlayerPosition.values()[new Random().nextInt(PlayerPosition.values().length)])
             .receptionPreference(genPlayerReceptionPreference())
@@ -114,9 +119,10 @@ public final class RandomHelper {
         return new Random().nextInt(30, 100);
     }
 
-    public static Team genTeam() {
+    public static Team genTeam(TeamRole role) {
         Team team = Team.builder()
             .id(RandomStringUtils.randomNumeric(5))
+            .role(role)
             .build();
         List<Player> players = genActivePlayers(team);
         List<Player> bench = genBenchPlayers(team);

@@ -77,7 +77,8 @@ public final class RandomHelper {
         return Player.builder()
                 .id(RandomStringUtils.random(5))
                 .teamId(team.getId())
-                .name(faker.name().fullName())
+                .teamRole(team.getRole())
+                .name(faker.name().firstName() + " " + faker.name().lastName()) // Avoid title ie Miss
                 .status(status)
                 .position(position)
                 .playerOrder(genPlayerOrder())
@@ -89,7 +90,8 @@ public final class RandomHelper {
         return Player.builder()
             .id(RandomStringUtils.random(5))
             .teamId(team.getId())
-            .name(faker.name().fullName())
+            .teamRole(team.getRole())
+            .name(faker.name().firstName() + " " + faker.name().lastName()) // Avoid title ie Miss
             .status(PlayerStatus.ACTIVE)
             .position(PlayerPosition.values()[new Random().nextInt(PlayerPosition.values().length)])
             .receptionPreference(genPlayerReceptionPreference())

@@ -2,11 +2,13 @@ package com.kjeldsen.match.state;
 
 import com.kjeldsen.match.entities.Action;
 import com.kjeldsen.match.entities.Play;
-import com.kjeldsen.match.entities.duel.DuelType;
 import com.kjeldsen.match.entities.Match;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import com.kjeldsen.match.recorder.GameProgressRecord;
+import com.kjeldsen.match.recorder.GameProgressRecorder;
 import lombok.Builder;
 import lombok.Value;
 
@@ -40,17 +42,27 @@ public class GameState {
     // The list of plays executed so far in the game
     List<Play> plays;
 
+    GameProgressRecorder recorder;
+
     // The initial game state simply selects a random team to start the game. Everything else is set
     // to a default start value.
     public static GameState init(Match match) {
-        return GameState.builder()
+
+        GameProgressRecorder recorder = GameProgressRecorder.init();
+
+        GameState newGame = GameState.builder()
             .turn(Turn.HOME) // TODO randomize - this is temporarily set to home for testing
             .clock(0)
             .home(TeamState.init(match.getHome()))
             .away(TeamState.init(match.getAway()))
             .ballState(BallState.init())
             .plays(List.of())
+            .recorder(recorder)
             .build();
+
+        recorder.record("The game has started.", newGame, GameProgressRecord.Type.INFORMATIVE, GameProgressRecord.DuelStage.BEFORE);
+
+        return newGame;
     }
 
     public TeamState attackingTeam() {
@@ -124,7 +136,7 @@ public class GameState {
 
             TeamState activeTeam = this.turn == Turn.HOME ? home : away;
             activeTeam.getPlayers().stream()
-                .filter((player) -> player.getId().equals(ballState.getPlayer().getId()))
+                .filter(player -> player.getId().equals(ballState.getPlayer().getId()))
                 .findAny()
                 .orElseThrow(
                     () -> new GameStateException("Player with ball is not on active team"));

@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.kjeldsen.match.common.RandomHelper;
 import com.kjeldsen.match.entities.Action;
 import com.kjeldsen.match.entities.Play;
+import com.kjeldsen.match.entities.TeamRole;
 import com.kjeldsen.match.entities.duel.Duel;
 import com.kjeldsen.match.state.BallHeight;
 import com.kjeldsen.match.state.BallState;
@@ -69,6 +70,7 @@ class ActionSelectionTest {
         player.setId(RandomStringUtils.random(5));
         Team home = Team.builder()
             .id(RandomStringUtils.random(5))
+            .role(TeamRole.HOME)
             .build();
         List<Player> players = genActivePlayers(home);
         List<Player> bench = genBenchPlayers(home);
@@ -86,7 +88,7 @@ class ActionSelectionTest {
             .action(Action.PASS)
             .build();
 
-        Team away = RandomHelper.genTeam();
+        Team away = RandomHelper.genTeam(TeamRole.AWAY);
         BallState ballState = new BallState(player, area, BallHeight.GROUND);
         GameState state = GameState.init(Match.builder().home(home).away(away).build());
         return Optional.of(state)

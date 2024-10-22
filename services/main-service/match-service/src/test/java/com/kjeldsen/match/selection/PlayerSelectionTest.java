@@ -3,6 +3,7 @@ package com.kjeldsen.match.selection;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.kjeldsen.match.common.RandomHelper;
+import com.kjeldsen.match.entities.TeamRole;
 import com.kjeldsen.match.state.GameStateException;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.TeamState;
@@ -15,7 +16,7 @@ class PlayerSelectionTest {
 
     @Test
     void noStrikerOnTeam() {
-        Team team = RandomHelper.genTeam();
+        Team team = RandomHelper.genTeam(TeamRole.HOME);
         List<Player> players = RandomHelper.genActivePlayers(team).stream()
             .filter(p -> !p.getPosition().isForward())
             .toList();

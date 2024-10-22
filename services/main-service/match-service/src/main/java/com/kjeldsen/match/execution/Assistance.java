@@ -5,6 +5,7 @@ import com.kjeldsen.match.entities.duel.DuelRole;
 import com.kjeldsen.match.modifers.HorizontalPressure;
 import com.kjeldsen.match.modifers.Tactic;
 import com.kjeldsen.match.modifers.VerticalPressure;
+import com.kjeldsen.match.recorder.GameProgressRecord;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.TeamState;
 import com.kjeldsen.player.domain.PitchArea;
@@ -30,14 +31,12 @@ public class Assistance {
     public static Map<String, Integer> teamAssistance(
         GameState state, Player player, DuelRole role) {
 
-        PitchArea pitchArea = state.getBallState().getArea();
         TeamState team = getTeam(state, role);
         return team.getPlayers().stream()
             .filter(teammate -> !teammate.equals(player))
-            .filter(teammate -> teammate.getPosition() != PlayerPosition.GOALKEEPER)
             .collect(Collectors.toMap(
                 Player::getName,
-                teammate -> playerAssistance(team.getTactic(), teammate, role, pitchArea)))
+                teammate -> playerAssistance(team.getTactic(), teammate, role, state)))
             .entrySet()
             .stream()
             .filter(assistance -> assistance.getValue() > 0)
@@ -48,10 +47,30 @@ public class Assistance {
 
     // Calculates the assistance an individual player provides to the teammate in the duel
     private static int playerAssistance(
-        Tactic tactic, Player player, DuelRole role, PitchArea ballArea) {
+        Tactic tactic, Player player, DuelRole role, GameState state) {
+
+        PitchArea ballArea = state.getBallState().getArea();
 
         if (player.getPosition() == PlayerPosition.GOALKEEPER) {
-            return 0;
+            return switch (role) {
+                case INITIATOR -> {
+                    yield 0;
+                }
+                case CHALLENGER -> {
+                    if (PitchArea.CENTRE_FORWARD.equals(ballArea)) {
+                        //double supportFactor = defenderSupport(player.getPosition(), ballArea);
+                        double supportFactor = 1;
+                        double or = player.getSkills().get(PlayerSkill.ORGANIZATION);
+
+                        String detail = "GK assisted in Penalty Box with ORGANIZATION skill: " + or + " (support factor: 1)";
+                        state.getRecorder().record(detail, state, GameProgressRecord.Type.ENTITY_DETAIL, GameProgressRecord.DuelStage.DURING);
+
+                        yield (int) (supportFactor * or);
+                    } else {
+                        yield 0;
+                    }
+                }
+            };
         }
         return switch (role) {
             case INITIATOR -> {

@@ -4,6 +4,7 @@ import com.kjeldsen.match.common.RandomHelper;
 import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.match.entities.TeamRole;
 import com.kjeldsen.match.state.BallHeight;
 import com.kjeldsen.match.state.BallState;
 import com.kjeldsen.match.state.GameState;
@@ -35,7 +36,7 @@ public class DefenderSelectionTest {
     @Test
     @Disabled
     void selectMidfieldReceiverDistribution() {
-        Team team = RandomHelper.genTeam();
+        Team team = RandomHelper.genTeam(TeamRole.HOME);
 
         List<Player> players = List.of(
             genActivePlayerWithPosition(team, PlayerPosition.CENTRE_MIDFIELDER),
@@ -54,7 +55,7 @@ public class DefenderSelectionTest {
         Team home = Team.builder().players(players).build();
         Match match = Match.builder()
             .home(home)
-            .away(RandomHelper.genTeam())
+            .away(RandomHelper.genTeam(TeamRole.AWAY))
             .build();
 
         BallState ballState =

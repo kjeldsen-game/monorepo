@@ -6,7 +6,9 @@ import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Play;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.match.entities.TeamRole;
 import com.kjeldsen.match.entities.duel.Duel;
+import com.kjeldsen.match.entities.duel.DuelDisruptor;
 import com.kjeldsen.match.entities.duel.DuelOrigin;
 import com.kjeldsen.match.entities.duel.DuelResult;
 import com.kjeldsen.match.entities.duel.DuelType;
@@ -29,8 +31,8 @@ class DuelExecutionTest {
 
     @Test
     void goalkeeperCheckOnShotDuelResolution() {
-        Team home = RandomHelper.genTeam();
-        Team away = RandomHelper.genTeam();
+        Team home = RandomHelper.genTeam(TeamRole.HOME);
+        Team away = RandomHelper.genTeam(TeamRole.AWAY);
 
         Match match = Match.builder()
                 .id(java.util.UUID.randomUUID().toString())
@@ -50,6 +52,7 @@ class DuelExecutionTest {
                 .initiator(initiator)
                 .challenger(challenger)
                 .origin(DuelOrigin.DEFAULT)
+                .disruptor(DuelDisruptor.NONE)
                 .build();
 
         try {
@@ -62,8 +65,8 @@ class DuelExecutionTest {
 
         @Test
     void shotDuelResolutionWinAndLose() {
-        Team home = RandomHelper.genTeam();
-        Team away = RandomHelper.genTeam();
+        Team home = RandomHelper.genTeam(TeamRole.HOME);
+        Team away = RandomHelper.genTeam(TeamRole.AWAY);
 
         Match match = Match.builder()
                 .id(java.util.UUID.randomUUID().toString())
@@ -83,6 +86,7 @@ class DuelExecutionTest {
                 .initiator(initiator)
                 .challenger(challenger)
                 .origin(DuelOrigin.DEFAULT)
+                .disruptor(DuelDisruptor.NONE)
                 .build();
 
         DuelDTO outcome = DuelExecution.executeDuel(state, params);
@@ -96,6 +100,7 @@ class DuelExecutionTest {
                 .initiator(initiator)
                 .challenger(challenger)
                 .origin(DuelOrigin.DEFAULT)
+                .disruptor(DuelDisruptor.NONE)
                 .build();
 
         outcome = DuelExecution.executeDuel(state, params);
@@ -105,8 +110,8 @@ class DuelExecutionTest {
 
     @Test
     void aerialPassDuelResolution() {
-        Team home = RandomHelper.genTeam();
-        Team away = RandomHelper.genTeam();
+        Team home = RandomHelper.genTeam(TeamRole.HOME);
+        Team away = RandomHelper.genTeam(TeamRole.AWAY);
 
         Match match = Match.builder()
                 .id(java.util.UUID.randomUUID().toString())
@@ -131,6 +136,7 @@ class DuelExecutionTest {
                 .initiator(initiator)
                 .challenger(challenger)
                 .origin(DuelOrigin.DEFAULT)
+                .disruptor(DuelDisruptor.NONE)
                 .build();
 
         DuelDTO outcome = DuelExecution.executeDuel(state, params);
