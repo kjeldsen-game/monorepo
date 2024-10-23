@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.kjeldsen.match.common.RandomHelper;
+import com.kjeldsen.match.entities.TeamRole;
 import com.kjeldsen.match.state.BallHeight;
 import com.kjeldsen.match.state.BallState;
 import com.kjeldsen.match.state.GameState;
@@ -23,8 +24,8 @@ public class DuelRandomizationTest {
 
     @Test
     void previousDuelFound() {
-        Team home = RandomHelper.genTeam();
-        Team away = RandomHelper.genTeam();
+        Team home = RandomHelper.genTeam(TeamRole.HOME);
+        Team away = RandomHelper.genTeam(TeamRole.AWAY);
         Player initiator = RandomHelper.genPlayer(home);
         Player challenger = RandomHelper.genPlayer(away);
         BallState ballState = new BallState(initiator, PitchArea.CENTRE_MIDFIELD, BallHeight.GROUND);

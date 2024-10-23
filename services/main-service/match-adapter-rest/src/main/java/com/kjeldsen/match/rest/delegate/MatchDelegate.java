@@ -7,6 +7,7 @@ import com.kjeldsen.match.entities.Match.Status;
 import com.kjeldsen.match.entities.MatchReport;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.match.entities.TeamRole;
 import com.kjeldsen.match.modifers.HorizontalPressure;
 import com.kjeldsen.match.modifers.Tactic;
 import com.kjeldsen.match.modifers.VerticalPressure;
@@ -77,8 +78,8 @@ public class MatchDelegate implements MatchApiDelegate {
         com.kjeldsen.player.domain.Team away = teamRepo.findById(awayId)
                 .orElseThrow(() -> new RuntimeException("Away team not found"));
 
-        Team engineHome = buildTeam(home, request.getHome().getModifiers());
-        Team engineAway = buildTeam(away, request.getAway().getModifiers());
+        Team engineHome = buildTeam(home, TeamRole.HOME, request.getHome().getModifiers());
+        Team engineAway = buildTeam(away,TeamRole.AWAY,  request.getAway().getModifiers());
 
         Match match = Match.builder()
                 .id(java.util.UUID.randomUUID().toString())
@@ -172,18 +173,7 @@ public class MatchDelegate implements MatchApiDelegate {
 
         List<MatchResponse> response = matches.stream()
                 .map(match -> {
-
-                    MatchResponse res = new MatchResponse();
-                    res.setId(match.getId());
-                    res.setDateTime(match.getDateTime());
-
-                    TeamResponse resHomeTeam = buildMatchTeamResponse(match.getHome());
-                    res.setHome(resHomeTeam);
-
-                    TeamResponse resAwayTeam = buildMatchTeamResponse(match.getAway());
-                    res.setAway(resAwayTeam);
-
-                    return res;
+                    return this.buildMatchResponse(match);
                 })
                 .toList();
 
@@ -233,7 +223,7 @@ public class MatchDelegate implements MatchApiDelegate {
 
             Optional<com.kjeldsen.player.domain.Player> optDomainPlayer = playerRepo.findOneById(com.kjeldsen.player.domain.Player.PlayerId.of(playerId));
             if (optDomainPlayer.isPresent()) {
-                Player playerToAdd = this.buildPlayer(optDomainPlayer.get());
+                Player playerToAdd = this.buildPlayer(optDomainPlayer.get(), team.getRole());
                 playerToAdd.setPosition(PlayerPosition.valueOf(playerRequest.getPosition().getValue()));
                 if (PlayerStatus.ACTIVE.equals(requestStatus)) {
                     team.getPlayers().add(playerToAdd);
@@ -456,19 +446,20 @@ public class MatchDelegate implements MatchApiDelegate {
         return result;
     }
 
-    private Team buildTeam(com.kjeldsen.player.domain.Team home, Modifiers modifiers) {
+    private Team buildTeam(com.kjeldsen.player.domain.Team home, TeamRole role, Modifiers modifiers) {
         List<Player> activePlayers = playerRepo.findByTeamId(home.getId()).stream()
                 .filter(player -> player.getStatus() == PlayerStatus.ACTIVE)
-                .map(this::buildPlayer)
+                .map(player -> this.buildPlayer(player, role))
                 .toList();
 
         List<Player> benchPlayers = playerRepo.findByTeamId(home.getId()).stream()
                 .filter(player -> player.getStatus() == PlayerStatus.BENCH)
-                .map(this::buildPlayer)
+                .map(player -> this.buildPlayer(player, role))
                 .toList();
 
         return Team.builder()
                 .id(home.getId().value())
+                .role(role)
                 .players(activePlayers)
                 .bench(benchPlayers)
                 .tactic(Tactic.valueOf(modifiers.getTactic().getValue()))
@@ -478,7 +469,7 @@ public class MatchDelegate implements MatchApiDelegate {
                 .build();
     }
 
-    private Player buildPlayer(com.kjeldsen.player.domain.Player player) {
+    private Player buildPlayer(com.kjeldsen.player.domain.Player player, TeamRole teamRole) {
         Map<PlayerSkill, Integer> skills = player.getActualSkills().entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getActual()));
         skills.put(PlayerSkill.INTERCEPTING, 0);
@@ -488,6 +479,7 @@ public class MatchDelegate implements MatchApiDelegate {
                 .name(player.getName())
                 .status(player.getStatus())
                 .teamId(player.getTeamId().value())
+                .teamRole(teamRole)
                 .position(player.getPosition())
                 .skills(skills)
                 .playerOrder(player.getPlayerOrder())

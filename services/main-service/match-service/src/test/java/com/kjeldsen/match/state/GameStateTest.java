@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.kjeldsen.match.common.RandomHelper;
 import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.match.entities.TeamRole;
 import com.kjeldsen.player.domain.PitchArea;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,8 @@ class GameStateTest {
 
     @Test
     void initialGameStateNotNull() {
-        Team home = RandomHelper.genTeam();
-        Team away = RandomHelper.genTeam();
+        Team home = RandomHelper.genTeam(TeamRole.HOME);
+        Team away = RandomHelper.genTeam(TeamRole.AWAY);
         Match match = Match.builder()
             .home(home)
             .away(away)
@@ -40,7 +41,7 @@ class GameStateTest {
 
     @Test
     void initialTeamStateNotNull() {
-        Team team = RandomHelper.genTeam();
+        Team team = RandomHelper.genTeam(TeamRole.HOME);
         TeamState teamState = TeamState.init(team);
         assertNotNull(teamState);
         assertEquals(0, teamState.getScore());
@@ -49,8 +50,8 @@ class GameStateTest {
 
     @Test
     void ballWithoutPlayerAfterKickOffFails() {
-        Team home = RandomHelper.genTeam();
-        Team away = RandomHelper.genTeam();
+        Team home = RandomHelper.genTeam(TeamRole.HOME);
+        Team away = RandomHelper.genTeam(TeamRole.AWAY);
         Match match = Match.builder()
             .home(home)
             .away(away)

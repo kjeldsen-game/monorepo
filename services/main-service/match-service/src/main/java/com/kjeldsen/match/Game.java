@@ -5,11 +5,13 @@ import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Play;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.duel.Duel;
+import com.kjeldsen.match.entities.duel.DuelDisruptor;
 import com.kjeldsen.match.entities.duel.DuelOrigin;
 import com.kjeldsen.match.entities.duel.DuelType;
 import com.kjeldsen.match.execution.DuelDTO;
 import com.kjeldsen.match.execution.DuelExecution;
 import com.kjeldsen.match.execution.DuelParams;
+import com.kjeldsen.match.recorder.GameProgressRecord;
 import com.kjeldsen.match.selection.ActionSelection;
 import com.kjeldsen.match.selection.ChallengerSelection;
 import com.kjeldsen.match.selection.DuelTypeSelection;
@@ -71,6 +73,7 @@ public class Game {
     }
 
     public static GameState init(Match match) {
+
         if (!TeamFormationValidator.validate(match.getHome()).getValid()) throw new RuntimeException("Home team formation is invalid.");
         if (!TeamFormationValidator.validate(match.getAway()).getValid()) throw new RuntimeException("Away team formation is invalid.");
 
@@ -100,6 +103,7 @@ public class Game {
                     .away(before.getAway())
                     .ballState((new BallState(starting, PitchArea.CENTRE_MIDFIELD, BallHeight.GROUND)))
                     .plays(before.getPlays())
+                    .recorder(before.getRecorder())
                     .build())
             .orElseThrow();
     }
@@ -118,9 +122,14 @@ public class Game {
 
         // For duels that require a receiver always wrap this variable with an Optional and check
         // that an actual player is present.
+        // Also, define an intented pitch area to move the ball to in case of duel win. In this case, the pitch area should be nearby.
         Player receiver = null;
+        PitchArea destinationPitchArea = null;
         if (action.requiresReceiver()) {
             receiver = ReceiverSelection.select(state, initiator);
+            Boolean nearbyOnly = true;
+            destinationPitchArea = PitchAreaSelection.select(state.getBallState().getArea(), receiver, true)
+                    .orElseThrow(() -> new GameStateException(state, "No pitch area to select from"));
         }
 
         // Generate a duel based on the action of the play. This requires a challenger - the person
@@ -142,6 +151,8 @@ public class Game {
             .challenger(challenger)
             .receiver(receiver)
             .origin(DuelOrigin.DEFAULT)
+            .disruptor(DuelDisruptor.NONE)
+            .destinationPitchArea(destinationPitchArea)
             .build();
 
         // The duel can be created once its result is determined. Any details about the duel that
@@ -156,9 +167,11 @@ public class Game {
             .challenger(outcome.getParams().getChallenger())
             .result(outcome.getResult())
             .pitchArea(outcome.getParams().getState().getBallState().getArea())
+            .destinationPitchArea(outcome.getDestinationPitchArea())
             .initiatorStats(outcome.getInitiatorStats())
             .challengerStats(outcome.getChallengerStats())
             .origin(outcome.getOrigin())
+            .disruptor(outcome.getDisruptor())
             .appliedPlayerOrder(outcome.getParams().getAppliedPlayerOrder())
             .build();
 
@@ -170,7 +183,18 @@ public class Game {
             .ballState(outcome.getParams().getState().getBallState())
             .build();
 
-        log.info("Play complete:\n{}", play);
+        StringBuilder detail = new StringBuilder();
+        detail.append(play.getDuel().getInitiator().getTeamRole()).append(" team in ").append(play.getDuel().getPitchArea()).append(" attempted ")
+                .append(play.getAction()).append(" ("). append(Action.PASS.equals(play.getAction()) ? play.getDuel().getType() + " to " + play.getDuel().getDestinationPitchArea() : play.getDuel().getType()). append(") with result ")
+                .append(play.getDuel().getResult()). append(" - ").append(play.getDuel().getInitiator().getName())
+                .append(" (").append(play.getDuel().getInitiator().getPosition()). append(")")
+                .append(play.getDuel().getChallenger() != null ? " challenged by " + play.getDuel().getChallenger().getName() : "")
+                .append(play.getDuel().getChallenger() != null ? " (" + play.getDuel().getChallenger().getPosition() + ")": "")
+                .append(play.getDuel().getReceiver() != null ? " to " + play.getDuel().getReceiver().getName() : "")
+                .append(play.getDuel().getReceiver() != null ? " (" + play.getDuel().getReceiver().getPosition() + ")" : "");
+        state.getRecorder().record(detail.toString(), state, GameProgressRecord.Type.SUMMARY, GameProgressRecord.DuelStage.AFTER);
+
+        //log.debug("Play complete:\n{}", play);
 
         return switch (outcome.getResult()) {
             case WIN -> {
@@ -198,15 +222,26 @@ public class Game {
         if (play.getDuel().getType().movesBall()) {
 
             if (play.getDuel().getType().equals(DuelType.PASSING_HIGH)) {
+                if (ballHeight.isLow()) {
+                    state.getRecorder().record("Ball moved from low to high.", state, GameProgressRecord.Type.BALL_BEHAVIOUR, GameProgressRecord.DuelStage.AFTER);
+                }
                 ballHeight = BallHeight.HIGH;
             }
-            if (play.getDuel().getType().equals(DuelType.PASSING_LOW)) ballHeight = BallHeight.LOW;
+            if (play.getDuel().getType().equals(DuelType.PASSING_LOW)) {
+                if (ballHeight.isHigh()) {
+                    state.getRecorder().record("Ball moved from high to low.", state, GameProgressRecord.Type.BALL_BEHAVIOUR, GameProgressRecord.DuelStage.AFTER);
+                }
 
-            // If the change flank order was applied, then ball can move outisde nearby areas.
-            Boolean nearbyOnly = ! PlayerOrder.CHANGE_FLANK.equals(play.getDuel().getAppliedPlayerOrder());
+                ballHeight = BallHeight.LOW;
+            }
 
-            playerArea = PitchAreaSelection.select(currentArea, player, nearbyOnly)
-                .orElseThrow(() -> new GameStateException(state, "No pitch area to select from"));
+            // Moves ball to intended destination form the duel.
+            if (play.getDuel().getDestinationPitchArea() == null) {
+                throw new GameStateException(state, "Duel has no destination pitch area defined");
+            }
+
+            playerArea = play.getDuel().getDestinationPitchArea();
+
         } else {
             playerArea = currentArea;
         }
@@ -221,6 +256,7 @@ public class Game {
                     .away(before.getAway())
                     .ballState(newBallState)
                     .plays(GameState.concatPlay(before.getPlays(), play))
+                    .recorder(before.getRecorder())
                     .build())
             .orElseThrow();
     }
@@ -232,12 +268,13 @@ public class Game {
         PitchArea currentArea = state.getBallState().getArea().flipPerspective();
 
         // TODO refactor this
-        Optional<BallState> fromModifier = checkModifiers(play);
+        Optional<BallState> fromModifier = checkModifiers(state, play);
         BallState newBallState;
         if (fromModifier.isPresent()) {
             newBallState = fromModifier.get();
         } else {
             PitchArea playerArea;
+            /*
             if (play.getDuel().getType().movesBall()) {
 
                 // If the change flank order was applied, then ball can move outisde nearby areas.
@@ -248,7 +285,9 @@ public class Game {
                         () -> new GameStateException(state, "No pitch area to select from"));
             } else {
                 playerArea = currentArea;
-            }
+            }*/
+            playerArea = currentArea;
+
             newBallState = new BallState(play.getDuel().getChallenger(), playerArea, state.getBallState().getHeight());
         }
 
@@ -261,12 +300,14 @@ public class Game {
                     .away(before.getAway())
                     .ballState(newBallState)
                     .plays(GameState.concatPlay(before.getPlays(), play))
+                    .recorder(before.getRecorder())
                     .build())
             .orElseThrow();
     }
 
     // For goals, we switch sides and increment the score
     private static GameState handleGoal(GameState state, Play play) {
+
         TeamState newTeamState = Optional.of(state.attackingTeam())
             .map((before) ->
                 TeamState.builder()
@@ -279,12 +320,16 @@ public class Game {
                     .build())
             .orElseThrow();
 
+        if (state.getBallState().getHeight().isHigh()) {
+            state.getRecorder().record("Ball moved from high to low.", state, GameProgressRecord.Type.BALL_BEHAVIOUR, GameProgressRecord.DuelStage.AFTER);
+        }
+
         // Give the ball to the kick-off player from the team that conceded the goal
         BallState newBallState = new BallState(
             KickOffSelection.selectPlayer(state, state.defendingTeam()),
             PitchArea.CENTRE_MIDFIELD, BallHeight.GROUND);
 
-        return Optional.of(state)
+        GameState newState = Optional.of(state)
             .map((before) ->
                 GameState.builder()
                     .turn(before.getTurn() == Turn.HOME ? Turn.AWAY : Turn.HOME)
@@ -294,12 +339,17 @@ public class Game {
                     .away(before.getTurn() == Turn.AWAY ? newTeamState : before.getAway())
                     .ballState(newBallState)
                     .plays(GameState.concatPlay(before.getPlays(), play))
+                    .recorder(before.getRecorder())
                     .build())
             .orElseThrow();
+
+        state.getRecorder().record("GOAL! ["  + newState.getHome().getScore() + "-" + newState.getAway().getScore() + "]", state, GameProgressRecord.Type.INFORMATIVE, GameProgressRecord.DuelStage.BEFORE);
+
+        return newState;
     }
 
     // TODO - refactor, this should probably go somewhere else
-    private static Optional<BallState> checkModifiers(Play play) {
+    private static Optional<BallState> checkModifiers(GameState state, Play play) {
         if (play.getDuel().getOrigin() == DuelOrigin.DEFAULT) {
             return Optional.empty();
         }
@@ -309,6 +359,11 @@ public class Game {
             PitchArea newArea = play.getDuel().getPitchArea().switchFile();
             Player receiver = play.getDuel().getReceiver();
             // For now, change flank
+
+            if (play.getBallState().getHeight().isLow()) {
+                state.getRecorder().record("Ball moved from low to high.", state, GameProgressRecord.Type.BALL_BEHAVIOUR, GameProgressRecord.DuelStage.AFTER);
+            }
+
             BallState newBallState = new BallState(receiver, newArea, BallHeight.HIGH);
             return Optional.of(newBallState);
         }

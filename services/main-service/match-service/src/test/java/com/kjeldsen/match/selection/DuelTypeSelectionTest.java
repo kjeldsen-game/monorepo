@@ -6,6 +6,7 @@ import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Play;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.match.entities.TeamRole;
 import com.kjeldsen.match.entities.duel.Duel;
 import com.kjeldsen.match.entities.duel.DuelType;
 import com.kjeldsen.match.state.BallHeight;
@@ -121,12 +122,13 @@ class DuelTypeSelectionTest {
         players.add(player);
         home = Team.builder()
             .id(home.getId())
+            .role(TeamRole.HOME)
             .players(players)
             .bench(bench)
             .rating(1)
             .build();
 
-        Team away = RandomHelper.genTeam();
+        Team away = RandomHelper.genTeam(TeamRole.AWAY);
         GameState state = GameState.init(Match.builder().home(home).away(away).build());
         return Optional.of(state)
             .map((before) ->
