@@ -10,6 +10,10 @@ export interface GameStats {
   awayRating: number
 }
 
+export interface PlayerOrder {
+  
+}
+
 export interface Play {
   action: Action
   duel: Duel

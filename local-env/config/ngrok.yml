@@ -1,0 +1,8 @@
+version: 2
+#authtoken: <paste_here_you_value>
+authtoken: 2C4kc52k49SZ5H86zFFWe2tAVSB_4Szybq3qKnpv3BryVurni
+tunnels:
+  traefik:
+    labels:
+      - edge=edghts_2mTRFmCiiajrcZef6zwyTTsl4HJ
+    addr: http://host.docker.internal:80

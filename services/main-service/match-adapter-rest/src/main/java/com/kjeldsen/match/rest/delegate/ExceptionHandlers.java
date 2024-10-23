@@ -37,7 +37,7 @@ public class ExceptionHandlers {
         log.error("Game state error: {}", e.getMessage());
         e.printStackTrace();
         return Optional.ofNullable(e.getState())
-            .map((GameState endState) -> new MatchReport(endState, endState.getPlays(), null, null))
+            .map((GameState endState) -> new MatchReport(endState, endState.getPlays(), null, null, 1000, 1000))
             .map(report -> {
                 ResponseError error = new ResponseError(e.getMessage(), report);
                 return ResponseEntity.unprocessableEntity().body(error);

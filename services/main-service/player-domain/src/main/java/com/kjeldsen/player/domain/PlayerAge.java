@@ -60,7 +60,9 @@ public class PlayerAge {
     public static Integer ageGeneration() {
         return RandomUtils.nextInt(RANGE_OF_AGE_JUNIOR.getMinimum(), RANGE_OF_AGE_SENIOR.getMaximum());
     }
-    public static PlayerAge gettingOlder(PlayerAge age){
+    public static PlayerAge gettingOlder(PlayerAge age) throws IllegalArgumentException {
+        if (age == null) { throw  new IllegalArgumentException("Age cannot be null"); }
+
         age.incrementDays();
         if (age.getDays()>MONTH_KJELDSEN){
            age.setDays(0d);

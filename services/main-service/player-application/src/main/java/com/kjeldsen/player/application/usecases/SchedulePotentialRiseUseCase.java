@@ -27,7 +27,7 @@ public class SchedulePotentialRiseUseCase {
     private final PlayerReadRepository playerReadRepository;
 
     public void generate(Player.PlayerId playerId, Integer daysToSimulate) {
-        log.info("Generating scheduled potentialRise");
+        log.info("SchedulePotentialRiseUseCase for player {}", playerId);
 
         validateDays(daysToSimulate);
 

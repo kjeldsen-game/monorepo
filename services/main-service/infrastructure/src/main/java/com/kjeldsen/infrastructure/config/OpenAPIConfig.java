@@ -19,7 +19,8 @@ import org.springframework.context.annotation.Configuration;
     ),
     servers = {
         @Server(url = "http://localhost:8081"),
-        @Server(url = "https://kjeldsengame.com")
+        @Server(url = "https://kjeldsengame.com"),
+        @Server(url = "https://actively-accurate-platypus.ngrok-free.app")
     },
     security = {
         @io.swagger.v3.oas.annotations.security.SecurityRequirement(name = "oauth2"),

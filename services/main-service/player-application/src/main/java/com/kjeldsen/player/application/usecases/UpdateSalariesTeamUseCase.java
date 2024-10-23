@@ -31,10 +31,10 @@ public class UpdateSalariesTeamUseCase {
         }
 
         players.forEach(player -> {
-                // TODO in the future we can add here an event to save the change on the salary of the player. Like previous salary information for
-                //  a graph in the future
-                player.negotiateSalary();
-                playerWriteRepository.save(player);
-            });
+            // TODO in the future we can add here an event to save the change on the salary of the player. Like previous salary information for
+            //  a graph in the future
+            player.negotiateSalary();
+            playerWriteRepository.save(player);
+        });
     }
 }

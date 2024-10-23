@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PlayerTrainingScheduledEventMongoRepository extends MongoRepository<PlayerTrainingScheduledEvent, EventId> {
@@ -15,4 +16,6 @@ public interface PlayerTrainingScheduledEventMongoRepository extends MongoReposi
     @Query(value = "from PlayerTrainingScheduledEvent t where :date BETWEEN startDate AND endDate")
     List<PlayerTrainingScheduledEvent> findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(LocalDate startDate);
 
+    @Query("{ 'status': 'ACTIVE' }")
+    List<PlayerTrainingScheduledEvent> findAllWhereStatusIsActive();
 }

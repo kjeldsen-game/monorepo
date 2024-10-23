@@ -2,6 +2,7 @@ package com.kjeldsen.player.domain.provider;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class InstantProvider {
 
@@ -9,8 +10,15 @@ public class InstantProvider {
         return Instant.now();
     }
 
+    public static Instant nowPlusDays(int days) {
+        return Instant.now().plus(days, ChronoUnit.DAYS);
+    }
+
+    public static Instant nowPlusMinutes(int minutes) {
+        return Instant.now().plus(minutes, ChronoUnit.MINUTES);
+    }
+
     public static LocalDate nowAsLocalDate() {
         return LocalDate.now();
     }
-
 }

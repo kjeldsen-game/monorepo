@@ -103,6 +103,7 @@ class GenerateTrainingUseCaseTest {
     private Player getPlayer(Player.PlayerId playerId) {
         return Player.builder()
                 .position(PlayerPosition.FORWARD)
+                .age(PlayerAge.generateAgeOfAPlayer())
                 .id(playerId)
             .actualSkills(new HashMap<>(Map.of(
                 PlayerSkill.SCORING, new PlayerSkills(5, 0, PlayerSkillRelevance.CORE),

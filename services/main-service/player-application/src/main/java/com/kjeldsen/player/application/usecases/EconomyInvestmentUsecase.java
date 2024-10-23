@@ -24,7 +24,7 @@ public class EconomyInvestmentUsecase {
 
     private final TeamReadRepository teamReadRepository;
     private final EconomyInvestmentEventWriteRepository economyInvestmentEventWriteRepository;
-    private final CanteraEconomyInvestmentUsecase canteraEconomyInvestmentUsecase;
+    private final CanteraInvestmentUsecase canteraInvestmentUsecase;
 
     public void invest(Team.TeamId teamId, BigDecimal amount) {
         log.info("Economy investment team {} with {} amount", teamId, amount);
@@ -41,8 +41,7 @@ public class EconomyInvestmentUsecase {
 
         economyInvestmentEventWriteRepository.save(economyInvestmentEvent);
 
-        canteraEconomyInvestmentUsecase.invest(teamId, amountToPoints(amount));
-
+        canteraInvestmentUsecase.investToCanteraCategory(teamId, Team.Cantera.Investment.ECONOMY, amountToPoints(amount));
     }
 
     private Integer amountToPoints(BigDecimal amount) {
@@ -55,5 +54,4 @@ public class EconomyInvestmentUsecase {
             return 0;
         }
     }
-
 }

@@ -5,6 +5,6 @@ import com.kjeldsen.player.domain.events.PlayerCreationEvent;
 
 import java.util.Optional;
 
-public interface PlayerCreationEventReadRepository {
+public interface  PlayerCreationEventReadRepository {
     Optional<PlayerCreationEvent> findByPlayerId(Player.PlayerId playerId);
 }
