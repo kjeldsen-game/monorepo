@@ -17,7 +17,6 @@ tags:
   - name: simulator
 
 paths:
-
   /team:
     get:
       summary: Get all teams
@@ -96,6 +95,42 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/responses/TeamResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /team/{teamId}/economy:
+    get:
+      summary: Get Team Economy
+      operationId: getTeamEconomy
+      tags:
+        - team
+      parameters:
+        - $ref: '#/components/parameters/TeamIdPathParameter'
+      responses:
+        "200":
+          description: Team Economy is retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/EconomyResponse'
+
+  /team/{teamId}/transactions:
+    get:
+      summary: Get team Transactions
+      operationId: getTeamTransactions
+      tags:
+        - team
+      parameters:
+        - $ref: '#/components/parameters/TeamIdPathParameter'
+      responses:
+        "200":
+          description: Team transactions were retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/responses/TransactionReportResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -638,6 +673,57 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
+  /simulator/reset-sponsor:
+    post:
+      summary: Reset sponsor
+      operationId: simulateResetSponsor
+      tags:
+        - simulator
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/SimulateSponsorResetRequest"
+      responses:
+        "200":
+          description: Sponsor was reseted
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/reset-billboard-deal:
+    post:
+      summary: Reset billboard deal
+      operationId: simulateBillboardDealReset
+      tags:
+        - simulator
+      responses:
+        "200":
+          description: Billboard deal was reseted
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+
+  /simulator/sign-sponsor/{teamId}:
+    post:
+      summary: Sign Sponsor
+      operationId: simulateSignSponsor
+      tags:
+        - simulator
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/SimulateSignSponsorRequest"
+      responses:
+        "200":
+          description: Sponsor deal was signed
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
 components:
 
   parameters:
@@ -779,6 +865,20 @@ components:
           schema:
             $ref: "#/components/schemas/SimulateLoyaltyUpdateRequest"
 
+    SimulateSponsorResetRequest:
+      description: Simulate sponsor reset request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SimulateSponsorResetRequest"
+
+    SimulateSignSponsorRequest:
+      description: Simulate sponsor sign request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/SimulateSignSponsorRequest"
+
     RegisterBloomPhaseRequest:
       description: Register a bloom phase request
       content:
@@ -794,6 +894,20 @@ components:
             $ref: "#/components/schemas/RegisterSimulatedDeclineRequest"
 
   responses:
+
+    EconomyResponse:
+      description: Economy response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EconomyResponse"
+
+    TransactionReportResponse:
+      description: Team Transactions response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/TransactionReportResponse"
 
     PlayerResponse:
       description: Player response
@@ -886,6 +1000,7 @@ components:
         - SEASON_TICKET
         - DAY_TICKET
         - MERCHANDISE
+        - RESTAURANT
 
     Facility:
       example: STADIUM
@@ -924,6 +1039,15 @@ components:
           example: 30
         playerSkillRelevance:
           $ref: "#/components/schemas/PlayerSkillRelevance"
+
+    PriceItem:
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/PricingType"
+        value:
+          type: integer
+          format: int32
 
     PlayerAge:
       type: object
@@ -1003,6 +1127,20 @@ components:
           type: number
           format: double
           example: 70000
+
+    TransactionType:
+      type: string
+      enum:
+        - SPONSOR
+        - PLAYER_SALE
+        - PLAYER_PURCHASE
+        - ATTENDANCE
+        - MERCHANDISE
+        - PLAYER_WAGE
+        - BUILDING_UPGRADE
+        - BUILDING_MAINTENANCE
+        - RESTAURANT
+        - BILLBOARDS
 
     SponsorPeriodicity:
       type: string
@@ -1148,6 +1286,26 @@ components:
           format: double
           example: 50000
 
+    BillboardDeal:
+      type: object
+      properties:
+        startSeason:
+          type: integer
+        endSeason:
+          type: integer
+        offer:
+          type: number
+        type:
+          $ref: "#/components/schemas/BillboardMode"
+
+    TransactionSummary:
+      type: object
+      properties:
+        weekSummary:
+          type: number
+        seasonSummary:
+          type: number
+
     Sponsor:
       type: object
       example: [ { "periodicity": "ANNUAL", "mode": "CONSERVATIVE" }, { "periodicity": "WEEKLY", "mode": "AGGRESSIVE" } ]
@@ -1156,6 +1314,78 @@ components:
           $ref: "#/components/schemas/SponsorPeriodicity"
         mode:
           $ref: "#/components/schemas/SponsorMode"
+
+    Pricing:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/PricingType'
+        value:
+          type: integer
+
+    PlayerWageTransaction:
+      type: object
+      properties:
+        player:
+          $ref: '#/components/schemas/PlayerResponse'
+        transactionSummary:
+          $ref: '#/components/schemas/TransactionSummary'
+
+    Transaction:
+      type: object
+      properties:
+        thisWeekAmount:
+          type: number
+        lastWeekAmount:
+          type: number
+        thisSeasonAmount:
+          type: number
+        context:
+          type: string
+
+    EconomyResponse:
+      type: object
+      properties:
+        balance:
+          type: number
+        billboardDeal:
+          $ref: "#/components/schemas/BillboardDeal"
+        sponsor:
+          type: array
+          items:
+            $ref: "#/components/schemas/Sponsor"
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceItem'
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        playerWages:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlayerWageTransaction'
+
+    SimulateSignSponsorRequest:
+      type: object
+      properties:
+        mode:
+          $ref: "#/components/schemas/SponsorMode"
+        periodicity:
+          $ref: '#/components/schemas/SponsorPeriodicity'
+
+    TransactionReportResponse:
+      type: object
+      properties:
+        thisWeekAmount:
+          type: number
+        lastWeekAmount:
+          type: number
+        thisSeasonAmount:
+          type: number
+        transactionType:
+          type: string
 
     PlayerResponse:
       type: object
@@ -1371,18 +1601,14 @@ components:
       required:
         - impactType
 
+
     SimulatePricingUpdateRequest:
       type: object
       properties:
-        pricingType:
-          $ref: "#/components/schemas/PricingType"
-        price:
-          type: integer
-          format: int32
-          example: 10
-      required:
-        - price
-        - pricingType
+        prices:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pricing"
 
     SimulateBuildingUpgradeRequest:
       type: object
@@ -1409,6 +1635,12 @@ components:
           type: integer
           format: int32
           example: 10
+
+    SimulateSponsorResetRequest:
+      type: object
+      properties:
+        periodicity:
+          $ref: "#/components/schemas/SponsorPeriodicity"
 
     RegisterSponsorIncomeRequest:
       type: object

@@ -2,6 +2,7 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.application.testdata.TestData;
 import com.kjeldsen.player.application.usecases.economy.BuildingMaintenanceExpenseUseCase;
+import com.kjeldsen.player.application.usecases.economy.CreateTransactionUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
@@ -65,7 +66,7 @@ class BuildingMaintenanceExpenseUseCaseTest {
 
         verify(mockedCreateTransactionUseCase, times(1)).create(
             eq(mockedTeamId),
-            eq(BigDecimal.valueOf(600_000)),
+            eq(BigDecimal.valueOf(-600_000)),
             eq(Transaction.TransactionType.BUILDING_MAINTENANCE)
         );
     }

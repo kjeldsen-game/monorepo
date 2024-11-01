@@ -19,13 +19,14 @@ import java.time.Instant;
 public class Transaction {
 
     @Id
-    TransactionId transactionId;
+    TransactionId id;
     Team.TeamId teamId;
     BigDecimal transactionAmount;
     BigDecimal prevTransactionBalance;
     BigDecimal postTransactionBalance;
     TransactionType transactionType;
     Instant occurredAt;
+    String message;
 
     public record TransactionId(String value) {
         public static TransactionId generate() {
@@ -42,10 +43,11 @@ public class Transaction {
             .occurredAt(Instant.now())
             .teamId(transactionEvent.getTeamId())
             .transactionType(transactionEvent.getTransactionType())
-            .transactionId(TransactionId.generate())
+            .id(TransactionId.generate())
             .transactionAmount(transactionEvent.getTransactionAmount())
             .prevTransactionBalance(transactionEvent.getPrevTransactionBalance())
             .postTransactionBalance(transactionEvent.getPostTransactionBalance())
+            .message(transactionEvent.getMessage() != null ? transactionEvent.getMessage() : "")
             .build();
     }
 

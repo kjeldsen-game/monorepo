@@ -26,7 +26,9 @@ const Player: NextPage = () => {
 
     const handleSellButtonClick = () => {
         connectorAPI(`/player/${id}/sell`, 'PUT');
-        setRefreshKey((prev) => !prev);
+        setTimeout(() => {
+            setRefreshKey((prev) => !prev);
+        }, 1000);
     };
 
     return (

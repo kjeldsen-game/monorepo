@@ -1,6 +1,5 @@
 package com.kjeldsen.player.application.usecases.economy;
 
-import com.kjeldsen.player.application.usecases.CreateTransactionUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
@@ -29,6 +28,6 @@ public class BuildingMaintenanceExpenseUseCase {
             Team.Buildings.FacilityData::getMaintenanceCost).reduce(BigDecimal.ZERO, BigDecimal::add)
             .add(team.getBuildings().getStadium().getMaintenanceCost());
 
-        createTransactionUseCase.create(teamId, maintenanceCost, Transaction.TransactionType.BUILDING_MAINTENANCE);
+        createTransactionUseCase.create(teamId, maintenanceCost.negate(), Transaction.TransactionType.BUILDING_MAINTENANCE);
     }
 }

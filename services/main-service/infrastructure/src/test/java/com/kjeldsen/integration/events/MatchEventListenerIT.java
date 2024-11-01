@@ -2,7 +2,7 @@ package com.kjeldsen.integration.events;
 
 import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.application.usecases.economy.BillboardIncomeUseCase;
-import com.kjeldsen.player.application.usecases.economy.MatchAttendanceIncomeUsecase;
+import com.kjeldsen.player.application.usecases.economy.MatchAttendanceIncomeUseCase;
 import com.kjeldsen.player.application.usecases.economy.MerchandiseIncomeUseCase;
 import com.kjeldsen.player.application.usecases.economy.RestaurantIncomeUseCase;
 import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 public class MatchEventListenerIT extends AbstractEventIT {
 
     @MockBean
-    private MatchAttendanceIncomeUsecase matchAttendanceIncomeUsecase;
+    private MatchAttendanceIncomeUseCase matchAttendanceIncomeUsecase;
     @MockBean
     private FansManagementUsecase fansManagementUsecase;
     @MockBean

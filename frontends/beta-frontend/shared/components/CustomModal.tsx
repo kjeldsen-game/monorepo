@@ -5,31 +5,16 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import { ReactNode } from 'react';
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    border: '1px solid #DEE2E6',
-    borderRadius: '8px',
-    boxShadow: 24,
-    backgroundColor: '#FFFFFF',
-    p: 4,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-};
+import { SxProps } from '@mui/material';
 
 interface CustomModalProps {
-    open: boolean; // Control the open state
-    onClose: () => void; // Function to handle modal close
-    title?: string; // Optional title
-    description?: string; // Optional description
-    actions?: ReactNode; // Custom actions as React nodes
-    children?: ReactNode; // Any additional content
+    open: boolean;
+    onClose: () => void;
+    title?: string;
+    description?: string;
+    actions?: ReactNode;
+    children?: ReactNode;
+    sx?: SxProps;
 }
 
 const CustomModal: React.FC<CustomModalProps> = ({
@@ -39,6 +24,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
     description,
     actions,
     children,
+    sx = {},
 }) => {
     return (
         <Modal
@@ -52,7 +38,23 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 timeout: 500,
             }}>
             <Fade in={open}>
-                <Box sx={style}>
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        border: '1px solid #DEE2E6',
+                        borderRadius: '8px',
+                        boxShadow: 24,
+                        backgroundColor: '#FFFFFF',
+                        p: 4,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        ...sx,
+                    }}>
                     {title && (
                         <Typography
                             id="transition-modal-title"

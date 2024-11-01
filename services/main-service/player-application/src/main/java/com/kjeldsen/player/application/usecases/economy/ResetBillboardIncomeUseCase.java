@@ -30,4 +30,13 @@ public class ResetBillboardIncomeUseCase {
             }
         });
     }
+
+    public void resetBillboardDeals() {
+        List<Team> teams = teamReadRepository.findAll();
+        teams.forEach(team -> {
+            Team.Economy.BillboardDeal deal = team.getEconomy().getBillboardDeal();
+            team.getEconomy().setBillboardDeal(null);
+            teamWriteRepository.save(team);
+        });
+    }
 }

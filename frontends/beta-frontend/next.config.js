@@ -5,6 +5,15 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
   i18n,
-}
+  webpack(config) {
+    // Add support for importing SVGs as React components
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
 
-module.exports = nextConfig
+    return config;
+  },
+};
+
+module.exports = nextConfig;

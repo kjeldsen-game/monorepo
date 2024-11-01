@@ -7,7 +7,7 @@ import {
     SelectChangeEvent,
 } from '@mui/material';
 import { FormValues } from './MarketFilter';
-import { formatString } from '@/shared/utils/MarketUtils';
+import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 
 interface MarketFilterPositionSelectProps {
     formValues: FormValues;
@@ -52,7 +52,7 @@ const MarketFilterPositionSelect: React.FC<MarketFilterPositionSelectProps> = ({
                 <MenuItem value="">-</MenuItem>
                 {Object.values(menuValues).map((menuValue) => (
                     <MenuItem key={String(menuValue)} value={String(menuValue)}>
-                        {formatString(String(menuValue))}
+                        {convertSnakeCaseToTitleCase(String(menuValue))}
                     </MenuItem>
                 ))}
             </Select>

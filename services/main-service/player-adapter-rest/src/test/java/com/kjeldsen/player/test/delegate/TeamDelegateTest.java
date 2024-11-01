@@ -1,6 +1,8 @@
 package com.kjeldsen.player.test.delegate;
 
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
+import com.kjeldsen.player.application.usecases.economy.GetPlayerWagesTransactionsUseCase;
+import com.kjeldsen.player.application.usecases.economy.GetTeamTransactionsUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
@@ -16,15 +18,17 @@ public class TeamDelegateTest {
 
     // TODO mock shiro security utils and test the methods in the delegate
 
-    private final GetTeamUseCase mockedGetTeamUseCase = Mockito.mock(GetTeamUseCase.class);
     private final TeamReadRepository teamReadRepository = Mockito.mock(TeamReadRepository.class);
     private final PlayerReadRepository playerReadRepository = Mockito.mock(PlayerReadRepository.class);
     private final PlayerWriteRepository playerWriteRepository = Mockito.mock(PlayerWriteRepository.class);
-    private final TeamDelegate teamDelegate =
-        new TeamDelegate(mockedGetTeamUseCase,
-            teamReadRepository,
-            playerReadRepository,
-            playerWriteRepository);
+    private final GetTeamTransactionsUseCase mockedGetTeamTransactionsUseCase = Mockito.mock(GetTeamTransactionsUseCase.class);
+    private final GetPlayerWagesTransactionsUseCase mockedGetPlayerWagesUseCase = Mockito.mock(GetPlayerWagesTransactionsUseCase.class);
+//    private final TeamDelegate teamDelegate =
+//        new TeamDelegate(
+//            mockedGetTeamTransactionsUseCase,
+//            teamReadRepository,
+//            playerReadRepository,
+//            playerWriteRepository,mockedGetPlayerWagesUseCase);
 
     @Test
     public void should_return_a_team_response_on_getTeam_method() {

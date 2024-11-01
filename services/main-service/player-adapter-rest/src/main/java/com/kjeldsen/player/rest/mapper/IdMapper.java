@@ -2,6 +2,7 @@ package com.kjeldsen.player.rest.mapper;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.Transaction;
 import org.mapstruct.Mapper;
 
 @Mapper
@@ -15,4 +16,5 @@ public interface IdMapper {
         return teamId.value();
     }
 
+    default String map(Transaction.TransactionId transactionId) { return transactionId.value(); }
 }

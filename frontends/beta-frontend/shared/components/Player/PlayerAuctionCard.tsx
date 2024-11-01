@@ -17,7 +17,6 @@ const PlayerAuctionCard = ({ refreshTrigger }: PlayerAuctionCardProps) => {
         `playerId=${useRouter().query.id}`,
     );
     const [open, setOpen] = useState<boolean>(false);
-    console.log(useRouter().query.id);
 
     useEffect(() => {
         refetch();
@@ -31,7 +30,7 @@ const PlayerAuctionCard = ({ refreshTrigger }: PlayerAuctionCardProps) => {
         return null;
     }
     return (
-        <Grow in={allAuctions.length != 0}>
+        <Grow in={allAuctions.length > 0}>
             <Box
                 sx={{
                     borderRadius: '4px',

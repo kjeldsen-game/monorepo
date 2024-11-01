@@ -9,13 +9,11 @@ import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.PlayerPotentialRiseEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
-import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.rest.api.SimulatorApiDelegate;
 import com.kjeldsen.player.rest.mapper.PlayerDeclineResponseMapper;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.mapper.PlayerPotentialRiseResponseMapper;
-import com.kjeldsen.player.rest.mapper.PlayerTrainingResponseMapper;
 import com.kjeldsen.player.rest.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +40,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final SponsorIncomeUsecase sponsorIncomeUsecase;
     private final PaySalariesTeamUseCase paySalariesTeamUseCase;
     private final UpdateSalariesTeamUseCase updateSalariesTeamUseCase;
-    private final MatchAttendanceIncomeUsecase matchAttendanceIncomeUsecase;
+    private final MatchAttendanceIncomeUseCase matchAttendanceIncomeUsecase;
     private final RestaurantIncomeUseCase restaurantIncomeUseCase;
     private final MerchandiseIncomeUseCase merchandiseIncomeUseCase;
     private final FansManagementUsecase fansManagementUsecase;
@@ -51,6 +49,9 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final BuildingMaintenanceExpenseUseCase buildingMaintenanceExpenseUseCase;
     private final UpdateLoyaltyUseCase updateLoyaltyUseCase;
     private final SignBillboardIncomeUseCase signBillboardIncomeUseCase;
+    private final ResetSponsorIncomeUseCase resetSponsorIncomeUseCase;
+    private final ResetBillboardIncomeUseCase resetBillboardIncomeUseCase;
+    private final SignSponsorIncomeUseCase signSponsorIncomeUseCase;
 
     @Override
     public ResponseEntity<PlayerHistoricalPotentialRiseResponse> registerSimulatedScheduledPotentialRise(
@@ -196,12 +197,25 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         return ResponseEntity.ok().build();
     }
 
+//    @Override
+//    public ResponseEntity<Void> simulatePricingUpdate(String teamId, SimulatePricingUpdateRequest simulatePricingUpdateRequest) {
+//        Team.TeamId id = Team.TeamId.of(teamId);
+//        Team.Economy.PricingType pricingType = Team.Economy.PricingType.valueOf(
+//                simulatePricingUpdateRequest.getPricingType().name());
+//        updateTeamPricingUsecase.update(id, simulatePricingUpdateRequest.getPrice(), pricingType);
+//        return ResponseEntity.ok().build();
+//    }
+
+
     @Override
     public ResponseEntity<Void> simulatePricingUpdate(String teamId, SimulatePricingUpdateRequest simulatePricingUpdateRequest) {
         Team.TeamId id = Team.TeamId.of(teamId);
-        Team.Economy.PricingType pricingType = Team.Economy.PricingType.valueOf(
-                simulatePricingUpdateRequest.getPricingType().name());
-        updateTeamPricingUsecase.update(id, simulatePricingUpdateRequest.getPrice(), pricingType);
+        simulatePricingUpdateRequest.getPrices().forEach(price -> {
+            System.out.println(price.getType());
+            System.out.println(price.getValue());
+            updateTeamPricingUsecase.update(id, price.getValue(),
+                Team.Economy.PricingType.valueOf(price.getType().name()));
+        });
         return ResponseEntity.ok().build();
     }
 
@@ -223,6 +237,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     public ResponseEntity<Void> simulateBillboardSelection(String teamId, SimulateBillboardSelectionRequest simulateBillboardSelectionRequest) {
         Team.Economy.BillboardIncomeType mode = Team.Economy.BillboardIncomeType.valueOf(
             simulateBillboardSelectionRequest.getMode().name());
+        System.out.println(mode);
         signBillboardIncomeUseCase.sign(Team.TeamId.of(teamId), mode);
         return  ResponseEntity.ok().build();
     }
@@ -237,6 +252,27 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
             updateLoyaltyUseCase.updateLoyaltySeason(id);
         else
             updateLoyaltyUseCase.updateLoyaltyMatch(id, simulateLoyaltyUpdateRequest.getGoals(), loyaltyImpactType);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> simulateResetSponsor(SimulateSponsorResetRequest simulateSponsorResetRequest) {
+        resetSponsorIncomeUseCase.reset(Team.Economy.IncomePeriodicity.valueOf(simulateSponsorResetRequest.getPeriodicity().name()));
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> simulateBillboardDealReset() {
+        resetBillboardIncomeUseCase.resetBillboardDeals();
+        return ResponseEntity.ok().build();
+    }
+
+
+    @Override
+    public ResponseEntity<Void> simulateSignSponsor(String teamId, SimulateSignSponsorRequest simulateSignSponsorRequest) {
+        signSponsorIncomeUseCase.sign(Team.TeamId.of(teamId),
+            Team.Economy.IncomePeriodicity.valueOf(simulateSignSponsorRequest.getPeriodicity().name()),
+            Team.Economy.IncomeMode.valueOf(simulateSignSponsorRequest.getMode().name()));
         return ResponseEntity.ok().build();
     }
 }

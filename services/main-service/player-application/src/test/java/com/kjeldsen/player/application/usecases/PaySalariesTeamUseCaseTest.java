@@ -1,14 +1,13 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.application.testdata.TestData;
+import com.kjeldsen.player.application.usecases.economy.CreateTransactionUseCase;
 import com.kjeldsen.player.domain.*;
-import com.kjeldsen.player.domain.events.ExpenseEvent;
 import com.kjeldsen.player.domain.repositories.*;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -54,10 +53,10 @@ public class PaySalariesTeamUseCaseTest {
         when(playerReadRepository.findByTeamId(mockedTeamId)).thenReturn(mockedPlayers);
         paySalariesTeamUseCase.pay(mockedTeamId);
 
-        verify(mockedCreateTransactionUseCase, times(1)).create(
-                eq(mockedTeamId),
-                eq(BigDecimal.valueOf(50_000)),
-                eq(Transaction.TransactionType.PLAYER_WAGE)
+        verify(mockedCreateTransactionUseCase, times(50)).create(
+            eq(mockedTeamId),
+            eq(BigDecimal.valueOf(-1000)),
+            anyString()
         );
     }
 

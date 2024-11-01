@@ -1,7 +1,6 @@
-package com.kjeldsen.player.application.usecases;
+package com.kjeldsen.player.application.usecases.economy;
 
 import com.kjeldsen.player.application.testdata.TestData;
-import com.kjeldsen.player.application.usecases.economy.MatchAttendanceIncomeUsecase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,10 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-class MatchAttendanceIncomeUsecaseTest {
+class MatchAttendanceIncomeUseCaseTest {
 
     private final CreateTransactionUseCase mockedCreateTransactionUseCase = Mockito.mock(CreateTransactionUseCase.class);
-    private final MatchAttendanceIncomeUsecase matchAttendanceIncomeUsecase = new MatchAttendanceIncomeUsecase(
+    private final MatchAttendanceIncomeUseCase matchAttendanceIncomeUsecase = new MatchAttendanceIncomeUseCase(
             mockedCreateTransactionUseCase);
 
     private static Team.TeamId mockedTeamId;

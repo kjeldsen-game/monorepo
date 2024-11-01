@@ -65,11 +65,13 @@ const MarketModal: React.FC<AuctionProps> = ({
     };
 
     const { data, updateAuction } = useAuctionRepository(auctionId);
-    console.log(auctionId);
-    console.log(data);
+
     return (
         <>
-            <CustomModal onClose={handleCloseModal} open={open}>
+            <CustomModal
+                sx={{ width: '400px' }}
+                onClose={handleCloseModal}
+                open={open}>
                 <Box>
                     <IconButton
                         sx={{
@@ -128,7 +130,7 @@ const MarketModal: React.FC<AuctionProps> = ({
                         textAlign: 'center',
                     }}>
                     Lorem ipsum que tu quieras para explicar como es el proceso
-                    de compra de un jugador
+                    de compra de un jugador.
                 </Typography>
 
                 <Box

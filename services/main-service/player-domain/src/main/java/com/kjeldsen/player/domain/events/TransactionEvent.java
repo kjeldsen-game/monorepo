@@ -23,4 +23,5 @@ public class TransactionEvent extends Event {
     BigDecimal prevTransactionBalance;
     BigDecimal postTransactionBalance;
     Transaction.TransactionType transactionType;
+    String message;
 }

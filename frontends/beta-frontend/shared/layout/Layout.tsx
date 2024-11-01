@@ -22,7 +22,14 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
             name: 'Team',
             icon: 'team',
             to: '/team',
-            selected: /^\/team/.test(pathname),
+            selected: pathname === '/team',
+        },
+        {
+            name: 'Economy',
+            icon: 'market',
+            to: '/team/economy',
+            hasDivider: false,
+            selected: pathname === '/team/economy',
         },
         {
             name: 'Training',

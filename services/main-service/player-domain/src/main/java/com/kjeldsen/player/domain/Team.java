@@ -363,7 +363,5 @@ public class Team {
             score += traditionLevel * 0.25;
             score += buildingsLevel * 0.25;
         }
-
     }
-
 }

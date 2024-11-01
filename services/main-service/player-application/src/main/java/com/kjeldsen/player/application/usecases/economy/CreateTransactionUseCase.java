@@ -1,4 +1,4 @@
-package com.kjeldsen.player.application.usecases;
+package com.kjeldsen.player.application.usecases.economy;
 
 
 import com.kjeldsen.domain.EventId;
@@ -26,13 +26,40 @@ public class CreateTransactionUseCase {
     private final TransactionWriteRepository transactionWriteRepository;
     private final TransactionEventWriteRepository transactionEventWriteRepository;
 
+
     public void create(Team.TeamId teamId, BigDecimal amount, Transaction.TransactionType transactionType) {
         log.info("CreateTransactionUseCase for {} with amount {} and type {}", teamId, amount, transactionType);
 
         Team team =  teamReadRepository.findById(teamId)
             .orElseThrow(() -> new RuntimeException("Team not found"));
 
-        TransactionEvent transactionEvent = TransactionEvent.builder()
+        TransactionEvent transactionEvent = createTransactionEvent(team, amount, transactionType);
+
+        team.getEconomy().updateBalance(amount);
+
+        transactionEventWriteRepository.save(transactionEvent);
+        transactionWriteRepository.save(Transaction.creation(transactionEvent));
+        teamWriteRepository.save(team);
+    }
+
+    public void create(Team.TeamId teamId, BigDecimal amount, String playerId) {
+        log.info("CreateTransactionUseCase for {} with amount {} for playerId {}", teamId, amount, playerId);
+
+        Team team =  teamReadRepository.findById(teamId)
+            .orElseThrow(() -> new RuntimeException("Team not found"));
+
+        TransactionEvent transactionEvent = createTransactionEvent(team, amount,
+            Transaction.TransactionType.PLAYER_WAGE);
+        transactionEvent.setMessage(playerId);
+
+        team.getEconomy().updateBalance(amount);
+        transactionEventWriteRepository.save(transactionEvent);
+        transactionWriteRepository.save(Transaction.creation(transactionEvent));
+        teamWriteRepository.save(team);
+    }
+
+    private TransactionEvent createTransactionEvent(Team team, BigDecimal amount, Transaction.TransactionType transactionType) {
+        return  TransactionEvent.builder()
             .id(EventId.generate())
             .occurredAt(InstantProvider.now())
             .teamId(team.getId())
@@ -41,11 +68,5 @@ public class CreateTransactionUseCase {
             .prevTransactionBalance(team.getEconomy().getBalance())
             .postTransactionBalance(team.getEconomy().getBalance().add(amount))
             .build();
-
-        team.getEconomy().updateBalance(amount);
-
-        transactionEventWriteRepository.save(transactionEvent);
-        transactionWriteRepository.save(Transaction.creation(transactionEvent));
-        teamWriteRepository.save(team);
     }
 }

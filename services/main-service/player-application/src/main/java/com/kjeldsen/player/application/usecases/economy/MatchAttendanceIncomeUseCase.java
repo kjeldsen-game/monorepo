@@ -1,6 +1,5 @@
 package com.kjeldsen.player.application.usecases.economy;
 
-import com.kjeldsen.player.application.usecases.CreateTransactionUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,7 @@ import java.math.BigDecimal;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class MatchAttendanceIncomeUsecase {
+public class MatchAttendanceIncomeUseCase {
 
     private final CreateTransactionUseCase createTransactionUseCase;
 

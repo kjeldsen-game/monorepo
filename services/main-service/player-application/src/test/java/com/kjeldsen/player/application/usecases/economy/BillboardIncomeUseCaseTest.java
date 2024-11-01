@@ -1,7 +1,6 @@
 package com.kjeldsen.player.application.usecases.economy;
 
 import com.kjeldsen.player.application.testdata.TestData;
-import com.kjeldsen.player.application.usecases.CreateTransactionUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;

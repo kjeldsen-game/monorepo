@@ -436,7 +436,7 @@ db.Players.insertMany([
             "days" : 0.44
         },
         "position" : "STRIKER",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "DEFENSIVE_POSITIONING" : {
@@ -500,7 +500,7 @@ db.Players.insertMany([
             "days" : 0.88
         },
         "position" : "LEFT_BACK",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "DEFENSIVE_POSITIONING" : {
@@ -835,7 +835,7 @@ db.Players.insertMany([
             "days" : 2.56
         },
         "position" : "RIGHT_BACK",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "DEFENSIVE_POSITIONING" : {
@@ -898,8 +898,8 @@ db.Players.insertMany([
             "months" : 25.44,
             "days" : 3.38
         },
-        "position" : "OFFENSIVE_MIDFIELDER",
-        "status" : "INACTIVE",
+        "position" : "LEFT_MIDFIELDER",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "DEFENSIVE_POSITIONING" : {
@@ -2017,7 +2017,7 @@ db.Players.insertMany([
             "days" : 3.77
         },
         "position" : "GOALKEEPER",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "ONE_ON_ONE" : {
@@ -2071,7 +2071,7 @@ db.Players.insertMany([
             "days" : 0.37
         },
         "position" : "CENTRE_MIDFIELDER",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "DEFENSIVE_POSITIONING" : {
@@ -2347,7 +2347,7 @@ db.Players.insertMany([
             "days" : 0.89
         },
         "position" : "CENTRE_MIDFIELDER",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "DEFENSIVE_POSITIONING" : {
@@ -2411,7 +2411,7 @@ db.Players.insertMany([
             "days" : 1.97
         },
         "position" : "FORWARD",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "DEFENSIVE_POSITIONING" : {
@@ -2554,7 +2554,7 @@ db.Players.insertMany([
             "days" : 1.03
         },
         "position" : "CENTRE_BACK",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "DEFENSIVE_POSITIONING" : {
@@ -2840,7 +2840,7 @@ db.Players.insertMany([
             "days" : 3.26
         },
         "position" : "RIGHT_MIDFIELDER",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "DEFENSIVE_POSITIONING" : {
@@ -2983,7 +2983,7 @@ db.Players.insertMany([
             "days" : 1.84
         },
         "position" : "CENTRE_BACK",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "DEFENSIVE_POSITIONING" : {
@@ -3555,7 +3555,7 @@ db.Players.insertMany([
             "days" : 2.0
         },
         "position" : "CENTRE_MIDFIELDER",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "PASSING" : {
@@ -3619,7 +3619,7 @@ db.Players.insertMany([
             "days" : 0.53
         },
         "position" : "OFFENSIVE_MIDFIELDER",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "PASSING" : {
@@ -3939,7 +3939,7 @@ db.Players.insertMany([
             "days" : 3.7
         },
         "position" : "LEFT_MIDFIELDER",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "PASSING" : {
@@ -4003,7 +4003,7 @@ db.Players.insertMany([
             "days" : 2.36
         },
         "position" : "CENTRE_BACK",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "PASSING" : {
@@ -4451,7 +4451,7 @@ db.Players.insertMany([
             "days" : 2.28
         },
         "position" : "RIGHT_BACK",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "PASSING" : {
@@ -4515,7 +4515,7 @@ db.Players.insertMany([
             "days" : 1.89
         },
         "position" : "STRIKER",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "PASSING" : {
@@ -4643,7 +4643,7 @@ db.Players.insertMany([
             "days" : 0.67
         },
         "position" : "LEFT_BACK",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "PASSING" : {
@@ -4707,7 +4707,7 @@ db.Players.insertMany([
             "days" : 3.94
         },
         "position" : "CENTRE_BACK",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "PASSING" : {
@@ -5219,7 +5219,7 @@ db.Players.insertMany([
             "days" : 1.73
         },
         "position" : "FORWARD",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "PASSING" : {
@@ -6307,7 +6307,7 @@ db.Players.insertMany([
             "days" : 1.29
         },
         "position" : "GOALKEEPER",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "GOALKEEPER_POSITIONING" : {
@@ -6617,7 +6617,7 @@ db.Players.insertMany([
             "days" : 3.48
         },
         "position" : "RIGHT_MIDFIELDER",
-        "status" : "INACTIVE",
+        "status" : "ACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "PASSING" : {
@@ -6736,3 +6736,10372 @@ db.Players.insertMany([
     }
 ])
 
+db.Transactions.insertMany([
+    {
+        "_id" : {
+            "value" : "bf149aa6-c17f-4382-8c38-7b50e833e457"
+        },
+        "teamId" : {
+            "value" : "709aad9c-8517-44ee-91d6-51226be6e210"
+        },
+        "transactionAmount" : "100000",
+        "prevTransactionBalance" : "10500000",
+        "postTransactionBalance" : "10600000",
+        "transactionType" : "SPONSOR",
+        "occurredAt" : ISODate("2024-10-21T11:41:47.169+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "e4c8c22f-3d75-4c29-a1f9-06e9e654300f"
+        },
+        "teamId" : {
+            "value" : "709aad9c-8517-44ee-91d6-51226be6e210"
+        },
+        "transactionAmount" : "100000",
+        "prevTransactionBalance" : "10600000",
+        "postTransactionBalance" : "10700000",
+        "transactionType" : "SPONSOR",
+        "occurredAt" : ISODate("2024-10-21T11:41:47.182+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "437ea8cb-32d2-486c-9ba5-f65b53061087"
+        },
+        "teamId" : {
+            "value" : "709aad9c-8517-44ee-91d6-51226be6e210"
+        },
+        "transactionAmount" : "100000",
+        "prevTransactionBalance" : "10700000",
+        "postTransactionBalance" : "10800000",
+        "transactionType" : "SPONSOR",
+        "occurredAt" : ISODate("2024-10-21T11:41:47.189+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "981c9da2-82ca-4db7-a4fb-a6083c384354"
+        },
+        "teamId" : {
+            "value" : "709aad9c-8517-44ee-91d6-51226be6e210"
+        },
+        "transactionAmount" : "100000",
+        "prevTransactionBalance" : "10800000",
+        "postTransactionBalance" : "10900000",
+        "transactionType" : "SPONSOR",
+        "occurredAt" : ISODate("2024-10-21T11:41:47.195+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "74e86151-943d-4ec5-9c53-576c455ad0ff"
+        },
+        "teamId" : {
+            "value" : "709aad9c-8517-44ee-91d6-51226be6e210"
+        },
+        "transactionAmount" : "100000",
+        "prevTransactionBalance" : "10900000",
+        "postTransactionBalance" : "11000000",
+        "transactionType" : "SPONSOR",
+        "occurredAt" : ISODate("2024-10-21T11:41:47.201+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "d43c54e8-e2bc-4a0e-a3b1-7f156c4a209e"
+        },
+        "teamId" : {
+            "value" : "709aad9c-8517-44ee-91d6-51226be6e210"
+        },
+        "transactionAmount" : "505000",
+        "prevTransactionBalance" : "13709225.00",
+        "postTransactionBalance" : "14214225.00",
+        "transactionType" : "BUILDING_MAINTENANCE",
+        "occurredAt" : ISODate("2024-10-21T18:36:23.229+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "b94ca37e-03fe-49e0-9ad4-b9afca959e30"
+        },
+        "teamId" : {
+            "value" : "709aad9c-8517-44ee-91d6-51226be6e210"
+        },
+        "transactionAmount" : "-505000",
+        "prevTransactionBalance" : "14214225.00",
+        "postTransactionBalance" : "13709225.00",
+        "transactionType" : "BUILDING_MAINTENANCE",
+        "occurredAt" : ISODate("2024-10-21T18:38:23.281+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "78737065-dc2a-4dc4-a5b2-1902b8ee518a"
+        },
+        "teamId" : {
+            "value" : "709aad9c-8517-44ee-91d6-51226be6e210"
+        },
+        "transactionAmount" : "-505000",
+        "prevTransactionBalance" : "13709225.00",
+        "postTransactionBalance" : "13204225.00",
+        "transactionType" : "BUILDING_MAINTENANCE",
+        "occurredAt" : ISODate("2024-10-21T18:38:24.119+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "7774a6b3-1e99-4f95-8445-07387b42942a"
+        },
+        "teamId" : {
+            "value" : "709aad9c-8517-44ee-91d6-51226be6e210"
+        },
+        "transactionAmount" : "-505000",
+        "prevTransactionBalance" : "13204225.00",
+        "postTransactionBalance" : "12699225.00",
+        "transactionType" : "BUILDING_MAINTENANCE",
+        "occurredAt" : ISODate("2024-10-21T18:38:25.069+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "1249ba4e-37bb-4c38-8384-d4107d5d59e1"
+        },
+        "teamId" : {
+            "value" : "709aad9c-8517-44ee-91d6-51226be6e210"
+        },
+        "transactionAmount" : "300000",
+        "prevTransactionBalance" : "4571550.00",
+        "postTransactionBalance" : "4871550.00",
+        "transactionType" : "ATTENDANCE",
+        "occurredAt" : ISODate("2024-10-21T21:39:27.928+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "0a9454d3-d974-46db-9264-c3c56bad9345"
+        },
+        "teamId" : {
+            "value" : "709aad9c-8517-44ee-91d6-51226be6e210"
+        },
+        "transactionAmount" : "2500",
+        "prevTransactionBalance" : "4871550.00",
+        "postTransactionBalance" : "4874050.00",
+        "transactionType" : "MERCHANDISE",
+        "occurredAt" : ISODate("2024-10-21T21:39:27.941+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "a3da5070-d371-48b7-b730-9a7cb3d3e239"
+        },
+        "teamId" : {
+            "value" : "709aad9c-8517-44ee-91d6-51226be6e210"
+        },
+        "transactionAmount" : "3000",
+        "prevTransactionBalance" : "4874050.00",
+        "postTransactionBalance" : "4877050.00",
+        "transactionType" : "RESTAURANT",
+        "occurredAt" : ISODate("2024-10-21T21:39:27.948+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "4d64138d-c8cd-4fab-8ed8-c6bb0aff018c"
+        },
+        "teamId" : {
+            "value" : "709aad9c-8517-44ee-91d6-51226be6e210"
+        },
+        "transactionAmount" : "-1",
+        "prevTransactionBalance" : "4877050.00",
+        "postTransactionBalance" : "4877049.00",
+        "transactionType" : "PLAYER_PURCHASE",
+        "occurredAt" : ISODate("2024-10-23T22:20:16.687+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "778e1fbb-f5cb-487a-9272-d9f8f952c51b"
+        },
+        "teamId" : {
+            "value" : "709aad9c-8517-44ee-91d6-51226be6e210"
+        },
+        "transactionAmount" : "1",
+        "prevTransactionBalance" : "4877049.00",
+        "postTransactionBalance" : "4877050.00",
+        "transactionType" : "PLAYER_SALE",
+        "occurredAt" : ISODate("2024-10-23T22:20:16.707+0000"),
+        "_class" : "Transaction"
+    },
+//     Second player
+    {
+        "_id" : {
+            "value" : "6ea6ec04-c1e1-4450-be3d-189593117c5f"
+        },
+        "teamId" : {
+            "value" : "51a96286-eb0e-48bb-a82d-93defef51068"
+        },
+        "transactionAmount" : "302000",
+        "prevTransactionBalance" : "819898",
+        "postTransactionBalance" : "1121898",
+        "transactionType" : "ATTENDANCE",
+        "occurredAt" : ISODate("2024-10-24T13:25:05.184+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "85bf9e54-b530-45fb-bae6-3a85992f859f"
+        },
+        "teamId" : {
+            "value" : "51a96286-eb0e-48bb-a82d-93defef51068"
+        },
+        "transactionAmount" : "2500",
+        "prevTransactionBalance" : "1121898",
+        "postTransactionBalance" : "1124398",
+        "transactionType" : "MERCHANDISE",
+        "occurredAt" : ISODate("2024-10-24T13:25:05.202+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "615927dd-84b1-4385-a333-176c2778030c"
+        },
+        "teamId" : {
+            "value" : "51a96286-eb0e-48bb-a82d-93defef51068"
+        },
+        "transactionAmount" : "3020",
+        "prevTransactionBalance" : "1124398",
+        "postTransactionBalance" : "1127418",
+        "transactionType" : "RESTAURANT",
+        "occurredAt" : ISODate("2024-10-24T13:25:05.209+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "e8da7b3a-fcca-442f-bb77-08f775a88e80"
+        },
+        "teamId" : {
+            "value" : "51a96286-eb0e-48bb-a82d-93defef51068"
+        },
+        "transactionAmount" : "200000",
+        "prevTransactionBalance" : "1127418",
+        "postTransactionBalance" : "1327418",
+        "transactionType" : "BUILDING_UPGRADE",
+        "occurredAt" : ISODate("2024-10-24T13:25:17.194+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "a404df54-2fd7-4c29-b983-40d0c7f14df4"
+        },
+        "teamId" : {
+            "value" : "51a96286-eb0e-48bb-a82d-93defef51068"
+        },
+        "transactionAmount" : "100000",
+        "prevTransactionBalance" : "1127418",
+        "postTransactionBalance" : "1227418",
+        "transactionType" : "SPONSOR",
+        "occurredAt" : ISODate("2024-10-24T13:25:26.638+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "89e598ae-1fb0-4a40-90cb-f2aad243dc81"
+        },
+        "teamId" : {
+            "value" : "51a96286-eb0e-48bb-a82d-93defef51068"
+        },
+        "transactionAmount" : "100000",
+        "prevTransactionBalance" : "1227418",
+        "postTransactionBalance" : "1327418",
+        "transactionType" : "SPONSOR",
+        "occurredAt" : ISODate("2024-10-24T13:25:26.648+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "b4eaa10a-7b1f-4c29-9eee-f77ffe6e14b4"
+        },
+        "teamId" : {
+            "value" : "51a96286-eb0e-48bb-a82d-93defef51068"
+        },
+        "transactionAmount" : "100000",
+        "prevTransactionBalance" : "1327418",
+        "postTransactionBalance" : "1427418",
+        "transactionType" : "SPONSOR",
+        "occurredAt" : ISODate("2024-10-24T13:25:26.657+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "3c44acc7-f5ad-4e2e-a4f0-aa94c94299dc"
+        },
+        "teamId" : {
+            "value" : "51a96286-eb0e-48bb-a82d-93defef51068"
+        },
+        "transactionAmount" : "100000",
+        "prevTransactionBalance" : "1427418",
+        "postTransactionBalance" : "1527418",
+        "transactionType" : "SPONSOR",
+        "occurredAt" : ISODate("2024-10-24T13:25:26.678+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "d12d8b1b-0465-408a-93b9-e75fdc1f6f9d"
+        },
+        "teamId" : {
+            "value" : "51a96286-eb0e-48bb-a82d-93defef51068"
+        },
+        "transactionAmount" : "100000",
+        "prevTransactionBalance" : "1527418",
+        "postTransactionBalance" : "1627418",
+        "transactionType" : "SPONSOR",
+        "occurredAt" : ISODate("2024-10-24T13:25:26.684+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "bcf32b98-e9b4-460c-b6b0-ac04ead1b262"
+        },
+        "teamId" : {
+            "value" : "51a96286-eb0e-48bb-a82d-93defef51068"
+        },
+        "transactionAmount" : "100000",
+        "prevTransactionBalance" : "1627418",
+        "postTransactionBalance" : "1727418",
+        "transactionType" : "SPONSOR",
+        "occurredAt" : ISODate("2024-10-24T13:25:26.691+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "0660ef38-548d-4569-a761-813a3fe27a15"
+        },
+        "teamId" : {
+            "value" : "51a96286-eb0e-48bb-a82d-93defef51068"
+        },
+        "transactionAmount" : "100000",
+        "prevTransactionBalance" : "1727418",
+        "postTransactionBalance" : "1827418",
+        "transactionType" : "SPONSOR",
+        "occurredAt" : ISODate("2024-10-24T13:25:26.698+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "e96fccb4-071a-4800-9bd3-2b30cbc2ea20"
+        },
+        "teamId" : {
+            "value" : "51a96286-eb0e-48bb-a82d-93defef51068"
+        },
+        "transactionAmount" : "100000",
+        "prevTransactionBalance" : "1827418",
+        "postTransactionBalance" : "1927418",
+        "transactionType" : "SPONSOR",
+        "occurredAt" : ISODate("2024-10-24T13:25:26.703+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "36928711-5a0f-418a-978a-9ef7525d2b54"
+        },
+        "teamId" : {
+            "value" : "51a96286-eb0e-48bb-a82d-93defef51068"
+        },
+        "transactionAmount" : "100000",
+        "prevTransactionBalance" : "1927418",
+        "postTransactionBalance" : "2027418",
+        "transactionType" : "SPONSOR",
+        "occurredAt" : ISODate("2024-10-24T13:25:26.710+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "5a12a853-f9ff-47a7-ab7b-2afb9c5f0ee7"
+        },
+        "teamId" : {
+            "value" : "51a96286-eb0e-48bb-a82d-93defef51068"
+        },
+        "transactionAmount" : "208120.0000",
+        "prevTransactionBalance" : "348153.00",
+        "postTransactionBalance" : "556273.0000",
+        "transactionType" : "BILLBOARDS",
+        "occurredAt" : ISODate("2024-10-24T13:25:52.273+0000"),
+        "_class" : "Transaction"
+    },
+    {
+        "_id" : {
+            "value" : "e7c8ac3b-c769-4850-92a1-544f30219276"
+        },
+        "teamId" : {
+            "value" : "51a96286-eb0e-48bb-a82d-93defef51068"
+        },
+        "transactionAmount" : "-605000",
+        "prevTransactionBalance" : "556273.0000",
+        "postTransactionBalance" : "-48727.0000",
+        "transactionType" : "BUILDING_MAINTENANCE",
+        "occurredAt" : ISODate("2024-10-24T13:26:00.753+0000"),
+        "_class" : "Transaction"
+    }
+])
+
+db.Match.insertOne(
+    {
+        "_id" : "813dd39f-b59e-4c48-9ad0-da5226c7eedc",
+        "home" : {
+            "_id" : "709aad9c-8517-44ee-91d6-51226be6e210",
+            "role" : "HOME",
+            "players" : [
+                {
+                    "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                    "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                    "teamRole" : "HOME",
+                    "name" : "Inger Halvorson",
+                    "position" : "CENTRE_MIDFIELDER",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(12),
+                        "AERIAL" : NumberInt(11),
+                        "CONSTITUTION" : NumberInt(31),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(34),
+                        "DEFENSIVE_POSITIONING" : NumberInt(21),
+                        "OFFENSIVE_POSITIONING" : NumberInt(26),
+                        "BALL_CONTROL" : NumberInt(35),
+                        "TACKLING" : NumberInt(30)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                    "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                    "teamRole" : "HOME",
+                    "name" : "Steve Schuppe",
+                    "position" : "OFFENSIVE_MIDFIELDER",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(17),
+                        "AERIAL" : NumberInt(7),
+                        "CONSTITUTION" : NumberInt(25),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(36),
+                        "DEFENSIVE_POSITIONING" : NumberInt(3),
+                        "OFFENSIVE_POSITIONING" : NumberInt(56),
+                        "BALL_CONTROL" : NumberInt(51),
+                        "TACKLING" : NumberInt(5)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                    "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                    "teamRole" : "HOME",
+                    "name" : "Efren Stiedemann",
+                    "position" : "LEFT_MIDFIELDER",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(9),
+                        "AERIAL" : NumberInt(7),
+                        "CONSTITUTION" : NumberInt(25),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(44),
+                        "DEFENSIVE_POSITIONING" : NumberInt(22),
+                        "OFFENSIVE_POSITIONING" : NumberInt(40),
+                        "BALL_CONTROL" : NumberInt(36),
+                        "TACKLING" : NumberInt(17)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "d1b0114c-5077-4cef-96c5-e6d4d14dd59e",
+                    "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                    "teamRole" : "HOME",
+                    "name" : "Lily Bergnaum",
+                    "position" : "CENTRE_BACK",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(4),
+                        "AERIAL" : NumberInt(28),
+                        "CONSTITUTION" : NumberInt(31),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(15),
+                        "DEFENSIVE_POSITIONING" : NumberInt(43),
+                        "OFFENSIVE_POSITIONING" : NumberInt(7),
+                        "BALL_CONTROL" : NumberInt(19),
+                        "TACKLING" : NumberInt(53)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "e4f5ac56-dfe2-4826-bd50-e8f518c8d315",
+                    "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                    "teamRole" : "HOME",
+                    "name" : "Bradly Hegmann",
+                    "position" : "RIGHT_BACK",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(4),
+                        "AERIAL" : NumberInt(23),
+                        "CONSTITUTION" : NumberInt(21),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(37),
+                        "DEFENSIVE_POSITIONING" : NumberInt(48),
+                        "OFFENSIVE_POSITIONING" : NumberInt(18),
+                        "BALL_CONTROL" : NumberInt(12),
+                        "TACKLING" : NumberInt(37)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                    "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                    "teamRole" : "HOME",
+                    "name" : "Yun Walsh",
+                    "position" : "STRIKER",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(54),
+                        "AERIAL" : NumberInt(31),
+                        "CONSTITUTION" : NumberInt(31),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(7),
+                        "DEFENSIVE_POSITIONING" : NumberInt(5),
+                        "OFFENSIVE_POSITIONING" : NumberInt(30),
+                        "BALL_CONTROL" : NumberInt(39),
+                        "TACKLING" : NumberInt(3)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "2416e24b-6f06-41ec-b420-120344f8fd2f",
+                    "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                    "teamRole" : "HOME",
+                    "name" : "Phil Bednar",
+                    "position" : "LEFT_BACK",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(6),
+                        "AERIAL" : NumberInt(16),
+                        "CONSTITUTION" : NumberInt(26),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(19),
+                        "DEFENSIVE_POSITIONING" : NumberInt(49),
+                        "OFFENSIVE_POSITIONING" : NumberInt(18),
+                        "BALL_CONTROL" : NumberInt(22),
+                        "TACKLING" : NumberInt(44)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "9c37ed23-100a-4546-8449-4286067a95c9",
+                    "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                    "teamRole" : "HOME",
+                    "name" : "Warren Beer",
+                    "position" : "CENTRE_BACK",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(7),
+                        "AERIAL" : NumberInt(21),
+                        "CONSTITUTION" : NumberInt(28),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(11),
+                        "DEFENSIVE_POSITIONING" : NumberInt(50),
+                        "OFFENSIVE_POSITIONING" : NumberInt(7),
+                        "BALL_CONTROL" : NumberInt(9),
+                        "TACKLING" : NumberInt(67)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                    "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                    "teamRole" : "HOME",
+                    "name" : "Deidre Lubowitz",
+                    "position" : "FORWARD",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(39),
+                        "AERIAL" : NumberInt(27),
+                        "CONSTITUTION" : NumberInt(24),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(16),
+                        "DEFENSIVE_POSITIONING" : NumberInt(8),
+                        "OFFENSIVE_POSITIONING" : NumberInt(36),
+                        "BALL_CONTROL" : NumberInt(42),
+                        "TACKLING" : NumberInt(8)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "17b86b0b-d2f0-491b-b131-1da04199ceda",
+                    "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                    "teamRole" : "HOME",
+                    "name" : "Rodney Bechtelar",
+                    "position" : "GOALKEEPER",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "GOALKEEPER_POSITIONING" : NumberInt(31),
+                        "ORGANIZATION" : NumberInt(15),
+                        "INTERCEPTIONS" : NumberInt(22),
+                        "ONE_ON_ONE" : NumberInt(42),
+                        "INTERCEPTING" : NumberInt(0),
+                        "CONTROL" : NumberInt(19),
+                        "REFLEXES" : NumberInt(71)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                    "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                    "teamRole" : "HOME",
+                    "name" : "Jaymie Oberbrunner",
+                    "position" : "RIGHT_MIDFIELDER",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(13),
+                        "AERIAL" : NumberInt(11),
+                        "CONSTITUTION" : NumberInt(20),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(43),
+                        "DEFENSIVE_POSITIONING" : NumberInt(21),
+                        "OFFENSIVE_POSITIONING" : NumberInt(39),
+                        "BALL_CONTROL" : NumberInt(34),
+                        "TACKLING" : NumberInt(19)
+                    },
+                    "playerOrder" : "NONE"
+                }
+            ],
+            "bench" : [
+
+            ],
+            "tactic" : "DOUBLE_TEAM",
+            "verticalPressure" : "MID_PRESSURE",
+            "horizontalPressure" : "SWARM_CENTRE"
+        },
+        "away" : {
+            "_id" : "51a96286-eb0e-48bb-a82d-93defef51068",
+            "role" : "AWAY",
+            "players" : [
+                {
+                    "_id" : "37128d0a-253e-4b8d-b17f-61237be7d261",
+                    "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                    "teamRole" : "AWAY",
+                    "name" : "Hettie Morissette",
+                    "position" : "STRIKER",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(55),
+                        "AERIAL" : NumberInt(29),
+                        "CONSTITUTION" : NumberInt(22),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(5),
+                        "DEFENSIVE_POSITIONING" : NumberInt(7),
+                        "OFFENSIVE_POSITIONING" : NumberInt(50),
+                        "BALL_CONTROL" : NumberInt(30),
+                        "TACKLING" : NumberInt(2)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "123c9df5-b05a-47a2-8e68-cf2e68907238",
+                    "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                    "teamRole" : "AWAY",
+                    "name" : "Clare Hegmann",
+                    "position" : "LEFT_BACK",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(0),
+                        "AERIAL" : NumberInt(2),
+                        "CONSTITUTION" : NumberInt(14),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(31),
+                        "DEFENSIVE_POSITIONING" : NumberInt(38),
+                        "OFFENSIVE_POSITIONING" : NumberInt(13),
+                        "BALL_CONTROL" : NumberInt(4),
+                        "TACKLING" : NumberInt(41)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "73ed5aac-cf61-49fa-a920-302aa9116618",
+                    "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                    "teamRole" : "AWAY",
+                    "name" : "Christinia Ryan",
+                    "position" : "RIGHT_BACK",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(7),
+                        "AERIAL" : NumberInt(16),
+                        "CONSTITUTION" : NumberInt(23),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(25),
+                        "DEFENSIVE_POSITIONING" : NumberInt(42),
+                        "OFFENSIVE_POSITIONING" : NumberInt(20),
+                        "BALL_CONTROL" : NumberInt(20),
+                        "TACKLING" : NumberInt(47)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "720941e1-a33f-4e74-8e40-190a06e25087",
+                    "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                    "teamRole" : "AWAY",
+                    "name" : "Asley Rogahn",
+                    "position" : "LEFT_MIDFIELDER",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(24),
+                        "AERIAL" : NumberInt(11),
+                        "CONSTITUTION" : NumberInt(24),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(34),
+                        "DEFENSIVE_POSITIONING" : NumberInt(2),
+                        "OFFENSIVE_POSITIONING" : NumberInt(45),
+                        "BALL_CONTROL" : NumberInt(50),
+                        "TACKLING" : NumberInt(10)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "523d14b8-be66-4b19-9aea-2c03b0520e86",
+                    "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                    "teamRole" : "AWAY",
+                    "name" : "Miss Florentino Hamill",
+                    "position" : "GOALKEEPER",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "ORGANIZATION" : NumberInt(26),
+                        "GOALKEEPER_POSITIONING" : NumberInt(37),
+                        "ONE_ON_ONE" : NumberInt(36),
+                        "INTERCEPTIONS" : NumberInt(20),
+                        "INTERCEPTING" : NumberInt(0),
+                        "REFLEXES" : NumberInt(58),
+                        "CONTROL" : NumberInt(23)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                    "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                    "teamRole" : "AWAY",
+                    "name" : "Evelyn Rippin III",
+                    "position" : "CENTRE_MIDFIELDER",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(3),
+                        "AERIAL" : NumberInt(3),
+                        "CONSTITUTION" : NumberInt(15),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(40),
+                        "DEFENSIVE_POSITIONING" : NumberInt(16),
+                        "OFFENSIVE_POSITIONING" : NumberInt(19),
+                        "BALL_CONTROL" : NumberInt(32),
+                        "TACKLING" : NumberInt(16)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                    "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                    "teamRole" : "AWAY",
+                    "name" : "Paris Bogan",
+                    "position" : "CENTRE_MIDFIELDER",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(11),
+                        "AERIAL" : NumberInt(11),
+                        "CONSTITUTION" : NumberInt(14),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(41),
+                        "DEFENSIVE_POSITIONING" : NumberInt(24),
+                        "OFFENSIVE_POSITIONING" : NumberInt(34),
+                        "BALL_CONTROL" : NumberInt(41),
+                        "TACKLING" : NumberInt(24)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "33ffd6d2-032e-489e-9ec7-f83220df8580",
+                    "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                    "teamRole" : "AWAY",
+                    "name" : "Brande McClure",
+                    "position" : "FORWARD",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(45),
+                        "AERIAL" : NumberInt(23),
+                        "CONSTITUTION" : NumberInt(19),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(21),
+                        "DEFENSIVE_POSITIONING" : NumberInt(7),
+                        "OFFENSIVE_POSITIONING" : NumberInt(39),
+                        "BALL_CONTROL" : NumberInt(41),
+                        "TACKLING" : NumberInt(5)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "40f518dc-af92-4543-9c4c-0a9e768666cd",
+                    "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                    "teamRole" : "AWAY",
+                    "name" : "Rod Terry DDS",
+                    "position" : "CENTRE_BACK",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(3),
+                        "AERIAL" : NumberInt(29),
+                        "CONSTITUTION" : NumberInt(30),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(11),
+                        "DEFENSIVE_POSITIONING" : NumberInt(54),
+                        "OFFENSIVE_POSITIONING" : NumberInt(4),
+                        "BALL_CONTROL" : NumberInt(19),
+                        "TACKLING" : NumberInt(50)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                    "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                    "teamRole" : "AWAY",
+                    "name" : "Joey Torphy",
+                    "position" : "RIGHT_MIDFIELDER",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(9),
+                        "AERIAL" : NumberInt(13),
+                        "CONSTITUTION" : NumberInt(30),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(38),
+                        "DEFENSIVE_POSITIONING" : NumberInt(14),
+                        "OFFENSIVE_POSITIONING" : NumberInt(48),
+                        "BALL_CONTROL" : NumberInt(27),
+                        "TACKLING" : NumberInt(21)
+                    },
+                    "playerOrder" : "NONE"
+                },
+                {
+                    "_id" : "a23f5a20-cdd4-40ea-8e60-b639122feb85",
+                    "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                    "teamRole" : "AWAY",
+                    "name" : "Tari Wisozk",
+                    "position" : "CENTRE_BACK",
+                    "status" : "ACTIVE",
+                    "skills" : {
+                        "SCORING" : NumberInt(5),
+                        "AERIAL" : NumberInt(32),
+                        "CONSTITUTION" : NumberInt(30),
+                        "INTERCEPTING" : NumberInt(0),
+                        "PASSING" : NumberInt(18),
+                        "DEFENSIVE_POSITIONING" : NumberInt(40),
+                        "OFFENSIVE_POSITIONING" : NumberInt(8),
+                        "BALL_CONTROL" : NumberInt(15),
+                        "TACKLING" : NumberInt(52)
+                    },
+                    "playerOrder" : "NONE"
+                }
+            ],
+            "bench" : [
+
+            ],
+            "tactic" : "DOUBLE_TEAM",
+            "verticalPressure" : "MID_PRESSURE",
+            "horizontalPressure" : "SWARM_CENTRE"
+        },
+        "dateTime" : ISODate("2024-10-24T22:00:00.000+0000"),
+        "status" : "ACCEPTED",
+        "matchReport" : {
+            "home" : {
+                "_id" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                "role" : "HOME",
+                "players" : [
+                    {
+                        "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                        "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                        "teamRole" : "HOME",
+                        "name" : "Inger Halvorson",
+                        "position" : "CENTRE_MIDFIELDER",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(12),
+                            "AERIAL" : NumberInt(11),
+                            "CONSTITUTION" : NumberInt(31),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(34),
+                            "DEFENSIVE_POSITIONING" : NumberInt(21),
+                            "OFFENSIVE_POSITIONING" : NumberInt(26),
+                            "BALL_CONTROL" : NumberInt(35),
+                            "TACKLING" : NumberInt(30)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                        "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                        "teamRole" : "HOME",
+                        "name" : "Steve Schuppe",
+                        "position" : "OFFENSIVE_MIDFIELDER",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(17),
+                            "AERIAL" : NumberInt(7),
+                            "CONSTITUTION" : NumberInt(25),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(36),
+                            "DEFENSIVE_POSITIONING" : NumberInt(3),
+                            "OFFENSIVE_POSITIONING" : NumberInt(56),
+                            "BALL_CONTROL" : NumberInt(51),
+                            "TACKLING" : NumberInt(5)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                        "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                        "teamRole" : "HOME",
+                        "name" : "Efren Stiedemann",
+                        "position" : "LEFT_MIDFIELDER",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(9),
+                            "AERIAL" : NumberInt(7),
+                            "CONSTITUTION" : NumberInt(25),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(44),
+                            "DEFENSIVE_POSITIONING" : NumberInt(22),
+                            "OFFENSIVE_POSITIONING" : NumberInt(40),
+                            "BALL_CONTROL" : NumberInt(36),
+                            "TACKLING" : NumberInt(17)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "d1b0114c-5077-4cef-96c5-e6d4d14dd59e",
+                        "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                        "teamRole" : "HOME",
+                        "name" : "Lily Bergnaum",
+                        "position" : "CENTRE_BACK",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(4),
+                            "AERIAL" : NumberInt(28),
+                            "CONSTITUTION" : NumberInt(31),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(15),
+                            "DEFENSIVE_POSITIONING" : NumberInt(43),
+                            "OFFENSIVE_POSITIONING" : NumberInt(7),
+                            "BALL_CONTROL" : NumberInt(19),
+                            "TACKLING" : NumberInt(53)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "e4f5ac56-dfe2-4826-bd50-e8f518c8d315",
+                        "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                        "teamRole" : "HOME",
+                        "name" : "Bradly Hegmann",
+                        "position" : "RIGHT_BACK",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(4),
+                            "AERIAL" : NumberInt(23),
+                            "CONSTITUTION" : NumberInt(21),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(37),
+                            "DEFENSIVE_POSITIONING" : NumberInt(48),
+                            "OFFENSIVE_POSITIONING" : NumberInt(18),
+                            "BALL_CONTROL" : NumberInt(12),
+                            "TACKLING" : NumberInt(37)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                        "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                        "teamRole" : "HOME",
+                        "name" : "Yun Walsh",
+                        "position" : "STRIKER",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(54),
+                            "AERIAL" : NumberInt(31),
+                            "CONSTITUTION" : NumberInt(31),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(7),
+                            "DEFENSIVE_POSITIONING" : NumberInt(5),
+                            "OFFENSIVE_POSITIONING" : NumberInt(30),
+                            "BALL_CONTROL" : NumberInt(39),
+                            "TACKLING" : NumberInt(3)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "2416e24b-6f06-41ec-b420-120344f8fd2f",
+                        "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                        "teamRole" : "HOME",
+                        "name" : "Phil Bednar",
+                        "position" : "LEFT_BACK",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(6),
+                            "AERIAL" : NumberInt(16),
+                            "CONSTITUTION" : NumberInt(26),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(19),
+                            "DEFENSIVE_POSITIONING" : NumberInt(49),
+                            "OFFENSIVE_POSITIONING" : NumberInt(18),
+                            "BALL_CONTROL" : NumberInt(22),
+                            "TACKLING" : NumberInt(44)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "9c37ed23-100a-4546-8449-4286067a95c9",
+                        "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                        "teamRole" : "HOME",
+                        "name" : "Warren Beer",
+                        "position" : "CENTRE_BACK",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(7),
+                            "AERIAL" : NumberInt(21),
+                            "CONSTITUTION" : NumberInt(28),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(11),
+                            "DEFENSIVE_POSITIONING" : NumberInt(50),
+                            "OFFENSIVE_POSITIONING" : NumberInt(7),
+                            "BALL_CONTROL" : NumberInt(9),
+                            "TACKLING" : NumberInt(67)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                        "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                        "teamRole" : "HOME",
+                        "name" : "Deidre Lubowitz",
+                        "position" : "FORWARD",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(39),
+                            "AERIAL" : NumberInt(27),
+                            "CONSTITUTION" : NumberInt(24),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(16),
+                            "DEFENSIVE_POSITIONING" : NumberInt(8),
+                            "OFFENSIVE_POSITIONING" : NumberInt(36),
+                            "BALL_CONTROL" : NumberInt(42),
+                            "TACKLING" : NumberInt(8)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "17b86b0b-d2f0-491b-b131-1da04199ceda",
+                        "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                        "teamRole" : "HOME",
+                        "name" : "Rodney Bechtelar",
+                        "position" : "GOALKEEPER",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "GOALKEEPER_POSITIONING" : NumberInt(31),
+                            "ORGANIZATION" : NumberInt(15),
+                            "INTERCEPTIONS" : NumberInt(22),
+                            "ONE_ON_ONE" : NumberInt(42),
+                            "INTERCEPTING" : NumberInt(0),
+                            "CONTROL" : NumberInt(19),
+                            "REFLEXES" : NumberInt(71)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                        "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                        "teamRole" : "HOME",
+                        "name" : "Jaymie Oberbrunner",
+                        "position" : "RIGHT_MIDFIELDER",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(13),
+                            "AERIAL" : NumberInt(11),
+                            "CONSTITUTION" : NumberInt(20),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(43),
+                            "DEFENSIVE_POSITIONING" : NumberInt(21),
+                            "OFFENSIVE_POSITIONING" : NumberInt(39),
+                            "BALL_CONTROL" : NumberInt(34),
+                            "TACKLING" : NumberInt(19)
+                        },
+                        "playerOrder" : "NONE"
+                    }
+                ],
+                "bench" : [
+
+                ],
+                "tactic" : "DOUBLE_TEAM",
+                "verticalPressure" : "MID_PRESSURE",
+                "horizontalPressure" : "SWARM_CENTRE"
+            },
+            "away" : {
+                "_id" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                "role" : "AWAY",
+                "players" : [
+                    {
+                        "_id" : "37128d0a-253e-4b8d-b17f-61237be7d261",
+                        "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                        "teamRole" : "AWAY",
+                        "name" : "Hettie Morissette",
+                        "position" : "STRIKER",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(55),
+                            "AERIAL" : NumberInt(29),
+                            "CONSTITUTION" : NumberInt(22),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(5),
+                            "DEFENSIVE_POSITIONING" : NumberInt(7),
+                            "OFFENSIVE_POSITIONING" : NumberInt(50),
+                            "BALL_CONTROL" : NumberInt(30),
+                            "TACKLING" : NumberInt(2)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "123c9df5-b05a-47a2-8e68-cf2e68907238",
+                        "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                        "teamRole" : "AWAY",
+                        "name" : "Clare Hegmann",
+                        "position" : "LEFT_BACK",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(0),
+                            "AERIAL" : NumberInt(2),
+                            "CONSTITUTION" : NumberInt(14),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(31),
+                            "DEFENSIVE_POSITIONING" : NumberInt(38),
+                            "OFFENSIVE_POSITIONING" : NumberInt(13),
+                            "BALL_CONTROL" : NumberInt(4),
+                            "TACKLING" : NumberInt(41)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "73ed5aac-cf61-49fa-a920-302aa9116618",
+                        "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                        "teamRole" : "AWAY",
+                        "name" : "Christinia Ryan",
+                        "position" : "RIGHT_BACK",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(7),
+                            "AERIAL" : NumberInt(16),
+                            "CONSTITUTION" : NumberInt(23),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(25),
+                            "DEFENSIVE_POSITIONING" : NumberInt(42),
+                            "OFFENSIVE_POSITIONING" : NumberInt(20),
+                            "BALL_CONTROL" : NumberInt(20),
+                            "TACKLING" : NumberInt(47)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "720941e1-a33f-4e74-8e40-190a06e25087",
+                        "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                        "teamRole" : "AWAY",
+                        "name" : "Asley Rogahn",
+                        "position" : "LEFT_MIDFIELDER",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(24),
+                            "AERIAL" : NumberInt(11),
+                            "CONSTITUTION" : NumberInt(24),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(34),
+                            "DEFENSIVE_POSITIONING" : NumberInt(2),
+                            "OFFENSIVE_POSITIONING" : NumberInt(45),
+                            "BALL_CONTROL" : NumberInt(50),
+                            "TACKLING" : NumberInt(10)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "523d14b8-be66-4b19-9aea-2c03b0520e86",
+                        "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                        "teamRole" : "AWAY",
+                        "name" : "Miss Florentino Hamill",
+                        "position" : "GOALKEEPER",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "ORGANIZATION" : NumberInt(26),
+                            "GOALKEEPER_POSITIONING" : NumberInt(37),
+                            "ONE_ON_ONE" : NumberInt(36),
+                            "INTERCEPTIONS" : NumberInt(20),
+                            "INTERCEPTING" : NumberInt(0),
+                            "REFLEXES" : NumberInt(58),
+                            "CONTROL" : NumberInt(23)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                        "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                        "teamRole" : "AWAY",
+                        "name" : "Evelyn Rippin III",
+                        "position" : "CENTRE_MIDFIELDER",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(3),
+                            "AERIAL" : NumberInt(3),
+                            "CONSTITUTION" : NumberInt(15),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(40),
+                            "DEFENSIVE_POSITIONING" : NumberInt(16),
+                            "OFFENSIVE_POSITIONING" : NumberInt(19),
+                            "BALL_CONTROL" : NumberInt(32),
+                            "TACKLING" : NumberInt(16)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                        "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                        "teamRole" : "AWAY",
+                        "name" : "Paris Bogan",
+                        "position" : "CENTRE_MIDFIELDER",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(11),
+                            "AERIAL" : NumberInt(11),
+                            "CONSTITUTION" : NumberInt(14),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(41),
+                            "DEFENSIVE_POSITIONING" : NumberInt(24),
+                            "OFFENSIVE_POSITIONING" : NumberInt(34),
+                            "BALL_CONTROL" : NumberInt(41),
+                            "TACKLING" : NumberInt(24)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "33ffd6d2-032e-489e-9ec7-f83220df8580",
+                        "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                        "teamRole" : "AWAY",
+                        "name" : "Brande McClure",
+                        "position" : "FORWARD",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(45),
+                            "AERIAL" : NumberInt(23),
+                            "CONSTITUTION" : NumberInt(19),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(21),
+                            "DEFENSIVE_POSITIONING" : NumberInt(7),
+                            "OFFENSIVE_POSITIONING" : NumberInt(39),
+                            "BALL_CONTROL" : NumberInt(41),
+                            "TACKLING" : NumberInt(5)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "40f518dc-af92-4543-9c4c-0a9e768666cd",
+                        "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                        "teamRole" : "AWAY",
+                        "name" : "Rod Terry DDS",
+                        "position" : "CENTRE_BACK",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(3),
+                            "AERIAL" : NumberInt(29),
+                            "CONSTITUTION" : NumberInt(30),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(11),
+                            "DEFENSIVE_POSITIONING" : NumberInt(54),
+                            "OFFENSIVE_POSITIONING" : NumberInt(4),
+                            "BALL_CONTROL" : NumberInt(19),
+                            "TACKLING" : NumberInt(50)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                        "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                        "teamRole" : "AWAY",
+                        "name" : "Joey Torphy",
+                        "position" : "RIGHT_MIDFIELDER",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(9),
+                            "AERIAL" : NumberInt(13),
+                            "CONSTITUTION" : NumberInt(30),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(38),
+                            "DEFENSIVE_POSITIONING" : NumberInt(14),
+                            "OFFENSIVE_POSITIONING" : NumberInt(48),
+                            "BALL_CONTROL" : NumberInt(27),
+                            "TACKLING" : NumberInt(21)
+                        },
+                        "playerOrder" : "NONE"
+                    },
+                    {
+                        "_id" : "a23f5a20-cdd4-40ea-8e60-b639122feb85",
+                        "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                        "teamRole" : "AWAY",
+                        "name" : "Tari Wisozk",
+                        "position" : "CENTRE_BACK",
+                        "status" : "ACTIVE",
+                        "skills" : {
+                            "SCORING" : NumberInt(5),
+                            "AERIAL" : NumberInt(32),
+                            "CONSTITUTION" : NumberInt(30),
+                            "INTERCEPTING" : NumberInt(0),
+                            "PASSING" : NumberInt(18),
+                            "DEFENSIVE_POSITIONING" : NumberInt(40),
+                            "OFFENSIVE_POSITIONING" : NumberInt(8),
+                            "BALL_CONTROL" : NumberInt(15),
+                            "TACKLING" : NumberInt(52)
+                        },
+                        "playerOrder" : "NONE"
+                    }
+                ],
+                "bench" : [
+
+                ],
+                "tactic" : "DOUBLE_TEAM",
+                "verticalPressure" : "MID_PRESSURE",
+                "horizontalPressure" : "SWARM_CENTRE"
+            },
+            "plays" : [
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(19),
+                            "performance" : NumberInt(12),
+                            "skillPoints" : NumberInt(7),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(-3),
+                            "performance" : NumberInt(-3),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(1),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "GROUND"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(29),
+                            "performance" : NumberInt(-11),
+                            "skillPoints" : NumberInt(26),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(127),
+                                "Jaymie Oberbrunner" : NumberInt(52),
+                                "Deidre Lubowitz" : NumberInt(18),
+                                "Efren Stiedemann" : NumberInt(54)
+                            },
+                            "assistance" : NumberInt(14)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(25),
+                            "performance" : NumberInt(1),
+                            "skillPoints" : NumberInt(24),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(16),
+                                "Brande McClure" : NumberInt(2),
+                                "Evelyn Rippin III" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(5)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(2),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(21),
+                            "performance" : NumberInt(-15),
+                            "skillPoints" : NumberInt(34),
+                            "carryover" : NumberInt(2)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(3),
+                            "performance" : NumberInt(3),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "LEFT_MIDFIELD"
+                    },
+                    "clock" : NumberInt(3),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "LEFT_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(54),
+                            "performance" : NumberInt(10),
+                            "skillPoints" : NumberInt(40),
+                            "teamAssistance" : {
+                                "Bradly Hegmann" : NumberInt(21),
+                                "Phil Bednar" : NumberInt(28),
+                                "Steve Schuppe" : NumberInt(76),
+                                "Jaymie Oberbrunner" : NumberInt(69),
+                                "Inger Halvorson" : NumberInt(28)
+                            },
+                            "assistance" : NumberInt(4)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(4),
+                            "performance" : NumberInt(-10),
+                            "skillPoints" : NumberInt(14),
+                            "teamAssistance" : {
+                                "Evelyn Rippin III" : NumberInt(15),
+                                "Christinia Ryan" : NumberInt(84),
+                                "Paris Bogan" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(11),
+                                "Clare Hegmann" : NumberInt(74)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(4),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "LEFT_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "LEFT_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(74),
+                            "performance" : NumberInt(5),
+                            "skillPoints" : NumberInt(44),
+                            "carryover" : NumberInt(25)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(11),
+                            "performance" : NumberInt(11),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_FORWARD"
+                    },
+                    "clock" : NumberInt(5),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "LEFT_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "40f518dc-af92-4543-9c4c-0a9e768666cd",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Rod Terry DDS",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(11),
+                                "DEFENSIVE_POSITIONING" : NumberInt(54),
+                                "OFFENSIVE_POSITIONING" : NumberInt(4),
+                                "BALL_CONTROL" : NumberInt(19),
+                                "TACKLING" : NumberInt(50)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(51),
+                            "performance" : NumberInt(-14),
+                            "skillPoints" : NumberInt(56),
+                            "teamAssistance" : {
+                                "Jaymie Oberbrunner" : NumberInt(34),
+                                "Deidre Lubowitz" : NumberInt(73),
+                                "Inger Halvorson" : NumberInt(28),
+                                "Efren Stiedemann" : NumberInt(36)
+                            },
+                            "assistance" : NumberInt(9)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(40),
+                            "performance" : NumberInt(-14),
+                            "skillPoints" : NumberInt(54),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(8),
+                                "Brande McClure" : NumberInt(8),
+                                "Evelyn Rippin III" : NumberInt(15),
+                                "Miss Florentino Hamill" : NumberInt(26),
+                                "Paris Bogan" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(2)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(6),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "40f518dc-af92-4543-9c4c-0a9e768666cd",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Rod Terry DDS",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(11),
+                                "DEFENSIVE_POSITIONING" : NumberInt(54),
+                                "OFFENSIVE_POSITIONING" : NumberInt(4),
+                                "BALL_CONTROL" : NumberInt(19),
+                                "TACKLING" : NumberInt(50)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(34),
+                            "performance" : NumberInt(-7),
+                            "skillPoints" : NumberInt(36),
+                            "carryover" : NumberInt(5)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(13),
+                            "performance" : NumberInt(13),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_FORWARD"
+                    },
+                    "clock" : NumberInt(7),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "a23f5a20-cdd4-40ea-8e60-b639122feb85",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Tari Wisozk",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(5),
+                                "AERIAL" : NumberInt(32),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(18),
+                                "DEFENSIVE_POSITIONING" : NumberInt(40),
+                                "OFFENSIVE_POSITIONING" : NumberInt(8),
+                                "BALL_CONTROL" : NumberInt(15),
+                                "TACKLING" : NumberInt(52)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(38),
+                            "performance" : NumberInt(-7),
+                            "skillPoints" : NumberInt(36),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(76),
+                                "Jaymie Oberbrunner" : NumberInt(34),
+                                "Inger Halvorson" : NumberInt(28),
+                                "Efren Stiedemann" : NumberInt(36)
+                            },
+                            "assistance" : NumberInt(9)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(50),
+                            "performance" : NumberInt(10),
+                            "skillPoints" : NumberInt(40),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(8),
+                                "Brande McClure" : NumberInt(8),
+                                "Evelyn Rippin III" : NumberInt(15),
+                                "Miss Florentino Hamill" : NumberInt(26),
+                                "Paris Bogan" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(2)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(8),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "TACKLE",
+                    "duel" : {
+                        "type" : "BALL_CONTROL",
+                        "pitchArea" : "CENTRE_BACK",
+                        "initiator" : {
+                            "_id" : "a23f5a20-cdd4-40ea-8e60-b639122feb85",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Tari Wisozk",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(5),
+                                "AERIAL" : NumberInt(32),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(18),
+                                "DEFENSIVE_POSITIONING" : NumberInt(40),
+                                "OFFENSIVE_POSITIONING" : NumberInt(8),
+                                "BALL_CONTROL" : NumberInt(15),
+                                "TACKLING" : NumberInt(52)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(43),
+                            "performance" : NumberInt(1),
+                            "skillPoints" : NumberInt(42),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(50),
+                            "performance" : NumberInt(10),
+                            "skillPoints" : NumberInt(34),
+                            "carryover" : NumberInt(6)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(9),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "a23f5a20-cdd4-40ea-8e60-b639122feb85",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Tari Wisozk",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(5),
+                                "AERIAL" : NumberInt(32),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(18),
+                                "DEFENSIVE_POSITIONING" : NumberInt(40),
+                                "OFFENSIVE_POSITIONING" : NumberInt(8),
+                                "BALL_CONTROL" : NumberInt(15),
+                                "TACKLING" : NumberInt(52)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_BACK",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "SHOOT",
+                    "duel" : {
+                        "type" : "HEADER_SHOT",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "523d14b8-be66-4b19-9aea-2c03b0520e86",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Miss Florentino Hamill",
+                            "position" : "GOALKEEPER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "ORGANIZATION" : NumberInt(26),
+                                "GOALKEEPER_POSITIONING" : NumberInt(37),
+                                "ONE_ON_ONE" : NumberInt(36),
+                                "INTERCEPTIONS" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "REFLEXES" : NumberInt(58),
+                                "CONTROL" : NumberInt(23)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(25),
+                            "performance" : NumberInt(-8),
+                            "skillPoints" : NumberInt(33),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(90),
+                            "performance" : NumberInt(14),
+                            "skillPoints" : NumberInt(73),
+                            "carryover" : NumberInt(3)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(10),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "37128d0a-253e-4b8d-b17f-61237be7d261",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Hettie Morissette",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(55),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(22),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(5),
+                                "DEFENSIVE_POSITIONING" : NumberInt(7),
+                                "OFFENSIVE_POSITIONING" : NumberInt(50),
+                                "BALL_CONTROL" : NumberInt(30),
+                                "TACKLING" : NumberInt(2)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(3),
+                            "performance" : NumberInt(-2),
+                            "skillPoints" : NumberInt(5),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(19),
+                            "performance" : NumberInt(-13),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(32)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "RIGHT_FORWARD"
+                    },
+                    "clock" : NumberInt(11),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "37128d0a-253e-4b8d-b17f-61237be7d261",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Hettie Morissette",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(55),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(22),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(5),
+                                "DEFENSIVE_POSITIONING" : NumberInt(7),
+                                "OFFENSIVE_POSITIONING" : NumberInt(50),
+                                "BALL_CONTROL" : NumberInt(30),
+                                "TACKLING" : NumberInt(2)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "GROUND"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "RIGHT_FORWARD",
+                        "initiator" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "2416e24b-6f06-41ec-b420-120344f8fd2f",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Phil Bednar",
+                            "position" : "LEFT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(6),
+                                "AERIAL" : NumberInt(16),
+                                "CONSTITUTION" : NumberInt(26),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(19),
+                                "DEFENSIVE_POSITIONING" : NumberInt(49),
+                                "OFFENSIVE_POSITIONING" : NumberInt(18),
+                                "BALL_CONTROL" : NumberInt(22),
+                                "TACKLING" : NumberInt(44)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(61),
+                            "performance" : NumberInt(7),
+                            "skillPoints" : NumberInt(48),
+                            "teamAssistance" : {
+                                "Brande McClure" : NumberInt(37),
+                                "Evelyn Rippin III" : NumberInt(16),
+                                "Christinia Ryan" : NumberInt(19),
+                                "Paris Bogan" : NumberInt(24),
+                                "Asley Rogahn" : NumberInt(67),
+                                "Clare Hegmann" : NumberInt(8)
+                            },
+                            "assistance" : NumberInt(6)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(49),
+                            "performance" : NumberInt(0),
+                            "skillPoints" : NumberInt(49),
+                            "teamAssistance" : {
+                                "Bradly Hegmann" : NumberInt(81),
+                                "Steve Schuppe" : NumberInt(3),
+                                "Jaymie Oberbrunner" : NumberInt(13),
+                                "Inger Halvorson" : NumberInt(16),
+                                "Efren Stiedemann" : NumberInt(13)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(12),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "RIGHT_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "RIGHT_FORWARD",
+                        "initiator" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "2416e24b-6f06-41ec-b420-120344f8fd2f",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Phil Bednar",
+                            "position" : "LEFT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(6),
+                                "AERIAL" : NumberInt(16),
+                                "CONSTITUTION" : NumberInt(26),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(19),
+                                "DEFENSIVE_POSITIONING" : NumberInt(49),
+                                "OFFENSIVE_POSITIONING" : NumberInt(18),
+                                "BALL_CONTROL" : NumberInt(22),
+                                "TACKLING" : NumberInt(44)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "37128d0a-253e-4b8d-b17f-61237be7d261",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Hettie Morissette",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(55),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(22),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(5),
+                                "DEFENSIVE_POSITIONING" : NumberInt(7),
+                                "OFFENSIVE_POSITIONING" : NumberInt(50),
+                                "BALL_CONTROL" : NumberInt(30),
+                                "TACKLING" : NumberInt(2)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(57),
+                            "performance" : NumberInt(13),
+                            "skillPoints" : NumberInt(38),
+                            "carryover" : NumberInt(6)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(9),
+                            "performance" : NumberInt(9),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_FORWARD"
+                    },
+                    "clock" : NumberInt(13),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "RIGHT_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "37128d0a-253e-4b8d-b17f-61237be7d261",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Hettie Morissette",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(55),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(22),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(5),
+                                "DEFENSIVE_POSITIONING" : NumberInt(7),
+                                "OFFENSIVE_POSITIONING" : NumberInt(50),
+                                "BALL_CONTROL" : NumberInt(30),
+                                "TACKLING" : NumberInt(2)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "d1b0114c-5077-4cef-96c5-e6d4d14dd59e",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Lily Bergnaum",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(4),
+                                "AERIAL" : NumberInt(28),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(15),
+                                "DEFENSIVE_POSITIONING" : NumberInt(43),
+                                "OFFENSIVE_POSITIONING" : NumberInt(7),
+                                "BALL_CONTROL" : NumberInt(19),
+                                "TACKLING" : NumberInt(53)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(62),
+                            "performance" : NumberInt(1),
+                            "skillPoints" : NumberInt(50),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(36),
+                                "Brande McClure" : NumberInt(75),
+                                "Evelyn Rippin III" : NumberInt(23),
+                                "Paris Bogan" : NumberInt(35),
+                                "Asley Rogahn" : NumberInt(45)
+                            },
+                            "assistance" : NumberInt(11)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(56),
+                            "performance" : NumberInt(13),
+                            "skillPoints" : NumberInt(43),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(3),
+                                "Jaymie Oberbrunner" : NumberInt(9),
+                                "Deidre Lubowitz" : NumberInt(11),
+                                "Rodney Bechtelar" : NumberInt(15),
+                                "Inger Halvorson" : NumberInt(24),
+                                "Efren Stiedemann" : NumberInt(9)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(14),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "37128d0a-253e-4b8d-b17f-61237be7d261",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Hettie Morissette",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(55),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(22),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(5),
+                                "DEFENSIVE_POSITIONING" : NumberInt(7),
+                                "OFFENSIVE_POSITIONING" : NumberInt(50),
+                                "BALL_CONTROL" : NumberInt(30),
+                                "TACKLING" : NumberInt(2)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "SHOOT",
+                    "duel" : {
+                        "type" : "ONE_TO_ONE_SHOT",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "37128d0a-253e-4b8d-b17f-61237be7d261",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Hettie Morissette",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(55),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(22),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(5),
+                                "DEFENSIVE_POSITIONING" : NumberInt(7),
+                                "OFFENSIVE_POSITIONING" : NumberInt(50),
+                                "BALL_CONTROL" : NumberInt(30),
+                                "TACKLING" : NumberInt(2)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "17b86b0b-d2f0-491b-b131-1da04199ceda",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Rodney Bechtelar",
+                            "position" : "GOALKEEPER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "GOALKEEPER_POSITIONING" : NumberInt(31),
+                                "ORGANIZATION" : NumberInt(15),
+                                "INTERCEPTIONS" : NumberInt(22),
+                                "ONE_ON_ONE" : NumberInt(42),
+                                "INTERCEPTING" : NumberInt(0),
+                                "CONTROL" : NumberInt(19),
+                                "REFLEXES" : NumberInt(71)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(64),
+                            "performance" : NumberInt(6),
+                            "skillPoints" : NumberInt(55),
+                            "carryover" : NumberInt(3)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(16),
+                            "performance" : NumberInt(-11),
+                            "skillPoints" : NumberInt(27),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(15),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "37128d0a-253e-4b8d-b17f-61237be7d261",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Hettie Morissette",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(55),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(22),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(5),
+                                "DEFENSIVE_POSITIONING" : NumberInt(7),
+                                "OFFENSIVE_POSITIONING" : NumberInt(50),
+                                "BALL_CONTROL" : NumberInt(30),
+                                "TACKLING" : NumberInt(2)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "CENTRE_BACK",
+                        "initiator" : {
+                            "_id" : "17b86b0b-d2f0-491b-b131-1da04199ceda",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Rodney Bechtelar",
+                            "position" : "GOALKEEPER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "GOALKEEPER_POSITIONING" : NumberInt(31),
+                                "ORGANIZATION" : NumberInt(15),
+                                "INTERCEPTIONS" : NumberInt(22),
+                                "ONE_ON_ONE" : NumberInt(42),
+                                "INTERCEPTING" : NumberInt(0),
+                                "CONTROL" : NumberInt(19),
+                                "REFLEXES" : NumberInt(71)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "37128d0a-253e-4b8d-b17f-61237be7d261",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Hettie Morissette",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(55),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(22),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(5),
+                                "DEFENSIVE_POSITIONING" : NumberInt(7),
+                                "OFFENSIVE_POSITIONING" : NumberInt(50),
+                                "BALL_CONTROL" : NumberInt(30),
+                                "TACKLING" : NumberInt(2)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(47),
+                            "performance" : NumberInt(8),
+                            "skillPoints" : NumberInt(15),
+                            "carryover" : NumberInt(24)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(10),
+                            "performance" : NumberInt(10),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(16),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "17b86b0b-d2f0-491b-b131-1da04199ceda",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Rodney Bechtelar",
+                            "position" : "GOALKEEPER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "GOALKEEPER_POSITIONING" : NumberInt(31),
+                                "ORGANIZATION" : NumberInt(15),
+                                "INTERCEPTIONS" : NumberInt(22),
+                                "ONE_ON_ONE" : NumberInt(42),
+                                "INTERCEPTING" : NumberInt(0),
+                                "CONTROL" : NumberInt(19),
+                                "REFLEXES" : NumberInt(71)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_BACK",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(20),
+                            "performance" : NumberInt(-19),
+                            "skillPoints" : NumberInt(26),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(127),
+                                "Jaymie Oberbrunner" : NumberInt(52),
+                                "Deidre Lubowitz" : NumberInt(18),
+                                "Efren Stiedemann" : NumberInt(54)
+                            },
+                            "assistance" : NumberInt(13)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(8),
+                            "performance" : NumberInt(-8),
+                            "skillPoints" : NumberInt(16),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(16),
+                                "Brande McClure" : NumberInt(2),
+                                "Paris Bogan" : NumberInt(34),
+                                "Asley Rogahn" : NumberInt(5)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(17),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(27),
+                            "performance" : NumberInt(-13),
+                            "skillPoints" : NumberInt(34),
+                            "carryover" : NumberInt(6)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(15),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(18),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(52),
+                            "performance" : NumberInt(-15),
+                            "skillPoints" : NumberInt(56),
+                            "teamAssistance" : {
+                                "Jaymie Oberbrunner" : NumberInt(52),
+                                "Deidre Lubowitz" : NumberInt(18),
+                                "Inger Halvorson" : NumberInt(57),
+                                "Efren Stiedemann" : NumberInt(54)
+                            },
+                            "assistance" : NumberInt(11)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(34),
+                            "performance" : NumberInt(10),
+                            "skillPoints" : NumberInt(24),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(16),
+                                "Brande McClure" : NumberInt(2),
+                                "Evelyn Rippin III" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(5)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(19),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(44),
+                            "performance" : NumberInt(-1),
+                            "skillPoints" : NumberInt(36),
+                            "carryover" : NumberInt(9)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(14),
+                            "performance" : NumberInt(14),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "LEFT_MIDFIELD"
+                    },
+                    "clock" : NumberInt(20),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "LEFT_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(50),
+                            "performance" : NumberInt(6),
+                            "skillPoints" : NumberInt(40),
+                            "teamAssistance" : {
+                                "Bradly Hegmann" : NumberInt(21),
+                                "Phil Bednar" : NumberInt(28),
+                                "Steve Schuppe" : NumberInt(76),
+                                "Jaymie Oberbrunner" : NumberInt(69),
+                                "Inger Halvorson" : NumberInt(28)
+                            },
+                            "assistance" : NumberInt(4)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(-5),
+                            "performance" : NumberInt(-19),
+                            "skillPoints" : NumberInt(14),
+                            "teamAssistance" : {
+                                "Evelyn Rippin III" : NumberInt(15),
+                                "Christinia Ryan" : NumberInt(84),
+                                "Paris Bogan" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(11),
+                                "Clare Hegmann" : NumberInt(74)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(21),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "LEFT_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "LEFT_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(62),
+                            "performance" : NumberInt(-9),
+                            "skillPoints" : NumberInt(44),
+                            "carryover" : NumberInt(27)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(15),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(22),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "LEFT_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(30),
+                            "performance" : NumberInt(-10),
+                            "skillPoints" : NumberInt(26),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(127),
+                                "Jaymie Oberbrunner" : NumberInt(52),
+                                "Deidre Lubowitz" : NumberInt(18),
+                                "Efren Stiedemann" : NumberInt(54)
+                            },
+                            "assistance" : NumberInt(14)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(33),
+                            "performance" : NumberInt(9),
+                            "skillPoints" : NumberInt(24),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(16),
+                                "Brande McClure" : NumberInt(2),
+                                "Evelyn Rippin III" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(5)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(23),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "TACKLE",
+                    "duel" : {
+                        "type" : "BALL_CONTROL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(28),
+                            "performance" : NumberInt(4),
+                            "skillPoints" : NumberInt(24),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(47),
+                            "performance" : NumberInt(11),
+                            "skillPoints" : NumberInt(35),
+                            "carryover" : NumberInt(1)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(24),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(31),
+                            "performance" : NumberInt(-3),
+                            "skillPoints" : NumberInt(34),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(24),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(9)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "RIGHT_FORWARD"
+                    },
+                    "clock" : NumberInt(25),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "RIGHT_FORWARD",
+                        "initiator" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "123c9df5-b05a-47a2-8e68-cf2e68907238",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Clare Hegmann",
+                            "position" : "LEFT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(0),
+                                "AERIAL" : NumberInt(2),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(31),
+                                "DEFENSIVE_POSITIONING" : NumberInt(38),
+                                "OFFENSIVE_POSITIONING" : NumberInt(13),
+                                "BALL_CONTROL" : NumberInt(4),
+                                "TACKLING" : NumberInt(41)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(33),
+                            "performance" : NumberInt(-14),
+                            "skillPoints" : NumberInt(39),
+                            "teamAssistance" : {
+                                "Bradly Hegmann" : NumberInt(14),
+                                "Phil Bednar" : NumberInt(18),
+                                "Steve Schuppe" : NumberInt(50),
+                                "Deidre Lubowitz" : NumberInt(36),
+                                "Inger Halvorson" : NumberInt(20),
+                                "Efren Stiedemann" : NumberInt(54)
+                            },
+                            "assistance" : NumberInt(8)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(52),
+                            "performance" : NumberInt(14),
+                            "skillPoints" : NumberInt(38),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(11),
+                                "Evelyn Rippin III" : NumberInt(10),
+                                "Christinia Ryan" : NumberInt(84),
+                                "Paris Bogan" : NumberInt(15),
+                                "Asley Rogahn" : NumberInt(3)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(26),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "RIGHT_FORWARD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "TACKLE",
+                    "duel" : {
+                        "type" : "BALL_CONTROL",
+                        "pitchArea" : "LEFT_BACK",
+                        "initiator" : {
+                            "_id" : "123c9df5-b05a-47a2-8e68-cf2e68907238",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Clare Hegmann",
+                            "position" : "LEFT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(0),
+                                "AERIAL" : NumberInt(2),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(31),
+                                "DEFENSIVE_POSITIONING" : NumberInt(38),
+                                "OFFENSIVE_POSITIONING" : NumberInt(13),
+                                "BALL_CONTROL" : NumberInt(4),
+                                "TACKLING" : NumberInt(41)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(14),
+                            "performance" : NumberInt(-7),
+                            "skillPoints" : NumberInt(21),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(33),
+                            "performance" : NumberInt(2),
+                            "skillPoints" : NumberInt(22),
+                            "carryover" : NumberInt(9)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(27),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "123c9df5-b05a-47a2-8e68-cf2e68907238",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Clare Hegmann",
+                            "position" : "LEFT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(0),
+                                "AERIAL" : NumberInt(2),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(31),
+                                "DEFENSIVE_POSITIONING" : NumberInt(38),
+                                "OFFENSIVE_POSITIONING" : NumberInt(13),
+                                "BALL_CONTROL" : NumberInt(4),
+                                "TACKLING" : NumberInt(41)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "LEFT_BACK",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "RIGHT_FORWARD",
+                        "initiator" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "123c9df5-b05a-47a2-8e68-cf2e68907238",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Clare Hegmann",
+                            "position" : "LEFT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(0),
+                                "AERIAL" : NumberInt(2),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(31),
+                                "DEFENSIVE_POSITIONING" : NumberInt(38),
+                                "OFFENSIVE_POSITIONING" : NumberInt(13),
+                                "BALL_CONTROL" : NumberInt(4),
+                                "TACKLING" : NumberInt(41)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(53),
+                            "performance" : NumberInt(10),
+                            "skillPoints" : NumberInt(43),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(5),
+                            "performance" : NumberInt(-4),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(9)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_FORWARD"
+                    },
+                    "clock" : NumberInt(28),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "RIGHT_FORWARD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "40f518dc-af92-4543-9c4c-0a9e768666cd",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Rod Terry DDS",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(11),
+                                "DEFENSIVE_POSITIONING" : NumberInt(54),
+                                "OFFENSIVE_POSITIONING" : NumberInt(4),
+                                "BALL_CONTROL" : NumberInt(19),
+                                "TACKLING" : NumberInt(50)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(33),
+                            "performance" : NumberInt(-9),
+                            "skillPoints" : NumberInt(30),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(76),
+                                "Jaymie Oberbrunner" : NumberInt(34),
+                                "Deidre Lubowitz" : NumberInt(73),
+                                "Inger Halvorson" : NumberInt(28),
+                                "Efren Stiedemann" : NumberInt(36)
+                            },
+                            "assistance" : NumberInt(12)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(47),
+                            "performance" : NumberInt(-7),
+                            "skillPoints" : NumberInt(54),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(8),
+                                "Brande McClure" : NumberInt(8),
+                                "Evelyn Rippin III" : NumberInt(15),
+                                "Miss Florentino Hamill" : NumberInt(26),
+                                "Paris Bogan" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(2)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(29),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "TACKLE",
+                    "duel" : {
+                        "type" : "BALL_CONTROL",
+                        "pitchArea" : "CENTRE_BACK",
+                        "initiator" : {
+                            "_id" : "40f518dc-af92-4543-9c4c-0a9e768666cd",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Rod Terry DDS",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(11),
+                                "DEFENSIVE_POSITIONING" : NumberInt(54),
+                                "OFFENSIVE_POSITIONING" : NumberInt(4),
+                                "BALL_CONTROL" : NumberInt(19),
+                                "TACKLING" : NumberInt(50)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(46),
+                            "performance" : NumberInt(7),
+                            "skillPoints" : NumberInt(39),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(52),
+                            "performance" : NumberInt(10),
+                            "skillPoints" : NumberInt(35),
+                            "carryover" : NumberInt(7)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(30),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "40f518dc-af92-4543-9c4c-0a9e768666cd",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Rod Terry DDS",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(11),
+                                "DEFENSIVE_POSITIONING" : NumberInt(54),
+                                "OFFENSIVE_POSITIONING" : NumberInt(4),
+                                "BALL_CONTROL" : NumberInt(19),
+                                "TACKLING" : NumberInt(50)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_BACK",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "SHOOT",
+                    "duel" : {
+                        "type" : "HEADER_SHOT",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "523d14b8-be66-4b19-9aea-2c03b0520e86",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Miss Florentino Hamill",
+                            "position" : "GOALKEEPER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "ORGANIZATION" : NumberInt(26),
+                                "GOALKEEPER_POSITIONING" : NumberInt(37),
+                                "ONE_ON_ONE" : NumberInt(36),
+                                "INTERCEPTIONS" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "REFLEXES" : NumberInt(58),
+                                "CONTROL" : NumberInt(23)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(40),
+                            "performance" : NumberInt(-1),
+                            "skillPoints" : NumberInt(41),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(100),
+                            "performance" : NumberInt(11),
+                            "skillPoints" : NumberInt(86),
+                            "carryover" : NumberInt(3)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(31),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "37128d0a-253e-4b8d-b17f-61237be7d261",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Hettie Morissette",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(55),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(22),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(5),
+                                "DEFENSIVE_POSITIONING" : NumberInt(7),
+                                "OFFENSIVE_POSITIONING" : NumberInt(50),
+                                "BALL_CONTROL" : NumberInt(30),
+                                "TACKLING" : NumberInt(2)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(17),
+                            "performance" : NumberInt(12),
+                            "skillPoints" : NumberInt(5),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(5),
+                            "performance" : NumberInt(-25),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(30)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(32),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "37128d0a-253e-4b8d-b17f-61237be7d261",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Hettie Morissette",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(55),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(22),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(5),
+                                "DEFENSIVE_POSITIONING" : NumberInt(7),
+                                "OFFENSIVE_POSITIONING" : NumberInt(50),
+                                "BALL_CONTROL" : NumberInt(30),
+                                "TACKLING" : NumberInt(2)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "GROUND"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(40),
+                            "performance" : NumberInt(-5),
+                            "skillPoints" : NumberInt(34),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(54),
+                                "Brande McClure" : NumberInt(18),
+                                "Evelyn Rippin III" : NumberInt(47),
+                                "Asley Rogahn" : NumberInt(67)
+                            },
+                            "assistance" : NumberInt(11)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(34),
+                            "performance" : NumberInt(13),
+                            "skillPoints" : NumberInt(21),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(3),
+                                "Jaymie Oberbrunner" : NumberInt(19),
+                                "Deidre Lubowitz" : NumberInt(3),
+                                "Efren Stiedemann" : NumberInt(18)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(33),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(59),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(41),
+                            "carryover" : NumberInt(3)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(-25),
+                            "performance" : NumberInt(-25),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(34),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(40),
+                            "performance" : NumberInt(10),
+                            "skillPoints" : NumberInt(19),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(54),
+                                "Brande McClure" : NumberInt(18),
+                                "Paris Bogan" : NumberInt(70),
+                                "Asley Rogahn" : NumberInt(67)
+                            },
+                            "assistance" : NumberInt(11)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(50),
+                            "performance" : NumberInt(0),
+                            "skillPoints" : NumberInt(0),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(3),
+                                "Jaymie Oberbrunner" : NumberInt(19),
+                                "Deidre Lubowitz" : NumberInt(3),
+                                "Inger Halvorson" : NumberInt(36),
+                                "Efren Stiedemann" : NumberInt(18)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(35),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "720941e1-a33f-4e74-8e40-190a06e25087",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Asley Rogahn",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(24),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(2),
+                                "OFFENSIVE_POSITIONING" : NumberInt(45),
+                                "BALL_CONTROL" : NumberInt(50),
+                                "TACKLING" : NumberInt(10)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(49),
+                            "performance" : NumberInt(9),
+                            "skillPoints" : NumberInt(40),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(-10),
+                            "performance" : NumberInt(-15),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(5)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "LEFT_FORWARD"
+                    },
+                    "clock" : NumberInt(36),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "LEFT_FORWARD",
+                        "initiator" : {
+                            "_id" : "720941e1-a33f-4e74-8e40-190a06e25087",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Asley Rogahn",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(24),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(2),
+                                "OFFENSIVE_POSITIONING" : NumberInt(45),
+                                "BALL_CONTROL" : NumberInt(50),
+                                "TACKLING" : NumberInt(10)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "e4f5ac56-dfe2-4826-bd50-e8f518c8d315",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Bradly Hegmann",
+                            "position" : "RIGHT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(4),
+                                "AERIAL" : NumberInt(23),
+                                "CONSTITUTION" : NumberInt(21),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(37),
+                                "DEFENSIVE_POSITIONING" : NumberInt(48),
+                                "OFFENSIVE_POSITIONING" : NumberInt(18),
+                                "BALL_CONTROL" : NumberInt(12),
+                                "TACKLING" : NumberInt(37)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(51),
+                            "performance" : NumberInt(1),
+                            "skillPoints" : NumberInt(45),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(54),
+                                "Brande McClure" : NumberInt(37),
+                                "Evelyn Rippin III" : NumberInt(16),
+                                "Christinia Ryan" : NumberInt(19),
+                                "Paris Bogan" : NumberInt(24),
+                                "Clare Hegmann" : NumberInt(8)
+                            },
+                            "assistance" : NumberInt(5)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(57),
+                            "performance" : NumberInt(9),
+                            "skillPoints" : NumberInt(48),
+                            "teamAssistance" : {
+                                "Phil Bednar" : NumberInt(88),
+                                "Steve Schuppe" : NumberInt(3),
+                                "Jaymie Oberbrunner" : NumberInt(13),
+                                "Inger Halvorson" : NumberInt(16),
+                                "Efren Stiedemann" : NumberInt(13)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(37),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "720941e1-a33f-4e74-8e40-190a06e25087",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Asley Rogahn",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(24),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(2),
+                                "OFFENSIVE_POSITIONING" : NumberInt(45),
+                                "BALL_CONTROL" : NumberInt(50),
+                                "TACKLING" : NumberInt(10)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "LEFT_FORWARD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "TACKLE",
+                    "duel" : {
+                        "type" : "BALL_CONTROL",
+                        "pitchArea" : "RIGHT_BACK",
+                        "initiator" : {
+                            "_id" : "e4f5ac56-dfe2-4826-bd50-e8f518c8d315",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Bradly Hegmann",
+                            "position" : "RIGHT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(4),
+                                "AERIAL" : NumberInt(23),
+                                "CONSTITUTION" : NumberInt(21),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(37),
+                                "DEFENSIVE_POSITIONING" : NumberInt(48),
+                                "OFFENSIVE_POSITIONING" : NumberInt(18),
+                                "BALL_CONTROL" : NumberInt(12),
+                                "TACKLING" : NumberInt(37)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "720941e1-a33f-4e74-8e40-190a06e25087",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Asley Rogahn",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(24),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(2),
+                                "OFFENSIVE_POSITIONING" : NumberInt(45),
+                                "BALL_CONTROL" : NumberInt(50),
+                                "TACKLING" : NumberInt(10)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(44),
+                            "performance" : NumberInt(14),
+                            "skillPoints" : NumberInt(30),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(24),
+                            "performance" : NumberInt(-9),
+                            "skillPoints" : NumberInt(30),
+                            "carryover" : NumberInt(3)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(38),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "e4f5ac56-dfe2-4826-bd50-e8f518c8d315",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Bradly Hegmann",
+                            "position" : "RIGHT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(4),
+                                "AERIAL" : NumberInt(23),
+                                "CONSTITUTION" : NumberInt(21),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(37),
+                                "DEFENSIVE_POSITIONING" : NumberInt(48),
+                                "OFFENSIVE_POSITIONING" : NumberInt(18),
+                                "BALL_CONTROL" : NumberInt(12),
+                                "TACKLING" : NumberInt(37)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "RIGHT_BACK",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "RIGHT_BACK",
+                        "initiator" : {
+                            "_id" : "e4f5ac56-dfe2-4826-bd50-e8f518c8d315",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Bradly Hegmann",
+                            "position" : "RIGHT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(4),
+                                "AERIAL" : NumberInt(23),
+                                "CONSTITUTION" : NumberInt(21),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(37),
+                                "DEFENSIVE_POSITIONING" : NumberInt(48),
+                                "OFFENSIVE_POSITIONING" : NumberInt(18),
+                                "BALL_CONTROL" : NumberInt(12),
+                                "TACKLING" : NumberInt(37)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "720941e1-a33f-4e74-8e40-190a06e25087",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Asley Rogahn",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(24),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(2),
+                                "OFFENSIVE_POSITIONING" : NumberInt(45),
+                                "BALL_CONTROL" : NumberInt(50),
+                                "TACKLING" : NumberInt(10)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(39),
+                            "performance" : NumberInt(-8),
+                            "skillPoints" : NumberInt(37),
+                            "carryover" : NumberInt(10)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(14),
+                            "performance" : NumberInt(14),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(39),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "e4f5ac56-dfe2-4826-bd50-e8f518c8d315",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Bradly Hegmann",
+                            "position" : "RIGHT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(4),
+                                "AERIAL" : NumberInt(23),
+                                "CONSTITUTION" : NumberInt(21),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(37),
+                                "DEFENSIVE_POSITIONING" : NumberInt(48),
+                                "OFFENSIVE_POSITIONING" : NumberInt(18),
+                                "BALL_CONTROL" : NumberInt(12),
+                                "TACKLING" : NumberInt(37)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "RIGHT_BACK",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(24),
+                            "performance" : NumberInt(-15),
+                            "skillPoints" : NumberInt(26),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(127),
+                                "Jaymie Oberbrunner" : NumberInt(52),
+                                "Deidre Lubowitz" : NumberInt(18),
+                                "Efren Stiedemann" : NumberInt(54)
+                            },
+                            "assistance" : NumberInt(13)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(13),
+                            "performance" : NumberInt(-3),
+                            "skillPoints" : NumberInt(16),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(16),
+                                "Brande McClure" : NumberInt(2),
+                                "Paris Bogan" : NumberInt(34),
+                                "Asley Rogahn" : NumberInt(5)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(40),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(33),
+                            "performance" : NumberInt(-6),
+                            "skillPoints" : NumberInt(34),
+                            "carryover" : NumberInt(5)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(2),
+                            "performance" : NumberInt(2),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_FORWARD"
+                    },
+                    "clock" : NumberInt(41),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "a23f5a20-cdd4-40ea-8e60-b639122feb85",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Tari Wisozk",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(5),
+                                "AERIAL" : NumberInt(32),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(18),
+                                "DEFENSIVE_POSITIONING" : NumberInt(40),
+                                "OFFENSIVE_POSITIONING" : NumberInt(8),
+                                "BALL_CONTROL" : NumberInt(15),
+                                "TACKLING" : NumberInt(52)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(39),
+                            "performance" : NumberInt(-26),
+                            "skillPoints" : NumberInt(56),
+                            "teamAssistance" : {
+                                "Jaymie Oberbrunner" : NumberInt(34),
+                                "Deidre Lubowitz" : NumberInt(73),
+                                "Inger Halvorson" : NumberInt(28),
+                                "Efren Stiedemann" : NumberInt(36)
+                            },
+                            "assistance" : NumberInt(9)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(55),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(40),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(8),
+                                "Brande McClure" : NumberInt(8),
+                                "Evelyn Rippin III" : NumberInt(15),
+                                "Miss Florentino Hamill" : NumberInt(26),
+                                "Paris Bogan" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(2)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(42),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "TACKLE",
+                    "duel" : {
+                        "type" : "BALL_CONTROL",
+                        "pitchArea" : "CENTRE_BACK",
+                        "initiator" : {
+                            "_id" : "a23f5a20-cdd4-40ea-8e60-b639122feb85",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Tari Wisozk",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(5),
+                                "AERIAL" : NumberInt(32),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(18),
+                                "DEFENSIVE_POSITIONING" : NumberInt(40),
+                                "OFFENSIVE_POSITIONING" : NumberInt(8),
+                                "BALL_CONTROL" : NumberInt(15),
+                                "TACKLING" : NumberInt(52)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(40),
+                            "performance" : NumberInt(-12),
+                            "skillPoints" : NumberInt(52),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(68),
+                            "performance" : NumberInt(9),
+                            "skillPoints" : NumberInt(51),
+                            "carryover" : NumberInt(8)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(43),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "a23f5a20-cdd4-40ea-8e60-b639122feb85",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Tari Wisozk",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(5),
+                                "AERIAL" : NumberInt(32),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(18),
+                                "DEFENSIVE_POSITIONING" : NumberInt(40),
+                                "OFFENSIVE_POSITIONING" : NumberInt(8),
+                                "BALL_CONTROL" : NumberInt(15),
+                                "TACKLING" : NumberInt(52)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_BACK",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "40f518dc-af92-4543-9c4c-0a9e768666cd",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Rod Terry DDS",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(11),
+                                "DEFENSIVE_POSITIONING" : NumberInt(54),
+                                "OFFENSIVE_POSITIONING" : NumberInt(4),
+                                "BALL_CONTROL" : NumberInt(19),
+                                "TACKLING" : NumberInt(50)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(32),
+                            "performance" : NumberInt(-4),
+                            "skillPoints" : NumberInt(36),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(29),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(14)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_FORWARD"
+                    },
+                    "clock" : NumberInt(44),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "40f518dc-af92-4543-9c4c-0a9e768666cd",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Rod Terry DDS",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(11),
+                                "DEFENSIVE_POSITIONING" : NumberInt(54),
+                                "OFFENSIVE_POSITIONING" : NumberInt(4),
+                                "BALL_CONTROL" : NumberInt(19),
+                                "TACKLING" : NumberInt(50)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(20),
+                            "performance" : NumberInt(-22),
+                            "skillPoints" : NumberInt(30),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(76),
+                                "Jaymie Oberbrunner" : NumberInt(34),
+                                "Deidre Lubowitz" : NumberInt(73),
+                                "Inger Halvorson" : NumberInt(28),
+                                "Efren Stiedemann" : NumberInt(36)
+                            },
+                            "assistance" : NumberInt(12)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(50),
+                            "performance" : NumberInt(-4),
+                            "skillPoints" : NumberInt(54),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(8),
+                                "Brande McClure" : NumberInt(8),
+                                "Evelyn Rippin III" : NumberInt(15),
+                                "Miss Florentino Hamill" : NumberInt(26),
+                                "Paris Bogan" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(2)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(45),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "TACKLE",
+                    "duel" : {
+                        "type" : "BALL_CONTROL",
+                        "pitchArea" : "CENTRE_BACK",
+                        "initiator" : {
+                            "_id" : "40f518dc-af92-4543-9c4c-0a9e768666cd",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Rod Terry DDS",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(11),
+                                "DEFENSIVE_POSITIONING" : NumberInt(54),
+                                "OFFENSIVE_POSITIONING" : NumberInt(4),
+                                "BALL_CONTROL" : NumberInt(19),
+                                "TACKLING" : NumberInt(50)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(42),
+                            "performance" : NumberInt(-8),
+                            "skillPoints" : NumberInt(50),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(69),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(39),
+                            "carryover" : NumberInt(15)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(46),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "40f518dc-af92-4543-9c4c-0a9e768666cd",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Rod Terry DDS",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(11),
+                                "DEFENSIVE_POSITIONING" : NumberInt(54),
+                                "OFFENSIVE_POSITIONING" : NumberInt(4),
+                                "BALL_CONTROL" : NumberInt(19),
+                                "TACKLING" : NumberInt(50)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_BACK",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "40f518dc-af92-4543-9c4c-0a9e768666cd",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Rod Terry DDS",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(11),
+                                "DEFENSIVE_POSITIONING" : NumberInt(54),
+                                "OFFENSIVE_POSITIONING" : NumberInt(4),
+                                "BALL_CONTROL" : NumberInt(19),
+                                "TACKLING" : NumberInt(50)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(10),
+                            "performance" : NumberInt(3),
+                            "skillPoints" : NumberInt(7),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(28),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(13)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "LEFT_FORWARD"
+                    },
+                    "clock" : NumberInt(47),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "LEFT_FORWARD",
+                        "initiator" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "73ed5aac-cf61-49fa-a920-302aa9116618",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Christinia Ryan",
+                            "position" : "RIGHT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(7),
+                                "AERIAL" : NumberInt(16),
+                                "CONSTITUTION" : NumberInt(23),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(25),
+                                "DEFENSIVE_POSITIONING" : NumberInt(42),
+                                "OFFENSIVE_POSITIONING" : NumberInt(20),
+                                "BALL_CONTROL" : NumberInt(20),
+                                "TACKLING" : NumberInt(47)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(33),
+                            "performance" : NumberInt(-12),
+                            "skillPoints" : NumberInt(36),
+                            "teamAssistance" : {
+                                "Bradly Hegmann" : NumberInt(14),
+                                "Phil Bednar" : NumberInt(18),
+                                "Steve Schuppe" : NumberInt(50),
+                                "Jaymie Oberbrunner" : NumberInt(52),
+                                "Inger Halvorson" : NumberInt(20),
+                                "Efren Stiedemann" : NumberInt(54)
+                            },
+                            "assistance" : NumberInt(9)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(43),
+                            "performance" : NumberInt(1),
+                            "skillPoints" : NumberInt(42),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(11),
+                                "Evelyn Rippin III" : NumberInt(10),
+                                "Paris Bogan" : NumberInt(15),
+                                "Asley Rogahn" : NumberInt(3),
+                                "Clare Hegmann" : NumberInt(74)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(48),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "LEFT_FORWARD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "TACKLE",
+                    "duel" : {
+                        "type" : "BALL_CONTROL",
+                        "pitchArea" : "RIGHT_BACK",
+                        "initiator" : {
+                            "_id" : "73ed5aac-cf61-49fa-a920-302aa9116618",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Christinia Ryan",
+                            "position" : "RIGHT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(7),
+                                "AERIAL" : NumberInt(16),
+                                "CONSTITUTION" : NumberInt(23),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(25),
+                                "DEFENSIVE_POSITIONING" : NumberInt(42),
+                                "OFFENSIVE_POSITIONING" : NumberInt(20),
+                                "BALL_CONTROL" : NumberInt(20),
+                                "TACKLING" : NumberInt(47)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(19),
+                            "performance" : NumberInt(-12),
+                            "skillPoints" : NumberInt(31),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(39),
+                            "performance" : NumberInt(0),
+                            "skillPoints" : NumberInt(34),
+                            "carryover" : NumberInt(5)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(49),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "73ed5aac-cf61-49fa-a920-302aa9116618",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Christinia Ryan",
+                            "position" : "RIGHT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(7),
+                                "AERIAL" : NumberInt(16),
+                                "CONSTITUTION" : NumberInt(23),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(25),
+                                "DEFENSIVE_POSITIONING" : NumberInt(42),
+                                "OFFENSIVE_POSITIONING" : NumberInt(20),
+                                "BALL_CONTROL" : NumberInt(20),
+                                "TACKLING" : NumberInt(47)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "RIGHT_BACK",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "LEFT_FORWARD",
+                        "initiator" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "73ed5aac-cf61-49fa-a920-302aa9116618",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Christinia Ryan",
+                            "position" : "RIGHT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(7),
+                                "AERIAL" : NumberInt(16),
+                                "CONSTITUTION" : NumberInt(23),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(25),
+                                "DEFENSIVE_POSITIONING" : NumberInt(42),
+                                "OFFENSIVE_POSITIONING" : NumberInt(20),
+                                "BALL_CONTROL" : NumberInt(20),
+                                "TACKLING" : NumberInt(47)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(23),
+                            "performance" : NumberInt(7),
+                            "skillPoints" : NumberInt(16),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(6),
+                            "performance" : NumberInt(-4),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(10)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_FORWARD"
+                    },
+                    "clock" : NumberInt(50),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "LEFT_FORWARD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "a23f5a20-cdd4-40ea-8e60-b639122feb85",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Tari Wisozk",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(5),
+                                "AERIAL" : NumberInt(32),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(18),
+                                "DEFENSIVE_POSITIONING" : NumberInt(40),
+                                "OFFENSIVE_POSITIONING" : NumberInt(8),
+                                "BALL_CONTROL" : NumberInt(15),
+                                "TACKLING" : NumberInt(52)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(31),
+                            "performance" : NumberInt(-11),
+                            "skillPoints" : NumberInt(30),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(76),
+                                "Jaymie Oberbrunner" : NumberInt(34),
+                                "Deidre Lubowitz" : NumberInt(73),
+                                "Inger Halvorson" : NumberInt(28),
+                                "Efren Stiedemann" : NumberInt(36)
+                            },
+                            "assistance" : NumberInt(12)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(55),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(40),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(8),
+                                "Brande McClure" : NumberInt(8),
+                                "Evelyn Rippin III" : NumberInt(15),
+                                "Miss Florentino Hamill" : NumberInt(26),
+                                "Paris Bogan" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(2)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(51),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "TACKLE",
+                    "duel" : {
+                        "type" : "BALL_CONTROL",
+                        "pitchArea" : "CENTRE_BACK",
+                        "initiator" : {
+                            "_id" : "a23f5a20-cdd4-40ea-8e60-b639122feb85",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Tari Wisozk",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(5),
+                                "AERIAL" : NumberInt(32),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(18),
+                                "DEFENSIVE_POSITIONING" : NumberInt(40),
+                                "OFFENSIVE_POSITIONING" : NumberInt(8),
+                                "BALL_CONTROL" : NumberInt(15),
+                                "TACKLING" : NumberInt(52)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(27),
+                            "performance" : NumberInt(-25),
+                            "skillPoints" : NumberInt(52),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(58),
+                            "performance" : NumberInt(7),
+                            "skillPoints" : NumberInt(39),
+                            "carryover" : NumberInt(12)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(52),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "a23f5a20-cdd4-40ea-8e60-b639122feb85",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Tari Wisozk",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(5),
+                                "AERIAL" : NumberInt(32),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(18),
+                                "DEFENSIVE_POSITIONING" : NumberInt(40),
+                                "OFFENSIVE_POSITIONING" : NumberInt(8),
+                                "BALL_CONTROL" : NumberInt(15),
+                                "TACKLING" : NumberInt(52)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_BACK",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "40f518dc-af92-4543-9c4c-0a9e768666cd",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Rod Terry DDS",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(11),
+                                "DEFENSIVE_POSITIONING" : NumberInt(54),
+                                "OFFENSIVE_POSITIONING" : NumberInt(4),
+                                "BALL_CONTROL" : NumberInt(19),
+                                "TACKLING" : NumberInt(50)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(14),
+                            "performance" : NumberInt(7),
+                            "skillPoints" : NumberInt(7),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(30),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(15)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "LEFT_FORWARD"
+                    },
+                    "clock" : NumberInt(53),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "LEFT_FORWARD",
+                        "initiator" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "73ed5aac-cf61-49fa-a920-302aa9116618",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Christinia Ryan",
+                            "position" : "RIGHT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(7),
+                                "AERIAL" : NumberInt(16),
+                                "CONSTITUTION" : NumberInt(23),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(25),
+                                "DEFENSIVE_POSITIONING" : NumberInt(42),
+                                "OFFENSIVE_POSITIONING" : NumberInt(20),
+                                "BALL_CONTROL" : NumberInt(20),
+                                "TACKLING" : NumberInt(47)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(36),
+                            "performance" : NumberInt(-9),
+                            "skillPoints" : NumberInt(36),
+                            "teamAssistance" : {
+                                "Bradly Hegmann" : NumberInt(14),
+                                "Phil Bednar" : NumberInt(18),
+                                "Steve Schuppe" : NumberInt(50),
+                                "Jaymie Oberbrunner" : NumberInt(52),
+                                "Inger Halvorson" : NumberInt(20),
+                                "Efren Stiedemann" : NumberInt(54)
+                            },
+                            "assistance" : NumberInt(9)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(46),
+                            "performance" : NumberInt(4),
+                            "skillPoints" : NumberInt(42),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(11),
+                                "Evelyn Rippin III" : NumberInt(10),
+                                "Paris Bogan" : NumberInt(15),
+                                "Asley Rogahn" : NumberInt(3),
+                                "Clare Hegmann" : NumberInt(74)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(54),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "LEFT_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "TACKLE",
+                    "duel" : {
+                        "type" : "BALL_CONTROL",
+                        "pitchArea" : "RIGHT_BACK",
+                        "initiator" : {
+                            "_id" : "73ed5aac-cf61-49fa-a920-302aa9116618",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Christinia Ryan",
+                            "position" : "RIGHT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(7),
+                                "AERIAL" : NumberInt(16),
+                                "CONSTITUTION" : NumberInt(23),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(25),
+                                "DEFENSIVE_POSITIONING" : NumberInt(42),
+                                "OFFENSIVE_POSITIONING" : NumberInt(20),
+                                "BALL_CONTROL" : NumberInt(20),
+                                "TACKLING" : NumberInt(47)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(34),
+                            "performance" : NumberInt(-13),
+                            "skillPoints" : NumberInt(47),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(47),
+                            "performance" : NumberInt(0),
+                            "skillPoints" : NumberInt(42),
+                            "carryover" : NumberInt(5)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(55),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "73ed5aac-cf61-49fa-a920-302aa9116618",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Christinia Ryan",
+                            "position" : "RIGHT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(7),
+                                "AERIAL" : NumberInt(16),
+                                "CONSTITUTION" : NumberInt(23),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(25),
+                                "DEFENSIVE_POSITIONING" : NumberInt(42),
+                                "OFFENSIVE_POSITIONING" : NumberInt(20),
+                                "BALL_CONTROL" : NumberInt(20),
+                                "TACKLING" : NumberInt(47)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "RIGHT_BACK",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "LEFT_FORWARD",
+                        "initiator" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "73ed5aac-cf61-49fa-a920-302aa9116618",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Christinia Ryan",
+                            "position" : "RIGHT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(7),
+                                "AERIAL" : NumberInt(16),
+                                "CONSTITUTION" : NumberInt(23),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(25),
+                                "DEFENSIVE_POSITIONING" : NumberInt(42),
+                                "OFFENSIVE_POSITIONING" : NumberInt(20),
+                                "BALL_CONTROL" : NumberInt(20),
+                                "TACKLING" : NumberInt(47)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(31),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(16),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(-12),
+                            "performance" : NumberInt(-18),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(6)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(56),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "dc95ab7f-bf1d-4d9c-adc4-bd9cdc1d77f9",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Deidre Lubowitz",
+                            "position" : "FORWARD",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(39),
+                                "AERIAL" : NumberInt(27),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(16),
+                                "DEFENSIVE_POSITIONING" : NumberInt(8),
+                                "OFFENSIVE_POSITIONING" : NumberInt(36),
+                                "BALL_CONTROL" : NumberInt(42),
+                                "TACKLING" : NumberInt(8)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "LEFT_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(56),
+                            "performance" : NumberInt(-11),
+                            "skillPoints" : NumberInt(56),
+                            "teamAssistance" : {
+                                "Jaymie Oberbrunner" : NumberInt(52),
+                                "Deidre Lubowitz" : NumberInt(18),
+                                "Inger Halvorson" : NumberInt(57),
+                                "Efren Stiedemann" : NumberInt(54)
+                            },
+                            "assistance" : NumberInt(11)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(19),
+                            "performance" : NumberInt(-5),
+                            "skillPoints" : NumberInt(24),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(16),
+                                "Brande McClure" : NumberInt(2),
+                                "Evelyn Rippin III" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(5)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(57),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(62),
+                            "performance" : NumberInt(8),
+                            "skillPoints" : NumberInt(36),
+                            "carryover" : NumberInt(18)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(-8),
+                            "performance" : NumberInt(-8),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "RIGHT_FORWARD"
+                    },
+                    "clock" : NumberInt(58),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "RIGHT_FORWARD",
+                        "initiator" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "123c9df5-b05a-47a2-8e68-cf2e68907238",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Clare Hegmann",
+                            "position" : "LEFT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(0),
+                                "AERIAL" : NumberInt(2),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(31),
+                                "DEFENSIVE_POSITIONING" : NumberInt(38),
+                                "OFFENSIVE_POSITIONING" : NumberInt(13),
+                                "BALL_CONTROL" : NumberInt(4),
+                                "TACKLING" : NumberInt(41)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(48),
+                            "performance" : NumberInt(1),
+                            "skillPoints" : NumberInt(39),
+                            "teamAssistance" : {
+                                "Bradly Hegmann" : NumberInt(14),
+                                "Phil Bednar" : NumberInt(18),
+                                "Steve Schuppe" : NumberInt(50),
+                                "Deidre Lubowitz" : NumberInt(36),
+                                "Inger Halvorson" : NumberInt(20),
+                                "Efren Stiedemann" : NumberInt(54)
+                            },
+                            "assistance" : NumberInt(8)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(40),
+                            "performance" : NumberInt(2),
+                            "skillPoints" : NumberInt(38),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(11),
+                                "Evelyn Rippin III" : NumberInt(10),
+                                "Christinia Ryan" : NumberInt(84),
+                                "Paris Bogan" : NumberInt(15),
+                                "Asley Rogahn" : NumberInt(3)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(59),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "RIGHT_FORWARD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "RIGHT_FORWARD",
+                        "initiator" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "123c9df5-b05a-47a2-8e68-cf2e68907238",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Clare Hegmann",
+                            "position" : "LEFT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(0),
+                                "AERIAL" : NumberInt(2),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(31),
+                                "DEFENSIVE_POSITIONING" : NumberInt(38),
+                                "OFFENSIVE_POSITIONING" : NumberInt(13),
+                                "BALL_CONTROL" : NumberInt(4),
+                                "TACKLING" : NumberInt(41)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(62),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(43),
+                            "carryover" : NumberInt(4)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(11),
+                            "performance" : NumberInt(11),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_FORWARD"
+                    },
+                    "clock" : NumberInt(60),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "RIGHT_FORWARD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "a23f5a20-cdd4-40ea-8e60-b639122feb85",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Tari Wisozk",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(5),
+                                "AERIAL" : NumberInt(32),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(18),
+                                "DEFENSIVE_POSITIONING" : NumberInt(40),
+                                "OFFENSIVE_POSITIONING" : NumberInt(8),
+                                "BALL_CONTROL" : NumberInt(15),
+                                "TACKLING" : NumberInt(52)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(45),
+                            "performance" : NumberInt(3),
+                            "skillPoints" : NumberInt(30),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(76),
+                                "Jaymie Oberbrunner" : NumberInt(34),
+                                "Deidre Lubowitz" : NumberInt(73),
+                                "Inger Halvorson" : NumberInt(28),
+                                "Efren Stiedemann" : NumberInt(36)
+                            },
+                            "assistance" : NumberInt(12)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(55),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(40),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(8),
+                                "Brande McClure" : NumberInt(8),
+                                "Evelyn Rippin III" : NumberInt(15),
+                                "Miss Florentino Hamill" : NumberInt(26),
+                                "Paris Bogan" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(2)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(61),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "TACKLE",
+                    "duel" : {
+                        "type" : "BALL_CONTROL",
+                        "pitchArea" : "CENTRE_BACK",
+                        "initiator" : {
+                            "_id" : "a23f5a20-cdd4-40ea-8e60-b639122feb85",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Tari Wisozk",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(5),
+                                "AERIAL" : NumberInt(32),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(18),
+                                "DEFENSIVE_POSITIONING" : NumberInt(40),
+                                "OFFENSIVE_POSITIONING" : NumberInt(8),
+                                "BALL_CONTROL" : NumberInt(15),
+                                "TACKLING" : NumberInt(52)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(26),
+                            "performance" : NumberInt(-16),
+                            "skillPoints" : NumberInt(42),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(55),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(35),
+                            "carryover" : NumberInt(5)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(62),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "a23f5a20-cdd4-40ea-8e60-b639122feb85",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Tari Wisozk",
+                            "position" : "CENTRE_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(5),
+                                "AERIAL" : NumberInt(32),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(18),
+                                "DEFENSIVE_POSITIONING" : NumberInt(40),
+                                "OFFENSIVE_POSITIONING" : NumberInt(8),
+                                "BALL_CONTROL" : NumberInt(15),
+                                "TACKLING" : NumberInt(52)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_BACK",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "SHOOT",
+                    "duel" : {
+                        "type" : "HEADER_SHOT",
+                        "pitchArea" : "CENTRE_FORWARD",
+                        "initiator" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "523d14b8-be66-4b19-9aea-2c03b0520e86",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Miss Florentino Hamill",
+                            "position" : "GOALKEEPER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "ORGANIZATION" : NumberInt(26),
+                                "GOALKEEPER_POSITIONING" : NumberInt(37),
+                                "ONE_ON_ONE" : NumberInt(36),
+                                "INTERCEPTIONS" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "REFLEXES" : NumberInt(58),
+                                "CONTROL" : NumberInt(23)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(34),
+                            "performance" : NumberInt(-7),
+                            "skillPoints" : NumberInt(41),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(32),
+                            "performance" : NumberInt(14),
+                            "skillPoints" : NumberInt(4),
+                            "carryover" : NumberInt(14)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(63),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "fb987d2b-1709-49dd-9097-140fb294d8ef",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Yun Walsh",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(54),
+                                "AERIAL" : NumberInt(31),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(7),
+                                "DEFENSIVE_POSITIONING" : NumberInt(5),
+                                "OFFENSIVE_POSITIONING" : NumberInt(30),
+                                "BALL_CONTROL" : NumberInt(39),
+                                "TACKLING" : NumberInt(3)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_FORWARD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "37128d0a-253e-4b8d-b17f-61237be7d261",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Hettie Morissette",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(55),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(22),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(5),
+                                "DEFENSIVE_POSITIONING" : NumberInt(7),
+                                "OFFENSIVE_POSITIONING" : NumberInt(50),
+                                "BALL_CONTROL" : NumberInt(30),
+                                "TACKLING" : NumberInt(2)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(9),
+                            "performance" : NumberInt(3),
+                            "skillPoints" : NumberInt(5),
+                            "carryover" : NumberInt(1)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(-4),
+                            "performance" : NumberInt(-4),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(64),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "37128d0a-253e-4b8d-b17f-61237be7d261",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Hettie Morissette",
+                            "position" : "STRIKER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(55),
+                                "AERIAL" : NumberInt(29),
+                                "CONSTITUTION" : NumberInt(22),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(5),
+                                "DEFENSIVE_POSITIONING" : NumberInt(7),
+                                "OFFENSIVE_POSITIONING" : NumberInt(50),
+                                "BALL_CONTROL" : NumberInt(30),
+                                "TACKLING" : NumberInt(2)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "GROUND"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(47),
+                            "performance" : NumberInt(2),
+                            "skillPoints" : NumberInt(34),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(54),
+                                "Brande McClure" : NumberInt(18),
+                                "Evelyn Rippin III" : NumberInt(47),
+                                "Asley Rogahn" : NumberInt(67)
+                            },
+                            "assistance" : NumberInt(11)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(36),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(21),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(3),
+                                "Jaymie Oberbrunner" : NumberInt(19),
+                                "Deidre Lubowitz" : NumberInt(3),
+                                "Efren Stiedemann" : NumberInt(18)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(65),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(50),
+                            "performance" : NumberInt(4),
+                            "skillPoints" : NumberInt(41),
+                            "carryover" : NumberInt(5)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(1),
+                            "performance" : NumberInt(1),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(66),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(32),
+                            "performance" : NumberInt(2),
+                            "skillPoints" : NumberInt(19),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(54),
+                                "Brande McClure" : NumberInt(18),
+                                "Paris Bogan" : NumberInt(70),
+                                "Asley Rogahn" : NumberInt(67)
+                            },
+                            "assistance" : NumberInt(11)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(50),
+                            "performance" : NumberInt(0),
+                            "skillPoints" : NumberInt(0),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(3),
+                                "Jaymie Oberbrunner" : NumberInt(19),
+                                "Deidre Lubowitz" : NumberInt(3),
+                                "Inger Halvorson" : NumberInt(36),
+                                "Efren Stiedemann" : NumberInt(18)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(67),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(55),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(40),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(13),
+                            "performance" : NumberInt(4),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(9)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "RIGHT_MIDFIELD"
+                    },
+                    "clock" : NumberInt(68),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "RIGHT_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(59),
+                            "performance" : NumberInt(11),
+                            "skillPoints" : NumberInt(48),
+                            "teamAssistance" : {
+                                "Evelyn Rippin III" : NumberInt(23),
+                                "Christinia Ryan" : NumberInt(28),
+                                "Paris Bogan" : NumberInt(35),
+                                "Asley Rogahn" : NumberInt(90),
+                                "Clare Hegmann" : NumberInt(12)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(24),
+                            "performance" : NumberInt(-9),
+                            "skillPoints" : NumberInt(22),
+                            "teamAssistance" : {
+                                "Bradly Hegmann" : NumberInt(81),
+                                "Phil Bednar" : NumberInt(88),
+                                "Steve Schuppe" : NumberInt(2),
+                                "Jaymie Oberbrunner" : NumberInt(38),
+                                "Inger Halvorson" : NumberInt(24)
+                            },
+                            "assistance" : NumberInt(11)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(69),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "RIGHT_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "RIGHT_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(67),
+                            "performance" : NumberInt(12),
+                            "skillPoints" : NumberInt(38),
+                            "carryover" : NumberInt(17)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(2),
+                            "performance" : NumberInt(2),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(70),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "RIGHT_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "LOSE",
+                        "initiatorStats" : {
+                            "total" : NumberInt(28),
+                            "performance" : NumberInt(-3),
+                            "skillPoints" : NumberInt(19),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(54),
+                                "Brande McClure" : NumberInt(18),
+                                "Paris Bogan" : NumberInt(70),
+                                "Asley Rogahn" : NumberInt(67)
+                            },
+                            "assistance" : NumberInt(12)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(31),
+                            "performance" : NumberInt(10),
+                            "skillPoints" : NumberInt(21),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(3),
+                                "Jaymie Oberbrunner" : NumberInt(19),
+                                "Deidre Lubowitz" : NumberInt(3),
+                                "Efren Stiedemann" : NumberInt(18)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(71),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "TACKLE",
+                    "duel" : {
+                        "type" : "BALL_CONTROL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(33),
+                            "performance" : NumberInt(13),
+                            "skillPoints" : NumberInt(20),
+                            "carryover" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(12),
+                            "performance" : NumberInt(-6),
+                            "skillPoints" : NumberInt(17),
+                            "carryover" : NumberInt(1)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(72),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(35),
+                            "performance" : NumberInt(-9),
+                            "skillPoints" : NumberInt(34),
+                            "carryover" : NumberInt(10)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(4),
+                            "performance" : NumberInt(4),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "RIGHT_MIDFIELD"
+                    },
+                    "clock" : NumberInt(73),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "RIGHT_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "720941e1-a33f-4e74-8e40-190a06e25087",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Asley Rogahn",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(24),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(2),
+                                "OFFENSIVE_POSITIONING" : NumberInt(45),
+                                "BALL_CONTROL" : NumberInt(50),
+                                "TACKLING" : NumberInt(10)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(44),
+                            "performance" : NumberInt(5),
+                            "skillPoints" : NumberInt(39),
+                            "teamAssistance" : {
+                                "Bradly Hegmann" : NumberInt(21),
+                                "Phil Bednar" : NumberInt(28),
+                                "Steve Schuppe" : NumberInt(76),
+                                "Inger Halvorson" : NumberInt(28),
+                                "Efren Stiedemann" : NumberInt(72)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(2),
+                            "performance" : NumberInt(-1),
+                            "skillPoints" : NumberInt(2),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(32),
+                                "Evelyn Rippin III" : NumberInt(15),
+                                "Christinia Ryan" : NumberInt(84),
+                                "Paris Bogan" : NumberInt(22),
+                                "Clare Hegmann" : NumberInt(74)
+                            },
+                            "assistance" : NumberInt(1)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(74),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "RIGHT_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "RIGHT_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "720941e1-a33f-4e74-8e40-190a06e25087",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Asley Rogahn",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(24),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(24),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(2),
+                                "OFFENSIVE_POSITIONING" : NumberInt(45),
+                                "BALL_CONTROL" : NumberInt(50),
+                                "TACKLING" : NumberInt(10)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(73),
+                            "performance" : NumberInt(9),
+                            "skillPoints" : NumberInt(43),
+                            "carryover" : NumberInt(21)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(15),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(75),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "565be1c7-9c99-40eb-bb5b-863a94ee8d46",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Jaymie Oberbrunner",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(13),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(20),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(43),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(39),
+                                "BALL_CONTROL" : NumberInt(34),
+                                "TACKLING" : NumberInt(19)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "RIGHT_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(65),
+                            "performance" : NumberInt(-2),
+                            "skillPoints" : NumberInt(56),
+                            "teamAssistance" : {
+                                "Jaymie Oberbrunner" : NumberInt(52),
+                                "Deidre Lubowitz" : NumberInt(18),
+                                "Inger Halvorson" : NumberInt(57),
+                                "Efren Stiedemann" : NumberInt(54)
+                            },
+                            "assistance" : NumberInt(11)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(16),
+                            "performance" : NumberInt(-8),
+                            "skillPoints" : NumberInt(24),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(16),
+                                "Brande McClure" : NumberInt(2),
+                                "Evelyn Rippin III" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(5)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(76),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(62),
+                            "performance" : NumberInt(2),
+                            "skillPoints" : NumberInt(36),
+                            "carryover" : NumberInt(24)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(-3),
+                            "performance" : NumberInt(-3),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "LEFT_MIDFIELD"
+                    },
+                    "clock" : NumberInt(77),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "LEFT_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(39),
+                            "performance" : NumberInt(-5),
+                            "skillPoints" : NumberInt(40),
+                            "teamAssistance" : {
+                                "Bradly Hegmann" : NumberInt(21),
+                                "Phil Bednar" : NumberInt(28),
+                                "Steve Schuppe" : NumberInt(76),
+                                "Jaymie Oberbrunner" : NumberInt(69),
+                                "Inger Halvorson" : NumberInt(28)
+                            },
+                            "assistance" : NumberInt(4)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(4),
+                            "performance" : NumberInt(-10),
+                            "skillPoints" : NumberInt(14),
+                            "teamAssistance" : {
+                                "Evelyn Rippin III" : NumberInt(15),
+                                "Christinia Ryan" : NumberInt(84),
+                                "Paris Bogan" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(11),
+                                "Clare Hegmann" : NumberInt(74)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(78),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "LEFT_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "LEFT_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(42),
+                            "performance" : NumberInt(-19),
+                            "skillPoints" : NumberInt(44),
+                            "carryover" : NumberInt(17)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(15),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(79),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "LEFT_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(80),
+                            "performance" : NumberInt(13),
+                            "skillPoints" : NumberInt(56),
+                            "teamAssistance" : {
+                                "Jaymie Oberbrunner" : NumberInt(52),
+                                "Deidre Lubowitz" : NumberInt(18),
+                                "Inger Halvorson" : NumberInt(57),
+                                "Efren Stiedemann" : NumberInt(54)
+                            },
+                            "assistance" : NumberInt(11)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(-1),
+                            "performance" : NumberInt(-17),
+                            "skillPoints" : NumberInt(16),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(16),
+                                "Brande McClure" : NumberInt(2),
+                                "Paris Bogan" : NumberInt(34),
+                                "Asley Rogahn" : NumberInt(5)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(80),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(85),
+                            "performance" : NumberInt(9),
+                            "skillPoints" : NumberInt(36),
+                            "carryover" : NumberInt(40)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(-2),
+                            "performance" : NumberInt(-2),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "LEFT_FORWARD"
+                    },
+                    "clock" : NumberInt(81),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "LEFT_FORWARD",
+                        "initiator" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "73ed5aac-cf61-49fa-a920-302aa9116618",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Christinia Ryan",
+                            "position" : "RIGHT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(7),
+                                "AERIAL" : NumberInt(16),
+                                "CONSTITUTION" : NumberInt(23),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(25),
+                                "DEFENSIVE_POSITIONING" : NumberInt(42),
+                                "OFFENSIVE_POSITIONING" : NumberInt(20),
+                                "BALL_CONTROL" : NumberInt(20),
+                                "TACKLING" : NumberInt(47)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(46),
+                            "performance" : NumberInt(-2),
+                            "skillPoints" : NumberInt(40),
+                            "teamAssistance" : {
+                                "Bradly Hegmann" : NumberInt(14),
+                                "Phil Bednar" : NumberInt(18),
+                                "Steve Schuppe" : NumberInt(50),
+                                "Jaymie Oberbrunner" : NumberInt(52),
+                                "Deidre Lubowitz" : NumberInt(36),
+                                "Inger Halvorson" : NumberInt(20)
+                            },
+                            "assistance" : NumberInt(8)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(33),
+                            "performance" : NumberInt(-9),
+                            "skillPoints" : NumberInt(42),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(11),
+                                "Evelyn Rippin III" : NumberInt(10),
+                                "Paris Bogan" : NumberInt(15),
+                                "Asley Rogahn" : NumberInt(3),
+                                "Clare Hegmann" : NumberInt(74)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(82),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "LEFT_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_HIGH",
+                        "pitchArea" : "LEFT_FORWARD",
+                        "initiator" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "73ed5aac-cf61-49fa-a920-302aa9116618",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Christinia Ryan",
+                            "position" : "RIGHT_BACK",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(7),
+                                "AERIAL" : NumberInt(16),
+                                "CONSTITUTION" : NumberInt(23),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(25),
+                                "DEFENSIVE_POSITIONING" : NumberInt(42),
+                                "OFFENSIVE_POSITIONING" : NumberInt(20),
+                                "BALL_CONTROL" : NumberInt(20),
+                                "TACKLING" : NumberInt(47)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(27),
+                            "performance" : NumberInt(-23),
+                            "skillPoints" : NumberInt(44),
+                            "carryover" : NumberInt(6)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(-29),
+                            "performance" : NumberInt(-29),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(83),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "LEFT_FORWARD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(82),
+                            "performance" : NumberInt(15),
+                            "skillPoints" : NumberInt(56),
+                            "teamAssistance" : {
+                                "Jaymie Oberbrunner" : NumberInt(52),
+                                "Deidre Lubowitz" : NumberInt(18),
+                                "Inger Halvorson" : NumberInt(57),
+                                "Efren Stiedemann" : NumberInt(54)
+                            },
+                            "assistance" : NumberInt(11)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(6),
+                            "performance" : NumberInt(-18),
+                            "skillPoints" : NumberInt(24),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(16),
+                                "Brande McClure" : NumberInt(2),
+                                "Evelyn Rippin III" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(5)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(84),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(72),
+                            "performance" : NumberInt(-2),
+                            "skillPoints" : NumberInt(36),
+                            "carryover" : NumberInt(38)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(-1),
+                            "performance" : NumberInt(-1),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(85),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "HIGH"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(24),
+                            "performance" : NumberInt(-15),
+                            "skillPoints" : NumberInt(26),
+                            "teamAssistance" : {
+                                "Steve Schuppe" : NumberInt(127),
+                                "Jaymie Oberbrunner" : NumberInt(52),
+                                "Deidre Lubowitz" : NumberInt(18),
+                                "Efren Stiedemann" : NumberInt(54)
+                            },
+                            "assistance" : NumberInt(13)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(4),
+                            "performance" : NumberInt(-12),
+                            "skillPoints" : NumberInt(16),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(16),
+                                "Brande McClure" : NumberInt(2),
+                                "Paris Bogan" : NumberInt(34),
+                                "Asley Rogahn" : NumberInt(5)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(86),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(50),
+                            "performance" : NumberInt(6),
+                            "skillPoints" : NumberInt(34),
+                            "carryover" : NumberInt(10)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(10),
+                            "performance" : NumberInt(10),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "CENTRE_MIDFIELD"
+                    },
+                    "clock" : NumberInt(87),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "8926d800-d291-4edd-bae6-f0b6381d226a",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Inger Halvorson",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(12),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(31),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(34),
+                                "DEFENSIVE_POSITIONING" : NumberInt(21),
+                                "OFFENSIVE_POSITIONING" : NumberInt(26),
+                                "BALL_CONTROL" : NumberInt(35),
+                                "TACKLING" : NumberInt(30)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "f1625784-6fc0-40ed-8941-775becc44ce2",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Paris Bogan",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(11),
+                                "AERIAL" : NumberInt(11),
+                                "CONSTITUTION" : NumberInt(14),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(41),
+                                "DEFENSIVE_POSITIONING" : NumberInt(24),
+                                "OFFENSIVE_POSITIONING" : NumberInt(34),
+                                "BALL_CONTROL" : NumberInt(41),
+                                "TACKLING" : NumberInt(24)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(69),
+                            "performance" : NumberInt(2),
+                            "skillPoints" : NumberInt(56),
+                            "teamAssistance" : {
+                                "Jaymie Oberbrunner" : NumberInt(52),
+                                "Deidre Lubowitz" : NumberInt(18),
+                                "Inger Halvorson" : NumberInt(57),
+                                "Efren Stiedemann" : NumberInt(54)
+                            },
+                            "assistance" : NumberInt(11)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(19),
+                            "performance" : NumberInt(-5),
+                            "skillPoints" : NumberInt(24),
+                            "teamAssistance" : {
+                                "Joey Torphy" : NumberInt(16),
+                                "Brande McClure" : NumberInt(2),
+                                "Evelyn Rippin III" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(5)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(88),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "PASS",
+                    "duel" : {
+                        "type" : "PASSING_LOW",
+                        "pitchArea" : "CENTRE_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "c03e11a2-684f-4018-87b1-54208b75e3b4",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Evelyn Rippin III",
+                            "position" : "CENTRE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(3),
+                                "AERIAL" : NumberInt(3),
+                                "CONSTITUTION" : NumberInt(15),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(40),
+                                "DEFENSIVE_POSITIONING" : NumberInt(16),
+                                "OFFENSIVE_POSITIONING" : NumberInt(19),
+                                "BALL_CONTROL" : NumberInt(32),
+                                "TACKLING" : NumberInt(16)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "receiver" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(69),
+                            "performance" : NumberInt(8),
+                            "skillPoints" : NumberInt(36),
+                            "carryover" : NumberInt(25)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(4),
+                            "performance" : NumberInt(4),
+                            "skillPoints" : NumberInt(0),
+                            "carryover" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "destinationPitchArea" : "LEFT_MIDFIELD"
+                    },
+                    "clock" : NumberInt(89),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "316df176-a0fb-43fe-9f6e-bf434ff1cdeb",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Steve Schuppe",
+                            "position" : "OFFENSIVE_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(17),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(36),
+                                "DEFENSIVE_POSITIONING" : NumberInt(3),
+                                "OFFENSIVE_POSITIONING" : NumberInt(56),
+                                "BALL_CONTROL" : NumberInt(51),
+                                "TACKLING" : NumberInt(5)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "CENTRE_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                },
+                {
+                    "action" : "POSITION",
+                    "duel" : {
+                        "type" : "POSITIONAL",
+                        "pitchArea" : "LEFT_MIDFIELD",
+                        "initiator" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "challenger" : {
+                            "_id" : "f11ce414-f23d-47f3-a4be-ced05fc657ff",
+                            "teamId" : "51a96286-eb0e-48bb-a82d-93defef51068",
+                            "teamRole" : "AWAY",
+                            "name" : "Joey Torphy",
+                            "position" : "RIGHT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(13),
+                                "CONSTITUTION" : NumberInt(30),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(38),
+                                "DEFENSIVE_POSITIONING" : NumberInt(14),
+                                "OFFENSIVE_POSITIONING" : NumberInt(48),
+                                "BALL_CONTROL" : NumberInt(27),
+                                "TACKLING" : NumberInt(21)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "result" : "WIN",
+                        "initiatorStats" : {
+                            "total" : NumberInt(40),
+                            "performance" : NumberInt(-4),
+                            "skillPoints" : NumberInt(40),
+                            "teamAssistance" : {
+                                "Bradly Hegmann" : NumberInt(21),
+                                "Phil Bednar" : NumberInt(28),
+                                "Steve Schuppe" : NumberInt(76),
+                                "Jaymie Oberbrunner" : NumberInt(69),
+                                "Inger Halvorson" : NumberInt(28)
+                            },
+                            "assistance" : NumberInt(4)
+                        },
+                        "challengerStats" : {
+                            "total" : NumberInt(-2),
+                            "performance" : NumberInt(-16),
+                            "skillPoints" : NumberInt(14),
+                            "teamAssistance" : {
+                                "Evelyn Rippin III" : NumberInt(15),
+                                "Christinia Ryan" : NumberInt(84),
+                                "Paris Bogan" : NumberInt(22),
+                                "Asley Rogahn" : NumberInt(11),
+                                "Clare Hegmann" : NumberInt(74)
+                            },
+                            "assistance" : NumberInt(0)
+                        },
+                        "origin" : "DEFAULT",
+                        "disruptor" : "NONE"
+                    },
+                    "clock" : NumberInt(90),
+                    "ballState" : {
+                        "player" : {
+                            "_id" : "847704a9-bcf8-452a-a9cf-451f609d0b28",
+                            "teamId" : "709aad9c-8517-44ee-91d6-51226be6e210",
+                            "teamRole" : "HOME",
+                            "name" : "Efren Stiedemann",
+                            "position" : "LEFT_MIDFIELDER",
+                            "status" : "ACTIVE",
+                            "skills" : {
+                                "SCORING" : NumberInt(9),
+                                "AERIAL" : NumberInt(7),
+                                "CONSTITUTION" : NumberInt(25),
+                                "INTERCEPTING" : NumberInt(0),
+                                "PASSING" : NumberInt(44),
+                                "DEFENSIVE_POSITIONING" : NumberInt(22),
+                                "OFFENSIVE_POSITIONING" : NumberInt(40),
+                                "BALL_CONTROL" : NumberInt(36),
+                                "TACKLING" : NumberInt(17)
+                            },
+                            "playerOrder" : "NONE"
+                        },
+                        "area" : "LEFT_MIDFIELD",
+                        "height" : "LOW"
+                    }
+                }
+            ],
+            "homeScore" : NumberInt(3),
+            "awayScore" : NumberInt(0),
+            "homeAttendance" : NumberInt(28800),
+            "awayAttendance" : NumberInt(36000),
+            "gameStats" : {
+                "homeRating" : NumberInt(13),
+                "awayRating" : NumberInt(-10)
+            }
+        },
+        "_class" : "com.kjeldsen.match.entities.Match"
+    }
+
+)

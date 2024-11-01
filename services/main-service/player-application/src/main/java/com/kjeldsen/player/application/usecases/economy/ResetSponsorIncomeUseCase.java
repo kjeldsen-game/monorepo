@@ -11,15 +11,14 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ResetBillboardSponsorIncomeUseCase {
+public class ResetSponsorIncomeUseCase {
 
     private final TeamReadRepository teamReadRepository;
     private final TeamWriteRepository teamWriteRepository;
 
     public void reset(Team.Economy.IncomePeriodicity periodicity) {
-        log.info("ResetBillboardSponsorIncomeUseCase for periodicity {}", periodicity);
+        log.info("ResetSponsorIncomeUseCase for periodicity {}", periodicity);
         teamReadRepository.findAll().forEach(team -> {
-            log.info("Team {} has been reset", team.getName());
             team.getEconomy().resetSponsorIncome(periodicity);
             teamWriteRepository.save(team);
         });

@@ -1,8 +1,9 @@
 package com.kjeldsen.player.listener;
 
-import com.kjeldsen.player.application.usecases.economy.MatchAttendanceIncomeUsecase;
+import com.kjeldsen.player.application.usecases.economy.MatchAttendanceIncomeUseCase;
 import com.kjeldsen.player.application.usecases.economy.MerchandiseIncomeUseCase;
 import com.kjeldsen.player.application.usecases.economy.RestaurantIncomeUseCase;
+import com.kjeldsen.player.application.usecases.economy.SignSponsorIncomeUseCase;
 import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
 import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
 import com.kjeldsen.player.domain.Team;
@@ -17,11 +18,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MatchEventListener {
 
-    private final MatchAttendanceIncomeUsecase matchAttendanceIncomeUsecase;
+    private final MatchAttendanceIncomeUseCase matchAttendanceIncomeUsecase;
     private final FansManagementUsecase fansManagementUsecase;
     private final MerchandiseIncomeUseCase merchandiseIncomeUseCase;
     private final RestaurantIncomeUseCase restaurantIncomeUseCase;
     private final UpdateLoyaltyUseCase updateLoyaltyUseCase;
+    private final SignSponsorIncomeUseCase signSponsorIncomeUseCase;
 
     @EventListener
     public void handleMatchEvent(MatchEvent matchEvent) {
@@ -39,9 +41,8 @@ public class MatchEventListener {
       // SponsorIncome per match win income
       Team.TeamId winningTeamId = getWinningTeam(matchEvent);
       if (winningTeamId != null) {
-          // TODO missing per win income Sponsor
+          signSponsorIncomeUseCase.processBonus(winningTeamId);
       }
-
 
       // Fans UseCases
       updateLoyaltyUseCase.updateLoyaltyMatch(homeTeamId, matchEvent.getHomeScore(),

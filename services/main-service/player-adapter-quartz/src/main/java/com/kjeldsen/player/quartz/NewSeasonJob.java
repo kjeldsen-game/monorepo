@@ -4,7 +4,6 @@ import com.kjeldsen.player.application.usecases.*;
 import com.kjeldsen.player.application.usecases.economy.*;
 import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
 import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
-import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,14 +13,12 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class NewSeasonJob implements Job {
 
-    private final ResetBillboardSponsorIncomeUseCase resetBillboardSponsorIncomeUseCase;
+    private final ResetSponsorIncomeUseCase resetSponsorIncomeUseCase;
     private final FansManagementUsecase fansManagementUsecase;
     private final UpdateLoyaltyUseCase updateLoyaltyUseCase;
     private final UpdateSalariesTeamUseCase updateSalariesTeamUseCase;
