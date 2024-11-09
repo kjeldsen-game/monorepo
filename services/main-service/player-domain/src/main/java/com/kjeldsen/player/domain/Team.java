@@ -56,6 +56,7 @@ public class Team {
     }
 
     public Integer getActualSeasonTablePosition () {
+        System.out.println(Collections.max(leagueStats.keySet()));
         try {
             return leagueStats.get(Collections.max(leagueStats.keySet())).getTablePosition();
         } catch (NullPointerException e) {

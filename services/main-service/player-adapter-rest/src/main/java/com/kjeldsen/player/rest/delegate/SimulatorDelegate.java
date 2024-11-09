@@ -5,6 +5,8 @@ import com.kjeldsen.player.application.usecases.economy.*;
 import com.kjeldsen.player.application.usecases.facilities.UpgradeBuildingUseCase;
 import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
 import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
+import com.kjeldsen.player.application.usecases.trainings.SchedulePotentialRiseUseCase;
+import com.kjeldsen.player.application.usecases.trainings.ScheduleTrainingUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.PlayerPotentialRiseEvent;
@@ -196,16 +198,6 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
 
         return ResponseEntity.ok().build();
     }
-
-//    @Override
-//    public ResponseEntity<Void> simulatePricingUpdate(String teamId, SimulatePricingUpdateRequest simulatePricingUpdateRequest) {
-//        Team.TeamId id = Team.TeamId.of(teamId);
-//        Team.Economy.PricingType pricingType = Team.Economy.PricingType.valueOf(
-//                simulatePricingUpdateRequest.getPricingType().name());
-//        updateTeamPricingUsecase.update(id, simulatePricingUpdateRequest.getPrice(), pricingType);
-//        return ResponseEntity.ok().build();
-//    }
-
 
     @Override
     public ResponseEntity<Void> simulatePricingUpdate(String teamId, SimulatePricingUpdateRequest simulatePricingUpdateRequest) {

@@ -9,63 +9,69 @@ import { useRouter } from 'next/router';
 
 // eslint-disable-next-line react/prop-types
 const MatchReport: NextPage = () => {
-    useSession({ required: true });
+  useSession({ required: true });
 
-    const router = useRouter();
-    const { report } = useMatchReportRepository(router.query.id as string);
+  const router = useRouter();
+  const { report } = useMatchReportRepository(router.query.id as string);
 
-    if (!report) {
-        return <></>;
-    }
+  if (!report) {
+    return <></>;
+  }
 
-    return (
-        <Box
-            sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: '100%',
-                height: 'calc(100vh - 64px - 42px)',
-            }}>
-            <MatchReportMetrics
-                teamId={report.away.id}
-                side="left"
-                sx={{
-                    width: '25%',
-                }}
-            />
-            {report ? (
-                <MatchReportContent
-                    report={report}
-                    sx={{
-                        width: '50%',
-                    }}
-                />
-            ) : null}
-            <MatchReportMetrics
-                teamId={report.home.id}
-                side="right"
-                sx={{
-                    width: '25%',
-                }}
-            />
-        </Box>
-    );
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        height: 'calc(100vh - 64px - 42px)',
+      }}>
+      <MatchReportMetrics
+        teamReport={report.away}
+        teamColor={'#29B6F6'}
+        players={report.away.players}
+        teamId={report.away.id}
+        side="left"
+        sx={{
+          width: '25%',
+        }}
+      />
+      {report ? (
+        <MatchReportContent
+          report={report}
+          sx={{
+            width: '50%',
+          }}
+        />
+      ) : null}
+      <MatchReportMetrics
+        teamReport={report.home}
+        teamColor={'#A4BC10'}
+        players={report.home.players}
+        teamId={report.home.id}
+        side="right"
+        sx={{
+          width: '25%',
+        }}
+      />
+    </Box>
+  );
 };
 
 export async function getStaticPaths() {
-    return {
-        paths: ['/match/report/*'],
-        fallback: true,
-    };
+  return {
+    paths: ['/match/report/*'],
+    fallback: true,
+  };
 }
 
 export async function getStaticProps({ locale }: { locale: string }) {
-    return {
-        props: {
-            ...(await serverSideTranslations(locale, ['common', 'game'])),
-            // Will be passed to the page component as props
-        },
-    };
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'game'])),
+      // Will be passed to the page component as props
+    },
+  };
 }
 
 export default MatchReport;

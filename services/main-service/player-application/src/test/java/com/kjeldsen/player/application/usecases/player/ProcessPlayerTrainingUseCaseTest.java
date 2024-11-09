@@ -2,6 +2,7 @@ package com.kjeldsen.player.application.usecases.player;
 
 import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.application.usecases.GenerateTrainingUseCase;
+import com.kjeldsen.player.application.usecases.trainings.ProcessPlayerTrainingUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;

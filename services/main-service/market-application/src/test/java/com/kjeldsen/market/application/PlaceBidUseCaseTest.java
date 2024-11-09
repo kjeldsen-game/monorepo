@@ -114,7 +114,7 @@ class PlaceBidUseCaseTest {
         when(mockedAuctionReadRepository.findById(mockedAuctionId)).thenReturn(Optional.of(mockedAuction));
         when(mockedTeamReadRepository.findByUserId(mockedUserId)).thenReturn(Optional.of(mockedTeam));
 
-        assertEquals("Bidder team don't have enough balance!", assertThrows(RuntimeException.class, () -> {
+        assertEquals("You don't have enough balance to place bid!", assertThrows(RuntimeException.class, () -> {
             placeBidUseCase.placeBid(mockedAuctionId, BigDecimal.valueOf(11), mockedUserId);
         }).getMessage());
     }
@@ -142,10 +142,10 @@ class PlaceBidUseCaseTest {
 
         placeBidUseCase.placeBid(mockedAuctionId, BigDecimal.TEN, mockedUserId);
 
-        assertEquals(2, mockedAuction.getBids().size());
+        assertEquals(1, mockedAuction.getBids().size());
         assertEquals(BigDecimal.TEN, mockedAuction.getBids().get(mockedAuction.getBids().size()-1).getAmount());
         assertEquals(BigDecimal.valueOf(991), mockedTeam.getEconomy().getBalance());
-        assertEquals(BigDecimal.valueOf(5.5), mockedAuction.getAverageBid());
+        assertEquals(BigDecimal.valueOf(10.0), mockedAuction.getAverageBid());
         assertEquals("2024-09-10T09:59:30Z", mockedAuction.getEndedAt().toString());
         verify(mockedAuctionWriteRepository).save(mockedAuction);
         verify(mockedTeamWriteRepository).save(mockedTeam);

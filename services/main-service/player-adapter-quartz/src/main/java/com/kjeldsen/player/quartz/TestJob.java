@@ -1,10 +1,8 @@
 package com.kjeldsen.player.quartz;
 
-import com.kjeldsen.player.application.usecases.FindAndProcessScheduledTrainingUseCase;
-import com.kjeldsen.player.application.usecases.player.ProcessDeclineTrainingUseCase;
-import com.kjeldsen.player.application.usecases.player.ProcessPlayerTrainingUseCase;
-import com.kjeldsen.player.application.usecases.player.ProcessPotentialRiseUseCase;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
+import com.kjeldsen.player.application.usecases.trainings.ProcessDeclineTrainingUseCase;
+import com.kjeldsen.player.application.usecases.trainings.ProcessPlayerTrainingUseCase;
+import com.kjeldsen.player.application.usecases.trainings.ProcessPotentialRiseUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
@@ -25,7 +23,7 @@ public class TestJob implements Job {
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         log.info("TestJob in Kjeldsen is here!");
         // PlayerTraining, PlayerDecline, PlayerRiseUp
-        processPlayerTrainingUseCase.process();
+//        processPlayerTrainingUseCase.process();
 //        processPotentialRiseUseCase.process();
 //        processDeclineTrainingUseCase.process();
     }

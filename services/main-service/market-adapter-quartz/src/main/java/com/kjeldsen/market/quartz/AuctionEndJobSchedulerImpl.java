@@ -46,7 +46,6 @@ public class AuctionEndJobSchedulerImpl implements AuctionEndJobScheduler {
     public void scheduleAuctionEndJob(String auctionId, Instant endTime) {
 
         try {
-
             JobDetail jobDetail = JobBuilder.newJob(AuctionEndJob.class)
                 .withIdentity("auctionEndJob-" + auctionId)
                 .usingJobData("auctionId", auctionId)

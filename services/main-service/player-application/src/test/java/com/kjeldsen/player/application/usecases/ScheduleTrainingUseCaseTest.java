@@ -1,8 +1,8 @@
 package com.kjeldsen.player.application.usecases;
 
+import com.kjeldsen.player.application.usecases.trainings.ScheduleTrainingUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventWriteRepository;
@@ -14,10 +14,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

@@ -13,7 +13,9 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -31,38 +33,39 @@ public class PlaceBidUseCase {
 
         Auction auction = auctionReadRepository.findById(auctionId).orElseThrow(
             () -> new RuntimeException("Auction not found"));
-
         Team team = teamReadRepository.findByUserId(userId).orElseThrow(
-                () -> new RuntimeException("Team not found"));
+            () -> new RuntimeException("Team not found"));
 
-       if (team.getId().equals(auction.getTeamId())) {
-           throw new RuntimeException("Auction creator team cannot place bid");
-       }
-
-       BigDecimal highestBidAmount = auction.getBids().stream()
-            .filter(bid -> bid.getTeamId().equals(team.getId()))
-            .map(Auction.Bid::getAmount)
-            .max(BigDecimal::compareTo).orElse(BigDecimal.ZERO);
-
-       if (amount.compareTo(highestBidAmount) <= 0) {
-            throw new RuntimeException("You cannot place less bid than your latest!");
+        if (Objects.equals(auction.getTeamId(), Team.TeamId.of(userId))) {
+            throw new RuntimeException("Cannot place new bid on auction you created!");
         }
-        BigDecimal bidAmountDiff = getDifferenceBetweenBids(amount, highestBidAmount);
+        if (team.getId().equals(auction.getTeamId())) {
+           throw new RuntimeException("Auction creator team cannot place bid");
+        }
 
-       // Team don't have enough balance
-       if (team.getEconomy().getBalance().compareTo(bidAmountDiff.abs()) < 0) {
-           throw new RuntimeException("Bidder team don't have enough balance!");
+        Auction.Bid highestBid = auction.getBids().stream()
+            .filter(bid -> bid.getTeamId().equals(team.getId()))
+            .max(Comparator.comparing(Auction.Bid::getAmount))
+            .orElse(null);
+
+        BigDecimal bidAmountDiff = getDifferenceBetweenBids(amount, highestBid == null ?
+            BigDecimal.ZERO : highestBid.getAmount());
+
+        if (highestBid != null) {
+           validateBidAmount(amount, highestBid.getAmount());
+           updateTeamBalance(team, bidAmountDiff);
+           highestBid.setAmount(highestBid.getAmount().add(bidAmountDiff.abs()));
+       } else {
+           updateTeamBalance(team, bidAmountDiff);
+           Auction.Bid bid = Auction.Bid.builder()
+           .timestamp(InstantProvider.now())
+           .teamId(team.getId())
+           .amount(amount)
+           .build();
+           auction.getBids().add(bid);
        }
 
-       // Subtract the money from the balance (so we have some record about money movement)
-       team.getEconomy().updateBalance(bidAmountDiff);
-        Auction.Bid bid = Auction.Bid.builder()
-            .timestamp(InstantProvider.now())
-            .teamId(team.getId())
-            .amount(amount)
-            .build();
         auction.reduceEndedAtBySeconds(AUCTION_BID_REDUCE_TIME);
-        auction.getBids().add(bid);
         auction.setAverageBid(getAverageBid(auction.getBids()));
 
         teamWriteRepository.save(team);
@@ -76,5 +79,18 @@ public class PlaceBidUseCase {
     private BigDecimal getAverageBid(List<Auction.Bid> bids) {
         BigDecimal a = bids.stream().map(Auction.Bid::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
         return a.divide(BigDecimal.valueOf(bids.size()), 1 , RoundingMode.HALF_UP);
+    }
+
+    private void validateBidAmount(BigDecimal amount, BigDecimal highestBidAmount) {
+        if (amount.compareTo(highestBidAmount) <= 0) {
+            throw new RuntimeException("You cannot place less bid than your latest!");
+        }
+    }
+
+    private void updateTeamBalance(Team team, BigDecimal bidAmountDiff) {
+        if (team.getEconomy().getBalance().compareTo(bidAmountDiff.abs()) < 0) {
+            throw new RuntimeException("You don't have enough balance to place bid!");
+        }
+        team.getEconomy().updateBalance(bidAmountDiff);
     }
 }

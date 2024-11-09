@@ -57,6 +57,7 @@ const TransactionsTabView: React.FC<TransactionsTabViewProps> = ({
                             borderBottom: 'none',
                         },
                     }}
+                    disableColumnMenu={true}
                     getRowId={(row) => row.context}
                     rows={transactions}
                     columns={memoizedColumns}

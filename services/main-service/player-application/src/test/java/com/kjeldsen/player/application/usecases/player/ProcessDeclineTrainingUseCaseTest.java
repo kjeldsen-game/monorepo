@@ -1,5 +1,6 @@
 package com.kjeldsen.player.application.usecases.player;
 
+import com.kjeldsen.player.application.usecases.trainings.ProcessDeclineTrainingUseCase;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventWriteRepository;

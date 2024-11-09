@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Range;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 import static com.kjeldsen.player.domain.generator.PointsGenerator.generatePointsBloom;
 
 @Slf4j
@@ -46,7 +48,7 @@ public class GenerateTrainingUseCase {
         validateDays(currentDay);
 
         Player player = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
-        playerAging(player);
+//        playerAging(player);
         return generateAndStoreEvent(player, skill, currentDay, "none");
     }
 
@@ -65,20 +67,33 @@ public class GenerateTrainingUseCase {
         if (player.isBloomActive()) {
             handleBloomEvent(player, playerTrainingEvent);
         } else {
+            // Generate the number of points playerSkill should rise
             Integer points = PointsGenerator.generatePointsRise(currentDay);
 
-            // Old potential of Skill + new points is greater than potential
-            if (player.getActualSkillPoints(playerSkill) + points > player.getPotentialSkillPoints(playerSkill)) {
-                player.addSkillsPotentialRisePoints(playerSkill, 1); // Set new potential rise
-                player.addSkillsPoints(playerSkill, player.getPotentialSkillPoints(playerSkill)); // Set actual to new potential
+            if (points > 0) {
+                // Player reach the maximum potential rise up, his potential will be increase +1 as well actual skill value
+                if (Objects.equals(player.getActualSkillPoints(playerSkill), player.getPotentialSkillPoints(playerSkill))) {
+                    log.info("Generating TrainingEvent, Training completed, maximum potential reach, updating player skill {} by 1!", playerSkill);
+                    points = 1;
+                    player.addSkillsPotentialRisePoints(playerSkill, 1);
+                } else if (player.getActualSkillPoints(playerSkill) + points > player.getPotentialSkillPoints(playerSkill)) {
+
+                    // Player will exceed the potential skill value, subtract points to the max value and assign to the points
+                    points = player.getActualSkillPoints(playerSkill) + points - player.getPotentialSkillPoints(playerSkill);
+                    log.info("Generating TrainingEvent, Training completed, generated points exceeded, updating player skill {} by calculated points {}!", playerSkill, points);
+
+                } else {
+                    log.info("Generating TrainingEvent, Training completed, updating player skill {} with generated points {}!", playerSkill, points);
+                }
             } else {
-                // TODO
-                
+                log.info("Generating TrainingEvent, Training completed but not successful, generating event with 0 points! for skill {}", playerSkill);
             }
+
+            // Update the player actual skill value
+            player.addSkillsPoints(playerSkill, points);
 
             playerTrainingEvent.setPoints(points);
             playerTrainingEvent.setActualPoints(player.getActualSkillPoints(playerSkill));
-            player.addSkillsPoints(playerSkill, points);
             playerTrainingEvent.setPotentialPoints(player.getPotentialSkillPoints(playerSkill));
             playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
         }
@@ -89,7 +104,9 @@ public class GenerateTrainingUseCase {
         return playerTrainingEvent;
     }
 
+    // Review handleBloomEventPhase
     private void handleBloomEvent(Player player, PlayerTrainingEvent playerTrainingEvent) {
+        log.info("Handling bloom event for player {}",  player.getId());
         Integer points = PointsGenerator.generatePointsRise(playerTrainingEvent.getCurrentDay());
         player.addSkillsPoints(playerTrainingEvent.getSkill(), points);
         Integer pointsToRise = generatePointsBloom(player.getBloom().getBloomSpeed(), points);
@@ -105,6 +122,7 @@ public class GenerateTrainingUseCase {
             throw new IllegalArgumentException("Days must be between 1 and 1000");
         }
     }
+
     public Player playerAging(Player player){
         PlayerAge age = player.getAge();
         PlayerAge playerAge = PlayerAge.gettingOlder(age);

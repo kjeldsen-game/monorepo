@@ -2,30 +2,17 @@ package com.kjeldsen.match.rest.delegate;
 
 import com.kjeldsen.domain.EventId;
 import com.kjeldsen.match.Game;
-import com.kjeldsen.match.entities.Match;
+import com.kjeldsen.match.entities.*;
 import com.kjeldsen.match.entities.Match.Status;
-import com.kjeldsen.match.entities.MatchReport;
-import com.kjeldsen.match.entities.Player;
-import com.kjeldsen.match.entities.Team;
-import com.kjeldsen.match.entities.TeamRole;
+import com.kjeldsen.match.entities.duel.DuelResult;
 import com.kjeldsen.match.modifers.HorizontalPressure;
 import com.kjeldsen.match.modifers.Tactic;
 import com.kjeldsen.match.modifers.VerticalPressure;
 import com.kjeldsen.match.publisher.MatchEventPublisher;
 import com.kjeldsen.match.repositories.MatchEventWriteRepository;
 import com.kjeldsen.match.rest.api.MatchApiDelegate;
-import com.kjeldsen.match.rest.model.ActionResponse;
-import com.kjeldsen.match.rest.model.CreateMatchRequest;
-import com.kjeldsen.match.rest.model.DuelResponse;
-import com.kjeldsen.match.rest.model.DuelResultResponse;
-import com.kjeldsen.match.rest.model.EditMatchRequest;
-import com.kjeldsen.match.rest.model.EditPlayerRequest;
-import com.kjeldsen.match.rest.model.MatchReportResponse;
-import com.kjeldsen.match.rest.model.MatchResponse;
-import com.kjeldsen.match.rest.model.Modifiers;
-import com.kjeldsen.match.rest.model.PlayResponse;
-import com.kjeldsen.match.rest.model.PlayerResponse;
-import com.kjeldsen.match.rest.model.TeamResponse;
+import com.kjeldsen.match.rest.model.*;
+import com.kjeldsen.match.rest.model.DuelStats;
 import com.kjeldsen.match.schedulers.MatchScheduler;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.utils.JsonUtils;
@@ -379,11 +366,33 @@ public class MatchDelegate implements MatchApiDelegate {
                 duelResponse.setReceiver(receiver);
             }
 
+
+            duelResponse.setInitiatorStats(buildPositionAssistanceStats(play.getDuel().getInitiatorStats(),
+                play.getAction()));
+            duelResponse.setChallengerStats(buildPositionAssistanceStats(play.getDuel().getChallengerStats(),
+                play.getAction()));
+
+
             res.setDuel(duelResponse);
 
             return res;
         }).toList();
         result.setPlays(playsResponse);
+
+        return result;
+    }
+
+    private DuelStats buildPositionAssistanceStats(com.kjeldsen.match.entities.DuelStats duelStats, Action action) {
+        DuelStats result = new DuelStats();
+
+        Optional.ofNullable(duelStats.getCarryover()).ifPresent(result::setCarryover);
+        Optional.ofNullable(duelStats.getAssistance()).ifPresent(result::setAssistance);
+        result.setTotal(duelStats.getTotal());
+        result.setPerformance(duelStats.getPerformance());
+        result.setSkillPoints(duelStats.getSkillPoints());
+        if (action.equals(Action.POSITION)) {
+            result.setTeamAssistance(duelStats.getTeamAssistance());
+        }
 
         return result;
     }

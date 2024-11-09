@@ -2,22 +2,18 @@ package com.kjeldsen.player.rest.delegate;
 
 import com.kjeldsen.player.application.usecases.GenerateBloomPhaseUseCase;
 import com.kjeldsen.player.application.usecases.GetHistoricalTrainingUseCase;
-import com.kjeldsen.player.application.usecases.ScheduleTrainingUseCase;
-import com.kjeldsen.player.application.usecases.player.SchedulePlayerTrainingUseCase;
+import com.kjeldsen.player.application.usecases.trainings.SchedulePlayerTrainingUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
-import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
 import com.kjeldsen.player.rest.api.TrainingApiDelegate;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.model.*;
 import lombok.RequiredArgsConstructor;
-import org.assertj.core.util.CanIgnoreReturnValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component

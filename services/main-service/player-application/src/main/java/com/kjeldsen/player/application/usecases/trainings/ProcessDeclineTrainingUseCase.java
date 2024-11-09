@@ -1,4 +1,4 @@
-package com.kjeldsen.player.application.usecases.player;
+package com.kjeldsen.player.application.usecases.trainings;
 
 import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.domain.Player;

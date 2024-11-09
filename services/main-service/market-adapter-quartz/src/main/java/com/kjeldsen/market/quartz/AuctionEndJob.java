@@ -19,10 +19,6 @@ public class AuctionEndJob implements Job {
     private final AuctionEndEventPublisher auctionEndEventPublisher;
     private final AuctionEndUseCase auctionEndUseCase;
 
-    public void execute(String auctionId) {
-        log.info("Executing AuctionEndJob {}", auctionId);
-    }
-
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         log.info("Ending Auction, time expired, ");

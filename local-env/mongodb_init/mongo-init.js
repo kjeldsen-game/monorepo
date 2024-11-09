@@ -102,7 +102,7 @@ db.Teams.insertMany([
         "userId" : "66cd9fd57a0b1808f7ba3f6e",
         "name" : "exampleTeam2",
         "economy" : {
-            "balance" : NumberDecimal("819898"),
+            "balance" : NumberDecimal("10000000"),
             "prices" : {
                 "SEASON_TICKET" : NumberInt(14),
                 "DAY_TICKET" : NumberInt(14),
@@ -2618,7 +2618,7 @@ db.Players.insertMany([
             "days" : 0.11
         },
         "position" : "SWEEPER",
-        "status" : "FOR_SALE",
+        "status" : "INACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "DEFENSIVE_POSITIONING" : {
@@ -2904,7 +2904,7 @@ db.Players.insertMany([
             "days" : 0.23
         },
         "position" : "SWEEPER",
-        "status" : "FOR_SALE",
+        "status" : "INACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "DEFENSIVE_POSITIONING" : {
@@ -3190,7 +3190,7 @@ db.Players.insertMany([
             "days" : 28.069999999999993
         },
         "position" : "LEFT_BACK",
-        "status" : "FOR_SALE",
+        "status" : "INACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "DEFENSIVE_POSITIONING" : {
@@ -3269,7 +3269,7 @@ db.Players.insertMany([
             "days" : 2.73
         },
         "position" : "SWEEPER",
-        "status" : "FOR_SALE",
+        "status" : "INACTIVE",
         "playerOrder" : "NONE",
         "actualSkills" : {
             "DEFENSIVE_POSITIONING" : {

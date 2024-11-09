@@ -10,6 +10,7 @@ import com.kjeldsen.player.domain.repositories.FindTeamsQuery;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.PasswordService;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class AuthDelegate implements AuthApiDelegate {
 
     private final UserRepository userRepository;
@@ -45,6 +47,7 @@ public class AuthDelegate implements AuthApiDelegate {
     public ResponseEntity<UserDetailsResponse> login(LoginRequest request) {
         // Remembers the user's token so they don't need to log in every time. This is set to true
         // by default but the login screen can add a checkbox to allow users to disable it.
+        log.info("Executing login request from request: {}", request.getEmail());
         boolean rememberMe = true;
         return userRepository.findByEmail(request.getEmail())
             .map(user -> {
@@ -54,6 +57,7 @@ public class AuthDelegate implements AuthApiDelegate {
 
                 UsernamePasswordToken token =
                     new UsernamePasswordToken(user.getEmail(), user.getPassword());
+                System.out.println(token);
                 token.setRememberMe(rememberMe);
                 SecurityUtils.getSubject().login(token);
 

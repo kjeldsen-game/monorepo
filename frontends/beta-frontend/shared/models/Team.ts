@@ -1,20 +1,20 @@
-import { Player } from './Player'
+import { Player } from './Player';
 
 export interface Team {
-  id: string
-  name: string
-  cantera: Cantera
-  economy: TeamEconomy
-  players: Player[]
+  id: string;
+  name: string;
+  cantera: Cantera;
+  economy: TeamEconomy;
+  players: Player[];
 }
 
 export interface Cantera {
-  score: number
-  economyLevel: number
-  traditionLevel: number
-  buildingsLevel: number
+  score: number;
+  economyLevel: number;
+  traditionLevel: number;
+  buildingsLevel: number;
 }
 
 export interface TeamEconomy {
-  balance: number
+  balance: number;
 }

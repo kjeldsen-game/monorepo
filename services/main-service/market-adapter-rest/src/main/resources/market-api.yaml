@@ -4,8 +4,6 @@ info:
   title: Markets Service API
 
 servers:
-#  - url: http://localhost:8081/api
-#  - url: https://actively-accurate-platypus.ngrok-free.app/api
   - url: http://localhost:8081/v1
   - url: https://actively-accurate-platypus.ngrok-free.app/v1
 tags:
@@ -204,6 +202,8 @@ components:
 ################################### Schemas ###################################
   schemas:
 
+################################### Enums ###################################
+
     PlayerSkill:
       type: string
       enum:
@@ -222,22 +222,6 @@ components:
         - ORGANIZATION
         - ONE_ON_ONE
         - INTERCEPTING
-
-    PlayerAge:
-      type: object
-      properties:
-        years:
-          type: number
-          format: int32
-          minimum: 15
-          maximum: 33
-          example: 20
-        months:
-          type: number
-          example: 1.05
-        days:
-          type: number
-          example: 3.01
 
     PlayerPosition:
       type: string
@@ -271,6 +255,32 @@ components:
         - RESIDUAL
       example: CORE
 
+    AuctionStatus:
+      type: string
+      enum:
+        - COMPLETED
+        - ACTIVE
+        - CANCEL
+      example: COMPLETED
+
+    ################################### Objects ###################################
+
+    PlayerAge:
+      type: object
+      properties:
+        years:
+          type: number
+          format: int32
+          minimum: 15
+          maximum: 33
+          example: 20
+        months:
+          type: number
+          example: 1.05
+        days:
+          type: number
+          example: 3.01
+
     PlayerSkills:
       type: object
       properties:
@@ -289,20 +299,61 @@ components:
         playerSkillRelevance:
           $ref: "#/components/schemas/PlayerSkillRelevance"
 
+    # TODO probably not needed need ot check
+    Bid:
+      type: object
+      properties:
+        teamId:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        amount:
+          type: number
+          example: 50000
+        timestamp:
+          type: string
+          example: TODO
+
+    Error:
+      type: "object"
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+################################### Responses ###################################
+
     MarketAuctionResponse:
       type: object
       properties:
-        auctionId:
+        id:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        player:
+          $ref: "#/components/schemas/MarketPlayerResponse"
+        teamId:
           type: string
           example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
         averageBid:
           type: number
-          example: 500000
-        player:
-          $ref: "#/components/schemas/MarketPlayerResponse"
-        bids:
+          example: 50000
+        status:
+          $ref: "#/components/schemas/AuctionStatus"
+        startedAt:
+          type: string
+          example: TODO
+        endedAt:
+          type: string
+          example: TODO
+        bidders:
           type: integer
           example: 2
+        bid:
+          type: number
 
     MarketPlayerResponse:
       type: object
@@ -324,6 +375,7 @@ components:
               PlayerSkills:
                 $ref: "#/components/schemas/PlayerSkills"
 
+    # TODO probably not needed need ot check
     AuctionResponse:
       type: object
       properties:
@@ -352,46 +404,15 @@ components:
           items:
             $ref: "#/components/schemas/Bid"
 
-    Bid:
-      type: object
-      properties:
-        teamId:
-          type: string
-          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
-        amount:
-          type: number
-          example: 50000
-        timestamp:
-          type: string
-          example: TODO
-
-    AuctionStatus:
-      type: string
-      enum:
-        - COMPLETED
-        - ACTIVE
-        - CANCEL
-      example: COMPLETED
+################################### Requests ###################################
 
     PlaceAuctionBidRequest:
       type: object
       properties:
-       amount:
-        type: integer
-        minimum: 1
-        example: 10000
-      required:
-      - amount
-
-    Error:
-      type: "object"
-      required:
-        - code
-        - message
-      properties:
-        code:
+        amount:
           type: integer
-          format: int32
-        message:
-          type: string
+          minimum: 1
+          example: 10000
+      required:
+        - amount
 

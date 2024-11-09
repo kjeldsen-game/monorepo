@@ -1,4 +1,4 @@
-package com.kjeldsen.player.application.usecases.player;
+package com.kjeldsen.player.application.usecases.trainings;
 
 import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.domain.Player;
@@ -10,7 +10,6 @@ import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventReadR
 import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.Range;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,9 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class SchedulePlayerTrainingUseCase {
-
-    private static final Integer MIN_DAY = 1;
-    private static final Integer MAX_DAY = 1000;
 
     private final PlayerTrainingScheduledEventWriteRepository playerTrainingScheduledEventWriteRepository;
     private final PlayerTrainingScheduledEventReadRepository playerTrainingScheduledEventReadRepository;
@@ -60,7 +56,6 @@ public class SchedulePlayerTrainingUseCase {
     }
 
     private void scheduleAndStoreEvent(Player player, PlayerSkill skill) {
-
         PlayerTrainingScheduledEvent playerTrainingScheduledEvent = PlayerTrainingScheduledEvent.builder()
             .id(EventId.generate())
             .occurredAt(InstantProvider.now())

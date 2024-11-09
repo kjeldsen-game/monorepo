@@ -18,11 +18,12 @@ public class QuartzConfiguration {
     @PostConstruct
     public void setupQuartz() {
         try {
-//            scheduleJob(NewDayJob.class, "newDayJob", "newDayJob",
-//                SimpleScheduleBuilder.simpleSchedule()
-//                    .withIntervalInMinutes(617)  //617 10.28 hours = 617 minutes
-//                    .repeatForever()
-//                    .withMisfireHandlingInstructionFireNow());
+            // TODO Quartz fix the interval in minutes, set to minute while testing
+            scheduleJob(NewDayJob.class, "newDayJob", "newDayJob",
+                SimpleScheduleBuilder.simpleSchedule()
+                    .withIntervalInMinutes(2)  //617 10.28 hours = 617 minutes
+                    .repeatForever()
+                    .withMisfireHandlingInstructionFireNow());
 //
 //            scheduleJob(NewWeekJob.class, "newWeekJob", "newWeekTrigger",
 //                SimpleScheduleBuilder.simpleSchedule()
@@ -43,11 +44,11 @@ public class QuartzConfiguration {
 //                    .repeatForever()
 //                    .withMisfireHandlingInstructionFireNow());
 
-            scheduleJob(TestJob.class, "testJob", "testJob",
-                SimpleScheduleBuilder.simpleSchedule()
-                    .withIntervalInMinutes(1)  //617 10.28 hours = 617 minutes
-                    .repeatForever()
-                    .withMisfireHandlingInstructionFireNow());
+//            scheduleJob(TestJob.class, "testJob", "testJob",
+//                SimpleScheduleBuilder.simpleSchedule()
+//                    .withIntervalInMinutes(1)  //617 10.28 hours = 617 minutes
+//                    .repeatForever()
+//                    .withMisfireHandlingInstructionFireNow());
 
         } catch (SchedulerException e) {
             e.printStackTrace();  // Handle exceptions

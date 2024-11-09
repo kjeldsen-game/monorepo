@@ -31,8 +31,8 @@ public class SignSponsorIncomeUseCase {
         team.getEconomy().getSponsors().put(periodicity, mode);
 
         BigDecimal amount = getAmount(mode, periodicity, false);
-        createTransactionUseCase.create(teamId, amount, Transaction.TransactionType.SPONSOR);
         teamWriteRepository.save(team);
+        createTransactionUseCase.create(teamId, amount, Transaction.TransactionType.SPONSOR);
     }
 
     public void processBonus(Team.TeamId teamId) {

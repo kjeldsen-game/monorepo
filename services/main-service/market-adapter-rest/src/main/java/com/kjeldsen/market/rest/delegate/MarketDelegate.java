@@ -13,7 +13,9 @@ import com.kjeldsen.market.rest.mapper.AuctionMapper;
 import com.kjeldsen.market.rest.mapper.PlayerMapper;
 import com.kjeldsen.market.rest.model.*;
 import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.AuctionEndEvent;
+import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,7 @@ public class MarketDelegate implements MarketApiDelegate {
     private final AuctionEndUseCase auctionEndUseCase;
     private final AuctionEndEventPublisher auctionEndEventPublisher;
     private final AuthService authService;
+    private final TeamReadRepository teamReadRepository;
     private final AuctionReadRepository auctionReadRepository;
     private final GetMarketAuctionsUseCase getMarketAuctionsUseCase;
     private final AuctionEndJobScheduler auctionEndJobScheduler;
@@ -50,7 +53,7 @@ public class MarketDelegate implements MarketApiDelegate {
         }
         BigDecimal amount = BigDecimal.valueOf(placeAuctionBidRequest.getAmount());
         Auction auction = placeBidUseCase.placeBid(Auction.AuctionId.of(auctionId), amount, currentUseId.get());
-        auctionEndJobScheduler.rescheduleAuctionEndJob(auctionId, auction.getEndedAt());
+        //auctionEndJobScheduler.rescheduleAuctionEndJob(auctionId, auction.getEndedAt());
         return ResponseEntity.ok().build();
     }
 
@@ -65,6 +68,14 @@ public class MarketDelegate implements MarketApiDelegate {
     @Override
     public ResponseEntity<List<MarketAuctionResponse>> getAllAuctions(Integer size, Integer page,
         PlayerPosition position, String skills, String potentialSkills,  Integer minAge, Integer maxAge, Double minBid, Double maxBid, String playerId) {
+        log.info("Get all auctions");
+        Optional<String> currentUserId = authService.currentUserId();
+        if (currentUserId.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        Team team = teamReadRepository.findByUserId(currentUserId.get()).orElseThrow(
+            () -> new RuntimeException("Team not found"));
 
         Map<Auction, Player> auctionPlayerMap = getMarketAuctionsUseCase.getAuctions(maxBid, minBid, maxAge, minAge,
             position != null ? PlayerMapper.INSTANCE.playerPositionMap(position) : null, skills, potentialSkills,
@@ -76,10 +87,18 @@ public class MarketDelegate implements MarketApiDelegate {
                 Player player = entry.getValue();
                 MarketPlayerResponse playerResponse = PlayerMapper.INSTANCE.playerResponseMap(player);
 
-                return new MarketAuctionResponse().auctionId(
-                    auction.getId().value()).averageBid(auction.getAverageBid())
+                Auction.Bid highestBid = auction.getBids().stream()
+                    .filter(bid -> bid.getTeamId().equals(team.getId()))
+                    .max(Comparator.comparing(Auction.Bid::getAmount))
+                    .orElse(null);
+
+                return new MarketAuctionResponse().id(
+                    auction.getId().value())
                     .averageBid(auction.getAverageBid())
-                    .bids(auction.getBids().size())
+                    .bidders(auction.getBids().size())
+                    .teamId(auction.getTeamId().value())
+                    .bid(highestBid != null ? highestBid.getAmount() : null)
+                    .endedAt(auction.getEndedAt().toString())
                     .player(playerResponse);
             })
             .toList();

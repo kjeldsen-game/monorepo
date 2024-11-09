@@ -1,5 +1,6 @@
 package com.kjeldsen.player.application.usecases.player;
 
+import com.kjeldsen.player.application.usecases.trainings.SchedulePlayerTrainingUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;

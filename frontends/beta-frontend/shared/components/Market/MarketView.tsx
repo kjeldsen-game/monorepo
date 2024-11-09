@@ -1,72 +1,90 @@
 import { Box, CircularProgress } from '@mui/material';
 import MarketFilter from './MarketFilter';
-import { useMemo, useState } from 'react';
-import { Auction } from '@/shared/models/Auction';
+import { useEffect, useMemo, useState } from 'react';
+import { Auction, AuctionMarket } from '@/shared/models/Auction';
 import { marketColumn } from '../Grid/Columns/MarketColumn';
 import Grid from '../Grid/Grid';
 import DashboardLink from '../DashboardLink';
 import MarketModal from './MarketModal';
 
 interface MarketProps {
-    auctions: Auction[] | undefined;
-    refetch: () => void;
+  auctions: AuctionMarket[] | undefined;
+  refetch: () => void;
 }
 
 const MarketView: React.FC<MarketProps> = ({
-    auctions,
-    refetch,
+  auctions,
+  refetch,
 }: MarketProps) => {
-    const [activeAuction, setActiveAuction] = useState('');
-    const [open, setOpen] = useState<boolean>(false);
+  const [activeAuction, setActiveAuction] = useState<AuctionMarket | undefined>(
+    undefined,
+  );
+  const [open, setOpen] = useState<boolean>(false);
 
-    const handleRowButtonClick = (auctionId: string) => {
-        setActiveAuction(auctionId);
-        setOpen(true);
-    };
+  const handleRowButtonClick = (auction: AuctionMarket) => {
+    setActiveAuction(auction);
+    setOpen(true);
+  };
 
-    const memoizedColumns = useMemo(
-        () => marketColumn(handleRowButtonClick),
-        [],
-    );
+  useEffect(() => {
+    if (activeAuction !== undefined && auctions?.length > 0) {
+      const updatedAuction = auctions?.find(
+        (auction) => auction.id === activeAuction.id,
+      );
 
-    const handleCloseModal = () => {
-        setOpen(false);
-    };
+      if (updatedAuction) {
+        setActiveAuction(updatedAuction);
+      }
+    }
+  }, [activeAuction, auctions]);
 
-    return (
-        <Box sx={{ width: '100%' }}>
-            <DashboardLink children={'Back to Dashboard'} />
-            <MarketModal
-                refetch={refetch}
-                auctionId={activeAuction}
-                open={open}
-                handleClose={handleCloseModal}
-            />
-            <Box
-                sx={{
-                    marginBottom: '2rem',
-                    alignItems: 'center',
-                }}>
-                <MarketFilter refetch={refetch} />
-            </Box>
-            <Box sx={{ width: '100%' }}>
-                {auctions ? (
-                    <Grid
-                        sx={{
-                            '& .MuiDataGrid-columnSeparator': {
-                                display: 'none',
-                            },
-                        }}
-                        getRowId={(row) => row.auctionId}
-                        rows={auctions}
-                        columns={memoizedColumns}
-                    />
-                ) : (
-                    <CircularProgress />
-                )}
-            </Box>
-        </Box>
-    );
+  const memoizedColumns = useMemo(() => marketColumn(handleRowButtonClick), []);
+
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+
+  return (
+    <Box sx={{ width: '100%' }}>
+      <DashboardLink children={'Back to Dashboard'} />
+      <MarketModal
+        auction={activeAuction}
+        refetch={refetch}
+        open={open}
+        handleClose={handleCloseModal}
+      />
+      <Box
+        sx={{
+          marginBottom: '2rem',
+          alignItems: 'center',
+        }}>
+        <MarketFilter refetch={refetch} />
+      </Box>
+      <Box sx={{ width: '100%' }}>
+        {auctions ? (
+          <Grid
+            sx={{
+              '& .MuiDataGrid-columnSeparator': {
+                display: 'none',
+              },
+              '& .MuiDataGrid-columnHeaders': {
+                padding: 0, // Removes padding from the column header container
+              },
+              '& .MuiDataGrid-columnHeader': {
+                padding: 0, // Removes padding from each individual header cell
+              },
+            }}
+            disableColumnMenu={true}
+            getRowId={(row) => row.id}
+            rows={auctions}
+            columns={memoizedColumns}
+          />
+        ) : (
+          <CircularProgress />
+        )}
+      </Box>
+    </Box>
+  );
 };
 
 export default MarketView;

@@ -3,15 +3,18 @@ package com.kjeldsen.player.domain;
 import com.kjeldsen.player.domain.events.FansEvent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import javax.swing.text.TabExpander;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 public class TeamTest {
 
@@ -36,10 +39,37 @@ public class TeamTest {
         Assertions.assertEquals(exampleTeamId, teamId.value());
     }
 
+
+
+    // ********* Start LeagueStats Tests *********
+    @Test
+    public void should_return_minus_one_if_leagueStats_not_defined() {
+        Team testTeam = Team.builder().leagueStats(null).build();
+        assertEquals(-1, testTeam.getActualSeason());
+    }
+    @Test
+    public void should_return_last_position_if_no_prev_position() {
+        Team testTeam = Team.builder().leagueStats(Map.of(
+            1, Team.LeagueStats.builder().points(12).tablePosition(1).build()
+        )).build();
+        assertEquals(12, testTeam.getLastSeasonPosition());
+    }
+    // ********* End LeagueStats Tests *********
+
+
+
+    // ********* Start Fans Tests *********
+
+    @Test
+    public void should_return_total_fans() {
+        Team team = Team.builder().fans(Team.Fans.builder().build()).build();
+        // Value of fans when team is created is set to 10000
+        assertThat(team.getFans().getTotalFans()).isEqualTo(10000);
+    }
+
     @Test
     public void should_update_loyalty_double_input() {
         Team team = Team.builder().fans(Team.Fans.builder().build()).build();
-
         Double testLoyaltyValue = 1.0;
         team.getFans().updateAllLoyaltyTiers(testLoyaltyValue);
         assertThat(team.getFans().getFanTiers().values())
@@ -79,6 +109,9 @@ public class TeamTest {
         team.getFans().resetLoyalty();
         assertThat(team.getFans().getFanTiers().get(1).getLoyalty()).isEqualTo(50.0);
     }
+
+    // ********* End Fans Tests *********
+
 
     @Test
     public void should_throw_error_if_stadium_have_max_seats() {

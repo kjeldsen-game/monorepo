@@ -68,6 +68,7 @@ public class MatchJob implements Job {
             matchWriteRepository.save(m);
         });
     }
+
     private Map<String, Integer> getMatchAttendance(Match match) {
         com.kjeldsen.player.domain.Team homeTeam = teamReadRepository.findById(Team.TeamId.of(match.getHome().getId()))
             .orElseThrow(() -> new RuntimeException("Team not found"));
