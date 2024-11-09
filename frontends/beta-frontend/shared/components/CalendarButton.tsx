@@ -46,11 +46,21 @@ const CalendarButton: React.FC<CalendarButtonProps> = ({
   return (
     <div>
       <Button
-        sx={{ marginX: '10px' }}
+        variant="outlined"
+        sx={{
+          borderColor: '#FF3F84',
+          color: '#FF3F84',
+          background: '#FFFFFF',
+          '&:hover': {
+            backgroundColor: '#FF3F84',
+            color: 'white',
+            borderColor: 'transparent',
+          },
+          borderRadius: '4px',
+          marginX: '10px',
+        }}
         ref={buttonRef}
-        onClick={handleButtonClick}
-        color="info"
-        variant="contained">
+        onClick={handleButtonClick}>
         {children}
       </Button>
       <Popover
