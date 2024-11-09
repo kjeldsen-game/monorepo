@@ -2,17 +2,23 @@ server:
   port: 8081
   error:
     include-message: always
+  forward-headers-strategy: framework
 
 spring:
   application:
     name: main-service
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      username: admin
-      password: root
-      database: admin
+      uri: mongodb://admin:root@localhost:27017/admin
+  quartz:
+    properties:
+      org:
+        quartz:
+          jobStore:
+            class: com.novemberain.quartz.mongodb.MongoDBJobStore
+            mongoUri: mongodb://admin:root@localhost:27017/admin
+            collectionPrefix: quartz_
+            dbName: quartz_db
 
 springdoc:
   version: '@springdoc.version@'
@@ -64,3 +70,7 @@ security:
       DDEH2BHz/eyCep6OcIsfeCTNDqlnQgB0ZEpHBPYMSQ2a1RasFmcmB0dy3kU7X1MS
       Mj3zZSFV5VuaPhjbk4mZIzGi/34o4BBVnZNJNuk4xvgRR6Qn3+lqRvQ=
       -----END RSA PRIVATE KEY-----
+logging:
+  level:
+    com.n.quartz.mongodb.dao.LocksDao: ERROR
+    com.n.quartz.mongodb.TriggerRunner: ERROR

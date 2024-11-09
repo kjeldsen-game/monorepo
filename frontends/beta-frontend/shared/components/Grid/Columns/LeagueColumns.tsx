@@ -1,34 +1,39 @@
-import { CalendarButton } from '@/shared/components/CalendarButton'
-import { GridCellParams, GridColDef } from '@mui/x-data-grid'
-import { GridAlignment } from '@mui/x-data-grid'
-import { TFunction } from 'i18next'
-import { Moment } from 'moment'
-import Link from 'next/link'
+import { CalendarButton } from '@/shared/components/CalendarButton';
+import { GridCellParams, GridColDef } from '@mui/x-data-grid';
+import { GridAlignment } from '@mui/x-data-grid';
+import { TFunction } from 'i18next';
+import { Moment } from 'moment';
+import Link from 'next/link';
+import { leftColumnConfig, rightColumnConfig } from './ColumnsConfig';
 
-const leagueColumns = (t: TFunction, handleChallengeButtonClick: (id: string, date: Moment) => void, disabledDates: number[]): GridColDef[] => [
+const leagueColumns = (
+  t: TFunction,
+  handleChallengeButtonClick: (id: string, date: Moment) => void,
+  disabledDates: number[],
+): GridColDef[] => [
   {
     field: 'teamName',
-    headerName: 'Team name',
-    headerAlign: 'center' as GridAlignment,
-    align: 'center' as GridAlignment,
-    minWidth: 70,
-    flex: 1,
+    renderHeader: () => <div style={{ paddingInline: '20px' }}>Team Name</div>,
+    ...leftColumnConfig,
     renderCell: (params: GridCellParams) => (
-      <Link passHref href={`/team/${params.row.id}`}>
+      <Link
+        style={{ paddingInline: '20px' }}
+        passHref
+        href={`/team/${params.row.id}`}>
         {params.row.name}
       </Link>
     ),
   },
   {
     field: 'manager',
-    headerName: 'Manager',
-    headerAlign: 'center' as GridAlignment,
-    minWidth: 130,
-    flex: 1,
+    renderHeader: () => <div style={{ paddingInline: '20px' }}>Manager</div>,
+    ...rightColumnConfig,
     renderCell: (params: GridCellParams) => (
       <CalendarButton
         datePickerProps={{
-          shouldDisableTime: (moment, view) => disabledDates.includes(moment.toDate().getTime()) && view === 'minutes',
+          shouldDisableTime: (moment, view) =>
+            disabledDates.includes(moment.toDate().getTime()) &&
+            view === 'minutes',
           minutesStep: 10,
           openTo: 'day',
         }}
@@ -37,7 +42,7 @@ const leagueColumns = (t: TFunction, handleChallengeButtonClick: (id: string, da
       </CalendarButton>
     ),
   },
-]
+];
 
-export { leagueColumns }
-export default leagueColumns
+export { leagueColumns };
+export default leagueColumns;

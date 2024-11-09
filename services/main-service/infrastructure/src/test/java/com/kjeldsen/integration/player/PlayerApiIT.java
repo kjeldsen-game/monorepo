@@ -54,14 +54,11 @@ class PlayerApiIT extends AbstractIT {
         @Test
         @DisplayName("return 201 when a valid request is sent")
         void return_201_status_when_a_valid_request_is_sent() throws Exception {
-            PlayerAge age = new PlayerAge();
-            age.setYears(BigDecimal.valueOf(16));
             CreatePlayerRequest request = new CreatePlayerRequest()
-                .age(age)
                 .position(PlayerPosition.FORWARD)
                 .points(700);
 
-            mockMvc.perform(post("/player")
+            mockMvc.perform(post("/api/player")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
@@ -69,7 +66,7 @@ class PlayerApiIT extends AbstractIT {
             var players = playerReadRepository.find(findPlayersQuery(com.kjeldsen.player.domain.PlayerPosition.FORWARD));
 
             assertThat(players).hasSize(1);
-            assertThat(players.get(0).getAge().getYears()).isEqualTo(16);
+            assertThat(players.get(0).getAge().getYears()).isNotNull();
             assertThat(players.get(0).getPosition().name()).isEqualTo("FORWARD");
         }
     }
@@ -83,7 +80,7 @@ class PlayerApiIT extends AbstractIT {
             GeneratePlayersRequest request = new GeneratePlayersRequest()
                 .numberOfPlayers(10);
 
-            mockMvc.perform(post("/player/generate")
+            mockMvc.perform(post("/api/player/generate")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
@@ -106,8 +103,7 @@ class PlayerApiIT extends AbstractIT {
                 .mapToObj(i -> PlayerPositionTendency.getDefault(PlayerProvider.position()))
                 .map(positionTendencies -> PlayerProvider.generate(Team.TeamId.generate(), positionTendencies, PlayerCategory.JUNIOR, 200))
                 .forEach(player -> {
-                    com.kjeldsen.player.domain.PlayerAge ageToCreate = null;
-                    ageToCreate = com.kjeldsen.player.domain.PlayerAge.generateAgeOfAPlayer();
+                    com.kjeldsen.player.domain.PlayerAge ageToCreate = com.kjeldsen.player.domain.PlayerAge.generateAgeOfAPlayer();
                     player.setAge(ageToCreate);
                     playerWriteRepository.save(player);
                 });
@@ -126,10 +122,9 @@ class PlayerApiIT extends AbstractIT {
                         .actualSkills(player.getActualSkills().entrySet().stream()
                             .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerApiIT::map))
                         ))
-                .toList()
-                .subList(0, 10);
+                .toList();
 
-            mockMvc.perform(get("/player")
+            mockMvc.perform(get("/api/player")
                     .queryParam("page", "0")
                     .queryParam("size", "10")
                     .queryParam("position", "FORWARD")
@@ -156,14 +151,16 @@ class PlayerApiIT extends AbstractIT {
                 .id(examplePlayer.getId().value())
                 .name(examplePlayer.getName())
                 .economy(map(playerEconomy))
+                .status(PlayerStatus.INACTIVE)
                 .age(PlayerMapper.INSTANCE.map(examplePlayer.getAge()))
+                .playerOrder(PlayerOrder.NONE)
                 .position(PlayerPosition.fromValue(examplePlayer.getPosition().name()))
                 .category(com.kjeldsen.player.rest.model.PlayerCategory.fromValue(examplePlayer.getCategory().name()))
                 .actualSkills(examplePlayer.getActualSkills().entrySet().stream()
                 .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerApiIT::map))
                 );
 
-            mockMvc.perform(get("/player/{playerId}", examplePlayer.getId().value()))
+            mockMvc.perform(get("/api/player/{playerId}", examplePlayer.getId().value()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(response)));

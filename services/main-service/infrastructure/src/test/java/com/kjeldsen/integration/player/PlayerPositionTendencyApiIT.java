@@ -187,7 +187,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
                         ._default(true)
             );
 
-            mockMvc.perform(get("/player-position-tendencies"))
+            mockMvc.perform(get("/api/player-position-tendencies"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(expected)));
@@ -207,7 +207,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
                     .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                 ._default(PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES.isDefault());
 
-            mockMvc.perform(get("/player-position-tendencies/CENTRE_BACK"))
+            mockMvc.perform(get("/api/player-position-tendencies/CENTRE_BACK"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(expected)));
@@ -229,7 +229,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
                     .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerPositionTendencyApiIT::map)))
                 ._default(false);
 
-            mockMvc.perform(get("/player-position-tendencies/FORWARD"))
+            mockMvc.perform(get("/api/player-position-tendencies/FORWARD"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(expected)));
@@ -252,7 +252,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
                 .tendencies(Map.of(PlayerSkill.SCORING.name(), var))
                 ._default(false);
 
-            mockMvc.perform(patch("/player-position-tendencies/FORWARD")
+            mockMvc.perform(patch("/api/player-position-tendencies/FORWARD")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())

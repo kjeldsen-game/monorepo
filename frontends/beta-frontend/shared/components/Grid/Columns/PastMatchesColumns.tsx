@@ -1,29 +1,34 @@
-import { Button, MenuItem, Select } from '@mui/material'
-import { GridCellParams, GridColDef } from '@mui/x-data-grid'
-import { GridAlignment } from '@mui/x-data-grid'
-import Link from 'next/link'
+import { Button, MenuItem, Select } from '@mui/material';
+import { GridCellParams, GridColDef } from '@mui/x-data-grid';
+import { GridAlignment } from '@mui/x-data-grid';
+import Link from 'next/link';
+import {
+  baseColumnConfig,
+  leftColumnConfig,
+  rightColumnConfig,
+} from './ColumnsConfig';
+import MarketButton from '../../Market/MarketButton';
 
-const pastMatchesColumns = (onReportSelect: (matchId: string) => void): GridColDef[] => [
+const pastMatchesColumns = (
+  onReportSelect: (matchId: string) => void,
+): GridColDef[] => [
   {
     field: 'away',
-    headerName: 'away',
-    headerAlign: 'center' as GridAlignment,
-    align: 'center' as GridAlignment,
-    minWidth: 70,
-    flex: 1,
+    ...leftColumnConfig,
+    renderHeader: () => <div style={{ paddingInline: '20px' }}>Away</div>,
     renderCell: (params: GridCellParams) => (
-      <Link passHref href={`/team/${params.row.away.id}`}>
+      <Link
+        style={{ paddingInline: '20px' }}
+        passHref
+        href={`/team/${params.row.away.id}`}>
         {params.row.away.name}
       </Link>
     ),
   },
   {
     field: 'home',
-    headerName: 'home',
-    headerAlign: 'center' as GridAlignment,
-    align: 'center' as GridAlignment,
-    minWidth: 70,
-    flex: 1,
+    ...baseColumnConfig,
+    renderHeader: () => <div style={{ paddingInline: '20px' }}>Home</div>,
     renderCell: (params: GridCellParams) => (
       <Link passHref href={`/team/${params.row.home.id}`}>
         {params.row.home.name}
@@ -32,29 +37,24 @@ const pastMatchesColumns = (onReportSelect: (matchId: string) => void): GridColD
   },
   {
     field: 'dateTime',
-    headerName: 'Date',
-    headerAlign: 'center' as GridAlignment,
-    align: 'center' as GridAlignment,
-    minWidth: 70,
-    flex: 1,
+    renderHeader: () => <div style={{ paddingInline: '20px' }}>Date</div>,
+    ...baseColumnConfig,
   },
   {
     field: 'reportButton',
-    headerName: 'Report',
-    headerAlign: 'center' as GridAlignment,
-    align: 'center' as GridAlignment,
-    minWidth: 70,
-    flex: 1,
-    renderCell: (val) => {
-      console.log(val.row)
+    renderHeader: () => <div style={{ paddingInline: '20px' }}>Report</div>,
+    ...rightColumnConfig,
+    renderCell: (params: GridCellParams) => {
       return (
-        <Button variant="contained" color="primary" onClick={() => onReportSelect(val.row.id)}>
+        <MarketButton
+          sx={{ marginInline: '10px' }}
+          onClick={() => onReportSelect(params.row.id)}>
           Report
-        </Button>
-      )
+        </MarketButton>
+      );
     },
   },
-]
+];
 
-export { pastMatchesColumns }
-export default pastMatchesColumns
+export { pastMatchesColumns };
+export default pastMatchesColumns;

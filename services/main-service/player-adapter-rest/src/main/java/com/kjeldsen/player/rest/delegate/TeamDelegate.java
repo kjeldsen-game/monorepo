@@ -1,24 +1,26 @@
 package com.kjeldsen.player.rest.delegate;
 
-import com.kjeldsen.player.application.usecases.GetTeamUseCase;
-import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.application.usecases.economy.GetPlayerWagesTransactionsUseCase;
+import com.kjeldsen.player.application.usecases.economy.GetTeamTransactionsUseCase;
+import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerStatus;
-import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Team.TeamId;
 import com.kjeldsen.player.domain.repositories.FindTeamsQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.rest.api.TeamApiDelegate;
+import com.kjeldsen.player.rest.mapper.EconomyMapper;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.mapper.TeamMapper;
-import com.kjeldsen.player.rest.model.EditPlayerRequest;
-import com.kjeldsen.player.rest.model.EditTeamRequest;
-import com.kjeldsen.player.rest.model.PlayerResponse;
-import com.kjeldsen.player.rest.model.TeamResponse;
-import java.util.List;
-import java.util.Objects;
+import com.kjeldsen.player.rest.model.*;
+
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import com.kjeldsen.player.rest.model.Transaction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -28,10 +30,53 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class TeamDelegate implements TeamApiDelegate {
 
-    private final GetTeamUseCase getTeamUseCase;
+    private final GetTeamTransactionsUseCase getTeamTransactionsUseCase;
     private final TeamReadRepository teamReadRepository;
     private final PlayerReadRepository playerReadRepository;
     private final PlayerWriteRepository playerWriteRepository;
+    private final GetPlayerWagesTransactionsUseCase getPlayerWagesTransactionsUseCase;
+
+    @Override
+    public ResponseEntity<EconomyResponse> getTeamEconomy(String teamId) {
+        Map<String, GetTeamTransactionsUseCase.TeamTransactionSummary> transactions =
+            getTeamTransactionsUseCase.getTransactions(teamId);
+        List<GetPlayerWagesTransactionsUseCase.PlayerWageSummary> playerWageSummaryList =
+            getPlayerWagesTransactionsUseCase.getPlayerWagesTransactions(teamId);
+
+        List<Transaction> responseTransactions = transactions.entrySet().stream()
+            .map(EconomyMapper.INSTANCE::mapToTransaction)
+            .toList();
+
+        List<PlayerWageTransaction> responseWages = playerWageSummaryList.stream()
+            .map(EconomyMapper.INSTANCE::mapToPlayerWageTransaction).toList();
+
+        Team team = teamReadRepository.findById(TeamId.of(teamId)).orElseThrow(
+            () -> new IllegalArgumentException("Team with id " + teamId + " not found"));
+
+        List<Sponsor> sponsors = team.getEconomy().getSponsors().entrySet().stream()
+            .map(entry -> new Sponsor()
+                .mode(entry.getValue() != null ? SponsorMode.valueOf(entry.getValue().name()) : null)
+                .periodicity(SponsorPeriodicity.valueOf(entry.getKey().name())))
+            .toList();
+
+        List<PriceItem> prices = team.getEconomy().getPrices().entrySet().stream()
+            .filter(entry -> entry.getKey() != null && entry.getValue() != null)
+            .map(entry -> new PriceItem()
+                .type(PricingType.valueOf(entry.getKey().name()))
+                .value(entry.getValue())).toList();
+
+        BillboardDeal billboardDeal = EconomyMapper.INSTANCE.mapToBillboardDeal(team.getEconomy().getBillboardDeal());
+
+        EconomyResponse economyResponse = new EconomyResponse()
+            .playerWages(responseWages)
+            .balance(team.getEconomy().getBalance())
+            .prices(prices)
+            .transactions(responseTransactions)
+            .billboardDeal(billboardDeal)
+            .sponsor(sponsors);
+
+        return ResponseEntity.ok(economyResponse);
+    }
 
     @Override
     public ResponseEntity<List<TeamResponse>> getAllTeams(String name, Integer size, Integer page) {
@@ -102,6 +147,7 @@ public class TeamDelegate implements TeamApiDelegate {
         TeamResponse response = TeamMapper.INSTANCE.map(team);
         return ResponseEntity.ok(response);
     }
+
 
     // Validates that the 11 players on the active team conform to the rules about positions
     private void validateTeamFormation(List<EditPlayerRequest> activePlayers) {

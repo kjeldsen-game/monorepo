@@ -1,68 +1,52 @@
-import { MatchActionType, MatchEventSide, Play } from '@/shared/models/MatchReport'
-import { SportsSoccer, ArrowForward, ControlCamera, KeyboardDoubleArrowDown } from '@mui/icons-material'
-import Box from '@mui/material/Box'
+import { Play } from '@/shared/models/MatchReport';
+import Box from '@mui/material/Box';
+import MatchReportItemMessage from './MatchReportItemMessage';
+
 interface MatchReportItemProps {
-  event: Play
-  sx?: React.CSSProperties
+  event: Play;
+  sx?: React.CSSProperties;
+  homeId: string;
+  awayId: string;
 }
 
-const justifyStyles: Record<MatchEventSide, React.CSSProperties> = {
-  MainEvent: {
-    justifyContent: 'center',
-  },
-  HomeTeamEvent: {
-    justifyContent: 'left',
-  },
-  AwayTeamEvent: {
-    justifyContent: 'right',
-  },
-}
-
-const colorStyles: Record<MatchEventSide, React.CSSProperties> = {
-  MainEvent: {
-    color: 'white',
-  },
-  HomeTeamEvent: {
-    color: 'green',
-  },
-  AwayTeamEvent: {
-    color: 'red',
-  },
-}
-
-const iconByAction: Record<MatchActionType, React.ReactNode> = {
-  PASSING: <ArrowForward />,
-  POSITIONAL: <ControlCamera />,
-  TACKLE: <KeyboardDoubleArrowDown />,
-  SHOT: <SportsSoccer />,
-}
-
-export const MatchReportItem: React.FC<MatchReportItemProps> = ({ sx, event }) => {
+export const MatchReportItem: React.FC<MatchReportItemProps> = ({
+  sx,
+  event,
+  homeId,
+}) => {
   return (
     <Box
       sx={{
-        alignItems: 'center',
         width: '100%',
         display: 'flex',
-        flexDirection: 'row',
-        ...justifyStyles[event.duel.side],
-        ...sx,
+        flexDirection: 'column',
       }}>
-      {iconByAction[event.duel.type]}
-      <span
-        style={{
-          color: 'black',
-          fontWeight: 'bold',
-          marginRight: '5px',
-          ...colorStyles[event.duel.side],
-        }}>
-        {event.duel.initiator.name}
-        {event.duel.type}
-      </span>
-      <span>{event.duel.challenger?.name}</span>
-      <span>{event.duel.receiver?.name}</span>
+      <Box
+        alignSelf={'center'}
+        fontSize={'8px'}
+        textAlign={'center'}
+        sx={{ background: '#A3A3A3', width: '40px' }}
+        borderRadius={'5px'}>
+        {event.clock}:00
+      </Box>
+      <Box
+        paddingY={'10px'}
+        display={'flex'}
+        justifyContent={
+          event.duel.initiator.teamId != homeId ? 'start' : 'end'
+        }>
+        <Box
+          textAlign={event.duel.initiator.teamId != homeId ? 'left' : 'right'}
+          sx={{ width: '50%' }}>
+          <MatchReportItemMessage
+            homeId={homeId}
+            duel={event.duel}
+            type={event.action}
+          />
+        </Box>
+      </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default MatchReportItem
+export default MatchReportItem;

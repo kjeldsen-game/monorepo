@@ -1,8 +1,12 @@
-import { Box, Button } from '@mui/material'
-import { GridCellParams, GridColDef } from '@mui/x-data-grid'
-import { GridAlignment } from '@mui/x-data-grid'
-import Link from 'next/link'
-import { sampleColumns } from '../PlayerGrid'
+import { Box, Button } from '@mui/material';
+import { GridCellParams, GridColDef } from '@mui/x-data-grid';
+import { GridAlignment } from '@mui/x-data-grid';
+import Link from 'next/link';
+import {
+  baseColumnConfig,
+  leftColumnConfig,
+  rightColumnConfig,
+} from './ColumnsConfig';
 
 const inviteColumns = (
   ownTeamId: string,
@@ -11,60 +15,66 @@ const inviteColumns = (
 ): GridColDef[] => [
   {
     field: 'id',
-    headerName: 'Match Id',
-    headerAlign: 'center' as GridAlignment,
-    align: 'center' as GridAlignment,
-    minWidth: 70,
-    flex: 1,
+    ...leftColumnConfig,
+    renderHeader: () => <div style={{ paddingInline: '20px' }}>Match ID</div>,
     renderCell: (params: GridCellParams) => (
-      <Link passHref href={`/team/${params.row.away}`}>
+      <Link
+        style={{ paddingInline: '20px' }}
+        passHref
+        href={`/team/${params.row.away.id}`}>
         {params.value}
       </Link>
     ),
   },
   {
     field: 'dateTime',
-    headerName: 'Date',
-    headerAlign: 'center' as GridAlignment,
-    align: 'center' as GridAlignment,
-    minWidth: 70,
-    flex: 1,
+    renderHeader: () => <div style={{ paddingInline: '20px' }}>Date</div>,
+    ...baseColumnConfig,
   },
   {
     field: 'acceptButton',
-    headerName: 'Action',
-    headerAlign: 'center' as GridAlignment,
-    align: 'center' as GridAlignment,
-    minWidth: 70,
-    flex: 1,
+    renderHeader: () => <div style={{ paddingInline: '20px' }}>Action</div>,
+    ...rightColumnConfig,
     renderCell: (params: GridCellParams) => {
-      if (ownTeamId === params.row?.home?.id)
-        return (
-          <Button variant="contained" disabled color="info" sx={{ mx: '5px' }}>
-            Pending confirmation
-          </Button>
-        )
-
       if (params.row?.status === 'ACCEPTED')
         return (
-          <Button variant="contained" disabled color="success" sx={{ mx: '5px' }}>
+          <Button
+            variant="contained"
+            disabled
+            color="success"
+            sx={{ mx: '10px' }}>
             Accepted
           </Button>
-        )
+        );
+
+      if (ownTeamId === params.row?.home?.id)
+        return (
+          <Button variant="contained" disabled color="info" sx={{ mx: '10px' }}>
+            Pending confirmation
+          </Button>
+        );
 
       return (
         <Box>
-          <Button variant="contained" color="info" sx={{ mx: '5px' }} onClick={() => onChallengeAccept(params.row?.id)}>
+          <Button
+            variant="contained"
+            color="info"
+            sx={{ mx: '10px' }}
+            onClick={() => onChallengeAccept(params.row?.id)}>
             Accept
           </Button>
-          <Button variant="contained" color="error" sx={{ mx: '5px' }} onClick={() => onChallengeDecline(params.row?.id)}>
+          <Button
+            variant="contained"
+            color="error"
+            sx={{ mx: '10px' }}
+            onClick={() => onChallengeDecline(params.row?.id)}>
             Decline
           </Button>
         </Box>
-      )
+      );
     },
   },
-]
+];
 
-export { inviteColumns }
-export default inviteColumns
+export { inviteColumns };
+export default inviteColumns;

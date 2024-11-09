@@ -1,10 +1,10 @@
-import { DataGrid, DataGridProps, GridColDef } from '@mui/x-data-grid'
-import Box from '@mui/material/Box'
+import { DataGrid, DataGridProps, GridColDef } from '@mui/x-data-grid';
+import Box from '@mui/material/Box';
 
 type GridProps<T> = {
-  rows: T[]
-  columns: GridColDef[]
-} & DataGridProps
+  rows: T[];
+  columns: GridColDef[];
+} & DataGridProps;
 
 function Grid<T>({ rows, columns, ...props }: GridProps<T>) {
   return (
@@ -28,10 +28,26 @@ function Grid<T>({ rows, columns, ...props }: GridProps<T>) {
         '& .super-app.forward .MuiDataGrid-cellContent': {
           backgroundColor: '#E52323',
         },
+        '& .MuiDataGrid-columnHeaders': {
+          fontWeight: 900,
+        },
+        '.MuiDataGrid-iconButtonContainer': {
+          visibility: 'visible',
+        },
+        '.MuiDataGrid-sortIcon': {
+          opacity: 'inherit !important',
+        },
       }}>
-      <DataGrid autoHeight={true} rows={rows} columns={columns} hideFooter={true} {...props} />
+      <DataGrid
+        disableColumnMenu
+        autoHeight={true}
+        rows={rows}
+        columns={columns}
+        hideFooter={true}
+        {...props}
+      />
     </Box>
-  )
+  );
 }
 
-export default Grid
+export default Grid;

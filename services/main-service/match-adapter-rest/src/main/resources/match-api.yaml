@@ -3,6 +3,12 @@ info:
   version: 1.0.0
   title: Match Service API
 
+servers:
+  #  - url: http://localhost:8081/api
+  #  - url: https://actively-accurate-platypus.ngrok-free.app/api
+  - url: http://localhost:8081/v1
+  - url: https://actively-accurate-platypus.ngrok-free.app/v1
+
 tags:
   - name: match
 
@@ -499,6 +505,24 @@ components:
         - TACKLE
         - SHOOT
 
+    DuelStats:
+      type: object
+      properties:
+        total:
+          type: integer
+        performance:
+          type: integer
+        skillPoints:
+          type: integer
+        assistance:
+          type: integer
+        carryover:
+          type: integer
+        teamAssistance:
+          type: object
+          additionalProperties:
+            type: integer
+
     DuelResponse:
       type: object
       properties:
@@ -510,6 +534,11 @@ components:
           $ref: "#/components/schemas/PlayerResponse"
         result:
           $ref: "#/components/schemas/DuelResultResponse"
+        initiatorStats:
+          $ref: "#/components/schemas/DuelStats"
+        challengerStats:
+          $ref: "#/components/schemas/DuelStats"
+
 
     DuelResultResponse:
       type: string

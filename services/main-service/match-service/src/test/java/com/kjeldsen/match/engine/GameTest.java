@@ -88,7 +88,7 @@ class GameTest {
     @Disabled
     void viewGameNarration() {
         GameState state = Game.play(match);
-        MatchReport report = new MatchReport(state, state.getPlays(), home, away);
+        MatchReport report = new MatchReport(state, state.getPlays(), home, away, 1000, 1000);
     }
 
     @Test

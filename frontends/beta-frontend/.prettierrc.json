@@ -4,8 +4,8 @@
   "singleQuote": true,
   "arrowParens": "always",
   "jsxSingleQuote": false,
-  "printWidth": 150,
-  "semi": false,
+  "printWidth": 80,
+  "semi": true,
   "tabWidth": 2,
   "useTabs": false,
   "bracketSameLine": true

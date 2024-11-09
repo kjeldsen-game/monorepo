@@ -1,38 +1,75 @@
-import { useTeamRepository } from '@/pages/api/team/useTeamRepository'
-import { HealthAndSafety } from '@mui/icons-material'
-import { Typography } from '@mui/material'
-import Box from '@mui/material/Box'
-import Image from 'next/image'
-import Grid from '../Grid/Grid'
-import { useMemo } from 'react'
-import { simpleTeamColumn } from '../Grid/Columns/SimpleTeamColumn'
-import { useTranslation } from 'react-i18next'
+import { useTeamRepository } from '@/pages/api/team/useTeamRepository';
+import { HealthAndSafety } from '@mui/icons-material';
+import { Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Grid from '../Grid/Grid';
+import { useMemo } from 'react';
+import { simpleTeamColumn } from '../Grid/Columns/SimpleTeamColumn';
+import { useTranslation } from 'react-i18next';
+import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
+import { Player } from '@/shared/models/Player';
+import { TABLE_PLAYER_POSITION_ORDER } from '@/shared/models/PlayerPosition';
 
 interface MatchReportMetricsProps {
-  sx?: React.CSSProperties
-  teamId: string
-  side: 'left' | 'right'
+  sx?: React.CSSProperties;
+  teamId: string;
+  side: 'left' | 'right';
+  players: any;
+  teamReport: any;
+  teamColor: string;
 }
 
-export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({ sx, teamId }) => {
-  const { data } = useTeamRepository(teamId)
+export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({
+  sx,
+  teamId,
+  players,
+  teamReport,
+  teamColor,
+}) => {
+  const { data } = useTeamRepository(teamId);
 
-  const { t } = useTranslation(['game'])
+  const { t } = useTranslation(['game']);
 
-  const memoizedColumns = useMemo(() => simpleTeamColumn(t), [teamId])
+  const filterTeamPlayers = (players: Player[], data: any) => {
+    if (data != undefined) {
+      return data.filter((player: Player) =>
+        players.some((p) => p.id === player.id),
+      );
+    }
+  };
+
+  function positionComparator(a: Player, b: Player): number {
+    const indexA = TABLE_PLAYER_POSITION_ORDER.indexOf(a.position);
+    const indexB = TABLE_PLAYER_POSITION_ORDER.indexOf(b.position);
+
+    return (
+      (indexA === -1 ? Number.MAX_SAFE_INTEGER : indexA) -
+      (indexB === -1 ? Number.MAX_SAFE_INTEGER : indexB)
+    );
+  }
+
+  const memoizedColumns = useMemo(() => simpleTeamColumn(t), [teamId]);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', ...sx }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        ...sx,
+        paddingX: '10px',
+      }}>
       <Box
         sx={{
+          marginBottom: '20px',
           borderStyle: 'solid',
           borderWidth: '0 14px 0 14px',
-          borderColor: '#A4BC10',
+          borderColor: teamColor,
           width: '100%',
           height: '120px',
           display: 'flex',
           flexFlow: 'column wrap',
           justifyContent: 'space-around',
+          textAlign: 'left',
         }}>
         <Typography
           sx={{
@@ -41,29 +78,73 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({ sx, team
             overflow: 'clip',
             height: '20px',
             lineHeight: '20px',
-            maxWidth: '50%',
           }}>
-          {data?.name}
+          {data?.name || ''}
         </Typography>
-        <Image width={90} height={90} alt="team logo" src="/profile.png" />
+        {/* <Box paddingLeft={'20px'} textAlign={'center'}>
+          <Image width={90} height={90} alt="team logo" src={Team} />
+        </Box> */}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <HealthAndSafety />
-          <Typography fontSize="20px">Swarm centre</Typography>
+          <HealthAndSafety sx={{ color: '#E52323' }} />
+          <Typography
+            sx={{ color: '#E52323' }}
+            fontSize="18px"
+            fontWeight={700}>
+            {convertSnakeCaseToTitleCase(
+              teamReport.modifiers.horizontalPressure,
+            )}
+          </Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <HealthAndSafety />
-          <Typography fontSize="20px">Vertical pressure</Typography>
+          <HealthAndSafety sx={{ color: '#E52323' }} />
+          <Typography
+            sx={{ color: '#E52323' }}
+            fontSize="18px"
+            fontWeight={700}>
+            {convertSnakeCaseToTitleCase(teamReport.modifiers.verticalPressure)}
+          </Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <HealthAndSafety />
-          <Typography fontSize="20px">Tiki Taka</Typography>
+          <HealthAndSafety sx={{ color: '#E52323' }} />
+          <Typography
+            sx={{ color: '#E52323' }}
+            fontSize="18px"
+            fontWeight={700}>
+            {convertSnakeCaseToTitleCase(teamReport.modifiers.tactic)}
+          </Typography>
         </Box>
       </Box>
       <Box>
-        <Grid rows={data?.players ?? []} columns={memoizedColumns} />
+        <Grid
+          sx={{
+            '& .MuiDataGrid-columnSeparator': {
+              display: 'none',
+            },
+            '& .MuiDataGrid-cell': {
+              padding: 0,
+            },
+            '& .MuiDataGrid-columnHeaders': {
+              padding: 0, // Removes padding from the column header container
+            },
+            '& .MuiDataGrid-columnHeader': {
+              padding: 0, // Removes padding from each individual header cell
+            },
+          }}
+          showColumnRightBorder
+          showCellRightBorder
+          disableColumnMenu={true}
+          rowHeight={40}
+          // disableExtendRowFullWidth
+          rows={
+            filterTeamPlayers(players, data?.players)?.sort(
+              positionComparator,
+            ) || []
+          }
+          columns={memoizedColumns}
+        />
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default MatchReportMetrics
+export default MatchReportMetrics;

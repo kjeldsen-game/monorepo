@@ -40,15 +40,15 @@ public class FindAndProcessScheduledPotentialUseCase {
                     throw new IllegalArgumentException("The age of the player must be less than 21 years.");
                 }
                 IntStream.rangeClosed(1, scheduledRise.getDaysToSimulate())
-                        .forEach(day -> {
-                            Integer rise = PotentialRiseGenerator.generatePotentialRaise();
-                            PlayerSkill randomSkill = PlayerProvider.randomSkillForSpecificPlayer(player);
-                            if(rise!=0){
-                                PlayerPotentialRiseEvent potentialRiseEvent = generatePotentialRiseUseCase.generate(
-                                        scheduledRise.getPlayerId(), randomSkill, currentDay.getAndIncrement(), rise, day);
-                                PlayerPotentialRiseEvents.add(potentialRiseEvent);
-                            }
-                        });
+                    .forEach(day -> {
+                        Integer rise = PotentialRiseGenerator.generatePotentialRaise();
+                        PlayerSkill randomSkill = PlayerProvider.randomSkillForSpecificPlayer(player);
+                        if(rise!=0){
+                            PlayerPotentialRiseEvent potentialRiseEvent = generatePotentialRiseUseCase.generate(
+                                    scheduledRise.getPlayerId(), randomSkill, currentDay.getAndIncrement(), rise, day);
+                            PlayerPotentialRiseEvents.add(potentialRiseEvent);
+                        }
+                    });
             });
 
         return PlayerPotentialRiseEvents;

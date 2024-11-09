@@ -65,6 +65,6 @@ public class PointsGenerator {
 
     public static int generatePotentialPoints(int actualPoints) {
         Integer result = (int) (increaseMaxPercentage * actualPoints);
-        return (int) (Math.min(MAX_SKILL_VALUE, result + actualPoints));
+        return Math.min(MAX_SKILL_VALUE, result + actualPoints);
     }
 }

@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface PlayerTrainingDeclineEventReadRepository {
 
     Optional<PlayerTrainingDeclineEvent> findOneByPlayerId(Player.PlayerId id);
+
+    Optional<PlayerTrainingDeclineEvent> findLatestByPlayerId(Player.PlayerId id);
 }

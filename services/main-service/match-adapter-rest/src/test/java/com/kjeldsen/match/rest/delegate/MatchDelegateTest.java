@@ -4,9 +4,12 @@ import com.kjeldsen.match.common.RandomHelper;
 import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.match.publisher.MatchEventPublisher;
+import com.kjeldsen.match.repositories.MatchEventWriteRepository;
 import com.kjeldsen.match.rest.model.EditPlayerRequest;
 import com.kjeldsen.match.rest.model.PlayerPosition;
 import com.kjeldsen.match.rest.model.PlayerStatus;
+import com.kjeldsen.match.schedulers.MatchScheduler;
 import com.kjeldsen.match.validation.TeamFormationValidationResult;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.PlayerSkillRelevance;
@@ -33,7 +36,12 @@ public class MatchDelegateTest {
     private final TeamReadRepository teamReadRepository = Mockito.mock(TeamReadRepository.class);
     private final PlayerReadRepository playerReadRepository = Mockito.mock(PlayerReadRepository.class);
     private final MatchRepository matchRepository = Mockito.mock(MatchRepository.class);
-    private final MatchDelegate matchDelegate = new MatchDelegate(teamReadRepository, playerReadRepository, matchRepository);
+
+    private final MatchEventPublisher matchEventPublisher = Mockito.mock(MatchEventPublisher.class);
+    private final MatchEventWriteRepository matchEventWriteRepository = Mockito.mock(MatchEventWriteRepository.class);
+    private final MatchScheduler matchScheduler = Mockito.mock(MatchScheduler.class);
+    private final MatchDelegate matchDelegate = new MatchDelegate(teamReadRepository, playerReadRepository, matchRepository,
+        matchEventPublisher, matchEventWriteRepository, matchScheduler);
 
     private Match match;
 

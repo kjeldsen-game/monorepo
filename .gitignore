@@ -10,3 +10,4 @@
 local-env/default/volume
 local-env/nocode/volume
 local-env/aws/volume
+local-env/.mongo_data
