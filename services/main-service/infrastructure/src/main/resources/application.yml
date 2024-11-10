@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: ${SERVER_PORT:15001}
   error:
     include-message: always
   forward-headers-strategy: framework
@@ -9,19 +9,30 @@ spring:
     name: main-service
   data:
     mongodb:
-      uri: mongodb://admin:root@localhost:27017/admin
+      host: ${MONGO_HOST:localhost}
+      port: ${MONGO_PORT:27017}
+      username: ${MONGO_USER:admin}
+      password: ${MONGO_PASSWORD:root}
+      database: ${MONGO_DATABASE:admin}
+  management:
+    server:
+      port: ${ACTUATOR_SERVER_PORT:15002}
   quartz:
     properties:
       org:
         quartz:
           jobStore:
             class: com.novemberain.quartz.mongodb.MongoDBJobStore
-            mongoUri: mongodb://admin:root@localhost:27017/admin
+            mongoUri: mongodb://${spring.data.mongodb.username}:${spring.data.mongodb.password}@${spring.data.mongodb.host}:${spring.data.mongodb.port}/${spring.data.mongodb.database}
             collectionPrefix: quartz_
             dbName: quartz_db
 
+logging:
+  level:
+    com.kjeldsen: INFO
+    root: INFO
+
 springdoc:
-  version: '@springdoc.version@'
   api-docs:
     path: /api-docs
   swagger-ui:
@@ -30,47 +41,48 @@ springdoc:
 
 security:
   oauth2:
-    access-token-validity-seconds: 86400  # 1 day
-    refresh-token-validity-seconds: 2592000  # 30 days
-    client-id: client-id
-    client-secret: client-secret
+    access-token-validity-seconds: ${ACCESS_TOKEN_VALIDITY_SECONDS:86400} # 1 day
+    public-endpoints:
+      - /
+      - /api-docs/**
+      - /swagger-ui.html
+      - /swagger-ui/index.html
+      - /v1/auth/register
+      - /v1/auth/token
     public-key: -----BEGIN PUBLIC KEY-----
-      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuObgk+RKEKqQ9EY8gMHL
-      1p3Q+OLmq/dQyT4FyafDdPHbB1RXoGM07t4Y+i7Uj6+M4IZOCKrVyEI0BsHv0WEh
-      BLN+m5F5/x4oxzDdb4OCUhMrGxPtUQmuqkRSMYqZyD1NHfm+w/3jTiEHeC4PpZxd
-      GwXRCwzYjNXV9TFntx8iZnqq8GDuQszyAjfaf1KLVH2lrTPo3ERGt1gKSH5qOfyZ
-      ZC0zp89DmPzYSmTWvrzAcclrgvpiy2dk+c+SCKhsMpJqIcREbC7z3kLT1yGYkdx3
-      DhyofcSeFws9ibdMbwW7C7PPERnZMGMXOY100i9NpqskK1GrebWuBLwqD8izrMn+
-      ewIDAQAB
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyX90djztHkBKOWZB9EDI
+      bkfEsaDMLSQ18OqM8wvW17cx5qE1w95qeBqSl4ObUJsFTEcfCXiN0KY3V8gs1lpb
+      JCfaMar66G9FnWfVNdYXfD3xF0cfOhOleON2nxqPS4VC739VvyI+c9e4Zj8oQ7/U
+      R5iFv/vvX4dux0c0T1ytWprxeM4NtEW/dfZyImtPXQ2+pPUvfAI8YnHE5SzybNAO
+      MhVBxJ1mG7j/ZCLJHeQ6FKE84ooAjPZewF1zoGiGj/1+0mFbgBufuQ+fXGQCHZ0G
+      aqrw1nmQQfLl4YYDebvndYZ5fPAivC8oQ8h0m7bVQAbtjmVuDqTVbwZ6Rqq8Qih6
+      mwIDAQAB
       -----END PUBLIC KEY-----
-    private-key: -----BEGIN RSA PRIVATE KEY-----
-      MIIEpQIBAAKCAQEAuObgk+RKEKqQ9EY8gMHL1p3Q+OLmq/dQyT4FyafDdPHbB1RX
-      oGM07t4Y+i7Uj6+M4IZOCKrVyEI0BsHv0WEhBLN+m5F5/x4oxzDdb4OCUhMrGxPt
-      UQmuqkRSMYqZyD1NHfm+w/3jTiEHeC4PpZxdGwXRCwzYjNXV9TFntx8iZnqq8GDu
-      QszyAjfaf1KLVH2lrTPo3ERGt1gKSH5qOfyZZC0zp89DmPzYSmTWvrzAcclrgvpi
-      y2dk+c+SCKhsMpJqIcREbC7z3kLT1yGYkdx3DhyofcSeFws9ibdMbwW7C7PPERnZ
-      MGMXOY100i9NpqskK1GrebWuBLwqD8izrMn+ewIDAQABAoIBAQCfVb1zVEeK4yD0
-      j031+oqIUAjTYNw8lmuUb5EXPC1Pqlb/kuvL95GWwecuOIrNow64MKQwDd8Zqgsh
-      Q6BAgv2sCm1w68UAVmH3fKFlRiNYTNJZjCt2KOzOJv/ZV0G77y90RFHinPdyzT2d
-      j7vGD9+fuLxyVEiL3H16xG9Gu1quiVGqUdl4wpEH2Z5EfkYgBod7RcIlb38r4Q4A
-      49OL3lMiPPLflY1bMVbGer/z8kehqo+lWH9V3yAxf4frHyiWfS+xxEUm6XRC2Rs2
-      qixjg5XRG4O9gegPUIWvQcNzeff2hMgWPK539ijzmvAh/jLoEPettBy+1O2+Vl+B
-      NrSVMZbRAoGBANm4iXTMSTnu44PsDOKxmxSHQ5RMbCGOFGrxkhBgbilZHd7O2W/X
-      owk1VKwwOwWj36Fvo9EdOxBz66JQpLzYRMzvrXSZCbSub+t3BCjcmTzM+fSL56lu
-      Qv6If6b9LpUvwHU1tzswjntUHKYuiTk5fYqkONkdNnS3h7Quv9WNDegTAoGBANlp
-      Lkup2tkv4TatG426Jlwj88csQHk0mHd7Nw1wVBIuR+AUf790BivKpbrcZC+HX+rZ
-      cmOv5MNg888bCE4uTXWHHB2jF9ngvWYA45FvUaCYznCnEOasj2FAnjzsEyhzKIig
-      z6VO4NbfEoNqLsNe/riGle838KG/0PUvYuAcICz5AoGBALKzC2dpUWUSlX0vHvhm
-      LFJyH162Rz5XXpzUgD2e2Gxpr+Gzx7ZLuI6TTlcyEw+zDJd1iXDW3CbJ7orARCaY
-      IAhRZP5Bqjy5vDT479oWDlRgLXyx5Eglryk5ogTO5BAhLIdHuogDd770L7uakJj+
-      ffNwjRRvLMYp6WFTybKe3t4vAoGBAIM6j60wG18ZHXGpT4ZepCTdtpm0Rj5i1tzX
-      zMUZ1kUbFltVRD7Fw6vPJ/YAbaCar/TLx9YQJ58e+Es8X+kA3dRg90GUXiMvGmNl
-      ifcRIE41rfYlgXgbFHh5ToorXOz/hanilzOKxwArqbsU7qESx+GNqxa3x1F6vKAi
-      OCZaE7nRAoGAalAkHi1Fv3kkHQIXmq+gXfgog8nvWAT9JNtq40EyMKj7h7SwN1AN
-      DDEH2BHz/eyCep6OcIsfeCTNDqlnQgB0ZEpHBPYMSQ2a1RasFmcmB0dy3kU7X1MS
-      Mj3zZSFV5VuaPhjbk4mZIzGi/34o4BBVnZNJNuk4xvgRR6Qn3+lqRvQ=
-      -----END RSA PRIVATE KEY-----
-logging:
-  level:
-    com.n.quartz.mongodb.dao.LocksDao: ERROR
-    com.n.quartz.mongodb.TriggerRunner: ERROR
+    private-key: -----BEGIN PRIVATE KEY-----
+      MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDJf3R2PO0eQEo5
+      ZkH0QMhuR8SxoMwtJDXw6ozzC9bXtzHmoTXD3mp4GpKXg5tQmwVMRx8JeI3QpjdX
+      yCzWWlskJ9oxqvrob0WdZ9U11hd8PfEXRx86E6V443afGo9LhULvf1W/Ij5z17hm
+      PyhDv9RHmIW/++9fh27HRzRPXK1amvF4zg20Rb919nIia09dDb6k9S98AjxiccTl
+      LPJs0A4yFUHEnWYbuP9kIskd5DoUoTziigCM9l7AXXOgaIaP/X7SYVuAG5+5D59c
+      ZAIdnQZqqvDWeZBB8uXhhgN5u+d1hnl88CK8LyhDyHSbttVABu2OZW4OpNVvBnpG
+      qrxCKHqbAgMBAAECggEAQuo0vt9Uz2sCOzWeSYMKDLWAuIxxwbv4vdzmmgAghNqt
+      k62NsVI3gVMxw2dNOOOCSuaDhB2o2tWYI2qymSzAf61MZJonYPEy6ScGQy6p9fSM
+      D/Lqh9rmZNMFHakwVSAYLnjW/PZeTxIghrQKpxUZZf1czXjY8ZyESWF4GbLpTuD2
+      fHjskuzR5l66t3ywLaNpoDtSEDEGeoaEYb7l+i+t31XxLiRpbP+rRe+vJB9u+FXf
+      JoR07FeqzQ89OcUuA3Xt57/s3QfrLuA705Ke/Z1gvrsFgj8nNZccvRWtB8oC8WGg
+      1ogeAOG0+d0wcZsBy4h7yinNM8rrAAmHYHEl9CdwwQKBgQDz4k5wXiIxc6Q0cThQ
+      +JUc8jtAACgQXvoKho7scwTTHj1oebitWEgo318WeQyRRm21xtzt9+A4vyt6t4na
+      dejy9rDU/npQQv1/FrGX4wRXUWQHMqLJO31Bl3kP2+0o88ynCACvrByU35tejvQ6
+      1ZWKPRFVIWkpjEL28XWQjBHBEwKBgQDTghXtdvaovjt0tv5NLJSWjStMph0v4H9o
+      +D6b3Wczj6Jky5qfbxEifFrPcN5l8yw9tIv0sjQhJmNNEg62iht+Yc7dlcImHkgz
+      tMz32N5uf2Dtt+vu0ijUFwURwiQ/zsmOy/eJKiRKtC7YzgBvJZTrNuol2MPNQbRq
+      s9HFyQiZWQKBgQCoEsU14Vm1NNnsHj7OZpH00ecNU05JAftVt6fVweqISCXP01r3
+      c4i/Sjkwtpl3oM7I4FSvVw1abjzbpJNHT80LbAEvuHS4zYH/zLb1UslSF9BUuYvA
+      HNRUmLwgttL5TxMx5Wz7pCRKYNOlVeVwinM1QqKoRY9Ax936ays3Q6CUqwKBgQCx
+      imylnEqIcsatvj3Qwi8oAO/rszSkz6mjj13esAbE/Tivq0jrs+uKKyB/KJtGsMze
+      LwOcL0oa2YJZW2MGTv+tIqTm06LZJGovHQFAusZbsojGgrCFE9w5y+jxcynCde4y
+      83uho8I7AuygCKvMoJtUpg/+HOqfDRxIxRC9GXciYQKBgE0eQRk5K4eOkfSczRNu
+      mKvkOMZ6jgFj4/2narROy+oBCyWz2PQiRwv6zZTw4wsc2ide9SM/8E0BOZAE9Jr3
+      930zFTMNOujHNrapHyef5sHSs80IKYfjDmhtyo6M/cvpN6M0LWAdrh6KoJdwVhD2
+      YpOywZRjHs3kDGDfwuWoedlX
+      -----END PRIVATE KEY-----

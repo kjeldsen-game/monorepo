@@ -2,9 +2,13 @@ package com.kjeldsen.match.rest.delegate;
 
 import com.kjeldsen.domain.EventId;
 import com.kjeldsen.match.Game;
-import com.kjeldsen.match.entities.*;
+import com.kjeldsen.match.entities.Action;
+import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Match.Status;
-import com.kjeldsen.match.entities.duel.DuelResult;
+import com.kjeldsen.match.entities.MatchReport;
+import com.kjeldsen.match.entities.Player;
+import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.match.entities.TeamRole;
 import com.kjeldsen.match.modifers.HorizontalPressure;
 import com.kjeldsen.match.modifers.Tactic;
 import com.kjeldsen.match.modifers.VerticalPressure;
@@ -12,7 +16,6 @@ import com.kjeldsen.match.publisher.MatchEventPublisher;
 import com.kjeldsen.match.repositories.MatchEventWriteRepository;
 import com.kjeldsen.match.rest.api.MatchApiDelegate;
 import com.kjeldsen.match.rest.model.*;
-import com.kjeldsen.match.rest.model.DuelStats;
 import com.kjeldsen.match.schedulers.MatchScheduler;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.utils.JsonUtils;
@@ -31,7 +34,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -59,22 +61,22 @@ public class MatchDelegate implements MatchApiDelegate {
     public ResponseEntity<Void> createMatch(CreateMatchRequest request) {
         TeamId homeId = TeamId.of(request.getHome().getId());
         com.kjeldsen.player.domain.Team home = teamRepo.findById(homeId)
-                .orElseThrow(() -> new RuntimeException("Home team not found"));
+            .orElseThrow(() -> new RuntimeException("Home team not found"));
 
         TeamId awayId = TeamId.of(request.getAway().getId());
         com.kjeldsen.player.domain.Team away = teamRepo.findById(awayId)
-                .orElseThrow(() -> new RuntimeException("Away team not found"));
+            .orElseThrow(() -> new RuntimeException("Away team not found"));
 
         Team engineHome = buildTeam(home, TeamRole.HOME, request.getHome().getModifiers());
-        Team engineAway = buildTeam(away,TeamRole.AWAY,  request.getAway().getModifiers());
+        Team engineAway = buildTeam(away, TeamRole.AWAY, request.getAway().getModifiers());
 
         Match match = Match.builder()
-                .id(java.util.UUID.randomUUID().toString())
-                .home(engineHome)
-                .away(engineAway)
-                .dateTime(request.getDateTime())
-                .status(Status.PENDING)
-                .build();
+            .id(java.util.UUID.randomUUID().toString())
+            .home(engineHome)
+            .away(engineAway)
+            .dateTime(request.getDateTime())
+            .status(Status.PENDING)
+            .build();
 
         matchRepo.save(match);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -83,7 +85,7 @@ public class MatchDelegate implements MatchApiDelegate {
     @Override
     public ResponseEntity<String> editMatch(String matchId, EditMatchRequest request) {
         Match match = matchRepo.findOneById(matchId)
-                .orElseThrow(() -> new RuntimeException("Match not found"));
+            .orElseThrow(() -> new RuntimeException("Match not found"));
 
         if (match.getStatus() != Status.PENDING) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -124,7 +126,7 @@ public class MatchDelegate implements MatchApiDelegate {
             matchRepo.save(match);
 
             String json = JsonUtils.exclude(
-                    report, "plays.duel.initiator.skills", "plays.duel.challenger.skills");
+                report, "plays.duel.initiator.skills", "plays.duel.challenger.skills");
             return ResponseEntity.ok().body(json);
         }
 
@@ -134,7 +136,7 @@ public class MatchDelegate implements MatchApiDelegate {
 
     private Map<String, Integer> getMatchAttendance(Match match) {
         com.kjeldsen.player.domain.Team homeTeam = teamRepo.findById(TeamId.of(match.getHome().getId()))
-                .orElseThrow(() -> new RuntimeException("Team not found"));
+            .orElseThrow(() -> new RuntimeException("Team not found"));
         Integer capacity = homeTeam.getBuildings().getStadium().getSeats();
         int homeAttendance = Math.round(homeTeam.getFans().getTotalFans() * 0.8f);
 
@@ -148,28 +150,28 @@ public class MatchDelegate implements MatchApiDelegate {
             awayAttendance = Math.round(awayAttendance * scaleFactor);
         }
         return Map.of(
-                "homeAttendance", homeAttendance,
-                "awayAttendance", awayAttendance
+            "homeAttendance", homeAttendance,
+            "awayAttendance", awayAttendance
         );
     }
 
     @Override
     public ResponseEntity<List<MatchResponse>> getAllMatches(String teamId, Integer size,
-                                                             Integer page) {
+        Integer page) {
         List<Match> matches = matchRepo.findMatchesByTeamId(teamId);
 
         List<MatchResponse> response = matches.stream()
-                .map(match -> {
-                    return this.buildMatchResponse(match);
-                })
-                .toList();
+            .map(match -> {
+                return this.buildMatchResponse(match);
+            })
+            .toList();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     public ResponseEntity<MatchResponse> getMatch(String matchId) {
         Match match = matchRepo.findOneById(matchId)
-                .orElseThrow(() -> new RuntimeException("Match not found"));
+            .orElseThrow(() -> new RuntimeException("Match not found"));
 
         MatchResponse response = this.buildMatchResponse(match);
 
@@ -183,32 +185,37 @@ public class MatchDelegate implements MatchApiDelegate {
 
     @Override
     public ResponseEntity<Void> addPlayer(String matchId,
-                                   String teamId,
-                                   EditPlayerRequest playerRequest) {
+        String teamId,
+        EditPlayerRequest playerRequest) {
 
         Match match = matchRepo.findOneById(matchId)
-                .orElseThrow(() -> new RuntimeException("Match not found"));
+            .orElseThrow(() -> new RuntimeException("Match not found"));
 
         Team team = match.getHome().getId().equals(teamId)
-                ? match.getHome()
-                : match.getAway().getId().equals(teamId)
-                ? match.getAway()
-                : null;
-        if (team == null) throw new RuntimeException("Team not found");
+            ? match.getHome()
+            : match.getAway().getId().equals(teamId)
+            ? match.getAway()
+            : null;
+        if (team == null) {
+            throw new RuntimeException("Team not found");
+        }
 
         PlayerStatus requestStatus = PlayerStatus.valueOf(playerRequest.getStatus().getValue());
 
-        if (PlayerStatus.INACTIVE.equals(requestStatus)) throw new RuntimeException("Cannot add inactive player");
+        if (PlayerStatus.INACTIVE.equals(requestStatus)) {
+            throw new RuntimeException("Cannot add inactive player");
+        }
 
         final String playerId = playerRequest.getId();
 
         Optional<Player> optPlayer = Stream.concat(team.getPlayers().stream(), team.getBench().stream())
-                .filter(p -> p.getId().equals(playerId))
-                .findAny();
+            .filter(p -> p.getId().equals(playerId))
+            .findAny();
 
         if (optPlayer.isEmpty()) {
 
-            Optional<com.kjeldsen.player.domain.Player> optDomainPlayer = playerRepo.findOneById(com.kjeldsen.player.domain.Player.PlayerId.of(playerId));
+            Optional<com.kjeldsen.player.domain.Player> optDomainPlayer = playerRepo.findOneById(
+                com.kjeldsen.player.domain.Player.PlayerId.of(playerId));
             if (optDomainPlayer.isPresent()) {
                 Player playerToAdd = this.buildPlayer(optDomainPlayer.get(), team.getRole());
                 playerToAdd.setPosition(PlayerPosition.valueOf(playerRequest.getPosition().getValue()));
@@ -232,20 +239,22 @@ public class MatchDelegate implements MatchApiDelegate {
     @Override
     public ResponseEntity<String> editPlayer(String matchId, String teamId, EditPlayerRequest playerRequest) {
         Match match = matchRepo.findOneById(matchId)
-                .orElseThrow(() -> new RuntimeException("Match not found"));
+            .orElseThrow(() -> new RuntimeException("Match not found"));
 
         Team team = match.getHome().getId().equals(teamId)
-                ? match.getHome()
-                : match.getAway().getId().equals(teamId)
-                ? match.getAway()
-                : null;
-        if (team == null) throw new RuntimeException("Team not found");
+            ? match.getHome()
+            : match.getAway().getId().equals(teamId)
+            ? match.getAway()
+            : null;
+        if (team == null) {
+            throw new RuntimeException("Team not found");
+        }
 
         final String playerId = playerRequest.getId();
 
         Optional<Player> optPlayer = Stream.concat(team.getPlayers().stream(), team.getBench().stream())
-                .filter(p -> p.getId().equals(playerId))
-                .findAny();
+            .filter(p -> p.getId().equals(playerId))
+            .findAny();
 
         if (optPlayer.isPresent()) {
             Player player = optPlayer.get();
@@ -254,7 +263,8 @@ public class MatchDelegate implements MatchApiDelegate {
                 if (!player.getStatus().equals(PlayerStatus.valueOf(playerRequest.getStatus().getValue()))) {
                     if (PlayerStatus.INACTIVE.equals(PlayerStatus.valueOf(playerRequest.getStatus().getValue()))) {
                         // Players cannot be deactivated in lineup.
-                        throw new RuntimeException("Inactive players should be removed from the lineup with delete."); // Changing status requires moving
+                        throw new RuntimeException(
+                            "Inactive players should be removed from the lineup with delete."); // Changing status requires moving
                     }
                     if (PlayerStatus.ACTIVE.equals(PlayerStatus.valueOf(playerRequest.getStatus().getValue()))) {
                         // Moving player from bench to active.
@@ -287,22 +297,24 @@ public class MatchDelegate implements MatchApiDelegate {
 
     @Override
     public ResponseEntity<Void> deletePlayer(String matchId,
-                                             String teamId,
-                                             String playerId) {
+        String teamId,
+        String playerId) {
 
         Match match = matchRepo.findOneById(matchId)
-                .orElseThrow(() -> new RuntimeException("Match not found"));
+            .orElseThrow(() -> new RuntimeException("Match not found"));
 
         Team team = match.getHome().getId().equals(teamId)
-                ? match.getHome()
-                : match.getAway().getId().equals(teamId)
-                ? match.getAway()
-                : null;
-        if (team == null) throw new RuntimeException("Team not found");
+            ? match.getHome()
+            : match.getAway().getId().equals(teamId)
+            ? match.getAway()
+            : null;
+        if (team == null) {
+            throw new RuntimeException("Team not found");
+        }
 
         Optional<Player> optPlayer = Stream.concat(team.getPlayers().stream(), team.getBench().stream())
-                .filter(p -> p.getId().equals(playerId))
-                .findAny();
+            .filter(p -> p.getId().equals(playerId))
+            .findAny();
 
         if (optPlayer.isPresent()) {
             team.getPlayers().removeIf(player -> player.getId().equals(playerId));
@@ -317,10 +329,10 @@ public class MatchDelegate implements MatchApiDelegate {
     }
 
     public ResponseEntity<String> validate(String matchId,
-                                           String teamId) {
+        String teamId) {
 
         Match match = matchRepo.findOneById(matchId)
-                .orElseThrow(() -> new RuntimeException("Match not found"));
+            .orElseThrow(() -> new RuntimeException("Match not found"));
 
         Team team = null;
         if (match.getHome().getId().equals(teamId)) {
@@ -420,7 +432,7 @@ public class MatchDelegate implements MatchApiDelegate {
 
         TeamId teamId = TeamId.of(matchTeam.getId());
         com.kjeldsen.player.domain.Team team = teamRepo.findById(teamId)
-                .orElseThrow(() -> new RuntimeException("Team not found"));
+            .orElseThrow(() -> new RuntimeException("Team not found"));
         res.setName(team.getName());
 
         List<PlayerResponse> teamPlayers = matchTeam.getPlayers().stream().map(this::buildPlayerResponse).collect(Collectors.toList());
@@ -436,7 +448,8 @@ public class MatchDelegate implements MatchApiDelegate {
             res.getModifiers().setTactic(com.kjeldsen.match.rest.model.Tactic.valueOf(matchTeam.getTactic().name()));
         }
         if (matchTeam.getHorizontalPressure() != null) {
-            res.getModifiers().setHorizontalPressure(com.kjeldsen.match.rest.model.HorizontalPressure.valueOf(matchTeam.getHorizontalPressure().name()));
+            res.getModifiers().setHorizontalPressure(
+                com.kjeldsen.match.rest.model.HorizontalPressure.valueOf(matchTeam.getHorizontalPressure().name()));
         }
 
         if (matchTeam.getVerticalPressure() != null) {
@@ -457,41 +470,41 @@ public class MatchDelegate implements MatchApiDelegate {
 
     private Team buildTeam(com.kjeldsen.player.domain.Team home, TeamRole role, Modifiers modifiers) {
         List<Player> activePlayers = playerRepo.findByTeamId(home.getId()).stream()
-                .filter(player -> player.getStatus() == PlayerStatus.ACTIVE)
-                .map(player -> this.buildPlayer(player, role))
-                .toList();
+            .filter(player -> player.getStatus() == PlayerStatus.ACTIVE)
+            .map(player -> this.buildPlayer(player, role))
+            .toList();
 
         List<Player> benchPlayers = playerRepo.findByTeamId(home.getId()).stream()
-                .filter(player -> player.getStatus() == PlayerStatus.BENCH)
-                .map(player -> this.buildPlayer(player, role))
-                .toList();
+            .filter(player -> player.getStatus() == PlayerStatus.BENCH)
+            .map(player -> this.buildPlayer(player, role))
+            .toList();
 
         return Team.builder()
-                .id(home.getId().value())
-                .role(role)
-                .players(activePlayers)
-                .bench(benchPlayers)
-                .tactic(Tactic.valueOf(modifiers.getTactic().getValue()))
-                .verticalPressure(VerticalPressure.valueOf(modifiers.getVerticalPressure().getValue()))
-                .horizontalPressure(
-                        HorizontalPressure.valueOf(modifiers.getHorizontalPressure().getValue()))
-                .build();
+            .id(home.getId().value())
+            .role(role)
+            .players(activePlayers)
+            .bench(benchPlayers)
+            .tactic(Tactic.valueOf(modifiers.getTactic().getValue()))
+            .verticalPressure(VerticalPressure.valueOf(modifiers.getVerticalPressure().getValue()))
+            .horizontalPressure(
+                HorizontalPressure.valueOf(modifiers.getHorizontalPressure().getValue()))
+            .build();
     }
 
     private Player buildPlayer(com.kjeldsen.player.domain.Player player, TeamRole teamRole) {
         Map<PlayerSkill, Integer> skills = player.getActualSkills().entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getActual()));
+            .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getActual()));
         skills.put(PlayerSkill.INTERCEPTING, 0);
 
         return Player.builder()
-                .id(player.getId().value())
-                .name(player.getName())
-                .status(player.getStatus())
-                .teamId(player.getTeamId().value())
-                .teamRole(teamRole)
-                .position(player.getPosition())
-                .skills(skills)
-                .playerOrder(player.getPlayerOrder())
-                .build();
+            .id(player.getId().value())
+            .name(player.getName())
+            .status(player.getStatus())
+            .teamId(player.getTeamId().value())
+            .teamRole(teamRole)
+            .position(player.getPosition())
+            .skills(skills)
+            .playerOrder(player.getPlayerOrder())
+            .build();
     }
 }

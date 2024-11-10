@@ -4,8 +4,7 @@ info:
   title: Markets Service API
 
 servers:
-  - url: http://localhost:8081/v1
-  - url: https://actively-accurate-platypus.ngrok-free.app/v1
+  - url: http://localhost:15001/v1
 tags:
   - name: market
 
@@ -45,14 +44,14 @@ paths:
           required: false
           schema:
             type: string
-            example: 'SCORING:50:100,BALL_CONTROL:50:100'
+            example: "SCORING:50:100,BALL_CONTROL:50:100"
         - name: potentialSkill
           in: query
           description: List of player potential values for skill min and max values
           required: false
           schema:
             type: string
-            example: 'SCORING:50:100,BALL_CONTROL:50:100'
+            example: "SCORING:50:100,BALL_CONTROL:50:100"
         - name: minAge
           in: query
           description: Minimum age of players
@@ -88,16 +87,16 @@ paths:
           schema:
             type: string
       responses:
-          '200':
-            description: List of filtered players
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: "#/components/responses/MarketAuctionResponse"
-          default:
-            $ref: "#/components/responses/DefaultErrorResponse"
+        "200":
+          description: List of filtered players
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MarketAuctionResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
 
   /market/auction/{auctionId}:
     get:
@@ -113,7 +112,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/responses/AuctionResponse"
+                $ref: "#/components/schemas/AuctionResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -129,7 +128,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/requestBodies/PlaceAuctionBidRequest"
+              $ref: "#/components/schemas/PlaceAuctionBidRequest"
       responses:
         "200":
           description: New bid placed successfully
@@ -150,13 +149,10 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-
 ################################### Components ###################################
 components:
-
-################################### Parameters ###################################
+  ################################### Parameters ###################################
   parameters:
-
     AuctionIdPathParameter:
       name: auctionId
       in: path
@@ -165,30 +161,8 @@ components:
       schema:
         type: string
 
-  requestBodies:
-    PlaceAuctionBidRequest:
-      description: Place a bid request
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/PlaceAuctionBidRequest"
-
-################################### Responses ###################################
+  ################################### Responses ###################################
   responses:
-
-    MarketAuctionResponse:
-      description: Market row response for team
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/MarketAuctionResponse"
-
-    AuctionResponse:
-      description: Team response
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/AuctionResponse"
 
     DefaultErrorResponse:
       description: Unexpected error
@@ -199,10 +173,9 @@ components:
             items:
               $ref: "#/components/schemas/Error"
 
-################################### Schemas ###################################
+  ################################### Schemas ###################################
   schemas:
-
-################################### Enums ###################################
+    ################################### Enums ###################################
 
     PlayerSkill:
       type: string
@@ -325,7 +298,7 @@ components:
         message:
           type: string
 
-################################### Responses ###################################
+    ################################### Responses ###################################
 
     MarketAuctionResponse:
       type: object
@@ -404,7 +377,7 @@ components:
           items:
             $ref: "#/components/schemas/Bid"
 
-################################### Requests ###################################
+    ################################### Requests ###################################
 
     PlaceAuctionBidRequest:
       type: object
@@ -415,4 +388,3 @@ components:
           example: 10000
       required:
         - amount
-

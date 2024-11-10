@@ -1,22 +1,15 @@
 package com.kjeldsen.player.test.delegate;
 
-import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.application.usecases.economy.GetPlayerWagesTransactionsUseCase;
 import com.kjeldsen.player.application.usecases.economy.GetTeamTransactionsUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
-import com.kjeldsen.player.rest.delegate.TeamDelegate;
-import com.kjeldsen.player.rest.model.TeamResponse;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.http.ResponseEntity;
 
 public class TeamDelegateTest {
-
-    // TODO mock shiro security utils and test the methods in the delegate
 
     private final TeamReadRepository teamReadRepository = Mockito.mock(TeamReadRepository.class);
     private final PlayerReadRepository playerReadRepository = Mockito.mock(PlayerReadRepository.class);

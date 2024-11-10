@@ -1,0 +1,136 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Authentication API
+
+servers:
+  - url: http://localhost:15001/v1
+
+tags:
+  - name: auth
+
+paths:
+
+  /auth/register:
+    post:
+      summary: Register
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "201":
+          description: Registration successful
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /auth/token:
+    post:
+      summary: "Generate JWT Token"
+      description: "Authenticates a user and provides a JWT token upon successful authentication"
+      operationId: "generateToken"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TokenRequest"
+      responses:
+        "200":
+          description: "Token generated successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /auth/me:
+    get:
+      summary: Get currently logged-in user
+      operationId: me
+      responses:
+        "200":
+          description: Logged-in user found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDetailsResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+components:
+
+  responses:
+
+    DefaultErrorResponse:
+      description: Unexpected error
+      content:
+        "*/*":
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Error"
+
+  schemas:
+
+    RegisterRequest:
+      type: object
+      required:
+        - email
+        - password
+        - teamName
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        teamName:
+          type: string
+
+    TokenRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: "The email for authentication"
+        password:
+          type: string
+          format: password
+          description: "The password for authentication"
+
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: "JWT token that can be used for authorization"
+
+    Error:
+      type: "object"
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+
+    UserDetailsResponse:
+      type: object
+      required:
+        - id
+        - email
+        - teamId
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        teamId:
+          type: string

@@ -3,7 +3,12 @@ package com.kjeldsen.match.quartz;
 import com.kjeldsen.match.schedulers.MatchScheduler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.quartz.*;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -33,7 +38,7 @@ public class MatchSchedulerIImpl implements MatchScheduler {
 
             log.info("Match scheduled for: {} on time {}", matchId, matchId);
         } catch (SchedulerException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
     }
 }

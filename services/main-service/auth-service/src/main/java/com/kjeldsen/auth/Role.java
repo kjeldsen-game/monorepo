@@ -1,4 +1,4 @@
-package com.kjeldsen.auth.config;
+package com.kjeldsen.auth;
 
 import java.util.Set;
 

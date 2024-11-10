@@ -3,13 +3,17 @@ package com.kjeldsen.market.quartz;
 import com.kjeldsen.market.domain.schedulers.AuctionEndJobScheduler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.quartz.*;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
 import org.springframework.stereotype.Component;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
-import java.util.UUID;
 
 
 @Component
@@ -62,7 +66,7 @@ public class AuctionEndJobSchedulerImpl implements AuctionEndJobScheduler {
 
             log.info("AuctionEnd scheduled for: {} on time {}", auctionId, endTime);
         } catch (SchedulerException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
     }
 }

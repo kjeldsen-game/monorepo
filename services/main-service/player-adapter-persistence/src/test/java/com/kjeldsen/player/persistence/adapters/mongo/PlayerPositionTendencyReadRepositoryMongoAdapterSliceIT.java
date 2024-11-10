@@ -1,6 +1,10 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
-import com.kjeldsen.player.domain.*;
+import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.domain.PlayerPositionTendency;
+import com.kjeldsen.player.domain.PlayerSkill;
+import com.kjeldsen.player.domain.PlayerSkillRelevance;
+import com.kjeldsen.player.domain.PlayerSkills;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.persistence.common.AbstractMongoDbTest;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerPositionTendencyMongoRepository;
@@ -10,7 +14,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
@@ -20,7 +23,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataMongoTest(includeFilters = @ComponentScan.Filter(classes = Component.class), excludeAutoConfiguration = EmbeddedMongoAutoConfiguration.class)
+@DataMongoTest(includeFilters = @ComponentScan.Filter(classes = Component.class))
 @ActiveProfiles("test")
 class PlayerPositionTendencyReadRepositoryMongoAdapterSliceIT extends AbstractMongoDbTest {
 
@@ -80,9 +83,12 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceIT extends AbstractMo
             val actual = playerPositionTendencyReadRepository.find();
 
             assertThat(actual).hasSize(PlayerPositionTendency.DEFAULT_TENDENCIES.size());
-            PlayerPositionTendency playerPositionTendency1 = actual.stream().filter(playerPositionTendency -> playerPositionTendency.getPosition().equals(PlayerPosition.FORWARD)).findFirst().orElseThrow();
-            assertThat(playerPositionTendency1.getTendencies().get(PlayerSkill.SCORING)).usingRecursiveComparison().isEqualTo(new PlayerSkills(1, 0, PlayerSkillRelevance.CORE));
-            assertThat(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.getTendencies().get(PlayerSkill.SCORING)).isNotEqualTo(playerPositionTendency1.getTendencies().get(PlayerSkill.SCORING));
+            PlayerPositionTendency playerPositionTendency1 = actual.stream().filter(
+                playerPositionTendency -> playerPositionTendency.getPosition().equals(PlayerPosition.FORWARD)).findFirst().orElseThrow();
+            assertThat(playerPositionTendency1.getTendencies().get(PlayerSkill.SCORING)).usingRecursiveComparison().isEqualTo(
+                new PlayerSkills(1, 0, PlayerSkillRelevance.CORE));
+            assertThat(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.getTendencies().get(PlayerSkill.SCORING)).isNotEqualTo(
+                playerPositionTendency1.getTendencies().get(PlayerSkill.SCORING));
 
             PlayerPositionTendency.DEFAULT_TENDENCIES.stream()
                 .filter(playerPositionTendency -> !playerPositionTendency.getPosition().equals(PlayerPosition.FORWARD))

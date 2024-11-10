@@ -1,6 +1,6 @@
 package com.kjeldsen.market.rest.delegate;
 
-import com.kjeldsen.auth.AuthService;
+import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.market.application.AuctionEndUseCase;
 import com.kjeldsen.market.application.GetMarketAuctionsUseCase;
 import com.kjeldsen.market.application.PlaceBidUseCase;
@@ -11,19 +11,24 @@ import com.kjeldsen.market.domain.schedulers.AuctionEndJobScheduler;
 import com.kjeldsen.market.rest.api.MarketApiDelegate;
 import com.kjeldsen.market.rest.mapper.AuctionMapper;
 import com.kjeldsen.market.rest.mapper.PlayerMapper;
-import com.kjeldsen.market.rest.model.*;
+import com.kjeldsen.market.rest.model.AuctionResponse;
+import com.kjeldsen.market.rest.model.MarketAuctionResponse;
+import com.kjeldsen.market.rest.model.MarketPlayerResponse;
+import com.kjeldsen.market.rest.model.PlaceAuctionBidRequest;
+import com.kjeldsen.market.rest.model.PlayerPosition;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.AuctionEndEvent;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -32,7 +37,6 @@ public class MarketDelegate implements MarketApiDelegate {
     private final PlaceBidUseCase placeBidUseCase;
     private final AuctionEndUseCase auctionEndUseCase;
     private final AuctionEndEventPublisher auctionEndEventPublisher;
-    private final AuthService authService;
     private final TeamReadRepository teamReadRepository;
     private final AuctionReadRepository auctionReadRepository;
     private final GetMarketAuctionsUseCase getMarketAuctionsUseCase;
@@ -47,12 +51,9 @@ public class MarketDelegate implements MarketApiDelegate {
 
     @Override
     public ResponseEntity<Void> placeAuctionBid(String auctionId, PlaceAuctionBidRequest placeAuctionBidRequest) {
-        Optional<String> currentUseId = authService.currentUserId();
-        if (currentUseId.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+        String currentUseId = SecurityUtils.getCurrentUserId();
         BigDecimal amount = BigDecimal.valueOf(placeAuctionBidRequest.getAmount());
-        Auction auction = placeBidUseCase.placeBid(Auction.AuctionId.of(auctionId), amount, currentUseId.get());
+        Auction auction = placeBidUseCase.placeBid(Auction.AuctionId.of(auctionId), amount, currentUseId);
         //auctionEndJobScheduler.rescheduleAuctionEndJob(auctionId, auction.getEndedAt());
         return ResponseEntity.ok().build();
     }
@@ -67,14 +68,12 @@ public class MarketDelegate implements MarketApiDelegate {
 
     @Override
     public ResponseEntity<List<MarketAuctionResponse>> getAllAuctions(Integer size, Integer page,
-        PlayerPosition position, String skills, String potentialSkills,  Integer minAge, Integer maxAge, Double minBid, Double maxBid, String playerId) {
+        PlayerPosition position, String skills, String potentialSkills, Integer minAge, Integer maxAge, Double minBid, Double maxBid,
+        String playerId) {
         log.info("Get all auctions");
-        Optional<String> currentUserId = authService.currentUserId();
-        if (currentUserId.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+        String currentUserId = SecurityUtils.getCurrentUserId();
 
-        Team team = teamReadRepository.findByUserId(currentUserId.get()).orElseThrow(
+        Team team = teamReadRepository.findByUserId(currentUserId).orElseThrow(
             () -> new RuntimeException("Team not found"));
 
         Map<Auction, Player> auctionPlayerMap = getMarketAuctionsUseCase.getAuctions(maxBid, minBid, maxAge, minAge,
@@ -93,7 +92,7 @@ public class MarketDelegate implements MarketApiDelegate {
                     .orElse(null);
 
                 return new MarketAuctionResponse().id(
-                    auction.getId().value())
+                        auction.getId().value())
                     .averageBid(auction.getAverageBid())
                     .bidders(auction.getBids().size())
                     .teamId(auction.getTeamId().value())

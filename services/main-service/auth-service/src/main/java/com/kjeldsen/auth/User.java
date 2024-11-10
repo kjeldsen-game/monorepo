@@ -1,10 +1,10 @@
 package com.kjeldsen.auth;
 
-import com.kjeldsen.auth.config.Role;
-import java.util.List;
-import java.util.Set;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Document(collection = "User")
@@ -24,4 +24,5 @@ public class User {
     public Set<String> getPermissions() {
         return Role.getPermissions(Role.USER);
     }
+
 }

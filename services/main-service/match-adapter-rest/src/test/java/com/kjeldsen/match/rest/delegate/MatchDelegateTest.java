@@ -32,7 +32,6 @@ import static org.mockito.Mockito.when;
 
 public class MatchDelegateTest {
 
-    // TODO mock shiro security utils and test the methods in the delegate
     private final TeamReadRepository teamReadRepository = Mockito.mock(TeamReadRepository.class);
     private final PlayerReadRepository playerReadRepository = Mockito.mock(PlayerReadRepository.class);
     private final MatchRepository matchRepository = Mockito.mock(MatchRepository.class);
@@ -53,20 +52,20 @@ public class MatchDelegateTest {
         Team home = RandomHelper.genTeam();
         Team away = RandomHelper.genTeam();
         match = Match.builder()
-                .id(java.util.UUID.randomUUID().toString())
-                .home(home)
-                .away(away)
-                .build();
+            .id(java.util.UUID.randomUUID().toString())
+            .home(home)
+            .away(away)
+            .build();
         when(matchRepository.findOneById(match.getId())).thenReturn(Optional.of(match));
 
         PlayerSkills skillPoints = new PlayerSkills(50, 0, PlayerSkillRelevance.RESIDUAL);
         com.kjeldsen.player.domain.Player player = com.kjeldsen.player.domain.Player.builder()
-                .id(com.kjeldsen.player.domain.Player.PlayerId.of(TEST_PLAYER_ID))
-                .status(com.kjeldsen.player.domain.PlayerStatus.INACTIVE)
-                .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
-                .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORING, skillPoints)))
-                .teamId(com.kjeldsen.player.domain.Team.TeamId.of(home.getId()))
-                .build();
+            .id(com.kjeldsen.player.domain.Player.PlayerId.of(TEST_PLAYER_ID))
+            .status(com.kjeldsen.player.domain.PlayerStatus.INACTIVE)
+            .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
+            .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORING, skillPoints)))
+            .teamId(com.kjeldsen.player.domain.Team.TeamId.of(home.getId()))
+            .build();
         when(playerReadRepository.findOneById(com.kjeldsen.player.domain.Player.PlayerId.of(TEST_PLAYER_ID))).thenReturn(Optional.of(player));
     }
 
@@ -93,9 +92,10 @@ public class MatchDelegateTest {
     @Test
     public void changePlayerPositionToCenterMidfielder() {
         Player player = match.getHome().getPlayers().stream()
-                .filter(p -> !p.getPosition().equals(com.kjeldsen.player.domain.PlayerPosition.CENTRE_MIDFIELDER)) // Filtra los que no son CENTRE_MIDFIELDER
-                .findFirst() // Encuentra el primer jugador que cumpla con la condición
-                .orElse(null); // Maneja el caso donde no hay jugadores que cumplan la condición
+            .filter(
+                p -> !p.getPosition().equals(com.kjeldsen.player.domain.PlayerPosition.CENTRE_MIDFIELDER)) // Filtra los que no son CENTRE_MIDFIELDER
+            .findFirst() // Encuentra el primer jugador que cumpla con la condición
+            .orElse(null); // Maneja el caso donde no hay jugadores que cumplan la condición
 
         EditPlayerRequest req = new EditPlayerRequest();
         req.setId(player.getId());

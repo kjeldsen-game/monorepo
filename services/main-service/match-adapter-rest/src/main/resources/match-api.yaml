@@ -4,16 +4,12 @@ info:
   title: Match Service API
 
 servers:
-  #  - url: http://localhost:8081/api
-  #  - url: https://actively-accurate-platypus.ngrok-free.app/api
-  - url: http://localhost:8081/v1
-  - url: https://actively-accurate-platypus.ngrok-free.app/v1
+  - url: http://localhost:15001/v1
 
 tags:
   - name: match
 
 paths:
-
   /match:
     post:
       summary: Create a match
@@ -25,7 +21,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/requestBodies/CreateMatchRequest"
+              $ref: "#/components/schemas/CreateMatchRequest"
       responses:
         "201":
           description: Match was created
@@ -67,7 +63,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/responses/MatchResponse"
+                  $ref: "#/components/schemas/MatchResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -90,7 +86,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/responses/MatchResponse"
+                $ref: "#/components/schemas/MatchResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
     patch:
@@ -110,7 +106,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/requestBodies/EditMatchRequest"
+              $ref: "#/components/schemas/EditMatchRequest"
       responses:
         "200":
           description: Match was edited
@@ -144,7 +140,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/requestBodies/EditPlayerRequest"
+              $ref: "#/components/schemas/EditPlayerRequest"
       responses:
         "201":
           description: Player was added
@@ -173,7 +169,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/requestBodies/EditPlayerRequest"
+              $ref: "#/components/schemas/EditPlayerRequest"
       responses:
         "200":
           description: Player was edited successfully
@@ -211,9 +207,9 @@ paths:
             type: string
             example: id
       responses:
-        '200':
+        "200":
           description: Player was removed successfully
-        '404':
+        "404":
           description: Player not found
 
   /match/{matchId}/teams/{teamId}/validate:
@@ -247,37 +243,7 @@ paths:
 
 components:
 
-  requestBodies:
-
-    CreateMatchRequest:
-      description: Create match request
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/CreateMatchRequest"
-
-    EditMatchRequest:
-      description: Edit match request
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/EditMatchRequest"
-
-    EditPlayerRequest:
-      description: Edit player request
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/EditPlayerRequest"
-
   responses:
-
-    MatchResponse:
-      description: Match response
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/MatchResponse"
 
     DefaultErrorResponse:
       description: Unexpected error
@@ -538,7 +504,6 @@ components:
           $ref: "#/components/schemas/DuelStats"
         challengerStats:
           $ref: "#/components/schemas/DuelStats"
-
 
     DuelResultResponse:
       type: string

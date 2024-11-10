@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kjeldsen.match.entities.MatchReport;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.GameStateException;
-import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -12,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.Optional;
 
 @Slf4j
 @ControllerAdvice
@@ -34,8 +35,7 @@ public class ExceptionHandlers {
 
     @ExceptionHandler(GameStateException.class)
     public ResponseEntity<?> handleException(GameStateException e) {
-        log.error("Game state error: {}", e.getMessage());
-        e.printStackTrace();
+        log.error("Game state error: {}", e.getMessage(), e);
         return Optional.ofNullable(e.getState())
             .map((GameState endState) -> new MatchReport(endState, endState.getPlays(), null, null, 1000, 1000))
             .map(report -> {

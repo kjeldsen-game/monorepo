@@ -1,6 +1,6 @@
 package com.kjeldsen.player.rest.delegate;
 
-import com.kjeldsen.auth.AuthService;
+import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
 import com.kjeldsen.player.application.usecases.PlayerSellUseCase;
@@ -17,7 +17,6 @@ import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.model.CreatePlayerRequest;
 import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
 import com.kjeldsen.player.rest.model.PlayerResponse;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +33,6 @@ public class PlayersDelegate implements PlayerApiDelegate {
     private final PlayerReadRepository playerReadRepository;
     private final PlayerSellUseCase playerSellUseCase;
     private final AuctionCreationEventPublisher auctionCreationEventPublisher;
-    private final AuthService authService;
 
     @Override
     public ResponseEntity<Void> createPlayer(CreatePlayerRequest createPlayerRequest) {
@@ -53,11 +51,8 @@ public class PlayersDelegate implements PlayerApiDelegate {
 
     @Override
     public ResponseEntity<List<PlayerResponse>> getAllPlayers(com.kjeldsen.player.rest.model.PlayerPosition position, Integer size, Integer page) {
-        Optional<String> currentUserId = authService.currentUserId();
-        if (currentUserId.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        TeamId teamId = TeamId.of(currentUserId.get());
+        final String currentUserId = SecurityUtils.getCurrentUserId();
+        TeamId teamId = TeamId.of(currentUserId);
         FindPlayersQuery query = FindPlayersQuery.builder()
             .position(position != null ? PlayerPosition.valueOf(position.name()) : null)
             .teamId(teamId)
@@ -80,6 +75,6 @@ public class PlayersDelegate implements PlayerApiDelegate {
     public ResponseEntity<Void> sellPlayer(String playerId) {
         auctionCreationEventPublisher.publishAuctionCreationEvent(
             playerSellUseCase.sell(Player.PlayerId.of(playerId)));
-        return  ResponseEntity.ok().build();
+        return ResponseEntity.ok().build();
     }
 }

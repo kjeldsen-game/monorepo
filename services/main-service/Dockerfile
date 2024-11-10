@@ -11,4 +11,3 @@ RUN --mount=type=cache,target=/root/.m2 mvn clean install -DskipTests=true -U
 FROM $JRE_IMAGE
 COPY --from=builder /app/src/infrastructure/target/*-service.jar /app/service.jar
 ENTRYPOINT ["java", "-Xms100M", "-Xmx1G", "-jar", "/app/service.jar"]
-EXPOSE 8081

@@ -1,12 +1,10 @@
 package com.kjeldsen.infrastructure.config;
 
-import com.kjeldsen.player.quartz.*;
+import com.kjeldsen.player.quartz.NewDayJob;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-
-import javax.annotation.PostConstruct;
 
 @Configuration
 @Slf4j
@@ -15,7 +13,7 @@ public class QuartzConfiguration {
     @Autowired
     private Scheduler scheduler;
 
-    @PostConstruct
+    //@PostConstruct
     public void setupQuartz() {
         try {
             // TODO Quartz fix the interval in minutes, set to minute while testing
@@ -51,13 +49,13 @@ public class QuartzConfiguration {
 //                    .withMisfireHandlingInstructionFireNow());
 
         } catch (SchedulerException e) {
-            e.printStackTrace();  // Handle exceptions
+            log.error(e.getMessage(), e);
         }
     }
 
 
-    private void scheduleJob(Class <? extends Job> jobClass, String jobName,
-         String triggerName, ScheduleBuilder<?> scheduleBuilder) throws SchedulerException {
+    private void scheduleJob(Class<? extends Job> jobClass, String jobName,
+        String triggerName, ScheduleBuilder<?> scheduleBuilder) throws SchedulerException {
 
         JobKey jobKey = new JobKey(jobClass.getName());
         if (!scheduler.checkExists(jobKey)) {

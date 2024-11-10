@@ -1,34 +1,20 @@
 services:
+
     ###############
     ## Local DBs ##
     ###############
 
-    #    local-postgres:
-    #        container_name: local-postgres
-    #        image: postgres:16
-    #        environment:
-    #            POSTGRES_USER: root
-    #            POSTGRES_PASSWORD: secret
-    #            POSTGRES_DB: quartz
-    #        ports:
-    #            - "5432:5432"
-    #        healthcheck:
-    #            test: [ "CMD-SHELL", "pg_isready" ]
-    #            interval: 10s
-    #            timeout: 5s
-    #            retries: 5
-
-    local-mongodb:
+    mongodb:
         image: mongo:5.0
-        container_name: local-mongodb
+        container_name: mongodb
         ports:
             - 27017:27017
         environment:
             MONGO_INITDB_ROOT_USERNAME: admin
             MONGO_INITDB_ROOT_PASSWORD: root
             MONGO_INITDB_DATABASE: admin
-        volumes: # Uncomment to persist data locally if container removed
-            #            - ./.mongo_data:/data/db # Uncomment to persist data locally if container removed
+        volumes:
+            # - ./.mongo_data:/data/db # Uncomment to persist data locally if container removed
             - ./mongodb_init:/docker-entrypoint-initdb.d
         healthcheck:
             test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
@@ -46,26 +32,20 @@ services:
         build:
             context: ../services/main-service
             dockerfile: ./Dockerfile
-        ports:
-            - 8081:8081
         container_name: main-service
+        ports:
+            - 15001:8080
+            - 15002:8081
         env_file:
-            - ./config/common.env
             - ./config/main-service.env
         depends_on:
-            local-mongodb:
+            mongodb:
                 condition: service_healthy
         healthcheck:
             test: "curl --fail --silent localhost:8081/actuator/health | grep UP || exit 1"
             interval: 20s
             timeout: 5s
             retries: 5
-        labels:
-            - "traefik.enable=true"
-            - "traefik.http.routers.main-service.rule=(PathPrefix(`/v1`) || PathPrefix(`/swagger-ui/index.html`))"
-            - "traefik.http.routers.main-service.entrypoints=web"
-            - "traefik.http.routers.main-service.priority=10"
-            - "traefik.http.services.main-service.loadbalancer.server.port=8081"
 
     ######################
     ## Frontend Service ##
@@ -76,47 +56,14 @@ services:
         build:
             context: ../frontends/beta-frontend
             dockerfile: ./Dockerfile
+        container_name: beta-frontend
         ports:
             - 3000:3000
-        container_name: beta-frontend
         env_file:
-            - ./config/common.env
             - ./config/beta-frontend.env
-        labels:
-            - "traefik.enable=true"
-            - "traefik.http.routers.beta-frontend.rule=PathPrefix(`/`)"
-            - "traefik.http.routers.beta-frontend.priority=1"
-            - "traefik.http.services.beta-frontend.loadbalancer.server.port=3000"
-
-    #############
-    ## Routing ##
-    #############
-#    traefik:
-#        image: traefik:v2.10
-#        container_name: traefik
-#        command:
-#            - "--api.insecure=true"
-#            - "--providers.docker=true"
-#            - "--entrypoints.web.address=:80"
-#        ports:
-#            - "80:80"
-#            - "8080:8080"
-#        volumes:
-#            - "/var/run/docker.sock:/var/run/docker.sock:ro"
-
-#####################################
-## Hosting from machine to network ##
-#####################################
-
-#    ngrok:
-#        container_name: ngrok
-#        image: ngrok/ngrok:latest
-#        command:
-#            - "start"
-#            - "--all"
-#            - "--config"
-#            - "/etc/ngrok.yml"
-#        volumes:
-#            - ./config/ngrok.yml:/etc/ngrok.yml
-#        ports:
-#            - 4040:4040
+        deploy:
+            resources:
+              limits:
+                memory: 2g        # Limits memory to 2GB
+                cpus: "1.0"       # Limits to 1 CPU
+        
