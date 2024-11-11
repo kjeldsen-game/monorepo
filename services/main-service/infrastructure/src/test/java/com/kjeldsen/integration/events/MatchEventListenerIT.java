@@ -5,6 +5,7 @@ import com.kjeldsen.player.application.usecases.economy.BillboardIncomeUseCase;
 import com.kjeldsen.player.application.usecases.economy.MatchAttendanceIncomeUseCase;
 import com.kjeldsen.player.application.usecases.economy.MerchandiseIncomeUseCase;
 import com.kjeldsen.player.application.usecases.economy.RestaurantIncomeUseCase;
+import com.kjeldsen.player.application.usecases.economy.SignSponsorIncomeUseCase;
 import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
 import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
 import com.kjeldsen.player.domain.Team;
@@ -31,6 +32,8 @@ public class MatchEventListenerIT extends AbstractEventIT {
     private BillboardIncomeUseCase billboardIncomeUseCase;
     @MockBean
     private UpdateLoyaltyUseCase updateLoyaltyUseCase;
+    @MockBean
+    private SignSponsorIncomeUseCase signSponsorIncomeUseCase;
 
     @Test
     public void should_handle_event_and_update_database() {
@@ -56,6 +59,7 @@ public class MatchEventListenerIT extends AbstractEventIT {
         verify(fansManagementUsecase).update(eq(Team.TeamId.of("awayTeamId")), any());
         verify(updateLoyaltyUseCase).updateLoyaltyMatch(eq(Team.TeamId.of("homeTeamId")), any(), any());
         verify(updateLoyaltyUseCase).updateLoyaltyMatch(eq(Team.TeamId.of("awayTeamId")), any(), any());
+        verify(signSponsorIncomeUseCase).processBonus(Team.TeamId.of("awayTeamId"));
 
     }
 }
