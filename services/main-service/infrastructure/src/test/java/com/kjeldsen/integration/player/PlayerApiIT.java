@@ -11,7 +11,14 @@ import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
-import com.kjeldsen.player.rest.model.*;
+import com.kjeldsen.player.rest.model.CreatePlayerRequest;
+import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
+import com.kjeldsen.player.rest.model.PlayerEconomy;
+import com.kjeldsen.player.rest.model.PlayerOrder;
+import com.kjeldsen.player.rest.model.PlayerPosition;
+import com.kjeldsen.player.rest.model.PlayerResponse;
+import com.kjeldsen.player.rest.model.PlayerResponseActualSkillsValue;
+import com.kjeldsen.player.rest.model.PlayerStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -19,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
-import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +64,7 @@ class PlayerApiIT extends AbstractIT {
                 .position(PlayerPosition.FORWARD)
                 .points(700);
 
-            mockMvc.perform(post("/api/player")
+            mockMvc.perform(post("/v1/player")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
@@ -80,7 +86,7 @@ class PlayerApiIT extends AbstractIT {
             GeneratePlayersRequest request = new GeneratePlayersRequest()
                 .numberOfPlayers(10);
 
-            mockMvc.perform(post("/api/player/generate")
+            mockMvc.perform(post("/v1/player/generate")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
@@ -124,7 +130,7 @@ class PlayerApiIT extends AbstractIT {
                         ))
                 .toList();
 
-            mockMvc.perform(get("/api/player")
+            mockMvc.perform(get("/v1/player")
                     .queryParam("page", "0")
                     .queryParam("size", "10")
                     .queryParam("position", "FORWARD")
@@ -157,10 +163,10 @@ class PlayerApiIT extends AbstractIT {
                 .position(PlayerPosition.fromValue(examplePlayer.getPosition().name()))
                 .category(com.kjeldsen.player.rest.model.PlayerCategory.fromValue(examplePlayer.getCategory().name()))
                 .actualSkills(examplePlayer.getActualSkills().entrySet().stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerApiIT::map))
+                    .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerApiIT::map))
                 );
 
-            mockMvc.perform(get("/api/player/{playerId}", examplePlayer.getId().value()))
+            mockMvc.perform(get("/v1/player/{playerId}", examplePlayer.getId().value()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(response)));

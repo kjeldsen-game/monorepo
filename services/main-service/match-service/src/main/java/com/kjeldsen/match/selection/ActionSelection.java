@@ -1,15 +1,16 @@
 package com.kjeldsen.match.selection;
 
 import com.kjeldsen.match.entities.Action;
+import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.GameStateException;
-import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PitchArea.PitchRank;
 import com.kjeldsen.player.domain.PlayerPosition;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
 import java.util.Random;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ActionSelection {
@@ -60,6 +61,6 @@ public class ActionSelection {
     }
 
     private static boolean shootingProhibited(Player player, PitchArea pitchArea) {
-        return !player.getPosition().isForward() || pitchArea.rank() != PitchRank.FORWARD || pitchArea.file() != PitchArea.PitchFile.CENTRE;
+        return !player.getPosition().isForward() || pitchArea.rank() != PitchRank.FORWARD;
     }
 }

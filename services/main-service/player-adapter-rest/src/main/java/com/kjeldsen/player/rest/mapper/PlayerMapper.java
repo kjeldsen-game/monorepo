@@ -9,6 +9,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Mapper(uses = {IdMapper.class})
 public interface PlayerMapper {
@@ -19,6 +20,10 @@ public interface PlayerMapper {
 
     default PlayerPosition playerPositionMap(com.kjeldsen.player.rest.model.PlayerPosition position) {
         return PlayerPosition.valueOf(position.name());
+    }
+
+    default com.kjeldsen.player.rest.model.PlayerPosition playerPositionMap(PlayerPosition position) {
+        return com.kjeldsen.player.rest.model.PlayerPosition.valueOf(position.name());
     }
 
     default PlayerSkill playerSkillMap(String playerSkill) {
@@ -33,7 +38,9 @@ public interface PlayerMapper {
         com.kjeldsen.player.rest.model.PlayerSkills var1 = new com.kjeldsen.player.rest.model.PlayerSkills();
         var1.setActual(playerSkills.getActual());
         var1.setPotential(playerSkills.getPotential());
-        var1.setPlayerSkillRelevance(PlayerSkillRelevance.valueOf(playerSkills.getPlayerSkillRelevance().name()));
+        if (Objects.nonNull(playerSkills.getPlayerSkillRelevance())) {
+            var1.setPlayerSkillRelevance(PlayerSkillRelevance.valueOf(playerSkills.getPlayerSkillRelevance().name()));
+        }
         return var1;
     }
 

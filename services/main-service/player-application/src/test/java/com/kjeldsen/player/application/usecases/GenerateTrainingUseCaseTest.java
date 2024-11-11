@@ -1,7 +1,12 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.domain.EventId;
-import com.kjeldsen.player.domain.*;
+import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.PlayerAge;
+import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.domain.PlayerSkill;
+import com.kjeldsen.player.domain.PlayerSkillRelevance;
+import com.kjeldsen.player.domain.PlayerSkills;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.generator.PointsGenerator;
 import com.kjeldsen.player.domain.provider.InstantProvider;
@@ -12,7 +17,11 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Instant;
@@ -79,7 +88,8 @@ class GenerateTrainingUseCaseTest {
             assertEquals(1, playerTrainingEvents.size());
 
             assertEquals(PlayerSkill.SCORING, playerTrainingEvents.get(0).getSkill());
-            assertEquals(3, playerTrainingEvents.get(0).getPoints());
+            assertEquals(8, playerTrainingEvents.get(0).getPoints());
+            assertEquals(13, playerTrainingEvents.get(0).getPointsAfterTraining());
 
             assertThat(playerTrainingEvents).allMatch(player -> player.getPlayerId().equals(playerId));
 
@@ -102,9 +112,9 @@ class GenerateTrainingUseCaseTest {
 
     private Player getPlayer(Player.PlayerId playerId) {
         return Player.builder()
-                .position(PlayerPosition.FORWARD)
-                .age(PlayerAge.generateAgeOfAPlayer())
-                .id(playerId)
+            .position(PlayerPosition.FORWARD)
+            .age(PlayerAge.generateAgeOfAPlayer())
+            .id(playerId)
             .actualSkills(new HashMap<>(Map.of(
                 PlayerSkill.SCORING, new PlayerSkills(5, 0, PlayerSkillRelevance.CORE),
                 PlayerSkill.CONSTITUTION, new PlayerSkills(3, 0, PlayerSkillRelevance.SECONDARY))))

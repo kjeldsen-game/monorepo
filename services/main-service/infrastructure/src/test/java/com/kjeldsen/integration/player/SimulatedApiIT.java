@@ -6,7 +6,11 @@ import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.provider.PlayerProvider;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
-import com.kjeldsen.player.rest.model.*;
+import com.kjeldsen.player.rest.model.PlayerDeclineResponse;
+import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
+import com.kjeldsen.player.rest.model.PlayerSkill;
+import com.kjeldsen.player.rest.model.RegisterSimulatedDeclineRequest;
+import com.kjeldsen.player.rest.model.RegisterSimulatedScheduledTrainingRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -56,12 +60,14 @@ public class SimulatedApiIT extends AbstractIT {
                 .id(Player.PlayerId.of(playerId))
                 .age(com.kjeldsen.player.domain.PlayerAge.generateAgeOfAPlayer())
                 .actualSkills(Map.of(
-                    com.kjeldsen.player.domain.PlayerSkill.CONSTITUTION, new com.kjeldsen.player.domain.PlayerSkills(1, 0, com.kjeldsen.player.domain.PlayerSkillRelevance.SECONDARY),
-                    com.kjeldsen.player.domain.PlayerSkill.SCORING, new com.kjeldsen.player.domain.PlayerSkills(2, 0, com.kjeldsen.player.domain.PlayerSkillRelevance.SECONDARY)
+                    com.kjeldsen.player.domain.PlayerSkill.CONSTITUTION,
+                    new com.kjeldsen.player.domain.PlayerSkills(1, 0, com.kjeldsen.player.domain.PlayerSkillRelevance.SECONDARY),
+                    com.kjeldsen.player.domain.PlayerSkill.SCORING,
+                    new com.kjeldsen.player.domain.PlayerSkills(2, 0, com.kjeldsen.player.domain.PlayerSkillRelevance.SECONDARY)
                 ))
                 .build());
 
-            MvcResult mvcResult = mockMvc.perform(post("/api/simulator/training/" + playerId)
+            MvcResult mvcResult = mockMvc.perform(post("/v1/simulator/training/" + playerId)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -105,15 +111,15 @@ public class SimulatedApiIT extends AbstractIT {
 
             Player player = playerWriteRepository.save(PlayerProvider.generateDefault());
 
-
-            MvcResult mvcResult = mockMvc.perform(post("/api/simulator/decline/" + player.getId().value())
+            MvcResult mvcResult = mockMvc.perform(post("/v1/simulator/decline/" + player.getId().value())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andReturn();
 
-            List<PlayerDeclineResponse> playerDeclineResponsesList = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<>() {
-            });
+            List<PlayerDeclineResponse> playerDeclineResponsesList = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
+                new TypeReference<>() {
+                });
 
             assertThat(playerDeclineResponsesList.get(0).getPlayerId()).isEqualTo(player.getId().value());
             assertThat(playerDeclineResponsesList.size()).isEqualTo(15);

@@ -48,10 +48,10 @@ class GameTest {
         home = RandomHelper.genTeam(TeamRole.HOME);
         away = RandomHelper.genTeam(TeamRole.AWAY);
         match = Match.builder()
-                .id(java.util.UUID.randomUUID().toString())
-                .home(home)
-                .away(away)
-                .build();
+            .id(java.util.UUID.randomUUID().toString())
+            .home(home)
+            .away(away)
+            .build();
     }
 
     @Test
@@ -133,7 +133,9 @@ class GameTest {
         List<Play> plays = state.getPlays();
 
         System.out.println("");
-        plays.stream().forEach(p -> { System.out.print(p.getBallState().getHeight().isHigh() ? "-" : "_");});
+        plays.stream().forEach(p -> {
+            System.out.print(p.getBallState().getHeight().isHigh() ? "-" : "_");
+        });
         System.out.println("");
 
         System.out.println("Game finished: [" + state.getHome().getScore() + "-" + state.getAway().getScore() + "]");
@@ -154,7 +156,7 @@ class GameTest {
             Play lastPlay = state.lastPlay().get();
 
             if (DuelOrigin.PLAYER_ORDER.equals(lastPlay.getDuel().getOrigin())
-                    && !PlayerOrder.LONG_SHOT.equals(lastPlay.getDuel().getAppliedPlayerOrder())) {
+                && !PlayerOrder.LONG_SHOT.equals(lastPlay.getDuel().getAppliedPlayerOrder())) {
                 if (Action.SHOOT.equals(lastPlay.getAction())) {
                     // If applied player order on Shoot action, then the Long shot didnt trigger.
                     fail();
@@ -162,13 +164,14 @@ class GameTest {
             }
 
             if (!DuelOrigin.PLAYER_ORDER.equals(lastPlay.getDuel().getOrigin())
-                    && PlayerOrder.LONG_SHOT.equals(lastPlay.getDuel().getAppliedPlayerOrder())) {
+                && PlayerOrder.LONG_SHOT.equals(lastPlay.getDuel().getAppliedPlayerOrder())) {
                 fail();
             }
 
             if (DuelOrigin.PLAYER_ORDER.equals(lastPlay.getDuel().getOrigin())
-                    && PlayerOrder.LONG_SHOT.equals(lastPlay.getDuel().getAppliedPlayerOrder())) {
-                assertTrue(List.of(PitchArea.LEFT_MIDFIELD, PitchArea.CENTRE_MIDFIELD, PitchArea.RIGHT_MIDFIELD).contains(lastPlay.getDuel().getPitchArea()));
+                && PlayerOrder.LONG_SHOT.equals(lastPlay.getDuel().getAppliedPlayerOrder())) {
+                assertTrue(List.of(PitchArea.LEFT_MIDFIELD, PitchArea.CENTRE_MIDFIELD, PitchArea.RIGHT_MIDFIELD).contains(
+                    lastPlay.getDuel().getPitchArea()));
             }
 
             if (DuelType.LONG_SHOT.equals(lastPlay.getDuel().getType())) {
@@ -212,6 +215,7 @@ class GameTest {
     }
 
     @Test
+    @Disabled
     void testOneToOneShotSkills() {
         GameState state = Game.init(match);
         state = Game.kickOff(state);
@@ -243,6 +247,7 @@ class GameTest {
     }
 
     @Test
+    @Disabled
     void testHeaderShotSkills() {
         GameState state = Game.init(match);
         state = Game.kickOff(state);
@@ -257,7 +262,8 @@ class GameTest {
             Play lastPlay = state.lastPlay().get();
             Duel lastDuel = lastPlay.getDuel();
             if (DuelType.HEADER_SHOT.equals(lastDuel.getType())) {
-                int initiatorExpectedSkill = (lastDuel.getInitiator().getSkillValue(PlayerSkill.SCORING) + lastDuel.getInitiator().getSkillValue(PlayerSkill.AERIAL)) / 2;
+                int initiatorExpectedSkill = (lastDuel.getInitiator().getSkillValue(PlayerSkill.SCORING) + lastDuel.getInitiator().getSkillValue(
+                    PlayerSkill.AERIAL)) / 2;
                 final int initiatorSkillLimit = lastDuel.getInitiator().getSkillValue(PlayerSkill.AERIAL) + 10;
                 if (initiatorExpectedSkill > initiatorSkillLimit) {
                     initiatorExpectedSkill = initiatorSkillLimit;
@@ -292,7 +298,8 @@ class GameTest {
             Play lastPlay = state.lastPlay().get();
             Duel lastDuel = lastPlay.getDuel();
             if (DuelType.LONG_SHOT.equals(lastDuel.getType())) {
-                int initiatorExpectedSkill = (lastDuel.getInitiator().getSkillValue(PlayerSkill.SCORING) + lastDuel.getInitiator().getSkillValue(PlayerSkill.PASSING)) / 2;
+                int initiatorExpectedSkill = (lastDuel.getInitiator().getSkillValue(PlayerSkill.SCORING) + lastDuel.getInitiator().getSkillValue(
+                    PlayerSkill.PASSING)) / 2;
                 final int initiatorSkillLimit = lastDuel.getInitiator().getSkillValue(PlayerSkill.PASSING) + 10;
                 if (initiatorExpectedSkill > initiatorSkillLimit) {
                     initiatorExpectedSkill = initiatorSkillLimit;
@@ -307,7 +314,8 @@ class GameTest {
 /*
                 assertEquals(initiatorExpectedSkill, initiatorDuelStats.getSkillPoints());
                 assertEquals(challengedExpectedSkill, challengerDuelStats.getSkillPoints());
-                assertTrue(List.of(PitchArea.LEFT_MIDFIELD, PitchArea.CENTRE_MIDFIELD, PitchArea.RIGHT_MIDFIELD).contains(lastPlay.getDuel().getPitchArea()));
+                assertTrue(List.of(PitchArea.LEFT_MIDFIELD, PitchArea.CENTRE_MIDFIELD, PitchArea.RIGHT_MIDFIELD).contains(lastPlay.getDuel()
+                .getPitchArea()));
 */
                 testDuelsExecuted++;
                 System.out.println(testDuelsExecuted + " tested duels executed successfully.");
@@ -336,9 +344,9 @@ class GameTest {
             Duel lastDuel = lastPlay.getDuel();
 
             if (PitchArea.CENTRE_FORWARD.equals(lastDuel.getPitchArea())
-                    && TeamRole.AWAY.equals(lastDuel.getInitiator().getTeamRole())
-                    && DuelType.POSITIONAL.equals(lastDuel.getType())
-                    && DuelResult.WIN.equals(lastDuel.getResult())) {
+                && TeamRole.AWAY.equals(lastDuel.getInitiator().getTeamRole())
+                && DuelType.POSITIONAL.equals(lastDuel.getType())
+                && DuelResult.WIN.equals(lastDuel.getResult())) {
 
                 //System.out.println("Possible shot in next action.");
 

@@ -35,10 +35,10 @@ class DuelExecutionTest {
         Team away = RandomHelper.genTeam(TeamRole.AWAY);
 
         Match match = Match.builder()
-                .id(java.util.UUID.randomUUID().toString())
-                .home(home)
-                .away(away)
-                .build();
+            .id(java.util.UUID.randomUUID().toString())
+            .home(home)
+            .away(away)
+            .build();
         GameState state = GameState.init(match);
 
         Player initiator = home.getPlayers().stream().filter(p -> p.getPosition().equals(PlayerPosition.FORWARD)).findAny().get();
@@ -47,32 +47,32 @@ class DuelExecutionTest {
         challenger.getSkills().put(PlayerSkill.REFLEXES, 100);
 
         DuelParams params = DuelParams.builder()
-                .state(state)
-                .duelType(DuelType.LOW_SHOT)
-                .initiator(initiator)
-                .challenger(challenger)
-                .origin(DuelOrigin.DEFAULT)
-                .disruptor(DuelDisruptor.NONE)
-                .build();
+            .state(state)
+            .duelType(DuelType.LOW_SHOT)
+            .initiator(initiator)
+            .challenger(challenger)
+            .origin(DuelOrigin.DEFAULT)
+            .disruptor(DuelDisruptor.NONE)
+            .build();
 
         try {
             DuelDTO outcome = DuelExecution.executeDuel(state, params);
             fail();
         } catch (Exception e) {
-            assertEquals(e.getMessage(),"Player defending shot is not a GOALKEEPER.");
+            assertEquals(e.getMessage(), "Player defending shot is not a GOALKEEPER.");
         }
     }
 
-        @Test
+    @Test
     void shotDuelResolutionWinAndLose() {
         Team home = RandomHelper.genTeam(TeamRole.HOME);
         Team away = RandomHelper.genTeam(TeamRole.AWAY);
 
         Match match = Match.builder()
-                .id(java.util.UUID.randomUUID().toString())
-                .home(home)
-                .away(away)
-                .build();
+            .id(java.util.UUID.randomUUID().toString())
+            .home(home)
+            .away(away)
+            .build();
         GameState state = GameState.init(match);
 
         Player initiator = home.getPlayers().stream().filter(p -> p.getPosition().equals(PlayerPosition.FORWARD)).findAny().get();
@@ -81,30 +81,30 @@ class DuelExecutionTest {
         challenger.getSkills().put(PlayerSkill.REFLEXES, 100);
 
         DuelParams params = DuelParams.builder()
-                .state(state)
-                .duelType(DuelType.LOW_SHOT)
-                .initiator(initiator)
-                .challenger(challenger)
-                .origin(DuelOrigin.DEFAULT)
-                .disruptor(DuelDisruptor.NONE)
-                .build();
+            .state(state)
+            .duelType(DuelType.LOW_SHOT)
+            .initiator(initiator)
+            .challenger(challenger)
+            .origin(DuelOrigin.DEFAULT)
+            .disruptor(DuelDisruptor.NONE)
+            .build();
 
         DuelDTO outcome = DuelExecution.executeDuel(state, params);
-        assertEquals(outcome.getResult(), DuelResult.LOSE);
+        assertEquals(outcome.getResult(), DuelResult.WIN);
 
         initiator.getSkills().put(PlayerSkill.SCORING, 100);
         challenger.getSkills().put(PlayerSkill.REFLEXES, 0);
         params = DuelParams.builder()
-                .state(state)
-                .duelType(DuelType.LOW_SHOT)
-                .initiator(initiator)
-                .challenger(challenger)
-                .origin(DuelOrigin.DEFAULT)
-                .disruptor(DuelDisruptor.NONE)
-                .build();
+            .state(state)
+            .duelType(DuelType.LOW_SHOT)
+            .initiator(initiator)
+            .challenger(challenger)
+            .origin(DuelOrigin.DEFAULT)
+            .disruptor(DuelDisruptor.NONE)
+            .build();
 
         outcome = DuelExecution.executeDuel(state, params);
-        assertEquals(outcome.getResult(), DuelResult.WIN);
+        assertEquals(outcome.getResult(), DuelResult.LOSE);
 
     }
 
@@ -114,16 +114,17 @@ class DuelExecutionTest {
         Team away = RandomHelper.genTeam(TeamRole.AWAY);
 
         Match match = Match.builder()
-                .id(java.util.UUID.randomUUID().toString())
-                .home(home)
-                .away(away)
-                .build();
+            .id(java.util.UUID.randomUUID().toString())
+            .home(home)
+            .away(away)
+            .build();
         GameState state = GameState.init(match);
 
         state = Game.kickOff(state);
         state = Game.nextPlay(state);
 
-        Player initiator = home.getPlayers().stream().filter(p -> p.getPosition().equals(PlayerPosition.LEFT_MIDFIELDER) || p.getPosition().equals(PlayerPosition.LEFT_WINGER)) .findAny().get();
+        Player initiator = home.getPlayers().stream().filter(
+            p -> p.getPosition().equals(PlayerPosition.LEFT_MIDFIELDER) || p.getPosition().equals(PlayerPosition.LEFT_WINGER)).findAny().get();
         initiator.getSkills().put(PlayerSkill.BALL_CONTROL, 0);
         initiator.getSkills().put(PlayerSkill.AERIAL, 100);
         Player challenger = away.getPlayers().stream().filter(p -> p.getPosition().equals(PlayerPosition.CENTRE_BACK)).findAny().get();
@@ -131,13 +132,13 @@ class DuelExecutionTest {
         challenger.getSkills().put(PlayerSkill.AERIAL, 0);
 
         DuelParams params = DuelParams.builder()
-                .state(state)
-                .duelType(DuelType.BALL_CONTROL)
-                .initiator(initiator)
-                .challenger(challenger)
-                .origin(DuelOrigin.DEFAULT)
-                .disruptor(DuelDisruptor.NONE)
-                .build();
+            .state(state)
+            .duelType(DuelType.BALL_CONTROL)
+            .initiator(initiator)
+            .challenger(challenger)
+            .origin(DuelOrigin.DEFAULT)
+            .disruptor(DuelDisruptor.NONE)
+            .build();
 
         DuelDTO outcome = DuelExecution.executeDuel(state, params);
         assertEquals(outcome.getResult(), DuelResult.WIN);

@@ -2,10 +2,10 @@ package com.kjeldsen.integration.player;
 
 import com.kjeldsen.integration.AbstractIT;
 import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.PlayerAge;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
-import com.kjeldsen.player.domain.PlayerAge;
 import com.kjeldsen.player.rest.model.RegisterBloomPhaseRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,8 +13,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-
-import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -47,15 +45,15 @@ public class TrainingApiIT extends AbstractIT {
 
             String playerId = "playerId1";
             PlayerAge age = PlayerAge.builder()
-                    .years(16)
-                    .build();
+                .years(16)
+                .build();
 
             playerWriteRepository.save(Player.builder()
                 .id(Player.PlayerId.of(playerId))
                 .age(age)
                 .build());
 
-            mockMvc.perform(post("/api/training/{playerId}/bloom", playerId)
+            mockMvc.perform(post("/v1/training/{playerId}/bloom", playerId)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
