@@ -12,13 +12,13 @@ db.User.insertMany([
     {
         "_id": ObjectId("66cd9fd57a0b1808f7ba3f6d"),
         "email": "exampleUser1",
-        "password": "$shiro1$SHA-256$500000$6uW2xlP4v1b/42nrF+htiQ==$AXRIkxDiWC9tVcTw+awJmhcBUUKq63Hi2INZZd2UJ4Q=", // password
+        "password": "$2a$12$4yy7GzV2tQ0XqE..lotXnuKTzR1uM05fvKd3Ez6i9DgJrmcU9W7F2", // password
         "_class": "com.kjeldsen.auth.User"
     },
     {
         "_id": ObjectId("66cd9fd57a0b1808f7ba3f6e"),
         "email": "exampleUser2",
-        "password": "$shiro1$SHA-256$500000$6uW2xlP4v1b/42nrF+htiQ==$AXRIkxDiWC9tVcTw+awJmhcBUUKq63Hi2INZZd2UJ4Q=", // password
+        "password": "$2a$12$4yy7GzV2tQ0XqE..lotXnuKTzR1uM05fvKd3Ez6i9DgJrmcU9W7F2", // password
         "_class": "com.kjeldsen.auth.User"
     }
 ]);

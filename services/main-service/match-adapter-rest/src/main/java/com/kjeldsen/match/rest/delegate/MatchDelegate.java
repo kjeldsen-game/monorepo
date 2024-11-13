@@ -155,6 +155,7 @@ public class MatchDelegate implements MatchApiDelegate {
         );
     }
 
+    // TODO REWORK TO USE THE SecurityUtils.getCurrentUserId(); instead of specifying the user
     @Override
     public ResponseEntity<List<MatchResponse>> getAllMatches(String teamId, Integer size,
         Integer page) {
@@ -183,6 +184,7 @@ public class MatchDelegate implements MatchApiDelegate {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    // TODO REWORK TO USE THE SecurityUtils.getCurrentUserId(); instead of specifying the user
     @Override
     public ResponseEntity<Void> addPlayer(String matchId,
         String teamId,
@@ -236,6 +238,7 @@ public class MatchDelegate implements MatchApiDelegate {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // TODO REWORK TO USE THE SecurityUtils.getCurrentUserId(); instead of specifying the user
     @Override
     public ResponseEntity<String> editPlayer(String matchId, String teamId, EditPlayerRequest playerRequest) {
         Match match = matchRepo.findOneById(matchId)
@@ -295,6 +298,7 @@ public class MatchDelegate implements MatchApiDelegate {
 
     }
 
+    // TODO REWORK TO USE THE SecurityUtils.getCurrentUserId(); instead of specifying the user
     @Override
     public ResponseEntity<Void> deletePlayer(String matchId,
         String teamId,
@@ -328,6 +332,7 @@ public class MatchDelegate implements MatchApiDelegate {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // TODO REWORK TO USE THE SecurityUtils.getCurrentUserId(); instead of specifying the user
     public ResponseEntity<String> validate(String matchId,
         String teamId) {
 

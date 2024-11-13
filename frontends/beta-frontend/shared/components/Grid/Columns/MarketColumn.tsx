@@ -7,7 +7,6 @@ import { GridAlignment } from '@mui/x-data-grid';
 import Link from 'next/link';
 import {
   PlayerPosition,
-  PlayerPositionColor,
   PlayerPositionColorNew,
 } from '@/shared/models/PlayerPosition';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';

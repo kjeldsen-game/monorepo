@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import { IconButton, TextField } from '@mui/material';
-import { useAuctionRepository } from '@/pages/api/market/useAuctionRepository';
 import { useSession } from 'next-auth/react';
 import MarketButton from './MarketButton';
 import AuctionDetailData from './AuctionDetailData';
@@ -15,6 +14,7 @@ import { AuctionMarket } from '@/shared/models/Auction';
 interface AuctionProps {
   auction: AuctionMarket | undefined;
   refetch: () => void;
+  update: (auctionId: number) => void;
   open: boolean;
   handleClose: () => void;
 }
@@ -22,6 +22,7 @@ interface AuctionProps {
 const MarketModal: React.FC<AuctionProps> = ({
   auction,
   refetch,
+  update,
   open,
   handleClose,
 }: AuctionProps) => {
@@ -51,7 +52,7 @@ const MarketModal: React.FC<AuctionProps> = ({
 
   const handleButtonClick = async () => {
     try {
-      const response = await updateAuction(bid);
+      const response = await update(bid);
       if (response.status == 500) {
         setConfirmation(false);
         setUpdateError(response.message);
@@ -76,8 +77,6 @@ const MarketModal: React.FC<AuctionProps> = ({
 
     return `${day}/${month}/${year}`;
   }
-
-  const { updateAuction } = useAuctionRepository(auction?.id);
 
   return (
     <>

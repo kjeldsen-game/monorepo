@@ -21,6 +21,7 @@ public class SignSponsorIncomeUseCase {
     private final CreateTransactionUseCase createTransactionUseCase;
 
     public void sign(Team.TeamId teamId, Team.Economy.IncomePeriodicity periodicity, Team.Economy.IncomeMode mode) {
+        log.info("SingSponsorUseCase for team {} periodicity {} mode {}", teamId, periodicity, mode);
         Team team = teamReadRepository.findById(teamId)
             .orElseThrow(() -> new RuntimeException("Team not found"));
 
@@ -31,8 +32,11 @@ public class SignSponsorIncomeUseCase {
         team.getEconomy().getSponsors().put(periodicity, mode);
 
         BigDecimal amount = getAmount(mode, periodicity, false);
+        log.info("SingSponsorUseCase amount {}", amount);
+
         teamWriteRepository.save(team);
         createTransactionUseCase.create(teamId, amount, Transaction.TransactionType.SPONSOR);
+
     }
 
     public void processBonus(Team.TeamId teamId) {

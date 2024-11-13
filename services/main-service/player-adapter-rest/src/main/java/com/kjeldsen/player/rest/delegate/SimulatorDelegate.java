@@ -1,5 +1,7 @@
 package com.kjeldsen.player.rest.delegate;
 
+import com.kjeldsen.auth.AuthService;
+import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.player.application.usecases.CanteraInvestmentUsecase;
 import com.kjeldsen.player.application.usecases.EconomyInvestmentUsecase;
 import com.kjeldsen.player.application.usecases.FindAndProcessScheduledPotentialUseCase;
@@ -19,6 +21,7 @@ import com.kjeldsen.player.domain.events.PlayerPotentialRiseEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
+import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.rest.api.SimulatorApiDelegate;
 import com.kjeldsen.player.rest.mapper.PlayerDeclineResponseMapper;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
@@ -26,17 +29,20 @@ import com.kjeldsen.player.rest.mapper.PlayerPotentialRiseResponseMapper;
 import com.kjeldsen.player.rest.mapper.PlayerTrainingResponseMapper;
 import com.kjeldsen.player.rest.model.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class SimulatorDelegate implements SimulatorApiDelegate {
     private static final Integer MAX_AGE = 21;
     private final ScheduleTrainingUseCase scheduleTrainingUseCase;
@@ -61,6 +67,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final ResetSponsorIncomeUseCase resetSponsorIncomeUseCase;
     private final ResetBillboardIncomeUseCase resetBillboardIncomeUseCase;
     private final SignSponsorIncomeUseCase signSponsorIncomeUseCase;
+    private final TeamReadRepository teamReadRepository;
 
     @Override
     public ResponseEntity<PlayerHistoricalPotentialRiseResponse> registerSimulatedScheduledPotentialRise(
@@ -207,17 +214,17 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         return ResponseEntity.ok().build();
     }
 
-    @Override
-    public ResponseEntity<Void> simulatePricingUpdate(String teamId, SimulatePricingUpdateRequest simulatePricingUpdateRequest) {
-        Team.TeamId id = Team.TeamId.of(teamId);
-        simulatePricingUpdateRequest.getPrices().forEach(price -> {
-            System.out.println(price.getType());
-            System.out.println(price.getValue());
-            updateTeamPricingUsecase.update(id, price.getValue(),
-                Team.Economy.PricingType.valueOf(price.getType().name()));
-        });
-        return ResponseEntity.ok().build();
-    }
+//    @Override
+//    public ResponseEntity<Void> simulatePricingUpdate(String teamId, SimulatePricingUpdateRequest simulatePricingUpdateRequest) {
+//        Team.TeamId id = Team.TeamId.of(teamId);
+//        simulatePricingUpdateRequest.getPrices().forEach(price -> {
+//            System.out.println(price.getType());
+//            System.out.println(price.getValue());
+//            updateTeamPricingUsecase.update(id, price.getValue(),
+//                Team.Economy.PricingType.valueOf(price.getType().name()));
+//        });
+//        return ResponseEntity.ok().build();
+//    }
 
     @Override
     public ResponseEntity<Void> simulateBuildingUpgrade(String teamId, SimulateBuildingUpgradeRequest simulateBuildingUpgradeRequest) {
@@ -233,14 +240,15 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         return ResponseEntity.ok().build();
     }
 
-    @Override
-    public ResponseEntity<Void> simulateBillboardSelection(String teamId, SimulateBillboardSelectionRequest simulateBillboardSelectionRequest) {
-        Team.Economy.BillboardIncomeType mode = Team.Economy.BillboardIncomeType.valueOf(
-            simulateBillboardSelectionRequest.getMode().name());
-        System.out.println(mode);
-        signBillboardIncomeUseCase.sign(Team.TeamId.of(teamId), mode);
-        return ResponseEntity.ok().build();
-    }
+    // TODO CLEANUP
+//    @Override
+//    public ResponseEntity<Void> simulateBillboardSelection(String teamId, SimulateBillboardSelectionRequest simulateBillboardSelectionRequest) {
+//        Team.Economy.BillboardIncomeType mode = Team.Economy.BillboardIncomeType.valueOf(
+//            simulateBillboardSelectionRequest.getMode().name());
+//        System.out.println(mode);
+//        signBillboardIncomeUseCase.sign(Team.TeamId.of(teamId), mode);
+//        return ResponseEntity.ok().build();
+//    }
 
     @Override
     public ResponseEntity<Void> simulateLoyaltyUpdate(String teamId, SimulateLoyaltyUpdateRequest simulateLoyaltyUpdateRequest) {
@@ -270,11 +278,15 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     }
 
 
-    @Override
-    public ResponseEntity<Void> simulateSignSponsor(String teamId, SimulateSignSponsorRequest simulateSignSponsorRequest) {
-        signSponsorIncomeUseCase.sign(Team.TeamId.of(teamId),
-            Team.Economy.IncomePeriodicity.valueOf(simulateSignSponsorRequest.getPeriodicity().name()),
-            Team.Economy.IncomeMode.valueOf(simulateSignSponsorRequest.getMode().name()));
-        return ResponseEntity.ok().build();
-    }
+//    @Override
+//    public ResponseEntity<Void> simulateSignSponsor(String teamId, SimulateSignSponsorRequest simulateSignSponsorRequest) {
+//        String currentUserId = SecurityUtils.getCurrentUserId();
+//        Optional<Team> team = teamReadRepository.findByUserId(currentUserId);
+//        log.info(team.get().getName());
+//
+//        signSponsorIncomeUseCase.sign(team.map(value -> Team.TeamId.of(value.getId().value())).orElse(null),
+//            Team.Economy.IncomePeriodicity.valueOf(simulateSignSponsorRequest.getPeriodicity().name()),
+//            Team.Economy.IncomeMode.valueOf(simulateSignSponsorRequest.getMode().name()));
+//        return ResponseEntity.ok().build();
+//    }
 }

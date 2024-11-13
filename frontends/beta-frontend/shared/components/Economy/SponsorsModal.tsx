@@ -53,7 +53,7 @@ const SponsorsModal: React.FC<SponsorsModalProps> = ({
     }
   };
 
-  const { signSponsor } = useEconomyRepository(userData?.user.teamId);
+  const { signSponsor } = useEconomyRepository(userData?.accessToken);
 
   return (
     <>

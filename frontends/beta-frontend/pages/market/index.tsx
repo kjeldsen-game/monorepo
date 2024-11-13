@@ -1,29 +1,55 @@
 import type { NextPage } from 'next';
 import { Box } from '@mui/material';
 import MarketView from '@/shared/components/Market/MarketView';
-import { useAllAuctionRepository } from '../api/market/useAllAuctionRepository';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import { useAuctionRepository } from '../api/market/useAuctionRepository';
 
-interface MarketProsp {
-    fallback: () => void;
-}
+interface MarketProsp {}
 
-const Market: NextPage<MarketProsp> = ({ fallback }) => {
-    const { allAuctions, refetch } = useAllAuctionRepository();
+const Market: NextPage<MarketProsp> = ({}) => {
+  const [filter, setFilter] = useState<string>('');
+  const [auction, setAuction] = useState<string | undefined>(undefined);
+  const { data: userData } = useSession();
 
-    return (
-        <>
-            <Box>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        marginBottom: '2rem',
-                        alignItems: 'center',
-                    }}>
-                    <MarketView refetch={refetch} auctions={allAuctions} />
-                </Box>
-            </Box>
-        </>
-    );
+  const { auctions, updateAuction, refetch } = useAuctionRepository(
+    auction,
+    userData?.accessToken,
+    filter,
+  );
+
+  useEffect(() => {
+    refetch();
+  }, [filter]);
+
+  const handleSetFilter = (filterInput: string) => {
+    setFilter(filterInput);
+  };
+
+  const handleAuction = (auctionId: string) => {
+    setAuction(auctionId);
+  };
+
+  return (
+    <>
+      <Box>
+        <Box
+          sx={{
+            display: 'flex',
+            marginBottom: '2rem',
+            alignItems: 'center',
+          }}>
+          <MarketView
+            setAuction={handleAuction}
+            updateAuction={updateAuction}
+            refetch={refetch}
+            auctions={auctions}
+            setFilter={handleSetFilter}
+          />
+        </Box>
+      </Box>
+    </>
+  );
 };
 
 export default Market;

@@ -56,9 +56,11 @@ public class CreateTransactionUseCase {
         transactionEventWriteRepository.save(transactionEvent);
         transactionWriteRepository.save(Transaction.creation(transactionEvent));
         teamWriteRepository.save(team);
+        log.info("CreateTransactionUseCase completed");
     }
 
     private TransactionEvent createTransactionEvent(Team team, BigDecimal amount, Transaction.TransactionType transactionType) {
+        System.out.println(amount);
         return  TransactionEvent.builder()
             .id(EventId.generate())
             .occurredAt(InstantProvider.now())

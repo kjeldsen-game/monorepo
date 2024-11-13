@@ -5,18 +5,19 @@ import { useEffect, useState } from 'react';
 const API = '/market/auction';
 
 const useAllAuctionRepository = (
+  token?: string,
   initialPage: number = 1,
   initialSize: number = 10,
   initialFilter: string = '',
 ) => {
   const [data, setData] = useState<AuctionMarket[]>([]);
-
   const fetchInitialData = async () => {
     const initialData = await connectorAPI(
       `${API}?page=${initialPage}&size=${initialSize}&${initialFilter}`,
       'GET',
       undefined,
       'include',
+      token,
     );
     setData(initialData);
   };

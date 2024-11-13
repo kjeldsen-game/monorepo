@@ -40,5 +40,4 @@ public class SecurityProperties {
             .replaceAll("-----END PRIVATE KEY-----", "")
             .replaceAll("\\s", "");
     }
-
 }

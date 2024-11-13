@@ -95,14 +95,14 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-  /team/{teamId}/economy:
+######################## ECONOMY START ########################
+
+  /team/economy:
     get:
       summary: Get Team Economy
       operationId: getTeamEconomy
       tags:
         - team
-      parameters:
-        - $ref: "#/components/parameters/TeamIdPathParameter"
       responses:
         "200":
           description: Team Economy is retrieved
@@ -111,25 +111,63 @@ paths:
               schema:
                 $ref: "#/components/schemas/EconomyResponse"
 
-  /team/{teamId}/transactions:
-    get:
-      summary: Get team Transactions
-      operationId: getTeamTransactions
+  /team/economy/sign-billboard:
+    post:
+      summary: Sign billboard deal
+      operationId: signBillboard
       tags:
         - team
-      parameters:
-        - $ref: "#/components/parameters/TeamIdPathParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignBillboardRequest"
       responses:
         "200":
-          description: Team transactions were retrieved
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/TransactionReportResponse"
+          description: Billboard income selected
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
+
+
+  /team/economy/sign-sponsor:
+    post:
+      summary: Sign Sponsor
+      operationId: signSponsor
+      tags:
+        - team
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignSponsorRequest"
+      responses:
+        "200":
+          description: Sponsor deal was signed
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /team/economy/update-pricing:
+    post:
+      summary: Update price of team items
+      operationId: updatePricing
+      tags:
+        - team
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePricingRequest"
+      responses:
+        "200":
+          description: Pricing updated
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+
+######################## ECONOMY END ########################
 
   /player:
     post:
@@ -576,26 +614,6 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-  /simulator/update-pricing/{teamId}:
-    post:
-      summary: Simulate update price of team items
-      operationId: simulatePricingUpdate
-      tags:
-        - simulator
-      parameters:
-        - $ref: "#/components/parameters/TeamIdPathParameter"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SimulatePricingUpdateRequest"
-      responses:
-        "200":
-          description: Pricing updated
-        default:
-          $ref: "#/components/responses/DefaultErrorResponse"
-
   /simulator/update-building/{teamId}:
     post:
       summary: Simulate building upgrade
@@ -630,25 +648,25 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-  /simulator/billboards-selection/{teamId}:
-    post:
-      summary: Simulate billboard selection w income
-      operationId: simulateBillboardSelection
-      tags:
-        - simulator
-      parameters:
-        - $ref: "#/components/parameters/TeamIdPathParameter"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SimulateBillboardSelectionRequest"
-      responses:
-        "200":
-          description: Billboard income selected
-        default:
-          $ref: "#/components/responses/DefaultErrorResponse"
+#  /simulator/billboards-selection/{teamId}:
+#    post:
+#      summary: Simulate billboard selection w income
+#      operationId: simulateBillboardSelection
+#      tags:
+#        - simulator
+#      parameters:
+#        - $ref: "#/components/parameters/TeamIdPathParameter"
+#      requestBody:
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#              $ref: "#/components/schemas/SimulateBillboardSelectionRequest"
+#      responses:
+#        "200":
+#          description: Billboard income selected
+#        default:
+#          $ref: "#/components/responses/DefaultErrorResponse"
 
   /simulator/update-loyalty/{teamId}:
     post:
@@ -700,25 +718,25 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-  /simulator/sign-sponsor/{teamId}:
-    post:
-      summary: Sign Sponsor
-      operationId: simulateSignSponsor
-      tags:
-        - simulator
-      parameters:
-        - $ref: "#/components/parameters/TeamIdPathParameter"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SimulateSignSponsorRequest"
-      responses:
-        "200":
-          description: Sponsor deal was signed
-        default:
-          $ref: "#/components/responses/DefaultErrorResponse"
+#  /simulator/sign-sponsor/{teamId}:
+#    post:
+#      summary: Sign Sponsor
+#      operationId: simulateSignSponsor
+#      tags:
+#        - simulator
+#      parameters:
+#        - $ref: "#/components/parameters/TeamIdPathParameter"
+#      requestBody:
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#              $ref: "#/components/schemas/SimulateSignSponsorRequest"
+#      responses:
+#        "200":
+#          description: Sponsor deal was signed
+#        default:
+#          $ref: "#/components/responses/DefaultErrorResponse"
 
 components:
   
@@ -1179,7 +1197,7 @@ components:
           items:
             $ref: "#/components/schemas/PlayerWageTransaction"
 
-    SimulateSignSponsorRequest:
+    SignSponsorRequest:
       type: object
       properties:
         mode:
@@ -1417,7 +1435,7 @@ components:
       required:
         - impactType
 
-    SimulatePricingUpdateRequest:
+    UpdatePricingRequest:
       type: object
       properties:
         prices:
@@ -1433,7 +1451,7 @@ components:
       required:
         - facility
 
-    SimulateBillboardSelectionRequest:
+    SignBillboardRequest:
       type: object
       example: { "mode": "SHORT" }
       properties:
