@@ -62,7 +62,7 @@ jobs:
           path: artifacts
 
       - name: Test documentation
-        uses: JetBrains/writerside-checker-action@v2
+        uses: JetBrains/writerside-checker-action@v1
         with:
           instance: ${{ env.INSTANCE }}
 
