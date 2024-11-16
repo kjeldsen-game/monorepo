@@ -32,8 +32,8 @@ module "database" {
   master_username = var.docdb_master_username
   master_password = var.docdb_master_password
 
-  # Optional: specify allowed security groups
-  allowed_security_groups = [] # Will be populated when we create the backend service
+  # Allow the backend security group to connect to DocumentDB
+  allowed_security_groups = [module.backend.security_group_id]
 }
 
 module "backend" {
@@ -51,7 +51,7 @@ module "backend" {
   ssh_password            = var.ssh_password
 
   environment_vars = {
-    SPRING_PROFILES_ACTIVE = "docker"
+    SPRING_PROFILES_ACTIVE = "aws"
 
     SERVER_PORT          = var.container_internal_port
     ACTUATOR_SERVER_PORT = 8081
@@ -61,6 +61,7 @@ module "backend" {
     MONGO_USER     = var.docdb_master_username
     MONGO_PASSWORD = var.docdb_master_password
     MONGO_DATABASE = "admin"
+    MONGO_OPTIONS  = "ssl=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false"
 
     ACCESS_TOKEN_VALIDITY_SECONDS = 86400
 

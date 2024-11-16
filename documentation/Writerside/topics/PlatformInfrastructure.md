@@ -2,9 +2,9 @@
 
 ## Terraform
 
-- terraform init 
 - aws configure --profile kjeldsen
-- 
+- terraform init 
+- terraform apply -var-file="prod.tfvars"
 
 
 

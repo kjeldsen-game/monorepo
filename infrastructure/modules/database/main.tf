@@ -46,11 +46,20 @@ resource "aws_security_group" "docdb" {
   name_prefix = "${var.project}-${var.environment}-docdb-"
   vpc_id      = var.vpc_id
 
+  # Allow inbound from backend security group
   ingress {
     from_port       = 27017
     to_port         = 27017
     protocol        = "tcp"
     security_groups = var.allowed_security_groups
+  }
+
+  # Allow all outbound traffic
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
