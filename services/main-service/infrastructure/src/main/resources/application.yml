@@ -19,7 +19,7 @@ spring:
         quartz:
           jobStore:
             class: com.novemberain.quartz.mongodb.MongoDBJobStore
-            mongoUri: mongodb://${spring.data.mongodb.username}:${spring.data.mongodb.password}@${spring.data.mongodb.host}:${spring.data.mongodb.port}/${spring.data.mongodb.database}
+            mongoUri: mongodb://${MONGO_USER:admin}:${MONGO_PASSWORD:root}@${MONGO_HOST:localhost}:${MONGO_PORT:27017}/${MONGO_DATABASE:admin}${MONGO_OPTIONS:retryWrites=false}
             collectionPrefix: quartz_
             dbName: quartz_db
 
