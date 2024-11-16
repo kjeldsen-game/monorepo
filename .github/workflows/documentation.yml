@@ -11,6 +11,7 @@ on:
       - main
     paths:
       - "documentation/**"
+      - ".github/workflows/documentation.yml"
 
 # Gives the workflow permissions to clone the repo and create a page deployment
 permissions:
