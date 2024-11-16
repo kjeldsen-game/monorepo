@@ -27,7 +27,7 @@ resource "aws_subnet" "public" {
 
 # Private subnets - for resources that don't need direct internet access (like databases)
 resource "aws_subnet" "private" {
-  count             = 1
+  count             = 2
   vpc_id            = aws_vpc.main.id
   cidr_block        = cidrsubnet(var.vpc_cidr, 8, count.index + 2) # Offset by 2 to avoid public subnet ranges
   availability_zone = data.aws_availability_zones.available.names[count.index]

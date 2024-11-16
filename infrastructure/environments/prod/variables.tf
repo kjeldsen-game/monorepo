@@ -18,3 +18,20 @@ variable "vpc_cidr" {
   description = "CIDR block for VPC"
   type        = string
 }
+
+variable "docdb_instance_class" {
+  description = "Instance class for DocumentDB"
+  type        = string
+}
+
+variable "docdb_master_username" {
+  description = "Master username for DocumentDB"
+  type        = string
+  sensitive   = true
+}
+
+variable "docdb_master_password" {
+  description = "Master password for DocumentDB"
+  type        = string
+  sensitive   = true
+}
