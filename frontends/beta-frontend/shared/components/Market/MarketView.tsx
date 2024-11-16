@@ -17,8 +17,6 @@ interface MarketProps {
 
 const MarketView: React.FC<MarketProps> = ({
   auctions,
-  refetch,
-  updateAuction,
   setFilter,
   setAuction,
 }: MarketProps) => {
@@ -28,11 +26,10 @@ const MarketView: React.FC<MarketProps> = ({
   const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    if (activeAuction !== undefined && auctions?.length > 0) {
+    if (activeAuction !== undefined && auctions && auctions?.length > 0) {
       const updatedAuction = auctions?.find(
         (auction) => auction.id === activeAuction.id,
       );
-
       if (updatedAuction) {
         setActiveAuction(updatedAuction);
       }
@@ -55,8 +52,6 @@ const MarketView: React.FC<MarketProps> = ({
       <DashboardLink children={'Back to Dashboard'} />
       <MarketModal
         auction={activeAuction}
-        refetch={refetch}
-        update={updateAuction}
         open={open}
         handleClose={handleCloseModal}
       />

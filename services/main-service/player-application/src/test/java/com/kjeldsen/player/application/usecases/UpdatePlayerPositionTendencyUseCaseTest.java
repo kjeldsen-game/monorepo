@@ -21,7 +21,8 @@ class UpdatePlayerPositionTendencyUseCaseTest {
         PlayerSkills v1 = new PlayerSkills(5, 0, PlayerSkillRelevance.CORE);
         PlayerSkills v2 = new PlayerSkills(4, 0, PlayerSkillRelevance.CORE);
         updatePlayerPositionTendencyUseCase.update(
-            new UpdatePlayerTendencies(PlayerPosition.FORWARD, Map.of(PlayerSkill.SCORING, v1, PlayerSkill.OFFENSIVE_POSITIONING, v2)));
+            new UpdatePlayerPositionTendencyUseCase.UpdatePlayerTendencies(
+                PlayerPosition.FORWARD, Map.of(PlayerSkill.SCORING, v1, PlayerSkill.OFFENSIVE_POSITIONING, v2)));
 
         PlayerPositionTendency expectedPlayerPositionToBeSaved = PlayerPositionTendency.builder().position(PlayerPosition.FORWARD).tendencies(
             Map.of(PlayerSkill.SCORING, v1, PlayerSkill.OFFENSIVE_POSITIONING, v2)).build();

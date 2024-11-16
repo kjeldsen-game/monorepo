@@ -1,7 +1,7 @@
 package com.kjeldsen.player.quartz;
 
-import com.kjeldsen.player.application.usecases.*;
 import com.kjeldsen.player.application.usecases.economy.BuildingMaintenanceExpenseUseCase;
+import com.kjeldsen.player.application.usecases.economy.PaySalariesTeamUseCase;
 import com.kjeldsen.player.application.usecases.economy.ResetSponsorIncomeUseCase;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import lombok.RequiredArgsConstructor;

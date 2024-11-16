@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class GetTeamTransactionsUseCase {
+public class GetTeamTransactionsUseCase extends GetTransactionsUseCaseAbstract {
 
     private static final int KJELDSEN_WEEK_LENGTH = 4;
     private static final int KJELDSEN_SEASON_LENGTH = 90;
@@ -29,16 +29,16 @@ public class GetTeamTransactionsUseCase {
         Transaction.TransactionType.RESTAURANT, Transaction.TransactionType.BILLBOARDS);
     private final TransactionReadRepository transactionReadRepository;
 
-    public Map<String, TeamTransactionSummary> getTransactions(final String teamId) {
+    public Map<String, TransactionSummary> getTransactions(final String teamId) {
         // Add filter probably only last 90 days
-        Map<String, TeamTransactionSummary> totalSummary = new LinkedHashMap<>() {{
-            put("Total Income", new TeamTransactionSummary());
-            put("Total Outcome", new TeamTransactionSummary());
-            put("Total Balance", new TeamTransactionSummary());
+        Map<String, TransactionSummary> totalSummary = new LinkedHashMap<>() {{
+            put("Total Income", new TransactionSummary());
+            put("Total Outcome", new TransactionSummary());
+            put("Total Balance", new TransactionSummary());
         }};
 
         List<Transaction> transactions = transactionReadRepository.findAllByTeamId(Team.TeamId.of(teamId));
-        Map<String, TeamTransactionSummary> result = new LinkedHashMap<>();
+        Map<String, TransactionSummary> result = new LinkedHashMap<>();
 
         Instant now = Instant.now();
         Instant fourDaysAgo = now.minus(KJELDSEN_WEEK_LENGTH, ChronoUnit.DAYS);
@@ -46,7 +46,7 @@ public class GetTeamTransactionsUseCase {
         Instant ninetyDaysAgo = now.minus(KJELDSEN_SEASON_LENGTH, ChronoUnit.DAYS);
 
         for (Transaction.TransactionType type : Transaction.TransactionType.values()) {
-            result.put(type.name(), new TeamTransactionSummary(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO));
+            result.put(type.name(), new TransactionSummary());
         }
 
         Map<Transaction.TransactionType, List<Transaction>> groupedTransactions = transactions.stream()
@@ -57,11 +57,10 @@ public class GetTeamTransactionsUseCase {
             List<Transaction> typeTransactions = entry.getValue();
 
             BigDecimal weekSum = typeAmountPerPeriods(typeTransactions, t -> t.getOccurredAt().isAfter(fourDaysAgo));
-            BigDecimal lastWeekSum = typeAmountPerPeriods(typeTransactions, t -> t.getOccurredAt().isBefore(fourDaysAgo) &&
-                t.getOccurredAt().isAfter(eightDaysAgo));
             BigDecimal seasonSum = typeAmountPerPeriods(typeTransactions, t -> t.getOccurredAt().isAfter(ninetyDaysAgo));
 
-            TeamTransactionSummary transactionTypeSummary = new TeamTransactionSummary(weekSum, lastWeekSum, seasonSum);
+            TransactionSummary transactionTypeSummary = new TransactionSummary(weekSum, seasonSum);
+
             filterTotal(totalSummary, transactionTypeSummary, transactionType);
             result.put(transactionType.name(), transactionTypeSummary);
         }
@@ -71,38 +70,21 @@ public class GetTeamTransactionsUseCase {
         return result;
     }
 
-    private BigDecimal typeAmountPerPeriods(List<Transaction> transactions, Predicate<Transaction> filterCondition ) {
-        return transactions.stream()
-            .filter(filterCondition)
-            .map(Transaction::getTransactionAmount)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    public static class TeamTransactionSummary {
-        private BigDecimal weekSum = BigDecimal.ZERO;
-        private BigDecimal lastWeekSum = BigDecimal.ZERO;
-        private BigDecimal seasonSum = BigDecimal.ZERO;
-    }
-
-    private void filterTotal(Map<String, TeamTransactionSummary> totalSummaryMap, TeamTransactionSummary typeSummary, Transaction.TransactionType transactionType) {
+    private void filterTotal(Map<String, TransactionSummary> totalSummaryMap, TransactionSummary typeSummary, Transaction.TransactionType transactionType) {
         // Update the Total Income/Outcome
-        TeamTransactionSummary totalSum;
+        TransactionSummary totalSum;
         if (INCOME_TRANSACTION_TYPES.contains(transactionType)) {
             totalSum = totalSummaryMap.get("Total Income");
         } else {
             totalSum = totalSummaryMap.get("Total Outcome");
         }
-        totalSum.weekSum = totalSum.weekSum.add(typeSummary.weekSum);
-        totalSum.lastWeekSum = totalSum.lastWeekSum.add(typeSummary.lastWeekSum);
-        totalSum.seasonSum = totalSum.seasonSum.add(typeSummary.seasonSum);
+
+        totalSum.setWeekSummary(totalSum.getWeekSummary().add(typeSummary.getWeekSummary()));
+        totalSum.setSeasonSummary(totalSum.getSeasonSummary().add(typeSummary.getSeasonSummary()));
 
         // Update the Total Balance
-        TeamTransactionSummary totalBalance = totalSummaryMap.get("Total Balance");
-        totalBalance.weekSum = totalBalance.weekSum.add(typeSummary.weekSum);
-        totalBalance.lastWeekSum = totalBalance.lastWeekSum.add(typeSummary.lastWeekSum);
-        totalBalance.seasonSum = totalBalance.seasonSum.add(typeSummary.seasonSum);
+        TransactionSummary totalBalance = totalSummaryMap.get("Total Balance");
+        totalBalance.setSeasonSummary(totalBalance.getSeasonSummary().add(typeSummary.getSeasonSummary()));
+        totalBalance.setWeekSummary(totalBalance.getWeekSummary().add(typeSummary.getWeekSummary()));
     }
 }

@@ -10,7 +10,9 @@ import java.math.BigDecimal;
 
 @Component
 @Slf4j
+@Deprecated
 @RequiredArgsConstructor
+// TODO CLEANUP was only used for simulations
 public class SponsorIncomeUsecase {
     private final CreateTransactionUseCase createTransactionUseCase;
 

@@ -1,22 +1,30 @@
 import useSWR from 'swr';
 import { MatchReport } from '@/shared/models/MatchReport';
-import { MatchReportResponse } from './models/MatchReportresponse';
 import { connectorAPI } from '@/libs/fetcher';
-import { South } from '@mui/icons-material';
 
 const API = '/match/';
 
-const useMatchReportRepository = (matchId: string | undefined) => {
-    if (!matchId) {
-        return { report: undefined, isLoading: true };
-    }
+const fetcher = (matchId: string | null | string[], token: string | null) => {
+  if (token === null || matchId === null) return undefined;
+  return connectorAPI<any>(
+    `${API}${matchId}`,
+    'GET',
+    undefined,
+    undefined,
+    token,
+  );
+};
 
-    const { data, isLoading } = useSWR<MatchReport>(
-        API + matchId,
-        connectorAPI,
-    );
+const useMatchReportRepository = (
+  matchId?: string | undefined | string[],
+  token?: string,
+) => {
+  const { data, isLoading, error } = useSWR<MatchReport | undefined>(
+    API + matchId,
+    () => fetcher(matchId ? matchId : null, token ? token : null),
+  );
 
-    return { report: data, isLoading };
+  return { data, isLoading, error };
 };
 
 export { useMatchReportRepository };

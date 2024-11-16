@@ -1,4 +1,4 @@
-package com.kjeldsen.player.application.usecases;
+package com.kjeldsen.player.application.usecases.player;
 
 import com.kjeldsen.player.application.usecases.economy.CreateTransactionUseCase;
 import com.kjeldsen.player.domain.Player;

@@ -3,7 +3,7 @@ package com.kjeldsen.player.rest.delegate;
 import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
-import com.kjeldsen.player.application.usecases.PlayerSellUseCase;
+import com.kjeldsen.player.application.usecases.player.PlayerSellUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.Team;

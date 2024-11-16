@@ -1,20 +1,27 @@
-export type Position = 'DEF' | 'MID' | 'FW' | 'GK'
+export type Position = 'DEF' | 'MID' | 'FW' | 'GK';
 
-export type Skill = 'DEFENSE_POSITION' | 'BALL_CONTROL' | 'SCORE' | 'PASSING' | 'OFFENSIVE_POSITION' | 'TACKLING' | 'CO'
+export type Skill =
+  | 'DEFENSIVE_POSITIONING'
+  | 'BALL_CONTROL'
+  | 'SCORING'
+  | 'PASSING'
+  | 'OFFENSIVE_POSITION'
+  | 'TACKLING'
+  | 'CONSTITUTION';
 
-export type Status = 'HEALTHY' | 'UNHEALTHY' | 'INJURY'
+export type Status = 'HEALTHY' | 'UNHEALTHY' | 'INJURY';
 
 export type ActualSkills = {
-  [skill in Skill]: number
-}
+  [skill in Skill]: number;
+};
 
 export interface PlayerStats {
-  id: string
-  age: number
-  name: string
-  position: Position
-  status: string
-  actualSkills: ActualSkills
+  id: string;
+  age: number;
+  name: string;
+  position: Position;
+  status: string;
+  actualSkills: ActualSkills;
 }
 
 export const samplePlayer: PlayerStats = {
@@ -32,7 +39,7 @@ export const samplePlayer: PlayerStats = {
     TACKLING: 60,
     CO: 40,
   },
-}
+};
 
 export const players: PlayerStats[] = [
   samplePlayer,
@@ -180,4 +187,4 @@ export const players: PlayerStats[] = [
       CO: 8,
     },
   },
-]
+];

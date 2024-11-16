@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 import { Player } from '@/shared/models/Player';
 import { TABLE_PLAYER_POSITION_ORDER } from '@/shared/models/PlayerPosition';
+import { useSession } from 'next-auth/react';
 
 interface MatchReportMetricsProps {
   sx?: React.CSSProperties;
@@ -26,7 +27,8 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({
   teamReport,
   teamColor,
 }) => {
-  const { data } = useTeamRepository(teamId);
+  const { data: session } = useSession();
+  const { data } = useTeamRepository(teamId, session?.accessToken);
 
   const { t } = useTranslation(['game']);
 

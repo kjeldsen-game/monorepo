@@ -1,6 +1,6 @@
 package com.kjeldsen.player.listener;
 
-import com.kjeldsen.player.application.usecases.*;
+import com.kjeldsen.player.application.usecases.player.ProcessPlayerTransferUseCase;
 import com.kjeldsen.player.domain.events.AuctionEndEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package com.kjeldsen.integration.events;
 
 import com.kjeldsen.domain.EventId;
-import com.kjeldsen.player.application.usecases.ProcessPlayerTransferUseCase;
+import com.kjeldsen.player.application.usecases.player.ProcessPlayerTransferUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.AuctionEndEvent;

@@ -10,7 +10,7 @@ interface MarketProsp {}
 const Market: NextPage<MarketProsp> = ({}) => {
   const [filter, setFilter] = useState<string>('');
   const [auction, setAuction] = useState<string | undefined>(undefined);
-  const { data: userData } = useSession();
+  const { data: userData } = useSession({ required: true });
 
   const { auctions, updateAuction, refetch } = useAuctionRepository(
     auction,

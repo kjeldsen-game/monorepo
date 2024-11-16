@@ -1,21 +1,27 @@
-import { useSWRConfig } from 'swr'
-import { MatchCreationRequest } from './MatchCreationRequest'
-import { connectorAPI } from '@/libs/fetcher'
-import { Match } from '@/shared/models/Match'
+import { useSWRConfig } from 'swr';
+import { MatchCreationRequest } from './MatchCreationRequest';
+import { connectorAPI } from '@/libs/fetcher';
+import { Match } from '@/shared/models/Match';
 
-const API = '/match/'
+const API = '/match/';
 
-const useMatchRepository = (ownTeamId?: string) => {
-  const { mutate } = useSWRConfig()
+const useMatchRepository = (token: string, ownTeamId?: string) => {
+  const { mutate } = useSWRConfig();
 
   const _patchMatch = async (matchId: string, params: Partial<Match>) => {
-    connectorAPI<Partial<Match>>(API + matchId, 'PATCH', params).then(() => {
-      mutate([API, ownTeamId])
-    })
-  }
+    connectorAPI<Partial<Match>>(
+      API + matchId,
+      'PATCH',
+      params,
+      undefined,
+      token,
+    ).then(() => {
+      mutate([API, ownTeamId]);
+    });
+  };
 
   const createMatch = async (rivalTeamId: string, date: Date) => {
-    if (!ownTeamId) return
+    if (!ownTeamId) return;
     const newData: MatchCreationRequest = {
       home: {
         id: ownTeamId,
@@ -34,25 +40,31 @@ const useMatchRepository = (ownTeamId?: string) => {
         },
       },
       dateTime: date,
-    }
-    connectorAPI<MatchCreationRequest>(API, 'POST', newData).then(() => {
-      mutate([API, ownTeamId])
-    })
-  }
+    };
+    connectorAPI<MatchCreationRequest>(
+      API,
+      'POST',
+      newData,
+      undefined,
+      token,
+    ).then(() => {
+      mutate([API, ownTeamId]);
+    });
+  };
 
   const acceptMatch = async (matchId: string) => {
-    _patchMatch(matchId, { status: 'ACCEPTED' })
-  }
+    _patchMatch(matchId, { status: 'ACCEPTED' });
+  };
 
   const declineMatch = async (matchId: string) => {
-    _patchMatch(matchId, { status: 'REJECTED' })
-  }
+    _patchMatch(matchId, { status: 'REJECTED' });
+  };
 
   return {
     createMatch,
     acceptMatch,
     declineMatch,
-  }
-}
+  };
+};
 
-export { useMatchRepository }
+export { useMatchRepository };

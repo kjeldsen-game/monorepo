@@ -1,7 +1,7 @@
 import { useMatchReportRepository } from '@/pages/api/match/useMatchReportRepository';
 import MatchReportContent from '@/shared/components/MatchReport/MatchReportContent';
 import MatchReportMetrics from '@/shared/components/MatchReport/MatchReportMetrics';
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -9,13 +9,17 @@ import { useRouter } from 'next/router';
 
 // eslint-disable-next-line react/prop-types
 const MatchReport: NextPage = () => {
-  useSession({ required: true });
+  const { data } = useSession({ required: true });
 
   const router = useRouter();
-  const { report } = useMatchReportRepository(router.query.id as string);
+
+  const { data: report } = useMatchReportRepository(
+    router.query.id as string,
+    data?.accessToken,
+  );
 
   if (!report) {
-    return <></>;
+    return <CircularProgress></CircularProgress>;
   }
 
   return (

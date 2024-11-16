@@ -137,6 +137,23 @@ public class PlayerProvider {
         return allSkills.get(random);
     }
 
+    public static PlayerSkill randomSkillForSpecificPlayerDeclineUseCase(Optional<Player> player) {
+        Map<PlayerSkill, PlayerSkills> skills = player.get().getActualSkills();
+        // Filter skills that are over 30
+        List<PlayerSkill> filteredSkills = skills.entrySet().stream()
+            .filter(entry -> entry.getValue().getActual() > 30)
+            .map(Map.Entry::getKey)
+            .toList();
+
+        // Player don't have any skill which have actual value over 30
+        if (filteredSkills.isEmpty()) {
+            return null;
+        }
+
+        int random = (int) (Math.random() * filteredSkills.size());
+        return filteredSkills.get(random);
+    }
+
     public static Player generateDefault() {
         return generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES, PlayerCategory.JUNIOR, 200);
     }

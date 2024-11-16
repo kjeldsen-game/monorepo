@@ -37,7 +37,10 @@ springdoc:
     path: /api-docs
   swagger-ui:
     use-root-path: true
+    operations-sorter: alpha
+#    tags-sorter: alpha
   show-actuator: true
+
 
 security:
   oauth2:

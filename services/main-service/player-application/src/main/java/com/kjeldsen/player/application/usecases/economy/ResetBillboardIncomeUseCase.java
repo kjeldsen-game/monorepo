@@ -18,6 +18,7 @@ public class ResetBillboardIncomeUseCase {
     private final TeamWriteRepository teamWriteRepository;
 
     public void reset() {
+        log.info("ResetBillboardIncomeUseCase for every team");
         List<Team> teams = teamReadRepository.findAll();
         teams.forEach(team -> {
             Team.Economy.BillboardDeal deal = team.getEconomy().getBillboardDeal();
@@ -28,15 +29,6 @@ public class ResetBillboardIncomeUseCase {
                     teamWriteRepository.save(team);
                 }
             }
-        });
-    }
-
-    public void resetBillboardDeals() {
-        List<Team> teams = teamReadRepository.findAll();
-        teams.forEach(team -> {
-            Team.Economy.BillboardDeal deal = team.getEconomy().getBillboardDeal();
-            team.getEconomy().setBillboardDeal(null);
-            teamWriteRepository.save(team);
         });
     }
 }

@@ -10,6 +10,7 @@ import static com.kjeldsen.player.domain.exception.ErrorCodes.DECLINE_SPEED_INVA
 import com.kjeldsen.player.domain.events.PlayerCreationEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
+import com.kjeldsen.player.domain.generator.BloomPhaseGenerator;
 import com.kjeldsen.player.domain.generator.PointsGenerator;
 import com.kjeldsen.player.domain.generator.SalaryGenerator;
 import java.math.BigDecimal;
@@ -56,8 +57,11 @@ public class Player {
     private PlayerOrder playerOrder;
     private Map<PlayerSkill, PlayerSkills> actualSkills;
     private Team.TeamId teamId;
-    private PlayerTrainingBloomEvent bloom;
+    private Integer bloomYear;
+//    private PlayerTrainingBloomEvent bloom;
     private PlayerTrainingDeclineEvent decline;
+    @Builder.Default
+    private boolean isFallCliff = false;
     private PlayerCategory category;
     private Economy economy;
 
@@ -71,6 +75,7 @@ public class Player {
             .status(PlayerStatus.INACTIVE)
             .actualSkills(playerCreationEvent.getInitialSkills())
             .teamId(playerCreationEvent.getTeamId())
+            .bloomYear(BloomPhaseGenerator.generateBloomPhaseYear())
             .category(playerCreationEvent.getPlayerCategory())
             .economy(Economy.builder().build())
             .build();
@@ -78,31 +83,31 @@ public class Player {
         return player;
     }
 
-    public boolean isBloomActive() {
-        if (Objects.isNull(bloom)) {
-            return false;
-        }
-        int initialRange = bloom.getBloomStartAge();
-        int endRange = initialRange + bloom.getYearsOn();
-        return Range.between(initialRange, endRange).contains(age.getYears());
-    }
+//    public boolean isBloomActive() {
+//        if (Objects.isNull(bloom)) {
+//            return false;
+//        }
+//        int initialRange = bloom.getBloomStartAge();
+//        int endRange = initialRange + bloom.getYearsOn();
+//        return Range.between(initialRange, endRange).contains(age.getYears());
+//    }
 
-    public void     addBloomPhase(PlayerTrainingBloomEvent playerTrainingBloomEvent) {
-        throwIfNot(Range.between(MIN_BLOOM_PLAYER_AGE, MAX_BLOOM_PLAYER_AGE).contains(age.getYears()), BLOOM_PLAYER_AGE_INVALID_RANGE);
-        throwIfNot(Range.between(MIN_BLOOM_YEARS_ON, MAX_BLOOM_YEARS_ON).contains(playerTrainingBloomEvent.getYearsOn()), BLOOM_YEARS_ON_INVALID_RANGE);
-        throwIfNot(Range.between(MIN_BLOOM_SPEED, MAX_BLOOM_SPEED) .contains(playerTrainingBloomEvent.getBloomSpeed()), BLOOM_SPEED_INVALID_RANGE);
-
-        this.bloom = playerTrainingBloomEvent;
-    }
+//    public void addBloomPhase(PlayerTrainingBloomEvent playerTrainingBloomEvent) {
+//        throwIfNot(Range.between(MIN_BLOOM_PLAYER_AGE, MAX_BLOOM_PLAYER_AGE).contains(age.getYears()), BLOOM_PLAYER_AGE_INVALID_RANGE);
+//        throwIfNot(Range.between(MIN_BLOOM_YEARS_ON, MAX_BLOOM_YEARS_ON).contains(playerTrainingBloomEvent.getYearsOn()), BLOOM_YEARS_ON_INVALID_RANGE);
+//        throwIfNot(Range.between(MIN_BLOOM_SPEED, MAX_BLOOM_SPEED) .contains(playerTrainingBloomEvent.getBloomSpeed()), BLOOM_SPEED_INVALID_RANGE);
+//
+//        this.bloom = playerTrainingBloomEvent;
+//    }
 
     public void addDeclinePhase(PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
         throwIfNot(Range.between(MIN_DECLINE_PLAYER_AGE, MAX_DECLINE_PLAYER_AGE).contains(age.getYears()), DECLINE_PLAYER_AGE_INVALID_RANGE);
-        throwIfNot(Range.between(MIN_DECLINE_SPEED, MAX_DECLINE_SPEED).contains(playerTrainingDeclineEvent.getDeclineSpeed()), DECLINE_SPEED_INVALID_RANGE);
+//        throwIfNot(Range.between(MIN_DECLINE_SPEED, MAX_DECLINE_SPEED).contains(playerTrainingDeclineEvent.getDeclineSpeed()), DECLINE_SPEED_INVALID_RANGE);
 
-        // TODO ?? Why points were calculated again
-        final int decreasePoints = PointsGenerator.generateDecreasePoints(
-            playerTrainingDeclineEvent.getDeclineSpeed(),
-            playerTrainingDeclineEvent.getPointsToSubtract());
+//        // TODO ?? Why points were calculated again
+//        final int decreasePoints = PointsGenerator.generateDecreasePoints(
+//            playerTrainingDeclineEvent.getDeclineSpeed(),
+//            playerTrainingDeclineEvent.getPointsToSubtract());
 
         subtractSkillPoints(playerTrainingDeclineEvent.getSkill(), playerTrainingDeclineEvent.getPointsToSubtract());
         this.decline = playerTrainingDeclineEvent;
@@ -150,7 +155,6 @@ public class Player {
     @Builder
     @Getter
     public static class Economy {
-
         private BigDecimal salary;
     }
 

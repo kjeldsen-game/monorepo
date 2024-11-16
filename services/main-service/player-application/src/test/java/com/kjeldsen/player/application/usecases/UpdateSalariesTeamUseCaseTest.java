@@ -1,5 +1,6 @@
 package com.kjeldsen.player.application.usecases;
 
+import com.kjeldsen.player.application.usecases.economy.UpdateSalariesTeamUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.PlayerSkills;

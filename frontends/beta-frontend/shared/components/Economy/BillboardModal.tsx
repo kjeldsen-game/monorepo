@@ -38,7 +38,10 @@ const BillboardModal: React.FC<BillboardModalProps> = ({
     }
   };
 
-  const { signBillboadDeal } = useEconomyRepository(userData?.accessToken);
+  const { signBillboadDeal } = useEconomyRepository(
+    userData?.user.teamId,
+    userData?.accessToken,
+  );
 
   return (
     <>

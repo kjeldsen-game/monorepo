@@ -9,7 +9,10 @@ const Economy: NextPage = () => {
     required: true,
   });
 
-  const { data, isLoading } = useEconomyRepository(userData?.accessToken);
+  const { data } = useEconomyRepository(
+    userData?.user.teamId,
+    userData?.accessToken,
+  );
 
   return (
     <>

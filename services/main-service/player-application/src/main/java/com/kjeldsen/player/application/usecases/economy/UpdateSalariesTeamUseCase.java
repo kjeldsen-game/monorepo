@@ -1,4 +1,4 @@
-package com.kjeldsen.player.application.usecases;
+package com.kjeldsen.player.application.usecases.economy;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;

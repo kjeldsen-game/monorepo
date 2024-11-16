@@ -23,6 +23,15 @@ public class SchedulePlayerTrainingUseCase {
     private final PlayerTrainingScheduledEventReadRepository playerTrainingScheduledEventReadRepository;
     private final PlayerReadRepository playerReadRepository;
 
+    /*
+    * SchedulePlayerTrainingUseCase is use case that is make by User/Team when he chose which player skill should
+    * be scheduled for the training. Word "Schedule" indicate that this happened by User on request. By this we mean that
+    * we store event but the handling of processing all training (all players) or specific training (one player) is handled
+    * by different use case.
+    *
+    * The workflow of PlayerTraining: Schedule -> Process -> Execute
+    */
+
     public void schedule(Player.PlayerId playerId, List<PlayerSkill> skills) {
         log.info("ScheduleTrainingUseCase for {} skill {}", playerId, skills);
 

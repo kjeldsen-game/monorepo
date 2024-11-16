@@ -19,11 +19,13 @@ const useAuctionRepository = (
   token?: string,
   initialFilter: string = '',
 ) => {
-  const { data: auctions, mutate } = useSWR<any>(token ? API : null, () =>
-    fetcher(token ? token : null, initialFilter),
+  const { data: auctions, mutate } = useSWR<any>(
+    token ? API + initialFilter : null,
+    () => fetcher(token ? token : null, initialFilter),
   );
 
   const refetch = () => {
+    console.log('Refetching the auctionRepository fetch!');
     mutate();
   };
 

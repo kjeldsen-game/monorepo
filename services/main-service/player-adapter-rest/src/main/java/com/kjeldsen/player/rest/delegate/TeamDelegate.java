@@ -1,6 +1,5 @@
 package com.kjeldsen.player.rest.delegate;
 
-import com.kjeldsen.auth.AuthService;
 import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.application.usecases.economy.*;
@@ -18,13 +17,12 @@ import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.mapper.TeamMapper;
 import com.kjeldsen.player.rest.model.*;
 
-import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import com.kjeldsen.player.rest.model.Transaction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,9 +48,16 @@ public class TeamDelegate implements TeamApiDelegate {
 
     /***************************** ECONOMY REST API *****************************/
     @Override
-    public ResponseEntity<Void> updatePricing(UpdatePricingRequest updatePricingRequest) {
+    public ResponseEntity<Void> updatePricing(String teamId, UpdatePricingRequest updatePricingRequest) {
         String userId = SecurityUtils.getCurrentUserId();
         Team team = getTeamUseCase.get(userId);
+
+        System.out.println(teamId);
+        System.out.println(team.getId().value());
+
+        if (!Objects.equals(teamId, team.getId().value())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
 
         updatePricingRequest.getPrices().forEach(price -> {
             System.out.println(price.getType());
@@ -64,7 +69,7 @@ public class TeamDelegate implements TeamApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> signBillboard(SignBillboardRequest signBillboardRequest) {
+    public ResponseEntity<Void> signBillboard(String teamId, SignBillboardRequest signBillboardRequest) {
         String userId = SecurityUtils.getCurrentUserId();
         Team team = getTeamUseCase.get(userId);
 
@@ -76,7 +81,7 @@ public class TeamDelegate implements TeamApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> signSponsor(SignSponsorRequest signSponsorRequest) {
+    public ResponseEntity<Void> signSponsor(String teamId, SignSponsorRequest signSponsorRequest) {
         String userId = SecurityUtils.getCurrentUserId();
         Team team = getTeamUseCase.get(userId);
 
@@ -87,11 +92,15 @@ public class TeamDelegate implements TeamApiDelegate {
     }
 
     @Override
-    public ResponseEntity<EconomyResponse> getTeamEconomy() {
+    public ResponseEntity<EconomyResponse> getTeamEconomy(String teamId) {
         String userId = SecurityUtils.getCurrentUserId();
         Team team = getTeamUseCase.get(userId);
 
-        Map<String, GetTeamTransactionsUseCase.TeamTransactionSummary> transactions =
+        if (!Objects.equals(teamId, team.getId().value())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Map<String, GetTransactionsUseCaseAbstract.TransactionSummary> transactions =
             getTeamTransactionsUseCase.getTransactions(team.getId().value());
         List<GetPlayerWagesTransactionsUseCase.PlayerWageSummary> playerWageSummaryList =
             getPlayerWagesTransactionsUseCase.getPlayerWagesTransactions(team.getId().value());

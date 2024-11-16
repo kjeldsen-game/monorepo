@@ -40,6 +40,7 @@ public class SignSponsorIncomeUseCase {
     }
 
     public void processBonus(Team.TeamId teamId) {
+        log.info("SingSponsorUseCase processBonus for match win {}", teamId);
         Team team = teamReadRepository.findById(teamId)
             .orElseThrow(() -> new RuntimeException("Team not found"));
 

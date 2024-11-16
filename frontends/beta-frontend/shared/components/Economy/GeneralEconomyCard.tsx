@@ -37,7 +37,10 @@ const GeneralEconomyCard: React.FC<GeneralEconomyCardProps> = ({
   const [editMode, setEditMode] = useState(false);
   const [pricingData, setPricingData] = useState(pricing);
 
-  const { editPricing } = useEconomyRepository(userData?.accessToken);
+  const { editPricing } = useEconomyRepository(
+    userData?.user.teamId,
+    userData?.accessToken,
+  );
 
   function getIndexByType(type: string): number {
     return pricing.findIndex((item) => item.type === type);

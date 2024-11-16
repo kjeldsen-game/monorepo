@@ -10,19 +10,16 @@ import CustomModal from '../CustomModal';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { CloseOutlined } from '@mui/icons-material';
 import { AuctionMarket } from '@/shared/models/Auction';
+import { useAuctionRepository } from '@/pages/api/market/useAuctionRepository';
 
 interface AuctionProps {
   auction: AuctionMarket | undefined;
-  refetch: () => void;
-  update: (auctionId: number) => void;
   open: boolean;
   handleClose: () => void;
 }
 
 const MarketModal: React.FC<AuctionProps> = ({
   auction,
-  refetch,
-  update,
   open,
   handleClose,
 }: AuctionProps) => {
@@ -33,6 +30,11 @@ const MarketModal: React.FC<AuctionProps> = ({
   const [bid, setBid] = React.useState<number>(0);
   const [confirmation, setConfirmation] = React.useState(false);
   const [updateError, setUpdateError] = React.useState<string | null>(null);
+
+  const { refetch, updateAuction } = useAuctionRepository(
+    auction?.id,
+    userData?.accessToken,
+  );
 
   const handleCloseModal = () => {
     handleClose();
@@ -52,7 +54,7 @@ const MarketModal: React.FC<AuctionProps> = ({
 
   const handleButtonClick = async () => {
     try {
-      const response = await update(bid);
+      const response = await updateAuction(bid);
       if (response.status == 500) {
         setConfirmation(false);
         setUpdateError(response.message);

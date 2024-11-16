@@ -1,7 +1,6 @@
-package com.kjeldsen.player.application.usecases;
+package com.kjeldsen.player.application.usecases.fanbase;
 
 import com.kjeldsen.player.application.testdata.TestData;
-import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.FansEventWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;

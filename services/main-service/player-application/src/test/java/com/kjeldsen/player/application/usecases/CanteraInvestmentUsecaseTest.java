@@ -1,6 +1,7 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.application.testdata.TestData;
+import com.kjeldsen.player.application.usecases.cantera.CanteraInvestmentUsecase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.CanteraInvestmentEvent;
 import com.kjeldsen.player.domain.repositories.CanteraInvestmentEventWriteRepository;

@@ -97,12 +97,14 @@ paths:
 
 ######################## ECONOMY START ########################
 
-  /team/economy:
+  /team/{teamId}/economy:
     get:
       summary: Get Team Economy
       operationId: getTeamEconomy
       tags:
         - team
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
       responses:
         "200":
           description: Team Economy is retrieved
@@ -111,12 +113,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/EconomyResponse"
 
-  /team/economy/sign-billboard:
+  /team/{teamId}/economy/sign-billboard:
     post:
       summary: Sign billboard deal
       operationId: signBillboard
       tags:
         - team
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
       requestBody:
         required: true
         content:
@@ -130,12 +134,14 @@ paths:
           $ref: "#/components/responses/DefaultErrorResponse"
 
 
-  /team/economy/sign-sponsor:
+  /team/{teamId}/economy/sign-sponsor:
     post:
       summary: Sign Sponsor
       operationId: signSponsor
       tags:
         - team
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
       requestBody:
         required: true
         content:
@@ -148,12 +154,14 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-  /team/economy/update-pricing:
+  /team/{teamId}/economy/update-pricing:
     post:
       summary: Update price of team items
       operationId: updatePricing
       tags:
         - team
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
       requestBody:
         required: true
         content:
@@ -648,26 +656,6 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-#  /simulator/billboards-selection/{teamId}:
-#    post:
-#      summary: Simulate billboard selection w income
-#      operationId: simulateBillboardSelection
-#      tags:
-#        - simulator
-#      parameters:
-#        - $ref: "#/components/parameters/TeamIdPathParameter"
-#      requestBody:
-#        required: true
-#        content:
-#          application/json:
-#            schema:
-#              $ref: "#/components/schemas/SimulateBillboardSelectionRequest"
-#      responses:
-#        "200":
-#          description: Billboard income selected
-#        default:
-#          $ref: "#/components/responses/DefaultErrorResponse"
-
   /simulator/update-loyalty/{teamId}:
     post:
       summary: Simulate loyalty update
@@ -718,26 +706,6 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-#  /simulator/sign-sponsor/{teamId}:
-#    post:
-#      summary: Sign Sponsor
-#      operationId: simulateSignSponsor
-#      tags:
-#        - simulator
-#      parameters:
-#        - $ref: "#/components/parameters/TeamIdPathParameter"
-#      requestBody:
-#        required: true
-#        content:
-#          application/json:
-#            schema:
-#              $ref: "#/components/schemas/SimulateSignSponsorRequest"
-#      responses:
-#        "200":
-#          description: Sponsor deal was signed
-#        default:
-#          $ref: "#/components/responses/DefaultErrorResponse"
-
 components:
   
   parameters:
@@ -770,6 +738,7 @@ components:
               $ref: "#/components/schemas/Error"
 
   schemas:
+    ######################## PLAYER SCHEMAS START ########################
     PlayerStatus:
       type: string
       enum:
@@ -797,95 +766,6 @@ components:
         - ORGANIZATION
         - ONE_ON_ONE
         - INTERCEPTING
-
-    CanteraInvestment:
-      example: ECONOMY
-      type: string
-      enum:
-        - ECONOMY
-        - TRADITION
-        - BUILDING
-
-    ImpactType:
-      example: MATCH_WIN
-      type: string
-      enum:
-        - MATCH_WIN
-        - MATCH_LOSS
-        - MATCH_DRAW
-        - SEASON_END
-
-    PricingType:
-      example: SEASON_TICKET
-      type: string
-      enum:
-        - SEASON_TICKET
-        - DAY_TICKET
-        - MERCHANDISE
-        - RESTAURANT
-
-    Facility:
-      example: STADIUM
-      type: string
-      enum:
-        - TRAINING_CENTER
-        - YOUTH_PITCH
-        - SPORTS_DOCTORS
-        - VIDEO_ROOM
-        - SCOUTS
-        - STADIUM
-
-    LoyaltyImpactType:
-      example: MATCH_WIN
-      type: string
-      enum:
-        - MATCH_WIN
-        - MATCH_LOSS
-        - SEASON_END
-        - SEASON_START
-
-    PlayerSkills:
-      type: object
-      properties:
-        actual:
-          type: integer
-          format: int32
-          minimum: 0
-          maximum: 100
-          example: 5
-        potential:
-          type: integer
-          format: int32
-          minimum: 0
-          maximum: 1000
-          example: 30
-        playerSkillRelevance:
-          $ref: "#/components/schemas/PlayerSkillRelevance"
-
-    PriceItem:
-      type: object
-      properties:
-        type:
-          $ref: "#/components/schemas/PricingType"
-        value:
-          type: integer
-          format: int32
-
-    PlayerAge:
-      type: object
-      properties:
-        years:
-          type: number
-          format: int32
-          minimum: 15
-          maximum: 33
-          example: 20
-        months:
-          type: number
-          example: 1.05
-        days:
-          type: number
-          example: 3.01
 
     PlayerPosition:
       type: string
@@ -942,6 +822,40 @@ components:
         - SENIOR
       example: JUNIOR
 
+    PlayerSkills:
+      type: object
+      properties:
+        actual:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          example: 5
+        potential:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 1000
+          example: 30
+        playerSkillRelevance:
+          $ref: "#/components/schemas/PlayerSkillRelevance"
+
+    PlayerAge:
+      type: object
+      properties:
+        years:
+          type: number
+          format: int32
+          minimum: 15
+          maximum: 33
+          example: 20
+        months:
+          type: number
+          example: 1.05
+        days:
+          type: number
+          example: 3.01
+
     PlayerEconomy:
       type: object
       properties:
@@ -950,6 +864,9 @@ components:
           format: double
           example: 70000
 
+    ######################## PLAYER SCHEMAS END ########################
+
+    ######################## ECONOMY SCHEMAS START ########################
     TransactionType:
       type: string
       enum:
@@ -979,6 +896,15 @@ components:
         - AGGRESSIVE
       example: MODERATE
 
+    PricingType:
+      example: SEASON_TICKET
+      type: string
+      enum:
+        - SEASON_TICKET
+        - DAY_TICKET
+        - MERCHANDISE
+        - RESTAURANT
+
     BillboardMode:
       type: string
       enum:
@@ -986,6 +912,63 @@ components:
         - MEDIUM
         - LONG
       example: SHORT
+
+    PriceItem:
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/PricingType"
+        value:
+          type: integer
+          format: int32
+    ######################## ECONOMY SCHEMAS END ########################
+
+    ######################## FACILITY SCHEMAS START ########################\
+    Facility:
+      example: STADIUM
+      type: string
+      enum:
+        - TRAINING_CENTER
+        - YOUTH_PITCH
+        - SPORTS_DOCTORS
+        - VIDEO_ROOM
+        - SCOUTS
+        - STADIUM
+    ######################## FACILITY SCHEMAS END ########################
+
+    ######################## FANS SCHEMAS START ########################
+    ImpactType:
+      example: MATCH_WIN
+      type: string
+      enum:
+        - MATCH_WIN
+        - MATCH_LOSS
+        - MATCH_DRAW
+        - SEASON_END
+
+    LoyaltyImpactType:
+      example: MATCH_WIN
+      type: string
+      enum:
+        - MATCH_WIN
+        - MATCH_LOSS
+        - SEASON_END
+        - SEASON_START
+
+    ######################## CANTERA SCHEMAS START ########################
+
+    CanteraInvestment:
+      example: ECONOMY
+      type: string
+      enum:
+        - ECONOMY
+        - TRADITION
+        - BUILDING
+
+################################### Objects ###################################
+
+  ################################### Economy ###################################
+
 
     SchedulePlayerTrainingRequest:
       type: object
@@ -1166,8 +1149,7 @@ components:
       properties:
         thisWeekAmount:
           type: number
-        lastWeekAmount:
-          type: number
+
         thisSeasonAmount:
           type: number
         context:

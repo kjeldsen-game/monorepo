@@ -25,6 +25,7 @@ public class UpdateLoyaltyUseCase {
     private final TeamWriteRepository teamWriteRepository;
 
     public void updateLoyaltyMatch(Team.TeamId teamId, Integer goals, Team.Fans.LoyaltyImpactType loyaltyImpactType) {
+        log.info("UpdateLoyaltyUseCase after match for team {}", teamId);
         Team team = getTeam(teamId);
 
         List<Double> calculatedLoyaltyPerTier = IntStream.range(0, getLoyaltyGoals(goals, loyaltyImpactType).size())
@@ -37,6 +38,8 @@ public class UpdateLoyaltyUseCase {
     }
 
     public void updateLoyaltySeason(Team.TeamId teamId) {
+        log.info("UpdateLoyaltyUseCase after season for team {}", teamId);
+
         Team team = getTeam(teamId);
 
         // Calculated Loyalty based on the position in current (previous) season
@@ -52,6 +55,8 @@ public class UpdateLoyaltyUseCase {
     }
 
     public void resetLoyalty(Team.TeamId teamId) {
+        log.info("UpdateLoyaltyUseCase reset for team {}", teamId);
+
         Team team = getTeam(teamId);
         team.getFans().resetLoyalty();
         teamWriteRepository.save(team);

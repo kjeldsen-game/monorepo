@@ -3,10 +3,7 @@ package com.kjeldsen.player.domain.events;
 import com.kjeldsen.domain.Event;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -23,7 +20,8 @@ public class PlayerTrainingEvent extends Event {
     private String scheduledTrainingId;
     private Player.PlayerId playerId;
     private PlayerSkill skill;
-    private PlayerTrainingBloomEvent bloom;
+    @Builder.Default
+    private boolean isBloom = false;
     private Integer points;
     private Integer actualPoints;
     private Integer potentialPoints;

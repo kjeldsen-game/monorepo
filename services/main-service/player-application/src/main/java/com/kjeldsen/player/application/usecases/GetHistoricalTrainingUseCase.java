@@ -13,6 +13,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Component
+// TODO REVIEW
 public class GetHistoricalTrainingUseCase {
 
     private final PlayerTrainingEventReadRepository playerTrainingEventReadRepository;

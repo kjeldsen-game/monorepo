@@ -18,10 +18,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "PlayerTrainingBloomEvents")
 @TypeAlias("PlayerTrainingBloomEvent")
 public class PlayerTrainingBloomEvent extends Event {
-
     private Player.PlayerId playerId;
-    private int yearsOn;
-    private int bloomStartAge;
-    private int bloomSpeed;
-
+    private int bloomYear;
 }
