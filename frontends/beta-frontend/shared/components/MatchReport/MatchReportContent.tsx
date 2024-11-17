@@ -1,9 +1,6 @@
 import Box from '@mui/material/Box';
 import MatchReportItem from './MatchReportItem';
 import { MatchReport } from '@/shared/models/MatchReport';
-import { Typography } from '@mui/material';
-import vs from '../../../public/img/vs.png';
-import Image from 'next/image';
 
 interface MatchReportContentProps {
   report: MatchReport;
