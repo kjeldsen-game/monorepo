@@ -30,6 +30,11 @@ public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
     private final MongoTemplate mongoTemplate;
 
     @Override
+    public List<Player> findAll() {
+        return playerMongoRepository.findAll();
+    }
+
+    @Override
     public List<Player> findByPlayersIds(List<String> playersIds) {
         return playerMongoRepository.findByPlayerIds(playersIds);
     }

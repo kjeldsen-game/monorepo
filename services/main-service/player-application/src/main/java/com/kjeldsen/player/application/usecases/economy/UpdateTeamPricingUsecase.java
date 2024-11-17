@@ -21,7 +21,7 @@ public class UpdateTeamPricingUsecase {
     private final PricingEventWriteRepository pricingEventWriteRepository;
 
     public void update(Team.TeamId teamId, Integer newPrice, Team.Economy.PricingType pricingType) {
-        log.info("UpdateTeamPricingUsecase team {}", teamId);
+        log.info("UpdateTeamPricingUsecase team {} for pricingType {} with new price {}", teamId, pricingType, newPrice);
 
         Team team = teamReadRepository.findById(teamId)
             .orElseThrow(() -> new RuntimeException("Team not found"));
@@ -41,6 +41,6 @@ public class UpdateTeamPricingUsecase {
         pricingEventWriteRepository.save(pricingEvent);
         team.getEconomy().updatePrices(pricingEvent);
         teamWriteRepository.save(team);
+        log.info("UpdateTeamPricingUsecase for team {} successfully updated", teamId);
     }
-
 }

@@ -1,7 +1,6 @@
 package com.kjeldsen.player.rest.delegate;
 
 import com.kjeldsen.player.application.usecases.UpdatePlayerPositionTendencyUseCase;
-import com.kjeldsen.player.application.usecases.UpdatePlayerTendencies;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.rest.api.PlayerPositionTendenciesApiDelegate;
@@ -45,7 +44,7 @@ public class PlayerPositionTendenciesDelegate implements PlayerPositionTendencie
                                                                                        Map<String, UpdatePlayerPositionTendencyRequestValue> tendencies) {
 
         PlayerPositionTendency updatedPlayerPositionTendency = updatePlayerPositionTendencyUseCase.update(
-            UpdatePlayerTendencies.builder()
+            UpdatePlayerPositionTendencyUseCase.UpdatePlayerTendencies.builder()
                 .position(PlayerMapper.INSTANCE.playerPositionMap(position))
                 .tendencies(PlayerPositionTendencyMapper.INSTANCE.map(tendencies))
                 .build());

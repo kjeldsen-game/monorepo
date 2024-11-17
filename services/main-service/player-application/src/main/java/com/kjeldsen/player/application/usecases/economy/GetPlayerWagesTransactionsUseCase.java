@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class GetPlayerWagesTransactionsUseCase {
+public class GetPlayerWagesTransactionsUseCase extends GetTransactionsUseCaseAbstract {
 
     private static final int KJELDSEN_WEEK_LENGTH = 4;
     private static final int KJELDSEN_SEASON_LENGTH = 90;
@@ -28,6 +28,7 @@ public class GetPlayerWagesTransactionsUseCase {
 
 
     public List<PlayerWageSummary> getPlayerWagesTransactions(final String teamId) {
+        log.info("GetPlayerWagesTransactionsUseCase for team {}", teamId);
         List<PlayerWageSummary> wageSummaryList = new ArrayList<>();
         Instant now = Instant.now();
         Instant fourDaysAgo = now.minus(KJELDSEN_WEEK_LENGTH, ChronoUnit.DAYS);
@@ -80,26 +81,11 @@ public class GetPlayerWagesTransactionsUseCase {
         return wageSummaryList;
     }
 
-    private BigDecimal typeAmountPerPeriods(List<Transaction> transactions, Predicate<Transaction> filterCondition ) {
-        return transactions.stream()
-            .filter(filterCondition)
-            .map(Transaction::getTransactionAmount)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
     @Getter
     @Setter
     @Builder
     public static class PlayerWageSummary {
         Player player;
         TransactionSummary transactionSummary;
-    }
-
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    public static class TransactionSummary {
-        private BigDecimal weekSummary = BigDecimal.ZERO;
-        private BigDecimal seasonSummary = BigDecimal.ZERO;
     }
 }

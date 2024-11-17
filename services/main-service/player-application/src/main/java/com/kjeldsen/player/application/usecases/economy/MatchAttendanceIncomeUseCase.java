@@ -25,8 +25,6 @@ public class MatchAttendanceIncomeUseCase {
 
         BigDecimal amount = getAmount(attendanceCount, 100);
         createTransactionUseCase.create(teamId, amount, Transaction.TransactionType.ATTENDANCE);
-
-
     }
 
     private BigDecimal getAmount(Integer attendanceCount, Integer price) {

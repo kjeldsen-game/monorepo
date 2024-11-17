@@ -17,7 +17,7 @@ public class ResetSponsorIncomeUseCase {
     private final TeamWriteRepository teamWriteRepository;
 
     public void reset(Team.Economy.IncomePeriodicity periodicity) {
-        log.info("ResetSponsorIncomeUseCase for periodicity {}", periodicity);
+        log.info("ResetSponsorIncomeUseCase for periodicity {} for every team", periodicity);
         teamReadRepository.findAll().forEach(team -> {
             team.getEconomy().resetSponsorIncome(periodicity);
             teamWriteRepository.save(team);

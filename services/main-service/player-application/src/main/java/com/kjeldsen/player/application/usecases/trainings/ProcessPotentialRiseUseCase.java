@@ -26,15 +26,12 @@ public class ProcessPotentialRiseUseCase {
     private final PlayerReadRepository playerReadRepository;
     private final PlayerWriteRepository playerWriteRepository;
 
-    /* HOW TO HANDLE PROCESS POTENTIAL RISE
-     * 1. Get all players which are under 21
-     * 2. Get Rise + RandomSkill
-     * 3. Check if the Rise happened if happened update potential + save event
-     *
-     *
-     * NOTE!! No need to use the current day here etc. as the day is not factor in this case
-     * as PlayerTrainingUseCase, Rise is based only on PotentialRiseGenerator w some % probability
-     */
+    /*
+    * ProcessPotentialRiseUseCase is use case that it's executed automatically by scheduler (quartz) and User/Team
+    * have no power (cannot modify/schedule or chose) any configuration. Use case get all players which are under 21,
+    * generate the rise (which could happened every day, there is no dependency for previous days yet), generate random skill.
+    * Once the generate part is done, based on the results (if rise happened or not) the potential is updated and event saved.
+    */
 
     public void process() {
         List<Player> players = playerReadRepository.findPlayerUnderAge(MAX_AGE);
@@ -47,14 +44,14 @@ public class ProcessPotentialRiseUseCase {
                 Integer rise = PotentialRiseGenerator.generatePotentialRaise();
                 PlayerSkill randomSkill = PlayerProvider.randomSkillForSpecificPlayer(player);
                 if (rise != 0) { // Rise happened
-                    log.info("Rise happened for player {} w points {} skill {}", player.getName(), rise,randomSkill);
-                    generateEventAndUpdatePlayerPotential(player, randomSkill, rise);
+//                    log.info("Rise happened for player {} w points {} skill {}", player.getName(), rise, randomSkill);
+                    executePlayerRiseAndStoreEvent(player, randomSkill, rise);
                 }
             }
         );
     }
 
-    private void generateEventAndUpdatePlayerPotential(Player player, PlayerSkill randomSkill,Integer rise) {
+    private void executePlayerRiseAndStoreEvent(Player player, PlayerSkill randomSkill,Integer rise) {
         PlayerPotentialRiseEvent playerPotentialRiseEvent = PlayerPotentialRiseEvent.builder()
             .id(EventId.generate())
             .occurredAt(InstantProvider.now())
@@ -66,9 +63,7 @@ public class ProcessPotentialRiseUseCase {
             .build();
 
         player.addSkillsPotentialRisePoints(randomSkill, rise);
-
         playerPotentialRiseEvent.setPotentialAfterRaise(player.getPotentialSkillPoints(randomSkill));
-
         playerPotentialRiseEventWriteRepository.save(playerPotentialRiseEvent);
         playerWriteRepository.save(player);
     }

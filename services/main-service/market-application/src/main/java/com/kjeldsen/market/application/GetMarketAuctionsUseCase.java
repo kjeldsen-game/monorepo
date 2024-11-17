@@ -30,10 +30,14 @@ public class GetMarketAuctionsUseCase {
 
     public Map<Auction, Player> getAuctions(Double maxBid, Double minBid, Integer maxAge, Integer minAge,
             PlayerPosition position, String skills, String potentialSkills, String playerId) {
+
+        log.info("GetMarketAuctionsUseCase for maxBid = {}, minBid = {}, maxAge = {} minAge = {}" +
+            " position = {} skills = {} potentialSkills = {} playerId = {}", maxBid, minBid, maxAge, minAge, position, skills, potentialSkills, playerId);
+
         List<Auction> auctions = auctionReadRepository.findAllByQuery(
-            FindAuctionsQuery.builder().auctionStatus(Auction.AuctionStatus.ACTIVE) // TODO use query parameter
+            FindAuctionsQuery.builder().auctionStatus(Auction.AuctionStatus.ACTIVE)
                 .maxAverageBid(maxBid).minAverageBid(minBid).playerId(Player.PlayerId.of(playerId)).build());
-        System.out.println(auctions.size());
+
         List<Player> players = playerReadRepository.filterMarketPlayers(
             FilterMarketPlayersQuery.builder()
                 .playerIds(auctions.stream()

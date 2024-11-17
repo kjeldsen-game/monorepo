@@ -48,15 +48,15 @@ class GetTeamTransactionsUseCaseTest {
         );
 
         when(mockedTransactionReadRepository.findAllByTeamId(teamId)).thenReturn(transactions);
-        Map<String, GetTeamTransactionsUseCase.TeamTransactionSummary> result =
+        Map<String, GetTransactionsUseCaseAbstract.TransactionSummary> result =
             getTeamTransactionsUseCase.getTransactions(teamId.value());
         System.out.println(result);
-        assertEquals(result.get("Total Income").getSeasonSum(), BigDecimal.valueOf(3000) );
-        assertEquals(result.get("Total Outcome").getSeasonSum(), BigDecimal.ZERO);
-        assertEquals(result.get(Transaction.TransactionType.ATTENDANCE.name()).getSeasonSum(), BigDecimal.valueOf(1000) );
-        assertEquals(result.get(Transaction.TransactionType.ATTENDANCE.name()).getWeekSum(), BigDecimal.ZERO );
+        assertEquals(result.get("Total Income").getSeasonSummary(), BigDecimal.valueOf(3000) );
+        assertEquals(result.get("Total Outcome").getSeasonSummary(), BigDecimal.ZERO);
+        assertEquals(result.get(Transaction.TransactionType.ATTENDANCE.name()).getSeasonSummary(), BigDecimal.valueOf(1000) );
+        assertEquals(result.get(Transaction.TransactionType.ATTENDANCE.name()).getWeekSummary(), BigDecimal.ZERO );
 
-        assertEquals(result.get(Transaction.TransactionType.SPONSOR.name()).getSeasonSum(), BigDecimal.valueOf(2000) );
-        assertEquals(result.get(Transaction.TransactionType.SPONSOR.name()).getWeekSum(), BigDecimal.valueOf(1000) );
+        assertEquals(result.get(Transaction.TransactionType.SPONSOR.name()).getSeasonSummary(), BigDecimal.valueOf(2000) );
+        assertEquals(result.get(Transaction.TransactionType.SPONSOR.name()).getWeekSummary(), BigDecimal.valueOf(1000) );
     }
 }

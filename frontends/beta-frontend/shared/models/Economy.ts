@@ -1,5 +1,5 @@
 export enum IncomeMode {
-  CONSERVATIVE = 'Conservatire',
+  CONSERVATIVE = 'Conservative',
   MODERATE = 'Moderate',
   AGGRESSIVE = 'Aggressive',
 }

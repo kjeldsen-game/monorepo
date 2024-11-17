@@ -1,9 +1,13 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import { Typography } from '@mui/material'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import { Typography } from '@mui/material';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useSession } from 'next-auth/react';
 
 const Home: NextPage = () => {
+  const { data: userData, status: sessionStatus } = useSession({
+    required: true,
+  });
   return (
     <>
       <Head>
@@ -16,8 +20,8 @@ const Home: NextPage = () => {
         </Typography>
       </>
     </>
-  )
-}
+  );
+};
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -25,7 +29,7 @@ export async function getStaticProps({ locale }: { locale: string }) {
       ...(await serverSideTranslations(locale, ['common'])),
       // Will be passed to the page component as props
     },
-  }
+  };
 }
 
-export default Home
+export default Home;

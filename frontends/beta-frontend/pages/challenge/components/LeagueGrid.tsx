@@ -1,41 +1,62 @@
-import { useAllTeamsRepository } from '../../api/team/useAllTeamsRepository'
-import Grid from '@/shared/components/Grid/Grid'
-import { Box } from '@mui/material'
-import { leagueColumns } from '../../../shared/components/Grid/Columns/LeagueColumns'
-import { useState } from 'react'
-import { useTranslation } from 'next-i18next'
-import { Moment } from 'moment'
-import { useSession } from 'next-auth/react'
-import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMatchesRepository'
-import { useMatchRepository } from '@/pages/api/match/useMatchRepository'
+import { useAllTeamsRepository } from '../../api/team/useAllTeamsRepository';
+import Grid from '@/shared/components/Grid/Grid';
+import { Box } from '@mui/material';
+import { leagueColumns } from '../../../shared/components/Grid/Columns/LeagueColumns';
+import { useState } from 'react';
+import { useTranslation } from 'next-i18next';
+import { Moment } from 'moment';
+import { useSession } from 'next-auth/react';
+import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMatchesRepository';
+import { useMatchRepository } from '@/pages/api/match/useMatchRepository';
 
-const PAGE_SIZE = 10
+const PAGE_SIZE = 10;
 
 interface LeagueGridProps {}
 
 const LeagueGrid: React.FC<LeagueGridProps> = () => {
-  const { data: userData } = useSession({ required: true })
-  const { createMatch } = useMatchRepository(userData?.user.teamId)
-  const { allMatches } = useAllPlayerMatchesRepository(undefined, undefined, userData?.user.teamId)
+  const [selectedPage, setSelectedPage] = useState<number>(0);
 
-  const { t } = useTranslation('common')
-  const [selectedPage, setSelectedPage] = useState<number>(0)
-  const { allTeams } = useAllTeamsRepository(selectedPage, PAGE_SIZE)
+  const { data: userData } = useSession({ required: true });
+  const { t } = useTranslation('common');
+
+  const { createMatch } = useMatchRepository(
+    userData?.accessToken,
+    userData?.user.teamId,
+  );
+  const { allMatches } = useAllPlayerMatchesRepository(
+    undefined,
+    undefined,
+    userData?.user.teamId,
+    userData?.accessToken,
+  );
+  const { allTeams } = useAllTeamsRepository(
+    selectedPage,
+    PAGE_SIZE,
+    userData?.accessToken,
+  );
+
+  console.log(allTeams);
 
   const handleChallengeButtonClick = (id: string, date: Moment) => {
-    const ownTeamId = userData?.user.teamId
+    const ownTeamId = userData?.user.teamId;
     if (!ownTeamId) {
-      return
+      return;
     }
-    createMatch(id, date.toDate())
-  }
+    createMatch(id, date.toDate());
+  };
 
   return (
     <Box sx={{ width: '100%' }}>
       <Grid
         isRowSelectable={() => false}
-        rows={allTeams ?? []}
-        columns={leagueColumns(t, handleChallengeButtonClick, allMatches?.map((match) => new Date(match.dateTime).getTime()) ?? [])}
+        rows={
+          allTeams?.filter((team) => team.id !== userData?.user.teamId) ?? []
+        }
+        columns={leagueColumns(
+          t,
+          handleChallengeButtonClick,
+          allMatches?.map((match) => new Date(match.dateTime).getTime()) ?? [],
+        )}
         paginationMode="server"
         pagination
         pageSize={PAGE_SIZE}
@@ -45,8 +66,8 @@ const LeagueGrid: React.FC<LeagueGridProps> = () => {
         rowCount={10}
       />
     </Box>
-  )
-}
+  );
+};
 
-export { LeagueGrid }
-export default LeagueGrid
+export { LeagueGrid };
+export default LeagueGrid;

@@ -1,6 +1,5 @@
 package com.kjeldsen.player.quartz;
 
-import com.kjeldsen.player.application.usecases.*;
 import com.kjeldsen.player.application.usecases.economy.*;
 import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
 import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;

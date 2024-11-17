@@ -1,12 +1,27 @@
-import { connectorAPI } from '@/libs/fetcher'
-import useSWR from 'swr'
-import { Team } from '@/shared/models/Team'
+import { connectorAPI } from '@/libs/fetcher';
+import useSWR from 'swr';
+import { Team } from '@/shared/models/Team';
 
-const API = '/team/'
+const API = '/team';
 
-const useAllTeamsRepository = (page: number, size: number) => {
-  const { data: allTeams } = useSWR<Team[]>([API, page, size], () => connectorAPI(API + `?page=${page}&size=${size}`, 'GET'))
+const fetcher = (page: number, size: number, token?: string | null) => {
+  if (token === null) {
+    return [];
+  }
+  return connectorAPI<any>(
+    API + `?page=${page}&size=${size}`,
+    'GET',
+    undefined,
+    undefined,
+    token,
+  );
+};
 
-  return { allTeams }
-}
-export { useAllTeamsRepository }
+const useAllTeamsRepository = (page: number, size: number, token: string) => {
+  const { data: allTeams } = useSWR<Team[]>([API, page, size], () =>
+    fetcher(page, size, token ? token : null),
+  );
+
+  return { allTeams };
+};
+export { useAllTeamsRepository };

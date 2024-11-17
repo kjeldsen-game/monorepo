@@ -23,7 +23,7 @@ public class CreateTeamUseCase {
     private final PlayerWriteRepository playerWriteRepository;
 
     public void create(String teamName, Integer numberOfPlayers, String userId) {
-        log.info("Creating team {} with {} players for user {}", teamName, numberOfPlayers, userId);
+        log.info("CreateTeamUseCase name {} with {} players for user {}", teamName, numberOfPlayers, userId);
 
         Team.TeamId newTeamId = Team.TeamId.generate();
         List<Player> players = generatePlayersUseCase.generate(numberOfPlayers, newTeamId);

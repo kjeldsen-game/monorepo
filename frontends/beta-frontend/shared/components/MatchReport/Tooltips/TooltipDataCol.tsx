@@ -1,7 +1,7 @@
 import React from 'react';
 import { SxProps, Grid, Typography } from '@mui/material';
 import { RStats } from '@/shared/models/MatchReport';
-import TooltipDataItem from './TooltipDataItem';
+import TooltipDataItem from './ToolTipDataItem';
 
 interface TooltipDataColProps {
   stats: RStats;

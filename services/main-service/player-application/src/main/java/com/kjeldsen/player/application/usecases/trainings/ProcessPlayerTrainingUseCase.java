@@ -1,6 +1,5 @@
 package com.kjeldsen.player.application.usecases.trainings;
 
-import com.kjeldsen.player.application.usecases.GenerateTrainingUseCase;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingEventReadRepository;
@@ -19,14 +18,17 @@ public class ProcessPlayerTrainingUseCase {
 
     private final PlayerTrainingScheduledEventReadRepository playerTrainingScheduledEventReadRepository;
     private final PlayerTrainingEventReadRepository playerTrainingEventReadRepository;
-    private final GenerateTrainingUseCase generateTrainingUseCase;
+    private final ExecutePlayerTrainingUseCase executePlayerTrainingUseCase;
+
+    /*
+    * ProcessPlayerTrainingUseCase is use case that handle the processing of all player trainings that are scheduled.
+    * Use case retrieve all "ACTIVE" scheduled trainings. In iteration the last executed training (these are handled by
+    * ExecutePlayerTrainingUseCase) is retrieved. We compare the before/after points of event and get the day in which that
+    * happened. Based on logic if training was successful day streak is refreshed to 1, if not streak is increased.
+    * If no training happened yet for scheduled skill, day streak is set to 1.
+    */
 
     public void process() {
-        // 1. get last playerTrainingEvent based on the PlayerTrainingScheduledTrainingId
-        // 2. check current day of the latest training and compare points before/after training
-        // 3. If after was higher set the current day again to 1 if not set current day to (current day + 1)
-        // If the latest playerTrainingEvent was null set it right to the day 1
-
         List<PlayerTrainingScheduledEvent> playerTrainingScheduledEvents = playerTrainingScheduledEventReadRepository
             .findAllActiveScheduledTrainings();
         log.info("ProcessPlayerTrainingUseCase for {} trainings", playerTrainingScheduledEvents.size());
@@ -39,16 +41,16 @@ public class ProcessPlayerTrainingUseCase {
                 if (trainingEvent.getPointsAfterTraining() > trainingEvent.getPointsBeforeTraining()) {
                     // Points increased, the new training is starting from 1 day
                     log.info("There was already successful training for player {} skill {}, set day to 1!", trainingEvent.getPlayerId(), trainingEvent.getSkill());
-                    generateTrainingUseCase.generate2(scheduledTraining.getPlayerId(), scheduledTraining.getSkill(),
+                    executePlayerTrainingUseCase.execute(scheduledTraining.getPlayerId(), scheduledTraining.getSkill(),
                         1, scheduledTraining.getId().value());
                 } else {
                     log.info("The previous training was not successful, setting day to {}", trainingEvent.getCurrentDay() + 1);
-                    generateTrainingUseCase.generate2(scheduledTraining.getPlayerId(), scheduledTraining.getSkill(),
+                    executePlayerTrainingUseCase.execute(scheduledTraining.getPlayerId(), scheduledTraining.getSkill(),
                         trainingEvent.getCurrentDay() + 1, scheduledTraining.getId().value());
                 }
             } else {
                 log.info("Training is not present setting the current day directly to 1 {}", scheduledTraining.getSkill());
-                generateTrainingUseCase.generate2(scheduledTraining.getPlayerId(), scheduledTraining.getSkill(), 1,
+                executePlayerTrainingUseCase.execute(scheduledTraining.getPlayerId(), scheduledTraining.getSkill(), 1,
                     scheduledTraining.getId().value());
             }
         });

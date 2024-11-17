@@ -1,7 +1,10 @@
-import { connectorAuth } from '@/libs/fetcher'
-import { signIn } from 'next-auth/react'
+import { connectorAuth } from '@/libs/fetcher';
+import { signIn } from 'next-auth/react';
 
-export async function apiSignIn(username: string, password: string): Promise<number> {
+export async function apiSignIn(
+  username: string,
+  password: string,
+): Promise<number> {
   return new Promise((resolve, reject) => {
     signIn('credentials', {
       redirect: false,
@@ -10,18 +13,22 @@ export async function apiSignIn(username: string, password: string): Promise<num
     })
       .then((res) => {
         if (res?.status === 200) {
-          resolve(res.status)
+          resolve(res.status);
         }
-        reject('Invalid credentials')
+        reject('Invalid credentials');
       })
       .catch((error) => {
-        console.error(error)
-        reject(error)
-      })
-  })
+        console.error(error);
+        reject(error);
+      });
+  });
 }
 
-export async function apiSignup(email: string, password: string, teamName: string): Promise<string | undefined> {
+export async function apiSignup(
+  email: string,
+  password: string,
+  teamName: string,
+): Promise<string | undefined> {
   return new Promise((resolve, reject) => {
     connectorAuth('/auth/register', 'POST', {
       email,
@@ -29,11 +36,11 @@ export async function apiSignup(email: string, password: string, teamName: strin
       teamName,
     })
       .then(() => {
-        resolve(undefined)
+        resolve(undefined);
       })
       .catch((error) => {
-        console.error(error)
-        reject('Register failed')
-      })
-  })
+        console.error(error);
+        reject('Register failed');
+      });
+  });
 }

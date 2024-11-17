@@ -1,43 +1,52 @@
-import React, { useState } from 'react'
-import { Box, Button, Card, CardContent, CardHeader, Snackbar, TextField, Typography } from '@mui/material'
-import { Controller, useForm } from 'react-hook-form'
-import { CenterContainer } from '@/shared/layout'
-import { NextPageWithLayout } from '@/pages/_app'
-import { apiSignIn, apiSignup } from '../api/auth/signup'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Snackbar,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
+import { CenterContainer } from '@/shared/layout';
+import { NextPageWithLayout } from '@/pages/_app';
+import { apiSignIn, apiSignup } from '../api/auth/signup';
+import { useRouter } from 'next/navigation';
 
 interface SignUpFormValues {
-  username: string
-  password: string
-  confirmPassword: string
-  teamName: string
+  username: string;
+  password: string;
+  confirmPassword: string;
+  teamName: string;
 }
 
 const SignUpPage: NextPageWithLayout = () => {
-  const [open, setOpen] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [open, setOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const { handleSubmit, control, watch } = useForm<SignUpFormValues>({
     mode: 'onBlur',
     reValidateMode: 'onChange',
-  })
-  const router = useRouter()
+  });
+  const router = useRouter();
 
   const doAutoLogin = (username: string, password: string) => {
     apiSignIn(username, password)
       .then(() => {
-        router.push('/')
+        router.push('/');
       })
       .catch((error) => {
-        console.error(error)
-        setErrorMessage('Login with new user failed')
-        setOpen(true)
-      })
-  }
+        console.error(error);
+        setErrorMessage('Login with new user failed');
+        setOpen(true);
+      });
+  };
 
   const handleCloseSnackBar = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   return (
     <Card>
@@ -54,22 +63,25 @@ const SignUpPage: NextPageWithLayout = () => {
           onSubmit={handleSubmit(async ({ username, password, teamName }) => {
             apiSignup(username, password, teamName)
               .then(() => {
-                console.log('then')
-                doAutoLogin(username, password)
+                console.log('then');
+                doAutoLogin(username, password);
               })
               .catch((err) => {
-                console.log('catch')
-                setErrorMessage(err)
-                setOpen(true)
-                console.error(err)
-              })
+                console.log('catch');
+                setErrorMessage(err);
+                setOpen(true);
+                console.error(err);
+              });
           })}>
           <Controller
             name="username"
             control={control}
             defaultValue=""
             rules={{ required: 'Username required' }}
-            render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
               <TextField
                 label="Username"
                 variant="filled"
@@ -86,7 +98,10 @@ const SignUpPage: NextPageWithLayout = () => {
             control={control}
             defaultValue=""
             rules={{ required: 'Team Name required' }}
-            render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
               <TextField
                 label="Team Name"
                 variant="filled"
@@ -103,7 +118,10 @@ const SignUpPage: NextPageWithLayout = () => {
             control={control}
             defaultValue=""
             rules={{ required: 'Password required' }}
-            render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
               <TextField
                 label="Password"
                 variant="filled"
@@ -124,11 +142,14 @@ const SignUpPage: NextPageWithLayout = () => {
               required: 'Password required',
               validate: (val: string) => {
                 if (watch('password') != val) {
-                  return 'Your passwords do no match'
+                  return 'Your passwords do no match';
                 }
               },
             }}
-            render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
               <TextField
                 label="Confirm Password"
                 variant="filled"
@@ -145,15 +166,22 @@ const SignUpPage: NextPageWithLayout = () => {
             <Button type="submit" variant="contained" color="primary">
               Sign Up
             </Button>
-            <Typography id="errorContainer" css={{ color: 'red', marginTop: '1rem' }}></Typography>
+            <Typography
+              id="errorContainer"
+              css={{ color: 'red', marginTop: '1rem' }}></Typography>
           </div>
         </form>
       </CardContent>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleCloseSnackBar} message={errorMessage} />
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackBar}
+        message={errorMessage}
+      />
     </Card>
-  )
-}
+  );
+};
 
-SignUpPage.getLayout = (page) => <CenterContainer>{page}</CenterContainer>
+SignUpPage.getLayout = (page) => <CenterContainer>{page}</CenterContainer>;
 
-export default SignUpPage
+export default SignUpPage;

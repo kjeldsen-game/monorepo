@@ -1,25 +1,48 @@
 import { connectorAPI } from '@/libs/fetcher';
-import useSWR from 'swr';
-import { AuctionDetail } from '@/shared/models/AuctionDetail';
+import useSWR, { mutate } from 'swr';
 
-const API = '/market/auction/';
+const API = '/market/auction';
 
-const useAuctionRepository = (auction?: string) => {
-  const { data, mutate } = useSWR<AuctionDetail>(
-    auction ? API + auction : null,
-    connectorAPI,
+const fetcher = (token: string | null, initialFilter?: string) => {
+  if (token === null) return undefined;
+  return connectorAPI<any>(
+    `${API}?page=${1}&size=${10}&${initialFilter}`,
+    'GET',
+    undefined,
+    undefined,
+    token,
+  );
+};
+
+const useAuctionRepository = (
+  auction?: string,
+  token?: string,
+  initialFilter: string = '',
+) => {
+  const { data: auctions, mutate } = useSWR<any>(
+    token ? API + initialFilter : null,
+    () => fetcher(token ? token : null, initialFilter),
   );
 
-  const updateAuction = (value: number): Promise<any> => {
-    if (!data) return Promise.reject('No data available');
+  const refetch = () => {
+    console.log('Refetching the auctionRepository fetch!');
+    mutate();
+  };
 
+  const updateAuction = (value: number): Promise<any> => {
     const newData = {
       amount: value,
     };
 
     if (!auction) return Promise.reject('No auction ID provided');
 
-    return connectorAPI<any>(API + auction, 'PATCH', newData, 'include')
+    return connectorAPI<any>(
+      API + '/' + auction,
+      'PATCH',
+      newData,
+      'include',
+      token,
+    )
       .then((response) => {
         mutate();
         return response;
@@ -30,7 +53,7 @@ const useAuctionRepository = (auction?: string) => {
       });
   };
 
-  return { updateAuction };
+  return { auctions, updateAuction, refetch };
 };
 
 export { useAuctionRepository };

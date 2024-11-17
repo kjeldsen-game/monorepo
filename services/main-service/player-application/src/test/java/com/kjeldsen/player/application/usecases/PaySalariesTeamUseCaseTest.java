@@ -2,6 +2,7 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.application.testdata.TestData;
 import com.kjeldsen.player.application.usecases.economy.CreateTransactionUseCase;
+import com.kjeldsen.player.application.usecases.economy.PaySalariesTeamUseCase;
 import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.repositories.*;
 import org.junit.jupiter.api.*;

@@ -1,6 +1,10 @@
-import NextAuth from 'next-auth'
-import CredentialsProvider from 'next-auth/providers/credentials'
-import { AUTH_CLIENT_ID, AUTH_CLIENT_SECRET, API_AUTH_ENDPOINT } from '@/config'
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import {
+  AUTH_CLIENT_ID,
+  AUTH_CLIENT_SECRET,
+  API_AUTH_ENDPOINT,
+} from '@/config';
 
 export default NextAuth({
   providers: [
@@ -20,20 +24,27 @@ export default NextAuth({
           password: credentials?.password || '',
           client_id: AUTH_CLIENT_ID,
           client_secret: AUTH_CLIENT_SECRET,
+        };
+
+        try {
+          const res = await fetch(`${API_AUTH_ENDPOINT}/auth/token`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+          });
+
+          if (res.status !== 200) throw new Error('Invalid credentials');
+
+          const data = await res.json();
+
+          // Save the access token as a cookie
+          return { accessToken: data.accessToken };
+        } catch (error) {
+          console.error('Error during authorization:', error);
+          throw error;
         }
-
-        const res = await fetch(`${API_AUTH_ENDPOINT}/auth/login`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        })
-        if (res.status !== 200) throw new Error('Invalid credentials')
-
-        // Returning token to set in session
-        const data = await res.json()
-        return data
       },
     }),
   ],
@@ -43,21 +54,48 @@ export default NextAuth({
   },
   session: { strategy: 'jwt' },
   callbacks: {
+    // The JWT callback is used to store the access token
     jwt: async ({ token, user }) => {
-      user && (token.user = user)
-      return token
-    },
-    session: async ({ session, token }) => {
-      session.user = token.user
+      // If user object exists, it means it came from the authorize method
+      if (user) {
+        token.accessToken = user.accessToken;
+      }
 
-      return session
+      return token;
+    },
+
+    // The session callback is used to fetch user data using the access token
+    session: async ({ session, token }) => {
+      // Add the access token to the session
+      session.accessToken = token.accessToken;
+
+      // Fetch user data from /auth/me using the access token
+      if (session.accessToken) {
+        try {
+          const res = await fetch(`${API_AUTH_ENDPOINT}/auth/me`, {
+            headers: {
+              Authorization: `Bearer ${session.accessToken}`,
+            },
+          });
+
+          if (res.status === 200) {
+            const userData = await res.json();
+            session.user = userData; // Attach the user data to the session
+          } else {
+            console.error('Failed to fetch user data:', res.status);
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      }
+
+      return session;
     },
   },
   theme: {
-    colorScheme: 'auto', // "auto" | "dark" | "light"
-    brandColor: '', // Hex color code #33FF5D
-    logo: '/logo.png', // Absolute URL to image
+    colorScheme: 'auto',
+    brandColor: '',
+    logo: '/logo.png',
   },
-  // Enable debug messages in the console if you are having problems
   debug: process.env.NODE_ENV === 'development',
-})
+});

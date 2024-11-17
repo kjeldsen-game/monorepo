@@ -25,7 +25,7 @@ public class CreatePlayerUseCase {
     private final PlayerCreationEventWriteRepository playerCreationEventWriteRepository;
 
     public void create(NewPlayer newPlayer) {
-        log.info("Creating player {}", newPlayer);
+        log.info("CreatePlayerUseCase for player {}", newPlayer);
         PlayerPositionTendency positionTendencies = playerPositionTendencyReadRepository.get(newPlayer.getPosition());
 
         PlayerCreationEvent playerCreationEvent = PlayerCreationEvent.builder()

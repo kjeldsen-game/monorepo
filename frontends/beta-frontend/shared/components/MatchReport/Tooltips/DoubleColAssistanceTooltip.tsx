@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
-import CustomTooltip from '../CustomTooltip';
+import CustomTooltip from './CustomTooltip';
 import { Box, Grid, Typography } from '@mui/material';
-import TooltipDataItem from '../TooltipDataItem';
+import TooltipDataItem from './ToolTipDataItem';
 import { RStats } from '@/shared/models/MatchReport';
 import { formatName } from '@/shared/utils/MatchReportUtils';
 

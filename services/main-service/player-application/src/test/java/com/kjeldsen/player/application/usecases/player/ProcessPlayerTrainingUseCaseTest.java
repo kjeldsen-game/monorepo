@@ -1,7 +1,7 @@
 package com.kjeldsen.player.application.usecases.player;
 
 import com.kjeldsen.domain.EventId;
-import com.kjeldsen.player.application.usecases.GenerateTrainingUseCase;
+import com.kjeldsen.player.application.usecases.trainings.ExecutePlayerTrainingUseCase;
 import com.kjeldsen.player.application.usecases.trainings.ProcessPlayerTrainingUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
@@ -29,7 +29,7 @@ class ProcessPlayerTrainingUseCaseTest {
     @Mock
     private PlayerTrainingEventReadRepository mockedPlayerTrainingEventReadRepository;
     @Mock
-    private GenerateTrainingUseCase mockedGenerateTrainingUseCase;
+    private ExecutePlayerTrainingUseCase mockedExecutePlayerTrainingUseCase;
     @InjectMocks
     private ProcessPlayerTrainingUseCase processPlayerTrainingUseCase;
 
@@ -53,7 +53,7 @@ class ProcessPlayerTrainingUseCaseTest {
         processPlayerTrainingUseCase.process();
 
 
-        verify(mockedGenerateTrainingUseCase, times(1)).generate2(Player.PlayerId.of("exampleId"),
+        verify(mockedExecutePlayerTrainingUseCase, times(1)).execute(Player.PlayerId.of("exampleId"),
             PlayerSkill.SCORING, 1, "eventId");
     }
 
@@ -77,7 +77,7 @@ class ProcessPlayerTrainingUseCaseTest {
 
         processPlayerTrainingUseCase.process();
 
-        verify(mockedGenerateTrainingUseCase, times(1)).generate2(Player.PlayerId.of("exampleId"),
+        verify(mockedExecutePlayerTrainingUseCase, times(1)).execute(Player.PlayerId.of("exampleId"),
             PlayerSkill.SCORING, currentDay + 1, "eventId");
     }
 
@@ -105,7 +105,7 @@ class ProcessPlayerTrainingUseCaseTest {
             Optional.of(eventAerial));
 
         processPlayerTrainingUseCase.process();
-        verify(mockedGenerateTrainingUseCase).generate2(Player.PlayerId.of("exampleId"), PlayerSkill.SCORING,3, "eventId1");
-        verify(mockedGenerateTrainingUseCase).generate2(Player.PlayerId.of("exampleId"), PlayerSkill.AERIAL,1, "eventId2");
+        verify(mockedExecutePlayerTrainingUseCase).execute(Player.PlayerId.of("exampleId"), PlayerSkill.SCORING,3, "eventId1");
+        verify(mockedExecutePlayerTrainingUseCase).execute(Player.PlayerId.of("exampleId"), PlayerSkill.AERIAL,1, "eventId2");
     }
 }

@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import { IconButton, TextField } from '@mui/material';
-import { useAuctionRepository } from '@/pages/api/market/useAuctionRepository';
 import { useSession } from 'next-auth/react';
 import MarketButton from './MarketButton';
 import AuctionDetailData from './AuctionDetailData';
@@ -11,17 +10,16 @@ import CustomModal from '../CustomModal';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { CloseOutlined } from '@mui/icons-material';
 import { AuctionMarket } from '@/shared/models/Auction';
+import { useAuctionRepository } from '@/pages/api/market/useAuctionRepository';
 
 interface AuctionProps {
   auction: AuctionMarket | undefined;
-  refetch: () => void;
   open: boolean;
   handleClose: () => void;
 }
 
 const MarketModal: React.FC<AuctionProps> = ({
   auction,
-  refetch,
   open,
   handleClose,
 }: AuctionProps) => {
@@ -32,6 +30,11 @@ const MarketModal: React.FC<AuctionProps> = ({
   const [bid, setBid] = React.useState<number>(0);
   const [confirmation, setConfirmation] = React.useState(false);
   const [updateError, setUpdateError] = React.useState<string | null>(null);
+
+  const { refetch, updateAuction } = useAuctionRepository(
+    auction?.id,
+    userData?.accessToken,
+  );
 
   const handleCloseModal = () => {
     handleClose();
@@ -76,8 +79,6 @@ const MarketModal: React.FC<AuctionProps> = ({
 
     return `${day}/${month}/${year}`;
   }
-
-  const { updateAuction } = useAuctionRepository(auction?.id);
 
   return (
     <>

@@ -1,13 +1,16 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Collapsible from '@/shared/components/Collapsible'
-import Box from '@mui/material/Box'
-import Grid from '@/shared/components/Grid/Grid'
-import { players } from '@/data/SamplePlayerTraining'
-import { sampleTrainingColumn } from '@/data/sampleTrainingColumn'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Collapsible from '@/shared/components/Collapsible';
+import Box from '@mui/material/Box';
+import Grid from '@/shared/components/Grid/Grid';
+import { players } from '@/data/SamplePlayerTraining';
+import { sampleTrainingColumn } from '@/data/sampleTrainingColumn';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useSession } from 'next-auth/react';
 
 const Training: NextPage = () => {
+  const { data: userData } = useSession({ required: true });
+
   return (
     <>
       <Head>
@@ -49,8 +52,8 @@ const Training: NextPage = () => {
         </Box>
       </>
     </>
-  )
-}
+  );
+};
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -58,7 +61,7 @@ export async function getStaticProps({ locale }: { locale: string }) {
       ...(await serverSideTranslations(locale, ['common'])),
       // Will be passed to the page component as props
     },
-  }
+  };
 }
 
-export default Training
+export default Training;

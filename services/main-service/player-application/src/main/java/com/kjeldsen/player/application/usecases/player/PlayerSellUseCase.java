@@ -1,4 +1,4 @@
-package com.kjeldsen.player.application.usecases;
+package com.kjeldsen.player.application.usecases.player;
 
 import com.kjeldsen.player.domain.events.AuctionCreationEvent;
 import com.kjeldsen.player.domain.Player;

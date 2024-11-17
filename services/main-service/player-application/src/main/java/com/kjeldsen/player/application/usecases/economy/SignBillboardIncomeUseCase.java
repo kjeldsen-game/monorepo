@@ -36,6 +36,7 @@ public class SignBillboardIncomeUseCase {
         Integer averageAttendanceSeasonPosition = 5; // TODO this have to be implemented JUST HARDCODED VALUE
 
         BigDecimal finalOffer = getFinalOffer(type, lastSeasonPosition, leagueCategory, averageAttendanceSeasonPosition);
+
         team.getEconomy().setBillboardDeal(Team.Economy.BillboardDeal.builder()
             .startSeason(team.getActualSeason())
             .endSeason(team.getActualSeason() + type.getSeasonLength())
@@ -43,6 +44,7 @@ public class SignBillboardIncomeUseCase {
             .type(type).build());
         teamWriteRepository.save(team);
         billboardIncomeUseCase.pay(teamId);
+        log.info("SignBillboardIncomeUseCase for team {} amount {} successfully completed!", teamId, finalOffer);
     }
 
     private BigDecimal getFinalOffer(Team.Economy.BillboardIncomeType type, Integer position,
