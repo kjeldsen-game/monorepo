@@ -42,7 +42,7 @@ security:
       - /
       - /api-docs/**
       - /swagger-ui.html
-      - /swagger-ui/index.html
+      - /swagger-ui/**
       - /v1/auth/register
       - /v1/auth/token
     public-key: -----BEGIN PUBLIC KEY-----
