@@ -1,10 +1,8 @@
-import React, { ReactNode } from 'react';
-import CustomTooltip from '../CustomTooltip';
+import { ReactNode } from 'react';
+import CustomTooltip from './CustomTooltip';
 import { Box } from '@mui/material';
-import TooltipDataCol from '../TooltipDataCol';
-import { DENOMINATIONS_RANGES, RStats } from '@/shared/models/MatchReport';
-import { getRangeLabel } from '../MatchReportItemMessage';
-import QualityText from '../MatchReportMessages/QualityText';
+import TooltipDataCol from './TooltipDataCol';
+import { RStats } from '@/shared/models/MatchReport';
 
 interface SingleColTooltipProps {
   stats: RStats;
