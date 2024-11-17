@@ -13,13 +13,11 @@ import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -74,6 +72,26 @@ class ProcessPotentialRiseUseCaseTest {
     @Test
     @DisplayName("Should not update the potential because rise did not happen")
     public void should_not_update_potential_because_rise_didnt_happened(){
+        List<Player> players = TestData.generateTestPlayers(Team.TeamId.of("testTeam"), 1);
+        players.get(0).getAge().setYears(19);
+        players.get(0).setActualSkills(Map.of(PlayerSkill.AERIAL, PlayerSkills.builder().actual(12).potential(13).build()));
 
+        when(mockedPlayerReadRepository.findPlayerUnderAge(MAX_AGE)).thenReturn(players);
+        try (
+            MockedStatic<PotentialRiseGenerator> potentialStaticMock = Mockito.mockStatic(PotentialRiseGenerator.class);
+            MockedStatic<PlayerProvider> playerStaticMock = Mockito.mockStatic(PlayerProvider.class);
+        )
+        {
+            potentialStaticMock.when(PotentialRiseGenerator::generatePotentialRaise).thenReturn(0);
+            playerStaticMock.when(() -> PlayerProvider.randomSkillForSpecificPlayer(players.get(0))).thenReturn(PlayerSkill.AERIAL);
+            potentialRiseUseCase.process();
+        }
+
+        assertEquals(13, players.get(0).getActualSkills().get(PlayerSkill.AERIAL).getPotential());
+        verify(mockedPlayerReadRepository, times(1)).findPlayerUnderAge(MAX_AGE);
+        verify(mockedPlayerWriteRepository, times(0)).save(any(Player.class));
+        verify(mockedPlayerPotentialRiseEventWriteRepository, times(0)).save(any(PlayerPotentialRiseEvent.class));
     }
+
+
 }
