@@ -19,6 +19,14 @@ service sshd restart
 mkdir -p /home/ec2-user/certs
 wget -O /home/ec2-user/certs/rds-combined-ca-bundle.pem https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem
 
+#Add the DocumentDB certificate to a Java truststore
+yum install -y java-17-amazon-corretto
+keytool -import -trustcacerts \
+  -file /home/ec2-user/certs/rds-combined-ca-bundle.pem \
+  -alias docdb \
+  -keystore /home/ec2-user/certs/truststore.jks \
+  -storepass ${ssh_password} -noprompt
+
 # Create environment file
 cat << EOF > /home/ec2-user/.env
 %{ for key, value in environment_vars ~}
