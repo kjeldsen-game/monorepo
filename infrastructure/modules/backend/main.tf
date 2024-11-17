@@ -115,3 +115,24 @@ resource "aws_instance" "backend" {
     Project     = var.project
   }
 }
+
+# Create an Elastic IP for the EC2 instance
+resource "aws_eip" "backend" {
+  instance = aws_instance.backend.id
+  vpc      = true
+
+  tags = {
+    Name        = "${var.project}-${var.environment}-backend-eip"
+    Environment = var.environment
+    Project     = var.project
+  }
+}
+
+# A record for the backend
+resource "aws_route53_record" "backend" {
+  zone_id = var.route53_zone_id
+  name    = var.domain_name
+  type    = "A"
+  ttl     = "60"
+  records = [aws_eip.backend.public_ip]
+}

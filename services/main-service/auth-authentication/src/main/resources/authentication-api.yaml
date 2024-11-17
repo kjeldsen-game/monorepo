@@ -3,14 +3,10 @@ info:
   version: 1.0.0
   title: Authentication API
 
-servers:
-  - url: http://localhost:15001/v1
-
 tags:
   - name: auth
 
 paths:
-
   /auth/register:
     post:
       summary: Register
@@ -63,9 +59,7 @@ paths:
           $ref: "#/components/responses/DefaultErrorResponse"
 
 components:
-
   responses:
-
     DefaultErrorResponse:
       description: Unexpected error
       content:
@@ -76,7 +70,6 @@ components:
               $ref: "#/components/schemas/Error"
 
   schemas:
-
     RegisterRequest:
       type: object
       required:

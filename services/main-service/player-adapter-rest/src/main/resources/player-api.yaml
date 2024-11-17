@@ -3,9 +3,6 @@ info:
   version: 1.0.0
   title: Players Service API
 
-servers:
-  - url: http://localhost:15001/v1
-
 tags:
   - name: team
   - name: player
@@ -721,9 +718,7 @@ paths:
           $ref: "#/components/responses/DefaultErrorResponse"
 
 components:
-  
   parameters:
-    
     PlayerIdPathParameter:
       name: playerId
       in: path
@@ -741,7 +736,6 @@ components:
         type: string
 
   responses:
-
     DefaultErrorResponse:
       description: Unexpected error
       content:
@@ -974,7 +968,7 @@ components:
       properties:
         skills:
           type: array
-          example: [ PASSING, SCORING ]
+          example: [PASSING, SCORING]
           items:
             $ref: "#/components/schemas/PlayerSkill"
 
@@ -1354,7 +1348,7 @@ components:
           example: 2
         skills:
           type: array
-          example: [ PASSING, SCORING ]
+          example: [PASSING, SCORING]
           items:
             $ref: "#/components/schemas/PlayerSkill"
 

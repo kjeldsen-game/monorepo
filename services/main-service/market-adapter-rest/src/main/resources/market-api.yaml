@@ -3,8 +3,6 @@ info:
   version: 1.0.0
   title: Markets Service API
 
-servers:
-  - url: http://localhost:15001/v1
 tags:
   - name: market
 
@@ -163,7 +161,6 @@ components:
 
   ################################### Responses ###################################
   responses:
-
     DefaultErrorResponse:
       description: Unexpected error
       content:

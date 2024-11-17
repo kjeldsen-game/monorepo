@@ -17,3 +17,13 @@ output "security_group_id" {
   description = "ID of the backend security group"
   value       = aws_security_group.backend.id
 }
+
+output "domain_name" {
+  description = "Domain name of the backend service"
+  value       = var.domain_name
+}
+
+output "public_ip" {
+  description = "Public IP of the EC2 instance"
+  value       = aws_eip.backend.public_ip
+}

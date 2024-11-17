@@ -3,9 +3,6 @@ info:
   version: 1.0.0
   title: Match Service API
 
-servers:
-  - url: http://localhost:15001/v1
-
 tags:
   - name: match
 
@@ -242,9 +239,7 @@ paths:
           $ref: "#/components/responses/DefaultErrorResponse"
 
 components:
-
   responses:
-
     DefaultErrorResponse:
       description: Unexpected error
       content:
@@ -255,7 +250,6 @@ components:
               $ref: "#/components/schemas/Error"
 
   schemas:
-
     Tactic:
       type: string
       example: DOUBLE_TEAM

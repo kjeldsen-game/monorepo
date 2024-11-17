@@ -68,4 +68,7 @@ module "backend" {
     PUBLIC_KEY  = var.public_key
     PRIVATE_KEY = var.private_key
   }
+
+  domain_name     = "api.kjeldsengame.com"
+  route53_zone_id = "Z01914961LF1F7AC5ES4"
 }
