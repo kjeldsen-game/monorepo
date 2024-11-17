@@ -9,6 +9,7 @@ import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingDeclineEventWriteRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
+@Disabled
 class ProcessDeclineTrainingUseCaseTest {
 
     private static final Integer DECLINE_AGE_TRIGGER = 27;

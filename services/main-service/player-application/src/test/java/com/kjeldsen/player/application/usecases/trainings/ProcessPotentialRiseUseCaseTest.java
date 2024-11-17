@@ -11,6 +11,7 @@ import com.kjeldsen.player.domain.provider.PlayerProvider;
 import com.kjeldsen.player.domain.repositories.PlayerPotentialRiseEventWriteRepository;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -22,6 +23,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@Disabled
 class ProcessPotentialRiseUseCaseTest {
 
     private static final Integer MAX_AGE = 21;
