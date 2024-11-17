@@ -61,10 +61,7 @@ module "backend" {
     MONGO_USER     = var.docdb_master_username
     MONGO_PASSWORD = var.docdb_master_password
     MONGO_DATABASE = "admin"
-    MONGO_OPTIONS  = "?ssl=true&tlsCAFile=/certs/truststore.jks&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false"
-
-    TRUST_STORE_PATH     = "/certs/truststore.jks"
-    TRUST_STORE_PASSWORD = var.ssh_password
+    MONGO_OPTIONS  = "?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false"
 
     ACCESS_TOKEN_VALIDITY_SECONDS = 86400
 

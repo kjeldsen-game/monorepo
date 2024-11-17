@@ -8,6 +8,9 @@ resource "aws_docdb_cluster" "main" {
   vpc_security_group_ids = [aws_security_group.docdb.id]
   skip_final_snapshot    = true # For development. In production, you might want this false
 
+  # Use the parameter group to disable TLS
+  db_cluster_parameter_group_name = "dev-parameter-group"
+
   tags = {
     Name        = "${var.project}-${var.environment}-docdb"
     Environment = var.environment
