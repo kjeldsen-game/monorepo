@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Component
 @RequiredArgsConstructor
@@ -34,6 +35,8 @@ public class ProcessPotentialRiseUseCase {
     */
 
     public void process() {
+        AtomicReference<Integer> failed = new AtomicReference<>(0);
+        AtomicReference<Integer> successful = new AtomicReference<>(0);
         List<Player> players = playerReadRepository.findPlayerUnderAge(MAX_AGE);
         log.info("Running PotentialRiseUseCase for {} players", players.size());
         players.forEach(
@@ -44,11 +47,16 @@ public class ProcessPotentialRiseUseCase {
                 Integer rise = PotentialRiseGenerator.generatePotentialRaise();
                 PlayerSkill randomSkill = PlayerProvider.randomSkillForSpecificPlayer(player);
                 if (rise != 0) { // Rise happened
+                    successful.getAndSet(successful.get() + 1);
 //                    log.info("Rise happened for player {} w points {} skill {}", player.getName(), rise, randomSkill);
                     executePlayerRiseAndStoreEvent(player, randomSkill, rise);
+                } else {
+                    failed.getAndSet(successful.get() + 1);
                 }
             }
         );
+        log.info("Finished running PotentialRiseUseCase for {} players successful {}, failed {}",
+            players.size(), successful.get(), failed.get());
     }
 
     private void executePlayerRiseAndStoreEvent(Player player, PlayerSkill randomSkill,Integer rise) {

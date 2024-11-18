@@ -22,11 +22,9 @@ public class TrainingDelegate implements TrainingApiDelegate {
 
     @Override
     public ResponseEntity<Void> schedulePlayerTraining(String playerId, SchedulePlayerTrainingRequest schedulePlayerTrainingRequest) {
-        List<com.kjeldsen.player.domain.PlayerSkill> skills = schedulePlayerTrainingRequest.getSkills().stream()
-            .map(playerSkill -> PlayerMapper.INSTANCE.map(playerSkill.getValue()))
-            .toList();
 
-        schedulePlayerTrainingUseCase.schedule(Player.PlayerId.of(playerId), skills);
+        com.kjeldsen.player.domain.PlayerSkill skill = PlayerMapper.INSTANCE.map(schedulePlayerTrainingRequest.getSkill().getValue());
+        schedulePlayerTrainingUseCase.schedule(Player.PlayerId.of(playerId), skill);
         return ResponseEntity.ok().build();
     }
 

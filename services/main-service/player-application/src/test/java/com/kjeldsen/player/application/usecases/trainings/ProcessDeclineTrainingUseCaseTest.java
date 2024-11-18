@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-@Disabled
 class ProcessDeclineTrainingUseCaseTest {
 
     private static final Integer DECLINE_AGE_TRIGGER = 27;

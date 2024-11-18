@@ -3,6 +3,9 @@ info:
   version: 1.0.0
   title: Players Service API
 
+servers:
+  - url: http://localhost:15001/v1
+
 tags:
   - name: team
   - name: player
@@ -11,6 +14,7 @@ tags:
   - name: simulator
 
 paths:
+  ######################## TEAM START ########################
   /team:
     get:
       summary: Get all teams
@@ -92,7 +96,7 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-######################## ECONOMY START ########################
+######################## TEAM ECONOMY START ########################
 
   /team/{teamId}/economy:
     get:
@@ -172,7 +176,10 @@ paths:
           $ref: "#/components/responses/DefaultErrorResponse"
 
 
-######################## ECONOMY END ########################
+######################## TEAM ECONOMY END ########################
+######################## TEAM END ########################
+
+######################## PLAYER START ########################
 
   /player:
     post:
@@ -287,6 +294,9 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
+######################## PLAYER END ########################
+
+######################## PLAYER-POSITION-TENDENCIES START ########################
   /player-position-tendencies:
     get:
       summary: Get all player position tendencies
@@ -354,7 +364,9 @@ paths:
                 $ref: "#/components/schemas/PlayerPositionTendencyResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
+######################## PLAYER-POSITION-TENDENCIES END ########################
 
+######################## TRAINING START ########################
   /training/{playerId}:
     get:
       summary: Get historical training of a player
@@ -390,72 +402,42 @@ paths:
           description: PlayerTrainingScheduled
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
+######################## TRAINING END ########################
 
-  /training/{playerId}/bloom:
+######################## SIMULATOR START ########################
+  /simulator/trainings:
     post:
-      summary: Register a new bloom phase
-      operationId: registerBloomPhase
+      summary: Simulate the execution of trainings
+      operationId: simulatePlayerTrainingsProcess
       tags:
-        - training
-      parameters:
-        - $ref: "#/components/parameters/PlayerIdPathParameter"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RegisterBloomPhaseRequest"
+        - simulator
       responses:
-        "201":
-          description: Bloom phase was registered
+        "200":
+          description: Simulation of process of trainings was successful
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-  /simulator/training/{playerId}:
+  /simulator/potential-rises:
     post:
-      summary: Register a simulated scheduled training
-      operationId: registerSimulatedScheduledTraining
+      summary: Simulate the execution of potential rises
+      operationId: simulatePotentialRisesProcess
       tags:
         - simulator
-      parameters:
-        - $ref: "#/components/parameters/PlayerIdPathParameter"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RegisterSimulatedScheduledTrainingRequest"
       responses:
         "200":
-          description: Simulated training was scheduled
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/PlayerHistoricalTrainingResponse"
+          description: Simulation of potential rises process was successful
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-  /simulator/potential-rise/{playerId}:
+  /simulator/player-declines:
     post:
-      summary: Register a simulated scheduled potential rise
-      operationId: registerSimulatedScheduledPotentialRise
+      summary: Simulate the execution of player declines
+      operationId: simulatePlayerDeclinesProcess
       tags:
         - simulator
-      parameters:
-        - $ref: "#/components/parameters/PlayerIdPathParameter"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RegisterSimulatedScheduledPotentialRiseRequest"
       responses:
         "200":
-          description: Simulated potential rise was scheduled
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/PlayerHistoricalPotentialRiseResponse"
+          description: Simulation player declines process was successful
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -499,26 +481,6 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-  /simulator/sponsor-income/{teamId}:
-    post:
-      summary: Register a sponsor income
-      operationId: registerSponsorIncome
-      tags:
-        - simulator
-      parameters:
-        - $ref: "#/components/parameters/TeamIdPathParameter"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RegisterSponsorIncomeRequest"
-      responses:
-        "201":
-          description: Simulated sponsor income
-        default:
-          $ref: "#/components/responses/DefaultErrorResponse"
-
   /simulator/salary-payroll/{teamId}:
     post:
       summary: Simulates a salary payroll
@@ -550,32 +512,6 @@ paths:
       responses:
         "201":
           description: Simulated sponsor income
-        default:
-          $ref: "#/components/responses/DefaultErrorResponse"
-
-  /simulator/decline/{playerId}:
-    post:
-      summary: Register a simulated decline
-      operationId: registerSimulatedDecline
-      tags:
-        - simulator
-      parameters:
-        - $ref: "#/components/parameters/PlayerIdPathParameter"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RegisterSimulatedDeclineRequest"
-      responses:
-        "200":
-          description: Decline phase simulated
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/PlayerDeclineResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -703,6 +639,9 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
+######################## SIMULATOR END ########################
+
+######################## COMPONENTS START ########################
 components:
   parameters:
     PlayerIdPathParameter:
@@ -948,6 +887,7 @@ components:
         - MATCH_LOSS
         - SEASON_END
         - SEASON_START
+    ######################## FANS SCHEMAS END ########################
 
     ######################## CANTERA SCHEMAS START ########################
 
@@ -958,20 +898,17 @@ components:
         - ECONOMY
         - TRADITION
         - BUILDING
+    ######################## CANTERA SCHEMAS END ########################
 
-################################### Objects ###################################
-
-  ################################### Economy ###################################
-
+    ######################## TRAINING SCHEMAS START ########################
 
     SchedulePlayerTrainingRequest:
       type: object
       properties:
-        skills:
-          type: array
-          example: [PASSING, SCORING]
-          items:
-            $ref: "#/components/schemas/PlayerSkill"
+        skill:
+          $ref: "#/components/schemas/PlayerSkill"
+
+    ######################## TRAINING SCHEMAS END ########################
 
     CreatePlayerRequest:
       type: object
@@ -1337,31 +1274,6 @@ components:
         default:
           type: boolean
 
-    RegisterSimulatedScheduledTrainingRequest:
-      type: object
-      properties:
-        days:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 1000
-          example: 2
-        skills:
-          type: array
-          example: [PASSING, SCORING]
-          items:
-            $ref: "#/components/schemas/PlayerSkill"
-
-    RegisterSimulatedScheduledPotentialRiseRequest:
-      type: object
-      properties:
-        daysToSimulate:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 1000
-          example: 2
-
     RegisterInvestmentOnCanteraRequest:
       type: object
       properties:
@@ -1450,86 +1362,6 @@ components:
       properties:
         periodicity:
           $ref: "#/components/schemas/SponsorPeriodicity"
-
-    RegisterSponsorIncomeRequest:
-      type: object
-      example:
-        {
-          "weeks": 5,
-          "wins": 5,
-          "sponsors":
-            [
-              { "periodicity": "ANNUAL", "mode": "CONSERVATIVE" },
-              { "periodicity": "WEEKLY", "mode": "AGGRESSIVE" },
-            ],
-        }
-      properties:
-        weeks:
-          type: integer
-          format: int32
-          example: 5
-        wins:
-          type: integer
-          format: int32
-          example: 5
-        sponsors:
-          type: array
-          items:
-            $ref: "#/components/schemas/Sponsor"
-
-    RegisterBloomPhaseRequest:
-      type: object
-      properties:
-        yearsOn:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 10
-          example: 3
-        bloomStartAge:
-          type: integer
-          format: int32
-          minimum: 15
-          maximum: 30
-          example: 18
-        bloomSpeed:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 1000
-          example: 350
-
-    RegisterSimulatedDeclineRequest:
-      type: object
-      properties:
-        daysToDecline:
-          type: integer
-          format: int32
-          minimum: 15
-          maximum: 30
-          example: 18
-        declineSpeed:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 1000
-          example: 350
-
-    RegisterRightDeclinePhaseRequest:
-      type: object
-      properties:
-        declineStartAge:
-          type: integer
-          format: int32
-          minimum: 15
-          maximum: 30
-          example: 18
-        declineSpeed:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 1000
-          example: 350
 
     Error:
       type: "object"

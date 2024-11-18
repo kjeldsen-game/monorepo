@@ -50,11 +50,10 @@ public class ExecutePlayerTrainingUseCase {
 
         // Generate the number of points playerSkill should rise
         int points = PointsGenerator.generatePointsRise(currentDay);
-        if (player.getBloomYear().equals(player.getAge().getYears())) {
+        if (player.getBloomYear() != null && player.getBloomYear().equals(player.getAge().getYears())) {
             playerTrainingEvent.setBloom(true);
             points = points * 2;
         }
-
         if (points > 0) {
             // Player reach the maximum potential rise up, his potential will be increase +1 as well actual skill value
             if (Objects.equals(player.getActualSkillPoints(playerSkill), player.getPotentialSkillPoints(playerSkill))) {

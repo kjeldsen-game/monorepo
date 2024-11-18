@@ -1,10 +1,13 @@
 package com.kjeldsen.auth.authentication;
 
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 
 @Configuration
@@ -13,11 +16,20 @@ import java.util.List;
 @Setter
 public class SecurityProperties {
 
+    private static final Logger logger = LoggerFactory.getLogger(SecurityProperties.class);
+
     private long accessTokenValiditySeconds;
     private long refreshTokenValiditySeconds;
     private List<String> publicEndpoints;
     private String publicKey;
     private String privateKey;
+
+    @PostConstruct
+    public void init() {
+        // Print the sanitized public and private keys during the Spring context load
+        logger.info("Sanitized Public Key: {}", getPublicKey());
+        logger.info("Sanitized Private Key: {}", getPrivateKey());
+    }
 
     public String getPublicKey() {
         return sanitizePemPublicKey(publicKey);

@@ -1,130 +1,110 @@
 package com.kjeldsen.integration.player;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.kjeldsen.domain.EventId;
 import com.kjeldsen.integration.AbstractIT;
 import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.PlayerCategory;
+import com.kjeldsen.player.domain.PlayerPositionTendency;
+import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.events.PlayerPotentialRiseEvent;
+import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
+import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
+import com.kjeldsen.player.domain.generator.PotentialRiseGenerator;
 import com.kjeldsen.player.domain.provider.PlayerProvider;
-import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
-import com.kjeldsen.player.rest.model.PlayerDeclineResponse;
-import com.kjeldsen.player.rest.model.PlayerHistoricalTrainingResponse;
-import com.kjeldsen.player.rest.model.PlayerSkill;
-import com.kjeldsen.player.rest.model.RegisterSimulatedDeclineRequest;
-import com.kjeldsen.player.rest.model.RegisterSimulatedScheduledTrainingRequest;
+import com.kjeldsen.player.persistence.mongo.repositories.PlayerPotentialRiseEventMongoRepository;
+import com.kjeldsen.player.persistence.mongo.repositories.PlayerTrainingDeclineEventMongoRepository;
+import com.kjeldsen.player.persistence.mongo.repositories.PlayerTrainingScheduledEventMongoRepository;
 import org.junit.jupiter.api.*;
+import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MvcResult;
+import org.testcontainers.shaded.org.checkerframework.checker.units.qual.A;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mockStatic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Disabled
 public class SimulatedApiIT extends AbstractIT {
     @Autowired
-    private PlayerWriteRepository playerWriteRepository;
-    @Autowired
     private PlayerMongoRepository playerMongoRepository;
+    @Autowired
+    private PlayerTrainingScheduledEventMongoRepository playerTrainingScheduledEventMongoRepository;
+    @Autowired
+    private PlayerTrainingDeclineEventMongoRepository playerTrainingDeclineEventMongoRepository;
+    @Autowired
+    private PlayerPotentialRiseEventMongoRepository playerPotentialRiseEventMongoRepository;
+
 
     @BeforeEach
     void setUp() {
         playerMongoRepository.deleteAll();
+        playerTrainingScheduledEventMongoRepository.deleteAll();
+        playerTrainingDeclineEventMongoRepository.deleteAll();
+        playerPotentialRiseEventMongoRepository.deleteAll();
     }
 
-    // TODO FIX
     @Nested
-    @DisplayName("HTTP POST to /simulator/training/{playerId} should")
-    class HttpPostToSimulatorTrainingShould {
+    @DisplayName("HTTP POST to /v1/simulator/")
+    class HttpPost {
+
         @Test
-        @Disabled
-        @DisplayName("return 200 and the list of the registered simulated scheduled trainings")
-        void return_200_and_the_list_of_the_registered_simulated_scheduled_trainings() throws Exception {
+        @DisplayName("Should process the scheduled trainings and return 200")
+        public void should_return_200_when_training_is_scheduled() throws Exception {
+            Player examplePlayer = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
+                PlayerCategory.JUNIOR, 200);
+            playerMongoRepository.save(examplePlayer);
 
-            List<PlayerSkill> skillList = new ArrayList<>();
-            skillList.add(PlayerSkill.CONSTITUTION);
-            skillList.add(PlayerSkill.SCORING);
-
-            RegisterSimulatedScheduledTrainingRequest request = new RegisterSimulatedScheduledTrainingRequest()
-                .days(2)
-                .skills(skillList);
-
-            String playerId = "playerId1";
-
-            playerWriteRepository.save(Player.builder()
-                .id(Player.PlayerId.of(playerId))
-                .age(com.kjeldsen.player.domain.PlayerAge.generateAgeOfAPlayer())
-                .actualSkills(Map.of(
-                    com.kjeldsen.player.domain.PlayerSkill.CONSTITUTION,
-                    new com.kjeldsen.player.domain.PlayerSkills(1, 0, com.kjeldsen.player.domain.PlayerSkillRelevance.SECONDARY),
-                    com.kjeldsen.player.domain.PlayerSkill.SCORING,
-                    new com.kjeldsen.player.domain.PlayerSkills(2, 0, com.kjeldsen.player.domain.PlayerSkillRelevance.SECONDARY)
-                ))
+            playerTrainingScheduledEventMongoRepository.save(PlayerTrainingScheduledEvent.builder()
+                .id(EventId.generate())
+                .playerId(examplePlayer.getId()).
+                skill(com.kjeldsen.player.domain.PlayerSkill.AERIAL)
+                .status(PlayerTrainingScheduledEvent.Status.ACTIVE)
                 .build());
 
-            MvcResult mvcResult = mockMvc.perform(post("/v1/simulator/training/" + playerId)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk())
-                .andReturn();
-
-            PlayerHistoricalTrainingResponse playerHistoricalTrainingResponse1 = objectMapper
-                .readValue(mvcResult.getResponse().getContentAsString(), PlayerHistoricalTrainingResponse.class);
-
-            assertThat(playerHistoricalTrainingResponse1.getPlayerId()).isEqualTo(playerId);
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().size()).isEqualTo(4);
-
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(0).getPlayerId()).isEqualTo(playerId);
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(0).getCurrentDay()).isEqualTo(1);
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(0).getSkill()).isEqualTo(PlayerSkill.CONSTITUTION);
-
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(1).getPlayerId()).isEqualTo(playerId);
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(1).getCurrentDay()).isEqualTo(2);
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(1).getSkill()).isEqualTo(PlayerSkill.CONSTITUTION);
-
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(2).getPlayerId()).isEqualTo(playerId);
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(2).getCurrentDay()).isEqualTo(1);
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(2).getSkill()).isEqualTo(PlayerSkill.SCORING);
-
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(3).getPlayerId()).isEqualTo(playerId);
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(3).getCurrentDay()).isEqualTo(2);
-            assertThat(playerHistoricalTrainingResponse1.getTrainings().get(3).getSkill()).isEqualTo(PlayerSkill.SCORING);
-
+            mockMvc.perform(post("/v1/simulator/trainings"))
+                .andExpect(status().isOk());
         }
-    }
 
-
-    @Nested
-    @Disabled
-    @DisplayName("HTTP POST to /simulator/decline/{playerId} should")
-    class HttpPostToSimulatorDeclineTrainingShould {
         @Test
-        @DisplayName("return 200 and the list of the registered simulated decline trainings")
-        void return_200_and_the_list_of_the_registered_simulated_decline_scheduled_trainings() throws Exception {
+        @DisplayName("Should process player declines and return 200")
+        public void should_return_200_when_decline_is_executed() throws Exception {
+            Player examplePlayer = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
+                PlayerCategory.JUNIOR, 200);
+            examplePlayer.getAge().setYears(28);
+            playerMongoRepository.save(examplePlayer);
 
-            RegisterSimulatedDeclineRequest request = new RegisterSimulatedDeclineRequest()
-                .daysToDecline(15)
-                .declineSpeed(100);
+            mockMvc.perform(post("/v1/simulator/player-declines"))
+                .andExpect(status().isOk());
 
-            Player player = playerWriteRepository.save(PlayerProvider.generateDefault());
+            List<PlayerTrainingDeclineEvent> events = playerTrainingDeclineEventMongoRepository.findAll();
+            assertEquals(examplePlayer.getId(), events.get(0).getPlayerId());
+            assertEquals(1, events.size());
+        }
 
-            MvcResult mvcResult = mockMvc.perform(post("/v1/simulator/decline/" + player.getId().value())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk())
-                .andReturn();
+        @Test
+        @DisplayName("Should process player potential rises and return 200")
+        public void should_return_200_when_process_potential_rises() throws Exception {
+            Player examplePlayer1 = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
+                PlayerCategory.JUNIOR, 200);
+            examplePlayer1.getAge().setYears(28);
+            Player examplePlayer2 = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
+                PlayerCategory.JUNIOR, 200);
+            examplePlayer2.getAge().setYears(20);
+            playerMongoRepository.saveAll(List.of(examplePlayer1, examplePlayer2));
 
-            List<PlayerDeclineResponse> playerDeclineResponsesList = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
-                new TypeReference<>() {
-                });
+            try (MockedStatic<PotentialRiseGenerator> mockedStatic = mockStatic(PotentialRiseGenerator.class)) {
+                mockedStatic.when(PotentialRiseGenerator::generatePotentialRaise).thenReturn(1);
 
-            assertThat(playerDeclineResponsesList.get(0).getPlayerId()).isEqualTo(player.getId().value());
-            assertThat(playerDeclineResponsesList.size()).isEqualTo(15);
+                mockMvc.perform(post("/v1/simulator/potential-rises"))
+                    .andExpect(status().isOk());
+            }
 
+            List<PlayerPotentialRiseEvent> events = playerPotentialRiseEventMongoRepository.findAll();
+            assertEquals(1, events.size());
         }
     }
 }

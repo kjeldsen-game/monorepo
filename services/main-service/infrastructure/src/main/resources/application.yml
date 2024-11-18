@@ -46,9 +46,8 @@ security:
       - /swagger-ui/**
       - /api-docs/**
       - /swagger-ui.html
-      - /swagger-ui/**
-      - /v1/auth/register
-      - /v1/auth/token
+      - /auth/register
+      - /auth/token
     public-key: -----BEGIN PUBLIC KEY-----
       MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyX90djztHkBKOWZB9EDI
       bkfEsaDMLSQ18OqM8wvW17cx5qE1w95qeBqSl4ObUJsFTEcfCXiN0KY3V8gs1lpb

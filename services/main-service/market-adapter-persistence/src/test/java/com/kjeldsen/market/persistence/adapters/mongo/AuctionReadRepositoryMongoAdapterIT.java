@@ -21,7 +21,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+// TODO fix
 @DataMongoTest(includeFilters = @ComponentScan.Filter(classes = Component.class))
 @ActiveProfiles("test")
 public class AuctionReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {

@@ -8,6 +8,9 @@ import com.kjeldsen.player.application.usecases.economy.*;
 import com.kjeldsen.player.application.usecases.facilities.UpgradeBuildingUseCase;
 import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
 import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
+import com.kjeldsen.player.application.usecases.trainings.ProcessDeclineTrainingUseCase;
+import com.kjeldsen.player.application.usecases.trainings.ProcessPlayerTrainingUseCase;
+import com.kjeldsen.player.application.usecases.trainings.ProcessPotentialRiseUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.rest.api.SimulatorApiDelegate;
 import com.kjeldsen.player.rest.model.*;
@@ -35,58 +38,15 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final BuildingMaintenanceExpenseUseCase buildingMaintenanceExpenseUseCase;
     private final UpdateLoyaltyUseCase updateLoyaltyUseCase;
 
+    // Training simulations
+    private final ProcessPlayerTrainingUseCase processPlayerTrainingUseCase;
+    private final ProcessPotentialRiseUseCase processPotentialRiseUseCase;
+    private final ProcessDeclineTrainingUseCase processDeclineTrainingUseCase;
+
     // Economy simulations
     private final ResetSponsorIncomeUseCase resetSponsorIncomeUseCase;
     private final ResetBillboardIncomeUseCase resetBillboardIncomeUseCase;
 
-//    @Override
-//    public ResponseEntity<PlayerHistoricalPotentialRiseResponse> registerSimulatedScheduledPotentialRise(
-//        String playerId,
-//        RegisterSimulatedScheduledPotentialRiseRequest registerSimulatedScheduledPotentialRiseRequest) {
-//
-//        schedulePotentialRiseUseCase.generate(
-//            Player.PlayerId.of(playerId),
-//            registerSimulatedScheduledPotentialRiseRequest.getDaysToSimulate()
-//        );
-//
-//        List<PlayerPotentialRiseEvent> potentialRises = findAndProcessScheduledPotentialRiseUseCase.findAndProcess(InstantProvider.nowAsLocalDate())
-//            .stream()
-//            .filter(playerPotentialRiseEvent -> playerPotentialRiseEvent.getPlayerId().equals(Player.PlayerId.of(playerId)))
-//            .toList();
-//
-//        return ResponseEntity.ok(new PlayerHistoricalPotentialRiseResponse()
-//            .playerId(playerId)
-//            .potentialRises(potentialRises.stream()
-//                .map(PlayerPotentialRiseResponseMapper.INSTANCE::fromPlayerPotentialRiseEvent)
-//                .toList()
-//            ));
-//    }
-
-//    @Override
-//    public ResponseEntity<PlayerHistoricalTrainingResponse> registerSimulatedScheduledTraining(
-//        String playerId,
-//        RegisterSimulatedScheduledTrainingRequest registerSimulatedScheduledTrainingRequest) {
-//
-//        registerSimulatedScheduledTrainingRequest.getSkills()
-//            .forEach(skillsToTrain -> scheduleTrainingUseCase.generate(
-//                Player.PlayerId.of(playerId),
-//                PlayerMapper.INSTANCE.map(skillsToTrain.getValue()),
-//                registerSimulatedScheduledTrainingRequest.getDays()
-//            ));
-//
-//        List<PlayerTrainingEvent> trainings = findAndProcessScheduledTrainingUseCase.findAndProcess(InstantProvider.nowAsLocalDate())
-//            .stream()
-//            .filter(playerTrainingEvent -> playerTrainingEvent.getPlayerId().equals(Player.PlayerId.of(playerId)))
-//            .toList();
-//
-//        return ResponseEntity.ok(new PlayerHistoricalTrainingResponse()
-//            .playerId(playerId)
-//            .trainings(trainings.stream()
-//                .map(PlayerTrainingResponseMapper.INSTANCE::fromPlayerTrainingEvent)
-//                .toList())
-//        );
-//    }
-//
 
     @Override
     public ResponseEntity<Void> registerInvestmentOnCantera(String teamId, RegisterInvestmentOnCanteraRequest registerInvestmentOnCanteraRequest) {
@@ -190,6 +150,8 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         return ResponseEntity.ok().build();
     }
 
+    //************************* ECONOMY SIMULATIONS *************************//
+
     @Override
     public ResponseEntity<Void> simulateResetSponsor(SimulateSponsorResetRequest simulateSponsorResetRequest) {
         resetSponsorIncomeUseCase.reset(Team.Economy.IncomePeriodicity.valueOf(simulateSponsorResetRequest.getPeriodicity().name()));
@@ -201,4 +163,23 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         resetBillboardIncomeUseCase.reset();
         return ResponseEntity.ok().build();
     }
+
+    //************************* TRAINING SIMULATIONS *************************//
+
+
+    @Override
+    public ResponseEntity<Void> simulatePotentialRisesProcess() {
+        processPotentialRiseUseCase.process();
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> simulatePlayerTrainingsProcess() {
+        processPlayerTrainingUseCase.process();
+        return ResponseEntity.ok().build();    }
+
+    @Override
+    public ResponseEntity<Void> simulatePlayerDeclinesProcess() {
+        processDeclineTrainingUseCase.process();
+        return ResponseEntity.ok().build();    }
 }

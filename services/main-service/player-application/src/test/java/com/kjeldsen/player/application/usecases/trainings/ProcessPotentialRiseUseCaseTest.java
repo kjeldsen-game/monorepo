@@ -23,7 +23,6 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@Disabled
 class ProcessPotentialRiseUseCaseTest {
 
     private static final Integer MAX_AGE = 21;

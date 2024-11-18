@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @Component
@@ -32,8 +34,8 @@ public class SchedulePlayerTrainingUseCase {
     * The workflow of PlayerTraining: Schedule -> Process -> Execute
     */
 
-    public void schedule(Player.PlayerId playerId, List<PlayerSkill> skills) {
-        log.info("ScheduleTrainingUseCase for {} skill {}", playerId, skills);
+    public void schedule(Player.PlayerId playerId, PlayerSkill skill) {
+        log.info("ScheduleTrainingUseCase for {} skill {}", playerId, skill);
 
         // Check if player exists
         Player player = playerReadRepository.findOneById(playerId).orElseThrow(() -> new RuntimeException("Player not found."));
@@ -42,26 +44,23 @@ public class SchedulePlayerTrainingUseCase {
         List<PlayerTrainingScheduledEvent> activeTrainings = playerTrainingScheduledEventReadRepository.findAllActiveScheduledTrainings()
             .stream().filter(event -> event.getPlayerId().equals(playerId)).toList();
 
-        // Filter missing skills
-        List<PlayerSkill> missingSkills = skills.stream()
-            .filter(skill -> activeTrainings.stream().noneMatch(event -> event.getSkill().equals(skill)))
-            .toList();
-
-        // Filter events that need to be set to INACTIVE
-        List<PlayerTrainingScheduledEvent> setToInactiveEvents = activeTrainings.stream()
-            .filter(event -> !skills.contains(event.getSkill()))
-            .toList();
-
-        // Schedule new Trainings and set old to INACTIVE
-        setScheduledTrainingsInactive(setToInactiveEvents);
-        missingSkills.forEach(playerSkill -> scheduleAndStoreEvent(player, playerSkill));
+        // Check if the skill in the request is not already set up for the training, if yes throw error or don't modify
+        if (activeTrainings.stream().anyMatch(sk -> sk.getSkill().equals(skill))) {
+            throw new RuntimeException("Training for the skill is already scheduled.");
+        }
+        // Check the active trainings, if the size is less than 2, we could set it without removing active training
+        if (activeTrainings.size() >= 2) {
+            log.info("Removing scheduled training for older skill, because there were already 2 trainings assigned to player.");
+            activeTrainings.stream()
+                .min(Comparator.comparing(PlayerTrainingScheduledEvent::getOccurredAt))
+                .ifPresent(this::setScheduledTrainingInactive);
+        }
+        scheduleAndStoreEvent(player, skill);
     }
 
-    private void setScheduledTrainingsInactive(List<PlayerTrainingScheduledEvent> trainings) {
-        for (PlayerTrainingScheduledEvent event : trainings) {
-            event.setStatus(PlayerTrainingScheduledEvent.Status.INACTIVE);
-            playerTrainingScheduledEventWriteRepository.save(event);
-        }
+    private void setScheduledTrainingInactive(PlayerTrainingScheduledEvent event) {
+        event.setStatus(PlayerTrainingScheduledEvent.Status.INACTIVE);
+        playerTrainingScheduledEventWriteRepository.save(event);
     }
 
     private void scheduleAndStoreEvent(Player player, PlayerSkill skill) {

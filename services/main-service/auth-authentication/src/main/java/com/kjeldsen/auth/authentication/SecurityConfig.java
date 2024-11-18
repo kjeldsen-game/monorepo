@@ -34,7 +34,7 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for stateless applications (like JWT)
             .authorizeHttpRequests(requests -> requests
-                .requestMatchers(securityProperties.getPublicEndpoints().toArray(new String[0]))
+                .requestMatchers("/v1/auth/**", "/swagger-ui/**", "/api-docs/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated())
