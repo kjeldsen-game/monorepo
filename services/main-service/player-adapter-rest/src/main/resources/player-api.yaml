@@ -367,23 +367,57 @@ paths:
 ######################## PLAYER-POSITION-TENDENCIES END ########################
 
 ######################## TRAINING START ########################
-  /training/{playerId}:
+  /training/{teamId}:
     get:
-      summary: Get historical training of a player
-      operationId: getHistoricalTraining
+      summary: Get historical trainings of the Team
+      operationId: getTeamHistoricalPlayerTrainings
       tags:
         - training
       parameters:
-        - $ref: "#/components/parameters/PlayerIdPathParameter"
+        - $ref: "#/components/parameters/TeamIdPathParameter"
       responses:
         "200":
-          description: Training historical returned
+          description: Historical trainings of team returned
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PlayerHistoricalTrainingResponse"
-        default:
-          $ref: "#/components/responses/DefaultErrorResponse"
+                $ref: "#/components/schemas/TeamHistoricalTrainingResponse"
+
+  /training/{teamId}/scheduled:
+    get:
+      summary: Get active trainings of the Team
+      operationId: getScheduledPlayerTrainings
+      tags:
+        - training
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      responses:
+        "200":
+          description: Historical trainings of team returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlayerScheduledTrainingResponse"
+
+  /training/{playerId}:
+#    get:
+#      summary: Get historical training of a player
+#      operationId: getHistoricalTraining
+#      tags:
+#        - training
+#      parameters:
+#        - $ref: "#/components/parameters/PlayerIdPathParameter"
+#      responses:
+#        "200":
+#          description: Training historical returned
+#          content:
+#            application/json:
+#              schema:
+#                $ref: "#/components/schemas/PlayerHistoricalTrainingResponse"
+#        default:
+#          $ref: "#/components/responses/DefaultErrorResponse"
     post:
       summary: Schedule training of a player
       operationId: schedulePlayerTraining
@@ -902,6 +936,58 @@ components:
 
     ######################## TRAINING SCHEMAS START ########################
 
+    PlayerScheduledTrainingResponse:
+      type: object
+      properties:
+        player:
+          $ref: "#/components/schemas/PlayerResponse"
+        skills:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerSkill"
+
+    TeamHistoricalTrainingResponse:
+      type: object
+      properties:
+#        playerId:
+#          type: string
+#          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        trainings:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: "#/components/schemas/PlayerTrainingResponse"
+
+    PlayerTrainingResponse:
+      type: object
+      properties:
+        player:
+          $ref: "#/components/schemas/PlayerResponse"
+        playerId:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        skill:
+          $ref: "#/components/schemas/PlayerSkill"
+        points:
+          type: integer
+          format: int32
+        actualPoints:
+          type: integer
+          format: int32
+        potentialPoints:
+          type: integer
+          format: int32
+        pointsBeforeTraining:
+          type: integer
+          format: int32
+        pointsAfterTraining:
+          type: integer
+          format: int32
+        currentDay:
+          type: integer
+          format: int32
+
     SchedulePlayerTrainingRequest:
       type: object
       properties:
@@ -1168,44 +1254,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/PlayerPotentialRiseResponse"
-
-    PlayerHistoricalTrainingResponse:
-      type: object
-      properties:
-        playerId:
-          type: string
-          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
-        trainings:
-          type: array
-          items:
-            $ref: "#/components/schemas/PlayerTrainingResponse"
-
-    PlayerTrainingResponse:
-      type: object
-      properties:
-        playerId:
-          type: string
-          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
-        skill:
-          $ref: "#/components/schemas/PlayerSkill"
-        points:
-          type: integer
-          format: int32
-        actualPoints:
-          type: integer
-          format: int32
-        potentialPoints:
-          type: integer
-          format: int32
-        pointsBeforeTraining:
-          type: integer
-          format: int32
-        pointsAfterTraining:
-          type: integer
-          format: int32
-        currentDay:
-          type: integer
-          format: int32
 
     PlayerPotentialRiseResponse:
       type: object

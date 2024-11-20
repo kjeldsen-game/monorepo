@@ -43,6 +43,7 @@ public class ExecutePlayerTrainingUseCase {
             .occurredAt(InstantProvider.now())
             .scheduledTrainingId(eventId)
             .playerId(player.getId())
+            .teamId(player.getTeamId())
             .skill(playerSkill)
             .currentDay(currentDay)
             .pointsBeforeTraining(player.getActualSkills().get(playerSkill).getActual())

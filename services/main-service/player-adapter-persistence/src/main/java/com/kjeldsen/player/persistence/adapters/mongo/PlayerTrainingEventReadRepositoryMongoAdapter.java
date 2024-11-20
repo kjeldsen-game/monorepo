@@ -1,8 +1,8 @@
 package com.kjeldsen.player.persistence.adapters.mongo;
 
 import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
-import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingEventReadRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerTrainingEventMongoRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +32,10 @@ public class PlayerTrainingEventReadRepositoryMongoAdapter implements PlayerTrai
             .findLatestByPlayerTrainingScheduledEventId(playerTrainingEventId, pageRequest);
 
         return page.hasContent() ? Optional.of(page.getContent().get(0)) : Optional.empty();
+    }
+
+    @Override
+    public List<PlayerTrainingEvent> findAllSuccessfulByPlayerIdAndTeamId(Player.PlayerId playerId, Team.TeamId teamId) {
+        return playerTrainingEventMongoRepository.findAllSuccessfulByPlayerId(playerId, teamId);
     }
 }

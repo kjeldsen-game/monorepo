@@ -2,6 +2,7 @@ package com.kjeldsen.player.persistence.mongo.repositories;
 
 import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
 import org.springframework.data.domain.Page;
@@ -21,5 +22,8 @@ public interface PlayerTrainingEventMongoRepository extends MongoRepository<Play
     @Query(value = "{ 'scheduledTrainingId': ?0 }", sort = "{ 'occurredAt': -1 }")
     Page<PlayerTrainingEvent> findLatestByPlayerTrainingScheduledEventId(String playerTrainingScheduledEventId,
                                                                          PageRequest pageRequest);
+
+    @Query("{ 'playerId': ?0,'teamId':  ?1,  $expr: { $ne: ['$pointsBeforeTraining', '$pointsAfterTraining'] } }")
+    List<PlayerTrainingEvent> findAllSuccessfulByPlayerId(Player.PlayerId playerId, Team.TeamId teamId);
 
 }
