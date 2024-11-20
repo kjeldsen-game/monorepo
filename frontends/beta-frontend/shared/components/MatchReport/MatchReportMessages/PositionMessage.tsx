@@ -6,9 +6,6 @@ import {
 } from '@/shared/models/MatchReport';
 import { getRangeLabel, MessageProps } from '../MatchReportItemMessage';
 import QualityText from './QualityText';
-import CustomTooltip from '../CustomTooltip';
-import { Box, Grid } from '@mui/material';
-import TooltipDataCol from '../TooltipDataCol';
 import ActionText from './ActionText';
 import SingleColTooltip from '../Tooltips/SingleColTooltip';
 import DoubleColTooltip from '../Tooltips/DoubleColTooltip';

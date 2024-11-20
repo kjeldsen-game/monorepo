@@ -4,9 +4,9 @@ import useSWR, { mutate } from 'swr';
 const API = '/player';
 
 const fetcher = (playerId: string | null | string[], token: string | null) => {
-  if (token === null || playerId === null) return undefined;
+  if (token === null) return undefined;
   return connectorAPI<any>(
-    `${API}/${playerId}`,
+    playerId ? `${API}/${playerId}` : API,
     'GET',
     undefined,
     undefined,
@@ -18,6 +18,7 @@ const usePlayerRepository = (
   playerId?: string | undefined | string[],
   token?: string,
 ) => {
+  console.log('usePlayerRepository');
   const { data, mutate, error, isLoading } = useSWR<any>(
     token ? `${API}/${playerId}` : null,
     () => fetcher(playerId ? playerId : null, token ? token : null),

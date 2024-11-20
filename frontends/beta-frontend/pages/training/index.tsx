@@ -7,9 +7,26 @@ import { players } from '@/data/SamplePlayerTraining';
 import { sampleTrainingColumn } from '@/data/sampleTrainingColumn';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useSession } from 'next-auth/react';
+import { useTrainingRepository } from '../api/training/useTrainingRepository';
+import TrainingView from '@/shared/components/Training/TrainingView';
+import { usePlayerRepository } from '../api/player/usePlayerRepository';
+import { useTeamRepository } from '../api/team/useTeamRepository';
+import { useScheduledTrainingRepository } from '../api/training/useScheduledTrainingRepository';
 
 const Training: NextPage = () => {
   const { data: userData } = useSession({ required: true });
+
+  const { data: trainings, isLoading } = useTrainingRepository(
+    userData?.user.teamId,
+    userData?.accessToken,
+  );
+
+  const { data: scheduledTrainings } = useScheduledTrainingRepository(
+    userData?.user.teamId,
+    userData?.accessToken,
+  );
+
+  console.log(scheduledTrainings);
 
   return (
     <>
@@ -19,36 +36,11 @@ const Training: NextPage = () => {
       </Head>
       <>
         <Box>
-          <Collapsible open title="Yesterday's Training Report">
-            <Box>
-              <Grid rows={players} columns={sampleTrainingColumn} />
-            </Box>
-          </Collapsible>
-          <Collapsible title="Yesterday -1 Training Report">
-            <Box>
-              <Grid rows={players} columns={sampleTrainingColumn} />
-            </Box>
-          </Collapsible>
-          <Collapsible title="Yesterday -2 Training Report">
-            <Box>
-              <Grid rows={players} columns={sampleTrainingColumn} />
-            </Box>
-          </Collapsible>
-          <Collapsible title="Yesterday -3 Training Report">
-            <Box>
-              <Grid rows={players} columns={sampleTrainingColumn} />
-            </Box>
-          </Collapsible>
-          <Collapsible title="Yesterday -4 Training Report">
-            <Box>
-              <Grid rows={players} columns={sampleTrainingColumn} />
-            </Box>
-          </Collapsible>
-          <Collapsible title="Yesterday -5 Training Report">
-            <Box>
-              <Grid rows={players} columns={sampleTrainingColumn} />
-            </Box>
-          </Collapsible>
+          <TrainingView
+            isLoading={isLoading}
+            trainings={trainings}
+            players={scheduledTrainings}
+          />
         </Box>
       </>
     </>

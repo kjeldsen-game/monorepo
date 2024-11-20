@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react'
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import { css } from '@emotion/react'
-import Typography from '@mui/material/Typography'
+import React, { useEffect, useRef, useState } from 'react';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { css } from '@emotion/react';
+import Typography from '@mui/material/Typography';
+import MarketButton from './Market/MarketButton';
 
 interface IProps {
-  open?: boolean
-  title: string
-  children: React.ReactNode
+  open?: boolean;
+  title: string;
+  children: React.ReactNode;
 }
 
 const card = css`
@@ -15,31 +16,31 @@ const card = css`
   border: 1px solid #e0e0e0;
   margin-bottom: 1rem;
   padding: 1rem;
-`
+`;
 
 const cardHeader = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`
+`;
 const marginRight = css`
   margin-right: 1rem;
-`
+`;
 
 const content = css`
   transition: height 2s ease-in-out;
-`
+`;
 
 const cardOpen = css`
   min-width: 900px;
-`
+`;
 
 const Collapsible: React.FC<IProps> = ({ open, children, title }) => {
-  const [isOpen, setIsOpen] = useState(open)
+  const [isOpen, setIsOpen] = useState(open);
 
   const handleFilterOpening = () => {
-    setIsOpen((prev) => !prev)
-  }
+    setIsOpen((prev) => !prev);
+  };
 
   return (
     <>
@@ -48,9 +49,9 @@ const Collapsible: React.FC<IProps> = ({ open, children, title }) => {
           <Typography variant="h6" css={marginRight}>
             {title}
           </Typography>
-          <button type="button" onClick={handleFilterOpening}>
+          <MarketButton onClick={handleFilterOpening}>
             {isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </button>
+          </MarketButton>
         </div>
 
         <div css={content}>
@@ -58,7 +59,7 @@ const Collapsible: React.FC<IProps> = ({ open, children, title }) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Collapsible
+export default Collapsible;
