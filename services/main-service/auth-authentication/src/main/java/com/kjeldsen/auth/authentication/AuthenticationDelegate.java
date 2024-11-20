@@ -1,6 +1,7 @@
 package com.kjeldsen.auth.authentication;
 
 import com.kjeldsen.auth.AuthService;
+import com.kjeldsen.auth.Role;
 import com.kjeldsen.auth.User;
 import com.kjeldsen.auth.UserRepository;
 import com.kjeldsen.auth.authentication.api.AuthApiDelegate;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -51,6 +53,7 @@ public class AuthenticationDelegate implements AuthApiDelegate {
         user.setEmail(request.getEmail());
         String encodedPassword = passwordEncoder.encode(request.getPassword());
         user.setPassword(encodedPassword);
+        user.setRoles(Set.of(Role.USER));
 
         String teamName = request.getTeamName();
         FindTeamsQuery query = FindTeamsQuery.builder()
@@ -95,7 +98,7 @@ public class AuthenticationDelegate implements AuthApiDelegate {
 
         return ResponseEntity.ok(
             new TokenResponse()
-                .accessToken(jwtTokenProvider.generateToken(userOpt.get().getId())));
+                .accessToken(jwtTokenProvider.generateToken(userOpt.get().getId(), userOpt.get().getRoles())));
     }
 
 }

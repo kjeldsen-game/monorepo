@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -21,6 +22,9 @@ import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebSecurity
@@ -36,6 +40,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(requests -> requests
                 .requestMatchers("/v1/auth/**", "/swagger-ui/**", "/api-docs/**")
                 .permitAll()
+                .requestMatchers("/v1/simulator/**")
+                .hasRole("ADMIN")
                 .anyRequest()
                 .authenticated())
             .oauth2ResourceServer(oauth2 -> oauth2
@@ -61,9 +67,32 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
-        // Customize how JWT claims are converted to authorities here, if necessary
-        return new JwtAuthenticationConverter();
+        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+        converter.setJwtGrantedAuthoritiesConverter(jwt -> {
+            List<String> roles = jwt.getClaimAsStringList("roles");
+            // Convert List<String> to Collection<GrantedAuthority>
+            return roles != null ?
+                roles.stream()
+                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                    .collect(Collectors.toSet()) :
+                Set.of();
+        });
+        return converter;
     }
+
+//    @Bean
+//    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+////        // Customize how JWT claims are converted to authorities here, if necessary
+////        return new JwtAuthenticationConverter();
+//        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+//        converter.setJwtGrantedAuthoritiesConverter(jwt -> {
+//            List<String> roles = jwt.getClaimAsStringList("roles");
+//            return roles != null ? roles.stream()
+//                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+//                .toList() : List.of();
+//        });
+//        return converter;
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

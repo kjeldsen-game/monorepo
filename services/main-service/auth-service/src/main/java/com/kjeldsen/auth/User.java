@@ -14,12 +14,16 @@ public class User {
     private String email;
     private String password;
     private String teamId;
+    private Set<Role> roles;
+
 
     // TODO roles - for now everyone is a `user`
 
-    public List<String> getRoles() {
-        return List.of(Role.USER.toString());
-    }
+//    public List<String> getRoles() {
+//        return roles.stream()
+//            .map(Role::name)
+//            .toList();
+//    }
 
     public Set<String> getPermissions() {
         return Role.getPermissions(Role.USER);
