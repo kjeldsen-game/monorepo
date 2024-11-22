@@ -18,7 +18,6 @@ const usePlayerRepository = (
   playerId?: string | undefined | string[],
   token?: string,
 ) => {
-  console.log('usePlayerRepository');
   const { data, mutate, error, isLoading } = useSWR<any>(
     token ? `${API}/${playerId}` : null,
     () => fetcher(playerId ? playerId : null, token ? token : null),

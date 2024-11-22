@@ -30,8 +30,6 @@ const useAllPlayerMatchesRepository = (
     fetcher(page, size, teamId ? teamId : null, token ? token : null),
   );
 
-  console.log(allMatches);
-
   const pastMatches = allMatches?.filter(
     (match) => new Date(match.dateTime).getTime() < new Date().getTime(),
   );

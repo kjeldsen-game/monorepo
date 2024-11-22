@@ -35,8 +35,6 @@ const LeagueGrid: React.FC<LeagueGridProps> = () => {
     userData?.accessToken,
   );
 
-  console.log(allTeams);
-
   const handleChallengeButtonClick = (id: string, date: Moment) => {
     const ownTeamId = userData?.user.teamId;
     if (!ownTeamId) {

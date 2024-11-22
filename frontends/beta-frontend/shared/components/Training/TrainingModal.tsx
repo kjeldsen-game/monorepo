@@ -43,7 +43,6 @@ const TrainingModal: React.FC<TrainingModalProps> = ({
   };
 
   const handleButtonClick = async () => {
-    console.log('Sending Request');
     scheduleTraining(skillToTrain);
     handleCloseModal();
   };
