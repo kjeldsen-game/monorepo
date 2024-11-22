@@ -4,9 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>auth-authentication</module>
-        <module>auth-authorization</module>
-        <module>auth-service</module>
+        <module>auth-adapter-authentication</module>
+        <module>auth-adapter-authorization</module>
         <module>domain</module>
         <module>infrastructure</module>
         <module>player-adapter-listener</module>
@@ -28,6 +27,9 @@
         <module>market-adapter-rest</module>
         <module>market-adapter-publisher</module>
         <module>market-adapter-quartz</module>
+        <module>auth-domain</module>
+        <module>auth-application</module>
+        <module>auth-adapter-persistence</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -301,17 +303,27 @@
             <!-- Modules -->
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>auth-authentication</artifactId>
+                <artifactId>auth-domain</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>auth-authorization</artifactId>
+                <artifactId>auth-application</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>auth-service</artifactId>
+                <artifactId>auth-adapter-persistence</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>auth-adapter-authentication</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>auth-adapter-authorization</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

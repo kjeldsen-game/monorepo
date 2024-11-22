@@ -3,6 +3,7 @@ package com.kjeldsen.player.rest.delegate;
 import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
+import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.application.usecases.player.PlayerSellUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPosition;
@@ -20,9 +21,11 @@ import com.kjeldsen.player.rest.model.PlayerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
@@ -32,6 +35,7 @@ public class PlayersDelegate implements PlayerApiDelegate {
     private final GeneratePlayersUseCase generatePlayersUseCase;
     private final PlayerReadRepository playerReadRepository;
     private final PlayerSellUseCase playerSellUseCase;
+    private final GetTeamUseCase getTeamUseCase;
     private final AuctionCreationEventPublisher auctionCreationEventPublisher;
 
     @Override
@@ -66,6 +70,13 @@ public class PlayersDelegate implements PlayerApiDelegate {
 
     @Override
     public ResponseEntity<PlayerResponse> getPlayerById(String playerId) {
+        Optional<Player> optionalPlayer = playerReadRepository.findOneById(Player.PlayerId.of(playerId));
+        if (optionalPlayer.isPresent()) {
+            if (optionalPlayer.get().getTeamId() != getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId()) {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+        }
+
         Player player = playerReadRepository.findOneById(Player.PlayerId.of(playerId))
             .orElseThrow();
         PlayerResponse response = PlayerMapper.INSTANCE.playerResponseMap(player);
@@ -73,6 +84,13 @@ public class PlayersDelegate implements PlayerApiDelegate {
     }
 
     public ResponseEntity<Void> sellPlayer(String playerId) {
+        Optional<Player> optionalPlayer = playerReadRepository.findOneById(Player.PlayerId.of(playerId));
+        if (optionalPlayer.isPresent()) {
+            if (optionalPlayer.get().getTeamId() != getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId()) {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+        }
+
         auctionCreationEventPublisher.publishAuctionCreationEvent(
             playerSellUseCase.sell(Player.PlayerId.of(playerId)));
         return ResponseEntity.ok().build();

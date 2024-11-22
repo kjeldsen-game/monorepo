@@ -5,10 +5,10 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 @EnableMongoRepositories(basePackages = {
-    "com.kjeldsen.auth",
     "com.kjeldsen.match",
     "com.kjeldsen.player.persistence.mongo.repositories",
-    "com.kjeldsen.market.persistence.mongo.repositories"
+    "com.kjeldsen.market.persistence.mongo.repositories",
+    "com.kjeldsen.auth.persistence.mongo.repositories"
 })
 public class RepositoriesConfig {
 }

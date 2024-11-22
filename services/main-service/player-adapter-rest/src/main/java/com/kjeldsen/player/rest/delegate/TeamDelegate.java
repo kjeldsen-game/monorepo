@@ -49,20 +49,13 @@ public class TeamDelegate implements TeamApiDelegate {
     /***************************** ECONOMY REST API *****************************/
     @Override
     public ResponseEntity<Void> updatePricing(String teamId, UpdatePricingRequest updatePricingRequest) {
-        String userId = SecurityUtils.getCurrentUserId();
-        Team team = getTeamUseCase.get(userId);
-
-        System.out.println(teamId);
-        System.out.println(team.getId().value());
-
-        if (!Objects.equals(teamId, team.getId().value())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        // Access denied as the path teamId is different that the teamId from Token
+        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
         updatePricingRequest.getPrices().forEach(price -> {
-            System.out.println(price.getType());
-            System.out.println(price.getValue());
-            updateTeamPricingUseCase.update(team.getId(), price.getValue(),
+            updateTeamPricingUseCase.update(Team.TeamId.of(teamId), price.getValue(),
                 Team.Economy.PricingType.valueOf(price.getType().name()));
         });
         return ResponseEntity.ok().build();
@@ -70,22 +63,25 @@ public class TeamDelegate implements TeamApiDelegate {
 
     @Override
     public ResponseEntity<Void> signBillboard(String teamId, SignBillboardRequest signBillboardRequest) {
-        String userId = SecurityUtils.getCurrentUserId();
-        Team team = getTeamUseCase.get(userId);
+        // Access denied as the path teamId is different that the teamId from Token
+        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
 
         Team.Economy.BillboardIncomeType mode = Team.Economy.BillboardIncomeType.valueOf(
             signBillboardRequest.getMode().name());
-        System.out.println(mode);
-        signBillboardIncomeUseCase.sign(team.getId(), mode);
+        signBillboardIncomeUseCase.sign(TeamId.of(teamId), mode);
         return ResponseEntity.ok().build();
     }
 
     @Override
     public ResponseEntity<Void> signSponsor(String teamId, SignSponsorRequest signSponsorRequest) {
-        String userId = SecurityUtils.getCurrentUserId();
-        Team team = getTeamUseCase.get(userId);
+        // Access denied as the path teamId is different that the teamId from Token
+        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
 
-        signSponsorIncomeUseCase.sign(team.getId(),
+        signSponsorIncomeUseCase.sign(TeamId.of(teamId),
             Team.Economy.IncomePeriodicity.valueOf(signSponsorRequest.getPeriodicity().name()),
             Team.Economy.IncomeMode.valueOf(signSponsorRequest.getMode().name()));
         return ResponseEntity.ok().build();
@@ -93,17 +89,16 @@ public class TeamDelegate implements TeamApiDelegate {
 
     @Override
     public ResponseEntity<EconomyResponse> getTeamEconomy(String teamId) {
-        String userId = SecurityUtils.getCurrentUserId();
-        Team team = getTeamUseCase.get(userId);
-
-        if (!Objects.equals(teamId, team.getId().value())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        // Access denied as the path teamId is different that the teamId from Token
+        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+        Team team = teamReadRepository.findById(TeamId.of(teamId)).orElse(null);
 
         Map<String, GetTransactionsUseCaseAbstract.TransactionSummary> transactions =
-            getTeamTransactionsUseCase.getTransactions(team.getId().value());
+            getTeamTransactionsUseCase.getTransactions(teamId);
         List<GetPlayerWagesTransactionsUseCase.PlayerWageSummary> playerWageSummaryList =
-            getPlayerWagesTransactionsUseCase.getPlayerWagesTransactions(team.getId().value());
+            getPlayerWagesTransactionsUseCase.getPlayerWagesTransactions(teamId);
 
         List<Transaction> responseTransactions = transactions.entrySet().stream()
             .map(EconomyMapper.INSTANCE::mapToTransaction)
@@ -167,6 +162,11 @@ public class TeamDelegate implements TeamApiDelegate {
     @Transactional
     public ResponseEntity<TeamResponse> updateTeamById(String teamId,
         EditTeamRequest editTeamRequest) {
+        // Access denied as the path teamId is different that the teamId from Token
+        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
         List<EditPlayerRequest> playerUpdates = editTeamRequest.getPlayers();
 
         List<EditPlayerRequest> activePlayers = playerUpdates.stream()

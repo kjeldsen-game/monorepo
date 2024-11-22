@@ -7,6 +7,8 @@ import java.util.Optional;
 
 public interface TeamReadRepository {
 
+    Optional<Team> findByTeamName(String teamName);
+
     Optional<Team> findOneById(TeamId id);
 
     Optional<Team> findByUserId(String id);

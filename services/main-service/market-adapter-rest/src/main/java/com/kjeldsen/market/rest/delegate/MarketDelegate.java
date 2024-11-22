@@ -70,7 +70,6 @@ public class MarketDelegate implements MarketApiDelegate {
     public ResponseEntity<List<MarketAuctionResponse>> getAllAuctions(Integer size, Integer page,
         PlayerPosition position, String skills, String potentialSkills, Integer minAge, Integer maxAge, Double minBid, Double maxBid,
         String playerId) {
-        log.info("Get all auctions");
         String currentUserId = SecurityUtils.getCurrentUserId();
 
         Team team = teamReadRepository.findByUserId(currentUserId).orElseThrow(
