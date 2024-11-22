@@ -19,14 +19,7 @@ const PlayerAuctionCard = ({ refreshTrigger }: PlayerAuctionCardProps) => {
     data?.accessToken,
     `playerId=${useRouter().query.id}`,
   );
-
-  console.log(auction);
-
   const [open, setOpen] = useState<boolean>(false);
-
-  // useEffect(() => {
-  //   refetch();
-  // }, [refreshTrigger]);
 
   const handleOpenModal = (state: boolean) => {
     setOpen(state);

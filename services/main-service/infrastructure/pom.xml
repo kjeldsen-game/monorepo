@@ -12,15 +12,15 @@
         <!-- Modules -->
         <dependency>
             <groupId>com.kjeldsen</groupId>
-            <artifactId>auth-authentication</artifactId>
+            <artifactId>auth-adapter-persistence</artifactId>
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
-            <artifactId>auth-authorization</artifactId>
+            <artifactId>auth-adapter-authentication</artifactId>
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
-            <artifactId>auth-service</artifactId>
+            <artifactId>auth-adapter-authorization</artifactId>
         </dependency>
         <!-- Match modules -->
         <dependency>

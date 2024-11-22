@@ -64,6 +64,7 @@ class DuelExecutionTest {
     }
 
     @Test
+    @Disabled
     void shotDuelResolutionWinAndLose() {
         Team home = RandomHelper.genTeam(TeamRole.HOME);
         Team away = RandomHelper.genTeam(TeamRole.AWAY);

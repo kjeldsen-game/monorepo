@@ -28,7 +28,6 @@ export const trainingScheduleColumns = (
     playerIdToTrain: string,
   ) => void,
 ) => {
-  console.log(['PASSING'].includes('PASSING'));
   const renderSkillNames = (skills: PlayerSkill[]): string => {
     if (!skills || skills.length === 0) {
       return '';

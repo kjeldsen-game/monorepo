@@ -3,6 +3,7 @@ package com.kjeldsen.player.rest.delegate;
 import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.player.application.usecases.GetHistoricalTrainingUseCase;
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
+import com.kjeldsen.player.application.usecases.trainings.GetActiveScheduledTrainingsUseCase;
 import com.kjeldsen.player.application.usecases.trainings.GetHistoricalTeamPlayerTrainingUseCase;
 import com.kjeldsen.player.application.usecases.trainings.SchedulePlayerTrainingUseCase;
 import com.kjeldsen.player.domain.Player;
@@ -36,9 +37,18 @@ public class TrainingDelegate implements TrainingApiDelegate {
 
     private final SchedulePlayerTrainingUseCase schedulePlayerTrainingUseCase;
     private final GetHistoricalTeamPlayerTrainingUseCase getHistoricalTeamPlayerTrainingUseCase;
+    private final GetActiveScheduledTrainingsUseCase getActiveScheduledTrainingsUseCase;
 
     @Override
     public ResponseEntity<Void> schedulePlayerTraining(String playerId, SchedulePlayerTrainingRequest schedulePlayerTrainingRequest) {
+        // Access denied as the player is not in your Team
+        Optional<Player> optionalPlayer = playerReadRepository.findOneById(Player.PlayerId.of(playerId));
+        if (optionalPlayer.isPresent()) {
+            if (optionalPlayer.get().getTeamId() != getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId()) {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+        }
+
 
         com.kjeldsen.player.domain.PlayerSkill skill = PlayerMapper.INSTANCE.map(schedulePlayerTrainingRequest.getSkill().getValue());
         schedulePlayerTrainingUseCase.schedule(Player.PlayerId.of(playerId), skill);
@@ -47,22 +57,17 @@ public class TrainingDelegate implements TrainingApiDelegate {
 
     @Override
     public ResponseEntity<List<PlayerScheduledTrainingResponse>> getScheduledPlayerTrainings(String teamId) {
+        // Access denied as the path teamId is different that the teamId from Token
         if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        // Move this to the UseCase
         List<PlayerScheduledTrainingResponse> response = new ArrayList<>();
-        List<Player> players = playerReadRepository.findByTeamId(Team.TeamId.of(teamId));
-        players.forEach(player -> {
-            List<PlayerTrainingScheduledEvent> activeTrainings = playerTrainingScheduledEventReadRepository.findAllActiveScheduledTrainings()
-                .stream().filter(event -> event.getPlayerId().equals(player.getId()))
-                .sorted(Comparator.comparing(PlayerTrainingScheduledEvent::getOccurredAt))
-                .toList();
-
+        List<GetActiveScheduledTrainingsUseCase.PlayerScheduledTraining> playerScheduled =
+            getActiveScheduledTrainingsUseCase.get(Team.TeamId.of(teamId));
+        playerScheduled.forEach(e -> {
             PlayerScheduledTrainingResponse scheduledTrainingResponse = new PlayerScheduledTrainingResponse()
-                .player(PlayerMapper.INSTANCE.playerResponseMap(player))
-                .skills(activeTrainings.stream()
-                    .map(PlayerTrainingScheduledEvent::getSkill)
+                .player(PlayerMapper.INSTANCE.playerResponseMap(e.getPlayer()))
+                .skills(e.getSkills().stream()
                     .map(skillDomain -> PlayerMapper.INSTANCE.playerSkillMap(skillDomain.name()))
                     .toList());
 
@@ -73,6 +78,7 @@ public class TrainingDelegate implements TrainingApiDelegate {
 
     @Override
     public ResponseEntity<TeamHistoricalTrainingResponse> getTeamHistoricalPlayerTrainings(String teamId) {
+        // Access denied as the path teamId is different that the teamId from Token
         if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }

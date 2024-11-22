@@ -11,14 +11,21 @@ collections.forEach(collection => {
 db.User.insertMany([
     {
         "_id": ObjectId("66cd9fd57a0b1808f7ba3f6d"),
-        "email": "exampleUser1",
+        "email": "admin",
         "password": "$2a$12$4yy7GzV2tQ0XqE..lotXnuKTzR1uM05fvKd3Ez6i9DgJrmcU9W7F2", // password
+        "roles" : [
+            "USER",
+            "ADMIN"
+        ],
         "_class": "com.kjeldsen.auth.User"
     },
     {
         "_id": ObjectId("66cd9fd57a0b1808f7ba3f6e"),
         "email": "exampleUser2",
         "password": "$2a$12$4yy7GzV2tQ0XqE..lotXnuKTzR1uM05fvKd3Ez6i9DgJrmcU9W7F2", // password
+        "roles" : [
+            "USER",
+        ],
         "_class": "com.kjeldsen.auth.User"
     }
 ]);

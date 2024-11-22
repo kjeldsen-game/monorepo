@@ -25,7 +25,6 @@ const useAuctionRepository = (
   );
 
   const refetch = () => {
-    console.log('Refetching the auctionRepository fetch!');
     mutate();
   };
 

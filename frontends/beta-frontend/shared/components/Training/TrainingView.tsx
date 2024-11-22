@@ -26,7 +26,6 @@ const TrainingView: React.FC<TrainingViewProps> = ({
     skillUnderTraining: PlayerSkill | undefined,
     playerIdToTrain: string,
   ) => {
-    console.log(playerIdToTrain);
     setSkillUnderTraining(skillUnderTraining);
     setSkillToTraing(skillToTrain);
     setOpen(true);

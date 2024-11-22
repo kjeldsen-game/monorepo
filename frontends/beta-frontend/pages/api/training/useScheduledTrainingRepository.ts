@@ -33,7 +33,7 @@ const useScheduledTrainingRepository = (
       skill: skill,
     };
     return connectorAPI<any>(
-      `/training/${playerId}`,
+      `${API}${playerId}`,
       'POST',
       newData,
       'include',
