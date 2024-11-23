@@ -4,16 +4,15 @@ on:
   pull_request:
     paths:
       - "frontends/beta-frontend/**"
-  #push:
-  #  tags:
-  #    - 'v*.*.*'
-  #  branches:
-  #    - main
-  #  paths:
-  #    - "frontends/beta-frontend/**"
+  push:
+    tags:
+      - "v*.*.*"
+    branches:
+      - main
+    paths:
+      - "frontends/beta-frontend/**"
 
 jobs:
-
   merge-request-job:
     uses: ./.github/workflows/default_npm_service.yml
     if: github.event_name == 'pull_request'
@@ -28,7 +27,7 @@ jobs:
     secrets: inherit
     with:
       FE_NAME: "beta-frontend"
-       
+
   tag-job:
     uses: ./.github/workflows/default_npm_service.yml
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
