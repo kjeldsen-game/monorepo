@@ -43,9 +43,7 @@ public class AuthenticationDelegate implements AuthApiDelegate {
 
     @Override
     public ResponseEntity<TokenResponse> generateToken(TokenRequest tokenRequest) {
-
         String token = generateTokenUseCase.get(tokenRequest.getEmail(), tokenRequest.getPassword());
-
         return ResponseEntity.ok(new TokenResponse().accessToken(token));
     }
 

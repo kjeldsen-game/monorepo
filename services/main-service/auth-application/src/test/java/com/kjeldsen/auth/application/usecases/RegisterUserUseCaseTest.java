@@ -80,6 +80,6 @@ class RegisterUserUseCaseTest {
             return true;
         }));
 
-        verify(createTeamUseCase, times(1)).create(eq("team"), any(),  any());
+        verify(createTeamUseCase, times(1)).create(eq("team"), any(), any());
     }
 }
