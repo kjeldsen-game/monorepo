@@ -17,9 +17,8 @@ public class GenerateTokenUseCase {
 
     public String get(String email, String password) {
         com.kjeldsen.auth.domain.User user = getUserUseCase.getUserByEmail(email);
-
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("invalid password");
+            throw new RuntimeException("Invalid password");
         }
         return jwtTokenProvider.generateToken(user.getId(), user.getRoles());
     }
