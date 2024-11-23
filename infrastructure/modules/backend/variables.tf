@@ -44,6 +44,11 @@ variable "container_internal_port" {
   type        = number
 }
 
+variable "container_name" {
+  description = "Name of the container"
+  type        = string
+}
+
 variable "environment_vars" {
   description = "Environment variables for the application"
   type        = map(string)

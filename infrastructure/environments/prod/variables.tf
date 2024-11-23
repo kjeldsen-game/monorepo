@@ -46,6 +46,11 @@ variable "backend_docker_image" {
   type        = string
 }
 
+variable "frontend_docker_image" {
+  description = "Docker image for the frontend service"
+  type        = string
+}
+
 variable "container_external_port" {
   description = "Port the container listens on"
   type        = number

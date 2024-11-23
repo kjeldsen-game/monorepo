@@ -48,6 +48,7 @@ module "backend" {
   docker_image            = var.backend_docker_image
   container_external_port = var.container_external_port
   container_internal_port = var.container_internal_port
+  container_name          = "backend"
   ssh_password            = var.ssh_password
 
   environment_vars = {
@@ -70,5 +71,31 @@ module "backend" {
   }
 
   domain_name     = "api.kjeldsengame.com"
-  route53_zone_id = "Z01914961LF1F7AC5ES4"
+  route53_zone_id = "Z03138513K6V3S28YCMV7"
+}
+
+module "frontend" {
+  source = "../../modules/backend"
+
+  project     = var.project_name
+  environment = var.environment
+  vpc_id      = module.networking.vpc_id
+  subnet_id   = module.networking.public_subnet_ids[0] # Using first public subnet
+
+  ecr_repository_url      = var.ecr_repository_url
+  docker_image            = var.frontend_docker_image
+  container_external_port = 80
+  container_internal_port = 3000
+  container_name          = "frontend"
+  ssh_password            = var.ssh_password
+
+  environment_vars = {
+    NEXTAUTH_SECRET         = "Gd86qxgWNPJRBY3x56YmsZuyT-lZAV6CXafqxDJ2nw8P9jQZfocwm3338xfUlY7si6tAk9C4WPvxhQT1uUDSWQ"
+    NEXT_AUTH_BACKEND_URL   = "http://backend:80/v1"
+    NEXT_PUBLIC_BACKEND_URL = "http://backend:80/v1"
+    NEXTAUTH_URL            = "http://frontend:3000"
+  }
+
+  domain_name     = "ui.kjeldsengame.com"
+  route53_zone_id = "Z03138513K6V3S28YCMV7"
 }

@@ -28,7 +28,7 @@ aws ecr get-login-password --region eu-west-1 | docker login --username AWS --pa
 # Run the container
 docker pull ${docker_image}
 docker run -d \
-  --name backend \
+  --name ${container_name} \
   --restart always \
   -p ${container_external_port}:${container_internal_port} \
   --env-file /home/ec2-user/.env \

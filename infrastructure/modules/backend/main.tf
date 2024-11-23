@@ -11,7 +11,7 @@ data "aws_ami" "amazon_linux_2" {
 
 # Security group for the EC2 instance
 resource "aws_security_group" "backend" {
-  name_prefix = "${var.project}-${var.environment}-backend-"
+  name_prefix = "${var.project}-${var.environment}-${var.container_name}-"
   vpc_id      = var.vpc_id
 
   # Allow SSH access
@@ -39,7 +39,7 @@ resource "aws_security_group" "backend" {
   }
 
   tags = {
-    Name        = "${var.project}-${var.environment}-backend"
+    Name        = "${var.project}-${var.environment}-${var.container_name}"
     Environment = var.environment
     Project     = var.project
   }
@@ -47,7 +47,7 @@ resource "aws_security_group" "backend" {
 
 # IAM role for EC2
 resource "aws_iam_role" "backend" {
-  name = "${var.project}-${var.environment}-backend"
+  name = "${var.project}-${var.environment}-${var.container_name}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -87,7 +87,7 @@ resource "aws_iam_role_policy" "ecr_policy" {
 
 # IAM instance profile
 resource "aws_iam_instance_profile" "backend" {
-  name = "${var.project}-${var.environment}-backend"
+  name = "${var.project}-${var.environment}-${var.container_name}"
   role = aws_iam_role.backend.name
 }
 
@@ -103,6 +103,7 @@ resource "aws_instance" "backend" {
   user_data = templatefile("${path.module}/user_data.sh", {
     ecr_repository_url      = var.ecr_repository_url
     docker_image            = var.docker_image
+    container_name          = var.container_name
     container_external_port = var.container_external_port
     container_internal_port = var.container_internal_port
     environment_vars        = var.environment_vars
@@ -110,7 +111,7 @@ resource "aws_instance" "backend" {
   })
 
   tags = {
-    Name        = "${var.project}-${var.environment}-backend"
+    Name        = "${var.project}-${var.environment}-${var.container_name}"
     Environment = var.environment
     Project     = var.project
   }
@@ -122,7 +123,7 @@ resource "aws_eip" "backend" {
   vpc      = true
 
   tags = {
-    Name        = "${var.project}-${var.environment}-backend-eip"
+    Name        = "${var.project}-${var.environment}-${var.container_name}-eip"
     Environment = var.environment
     Project     = var.project
   }
