@@ -9,24 +9,13 @@ import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@OpenAPIDefinition(
-    info = @Info(
-        title = "Main API",
-        version = "1"
-    ),
-    servers = {
+@OpenAPIDefinition(info = @Info(title = "Main API", version = "1"), servers = {
         @Server(url = "http://localhost:15001"),
         @Server(url = "https://api.kjeldsengame.com"),
-    },
-    security = {
+        @Server(url = "http://kjeldsengame.com:8080"),
+}, security = {
         @SecurityRequirement(name = "bearerAuth"),
-    }
-)
-@SecurityScheme(
-    name = "bearerAuth",
-    type = SecuritySchemeType.HTTP,
-    scheme = "bearer",
-    bearerFormat = "JWT"
-)
+})
+@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
 public class OpenAPIConfig {
 }
