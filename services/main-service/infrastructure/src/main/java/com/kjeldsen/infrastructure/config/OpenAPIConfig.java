@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition(info = @Info(title = "Main API", version = "1"), servers = {
         @Server(url = "http://localhost:15001"),
         @Server(url = "https://api.kjeldsengame.com"),
-        @Server(url = "www.kjeldsengame.com:8080"),
+        @Server(url = "http://kjeldsengame.com:8080"),
 }, security = {
         @SecurityRequirement(name = "bearerAuth"),
 })
