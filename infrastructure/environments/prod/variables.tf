@@ -1,27 +1,13 @@
-# This file defines what variables are needed and their types
-variable "aws_region" {
-  description = "AWS region to deploy resources"
-  type        = string
-}
-
-variable "project_name" {
+variable "project" {
   description = "Name of the project"
   type        = string
+  default     = "kjeldsen"
 }
 
 variable "environment" {
   description = "Environment name"
   type        = string
-}
-
-variable "vpc_cidr" {
-  description = "CIDR block for VPC"
-  type        = string
-}
-
-variable "docdb_instance_class" {
-  description = "Instance class for DocumentDB"
-  type        = string
+  default     = "prod"
 }
 
 variable "docdb_master_username" {
@@ -34,31 +20,6 @@ variable "docdb_master_password" {
   description = "Master password for DocumentDB"
   type        = string
   sensitive   = true
-}
-
-variable "ecr_repository_url" {
-  description = "ECR repository URL"
-  type        = string
-}
-
-variable "backend_docker_image" {
-  description = "Docker image for the backend service"
-  type        = string
-}
-
-variable "frontend_docker_image" {
-  description = "Docker image for the frontend service"
-  type        = string
-}
-
-variable "container_external_port" {
-  description = "Port the container listens on"
-  type        = number
-}
-
-variable "container_internal_port" {
-  description = "Port the container listens on"
-  type        = number
 }
 
 variable "ssh_password" {

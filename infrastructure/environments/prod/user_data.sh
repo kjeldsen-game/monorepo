@@ -23,13 +23,22 @@ ${key}=${value}
 EOF
 
 # Login to ECR
-aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ${ecr_repository_url}
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 040156513434.dkr.ecr.eu-west-1.amazonaws.com
 
 # Run the container
-docker pull ${docker_image}
+docker pull 040156513434.dkr.ecr.eu-west-1.amazonaws.com/main-service:latest
+docker pull 040156513434.dkr.ecr.eu-west-1.amazonaws.com/beta-frontend:latest
+
 docker run -d \
-  --name ${container_name} \
+  --name main-service \
   --restart always \
-  -p ${container_external_port}:${container_internal_port} \
+  -p 8080:8080 \
   --env-file /home/ec2-user/.env \
-  ${docker_image} 
+  040156513434.dkr.ecr.eu-west-1.amazonaws.com/main-service:latest
+
+docker run -d \
+  --name beta-frontend \
+  --restart always \
+  -p 80:3000 \
+  --env-file /home/ec2-user/.env \
+  040156513434.dkr.ecr.eu-west-1.amazonaws.com/beta-frontend:latest
