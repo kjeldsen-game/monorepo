@@ -67,7 +67,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
                   borderLeft: item.selected ? '16px solid #FF3F84' : 'inherit',
                   boxShadow: '0 2px white',
                 }}>
-                <Link
+                <a
                   href={item.to}
                   style={{
                     width: '100%',
@@ -78,7 +78,7 @@ export const Sidebar: FC<SidebarProps> = (props) => {
                     <ListItemIcon>{providedIcons[item.icon]}</ListItemIcon>
                     <ListItemText primary={item.name} />
                   </ListItemButton>
-                </Link>
+                </a>
                 {item.hasDivider ? <Divider /> : <></>}
               </ListItem>
             ))}
