@@ -308,6 +308,7 @@ resource "aws_instance" "ec2" {
       NEXT_AUTH_BACKEND_URL   = "http://main-service:8080/v1"
       NEXT_PUBLIC_BACKEND_URL = "http://main-service:8080/v1"
       NEXTAUTH_URL            = "http://beta-frontend:3000"
+      APP_ENV                 = "production"
     }
   })
 
