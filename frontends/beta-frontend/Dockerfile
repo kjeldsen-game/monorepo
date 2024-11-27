@@ -1,8 +1,6 @@
 # Stage 1: Build
 FROM node:20-bullseye-slim AS builder
 WORKDIR /app
-ARG APP_ENV
-ENV APP_ENV=${APP_ENV}
 COPY package*.json ./
 RUN npm ci
 COPY . .
@@ -14,7 +12,7 @@ FROM node:20-bullseye-slim
 WORKDIR /app
 COPY --from=builder /app ./
 EXPOSE 3000
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]
 
 # syntax=docker.io/docker/dockerfile:1
 

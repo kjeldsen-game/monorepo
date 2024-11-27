@@ -74,7 +74,7 @@ runs:
       if: steps.login_ecr.outcome == 'success'
       run: |
         cd ${{ inputs.PATH }}/${{ inputs.NAME }}
-        docker build --build-arg APP_ENV=production -t ${{ env.ECR_IMAGE_NAME }} .
+        docker build -t ${{ env.ECR_IMAGE_NAME }} .
         docker push ${{ env.ECR_IMAGE_NAME }}
       shell: bash
 
