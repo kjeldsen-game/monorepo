@@ -27,9 +27,11 @@ public class PlayerAgingUseCase {
         });
     }
 
-    private void playerAging(Player player){
+    public void playerAging(Player player){
         PlayerAge age = player.getAge();
+        log.info("before executed for age {} {} {}", age.getYears(), age.getMonths(), age.getDays());
         PlayerAge playerAge = PlayerAge.gettingOlder(age);
+        log.info("after executed for age {} {} {}", playerAge.getYears(), playerAge.getMonths(), playerAge.getDays());
         player.setAge(playerAge);
     }
 }

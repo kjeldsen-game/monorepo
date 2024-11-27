@@ -137,6 +137,23 @@ public class PlayerProvider {
         return allSkills.get(random);
     }
 
+    public static PlayerSkill randomSkillForSpecificPlayerPotentialRise(Optional<Player> player) {
+        Map<PlayerSkill, PlayerSkills> skills = player.get().getActualSkills();
+        // Filter skills that are not maxed out -> actual == 100
+        List<PlayerSkill> filteredSkills = skills.entrySet().stream()
+            .filter(entry -> entry.getValue().getActual() < 100)
+            .map(Map.Entry::getKey)
+            .toList();
+
+        // Player don't have any skill which have actual value under 100
+        if (filteredSkills.isEmpty()) {
+            return null;
+        }
+
+        int random = (int) (Math.random() * filteredSkills.size());
+        return filteredSkills.get(random);
+    }
+
     public static PlayerSkill randomSkillForSpecificPlayerDeclineUseCase(Optional<Player> player) {
         Map<PlayerSkill, PlayerSkills> skills = player.get().getActualSkills();
         // Filter skills that are over 30

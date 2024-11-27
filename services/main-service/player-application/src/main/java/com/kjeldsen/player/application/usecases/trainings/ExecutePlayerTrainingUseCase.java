@@ -2,7 +2,6 @@ package com.kjeldsen.player.application.usecases.trainings;
 
 import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerAge;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.generator.PointsGenerator;

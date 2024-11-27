@@ -9,10 +9,10 @@ import PlayerAuctionCard from '@/shared/components/Player/PlayerAuctionCard';
 import { useState } from 'react';
 import { usePlayerRepository } from '@/pages/api/player/usePlayerRepository';
 import { useSession } from 'next-auth/react';
+import { useAuctionRepository } from '@/pages/api/market/useAuctionRepository';
 
 const Player: NextPage = () => {
   const { data: userData } = useSession({ required: true });
-  const [refreshKey, setRefreshKey] = useState(true);
 
   let player = {} as PlayerStats;
 
@@ -24,6 +24,12 @@ const Player: NextPage = () => {
     userData?.accessToken,
   );
 
+  const { auctions: auction, refetch } = useAuctionRepository(
+    '',
+    userData?.accessToken,
+    `playerId=${useRouter().query.id}`,
+  );
+
   if (error) return <div>failed to load</div>;
   if (isLoading) return <CircularProgress></CircularProgress>;
   if (data) player = data;
@@ -31,14 +37,14 @@ const Player: NextPage = () => {
   const handleSellButtonClick = () => {
     sellPlayer();
     setTimeout(() => {
-      setRefreshKey((prev) => !prev);
+      refetch();
     }, 1000);
   };
 
   return (
     <>
       <Box>
-        <PlayerAuctionCard refreshTrigger={refreshKey} />
+        <PlayerAuctionCard auction={auction} />
         <PlayerDetails player={player} />
         <Box sx={{ marginBottom: '1rem' }}>
           <Button
@@ -47,13 +53,18 @@ const Player: NextPage = () => {
             sx={{ marginRight: '8px', marginBottom: '8px' }}>
             <strong>Main Action</strong>
           </Button>
-          <Button
-            variant="outlined"
-            color="secondary"
-            sx={{ marginRight: '8px', marginBottom: '8px' }}
-            onClick={handleSellButtonClick}>
-            <strong>Sell Player</strong>
-          </Button>
+          {auction != undefined && auction.length > 0 ? (
+            <></>
+          ) : (
+            <Button
+              variant="outlined"
+              color="secondary"
+              sx={{ marginRight: '8px', marginBottom: '8px' }}
+              onClick={handleSellButtonClick}>
+              <strong>Sell Player</strong>
+            </Button>
+          )}
+
           <Button
             variant="outlined"
             color="secondary"
