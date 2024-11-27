@@ -5,7 +5,7 @@ COPY package*.json ./
 RUN npm ci
 COPY . .
 RUN npm run build
-ENV NODE_ENV=production
+# ENV NODE_ENV=production
 
 # Stage 2: Development
 FROM node:20-bullseye-slim
