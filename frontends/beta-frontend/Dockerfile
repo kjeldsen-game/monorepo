@@ -1,6 +1,8 @@
 # Stage 1: Build
 FROM node:20-bullseye-slim AS builder
 WORKDIR /app
+ARG APP_ENV
+ENV APP_ENV=${APP_ENV}
 COPY package*.json ./
 RUN npm ci
 COPY . .
