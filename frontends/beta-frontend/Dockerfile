@@ -14,7 +14,7 @@ FROM node:20-bullseye-slim
 WORKDIR /app
 COPY --from=builder /app ./
 EXPOSE 3000
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "dev"]
 
 # syntax=docker.io/docker/dockerfile:1
 
