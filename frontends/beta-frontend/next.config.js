@@ -20,5 +20,7 @@ const nextConfig = {
     return config;
   },
 };
-
+console.log(process.env.APP_ENV)
+console.log('Asset Prefix:', nextConfig.assetPrefix);
+// console.log(APP_ENV)
 module.exports = nextConfig;
