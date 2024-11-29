@@ -1,4 +1,4 @@
-import { API_ENDPOINT } from '@/config';
+import { API_AUTH_ENDPOINT, API_ENDPOINT } from '@/config';
 
 type Method =
   | 'CONNECT'
@@ -53,11 +53,14 @@ export const connector = async (
   creds?: RequestCredentials,
   token?: string,
 ) => {
+  const authHeaders = token && { Authorization: `Bearer ${token}` };
+  const defaultHeaders = { 'Content-Type': 'application/json' };
+
   const response = await fetch(`${url}`, {
     method: method,
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      ...defaultHeaders,
+      ...authHeaders,
     },
     body: JSON.stringify(body),
   });

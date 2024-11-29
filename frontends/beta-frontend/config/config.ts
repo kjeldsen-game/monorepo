@@ -6,5 +6,5 @@ export const JWT_SECRET = process.env.JWT_SECRET || '';
 export const API_ENDPOINT = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
 export const AUTH_CLIENT_ID = process.env.AUTH_CLIENT_ID || '';
 export const AUTH_CLIENT_SECRET = process.env.AUTH_CLIENT_SECRET || '';
-export const API_AUTH_ENDPOINT = process.env.NEXT_AUTH_BACKEND_URL || '';
+export const API_AUTH_ENDPOINT = `${process.env.NEXT_PUBLIC_AUTH_URL}`;
 export const APP_ENV = process.env.APP_ENV || 'dev';
