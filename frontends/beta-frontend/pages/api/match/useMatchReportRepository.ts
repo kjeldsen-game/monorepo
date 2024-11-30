@@ -20,7 +20,7 @@ const useMatchReportRepository = (
   token?: string,
 ) => {
   const { data, isLoading, error } = useSWR<MatchReport | undefined>(
-    API + matchId,
+    API + matchId + 'report',
     () => fetcher(matchId ? matchId : null, token ? token : null),
   );
 
