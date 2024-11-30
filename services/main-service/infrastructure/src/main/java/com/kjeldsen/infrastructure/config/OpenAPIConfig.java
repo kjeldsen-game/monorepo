@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @OpenAPIDefinition(info = @Info(title = "Main API", version = "1"), servers = {
-        @Server(url = "http://localhost:15001"),
-        @Server(url = "https://api.kjeldsengame.com"),
-        @Server(url = "http://www.kjeldsengame.com:8080"),
+                @Server(url = "http://localhost:15001"),
+                @Server(url = "https://api.kjeldsengame.com"),
+                @Server(url = "https://backend.kjeldsengame.com"),
 }, security = {
-        @SecurityRequirement(name = "bearerAuth"),
+                @SecurityRequirement(name = "bearerAuth"),
 })
 @SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
 public class OpenAPIConfig {

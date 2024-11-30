@@ -1,5 +1,4 @@
 services:
-
     ###############
     ## Local DBs ##
     ###############
@@ -55,7 +54,7 @@ services:
         # image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/beta-frontend:latest
         build:
             context: ../frontends/beta-frontend
-            dockerfile: ./Dockerfile
+            dockerfile: ./Dockerfile.local
         container_name: beta-frontend
         ports:
             - 3000:3000
@@ -63,7 +62,6 @@ services:
             - ./config/beta-frontend.env
         deploy:
             resources:
-              limits:
-                memory: 2g        # Limits memory to 2GB
-                cpus: "1.0"       # Limits to 1 CPU
-        
+                limits:
+                    memory: 2g # Limits memory to 2GB
+                    cpus: "1.0" # Limits to 1 CPU

@@ -7,6 +7,16 @@ terraform {
   }
 }
 provider "aws" {
+  alias   = "acm"
+  region  = "eu-west-1"
+  profile = "default"
+}
+provider "aws" {
+  alias   = "route53"
+  region  = "eu-west-1"
+  profile = "default"
+}
+provider "aws" {
   region  = "eu-west-1"
   profile = "default"
 }
@@ -15,9 +25,9 @@ provider "aws" {
 ##############################
 # Main VPC resource - provides isolated network environment
 resource "aws_vpc" "main" {
-  cidr_block           = "10.0.0.0/16" # Defines the IP range for the entire VPC
-  enable_dns_hostnames = true          # Enables DNS hostnames for EC2 instances
-  enable_dns_support   = true          # Enables DNS resolution in the VPC
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_hostnames = true
+  enable_dns_support   = true
   tags = {
     Name        = "${var.project}-${var.environment}-vpc"
     Environment = var.environment
@@ -270,33 +280,36 @@ resource "aws_eip" "ec2" {
 ##############################
 ########## ACM ###############
 ##############################
-resource "aws_acm_certificate" "main" {
-  domain_name       = "www.kjeldsengame.com"
-  validation_method = "DNS"
+module "acm" {
+  source  = "terraform-aws-modules/acm/aws"
+  version = "~> 4.0"
+  providers = {
+    aws = aws.acm
+  }
+  domain_name = "kjeldsengame.com"
+  subject_alternative_names = [
+    "backend.kjeldsengame.com"
+  ]
+  validation_method      = "DNS"
+  create_route53_records = false
   tags = {
     Name        = "${var.project}-${var.environment}-acm"
     Environment = var.environment
     Project     = var.project
   }
 }
-# Validation record for ACM certificate
-resource "aws_route53_record" "acm_validation" {
-  for_each = {
-    for dvo in aws_acm_certificate.main.domain_validation_options : dvo.domain_name => {
-      name  = dvo.resource_record_name
-      type  = dvo.resource_record_type
-      value = dvo.resource_record_value
-    }
+module "route53_records" {
+  source  = "terraform-aws-modules/acm/aws"
+  version = "~> 4.0"
+  providers = {
+    aws = aws.route53
   }
-  zone_id = "Z03138513K6V3S28YCMV7"
-  name    = each.value.name
-  type    = each.value.type
-  records = [each.value.value]
-  ttl     = 60
-}
-resource "aws_acm_certificate_validation" "main" {
-  certificate_arn         = aws_acm_certificate.main.arn
-  validation_record_fqdns = [for record in aws_route53_record.acm_validation : record.fqdn]
+  create_certificate                        = false
+  create_route53_records_only               = true
+  validation_method                         = "DNS"
+  distinct_domain_names                     = module.acm.distinct_domain_names
+  zone_id                                   = "Z03138513K6V3S28YCMV7"
+  acm_certificate_domain_validation_options = module.acm.acm_certificate_domain_validation_options
 }
 ##############################
 ########## ALB ###############
@@ -367,6 +380,33 @@ resource "aws_lb_target_group_attachment" "main" {
   target_id        = aws_instance.ec2.id
   port             = 80
 }
+resource "aws_lb_target_group" "backend" {
+  name        = "${var.project}-${var.environment}-tg-backend"
+  port        = 8080
+  protocol    = "HTTP"
+  vpc_id      = aws_vpc.main.id
+  target_type = "instance"
+  health_check {
+    path                = "/swagger-ui/index.html"
+    port                = "8080"
+    protocol            = "HTTP"
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+    timeout             = 5
+    interval            = 30
+    matcher             = "200-299"
+  }
+  tags = {
+    Name        = "${var.project}-${var.environment}-tg-backend"
+    Environment = var.environment
+    Project     = var.project
+  }
+}
+resource "aws_lb_target_group_attachment" "backend" {
+  target_group_arn = aws_lb_target_group.backend.arn
+  target_id        = aws_instance.ec2.id
+  port             = 8080
+}
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.main.arn
   port              = 80
@@ -385,10 +425,23 @@ resource "aws_lb_listener" "https" {
   port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = aws_acm_certificate.main.arn
+  certificate_arn   = module.acm.acm_certificate_arn
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.main.arn
+  }
+}
+resource "aws_lb_listener_rule" "backend_https" {
+  listener_arn = aws_lb_listener.https.arn
+  priority     = 100
+  condition {
+    host_header {
+      values = ["backend.kjeldsengame.com"]
+    }
+  }
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.backend.arn
   }
 }
 ##############################
@@ -396,7 +449,17 @@ resource "aws_lb_listener" "https" {
 ##############################
 resource "aws_route53_record" "alb" {
   zone_id = "Z03138513K6V3S28YCMV7"
-  name    = "www.kjeldsengame.com"
+  name    = "kjeldsengame.com"
+  type    = "A"
+  alias {
+    name                   = aws_lb.main.dns_name
+    zone_id                = aws_lb.main.zone_id
+    evaluate_target_health = true
+  }
+}
+resource "aws_route53_record" "backend_alb" {
+  zone_id = "Z03138513K6V3S28YCMV7"
+  name    = "backend.kjeldsengame.com"
   type    = "A"
   alias {
     name                   = aws_lb.main.dns_name
