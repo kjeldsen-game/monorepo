@@ -19,10 +19,7 @@ import com.kjeldsen.player.rest.model.PlayerPosition;
 import com.kjeldsen.player.rest.model.PlayerResponse;
 import com.kjeldsen.player.rest.model.PlayerResponseActualSkillsValue;
 import com.kjeldsen.player.rest.model.PlayerStatus;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
@@ -39,6 +36,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 class PlayerApiIT extends AbstractIT {
 

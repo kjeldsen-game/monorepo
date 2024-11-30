@@ -8,17 +8,12 @@ import { useSession } from 'next-auth/react';
 import { useAuctionRepository } from '@/pages/api/market/useAuctionRepository';
 
 interface PlayerAuctionCardProps {
-  refreshTrigger: boolean;
+  auction: any;
 }
 
-const PlayerAuctionCard = ({ refreshTrigger }: PlayerAuctionCardProps) => {
+const PlayerAuctionCard = ({ auction }: PlayerAuctionCardProps) => {
   const { data } = useSession();
 
-  const { auctions: auction } = useAuctionRepository(
-    '',
-    data?.accessToken,
-    `playerId=${useRouter().query.id}`,
-  );
   const [open, setOpen] = useState<boolean>(false);
 
   const handleOpenModal = (state: boolean) => {

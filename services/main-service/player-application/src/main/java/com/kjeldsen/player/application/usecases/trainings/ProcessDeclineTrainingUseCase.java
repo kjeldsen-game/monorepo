@@ -71,12 +71,12 @@ public class ProcessDeclineTrainingUseCase {
                     executeDeclineAndStoreEvent(player, skill, 1);
                 } else {
                     // Last decline was not successful, increase the day
-                    failedDeclines.getAndSet(successfulDeclines.get() + 1);
+                    failedDeclines.getAndSet(failedDeclines.get() + 1);
                     executeDeclineAndStoreEvent(player, skill, event.get().getCurrentDay() + 1);
                 }
             } else {
                 // No decline events about player before, create a new one
-                failedDeclines.getAndSet(successfulDeclines.get() + 1);
+                failedDeclines.getAndSet(failedDeclines.get() + 1);
                 executeDeclineAndStoreEvent(player, skill, 1);
             }
         });

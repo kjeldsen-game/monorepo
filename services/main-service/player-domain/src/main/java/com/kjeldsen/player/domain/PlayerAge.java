@@ -66,7 +66,7 @@ public class PlayerAge {
         age.incrementDays();
         if (age.getDays()>MONTH_KJELDSEN){
            age.setDays(0d);
-           age.setMonths(age.getMonths()+DAY_KJELDSEN);
+           age.setMonths(age.getMonths()+MONTH_KJELDSEN);
         } else if (age.getMonths()>YEAR_KJELDSEN) {
            age.setMonths(0d);
            age.setYears(age.getYears()+1);

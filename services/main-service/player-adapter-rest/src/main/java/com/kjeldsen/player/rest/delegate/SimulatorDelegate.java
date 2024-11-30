@@ -1,5 +1,8 @@
 package com.kjeldsen.player.rest.delegate;
 
+import com.kjeldsen.auth.authorization.SecurityUtils;
+import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
+import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.application.usecases.cantera.CanteraInvestmentUsecase;
 import com.kjeldsen.player.application.usecases.cantera.EconomyInvestmentUsecase;
 import com.kjeldsen.player.application.usecases.economy.PaySalariesTeamUseCase;
@@ -8,10 +11,15 @@ import com.kjeldsen.player.application.usecases.economy.*;
 import com.kjeldsen.player.application.usecases.facilities.UpgradeBuildingUseCase;
 import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
 import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
-import com.kjeldsen.player.application.usecases.trainings.ProcessDeclineTrainingUseCase;
-import com.kjeldsen.player.application.usecases.trainings.ProcessPlayerTrainingUseCase;
-import com.kjeldsen.player.application.usecases.trainings.ProcessPotentialRiseUseCase;
+import com.kjeldsen.player.application.usecases.player.PlayerAgingUseCase;
+import com.kjeldsen.player.application.usecases.trainings.*;
+import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.events.PlayerPotentialRiseEvent;
+import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
+import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
+import com.kjeldsen.player.persistence.mongo.repositories.PlayerPotentialRiseEventMongoRepository;
+import com.kjeldsen.player.persistence.mongo.repositories.PlayerTrainingDeclineEventMongoRepository;
 import com.kjeldsen.player.rest.api.SimulatorApiDelegate;
 import com.kjeldsen.player.rest.model.*;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +28,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 @RequiredArgsConstructor
@@ -37,11 +47,21 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final UpgradeBuildingUseCase upgradeBuildingUseCase;
     private final BuildingMaintenanceExpenseUseCase buildingMaintenanceExpenseUseCase;
     private final UpdateLoyaltyUseCase updateLoyaltyUseCase;
+    private final PlayerAgingUseCase playerAgingUseCase;
+    private final GeneratePlayersUseCase generatePlayersUseCase;
+    private final GetTeamUseCase getTeamUseCase;
+
+    // TMP repositories for simulation
+    private final PlayerMongoRepository playerMongoRepository;
+    private final PlayerTrainingDeclineEventMongoRepository playerTrainingDeclineEventMongoRepository;
+    private final PlayerPotentialRiseEventMongoRepository playerPotentialRiseEventMongoRepository;
 
     // Training simulations
     private final ProcessPlayerTrainingUseCase processPlayerTrainingUseCase;
     private final ProcessPotentialRiseUseCase processPotentialRiseUseCase;
     private final ProcessDeclineTrainingUseCase processDeclineTrainingUseCase;
+    private final ExecuteDeclineTrainingUseCase executeDeclineTrainingUseCase;
+    private final ExecutePotentialRiseUseCase executePotentialRiseUseCase;
 
     // Economy simulations
     private final ResetSponsorIncomeUseCase resetSponsorIncomeUseCase;
@@ -62,32 +82,6 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         economyInvestmentUsecase.invest(Team.TeamId.of(teamId), BigDecimal.valueOf(registerEconomicInvestmentRequest.getAmount()));
         return ResponseEntity.ok().build();
     }
-
-//    @Override
-//    public ResponseEntity<Void> registerSponsorIncome(String teamId, RegisterSponsorIncomeRequest registerSponsorIncomeRequest) {
-//
-//        Integer weeks = registerSponsorIncomeRequest.getWeeks();
-//        Integer wins = registerSponsorIncomeRequest.getWins();
-//
-//        IntStream.rangeClosed(1, weeks).forEach(index -> registerSponsorIncomeRequest.getSponsors()
-//            .stream()
-//            .filter(sponsor -> SponsorPeriodicity.WEEKLY.equals(sponsor.getPeriodicity()))
-//            .forEach(sponsor -> {
-//                Team.Economy.IncomeMode mode = Team.Economy.IncomeMode.valueOf(sponsor.getMode().name());
-//                sponsorIncomeUsecase.incomeWeekly(Team.TeamId.of(teamId), mode, wins);
-//            }));
-//
-//        int years = weeks / 13; // 13 weeks in a season
-//        IntStream.rangeClosed(1, years).forEach(index -> registerSponsorIncomeRequest.getSponsors()
-//            .stream()
-//            .filter(sponsor -> SponsorPeriodicity.ANNUAL.equals(sponsor.getPeriodicity()))
-//            .forEach(sponsor -> {
-//                Team.Economy.IncomeMode mode = Team.Economy.IncomeMode.valueOf(sponsor.getMode().name());
-//                sponsorIncomeUsecase.incomeAnnual(Team.TeamId.of(teamId), mode, wins);
-//            }));
-//
-//        return ResponseEntity.ok().build();
-//    }
 
     @Override
     public ResponseEntity<Void> simulateSalaryPayroll(String teamId, SimulateSalaryPayrollRequest simulateSalaryPayrollRequest) {
@@ -176,10 +170,80 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     @Override
     public ResponseEntity<Void> simulatePlayerTrainingsProcess() {
         processPlayerTrainingUseCase.process();
-        return ResponseEntity.ok().build();    }
+        return ResponseEntity.ok().build();
+    }
 
     @Override
     public ResponseEntity<Void> simulatePlayerDeclinesProcess() {
         processDeclineTrainingUseCase.process();
-        return ResponseEntity.ok().build();    }
+        return ResponseEntity.ok().build();
+    }
+
+
+
+    @Override
+    public ResponseEntity<List<SimulateDaysResponse>> simulateDays(SimulateDaysRequest simulateDaysRequest) {
+        List<SimulateDaysResponse> response = new ArrayList<>();
+        Team team = getTeamUseCase.get(SecurityUtils.getCurrentUserId());
+        Player playerForSimulation = generatePlayersUseCase.generate(1, team.getId()).get(0);
+        playerForSimulation.getAge().setYears(18);
+        IntStream.rangeClosed(1, simulateDaysRequest.getDays()).forEach(i -> {
+            playerAgingUseCase.playerAging(playerForSimulation);
+
+            if (simulateDaysRequest.getExecuteDeclines()) {
+//                processDeclineTrainingUseCase.process();
+                if (playerForSimulation.getAge().getYears() >= 27 ) {
+                    executeDeclineTrainingUseCase.execute(playerForSimulation);
+                }
+            }
+            if (simulateDaysRequest.getExecutePotentialRises()) {
+//                processPotentialRiseUseCase.process();
+                if (playerForSimulation.getAge().getYears() < 21 ) {
+                    executePotentialRiseUseCase.execute(playerForSimulation);
+                }
+            }
+//            if (simulateDaysRequest.getExecuteScheduled()) {
+//                processPlayerTrainingUseCase.process();
+//            }
+
+        });
+        log.info("Player age after the end {}", playerForSimulation.getAge().getYears());
+
+        List<PlayerTrainingDeclineEvent> declineEventList = playerTrainingDeclineEventMongoRepository.findAllByPlayerId(playerForSimulation.getId());
+        declineEventList.stream()
+            .filter(event -> !event.getPointsBeforeTraining().equals(event.getPointsAfterTraining()))
+            .forEach(event -> {
+                response.add(new SimulateDaysResponse()
+                    .message(event.getFallOfCliffActive() ? "fallOfCliff" : "noFall")
+                    .eventType("decline")
+                    .playerName(playerForSimulation.getName())
+                    .date(event.getOccurredAt().toString())
+                    .skill(event.getSkill().name())
+                    .pointsBefore(event.getPointsBeforeTraining())
+                    .pointsAfter(event.getPointsAfterTraining()));
+            });
+
+        List<PlayerPotentialRiseEvent> riseEventList = playerPotentialRiseEventMongoRepository.findAllByPlayerId(playerForSimulation.getId());
+        riseEventList.stream()
+            .filter(event -> event.getPointsToRise() != 0)
+            .forEach(event -> {
+                response.add(new SimulateDaysResponse()
+                    .message("")
+                    .eventType("rise")
+                    .playerName(playerForSimulation.getName())
+                    .date(event.getOccurredAt().toString())
+                    .skill(event.getSkillThatRisen().name())
+                    .pointsBefore(event.getPotentialBeforeRaise())
+                    .pointsAfter(event.getPotentialAfterRaise()));
+            });
+
+        System.out.println(declineEventList.size());
+        System.out.println(riseEventList.size());
+        System.out.println(playerForSimulation);
+
+        playerPotentialRiseEventMongoRepository.deleteAll(riseEventList);
+        playerTrainingDeclineEventMongoRepository.deleteAll(declineEventList);
+        playerMongoRepository.delete(playerForSimulation);
+        return ResponseEntity.ok(response);
+    }
 }
