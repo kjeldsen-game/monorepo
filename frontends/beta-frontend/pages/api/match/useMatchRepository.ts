@@ -3,14 +3,14 @@ import { MatchCreationRequest } from './MatchCreationRequest';
 import { connectorAPI } from '@/libs/fetcher';
 import { Match } from '@/shared/models/Match';
 
-const API = '/match/';
+const API = '/match';
 
 const useMatchRepository = (token: string, ownTeamId?: string) => {
   const { mutate } = useSWRConfig();
 
   const _patchMatch = async (matchId: string, params: Partial<Match>) => {
     connectorAPI<Partial<Match>>(
-      API + matchId,
+      API + '/' + matchId,
       'PATCH',
       params,
       undefined,

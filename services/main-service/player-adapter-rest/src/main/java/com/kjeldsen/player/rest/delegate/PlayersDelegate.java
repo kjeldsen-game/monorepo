@@ -86,7 +86,7 @@ public class PlayersDelegate implements PlayerApiDelegate {
     public ResponseEntity<Void> sellPlayer(String playerId) {
         Optional<Player> optionalPlayer = playerReadRepository.findOneById(Player.PlayerId.of(playerId));
         if (optionalPlayer.isPresent()) {
-            if (optionalPlayer.get().getTeamId() != getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId()) {
+            if (!optionalPlayer.get().getTeamId().equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId())) {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
         }
