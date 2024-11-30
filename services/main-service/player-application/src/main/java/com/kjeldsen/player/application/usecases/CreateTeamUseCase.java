@@ -49,7 +49,7 @@ public class CreateTeamUseCase {
                     put(Team.Economy.IncomePeriodicity.WEEKLY, null);
                     put(Team.Economy.IncomePeriodicity.ANNUAL, null);
                 }})
-                .billboardDeal(Team.Economy.BillboardDeal.builder().build())
+                .billboardDeal(null)
                 .build())
             .fans(Team.Fans.builder().build())
             .buildings(Team.Buildings.builder()
