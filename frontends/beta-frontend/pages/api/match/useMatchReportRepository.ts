@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import { MatchReport } from '@/shared/models/MatchReport';
 import { connectorAPI } from '@/libs/fetcher';
 
-const API = '/match/report';
+const API = '/match';
 
 const fetcher = (matchId: string | null | string[], token: string | null) => {
   if (token === null || matchId === null) return undefined;
