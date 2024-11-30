@@ -11,7 +11,7 @@ import IncomingMatchesGrid from './components/IncomingMatchesGrid';
 import PastMatchesGrid from './components/PastMatchesGrid';
 import CustomTabs from '@/shared/components/CustomTabs';
 
-const Team: NextPage = () => {
+const Challenge: NextPage = () => {
   useSession({ required: true });
 
   const { t } = useTranslation('common', { keyPrefix: 'challenge' });
@@ -60,4 +60,4 @@ export async function getStaticProps({ locale }: { locale: string }) {
   };
 }
 
-export default Team;
+export default Challenge;
