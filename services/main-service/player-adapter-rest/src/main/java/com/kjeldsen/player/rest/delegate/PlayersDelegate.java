@@ -40,8 +40,10 @@ public class PlayersDelegate implements PlayerApiDelegate {
 
     @Override
     public ResponseEntity<Void> createPlayer(CreatePlayerRequest createPlayerRequest) {
+        Team team = getTeamUseCase.get(SecurityUtils.getCurrentUserId());
         CreatePlayerUseCase.NewPlayer newPlayer = CreatePlayerMapper.INSTANCE.map(createPlayerRequest);
-        newPlayer.setTeamId(Team.TeamId.of("NOTEAM")); // TODO change to receive team id in api?
+
+        newPlayer.setTeamId(team.getId());
         createPlayerUseCase.create(newPlayer);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -70,16 +72,13 @@ public class PlayersDelegate implements PlayerApiDelegate {
 
     @Override
     public ResponseEntity<PlayerResponse> getPlayerById(String playerId) {
-        Optional<Player> optionalPlayer = playerReadRepository.findOneById(Player.PlayerId.of(playerId));
-        if (optionalPlayer.isPresent()) {
-            if (optionalPlayer.get().getTeamId() != getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId()) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
-        }
-
         Player player = playerReadRepository.findOneById(Player.PlayerId.of(playerId))
             .orElseThrow();
         PlayerResponse response = PlayerMapper.INSTANCE.playerResponseMap(player);
+        if (!player.getTeamId().equals(getTeamUseCase.  get(SecurityUtils.getCurrentUserId()).getId())) {
+            // TODO later
+            //return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         return ResponseEntity.ok(response);
     }
 

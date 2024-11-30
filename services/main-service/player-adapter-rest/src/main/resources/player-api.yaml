@@ -439,6 +439,31 @@ paths:
 ######################## TRAINING END ########################
 
 ######################## SIMULATOR START ########################
+  /simulator/simulate-days:
+    post:
+      summary: Simulate number of days
+      operationId: simulateDays
+      tags:
+        - simulator
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimulateDaysRequest"
+      responses:
+        "201":
+          description: Simulated days executed
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SimulateDaysResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+
   /simulator/trainings:
     post:
       summary: Simulate the execution of trainings
@@ -936,6 +961,46 @@ components:
 
     ######################## TRAINING SCHEMAS START ########################
 
+    SimulateDaysRequest:
+      type: object
+      properties:
+        days:
+          type: integer
+          example: 5
+          minimum: 1
+        executeScheduled:
+          type: boolean
+          default: true
+        executeDeclines:
+          type: boolean
+          default: true
+        executePotentialRises:
+          type: boolean
+          default: true
+        createCustomPlayer:
+          type: boolean
+          default: false
+        player:
+          $ref: "#/components/schemas/CreatePlayerRequest"
+
+    SimulateDaysResponse:
+      type: object
+      properties:
+        date:
+          type: string
+        skill:
+          type: string
+        playerName:
+          type: string
+        eventType:
+          type: string
+        pointsBefore:
+          type: integer
+        pointsAfter:
+          type: integer
+        message:
+          type: string
+
     PlayerScheduledTrainingResponse:
       type: object
       properties:
@@ -1007,10 +1072,30 @@ components:
           example: 5
         age:
           $ref: "#/components/schemas/PlayerAge"
+        bloomYear:
+          type: integer
+          minimum: 17
+          maximum: 21
+        isFallCliff:
+          type: boolean
+          default: false
         position:
           $ref: "#/components/schemas/PlayerPosition"
         category:
           $ref: "#/components/schemas/PlayerCategory"
+        skills:
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/PlayerSkills"
+          example:
+            SCORING:
+              actual: 5
+              potential: 30
+              playerSkillRelevance: CORE
+            TACKLING:
+              actual: 10
+              potential: 40
+              playerSkillRelevance: SECONDARY
 
     GeneratePlayersRequest:
       type: object

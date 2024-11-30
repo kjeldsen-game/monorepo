@@ -146,9 +146,14 @@ public class TeamDelegate implements TeamApiDelegate {
 
     @Override
     public ResponseEntity<TeamResponse> getTeamById(String teamId) {
+        // Different user than the team owner is accessing the team
         Team team = teamReadRepository.findOneById(Team.TeamId.of(teamId))
             .orElseThrow();
         TeamResponse response = TeamMapper.INSTANCE.map(team);
+        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
+            // TODO filter the response if other team access remove the tactics only show players
+        }
+
         playerReadRepository.findByTeamId(TeamId.of(teamId));
         List<PlayerResponse> players = playerReadRepository.findByTeamId(TeamId.of(teamId))
             .stream()

@@ -3,10 +3,7 @@ package com.kjeldsen.player.domain.events;
 import com.kjeldsen.domain.Event;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,8 +18,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class PlayerTrainingDeclineEvent extends Event {
 
     private Player.PlayerId playerId;
-    private Integer declineStartAge;
-    private Integer declineSpeed;
+    @Builder.Default
+    private Boolean fallOfCliffActive = false;
     private PlayerSkill skill;
     private Integer pointsToSubtract;
     private Integer pointsBeforeTraining;
