@@ -1,6 +1,5 @@
 package com.kjeldsen.player.application.usecases.trainings;
 
-
 import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
@@ -41,7 +40,7 @@ public class ExecuteDeclineTrainingUseCase {
         }
 
         Optional<PlayerTrainingDeclineEvent> event = playerTrainingDeclineEventReadRepository
-            .findLatestByPlayerId(player.getId());
+                .findLatestByPlayerId(player.getId());
 
         if (event.isPresent()) {
             if (event.get().getPointsBeforeTraining() > event.get().getPointsAfterTraining()) {
@@ -59,19 +58,21 @@ public class ExecuteDeclineTrainingUseCase {
     }
 
     private void executeDeclineAndStoreEvent(Player player, PlayerSkill playerSkill, Integer currentDay) {
-        // Calculate how many years player is in decline phase, if fallOff is True always use the last year
-        int yearInDecline = player.isFallCliff() ? MAX_YEAR_IN_DECLINE : calculateYearInDecline(player.getAge().getYears());
+        // Calculate how many years player is in decline phase, if fallOff is True
+        // always use the last year
+        int yearInDecline = player.isFallCliff() ? MAX_YEAR_IN_DECLINE
+                : calculateYearInDecline(player.getAge().getYears());
         int points = DeclinePointsGenerator.generateDeclinePoints(currentDay, yearInDecline);
 
         PlayerTrainingDeclineEvent playerTrainingDeclineEvent = PlayerTrainingDeclineEvent.builder()
-            .id(EventId.generate())
-            .occurredAt(InstantProvider.now())
-            .playerId(player.getId())
-            .skill(playerSkill)
-            .currentDay(currentDay)
-            .pointsToSubtract(points)
-            .pointsBeforeTraining(player.getActualSkillPoints(playerSkill))
-            .build();
+                .id(EventId.generate())
+                .occurredAt(InstantProvider.now())
+                .playerId(player.getId())
+                .skill(playerSkill)
+                .currentDay(currentDay)
+                .pointsToSubtract(points)
+                .pointsBeforeTraining(player.getActualSkillPoints(playerSkill))
+                .build();
 
         player.addDeclinePhase(playerTrainingDeclineEvent);
         playerTrainingDeclineEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));

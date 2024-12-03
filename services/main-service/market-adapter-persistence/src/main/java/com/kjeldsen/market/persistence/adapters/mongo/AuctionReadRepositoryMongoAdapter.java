@@ -22,22 +22,23 @@ public class AuctionReadRepositoryMongoAdapter implements AuctionReadRepository 
     private final AuctionMongoRepository auctionMongoRepository;
     private final MongoTemplate mongoTemplate;
 
-
     @Override
     public List<Auction> findAllByQuery(FindAuctionsQuery inputQuery) {
         Query query = new Query();
         if (inputQuery.getPlayerId() != null) {
-            if (inputQuery.getPlayerId().value() != null ) {
+            if (inputQuery.getPlayerId().value() != null) {
                 query.addCriteria(Criteria.where("playerId").is(inputQuery.getPlayerId()));
             }
         }
         if (inputQuery.getMinAverageBid() != null || inputQuery.getMaxAverageBid() != null) {
             Criteria averageBidCriteria = Criteria.where("averageBid");
             if (inputQuery.getMinAverageBid() != null) {
-                averageBidCriteria = averageBidCriteria.gt(new Decimal128(BigDecimal.valueOf(inputQuery.getMinAverageBid())));
+                averageBidCriteria = averageBidCriteria
+                        .gt(new Decimal128(BigDecimal.valueOf(inputQuery.getMinAverageBid())));
             }
             if (inputQuery.getMinAverageBid() != null) {
-                averageBidCriteria = averageBidCriteria.lt(new Decimal128(BigDecimal.valueOf(inputQuery.getMinAverageBid())));
+                averageBidCriteria = averageBidCriteria
+                        .lt(new Decimal128(BigDecimal.valueOf(inputQuery.getMinAverageBid())));
             }
             query.addCriteria(averageBidCriteria);
         }
@@ -50,7 +51,7 @@ public class AuctionReadRepositoryMongoAdapter implements AuctionReadRepository 
 
     @Override
     public Optional<Auction> findById(Auction.AuctionId auctionId) {
-       return auctionMongoRepository.findById(auctionId);
+        return auctionMongoRepository.findById(auctionId);
     }
 
     @Override

@@ -28,7 +28,7 @@ const useScheduledTrainingRepository = (
   );
 
   const scheduleTraining = (skill: PlayerSkill): Promise<any> => {
-    if (playerId) Promise.reject();
+    // if (playerId) Promise.reject();
     const newData = {
       skill: skill,
     };

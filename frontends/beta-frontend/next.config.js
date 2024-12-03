@@ -6,7 +6,7 @@ const nextConfig = {
   typescript: { // TODO tmp
     ignoreBuildErrors: true,
   },
-  assetPrefix: process.env.APP_ENV === 'production' ? 'http://kjeldsengame.com/' : 'http://localhost:3000',
+  // assetPrefix: process.env.APP_ENV === 'production' ? 'http://kjeldsengame.com/' : 'http://localhost:3000',
   reactStrictMode: false,
   swcMinify: true,
   i18n,
@@ -20,5 +20,7 @@ const nextConfig = {
     return config;
   },
 };
-
+console.log(process.env.APP_ENV)
+console.log('Asset Prefix:', nextConfig.assetPrefix);
+// console.log(APP_ENV)
 module.exports = nextConfig;

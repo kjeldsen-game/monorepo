@@ -256,9 +256,9 @@ resource "aws_instance" "ec2" {
       PRIVATE_KEY                   = var.private_key
       # frontend
       NEXTAUTH_SECRET         = "Gd86qxgWNPJRBY3x56YmsZuyT-lZAV6CXafqxDJ2nw8P9jQZfocwm3338xfUlY7si6tAk9C4WPvxhQT1uUDSWQ"
-      NEXT_AUTH_BACKEND_URL   = "http://main-service:8080/v1"
-      NEXT_PUBLIC_BACKEND_URL = "http://main-service:8080/v1"
-      NEXTAUTH_URL            = "http://beta-frontend:3000"
+      NEXT_AUTH_BACKEND_URL   = "https://backend.kjeldsengame.com/v1"
+      NEXT_PUBLIC_BACKEND_URL = "https://backend.kjeldsengame.com/v1"
+      NEXTAUTH_URL            = "https://kjeldsengame.com"
     }
   })
   tags = {

@@ -1,6 +1,6 @@
 import Grid from '@/shared/components/Grid/Grid';
 import { Box } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMatchesRepository';
 import { useTranslation } from 'next-i18next';
@@ -20,12 +20,16 @@ const PastMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
 
   const [selectedPage, setSelectedPage] = useState<number>(0);
 
-  const { pastMatches } = useAllPlayerMatchesRepository(
+  const { pastMatches, refetch } = useAllPlayerMatchesRepository(
     selectedPage,
     10,
     userData?.user.teamId,
     userData?.accessToken,
   );
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   if (!pastMatches || pastMatches.length === 0) {
     return <Box sx={{ width: '100%' }}>{t('challenge.no_past_matches')}</Box>;

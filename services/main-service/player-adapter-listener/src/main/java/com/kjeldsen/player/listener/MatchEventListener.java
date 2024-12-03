@@ -50,10 +50,10 @@ public class MatchEventListener {
       updateLoyaltyUseCase.updateLoyaltyMatch(awayTeamId, matchEvent.getAwayScore(),
           Team.Fans.LoyaltyImpactType.valueOf(getFansImpact(matchEvent.getHomeScore(), matchEvent.getAwayScore(), false).name()));
 
-      fansManagementUsecase.update(homeTeamId,
-        getFansImpact(matchEvent.getHomeScore(), matchEvent.getAwayScore(), true));
-      fansManagementUsecase.update(awayTeamId,
-        getFansImpact(matchEvent.getHomeScore(), matchEvent.getAwayScore(), false));
+//      fansManagementUsecase.update(homeTeamId,
+//        getFansImpact(matchEvent.getHomeScore(), matchEvent.getAwayScore(), true));
+//      fansManagementUsecase.update(awayTeamId,
+//        getFansImpact(matchEvent.getHomeScore(), matchEvent.getAwayScore(), false));
     }
 
     private Team.TeamId getWinningTeam(MatchEvent matchEvent) {

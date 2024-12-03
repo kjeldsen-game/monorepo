@@ -44,7 +44,7 @@ public class TrainingDelegate implements TrainingApiDelegate {
         // Access denied as the player is not in your Team
         Optional<Player> optionalPlayer = playerReadRepository.findOneById(Player.PlayerId.of(playerId));
         if (optionalPlayer.isPresent()) {
-            if (optionalPlayer.get().getTeamId() != getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId()) {
+            if (!optionalPlayer.get().getTeamId().equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId())) {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
         }

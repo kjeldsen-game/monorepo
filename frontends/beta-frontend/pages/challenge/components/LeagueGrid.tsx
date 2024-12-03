@@ -23,7 +23,7 @@ const LeagueGrid: React.FC<LeagueGridProps> = () => {
     userData?.accessToken,
     userData?.user.teamId,
   );
-  const { allMatches } = useAllPlayerMatchesRepository(
+  const { allMatches, refetch } = useAllPlayerMatchesRepository(
     undefined,
     undefined,
     userData?.user.teamId,

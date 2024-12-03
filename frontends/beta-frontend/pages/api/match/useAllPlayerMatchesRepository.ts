@@ -1,5 +1,5 @@
 import { connectorAPI } from '@/libs/fetcher';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import { Match } from '@/shared/models/Match';
 
 const API = '/match';
@@ -26,9 +26,13 @@ const useAllPlayerMatchesRepository = (
   teamId?: string,
   token?: string,
 ) => {
-  const { data: allMatches } = useSWR<Match[]>([API, teamId], () =>
+  const { data: allMatches, mutate } = useSWR<Match[]>([API, teamId], () =>
     fetcher(page, size, teamId ? teamId : null, token ? token : null),
   );
+
+  const refetch = () => {
+    mutate();
+  };
 
   const pastMatches = allMatches?.filter(
     (match) => new Date(match.dateTime).getTime() < new Date().getTime(),
@@ -40,6 +44,6 @@ const useAllPlayerMatchesRepository = (
     (match) => match.status === 'ACCEPTED',
   );
 
-  return { allMatches, pastMatches, incomingMatches, acceptedMatches };
+  return { allMatches, pastMatches, incomingMatches, acceptedMatches, refetch };
 };
 export { useAllPlayerMatchesRepository };
