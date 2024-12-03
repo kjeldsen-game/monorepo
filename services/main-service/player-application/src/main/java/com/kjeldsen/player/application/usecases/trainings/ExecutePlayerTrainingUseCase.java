@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Component
 @Slf4j
@@ -31,11 +32,14 @@ public class ExecutePlayerTrainingUseCase {
     * by one (Over training), if it will exceed, points are subtracted to value which can fill into.
     */
 
+
     public void execute(Player.PlayerId playerId, PlayerSkill playerSkill, Integer currentDay, String eventId) {
         log.info("ExecutePlayerTrainingUseCase for player {} skill {} on day {}", playerId, playerSkill, currentDay);
 
         Player player = playerReadRepository.findOneById(playerId).orElseThrow(
             () -> new RuntimeException("Player not found."));
+        log.info("Player bloom year is set to {} {} {}", player.getBloomYear(), player.getBloomYear() != null, player.getAge().getYears());
+        log.info("Test {}",  player.getBloomYear() != null && player.getBloomYear().equals(player.getAge().getYears()));
 
         PlayerTrainingEvent playerTrainingEvent = PlayerTrainingEvent.builder()
             .id(EventId.generate())
@@ -51,6 +55,7 @@ public class ExecutePlayerTrainingUseCase {
         // Generate the number of points playerSkill should rise
         int points = PointsGenerator.generatePointsRise(currentDay);
         if (player.getBloomYear() != null && player.getBloomYear().equals(player.getAge().getYears())) {
+            log.info("Generating poitns with bloom active player age {}", player.getAge().getYears());
             playerTrainingEvent.setBloom(true);
             points = points * 2;
         }
@@ -83,4 +88,30 @@ public class ExecutePlayerTrainingUseCase {
         playerWriteRepository.save(player);
 
     }
+
+
+//    public void executeV2(Player.PlayerId playerId, PlayerSkill playerSkill, Integer currentDay, String eventId) {
+//        Optional<PlayerTrainingEvent> latestPlayerTrainingEvent = playerTrainingEventReadRepository
+//            .findLastByPlayerTrainingEvent(scheduledTraining.getId().value());
+//
+//        if (latestPlayerTrainingEvent.isPresent()) {
+//            PlayerTrainingEvent trainingEvent = latestPlayerTrainingEvent.get();
+//            if (trainingEvent.getPointsAfterTraining() > trainingEvent.getPointsBeforeTraining()) {
+//                // Points increased, the new training is starting from 1 day
+//                log.info("There was already successful training for player {} skill {}, set day to 1!", trainingEvent.getPlayerId(), trainingEvent.getSkill());
+//                execute(scheduledTraining.getPlayerId(), scheduledTraining.getSkill(),
+//                    1, scheduledTraining.getId().value());
+//            } else {
+//                log.info("The previous training was not successful, setting day to {}", trainingEvent.getCurrentDay() + 1);
+//                executePlayerTrainingUseCase.execute(scheduledTraining.getPlayerId(), scheduledTraining.getSkill(),
+//                    trainingEvent.getCurrentDay() + 1, scheduledTraining.getId().value());
+//            }
+//        } else {
+//            log.info("Training is not present setting the current day directly to 1 {}", scheduledTraining.getSkill());
+//            execute(scheduledTraining.getPlayerId(), scheduledTraining.getSkill(), 1,
+//                scheduledTraining.getId().value());
+//        }
+//    }
+
+
 }

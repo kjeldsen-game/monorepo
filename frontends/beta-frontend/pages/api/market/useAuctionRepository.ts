@@ -23,7 +23,6 @@ const useAuctionRepository = (
     token ? API + initialFilter : null,
     () => fetcher(token ? token : null, initialFilter),
   );
-
   const refetch = () => {
     mutate();
   };

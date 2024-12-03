@@ -7,6 +7,8 @@ import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventWriteRepository;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -20,10 +22,11 @@ import static org.mockito.Mockito.when;
 class ProcessPlayerTrainingUseCaseTest {
 
     private final PlayerTrainingScheduledEventReadRepository mockedPlayerTrainingScheduledEventReadRepository = Mockito.mock(PlayerTrainingScheduledEventReadRepository.class);
+    private final PlayerTrainingScheduledEventWriteRepository mockedPlayerTrainingScheduledEventWriteRepository = Mockito.mock(PlayerTrainingScheduledEventWriteRepository.class);
     private final PlayerTrainingEventReadRepository mockedPlayerTrainingEventReadRepository = Mockito.mock(PlayerTrainingEventReadRepository.class);
     private final ExecutePlayerTrainingUseCase mockedExecutePlayerTrainingUseCase = Mockito.mock(ExecutePlayerTrainingUseCase.class);
     private final ProcessPlayerTrainingUseCase processPlayerTrainingUseCase = new ProcessPlayerTrainingUseCase(
-        mockedPlayerTrainingScheduledEventReadRepository, mockedPlayerTrainingEventReadRepository, mockedExecutePlayerTrainingUseCase
+        mockedPlayerTrainingScheduledEventReadRepository, mockedPlayerTrainingScheduledEventWriteRepository, mockedPlayerTrainingEventReadRepository, mockedExecutePlayerTrainingUseCase
     );
 
 
@@ -67,6 +70,7 @@ class ProcessPlayerTrainingUseCaseTest {
                 PlayerTrainingEvent.builder()
                     .id(EventId.generate())
                     .pointsAfterTraining(13)
+                    .actualPoints(13)
                     .pointsBeforeTraining(11)
                     .scheduledTrainingId(event.getId()
                     .value())
@@ -99,6 +103,7 @@ class ProcessPlayerTrainingUseCaseTest {
                     .id(EventId.generate())
                     .pointsAfterTraining(13)
                     .pointsBeforeTraining(13)
+                    .actualPoints(13)
                     .currentDay(DAY)
                     .scheduledTrainingId(event.getId()
                         .value())

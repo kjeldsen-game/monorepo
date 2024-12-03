@@ -142,6 +142,7 @@ public class Team {
 
         @Getter
         public enum LoyaltyImpactType {
+            MATCH_DRAW,
             MATCH_WIN,
             MATCH_LOSS,
             SEASON_END,

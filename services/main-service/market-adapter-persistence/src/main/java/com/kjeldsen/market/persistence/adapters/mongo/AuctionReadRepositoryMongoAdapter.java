@@ -45,6 +45,7 @@ public class AuctionReadRepositoryMongoAdapter implements AuctionReadRepository 
         if (inputQuery.getAuctionStatus() != null) {
             query.addCriteria(Criteria.where("status").is(inputQuery.getAuctionStatus()));
         }
+        System.out.println(query);
         return mongoTemplate.find(query, Auction.class);
     }
 

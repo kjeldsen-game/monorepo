@@ -21,19 +21,16 @@ public class PlayerAgingUseCase {
     public void increaseAge() {
         List<Player> players = playerReadRepository.findAll();
         log.info("PlayerAgingUseCase executed for total {} players!", players.size());
-        players.forEach(player -> {
-            playerAging(player);
-            playerWriteRepository.save(player);
-        });
+        //            playerWriteRepository.save(player);
+        players.forEach(this::playerAging);
     }
 
     public void playerAging(Player player) {
         PlayerAge age = player.getAge();
-        // log.info("before executed for age {} {} {}", age.getYears(), age.getMonths(),
-        // age.getDays());
+        log.info("before executed for age {} {} {}", age.getYears(), age.getMonths(), age.getDays());
         PlayerAge playerAge = PlayerAge.gettingOlder(age);
-        // log.info("after executed for age {} {} {}", playerAge.getYears(),
-        // playerAge.getMonths(), playerAge.getDays());
+        log.info("after executed for age {} {} {}", playerAge.getYears(), playerAge.getMonths(), playerAge.getDays());
         player.setAge(playerAge);
+        playerWriteRepository.save(player);
     }
 }

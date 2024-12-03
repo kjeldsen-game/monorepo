@@ -46,7 +46,7 @@ public interface PlayerMapper {
 
     default com.kjeldsen.player.rest.model.PlayerAge map(com.kjeldsen.player.domain.PlayerAge playerAge) {
         com.kjeldsen.player.rest.model.PlayerAge var1 = new com.kjeldsen.player.rest.model.PlayerAge();
-        var1.setYears(BigDecimal.valueOf(playerAge.getYears()));
+        var1.setYears(playerAge.getYears());
         var1.setMonths(BigDecimal.valueOf(playerAge.getMonths()));
         var1.setDays(BigDecimal.valueOf(playerAge.getDays()));
         return var1;
