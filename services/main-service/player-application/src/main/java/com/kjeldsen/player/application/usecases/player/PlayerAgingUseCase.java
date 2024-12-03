@@ -21,10 +21,8 @@ public class PlayerAgingUseCase {
     public void increaseAge() {
         List<Player> players = playerReadRepository.findAll();
         log.info("PlayerAgingUseCase executed for total {} players!", players.size());
-        players.forEach(player -> {
-            playerAging(player);
-            playerWriteRepository.save(player);
-        });
+        //            playerWriteRepository.save(player);
+        players.forEach(this::playerAging);
     }
 
     public void playerAging(Player player) {
