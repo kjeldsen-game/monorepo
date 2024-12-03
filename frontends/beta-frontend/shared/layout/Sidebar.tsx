@@ -15,7 +15,7 @@ import Groups2Icon from '@mui/icons-material/Groups2';
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 import Link from 'next/link';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
-
+import TerminalIcon from '@mui/icons-material/Terminal';
 const drawerWidth = '180px';
 
 const providedIcons = {
@@ -25,6 +25,7 @@ const providedIcons = {
   market: <LocalGroceryStoreIcon />,
   team: <Groups2Icon />,
   training: <FitnessCenterIcon />,
+  simulator: <TerminalIcon />,
 };
 export interface Item {
   name: string;

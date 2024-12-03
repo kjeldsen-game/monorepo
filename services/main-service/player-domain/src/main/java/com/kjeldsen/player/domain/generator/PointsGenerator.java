@@ -2,7 +2,9 @@ package com.kjeldsen.player.domain.generator;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PointsGenerator {
     private static final Float increaseMaxPercentage = 0.3f;
@@ -10,6 +12,7 @@ public class PointsGenerator {
     public static int generatePointsRise(int currentDay) {
         double probability = probabilityRiseBasedOnCurrentDay(currentDay);
         double randomProbabilityRise = RandomGenerator.random() * 100;
+        log.info("CurrentDay {} Probability {} randomProbabilityRise {}", currentDay ,probability, randomProbabilityRise);
 
         if (randomProbabilityRise <= probability) {
             return generatePoints();

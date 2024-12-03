@@ -37,7 +37,6 @@ public class ExecuteDeclineTrainingUseCase {
         // Retrieve the player skill that have actual greater > 30
         PlayerSkill skill = PlayerProvider.randomSkillForSpecificPlayerDeclineUseCase(Optional.of(player));
         if (skill == null) {
-//            withoutSkillDecline.getAndSet(withoutSkillDecline.get() + 1);
             return;
         }
 
@@ -46,17 +45,11 @@ public class ExecuteDeclineTrainingUseCase {
 
         if (event.isPresent()) {
             if (event.get().getPointsBeforeTraining() > event.get().getPointsAfterTraining()) {
-                // Last decline was successful set day to 1
-//                successfulDeclines.getAndSet(successfulDeclines.get() + 1);
                 executeDeclineAndStoreEvent(player, skill, 1);
             } else {
-                // Last decline was not successful, increase the day
-//                failedDeclines.getAndSet(failedDeclines.get() + 1);
                 executeDeclineAndStoreEvent(player, skill, event.get().getCurrentDay() + 1);
             }
         } else {
-            // No decline events about player before, create a new one
-//            failedDeclines.getAndSet(failedDeclines.get() + 1);
             executeDeclineAndStoreEvent(player, skill, 1);
         }
     }

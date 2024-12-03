@@ -33,5 +33,6 @@ public class PlayerAgingUseCase {
         PlayerAge playerAge = PlayerAge.gettingOlder(age);
         log.info("after executed for age {} {} {}", playerAge.getYears(), playerAge.getMonths(), playerAge.getDays());
         player.setAge(playerAge);
+        playerWriteRepository.save(player);
     }
 }

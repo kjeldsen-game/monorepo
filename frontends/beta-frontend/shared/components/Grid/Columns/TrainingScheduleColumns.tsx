@@ -206,7 +206,7 @@ export const trainingScheduleColumns = (
         return renderSkillCell(
           params,
           PlayerSkill.OFFENSIVE_POSITIONING,
-          PlayerSkill.POSITIONING,
+          PlayerSkill.REFLEXES,
         );
       },
     },

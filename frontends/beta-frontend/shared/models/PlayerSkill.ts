@@ -12,7 +12,6 @@ export enum PlayerSkill {
   INTERCEPTIONS = 'INTERCEPTIONS',
   CONTROL = 'CONTROL',
   ORGANIZATION = 'ORGANIZATION',
-  POSITIONING = 'POSITIONING',
   ONE_ON_ONE = 'ONE_ON_ONE',
   INTERCEPTING = 'INTERCEPTING', // Currently for engine use only, ignore
 }

@@ -836,7 +836,7 @@ components:
       type: object
       properties:
         years:
-          type: number
+          type: integer
           format: int32
           minimum: 15
           maximum: 33
@@ -982,6 +982,19 @@ components:
           default: false
         player:
           $ref: "#/components/schemas/CreatePlayerRequest"
+        skills:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerSkill"
+          example:
+            - SCORING
+            - TACKLING
+            - BALL_CONTROL
+            - PASSING
+            - AERIAL
+            - CONSTITUTION
+            - DEFENSIVE_POSITIONING
+            - REFLEXES
 
     SimulateDaysResponse:
       type: object
@@ -992,6 +1005,8 @@ components:
           type: string
         playerName:
           type: string
+        points:
+          type: integer
         eventType:
           type: string
         pointsBefore:
@@ -1000,6 +1015,10 @@ components:
           type: integer
         message:
           type: string
+        potentialPoints:
+          type: integer
+        actualPoints:
+          type: integer
 
     PlayerScheduledTrainingResponse:
       type: object
@@ -1089,12 +1108,36 @@ components:
             $ref: "#/components/schemas/PlayerSkills"
           example:
             SCORING:
-              actual: 5
-              potential: 30
+              actual: 20
+              potential: 75
               playerSkillRelevance: CORE
+            BALL_CONTROL:
+              actual: 25
+              potential: 78
+              playerSkillRelevance: SECONDARY
+            PASSING:
+              actual: 30
+              potential: 72
+              playerSkillRelevance: CORE
+            AERIAL:
+              actual: 15
+              potential: 74
+              playerSkillRelevance: SECONDARY
             TACKLING:
-              actual: 10
-              potential: 40
+              actual: 40
+              potential: 75
+              playerSkillRelevance: CORE
+            DEFENSIVE_POSITIONING:
+              actual: 18
+              potential: 70
+              playerSkillRelevance: SECONDARY
+            REFLEXES:
+              actual: 22
+              potential: 77
+              playerSkillRelevance: SECONDARY
+            INTERCEPTIONS:
+              actual: 28
+              potential: 75
               playerSkillRelevance: SECONDARY
 
     GeneratePlayersRequest:

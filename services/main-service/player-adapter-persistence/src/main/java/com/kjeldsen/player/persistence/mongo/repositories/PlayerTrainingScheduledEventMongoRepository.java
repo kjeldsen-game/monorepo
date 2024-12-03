@@ -1,6 +1,8 @@
 package com.kjeldsen.player.persistence.mongo.repositories;
 
 import com.kjeldsen.domain.EventId;
+import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -18,4 +20,6 @@ public interface PlayerTrainingScheduledEventMongoRepository extends MongoReposi
 
     @Query("{ 'status': 'ACTIVE' }")
     List<PlayerTrainingScheduledEvent> findAllWhereStatusIsActive();
+
+    List<PlayerTrainingScheduledEvent> findAllByPlayerId(Player.PlayerId playerId);
 }

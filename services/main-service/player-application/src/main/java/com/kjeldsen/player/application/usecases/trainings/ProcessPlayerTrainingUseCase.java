@@ -4,6 +4,7 @@ import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingEventReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class ProcessPlayerTrainingUseCase {
 
     private final PlayerTrainingScheduledEventReadRepository playerTrainingScheduledEventReadRepository;
+    private final PlayerTrainingScheduledEventWriteRepository playerTrainingScheduledEventWriteRepository;
     private final PlayerTrainingEventReadRepository playerTrainingEventReadRepository;
     private final ExecutePlayerTrainingUseCase executePlayerTrainingUseCase;
 
@@ -38,6 +40,14 @@ public class ProcessPlayerTrainingUseCase {
 
             if (latestPlayerTrainingEvent.isPresent()) {
                 PlayerTrainingEvent trainingEvent = latestPlayerTrainingEvent.get();
+
+                // You reach the maximum so we this training is going to be set to INACTIVE
+                if (trainingEvent.getActualPoints() == 100) {
+                    scheduledTraining.setStatus(PlayerTrainingScheduledEvent.Status.INACTIVE);
+                    playerTrainingScheduledEventWriteRepository.save(scheduledTraining);
+                    return;
+                }
+
                 if (trainingEvent.getPointsAfterTraining() > trainingEvent.getPointsBeforeTraining()) {
                     // Points increased, the new training is starting from 1 day
                     log.info("There was already successful training for player {} skill {}, set day to 1!", trainingEvent.getPlayerId(), trainingEvent.getSkill());
