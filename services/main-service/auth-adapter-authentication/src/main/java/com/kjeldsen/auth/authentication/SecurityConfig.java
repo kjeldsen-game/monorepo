@@ -40,8 +40,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(requests -> requests
                 .requestMatchers("/v1/auth/**", "/swagger-ui/**", "/api-docs/**", "/actuator/**", "/actuator")
                 .permitAll()
-                .requestMatchers("/v1/simulator/**")
-                .hasRole("ADMIN")
+//                .requestMatchers("/v1/simulator/**")
+//                .hasRole("ADMIN")
                 .anyRequest()
                 .authenticated())
             .oauth2ResourceServer(oauth2 -> oauth2
