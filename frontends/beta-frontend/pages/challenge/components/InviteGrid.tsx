@@ -18,7 +18,7 @@ const InviteGrid: React.FC<InviteGridProps> = () => {
 
   const [selectedPage, setSelectedPage] = useState<number>(0);
 
-  const { allMatches } = useAllPlayerMatchesRepository(
+  const { pendingMatches } = useAllPlayerMatchesRepository(
     selectedPage,
     10,
     userData?.user.teamId,
@@ -30,7 +30,7 @@ const InviteGrid: React.FC<InviteGridProps> = () => {
     userData?.user.teamId,
   );
 
-  if (!allMatches || allMatches.length === 0) {
+  if (!pendingMatches || pendingMatches.length === 0) {
     return (
       <Box sx={{ width: '100%' }}>{t('challenge.no_pending_challenges')}</Box>
     );
@@ -48,7 +48,7 @@ const InviteGrid: React.FC<InviteGridProps> = () => {
     <Box sx={{ width: '100%' }}>
       <Grid
         isRowSelectable={() => false}
-        rows={allMatches ?? []}
+        rows={pendingMatches ?? []}
         columns={
           userData?.user.teamId
             ? inviteColumns(

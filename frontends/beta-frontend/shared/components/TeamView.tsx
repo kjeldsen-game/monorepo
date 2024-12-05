@@ -1,79 +1,117 @@
-import { Box, Button, CircularProgress, Tooltip, TooltipProps, styled, tooltipClasses } from '@mui/material'
-import TeamDetails from './TeamDetails'
-import PlayerTactics from './PlayerTactics'
-import TeamTactics from '@/shared/components/TeamTactics'
-import { teamColumn } from '@/shared/components/Grid/Columns/TeamColumn'
-import { SampleTeam } from '@/data/SampleTeam'
-import Grid from './Grid/Grid'
-import { Player } from '../models/Player'
-import { Team } from '../models/Team'
-import { useEffect, useMemo, useState } from 'react'
-import checkTeamComposition from '../utils/TeamCompositionRules'
-import TeamCompositionErrors from './TeamCompositionErrors'
-import { CompositionError } from '../models/CompositionError'
-import { PlayerLineupStatus } from '../models/PlayerLineupStatus'
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Tooltip,
+  TooltipProps,
+  styled,
+  tooltipClasses,
+} from '@mui/material';
+import TeamDetails from './TeamDetails';
+import PlayerTactics from './PlayerTactics';
+import TeamTactics from '@/shared/components/TeamTactics';
+import { teamColumn } from '@/shared/components/Grid/Columns/TeamColumn';
+import { SampleTeam } from '@/data/SampleTeam';
+import Grid from './Grid/Grid';
+import { Player } from '../models/Player';
+import { Team } from '../models/Team';
+import { useEffect, useMemo, useState } from 'react';
+import checkTeamComposition from '../utils/TeamCompositionRules';
+import TeamCompositionErrors from './TeamCompositionErrors';
+import { CompositionError } from '../models/CompositionError';
+import { PlayerLineupStatus } from '../models/PlayerLineupStatus';
 
-const CompositionTooltip = styled(({ className, ...props }: TooltipProps) => <Tooltip {...props} classes={{ popper: className }} />)(() => ({
+const CompositionTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(() => ({
   [`& .${tooltipClasses.tooltip}`]: {
     maxWidth: 500,
   },
-}))
+}));
 
 interface TeamProps {
-  isEditing: boolean
-  team: Team | undefined
-  handlePlayerChange?: (value: Player) => void
-  onTeamUpdate?: () => void
+  isEditing: boolean;
+  team: Team | undefined;
+  handlePlayerChange?: (value: Player) => void;
+  onTeamUpdate?: () => void;
 }
 
-const TeamView: React.FC<TeamProps> = ({ isEditing, team, handlePlayerChange, onTeamUpdate }: TeamProps) => {
-  const [compositionErrors, setCompositionErrors] = useState<CompositionError[]>([])
+const TeamView: React.FC<TeamProps> = ({
+  isEditing,
+  team,
+  handlePlayerChange,
+  onTeamUpdate,
+}: TeamProps) => {
+  const [compositionErrors, setCompositionErrors] = useState<
+    CompositionError[]
+  >([]);
 
   const memoizedCheck = useMemo(
-    () => checkTeamComposition(team?.players.filter((player) => player.status === PlayerLineupStatus.Active) ?? []),
+    () =>
+      checkTeamComposition(
+        team?.players.filter(
+          (player) => player.status === PlayerLineupStatus.Active,
+        ) ?? [],
+      ),
     [team?.players],
-  )
+  );
 
-  const memoizedColumns = useMemo(() => teamColumn(isEditing, handlePlayerChange), [isEditing, handlePlayerChange])
+  const memoizedColumns = useMemo(
+    () => teamColumn(isEditing, handlePlayerChange),
+    [isEditing, handlePlayerChange],
+  );
 
   useEffect(() => {
     if (team?.players) {
-      setCompositionErrors([...memoizedCheck])
+      setCompositionErrors([...memoizedCheck]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [team?.players])
+  }, [team?.players]);
 
   const saveButton = () => {
     if (isEditing) {
       return (
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'right',
+          }}>
           <CompositionTooltip
             disableHoverListener={compositionErrors.length === 0}
             placement={'left'}
             title={<TeamCompositionErrors errors={compositionErrors} />}>
             <span>
-              <Button variant="contained" onClick={onTeamUpdate} disabled={compositionErrors.length > 0}>
+              <Button
+                variant="contained"
+                onClick={onTeamUpdate}
+                // disabled={compositionErrors.length > 0}
+              >
                 Save
               </Button>
             </span>
           </CompositionTooltip>
         </Box>
-      )
+      );
     }
-  }
+  };
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ display: 'flex', marginBottom: '2rem', alignItems: 'center' }}>
-        <TeamDetails {...SampleTeam} />
+        <TeamDetails name={team?.name} />
         <PlayerTactics />
         <TeamTactics />
       </Box>
       <Box sx={{ width: '100%' }}>
         {saveButton()}
-        {team?.players ? <Grid rows={team?.players} columns={memoizedColumns} /> : <CircularProgress />}
+        {team?.players ? (
+          <Grid rows={team?.players} columns={memoizedColumns} />
+        ) : (
+          <CircularProgress />
+        )}
       </Box>
     </Box>
-  )
-}
-export default TeamView
+  );
+};
+export default TeamView;

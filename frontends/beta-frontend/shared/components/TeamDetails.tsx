@@ -1,21 +1,16 @@
-import Box from '@mui/material/Box'
-import { Typography } from '@mui/material'
-import Avatar from '@/shared/components/Avatar'
-import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation'
-import { SampleTeam, SampleTeamStats } from 'data/SampleTeam'
-import BarChartIcon from '@mui/icons-material/BarChart'
+import Box from '@mui/material/Box';
+import { Typography } from '@mui/material';
+import Avatar from '@/shared/components/Avatar';
+import { SampleTeamStats } from 'data/SampleTeam';
+import BarChartIcon from '@mui/icons-material/BarChart';
 
-const playerStatsStyle = {
-  background: 'linear-gradient(90deg, #29B6F6 0%, #1C97CE 100%);',
-  borderRadius: '4px',
-  color: 'white',
-  width: '170px',
-  height: '28px',
-  margin: '2px 0',
-  paddingLeft: '1rem',
+interface TeamDetailsProps {
+  name?: string;
 }
 
-export default function TeamDetails(SampleTeam: SampleTeamStats) {
+import React from 'react';
+
+const TeamDetails = ({ name }: TeamDetailsProps) => {
   return (
     <Box
       sx={{
@@ -28,15 +23,20 @@ export default function TeamDetails(SampleTeam: SampleTeamStats) {
           marginLeft: '3rem',
         }}>
         <Typography variant="body1">
-          <strong>{SampleTeam.name}</strong>
+          <strong>{name}</strong>
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <BarChartIcon sx={{ fontSize: 'large', color: '#A4BC10', marginRight: '4px' }} />
+          <BarChartIcon
+            sx={{ fontSize: 'large', color: '#A4BC10', marginRight: '4px' }}
+          />
           <Typography variant="body1" sx={{ color: '#A4BC10' }}>
-            {SampleTeam.position} Position
+            Team League Position
+            {/* {SampleTeam.position} Position */}
           </Typography>
         </Box>
       </Box>
     </Box>
-  )
-}
+  );
+};
+
+export default TeamDetails;

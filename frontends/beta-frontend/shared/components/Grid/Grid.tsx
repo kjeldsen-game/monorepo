@@ -16,6 +16,9 @@ function Grid<T>({ rows, columns, ...props }: GridProps<T>) {
           fontWeight: '600',
           borderRadius: '8%',
         },
+        '& .MuiDataGrid-cell:focus': {
+          outline: 'none', // Removes focus outline on click
+        },
         '& .super-app.goalkeeper .MuiDataGrid-cellContent': {
           backgroundColor: '#A4BC10',
         },

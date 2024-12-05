@@ -101,43 +101,24 @@ export const marketColumn = (
       minWidth: 50,
       flex: 1,
     },
-    {
-      ...baseColumnConfig,
-      field: 'Core Skills',
-      renderHeader: () => <div>CS</div>,
-      minWidth: 50,
-      renderCell: (params) => {
-        const coreSkills = filterCoreSkills(params.row.player.actualSkills);
-        const [firstSkill, secondSkill] = coreSkills;
-
-        return (
-          <div>
-            <span style={{ fontWeight: '900' }}>
-              {PlayerSkillToShortcut[firstSkill]}
-            </span>{' '}
-            /{PlayerSkillToShortcut[secondSkill]}
-          </div>
-        );
-      },
-    },
-    {
-      ...baseColumnConfig,
-      field: 'TODO',
-      renderHeader: () => <div>DV</div>,
-      minWidth: 50,
-      renderCell: (params) => (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          17
-          <ArrowRightIcon sx={{ color: '#A4BC10' }} />
-          <Typography sx={{ fontWeight: '900' }}>18</Typography>
-        </div>
-      ),
-    },
+    // {
+    //   ...baseColumnConfig,
+    //   field: 'TODO',
+    //   renderHeader: () => <div>DV</div>,
+    //   minWidth: 50,
+    //   renderCell: (params) => (
+    //     <div
+    //       style={{
+    //         display: 'flex',
+    //         alignItems: 'center',
+    //         justifyContent: 'center',
+    //       }}>
+    //       17
+    //       <ArrowRightIcon sx={{ color: '#A4BC10' }} />
+    //       <Typography sx={{ fontWeight: '900' }}>18</Typography>
+    //     </div>
+    //   ),
+    // },
     createSkillColumnConfig('DEFENSIVE_POSITIONING', 'DP'),
     createSkillColumnConfig('BALL_CONTROL', 'BC'),
     createSkillColumnConfig('SCORING', 'SC'),

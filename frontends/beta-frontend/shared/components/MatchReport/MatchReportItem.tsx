@@ -37,7 +37,7 @@ export const MatchReportItem: React.FC<MatchReportItemProps> = ({
         }>
         <Box
           textAlign={event.duel.initiator.teamId != homeId ? 'left' : 'right'}
-          sx={{ width: '50%' }}>
+          sx={{ width: '80%' }}>
           <MatchReportItemMessage
             homeId={homeId}
             duel={event.duel}

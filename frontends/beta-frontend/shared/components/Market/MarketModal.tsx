@@ -11,6 +11,7 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import { CloseOutlined } from '@mui/icons-material';
 import { AuctionMarket } from '@/shared/models/Auction';
 import { useAuctionRepository } from '@/pages/api/market/useAuctionRepository';
+import { formatDateToDDMMYY } from '@/shared/utils/DateUtils';
 
 interface AuctionProps {
   auction: AuctionMarket | undefined;
@@ -67,18 +68,6 @@ const MarketModal: React.FC<AuctionProps> = ({
       console.error('Failed to update auction:', error);
     }
   };
-
-  function formatDateToDDMMYY(dateString?: string): string {
-    if (!dateString) {
-      return '';
-    }
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = String(date.getFullYear()).slice(-2);
-
-    return `${day}/${month}/${year}`;
-  }
 
   return (
     <>
