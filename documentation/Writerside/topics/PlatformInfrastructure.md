@@ -13,7 +13,7 @@ management, primarily on Windows.
 Open the Start menu or press the Windows key + R. Type cmd or cmd.exe in the Run command box. Press Enter.
 
 - Follow this article to open in specific directory: [Open CMD in specific directory](https://www.lifewire.com/open-command-prompt-in-folder-8681085)
-
+ 
 #### Mac OS
 On your Mac, do one of the following:
 - Click the Launchpad icon  in the Dock, type Terminal in the search field, then click Terminal.
