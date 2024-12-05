@@ -65,7 +65,7 @@ jobs:
           name: docs
 
       - name: Unzip artifact
-        uses: montudor/action-zip@v1.0.0
+        uses: montudor/action-zip@v1.0 w.0
         with:
           args: unzip -qq ${{ env.ARTIFACT }} -d dir
 

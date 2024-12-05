@@ -2,6 +2,7 @@ package com.kjeldsen.player.domain.provider;
 
 import com.github.javafaker.Faker;
 import com.kjeldsen.player.domain.*;
+import com.kjeldsen.player.domain.generator.BloomPhaseGenerator;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
@@ -114,6 +115,7 @@ public class PlayerProvider {
             .position(positionTendencies.getPosition())
             .status(PlayerStatus.INACTIVE)
             .playerOrder(PlayerOrder.NONE)
+            .bloomYear(BloomPhaseGenerator.generateBloomPhaseYear())
             .actualSkills(skillsBasedOnTendency(positionTendencies, totalPoints))
             .teamId(teamId)
             .category(playerCategory == PlayerCategory.JUNIOR ? PlayerCategory.JUNIOR : PlayerCategory.SENIOR)
