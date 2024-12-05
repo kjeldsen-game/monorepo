@@ -7,6 +7,7 @@ import {
   leftColumnConfig,
   rightColumnConfig,
 } from './ColumnsConfig';
+import { formatDateAndTime } from '@/shared/utils/DateUtils';
 
 const incomingMatchesColumns = (
   handleLineupChange: (value: number, teamId: string) => void,
@@ -17,7 +18,11 @@ const incomingMatchesColumns = (
     renderHeader: () => <div style={{ paddingInline: '20px' }}>Away</div>,
     renderCell: (params: GridCellParams) => (
       <Link
-        style={{ paddingInline: '20px' }}
+        style={{
+          paddingInline: '20px',
+          color: 'black',
+          textDecoration: 'none',
+        }}
         passHref
         href={`/team/${params.row.away.id}`}>
         {params.row.away.name}
@@ -29,7 +34,13 @@ const incomingMatchesColumns = (
     ...baseColumnConfig,
     renderHeader: () => <div style={{ paddingInline: '20px' }}>Home</div>,
     renderCell: (params: GridCellParams) => (
-      <Link passHref href={`/team/${params.row.home.id}`}>
+      <Link
+        style={{
+          color: 'black',
+          textDecoration: 'none',
+        }}
+        passHref
+        href={`/team/${params.row.home.id}`}>
         {params.row.home.name}
       </Link>
     ),
@@ -38,6 +49,9 @@ const incomingMatchesColumns = (
     field: 'dateTime',
     renderHeader: () => <div style={{ paddingInline: '20px' }}>Date</div>,
     ...baseColumnConfig,
+    renderCell: (params: GridCellParams) => {
+      return formatDateAndTime(params.row?.dateTime);
+    },
   },
   {
     field: 'lineupButton',

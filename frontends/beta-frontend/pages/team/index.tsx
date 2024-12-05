@@ -13,10 +13,12 @@ const Team: NextPage = () => {
     required: true,
   });
 
-  const { data, updateTeam } = useTeamRepository(
+  const { data, updateTeam, error, isLoading } = useTeamRepository(
     userData?.user.teamId,
     userData?.accessToken,
   );
+
+  console.log(error);
 
   const [teamPlayers, setTeamPlayers] = useState<Player[]>(data?.players ?? []);
 
@@ -36,8 +38,26 @@ const Team: NextPage = () => {
     });
   };
 
-  const handleTeamUpdate = () => {
-    updateTeam(teamPlayers);
+  const handleTeamUpdate = async () => {
+    // console.log(teamPlayers);
+    try {
+      const response = await updateTeam(teamPlayers);
+      if (response.status == 500) {
+        // setShowAlert({
+        //   open: true,
+        //   message: response.message,
+        //   type: 'error',
+        // });
+      } else {
+        // setShowAlert({
+        //   open: true,
+        //   message: 'Pricing updated successfully',
+        //   type: 'success',
+        // });
+      }
+    } catch (error) {
+      console.error('Failed to update auction:', error);
+    }
   };
 
   return (

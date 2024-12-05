@@ -14,7 +14,7 @@ const fetcher = (teamId?: string, token?: string | null) => {
 };
 
 const useTeamRepository = (team?: string, token?: string) => {
-  const { data, mutate } = useSWR<Team | undefined>(
+  const { data, mutate, error, isLoading } = useSWR<Team | undefined>(
     team ? API + team : null,
     () => fetcher(team, token ? token : null),
   );
@@ -81,11 +81,16 @@ const useTeamRepository = (team?: string, token?: string) => {
       newData,
       undefined,
       token,
-    ).then(() => {
-      mutate();
-    });
+    )
+      .then(() => {
+        mutate();
+      })
+      .catch((error) => {
+        console.error('Error updating auction:', error);
+        throw error;
+      });
   };
 
-  return { data, updateTeamPlayer, updateTeam };
+  return { data, error, isLoading, updateTeamPlayer, updateTeam };
 };
 export { useTeamRepository };

@@ -7,6 +7,10 @@ import {
   leftColumnConfig,
   rightColumnConfig,
 } from './ColumnsConfig';
+import {
+  formatDateAndTime,
+  formatDateToDDMMYY,
+} from '@/shared/utils/DateUtils';
 
 const inviteColumns = (
   ownTeamId: string,
@@ -19,7 +23,11 @@ const inviteColumns = (
     renderHeader: () => <div style={{ paddingInline: '20px' }}>Match ID</div>,
     renderCell: (params: GridCellParams) => (
       <Link
-        style={{ paddingInline: '20px' }}
+        style={{
+          paddingInline: '20px',
+          color: 'black',
+          textDecoration: 'none',
+        }}
         passHref
         href={`/team/${params.row.away.id}`}>
         {params.value}
@@ -30,6 +38,9 @@ const inviteColumns = (
     field: 'dateTime',
     renderHeader: () => <div style={{ paddingInline: '20px' }}>Date</div>,
     ...baseColumnConfig,
+    renderCell: (params: GridCellParams) => {
+      return formatDateAndTime(params.row?.dateTime);
+    },
   },
   {
     field: 'acceptButton',

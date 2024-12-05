@@ -17,7 +17,11 @@ const leagueColumns = (
     ...leftColumnConfig,
     renderCell: (params: GridCellParams) => (
       <Link
-        style={{ paddingInline: '20px' }}
+        style={{
+          paddingInline: '20px',
+          color: 'black',
+          textDecoration: 'none',
+        }}
         passHref
         href={`/team/${params.row.id}`}>
         {params.row.name}

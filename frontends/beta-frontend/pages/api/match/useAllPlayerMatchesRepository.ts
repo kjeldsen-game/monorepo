@@ -35,7 +35,8 @@ const useAllPlayerMatchesRepository = (
   };
 
   const pastMatches = allMatches?.filter(
-    (match) => new Date(match.dateTime).getTime() < new Date().getTime(),
+    (match) => match.status === 'ACCEPTED',
+    // (match) => new Date(match.dateTime).getTime() < new Date().getTime(),
   );
   const incomingMatches = allMatches?.filter(
     (match) => new Date(match.dateTime).getTime() > new Date().getTime(),
@@ -43,7 +44,17 @@ const useAllPlayerMatchesRepository = (
   const acceptedMatches = allMatches?.filter(
     (match) => match.status === 'ACCEPTED',
   );
+  const pendingMatches = allMatches?.filter(
+    (match) => match.status === 'PENDING',
+  );
 
-  return { allMatches, pastMatches, incomingMatches, acceptedMatches, refetch };
+  return {
+    allMatches,
+    pastMatches,
+    incomingMatches,
+    acceptedMatches,
+    pendingMatches,
+    refetch,
+  };
 };
 export { useAllPlayerMatchesRepository };
