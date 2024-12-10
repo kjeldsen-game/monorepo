@@ -10,6 +10,7 @@
 local-env/default/volume
 local-env/nocode/volume
 local-env/aws/volume
+/services/main-service/auth-service/src/main/java/com/kjeldsen/auth/config/CorsFilter.java
 local-env/.mongo_data
 
 ### Terraform ###

@@ -7,6 +7,7 @@ import com.kjeldsen.match.entities.TeamRole;
 import com.kjeldsen.match.modifers.HorizontalPressure;
 import com.kjeldsen.match.modifers.Tactic;
 import com.kjeldsen.match.modifers.VerticalPressure;
+import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerReceptionPreference;
@@ -77,6 +78,9 @@ public final class RandomHelper {
     }
 
     private static Player genPlayerWithPosition(Team team, PlayerStatus status, PlayerPosition position) {
+
+        PlayerOrder playerOrder = genPlayerOrder();
+
         return Player.builder()
                 .id(RandomStringUtils.randomNumeric(5))
                 .teamId(team.getId())
@@ -84,7 +88,8 @@ public final class RandomHelper {
                 .name(faker.name().firstName() + " " + faker.name().lastName()) // Avoid title ie Miss
                 .status(status)
                 .position(position)
-                .playerOrder(genPlayerOrder())
+                .playerOrder(playerOrder)
+                .playerOrderDestinationPitchArea(genPlayerOrderDestinationPitchArea(playerOrder))
                 .receptionPreference(genPlayerReceptionPreference())
                 .skills(genSkillSet()).build();
     }
@@ -105,6 +110,15 @@ public final class RandomHelper {
         return Arrays.stream(PlayerSkill.values())
             .map(skill -> Map.entry(skill, genAttributeRating()))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    private static PitchArea genPlayerOrderDestinationPitchArea(PlayerOrder playerOrder) {
+
+        if (PlayerOrder.PASS_TO_AREA == playerOrder) return PitchArea.midfield()[new Random().nextInt(PitchArea.midfield().length)];
+
+        if (PlayerOrder.DRIBBLE_TO_AREA == playerOrder) return PitchArea.midfieldAndForward()[new Random().nextInt(PitchArea.midfieldAndForward().length)];
+
+        return null;
     }
 
     private static PlayerOrder genPlayerOrder() {

@@ -7,6 +7,7 @@ import com.kjeldsen.match.entities.duel.DuelType;
 import com.kjeldsen.match.recorder.GameProgressRecord;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.utils.JsonUtils;
+import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerReceptionPreference;
@@ -40,6 +41,7 @@ public class Player {
     PlayerStatus status;
     Map<PlayerSkill, Integer> skills;
     PlayerOrder playerOrder;
+    PitchArea playerOrderDestinationPitchArea;
     PlayerReceptionPreference receptionPreference;
 
     // Instead of accessing the skill points directly, this method should be used to determine the
