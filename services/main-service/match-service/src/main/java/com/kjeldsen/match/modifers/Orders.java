@@ -29,9 +29,10 @@ public class Orders {
     public static DuelParams apply(GameState state, DuelParams params, PlayerOrder order) {
         // Player orders are not applied to every single play. For now whether a player order is
         // applied is randomly determined.
+        // Also, no player orders are applied if inside a chain action sequence.
         double playerOrderProbability = 0.5;
         double flip = new Random().nextDouble();
-        if (flip < playerOrderProbability) {
+        if (flip < playerOrderProbability || state.getChainActionSequence().isActive()) {
             return params;
         }
 
@@ -42,6 +43,9 @@ public class Orders {
             case PASS_FORWARD -> passForward(state, params);
             case LONG_SHOT -> longShot(state, params);
             case CHANGE_FLANK -> changeFlank(state, params);
+            case PASS_TO_AREA -> passToArea(state, params);
+            case DRIBBLE_TO_AREA -> dribbleToArea(state, params);
+            case WALL_PASS -> wallPass(state, params);
             case NONE -> params;
         };
     }
@@ -140,4 +144,121 @@ public class Orders {
             .destinationPitchArea(destinationArea)
             .build();
     }
+
+    // Player pass the ball to a predefined area.
+    private static DuelParams passToArea(GameState state, DuelParams params) {
+
+        // The destination area needs to be specified for the player.
+        PitchArea destinationArea = params.getInitiator().getPlayerOrderDestinationPitchArea();
+        if (destinationArea == null) throw new GameStateException(params.getState(), "Pass to area player order requires a destination pitch area.");
+
+        // Only from midfield.
+        if (params.getState().getBallState().getArea().rank() != PitchRank.MIDDLE) {
+            return params;
+        }
+
+        // Only to midfield.
+        if (destinationArea.rank() != PitchRank.MIDDLE) {
+            throw new GameStateException(params.getState(), "Pass to area player order should only have midfield as origin and destination.");
+        }
+
+        // Current area should be different from destination area.
+        if (params.getState().getBallState().getArea().equals(params.getInitiator().getPlayerOrderDestinationPitchArea())) {
+            return params;
+        }
+
+        Optional<Player> receiver = ReceiverSelection.selectFromArea(
+                params.getState(), params.getInitiator(), destinationArea);
+
+        if (receiver.isEmpty()) {
+            return params;
+        }
+
+        DuelType duelType = DuelTypeSelection.select(state, Action.PASS, receiver.get());
+
+        return DuelParams.builder()
+                .state(params.getState())
+                .duelType(duelType)
+                .initiator(params.getInitiator())
+                .challenger(params.getChallenger())
+                .receiver(receiver.get())
+                .origin(DuelOrigin.PLAYER_ORDER)
+                .disruptor(params.getDisruptor())
+                .appliedPlayerOrder(PlayerOrder.PASS_TO_AREA)
+                .destinationPitchArea(destinationArea)
+                .build();
+    }
+
+    // Player moves with the the ball to a predefined area.
+    private static DuelParams dribbleToArea(GameState state, DuelParams params) {
+
+        // The destination area needs to be specified for the player.
+        PitchArea destinationArea = params.getInitiator().getPlayerOrderDestinationPitchArea();
+        if (destinationArea == null) throw new GameStateException(params.getState(), "Pass to area player order requires a destination pitch area.");
+
+        // Only from midfield.
+        if (params.getState().getBallState().getArea().rank() != PitchRank.MIDDLE) {
+            return params;
+        }
+
+        // Only to midfield or forward
+        if (destinationArea.rank() != PitchRank.MIDDLE && destinationArea.rank() != PitchRank.FORWARD) {
+            throw new GameStateException(params.getState(), "Pass to area player order should only have midfield as origin and destination.");
+        }
+
+        // Current area should be different from destination area.
+        if (params.getState().getBallState().getArea().equals(params.getInitiator().getPlayerOrderDestinationPitchArea())) {
+            return params;
+        }
+
+        DuelType duelType = DuelTypeSelection.select(state, Action.DRIBBLE, params.getInitiator());
+
+        return DuelParams.builder()
+                .state(params.getState())
+                .duelType(duelType)
+                .initiator(params.getInitiator())
+                .challenger(params.getChallenger())
+                .origin(DuelOrigin.PLAYER_ORDER)
+                .disruptor(params.getDisruptor())
+                .appliedPlayerOrder(PlayerOrder.DRIBBLE_TO_AREA)
+                .destinationPitchArea(destinationArea)
+                .build();
+    }
+
+    // Player starts a wall pass with another player.
+    private static DuelParams wallPass(GameState state, DuelParams params) {
+
+        // Only from midfield.
+        if (params.getState().getBallState().getArea().rank() != PitchRank.MIDDLE) {
+            return params;
+        }
+        // Sets a receiver (replaces another if previously set).
+        Optional<Player> receiver =
+                ReceiverSelection.selectMidfielder(params.getState(), params.getInitiator());
+        if (receiver.isEmpty()) {
+            return params;
+        }
+
+        // Wall pass should only pass to midfield.
+        PitchArea destinationArea = PitchAreaSelection.select(state.getBallState(), receiver.get(), true)
+                .orElseThrow(() -> new GameStateException(state, "No pitch area to select from"));
+        if (destinationArea.rank() != PitchRank.MIDDLE) {
+            return params;
+        }
+
+        DuelType duelType = DuelTypeSelection.select(state, Action.PASS, params.getInitiator());
+
+        return DuelParams.builder()
+                .state(params.getState())
+                .duelType(duelType)
+                .initiator(params.getInitiator())
+                .challenger(params.getChallenger())
+                .receiver(receiver.get())
+                .destinationPitchArea(destinationArea)
+                .origin(DuelOrigin.PLAYER_ORDER)
+                .disruptor(params.getDisruptor())
+                .appliedPlayerOrder(PlayerOrder.WALL_PASS)
+                .build();
+    }
+
 }

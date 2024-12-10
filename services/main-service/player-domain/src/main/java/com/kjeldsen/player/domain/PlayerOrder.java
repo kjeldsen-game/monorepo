@@ -14,6 +14,9 @@ public enum PlayerOrder {
     PASS_FORWARD,
     LONG_SHOT,
     CHANGE_FLANK,
+    PASS_TO_AREA,
+    DRIBBLE_TO_AREA,
+    WALL_PASS,
 
     // Forward orders
 
@@ -21,5 +24,5 @@ public enum PlayerOrder {
 
     // Disabled for player - NONE is also the default order
 
-    NONE;
+    NONE
 }

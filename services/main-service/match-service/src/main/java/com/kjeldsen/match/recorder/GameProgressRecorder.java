@@ -19,7 +19,8 @@ public class GameProgressRecorder {
 
     public void record(String detail, GameState state, GameProgressRecord.Type type, GameProgressRecord.DuelStage duelStage) {
 
-        if (List.of(GameProgressRecord.Type.SUMMARY).contains(type)) {
+        if (List.of(GameProgressRecord.Type.SUMMARY, GameProgressRecord.Type.CALCULATION).contains(type)) {
+            System.out.println("");
             System.out.println("Clock " + state.getClock() + " - " + detail);
         }
 

@@ -75,7 +75,7 @@ public enum PitchArea {
 
     // Returns true if the area of a player from the *same* team is adjacent to or is the same as
     // this area.
-    public boolean teammateIsNearby(PitchArea area) {
+    public boolean isNearby(PitchArea area) {
         boolean leftAndRight = this.file() == PitchFile.LEFT && area.file() == PitchFile.RIGHT;
         boolean rightAndLeft = this.file() == PitchFile.RIGHT && area.file() == PitchFile.LEFT;
         boolean frontAndBack = this.rank() == PitchRank.FORWARD && area.rank() == PitchRank.BACK;
@@ -112,4 +112,26 @@ public enum PitchArea {
             case RIGHT_BACK -> LEFT_BACK;
         };
     }
+
+    public PitchArea rankUp() {
+        return switch (this) {
+            case LEFT_FORWARD -> LEFT_FORWARD;
+            case CENTRE_FORWARD -> CENTRE_FORWARD;
+            case RIGHT_FORWARD -> RIGHT_FORWARD;
+            case LEFT_MIDFIELD -> LEFT_FORWARD;
+            case CENTRE_MIDFIELD -> CENTRE_FORWARD;
+            case RIGHT_MIDFIELD -> RIGHT_FORWARD;
+            case LEFT_BACK -> LEFT_MIDFIELD;
+            case CENTRE_BACK -> CENTRE_MIDFIELD;
+            case RIGHT_BACK -> RIGHT_MIDFIELD;
+        };
+    }
+    public static PitchArea[] midfield() {
+        return new PitchArea[]{LEFT_MIDFIELD, CENTRE_MIDFIELD, RIGHT_MIDFIELD};
+    }
+
+    public static PitchArea[] midfieldAndForward() {
+        return new PitchArea[]{LEFT_MIDFIELD, CENTRE_MIDFIELD, RIGHT_MIDFIELD, RIGHT_FORWARD, CENTRE_FORWARD, LEFT_FORWARD};
+    }
+
 }

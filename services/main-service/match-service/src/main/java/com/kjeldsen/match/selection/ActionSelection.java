@@ -1,6 +1,7 @@
 package com.kjeldsen.match.selection;
 
 import com.kjeldsen.match.entities.Action;
+import com.kjeldsen.match.entities.Play;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.GameStateException;
@@ -37,18 +38,31 @@ public class ActionSelection {
         if (legalActions.size() == 1 && legalActions.get(0) == Action.PASS) {
             return List.of(Action.PASS);
         }
+
         PitchArea pitchArea = state.getBallState().getArea();
 
         List<Action> actions = legalActions.stream()
             // Prevents players in back area from positioning - this is required to force defensive
             // midfielders (who have receded into the back area) to pass the ball forward.
             .filter(action -> !(action == Action.POSITION && pitchArea.rank() == PitchRank.BACK))
-            // Prevents forwards from passing the ball when in penalty box
+            // Prevents forwards from passing the ball to area when in penalty box
             .filter(action ->
-                !(action == Action.PASS && player.getPosition() == PlayerPosition.FORWARD && pitchArea.rank() == PitchRank.FORWARD && pitchArea.file() == PitchArea.PitchFile.CENTRE))
+                !((action == Action.PASS )
+                        && player.getPosition() == PlayerPosition.FORWARD
+                        && pitchArea.rank() == PitchRank.FORWARD
+                        && pitchArea.file() == PitchArea.PitchFile.CENTRE))
             // Prevents certain players from shooting
             .filter(action -> !(action == Action.SHOOT && shootingProhibited(player, pitchArea)))
             .toList();
+
+        // If inside a chained action sequence, chose the only valid action.
+        if (state.getChainActionSequence().isActive()) {
+            Play lastPlay = state.lastPlay().get();
+            switch (lastPlay.getDuel().getType()) {
+                // If the last duel was positional, then the player must pass to the player that initiated the chained action sequence.
+                case POSITIONAL ->  actions = actions.stream().filter(action -> action == Action.PASS).toList();
+            }
+        }
 
         if (actions.isEmpty()) {
             log.info("Current area: {}", pitchArea.toString());
@@ -58,6 +72,10 @@ public class ActionSelection {
                 "No valid actions after action filters were applied");
         }
         return actions;
+    }
+
+    private static boolean dribblingProhibited(Player player, PitchArea pitchArea) {
+        return pitchArea.rank() != PitchRank.MIDDLE;
     }
 
     private static boolean shootingProhibited(Player player, PitchArea pitchArea) {
