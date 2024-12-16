@@ -31,6 +31,7 @@ const TooltipDataItem: React.FC<TooltipDataItemProps> = ({
       </Box>
       <Box
         sx={{
+          marginLeft: '10px',
           textAlign: 'left',
           fontWeight: 'normal',
           color: '#A4BC10',

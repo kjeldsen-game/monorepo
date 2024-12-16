@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box'
+import Box from '@mui/material/Box';
 
 export default function Avatar() {
   return (
@@ -12,5 +12,5 @@ export default function Avatar() {
         minWidth: '120px',
         minHeight: '120px',
       }}></Box>
-  )
+  );
 }

@@ -409,6 +409,18 @@ components:
         - INACTIVE
         - BENCH
 
+    PitchArea:
+      type: string
+      enum:
+        - LEFT_FORWARD
+        - CENTRE_FORWARD
+        - RIGHT_FORWARD
+        - LEFT_MIDFIELD
+        - CENTRE_MIDFIELD
+        - RIGHT_MIDFIELD
+        - LEFT_BACK
+        - CENTRE_BACK
+        - RIGHT_BACK
     PlayerPosition:
       type: string
       example: CENTRE_BACK
@@ -453,6 +465,10 @@ components:
       type: object
       properties:
         clock:
+          type: integer
+        homeScore:
+          type: integer
+        awayScore:
           type: integer
         action:
           $ref: "#/components/schemas/ActionResponse"
@@ -501,6 +517,8 @@ components:
           $ref: "#/components/schemas/DuelStats"
         challengerStats:
           $ref: "#/components/schemas/DuelStats"
+        pitchArea:
+          $ref: "#/components/schemas/PitchArea"
 
     DuelResultResponse:
       type: string

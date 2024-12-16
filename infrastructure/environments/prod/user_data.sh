@@ -8,6 +8,10 @@ usermod -a -G docker ec2-user
 # Install AWS CLI
 yum install -y aws-cli
 
+# Data persistence 
+curl -O https://fastdl.mongodb.org/tools/db/mongodb-database-tools-amazon2-x86_64-100.10.0.rpm
+sudo yum install -y mongodb-database-tools-*-100.10.0.rpm
+
 # Set password for ec2-user
 echo "ec2-user:${ssh_password}" | chpasswd
 

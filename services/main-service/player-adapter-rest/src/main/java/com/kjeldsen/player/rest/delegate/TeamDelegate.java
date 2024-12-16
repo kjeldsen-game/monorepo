@@ -4,6 +4,7 @@ import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.application.usecases.economy.*;
 import com.kjeldsen.player.domain.*;
+import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerStatus;
 import com.kjeldsen.player.domain.Team.TeamId;
@@ -191,6 +192,7 @@ public class TeamDelegate implements TeamApiDelegate {
             boolean playerChangingPositionToGoalkeeper = !PlayerPosition.GOALKEEPER.equals(player.getPosition()) && PlayerPosition.GOALKEEPER.equals(PlayerPosition.valueOf(update.getPosition().getValue()));
             if (playerChangingPositionFromGoalkeeper || playerChangingPositionToGoalkeeper) throw new RuntimeException(player.getName() + ": GOALKEEPER position is not changeable.");
 
+            player.setPlayerOrder(PlayerOrder.valueOf(update.getPlayerOrder().name()));
             player.setPosition(PlayerPosition.valueOf(update.getPosition().name()));
             player.setStatus(PlayerStatus.valueOf(update.getStatus().name()));
             playerWriteRepository.save(player);

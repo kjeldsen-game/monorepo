@@ -1,6 +1,14 @@
 import styled from '@emotion/styled';
-import { Box, Grid, Tooltip, tooltipClasses, Typography } from '@mui/material';
-import { ReactNode } from 'react';
+import { CloseOutlined } from '@mui/icons-material';
+import {
+  Box,
+  Grid,
+  IconButton,
+  Tooltip,
+  tooltipClasses,
+  Typography,
+} from '@mui/material';
+import { ReactNode, useState } from 'react';
 
 interface CustomTooltipProps {
   className?: string;
@@ -16,26 +24,64 @@ const CustomTooltip = styled(
     tooltipContent,
     heading,
     ...props
-  }: CustomTooltipProps) => (
-    <Tooltip
-      {...props}
-      title={
-        <Box sx={{ color: 'black' }}>
-          <Typography
-            fontSize={'14px'}
-            fontWeight={'bold'}
-            paddingBottom={'5px'}
-            textAlign={'center'}>
-            {heading}
-          </Typography>
-          {tooltipContent}
-        </Box>
-      }
-      classes={{ popper: className }}
-      arrow>
-      <span>{children}</span>
-    </Tooltip>
-  ),
+  }: CustomTooltipProps) => {
+    const [open, setOpen] = useState(false);
+
+    const handleTooltipOpen = () => setOpen(true);
+    const handleTooltipClose = () => setOpen(false);
+
+    return (
+      <Tooltip
+        {...props}
+        open={open}
+        onClose={handleTooltipClose}
+        disableHoverListener
+        title={
+          <Box
+            sx={{ color: 'black' }}
+            onMouseEnter={handleTooltipOpen}
+            // onMouseLeave={handleTooltipClose}
+          >
+            <IconButton
+              sx={{
+                width: '12px',
+                height: '12px',
+                position: 'absolute',
+                left: 'calc(100% - 20px)',
+                top: '3%',
+                background: '#E5E5E5',
+              }}
+              onClick={handleTooltipClose}
+              aria-label="close">
+              <CloseOutlined
+                sx={{
+                  color: '#4F4F4F',
+                  width: '10px',
+                  height: '10px',
+                }}
+              />
+            </IconButton>
+            <Typography
+              fontSize={'14px'}
+              fontWeight={'bold'}
+              paddingBottom={'5px'}
+              textAlign={'center'}>
+              {heading}
+            </Typography>
+            {tooltipContent}
+          </Box>
+        }
+        classes={{ popper: className }}
+        arrow>
+        <span
+          onMouseEnter={handleTooltipOpen}
+          // onMouseLeave={handleTooltipClose}
+        >
+          {children}
+        </span>
+      </Tooltip>
+    );
+  },
 )({
   [`& .${tooltipClasses.tooltip}`]: {
     maxWidth: 500,

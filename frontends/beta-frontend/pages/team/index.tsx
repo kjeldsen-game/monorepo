@@ -18,10 +18,14 @@ const Team: NextPage = () => {
     userData?.accessToken,
   );
 
-  console.log(error);
+  const [alert, setAlert] = useState<any>({
+    open: false,
+    type: 'success',
+    message: '',
+  });
 
   const [teamPlayers, setTeamPlayers] = useState<Player[]>(data?.players ?? []);
-
+  console.log(teamPlayers);
   useEffect(() => {
     setTeamPlayers(data?.players ?? []);
   }, [data?.players]);
@@ -42,26 +46,31 @@ const Team: NextPage = () => {
     // console.log(teamPlayers);
     try {
       const response = await updateTeam(teamPlayers);
+      // console.log(response);
       if (response.status == 500) {
-        // setShowAlert({
-        //   open: true,
-        //   message: response.message,
-        //   type: 'error',
-        // });
+        // console.log(response.status);
+        // console.log(response.message);
+        setAlert({
+          open: true,
+          message: response.message,
+          type: 'error',
+        });
       } else {
-        // setShowAlert({
-        //   open: true,
-        //   message: 'Pricing updated successfully',
-        //   type: 'success',
-        // });
+        setAlert({
+          open: true,
+          message: 'Team was updated successfully!',
+          type: 'success',
+        });
       }
     } catch (error) {
-      console.error('Failed to update auction:', error);
+      console.error('Failed to update team:', error);
     }
   };
 
   return (
     <TeamView
+      setAlert={setAlert}
+      alert={alert}
       isEditing
       team={{ ...data, players: teamPlayers }}
       handlePlayerChange={handlePlayerChange}

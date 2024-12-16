@@ -129,6 +129,10 @@ resource "aws_docdb_subnet_group" "main" {
     Project     = var.project
   }
 }
+output "docdb_cluster_endpoint" {
+  value       = aws_docdb_cluster.main.endpoint
+  description = "The endpoint of the DocumentDB cluster."
+}
 resource "aws_security_group" "docdb" {
   name_prefix = "${var.project}-${var.environment}-docdb-"
   vpc_id      = aws_vpc.main.id
@@ -151,6 +155,27 @@ resource "aws_security_group" "docdb" {
     Environment = var.environment
     Project     = var.project
   }
+}
+##############################
+########## Key Pair ##########
+##############################
+resource "tls_private_key" "ec2_key" {
+  algorithm = "RSA"
+  rsa_bits  = 2048
+}
+resource "aws_key_pair" "ec2_key" {
+  key_name   = "${var.project}-${var.environment}-key"
+  public_key = tls_private_key.ec2_key.public_key_openssh
+}
+resource "local_file" "private_key" {
+  content         = tls_private_key.ec2_key.private_key_pem
+  filename        = "${path.module}/${var.project}-${var.environment}-key.pem"
+  file_permission = "0400"
+}
+output "ec2_private_key" {
+  value       = tls_private_key.ec2_key.private_key_pem
+  sensitive   = true
+  description = "The private key for SSH access to the EC2 instance."
 }
 ##############################
 ######### EC2 ################
@@ -223,6 +248,7 @@ resource "aws_iam_role_policy" "ecr_policy" {
       {
         Effect = "Allow"
         Action = [
+          "s3:*",
           "ecr:GetAuthorizationToken",
           "ecr:BatchCheckLayerAvailability",
           "ecr:GetDownloadUrlForLayer",
@@ -243,7 +269,8 @@ resource "aws_instance" "ec2" {
   subnet_id                   = aws_subnet.public[0].id
   vpc_security_group_ids      = [aws_security_group.ec2.id]
   iam_instance_profile        = aws_iam_instance_profile.ec2.name
-  associate_public_ip_address = true # This enables public IP
+  associate_public_ip_address = true                          # This enables public IP
+  key_name                    = aws_key_pair.ec2_key.key_name # Dynamically generated key pair
   user_data = templatefile("${path.module}/user_data.sh", {
     ssh_password = var.ssh_password
     environment_vars = {
@@ -262,9 +289,9 @@ resource "aws_instance" "ec2" {
       PRIVATE_KEY                   = var.private_key
       # frontend
       NEXTAUTH_SECRET         = "Gd86qxgWNPJRBY3x56YmsZuyT-lZAV6CXafqxDJ2nw8P9jQZfocwm3338xfUlY7si6tAk9C4WPvxhQT1uUDSWQ"
-      NEXT_AUTH_BACKEND_URL   = "https://backend.kjeldsengame.com/v1"
-      NEXT_PUBLIC_BACKEND_URL = "https://backend.kjeldsengame.com/v1"
-      NEXTAUTH_URL            = "https://kjeldsengame.com"
+      NEXT_AUTH_BACKEND_URL   = "http://main-service:8080/v1"
+      NEXT_PUBLIC_BACKEND_URL = "http://main-service:8080/v1"
+      NEXTAUTH_URL            = "http://beta-frontend:3000"
     }
   })
   tags = {
@@ -272,6 +299,9 @@ resource "aws_instance" "ec2" {
     Environment = var.environment
     Project     = var.project
   }
+}
+output "ec2_public_ip" {
+  value = aws_instance.ec2.public_ip
 }
 # Create an Elastic IP for the EC2 instance
 resource "aws_eip" "ec2" {
@@ -473,3 +503,4 @@ resource "aws_route53_record" "backend_alb" {
     evaluate_target_health = true
   }
 }
+

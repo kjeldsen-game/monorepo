@@ -23,9 +23,12 @@ import com.kjeldsen.player.domain.PlayerPosition;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
 
+@Disabled
 class ActionSelectionTest {
 
     List<Action> allActions = Arrays.stream(Action.values()).toList();

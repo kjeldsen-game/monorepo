@@ -15,6 +15,8 @@ export interface GameStats {
 }
 
 export interface Play {
+  homeScore: number;
+  awayScore: number;
   action: Action;
   duel: Duel;
   clock: number;
