@@ -789,6 +789,9 @@ components:
         - PASS_FORWARD
         - LONG_SHOT
         - CHANGE_FLANK
+        - PASS_TO_AREA
+        - DRIBBLE_TO_AREA
+        - WALL_PASS
         - NONE
       example: FORWARD
 
