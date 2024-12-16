@@ -1,8 +1,6 @@
 #!/bin/bash
 
 SSH_USER="ec2-user"                         
-SSH_PASS="password123"                
-DB_HOST="kjeldsen-prod-docdb-1.cgznmelkvcds.eu-west-1.docdb.amazonaws.com"
 DB_PORT=27017
 LOCAL_PORT=27017                          
 DB_NAME="admin"
@@ -11,6 +9,18 @@ DB_PASS="kjeldsenprodpassword"
 EXPORT_DIR="./mongo_backup"
 S3_BUCKET="docdb-persistence"
 SSH_KEY_PATH="./kjeldsen-prod-key.pem"
+
+get_db_host() {
+  DB_HOST=$(
+    aws rds describe-db-clusters \
+    --db-cluster-identifier "$DOCDB_CLUSTER_IDENTIFIER" \
+    --query "DBClusters[0].Endpoint" \
+    --output text)
+  if [ -z "$DB_HOST" ]; then
+    echo "Failed to retrieve the DB host. Exiting."
+    exit 1
+  fi
+}
 
 get_ssh_host() {
   SSH_HOST=$(aws ec2 describe-instances --query 'Reservations[0].Instances[0].PublicDnsName' --output text)
@@ -23,16 +33,12 @@ get_ssh_host() {
 # Function to Start SSH Tunnel
 export_data() {
   get_ssh_host
+  get_db_host
   echo "Starting SSH tunnel to $SSH_HOST to export data..."
 
   ssh -i "$SSH_KEY_PATH" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
   "$SSH_USER@$SSH_HOST" "mongodump --uri 'mongodb://$DB_USER:$DB_PASS@$DB_HOST:$LOCAL_PORT' --out '$EXPORT_DIR' --verbose \
   && ls -al && aws s3 cp $EXPORT_DIR s3://$S3_BUCKET/ --recursive"
-
-#   sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-#     "$SSH_USER@$SSH_HOST" "mongodump --uri 'mongodb://$DB_USER:$DB_PASS@$DB_HOST:$LOCAL_PORT' --out '$EXPORT_DIR' --verbose \
-#     && ls -al && aws s3 cp $EXPORT_DIR s3://$S3_BUCKET/ --recursive"
-
 
   if [ $? -eq 0 ]; then
     echo "Data successfully exported to the S3 bucket."
@@ -43,7 +49,7 @@ export_data() {
 }
 
 import_data() {
-
+  get_db_host
   get_ssh_host
   echo "Starting SSH tunnel to $SSH_HOST to import data..."
    ssh -i "$SSH_KEY_PATH" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
