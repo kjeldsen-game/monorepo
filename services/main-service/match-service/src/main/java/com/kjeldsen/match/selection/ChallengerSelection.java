@@ -23,6 +23,7 @@ public class ChallengerSelection {
         PitchArea pitchArea = state.getBallState().getArea().flipPerspective();
         return switch (duelType) {
             case PASSING_LOW, PASSING_HIGH -> passingDuelChallenger(state, pitchArea);
+            case DRIBBLE -> dribbleDuelChallenger(state, pitchArea);
             case BALL_CONTROL -> ballControlDuelChallenger(state);
             case POSITIONAL -> positionalDuelChallenger(state, pitchArea);
             case LOW_SHOT, ONE_TO_ONE_SHOT, HEADER_SHOT, LONG_SHOT -> players.stream()
@@ -41,6 +42,17 @@ public class ChallengerSelection {
             .findAny()
             .orElseThrow(
                 () -> new GameStateException(state, "No players found to intercept the ball"));
+    }
+
+    // Returns a player from the defending team to intercept the plauer.
+    public static Player dribbleDuelChallenger(GameState state, PitchArea pitchArea) {
+        // Passing duels always succeed for now so select any nearby player
+        return state.defendingTeam().getPlayers().stream()
+                .filter(challenger -> challenger.getPosition() != PlayerPosition.GOALKEEPER)
+                .filter(challenger -> challenger.getPosition().coverage().contains(pitchArea))
+                .findAny()
+                .orElseThrow(
+                        () -> new GameStateException(state, "No players found to intercept the player"));
     }
 
     // Returns a player from the defending team to challenge the player in a ball control duel.

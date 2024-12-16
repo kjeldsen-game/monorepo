@@ -3,11 +3,9 @@ package com.kjeldsen.match.selection;
 import com.kjeldsen.match.entities.Action;
 import com.kjeldsen.match.entities.Play;
 import com.kjeldsen.match.entities.Player;
-import com.kjeldsen.match.entities.duel.DuelOrigin;
 import com.kjeldsen.match.entities.duel.DuelType;
 import com.kjeldsen.match.state.BallHeight;
 import com.kjeldsen.match.state.GameState;
-import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.player.domain.PlayerReceptionPreference;
 
 import java.util.Random;
@@ -36,6 +34,7 @@ public class DuelTypeSelection {
                     yield DuelType.PASSING_HIGH;
                 }
             }
+            case DRIBBLE -> DuelType.DRIBBLE;
             case POSITION -> DuelType.POSITIONAL;
             // TACKLE is the ball control action: if the challenger of the preceding positional duel
             // won, then they initiate the following ball control duel, so the action is a tackle

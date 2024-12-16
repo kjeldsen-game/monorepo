@@ -43,6 +43,7 @@ public class GameState {
     List<Play> plays;
 
     GameProgressRecorder recorder;
+    ChainActionSequence chainActionSequence;
 
     // The initial game state simply selects a random team to start the game. Everything else is set
     // to a default start value.
@@ -58,6 +59,7 @@ public class GameState {
             .ballState(BallState.init())
             .plays(List.of())
             .recorder(recorder)
+            .chainActionSequence(ChainActionSequence.NONE)
             .build();
 
         recorder.record("The game has started.", newGame, GameProgressRecord.Type.INFORMATIVE, GameProgressRecord.DuelStage.BEFORE);
@@ -78,6 +80,13 @@ public class GameState {
             return Optional.empty();
         }
         return Optional.of(plays.get(plays.size() - 1));
+    }
+
+    public Optional<Play> beforeLastPlay() {
+        if (plays.isEmpty() || plays.size() < 2) {
+            return Optional.empty();
+        }
+        return Optional.of(plays.get(plays.size() - 2));
     }
 
     // Since the game state is immutable, we need to create new lists when adding a play to the list

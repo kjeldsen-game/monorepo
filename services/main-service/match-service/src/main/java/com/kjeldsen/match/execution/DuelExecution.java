@@ -1,5 +1,6 @@
 package com.kjeldsen.match.execution;
 
+import com.kjeldsen.match.entities.Action;
 import com.kjeldsen.match.entities.DuelStats;
 import com.kjeldsen.match.entities.Play;
 import com.kjeldsen.match.entities.Player;
@@ -10,6 +11,7 @@ import com.kjeldsen.match.entities.duel.DuelType;
 import com.kjeldsen.match.modifers.Orders;
 import com.kjeldsen.match.random.DuelRandomization;
 import com.kjeldsen.match.recorder.GameProgressRecord;
+import com.kjeldsen.match.state.ChainActionSequence;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.GameStateException;
 import com.kjeldsen.player.domain.PitchArea;
@@ -30,16 +32,21 @@ public class DuelExecution {
 
     public static DuelDTO executeDuel(GameState state, DuelParams params) {
 
-        if (params.getDuelType().isPassing() && params.getState().getClock() != 1) {
-            // Before we execute a passing duel (besides kickoff), player orders are given the opportunity
-            // to change of the parameters for execution - the action (duelType) and challenger - as well
-            // as the skill points of players involved (this is only temporary).
-            params = Orders.apply(state, params, params.getInitiator().getPlayerOrder());
+        // Before we execute a passing duel (besides kickoff or after a shot), player orders are given the opportunity
+        // to change of the parameters for execution - the action (duelType) and challenger - as well
+        // as the skill points of players involved (this is only temporary).
+        if (params.getDuelType().isPassing()) {
+            boolean firstPlay = params.getState().getClock() == 1;
+            boolean afterShot = state.lastPlay().isPresent() && Action.SHOOT.equals(state.lastPlay().get().getAction());
+            if (!firstPlay && !afterShot) {
+                params = Orders.apply(state, params, params.getInitiator().getPlayerOrder());
+            }
         }
 
         return switch (params.getDuelType()) {
             case POSITIONAL -> handlePositionalDuel(params);
             case BALL_CONTROL -> handleBallControlDuel(params);
+            case DRIBBLE -> handleDribbleDuel(params);
             case PASSING_LOW, PASSING_HIGH -> handlePassDuel(params);
             case LOW_SHOT, ONE_TO_ONE_SHOT, HEADER_SHOT, LONG_SHOT -> handleShotDuel(params);
         };
@@ -125,10 +132,28 @@ public class DuelExecution {
         int performance =
             DuelRandomization.performance(state, player, DuelType.POSITIONAL, role);
 
+        // Apply chain action sequences skill modifiers.
+        int chainActionSequenceModifier = 0;
+        if (ChainActionSequence.WALL_PASS == state.getChainActionSequence()
+                && state.lastPlay().isPresent()
+                && state.lastPlay().get().getChainActionSequence().isActive()) {
+            int passingSkill = player.getSkills().get(PlayerSkill.PASSING);
+
+            double lowerLimit = -15;
+            double upperLimit = 15;
+
+            // Linear transformation. PA = 0 -> OP = -15. PA = 100 -> OP = 15.
+            chainActionSequenceModifier = (int) (lowerLimit + ((upperLimit - lowerLimit) * (passingSkill / 100.0)));
+            String detail = "Wall pass skill modification. For POSITIONAL " + skillPoints + " and PASSING " + passingSkill + ", the modifier is " + chainActionSequenceModifier + " for a resulting POSITION skill of " + (skillPoints + chainActionSequenceModifier);
+            System.out.println(detail);
+            state.getRecorder().record(detail, state, GameProgressRecord.Type.CALCULATION, GameProgressRecord.DuelStage.DURING);
+
+        }
+
         int assistance =
             (int) (adjustedAssistance.get(role) * Assistance.assistanceFactor(state, role));
 
-        int total = skillPoints + performance + assistance;
+        int total = skillPoints + chainActionSequenceModifier + performance + assistance;
 
         return DuelStats.builder()
             .skillPoints(skillPoints)
@@ -171,6 +196,37 @@ public class DuelExecution {
             .disruptor(params.getDisruptor())
             .params(params)
             .build();
+    }
+
+    public static DuelDTO handleDribbleDuel(DuelParams params) {
+        GameState state = params.getState();
+        Player initiator = params.getInitiator();
+        Player challenger = params.getChallenger();
+
+        DuelStats initiatorStats = buildDuelStats(
+                state,
+                initiator,
+                params.getDuelType(),
+                DuelRole.INITIATOR);
+
+        DuelStats challengerStats = buildDuelStats(
+                state,
+                challenger,
+                params.getDuelType(),
+                DuelRole.CHALLENGER);
+
+        // Dribbling duels always succeed for now but this leaves the possibility of an interception exactly as passing.
+        DuelResult result = result = DuelResult.WIN;
+
+        return DuelDTO.builder()
+                .result(result)
+                .initiatorStats(initiatorStats)
+                .challengerStats(challengerStats)
+                .origin(params.getOrigin())
+                .destinationPitchArea(params.getDestinationPitchArea())
+                .disruptor(params.getDisruptor())
+                .params(params)
+                .build();
     }
 
     public static DuelDTO handlePassDuel(DuelParams params) {

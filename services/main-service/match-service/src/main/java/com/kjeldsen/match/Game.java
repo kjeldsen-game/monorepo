@@ -20,6 +20,7 @@ import com.kjeldsen.match.selection.PitchAreaSelection;
 import com.kjeldsen.match.selection.ReceiverSelection;
 import com.kjeldsen.match.state.BallHeight;
 import com.kjeldsen.match.state.BallState;
+import com.kjeldsen.match.state.ChainActionSequence;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.GameState.Turn;
 import com.kjeldsen.match.state.GameStateException;
@@ -30,6 +31,7 @@ import com.kjeldsen.player.domain.PlayerOrder;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -104,6 +106,7 @@ public class Game {
                     .ballState((new BallState(starting, PitchArea.CENTRE_MIDFIELD, BallHeight.GROUND)))
                     .plays(before.getPlays())
                     .recorder(before.getRecorder())
+                    .chainActionSequence(before.getChainActionSequence())
                     .build())
             .orElseThrow();
     }
@@ -120,16 +123,31 @@ public class Game {
         // users (e.g. strategies) and by rules to improve gameplay.
         Action action = ActionSelection.selectAction(state, initiator);
 
-        // For duels that require a receiver always wrap this variable with an Optional and check
+        // For actions that require a receiver always wrap this variable with an Optional and check
         // that an actual player is present.
-        // Also, define an intented pitch area to move the ball to in case of duel win. In this case, the pitch area should be nearby.
         Player receiver = null;
-        PitchArea destinationPitchArea = null;
         if (action.requiresReceiver()) {
             receiver = ReceiverSelection.select(state, initiator);
+        }
+
+        // Define the area where the ball should be moved to.
+        PitchArea destinationArea = null;
+        if (action.movesBall()) {
+            Player outcomePlayer = receiver != null ? receiver : initiator;
             Boolean nearbyOnly = true;
-            destinationPitchArea = PitchAreaSelection.select(state.getBallState().getArea(), receiver, true)
+            destinationArea = PitchAreaSelection.select(state.getBallState(), receiver, true)
                     .orElseThrow(() -> new GameStateException(state, "No pitch area to select from"));
+
+            // REFACTOR THIS. If inside chained action (wall pass), the last pass is made to a forward area.
+            if (state.getChainActionSequence().isActive()) {
+                if (state.lastPlay().isPresent()) {
+                    Play lastPlay = state.lastPlay().get();
+                    // Rank up the area when finishing the chain action sequence.
+                    if (Action.PASS.equals(action) && lastPlay.getChainActionSequence().isActive()) {
+                        destinationArea = destinationArea.rankUp();
+                    }
+                }
+            }
         }
 
         // Generate a duel based on the action of the play. This requires a challenger - the person
@@ -152,13 +170,18 @@ public class Game {
             .receiver(receiver)
             .origin(DuelOrigin.DEFAULT)
             .disruptor(DuelDisruptor.NONE)
-            .destinationPitchArea(destinationPitchArea)
+            .destinationPitchArea(destinationArea)
             .build();
 
         // The duel can be created once its result is determined. Any details about the duel that
         // need to be stored for future analysis should be set in the duel DTO and saved as part of
         // the duel here.
         DuelDTO outcome = DuelExecution.executeDuel(state, params);
+
+        if (!action.equals(outcome.getParams().getDuelType().getAction())) {
+            System.out.println("Action changed by duel! From " + action + " to " + outcome.getParams().getDuelType().getAction());
+            action = outcome.getParams().getDuelType().getAction();
+        }
 
         Duel duel = Duel.builder()
             .type(outcome.getParams().getDuelType())
@@ -183,13 +206,17 @@ public class Game {
             .action(outcome.getParams().getDuelType().getAction())
             .clock(state.getClock())
             .ballState(outcome.getParams().getState().getBallState())
+            .chainActionSequence(state.getChainActionSequence())
             .build();
 
         StringBuilder detail = new StringBuilder();
         detail.append(play.getDuel().getInitiator().getTeamRole()).append(" team in ").append(play.getDuel().getPitchArea()).append(" attempted ")
-                .append(play.getAction()).append(" ("). append(Action.PASS.equals(play.getAction()) ? play.getDuel().getType() + " to " + play.getDuel().getDestinationPitchArea() : play.getDuel().getType()). append(") with result ")
-                .append(play.getDuel().getResult()). append(" - ").append(play.getDuel().getInitiator().getName())
-                .append(" (").append(play.getDuel().getInitiator().getPosition()). append(")")
+                .append(play.getAction()).append(" with result ").append(play.getDuel().getResult())
+                .append(" ("). append(List.of(Action.PASS, Action.DRIBBLE).contains(play.getAction()) ? play.getDuel().getType() + " to " + play.getDuel().getDestinationPitchArea() : play.getDuel().getType())
+                .append(play.getDuel().getAppliedPlayerOrder() != null ? ", applied player order: " + play.getDuel().getAppliedPlayerOrder() : "")
+                .append(state.getChainActionSequence().isActive() ? ", IN CHAINED ACTION SEQUENCE" : "")
+                .append(") - ").append(play.getDuel().getInitiator().getName())
+                .append(" (").append(play.getDuel().getInitiator().getPosition()).append(")")
                 .append(play.getDuel().getChallenger() != null ? " challenged by " + play.getDuel().getChallenger().getName() : "")
                 .append(play.getDuel().getChallenger() != null ? " (" + play.getDuel().getChallenger().getPosition() + ")": "")
                 .append(play.getDuel().getReceiver() != null ? " to " + play.getDuel().getReceiver().getName() : "")
@@ -198,9 +225,9 @@ public class Game {
 
         //log.debug("Play complete:\n{}", play);
 
-        return switch (outcome.getResult()) {
+        GameState resultingGameState = switch (outcome.getResult()) {
             case WIN -> {
-                if (action == Action.SHOOT) {
+                if (play.getAction() == Action.SHOOT) {
                     yield handleGoal(state, play);
                 } else {
                     yield handleDuelWin(state, play);
@@ -208,6 +235,9 @@ public class Game {
             }
             case LOSE -> handleDuelLoss(state, play);
         };
+
+        return resultingGameState;
+
     }
 
     // For duel wins, we determine who takes control of the ball (depending on whether a receiver
@@ -221,7 +251,7 @@ public class Game {
         PitchArea playerArea;
 
         BallHeight ballHeight = state.getBallState().getHeight();
-        if (play.getDuel().getType().movesBall()) {
+        if (play.getAction().movesBall()) {
 
             if (play.getDuel().getType().equals(DuelType.PASSING_HIGH)) {
                 if (ballHeight.isLow()) {
@@ -249,6 +279,30 @@ public class Game {
         }
         BallState newBallState = new BallState(player, playerArea, ballHeight);
 
+        // REFACTOR THIS. Player orders may start a chained action sequence.
+        ChainActionSequence startingChainActionSequence = ChainActionSequence.NONE;
+        if (DuelOrigin.PLAYER_ORDER.equals(play.getDuel().getOrigin())
+            && PlayerOrder.WALL_PASS.equals(play.getDuel().getAppliedPlayerOrder())) {
+            startingChainActionSequence = ChainActionSequence.WALL_PASS;
+        }
+        // Chained action sequence finishes after special fixed conditions.
+        boolean insideChainedActionSequence = false;
+        if (state.getChainActionSequence().isActive()) {
+            insideChainedActionSequence = true;
+            if (state.lastPlay().isPresent()) {
+                Play lastPlay = state.lastPlay().get();
+                // If won a POSITION action after a PASS inside a chained action sequence. Then the sequence has ended.
+                if (Action.POSITION.equals(play.getAction())
+                        && lastPlay.getChainActionSequence().isActive()) {
+                    insideChainedActionSequence = false;
+                }
+            }
+        }
+
+        ChainActionSequence chainActionSequence = startingChainActionSequence.isActive() ?
+                startingChainActionSequence : insideChainedActionSequence ?
+                play.getChainActionSequence() : ChainActionSequence.NONE;
+
         return Optional.of(state)
             .map((before) ->
                 GameState.builder()
@@ -257,6 +311,7 @@ public class Game {
                     .home(before.getHome())
                     .away(before.getAway())
                     .ballState(newBallState)
+                    .chainActionSequence(chainActionSequence)
                     .plays(GameState.concatPlay(before.getPlays(), play))
                     .recorder(before.getRecorder())
                     .build())
@@ -301,6 +356,7 @@ public class Game {
                     .home(before.getHome())
                     .away(before.getAway())
                     .ballState(newBallState)
+                    .chainActionSequence(ChainActionSequence.NONE) // Losing a duel stops a chained action sequence, if any.
                     .plays(GameState.concatPlay(before.getPlays(), play))
                     .recorder(before.getRecorder())
                     .build())
@@ -328,7 +384,7 @@ public class Game {
             play.setAwayScore(play.getAwayScore() + 1);
         }
 
-        if (state.getBallState().getHeight().isHigh()) {
+        if (play.getBallState().getHeight().isHigh()) {
             state.getRecorder().record("Ball moved from high to low.", state, GameProgressRecord.Type.BALL_BEHAVIOUR, GameProgressRecord.DuelStage.AFTER);
         }
 
@@ -346,12 +402,13 @@ public class Game {
                     .home(before.getTurn() == Turn.HOME ? newTeamState : before.getHome())
                     .away(before.getTurn() == Turn.AWAY ? newTeamState : before.getAway())
                     .ballState(newBallState)
+                    .chainActionSequence(ChainActionSequence.NONE) // Goals stops a chained action sequence, if any.
                     .plays(GameState.concatPlay(before.getPlays(), play))
                     .recorder(before.getRecorder())
                     .build())
             .orElseThrow();
 
-        state.getRecorder().record("GOAL! ["  + newState.getHome().getScore() + "-" + newState.getAway().getScore() + "]", state, GameProgressRecord.Type.INFORMATIVE, GameProgressRecord.DuelStage.BEFORE);
+        state.getRecorder().record("GOAL! ["  + newState.getHome().getScore() + "-" + newState.getAway().getScore() + "]", state, GameProgressRecord.Type.INFORMATIVE, GameProgressRecord.DuelStage.AFTER);
 
         return newState;
     }

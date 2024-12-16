@@ -1,10 +1,12 @@
 package com.kjeldsen.match.selection;
 
+import com.kjeldsen.match.entities.Play;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.state.GameState;
 import com.kjeldsen.match.state.GameStateException;
 import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerPosition;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +32,22 @@ public class ReceiverSelection {
     // Returns a player to receive the ball based on the current pitch area.
     public static Player select(GameState state, Player initiator) {
         PitchArea ballArea = state.getBallState().getArea();
+
+        // REFACTOR THIS. The chained action sequence should probably have it's own class.
+        if (state.getChainActionSequence().isActive()) {
+            if (state.lastPlay().isPresent() && state.beforeLastPlay().isPresent()) {
+                Play lastPlay = state.lastPlay().get();
+                Play beforeLastPlay = state.beforeLastPlay().get();
+
+                switch (lastPlay.getDuel().getType()) {
+                    // If the last duel was positional, then the receiver player must be the one that initiated the chained action sequence.
+                    case POSITIONAL -> {
+                        return beforeLastPlay.getDuel().getInitiator();
+                    }
+                }
+            }
+        }
+
         return switch (ballArea.rank()) {
             case BACK -> selectFromBack(state, initiator);
             case MIDDLE -> selectFromMidfield(state, initiator);
@@ -117,6 +135,12 @@ public class ReceiverSelection {
             .findAny();
     }
 
+    public static Optional<Player> selectMidfielder(GameState state, Player initiator) {
+        return nearbyTeammates(state, initiator)
+                .filter(player -> player.getPosition().isMidfielder())
+                .findAny();
+    }
+
     public static Optional<Player> selectFromArea(
         GameState state, Player initiator, PitchArea area) {
 
@@ -136,6 +160,6 @@ public class ReceiverSelection {
 
     private static boolean teammateIsNearby(PitchArea playerArea, Player teammate) {
         return teammate.getPosition().coverage().stream()
-            .anyMatch(teammateArea -> teammateArea.teammateIsNearby(playerArea));
+            .anyMatch(teammateArea -> teammateArea.isNearby(playerArea));
     }
 }
