@@ -11,6 +11,8 @@ import SingleColTooltip from '../Tooltips/SingleColTooltip';
 import DoubleColTooltip from '../Tooltips/DoubleColTooltip';
 import DoubleColAssistanceTooltip from '../Tooltips/DoubleColAssistanceTooltip';
 import { getPositionInitials } from '@/shared/utils/PlayerUtils';
+import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
+import PitchAreaTooltip from '../Tooltips/PitchAreaTooltip';
 
 const PositionMessage = ({
   duel,
@@ -18,6 +20,7 @@ const PositionMessage = ({
   challengerEventSide,
   action,
   result,
+  event,
 }: MessageProps) => {
   return (
     <span style={{ fontSize: '12px' }}>
@@ -26,6 +29,10 @@ const PositionMessage = ({
         children={`${duel.initiator.name} [${getPositionInitials(duel.initiator.position)}]`}
         matchEventSide={initiatorEventSide}
       />
+      in the{' '}
+      <PitchAreaTooltip pitchArea={event.duel.pitchArea}>
+        {convertSnakeCaseToTitleCase(duel.pitchArea)}
+      </PitchAreaTooltip>{' '}
       tried with a
       <SingleColTooltip stats={duel.initiatorStats}>
         <QualityText>
@@ -69,7 +76,7 @@ const PositionMessage = ({
           )}
         </QualityText>
       </DoubleColAssistanceTooltip>
-      assistance for the attacker .
+      assistance for the attacker.{` [${event.homeScore}:${event.awayScore}]`}
     </span>
   );
 };

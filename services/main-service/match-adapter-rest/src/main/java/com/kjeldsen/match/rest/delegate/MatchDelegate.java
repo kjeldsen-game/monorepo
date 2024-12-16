@@ -366,9 +366,10 @@ public class MatchDelegate implements MatchApiDelegate {
             PlayResponse res = new PlayResponse();
             res.setClock(play.getClock());
             res.setAction(ActionResponse.valueOf(play.getAction().name()));
-
+            res.awayScore(play.getAwayScore());
+            res.homeScore(play.getHomeScore());
             DuelResponse duelResponse = new DuelResponse();
-
+            duelResponse.setPitchArea(PitchArea.valueOf(play.getDuel().getPitchArea().name()));
             duelResponse.setResult(DuelResultResponse.valueOf(play.getDuel().getResult().name()));
             PlayerResponse initiator = this.buildPlayerResponse(play.getDuel().getInitiator());
             duelResponse.setInitiator(initiator);

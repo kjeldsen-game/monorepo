@@ -1,22 +1,14 @@
-import React from 'react';
 import { getRangeLabel, MessageProps } from '../MatchReportItemMessage';
 import MessageText from './MessageText';
 import { DENOMINATIONS_RANGES } from '@/shared/models/MatchReport';
-import CustomTooltip from '../CustomTooltip';
-import { Box, Grid } from '@mui/material';
-import TooltipDataCol from '../TooltipDataCol';
 import QualityText from './QualityText';
 import ActionText from './ActionText';
 import SingleColTooltip from '../Tooltips/SingleColTooltip';
 import { getPositionInitials } from '@/shared/utils/PlayerUtils';
+import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
+import PitchAreaTooltip from '../Tooltips/PitchAreaTooltip';
 
-const PassMessage = ({
-  duel,
-  initiatorEventSide,
-  challengerEventSide,
-  action,
-  result,
-}: MessageProps) => {
+const PassMessage = ({ duel, initiatorEventSide, event }: MessageProps) => {
   return (
     <span style={{ fontSize: '12px' }}>
       Attacker
@@ -35,6 +27,12 @@ const PassMessage = ({
         children={`${duel.receiver?.name} [${getPositionInitials(duel.receiver?.position)}]`}
         matchEventSide={initiatorEventSide}
       />
+      in{' '}
+      <PitchAreaTooltip pitchArea={event.duel.pitchArea}>
+        {convertSnakeCaseToTitleCase(event.duel.pitchArea)}
+      </PitchAreaTooltip>{' '}
+      area
+      {`. [${event.homeScore}:${event.awayScore}]`}
     </span>
   );
 };

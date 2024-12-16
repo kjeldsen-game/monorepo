@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import CustomTooltip from './CustomTooltip';
 import { Box, Grid, Typography } from '@mui/material';
 import TooltipDataItem from './ToolTipDataItem';
@@ -25,12 +25,16 @@ const DoubleColAssistanceTooltip = ({
       tooltipContent={
         <Box sx={{ color: 'black' }}>
           <Grid container>
-            <Grid item xs={6} paddingX={'20px'}>
+            <Grid item xs={6}>
               <Typography>{formatName(attackerName)}</Typography>
               {attackerStats.teamAssistance &&
                 Object.entries(attackerStats.teamAssistance).map(
                   ([name, value]) => (
-                    <TooltipDataItem title={formatName(name)} value={value} />
+                    <TooltipDataItem
+                      key={name}
+                      title={formatName(name)}
+                      value={value}
+                    />
                   ),
                 )}
               <TooltipDataItem
@@ -39,12 +43,16 @@ const DoubleColAssistanceTooltip = ({
                 value={attackerStats.assistance}
               />
             </Grid>
-            <Grid item xs={6} paddingX={'20px'}>
+            <Grid item xs={6} paddingLeft={'40px'}>
               <Typography>{formatName(defenderName)}</Typography>
               {defenderStats.teamAssistance &&
                 Object.entries(defenderStats.teamAssistance).map(
                   ([name, value]) => (
-                    <TooltipDataItem title={formatName(name)} value={value} />
+                    <TooltipDataItem
+                      key={name}
+                      title={formatName(name)}
+                      value={value}
+                    />
                   ),
                 )}
               <TooltipDataItem

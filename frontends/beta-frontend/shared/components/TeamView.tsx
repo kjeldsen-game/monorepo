@@ -1,9 +1,15 @@
 import {
+  Alert,
   Box,
   Button,
   CircularProgress,
+  Snackbar,
+  SnackbarCloseReason,
+  Theme,
   Tooltip,
   TooltipProps,
+  darken,
+  lighten,
   styled,
   tooltipClasses,
 } from '@mui/material';
@@ -20,6 +26,8 @@ import checkTeamComposition from '../utils/TeamCompositionRules';
 import TeamCompositionErrors from './TeamCompositionErrors';
 import { CompositionError } from '../models/CompositionError';
 import { PlayerLineupStatus } from '../models/PlayerLineupStatus';
+import { light } from '@mui/material/styles/createPalette';
+import { DataGrid } from '@mui/x-data-grid';
 
 const CompositionTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -34,6 +42,8 @@ interface TeamProps {
   team: Team | undefined;
   handlePlayerChange?: (value: Player) => void;
   onTeamUpdate?: () => void;
+  alert: any;
+  setAlert: any;
 }
 
 const TeamView: React.FC<TeamProps> = ({
@@ -41,6 +51,8 @@ const TeamView: React.FC<TeamProps> = ({
   team,
   handlePlayerChange,
   onTeamUpdate,
+  alert,
+  setAlert,
 }: TeamProps) => {
   const [compositionErrors, setCompositionErrors] = useState<
     CompositionError[]
@@ -55,6 +67,20 @@ const TeamView: React.FC<TeamProps> = ({
       ),
     [team?.players],
   );
+
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason,
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setAlert((prev) => ({
+      ...prev,
+      open: false,
+    }));
+  };
 
   const memoizedColumns = useMemo(
     () => teamColumn(isEditing, handlePlayerChange),
@@ -77,6 +103,15 @@ const TeamView: React.FC<TeamProps> = ({
             alignItems: 'center',
             justifyContent: 'right',
           }}>
+          <Snackbar
+            onClose={handleClose}
+            autoHideDuration={1500}
+            open={alert.open}
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+            <Alert severity={alert.type} sx={{ width: '100%' }}>
+              {alert.message}
+            </Alert>
+          </Snackbar>
           <CompositionTooltip
             disableHoverListener={compositionErrors.length === 0}
             placement={'left'}
@@ -96,6 +131,32 @@ const TeamView: React.FC<TeamProps> = ({
     }
   };
 
+  const getBackgroundColor = (
+    color: string,
+    theme: Theme,
+    coefficient: number,
+  ) => ({
+    backgroundColor: darken(color, coefficient),
+    ...theme.applyStyles('light', {
+      backgroundColor: lighten(color, coefficient),
+    }),
+  });
+
+  const StyledDataGrid = styled(Grid)(({ theme }) => ({
+    '& .super-app-theme--ACTIVE': {
+      ...getBackgroundColor(theme.palette.success.main, theme, 0.7),
+      '&:hover': {
+        ...getBackgroundColor(theme.palette.info.main, theme, 0.6),
+      },
+      '&.Mui-selected': {
+        ...getBackgroundColor(theme.palette.info.main, theme, 0.5),
+        '&:hover': {
+          ...getBackgroundColor(theme.palette.info.main, theme, 0.4),
+        },
+      },
+    },
+  }));
+
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ display: 'flex', marginBottom: '2rem', alignItems: 'center' }}>
@@ -106,7 +167,13 @@ const TeamView: React.FC<TeamProps> = ({
       <Box sx={{ width: '100%' }}>
         {saveButton()}
         {team?.players ? (
-          <Grid rows={team?.players} columns={memoizedColumns} />
+          <StyledDataGrid
+            rows={team?.players}
+            columns={memoizedColumns}
+            getRowClassName={(params) =>
+              `super-app-theme--${params.row.status}`
+            }
+          />
         ) : (
           <CircularProgress />
         )}

@@ -4,12 +4,17 @@ import com.kjeldsen.match.entities.duel.Duel;
 import com.kjeldsen.match.state.BallState;
 import com.kjeldsen.match.utils.JsonUtils;
 import lombok.Builder;
+import lombok.Data;
+import lombok.Setter;
 import lombok.Value;
 
 @Builder
-@Value
+@Data
+@Setter
 public class Play {
 
+    Integer homeScore;
+    Integer awayScore;
     Action action;
     Duel duel;
     Integer clock;

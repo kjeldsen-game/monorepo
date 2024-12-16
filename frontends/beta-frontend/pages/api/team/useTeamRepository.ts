@@ -29,12 +29,14 @@ const useTeamRepository = (team?: string, token?: string) => {
             id: value.id,
             position: value.position,
             status: value.status,
+            playerOrder: value.playerOrder,
           };
         }
         return {
           id: player.id,
           position: player.position,
           status: player.status,
+          playerOrder: player.playerOrder,
         };
       }),
     };
@@ -51,42 +53,53 @@ const useTeamRepository = (team?: string, token?: string) => {
     });
   };
 
-  const updateTeam = (value: Player[]): void => {
-    if (!data) return;
+  const updateTeam = (value: Player[]): Promise<any> => {
+    if (!data) {
+      return Promise.reject(new Error('Data is not available.'));
+    }
+
+    if (!team) {
+      return Promise.reject(new Error('Team is not defined.'));
+    }
+
     const oldData = data.players;
     const newData: TeamPlayerPatchRequest = {
       players: oldData.map((player) => {
         const updatedPlayer = value.find(
           (playerValue) => playerValue.id === player.id,
         );
-        if (updatedPlayer && updatedPlayer.id === player.id) {
+
+        if (updatedPlayer) {
           return {
             id: updatedPlayer.id,
             position: updatedPlayer.position,
             status: updatedPlayer.status,
+            playerOrder: updatedPlayer.playerOrder,
           };
         }
+
         return {
           id: player.id,
           position: player.position,
           status: player.status,
+          playerOrder: player.playerOrder,
         };
       }),
     };
 
-    if (!team) return;
-    connectorAPI<TeamPlayerPatchRequest>(
+    return connectorAPI<TeamPlayerPatchRequest>(
       API + team,
       'PATCH',
       newData,
       undefined,
       token,
     )
-      .then(() => {
+      .then((response) => {
         mutate();
+        return response;
       })
       .catch((error) => {
-        console.error('Error updating auction:', error);
+        console.error('Error updating Team:', error);
         throw error;
       });
   };

@@ -4,6 +4,7 @@ import {
   DuelResultRange,
   MatchEventSide,
   MatchResult,
+  Play,
 } from '@/shared/models/MatchReport';
 import React from 'react';
 
@@ -16,6 +17,7 @@ interface MatchReportItemMessageProps {
   duel: Duel;
   type: any;
   homeId: any;
+  event: Play;
 }
 
 export interface MessageProps {
@@ -24,6 +26,7 @@ export interface MessageProps {
   challengerEventSide: MatchEventSide;
   action: Action;
   result: MatchResult;
+  event: Play;
 }
 
 export const getRangeLabel = (
@@ -42,6 +45,7 @@ export const getRangeLabel = (
 };
 
 const MatchReportItemMessage: React.FC<MatchReportItemMessageProps> = ({
+  event,
   duel,
   type,
   homeId,
@@ -61,6 +65,7 @@ const MatchReportItemMessage: React.FC<MatchReportItemMessageProps> = ({
       {type === 'PASS' && (
         <PassMessage
           duel={duel}
+          event={event}
           initiatorEventSide={eventSides.initiatorEventSide}
           challengerEventSide={eventSides.challengerEventSide}
           result={duel.result}
@@ -69,6 +74,7 @@ const MatchReportItemMessage: React.FC<MatchReportItemMessageProps> = ({
       )}
       {type === 'POSITION' && (
         <PositionMessage
+          event={event}
           duel={duel}
           initiatorEventSide={eventSides.initiatorEventSide}
           challengerEventSide={eventSides.challengerEventSide}
@@ -79,6 +85,7 @@ const MatchReportItemMessage: React.FC<MatchReportItemMessageProps> = ({
       {type === 'SHOOT' && (
         <ShootMessage
           duel={duel}
+          event={event}
           initiatorEventSide={eventSides.initiatorEventSide}
           challengerEventSide={eventSides.challengerEventSide}
           result={duel.result}
@@ -88,6 +95,7 @@ const MatchReportItemMessage: React.FC<MatchReportItemMessageProps> = ({
       {type === 'TACKLE' && (
         <TackleMessage
           duel={duel}
+          event={event}
           initiatorEventSide={eventSides.initiatorEventSide}
           challengerEventSide={eventSides.challengerEventSide}
           result={duel.result}

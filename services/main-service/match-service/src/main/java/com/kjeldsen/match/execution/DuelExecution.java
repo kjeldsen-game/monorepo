@@ -15,11 +15,13 @@ import com.kjeldsen.match.state.GameStateException;
 import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerSkill;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 public class DuelExecution {
 
     /*
@@ -322,8 +324,8 @@ public class DuelExecution {
             params.getDuelType(),
             DuelRole.CHALLENGER);
 
-        Boolean goalkeeperReachedTheBall = initiatorStats.getTotal() > challengerStats.getTotal();
-
+        Boolean goalkeeperReachedTheBall = initiatorStats.getTotal() < challengerStats.getTotal(); // initiator striker
+        log.info("InitiatorStats {} challengerStats {} booleanResult {}", initiatorStats.getTotal(), challengerStats.getTotal(), goalkeeperReachedTheBall);
         // TODO refactor this
         Boolean fumbleOccurred = false;
         if (goalkeeperReachedTheBall) {
@@ -363,9 +365,7 @@ public class DuelExecution {
 
         }
 
-        DuelResult result = !goalkeeperReachedTheBall || fumbleOccurred
-            ? DuelResult.WIN
-            : DuelResult.LOSE;
+        DuelResult result = !goalkeeperReachedTheBall || fumbleOccurred ? DuelResult.WIN : DuelResult.LOSE;
 
         return DuelDTO.builder()
             .result(result)

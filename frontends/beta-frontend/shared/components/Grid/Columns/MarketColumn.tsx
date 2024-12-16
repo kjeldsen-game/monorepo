@@ -119,12 +119,12 @@ export const marketColumn = (
     //     </div>
     //   ),
     // },
-    createSkillColumnConfig('DEFENSIVE_POSITIONING', 'DP'),
-    createSkillColumnConfig('BALL_CONTROL', 'BC'),
     createSkillColumnConfig('SCORING', 'SC'),
-    createSkillColumnConfig('PASSING', 'PA'),
     createSkillColumnConfig('OFFENSIVE_POSITIONING', 'OP'),
+    createSkillColumnConfig('BALL_CONTROL', 'BC'),
+    createSkillColumnConfig('PASSING', 'PA'),
     createSkillColumnConfig('TACKLING', 'TA'),
+    createSkillColumnConfig('DEFENSIVE_POSITIONING', 'DP'),
     {
       ...baseColumnConfig,
       field: 'averageBid',

@@ -15,7 +15,7 @@ const TooltipDataCol: React.FC<TooltipDataColProps> = ({
   heading,
 }) => {
   return (
-    <Grid item xs={6} sx={{ ...sx }} paddingX={'10px'}>
+    <Grid item xs={6} sx={{ ...sx }} paddingX={'20px'}>
       <Typography fontWeight={'bold'} fontSize={'14px'} textAlign={'center'}>
         {heading}
       </Typography>
