@@ -6,7 +6,7 @@ interface MatchStatsProps {
 }
 
 const MatchStats: React.FC<MatchStatsProps> = ({ report }) => {
-  console.log(report.matchReport);
+  // console.log(report.matchReport);
   return (
     <Box
       display={'flex'}

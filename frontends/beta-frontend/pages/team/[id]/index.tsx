@@ -10,7 +10,12 @@ const Team: NextPage = () => {
   const { data: userData } = useSession({ required: true });
   const router = useRouter();
 
-  const { data } = useTeamRepository(router.query.id as string);
+  const { data } = useTeamRepository(
+    router.query.id as string,
+    userData?.accessToken,
+  );
+
+  console.log(data?.players);
 
   return (
     <>

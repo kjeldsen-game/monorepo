@@ -25,31 +25,29 @@ const Team: NextPage = () => {
   });
 
   const [teamPlayers, setTeamPlayers] = useState<Player[]>(data?.players ?? []);
-  console.log(teamPlayers);
+
   useEffect(() => {
     setTeamPlayers(data?.players ?? []);
   }, [data?.players]);
 
   if (sessionStatus === 'loading' || !data) return <CircularProgress />;
 
-  const handlePlayerChange = (value: Player) => {
-    if (data === undefined) return;
-    setTeamPlayers((prev) => {
-      const index = prev.findIndex((p) => p.id === value.id);
-      const newPlayers = [...prev];
-      newPlayers[index] = { ...value };
-      return newPlayers;
-    });
+  const handlePlayerChange = (players: Player[]) => {
+    setTeamPlayers(players);
+    // if (data === undefined) return;
+    // setTeamPlayers((prev) => {
+    //   const index = prev.findIndex((p) => p.id === value.id);
+    //   const newPlayers = [...prev];
+    //   newPlayers[index] = { ...value };
+    //   return newPlayers;
+    // });
   };
 
-  const handleTeamUpdate = async () => {
-    // console.log(teamPlayers);
+  const handleTeamUpdate = async (players: Player[]) => {
+    console.log(players);
     try {
-      const response = await updateTeam(teamPlayers);
-      // console.log(response);
+      const response = await updateTeam(players);
       if (response.status == 500) {
-        // console.log(response.status);
-        // console.log(response.message);
         setAlert({
           open: true,
           message: response.message,

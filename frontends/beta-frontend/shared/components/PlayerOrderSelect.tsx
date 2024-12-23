@@ -1,16 +1,25 @@
-import React from 'react'
-import { Select, MenuItem, FormControl, SelectChangeEvent, InputLabel } from '@mui/material'
-import { PlayerOrder } from '../models/PlayerOrder'
+import React from 'react';
+import {
+  Select,
+  MenuItem,
+  FormControl,
+  SelectChangeEvent,
+  InputLabel,
+} from '@mui/material';
+import { PlayerOrder } from '../models/PlayerOrder';
 
 interface PlayerOrderSelectProps {
-  onChange?: (value: PlayerOrder) => void
-  value: PlayerOrder
+  onChange?: (value: PlayerOrder) => void;
+  value: PlayerOrder;
 }
 
-export const PlayerOrderSelect: React.FC<PlayerOrderSelectProps> = ({ onChange, value }) => {
+export const PlayerOrderSelect: React.FC<PlayerOrderSelectProps> = ({
+  onChange,
+  value,
+}) => {
   const handleChangePlayerOrder = (event: SelectChangeEvent<PlayerOrder>) => {
-    onChange?.(event.target.value as PlayerOrder)
-  }
+    onChange?.(event.target.value as PlayerOrder);
+  };
 
   return (
     <FormControl sx={{ minWidth: 140, marginTop: '16px' }} size="small">
@@ -27,9 +36,9 @@ export const PlayerOrderSelect: React.FC<PlayerOrderSelectProps> = ({ onChange, 
             <MenuItem key={`player-order-${order}`} value={order}>
               {order}
             </MenuItem>
-          )
+          );
         })}
       </Select>
     </FormControl>
-  )
-}
+  );
+};

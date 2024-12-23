@@ -7,6 +7,8 @@ import { Player } from '@/shared/models/Player';
 const API = '/team/';
 
 const fetcher = (teamId?: string, token?: string | null) => {
+  console.log(teamId);
+  console.log(token);
   if (token === null) {
     return undefined;
   }
