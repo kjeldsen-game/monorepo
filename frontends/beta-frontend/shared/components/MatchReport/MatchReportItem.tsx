@@ -14,6 +14,16 @@ export const MatchReportItem: React.FC<MatchReportItemProps> = ({
   event,
   homeId,
 }) => {
+  const formatClock = (clock: number): string => {
+    const totalMinutes = Math.floor(clock / 4);
+    const seconds = (clock % 4) * 15;
+
+    const formattedMinutes = String(totalMinutes).padStart(2, '0');
+    const formattedSeconds = String(seconds).padStart(2, '0');
+
+    return `${formattedMinutes}:${formattedSeconds}`;
+  };
+
   return (
     <Box
       sx={{
@@ -27,7 +37,8 @@ export const MatchReportItem: React.FC<MatchReportItemProps> = ({
         textAlign={'center'}
         sx={{ background: '#A3A3A3', width: '40px' }}
         borderRadius={'5px'}>
-        {event.clock}:00
+        {formatClock(event.clock)}
+        {/* {event.clock}:00 */}
       </Box>
       <Box
         paddingY={'10px'}
@@ -39,6 +50,7 @@ export const MatchReportItem: React.FC<MatchReportItemProps> = ({
           textAlign={event.duel.initiator.teamId != homeId ? 'left' : 'right'}
           sx={{ width: '80%' }}>
           <MatchReportItemMessage
+            event={event}
             homeId={homeId}
             duel={event.duel}
             type={event.action}

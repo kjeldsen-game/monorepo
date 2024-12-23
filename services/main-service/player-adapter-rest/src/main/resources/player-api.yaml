@@ -789,6 +789,9 @@ components:
         - PASS_FORWARD
         - LONG_SHOT
         - CHANGE_FLANK
+        - PASS_TO_AREA
+        - DRIBBLE_TO_AREA
+        - WALL_PASS
         - NONE
       example: FORWARD
 
@@ -1185,6 +1188,8 @@ components:
           $ref: "#/components/schemas/PlayerStatus"
         position:
           $ref: "#/components/schemas/PlayerPosition"
+        playerOrder:
+          $ref: "#/components/schemas/PlayerOrder"
 
     TeamResponse:
       type: object

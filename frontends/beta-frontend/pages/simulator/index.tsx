@@ -43,7 +43,7 @@ const Simulator = () => {
   });
 
   const handleButtonClick = async () => {
-    console.log(formData);
+    // console.log(formData);
     setShowResponse(false); // Hide any previous response
     setIsLoading(true); // Set loading state
     setError(null); // Reset error state
@@ -56,7 +56,7 @@ const Simulator = () => {
         undefined,
         userData?.accessToken,
       );
-      console.log(response);
+      // console.log(response);
       setResponseData(response); // Update the response data
       setShowResponse(true); // Show the response
     } catch (err) {

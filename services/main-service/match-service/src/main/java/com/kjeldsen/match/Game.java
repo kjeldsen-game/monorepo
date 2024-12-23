@@ -43,8 +43,8 @@ public class Game {
      * plays are executed until the game is over.
      */
 
-    public static int HALF_TIME = 45;
-    public static int FULL_TIME = 90;
+    public static int HALF_TIME = 45*4; // execute play every 15 seconds
+    public static int FULL_TIME = 90*4;
 
     // This method simulates a match. Any information required for the game to be executed needs to
     // be passed to this method as part of the match. It returns the final game state with a list
@@ -200,6 +200,8 @@ public class Game {
 
         // The play is now over. It is saved and the state is transitioned depending on the result.
         Play play = Play.builder()
+            .homeScore(state.getHome().getScore())
+            .awayScore(state.getAway().getScore())
             .duel(duel)
             .action(outcome.getParams().getDuelType().getAction())
             .clock(state.getClock())
@@ -375,6 +377,12 @@ public class Game {
                     .score(before.getScore() + 1)
                     .build())
             .orElseThrow();
+
+        if (state.getTurn() == Turn.HOME) { //Attacking team is home
+            play.setHomeScore(play.getHomeScore() + 1);
+        } else {
+            play.setAwayScore(play.getAwayScore() + 1);
+        }
 
         if (play.getBallState().getHeight().isHigh()) {
             state.getRecorder().record("Ball moved from high to low.", state, GameProgressRecord.Type.BALL_BEHAVIOUR, GameProgressRecord.DuelStage.AFTER);

@@ -35,3 +35,4 @@ override.tf
 # CLI configuration files
 .terraformrc
 terraform.rc
+*.pem

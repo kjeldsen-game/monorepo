@@ -18,7 +18,11 @@ const Team: NextPage = () => {
     userData?.accessToken,
   );
 
-  console.log(error);
+  const [alert, setAlert] = useState<any>({
+    open: false,
+    type: 'success',
+    message: '',
+  });
 
   const [teamPlayers, setTeamPlayers] = useState<Player[]>(data?.players ?? []);
 
@@ -28,40 +32,42 @@ const Team: NextPage = () => {
 
   if (sessionStatus === 'loading' || !data) return <CircularProgress />;
 
-  const handlePlayerChange = (value: Player) => {
-    if (data === undefined) return;
-    setTeamPlayers((prev) => {
-      const index = prev.findIndex((p) => p.id === value.id);
-      const newPlayers = [...prev];
-      newPlayers[index] = { ...value };
-      return newPlayers;
-    });
+  const handlePlayerChange = (players: Player[]) => {
+    setTeamPlayers(players);
+    // if (data === undefined) return;
+    // setTeamPlayers((prev) => {
+    //   const index = prev.findIndex((p) => p.id === value.id);
+    //   const newPlayers = [...prev];
+    //   newPlayers[index] = { ...value };
+    //   return newPlayers;
+    // });
   };
 
-  const handleTeamUpdate = async () => {
-    // console.log(teamPlayers);
+  const handleTeamUpdate = async (players: Player[]) => {
     try {
-      const response = await updateTeam(teamPlayers);
+      const response = await updateTeam(players);
       if (response.status == 500) {
-        // setShowAlert({
-        //   open: true,
-        //   message: response.message,
-        //   type: 'error',
-        // });
+        setAlert({
+          open: true,
+          message: response.message,
+          type: 'error',
+        });
       } else {
-        // setShowAlert({
-        //   open: true,
-        //   message: 'Pricing updated successfully',
-        //   type: 'success',
-        // });
+        setAlert({
+          open: true,
+          message: 'Team was updated successfully!',
+          type: 'success',
+        });
       }
     } catch (error) {
-      console.error('Failed to update auction:', error);
+      console.error('Failed to update team:', error);
     }
   };
 
   return (
     <TeamView
+      setAlert={setAlert}
+      alert={alert}
       isEditing
       team={{ ...data, players: teamPlayers }}
       handlePlayerChange={handlePlayerChange}

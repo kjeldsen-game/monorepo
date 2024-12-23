@@ -9,9 +9,6 @@ import {
   PlayerPosition,
   PlayerPositionColorNew,
 } from '@/shared/models/PlayerPosition';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { Typography } from '@mui/material';
-import { PlayerSkillToShortcut } from '@/shared/models/PlayerSkill';
 import MarketButton from '../../Market/MarketButton';
 import { AuctionMarket } from '@/shared/models/Auction';
 import { getPositionInitials } from '@/shared/utils/PlayerUtils';
@@ -70,7 +67,6 @@ export const marketColumn = (
       ...baseColumnConfig,
       field: 'age',
       renderHeader: () => <div>Age</div>,
-      minWidth: 70,
       valueGetter: (params: GridValueGetterParams) =>
         params.row.player.age.years,
     },
@@ -82,7 +78,6 @@ export const marketColumn = (
         const position = params.row.player
           .position as keyof typeof PlayerPosition;
         const initials = getPositionInitials(position);
-
         return (
           <div
             style={{
@@ -101,30 +96,12 @@ export const marketColumn = (
       minWidth: 50,
       flex: 1,
     },
-    // {
-    //   ...baseColumnConfig,
-    //   field: 'TODO',
-    //   renderHeader: () => <div>DV</div>,
-    //   minWidth: 50,
-    //   renderCell: (params) => (
-    //     <div
-    //       style={{
-    //         display: 'flex',
-    //         alignItems: 'center',
-    //         justifyContent: 'center',
-    //       }}>
-    //       17
-    //       <ArrowRightIcon sx={{ color: '#A4BC10' }} />
-    //       <Typography sx={{ fontWeight: '900' }}>18</Typography>
-    //     </div>
-    //   ),
-    // },
-    createSkillColumnConfig('DEFENSIVE_POSITIONING', 'DP'),
-    createSkillColumnConfig('BALL_CONTROL', 'BC'),
     createSkillColumnConfig('SCORING', 'SC'),
-    createSkillColumnConfig('PASSING', 'PA'),
     createSkillColumnConfig('OFFENSIVE_POSITIONING', 'OP'),
+    createSkillColumnConfig('BALL_CONTROL', 'BC'),
+    createSkillColumnConfig('PASSING', 'PA'),
     createSkillColumnConfig('TACKLING', 'TA'),
+    createSkillColumnConfig('DEFENSIVE_POSITIONING', 'DP'),
     {
       ...baseColumnConfig,
       field: 'averageBid',

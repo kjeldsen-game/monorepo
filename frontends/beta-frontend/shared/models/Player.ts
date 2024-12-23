@@ -1,23 +1,23 @@
-import { PlayerLineupStatus } from './PlayerLineupStatus'
-import { PlayerOrder } from './PlayerOrder'
-import { PlayerPosition } from './PlayerPosition'
+import { PlayerLineupStatus } from './PlayerLineupStatus';
+import { PlayerOrder } from './PlayerOrder';
+import { PlayerPosition } from './PlayerPosition';
 
 export interface Player {
-  id: string
-  age: number
-  name: string
-  position: PlayerPosition
-  category: Category
-  playerOrder: PlayerOrder
-  status: PlayerLineupStatus
-  actualSkills: { [key: string]: ActualSkill }
-  economy: PlayerEconomy
+  id: string;
+  age: number;
+  name: string;
+  position: PlayerPosition;
+  category: Category;
+  playerOrder: PlayerOrder;
+  status: PlayerLineupStatus;
+  actualSkills: { [key: string]: ActualSkill };
+  economy: PlayerEconomy;
 }
 
 export interface PlayerAge {
-  years: number
-  months: number
-  days: number
+  years: number;
+  months: number;
+  days: number;
 }
 
 export enum Category {
@@ -26,17 +26,17 @@ export enum Category {
 }
 
 export interface PlayerEconomy {
-  salary: number
+  salary: number;
 }
 
 export interface ActualSkill {
-  PlayerSkills: PlayerSkills
+  PlayerSkills: PlayerSkills;
 }
 
 export interface PlayerSkills {
-  actual: number
-  potential: number
-  playerSkillRelevance: PlayerSkillRelevance
+  actual: number;
+  potential: number;
+  playerSkillRelevance: PlayerSkillRelevance;
 }
 
 export enum PlayerSkillRelevance {

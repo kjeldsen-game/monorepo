@@ -1,20 +1,35 @@
 import { useTeamRepository } from '@/pages/api/team/useTeamRepository';
 import TeamView from '@/shared/components/TeamView';
+import { Player } from '@/shared/models/Player';
+import { CircularProgress } from '@mui/material';
 import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 // eslint-disable-next-line react/prop-types
 const Team: NextPage = () => {
-  const { data: userData } = useSession({ required: true });
-  const router = useRouter();
+  const { data: userData, status: sessionStatus } = useSession({
+    required: true,
+  });
 
-  const { data } = useTeamRepository(router.query.id as string);
+  const { data } = useTeamRepository(
+    useRouter().query.id as string,
+    userData?.accessToken,
+  );
+
+  const [teamPlayers, setTeamPlayers] = useState<Player[]>(data?.players ?? []);
+
+  useEffect(() => {
+    setTeamPlayers(data?.players ?? []);
+  }, [data?.players]);
+
+  if (sessionStatus === 'loading' || !data) return <CircularProgress />;
 
   return (
     <>
-      <TeamView isEditing={false} team={data}></TeamView>
+      <TeamView isEditing={false} team={{ ...data, players: teamPlayers }} />
     </>
   );
 };

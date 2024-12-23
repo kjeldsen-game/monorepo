@@ -1,6 +1,7 @@
 import {
   GridCellParams,
   GridColDef,
+  GridComparatorFn,
   GridValueGetterParams,
 } from '@mui/x-data-grid';
 import { GridAlignment } from '@mui/x-data-grid';
@@ -12,11 +13,38 @@ import { Player } from '@/shared/models/Player';
 import { PlayerOrder } from '@/shared/models/PlayerOrder';
 import { PlayerStatusSelect } from '../../PlayerStatusSelect';
 import { PlayerLineupStatus } from '@/shared/models/PlayerLineupStatus';
+import { baseColumnConfig } from './ColumnsConfig';
 
 export const teamColumn = (
   isEditing: boolean,
   handlePlayerChange?: (value: Player) => void,
 ) => {
+  const statusComparator: GridComparatorFn<string> = (v1, v2) => {
+    const order = ['ACTIVE', 'INACTIVE', 'BENCH', 'FOR_SALE'];
+    const index1 = order.indexOf(v1);
+    const index2 = order.indexOf(v2);
+    const result = index1 - index2;
+    return result;
+  };
+
+  const createSkillColumnConfig = (
+    field: string,
+    headerName: string,
+  ): GridColDef => {
+    return {
+      ...baseColumnConfig,
+      field,
+      renderHeader: () => <div>{headerName}</div>,
+      minWidth: 50,
+      valueGetter: (params: GridValueGetterParams) => {
+        const actual = params.row.actualSkills[field]?.PlayerSkills.actual || 0;
+        const potential =
+          params.row.actualSkills[field]?.PlayerSkills.potential || 0;
+        return `${actual}/${potential}`;
+      },
+    };
+  };
+
   const handlePlayerPositionChange = (
     player: Player,
     value: PlayerPosition,
@@ -61,114 +89,122 @@ export const teamColumn = (
       flex: 1,
       valueGetter: (params: GridValueGetterParams) => params.row.age.years,
     },
-    {
-      field: 'DEFENSIVE_POSITIONING',
-      renderHeader: () => (
-        <div>
-          DP<sup>CO</sup>
-        </div>
-      ),
-      minWidth: 50,
-      headerAlign: 'center' as GridAlignment,
-      align: 'center' as GridAlignment,
-      flex: 1,
-      valueGetter: (params: GridValueGetterParams) => {
-        return (
-          params.row.actualSkills.DEFENSIVE_POSITIONING?.PlayerSkills.actual ||
-          params.row.actualSkills.CONTROL?.PlayerSkills.actual
-        );
-      },
-    },
-    {
-      field: 'BALL_CONTROL',
-      renderHeader: () => (
-        <div>
-          BC<sup>INT</sup>
-        </div>
-      ),
-      headerAlign: 'center' as GridAlignment,
-      align: 'center' as GridAlignment,
-      minWidth: 50,
-      flex: 1,
-      valueGetter: (params: GridValueGetterParams) => {
-        return (
-          params.row.actualSkills.BALL_CONTROL?.PlayerSkills.actual ||
-          params.row.actualSkills.INTERCEPTIONS?.PlayerSkills.actual
-        );
-      },
-    },
-    {
-      field: 'SCORE',
-      renderHeader: () => (
-        <div>
-          SC<sup>1on1</sup>
-        </div>
-      ),
-      headerAlign: 'center' as GridAlignment,
-      align: 'center' as GridAlignment,
-      minWidth: 50,
-      flex: 1,
-      valueGetter: (params: GridValueGetterParams) => {
-        return (
-          params.row.actualSkills.SCORING?.PlayerSkills.actual ||
-          params.row.actualSkills.ONE_ON_ONE?.PlayerSkills.actual
-        );
-      },
-    },
-    {
-      field: 'PASSING',
-      renderHeader: () => (
-        <div>
-          PA<sup>ORG</sup>
-        </div>
-      ),
-      headerAlign: 'center' as GridAlignment,
-      align: 'center' as GridAlignment,
-      minWidth: 50,
-      flex: 1,
-      valueGetter: (params: GridValueGetterParams) => {
-        return (
-          params.row.actualSkills.PASSING?.PlayerSkills.actual ||
-          params.row.actualSkills.ORGANIZATION?.PlayerSkills.actual
-        );
-      },
-    },
-    {
-      field: 'OFFENSIVE_POSITIONING',
-      renderHeader: () => (
-        <div>
-          OP<sup>POS</sup>
-        </div>
-      ),
-      headerAlign: 'center' as GridAlignment,
-      align: 'center' as GridAlignment,
-      minWidth: 50,
-      flex: 1,
-      valueGetter: (params: GridValueGetterParams) => {
-        return (
-          params.row.actualSkills.OFFENSIVE_POSITIONING?.PlayerSkills.actual ||
-          params.row.actualSkills.POSITIONING?.PlayerSkills.actual
-        );
-      },
-    },
-    {
-      field: 'TACKLING',
-      renderHeader: () => (
-        <div>
-          TA<sup>RE</sup>
-        </div>
-      ),
-      headerAlign: 'center' as GridAlignment,
-      align: 'center' as GridAlignment,
-      minWidth: 50,
-      flex: 1,
-      valueGetter: (params: GridValueGetterParams) => {
-        return (
-          params.row.actualSkills.TACKLING?.PlayerSkills.actual ||
-          params.row.actualSkills.REFLEXES?.PlayerSkills.actual
-        );
-      },
-    },
+    createSkillColumnConfig('SCORING', 'SC'),
+    createSkillColumnConfig('OFFENSIVE_POSITIONING', 'OP'),
+    createSkillColumnConfig('BALL_CONTROL', 'BC'),
+    createSkillColumnConfig('PASSING', 'PA'),
+    createSkillColumnConfig('AERIAL', 'AE'),
+    createSkillColumnConfig('CONSTITUTION', 'CO'),
+    createSkillColumnConfig('TACKLING', 'TA'),
+    createSkillColumnConfig('DEFENSIVE_POSITIONING', 'DP'),
+    // {
+    //   field: 'DEFENSIVE_POSITIONING',
+    //   renderHeader: () => (
+    //     <div>
+    //       DP<sup>CO</sup>
+    //     </div>
+    //   ),
+    //   minWidth: 50,
+    //   headerAlign: 'center' as GridAlignment,
+    //   align: 'center' as GridAlignment,
+    //   flex: 1,
+    //   valueGetter: (params: GridValueGetterParams) => {
+    //     return (
+    //       params.row.actualSkills.DEFENSIVE_POSITIONING?.PlayerSkills.actual ||
+    //       params.row.actualSkills.CONTROL?.PlayerSkills.actual
+    //     );
+    //   },
+    // },
+    // {
+    //   field: 'BALL_CONTROL',
+    //   renderHeader: () => (
+    //     <div>
+    //       BC<sup>INT</sup>
+    //     </div>
+    //   ),
+    //   headerAlign: 'center' as GridAlignment,
+    //   align: 'center' as GridAlignment,
+    //   minWidth: 50,
+    //   flex: 1,
+    //   valueGetter: (params: GridValueGetterParams) => {
+    //     return (
+    //       params.row.actualSkills.BALL_CONTROL?.PlayerSkills.actual ||
+    //       params.row.actualSkills.INTERCEPTIONS?.PlayerSkills.actual
+    //     );
+    //   },
+    // },
+    // {
+    //   field: 'SCORE',
+    //   renderHeader: () => (
+    //     <div>
+    //       SC<sup>1on1</sup>
+    //     </div>
+    //   ),
+    //   headerAlign: 'center' as GridAlignment,
+    //   align: 'center' as GridAlignment,
+    //   minWidth: 50,
+    //   flex: 1,
+    //   valueGetter: (params: GridValueGetterParams) => {
+    //     return (
+    //       params.row.actualSkills.SCORING?.PlayerSkills.actual ||
+    //       params.row.actualSkills.ONE_ON_ONE?.PlayerSkills.actual
+    //     );
+    //   },
+    // },
+    // {
+    //   field: 'PASSING',
+    //   renderHeader: () => (
+    //     <div>
+    //       PA<sup>ORG</sup>
+    //     </div>
+    //   ),
+    //   headerAlign: 'center' as GridAlignment,
+    //   align: 'center' as GridAlignment,
+    //   minWidth: 50,
+    //   flex: 1,
+    //   valueGetter: (params: GridValueGetterParams) => {
+    //     return (
+    //       params.row.actualSkills.PASSING?.PlayerSkills.actual ||
+    //       params.row.actualSkills.ORGANIZATION?.PlayerSkills.actual
+    //     );
+    //   },
+    // },
+    // {
+    //   field: 'OFFENSIVE_POSITIONING',
+    //   renderHeader: () => (
+    //     <div>
+    //       OP<sup>POS</sup>
+    //     </div>
+    //   ),
+    //   headerAlign: 'center' as GridAlignment,
+    //   align: 'center' as GridAlignment,
+    //   minWidth: 50,
+    //   flex: 1,
+    //   valueGetter: (params: GridValueGetterParams) => {
+    //     return (
+    //       params.row.actualSkills.OFFENSIVE_POSITIONING?.PlayerSkills.actual ||
+    //       params.row.actualSkills.POSITIONING?.PlayerSkills.actual
+    //     );
+    //   },
+    // },
+    // {
+    //   field: 'TACKLING',
+    //   renderHeader: () => (
+    //     <div>
+    //       TA<sup>RE</sup>
+    //     </div>
+    //   ),
+    //   headerAlign: 'center' as GridAlignment,
+    //   align: 'center' as GridAlignment,
+    //   minWidth: 50,
+    //   flex: 1,
+    //   valueGetter: (params: GridValueGetterParams) => {
+    //     return (
+    //       params.row.actualSkills.TACKLING?.PlayerSkills.actual ||
+    //       params.row.actualSkills.REFLEXES?.PlayerSkills.actual
+    //     );
+    //   },
+    // },
     // {
     //   field: 'CO',
     //   headerName: 'CO',
@@ -229,7 +265,7 @@ export const teamColumn = (
       headerName: 'Status',
       headerAlign: 'center' as GridAlignment,
       align: 'center' as GridAlignment,
-      sortable: false,
+      valueGetter: (params: GridValueGetterParams) => params.row.status,
       renderCell: (params) => (
         <PlayerStatusSelect
           value={params.row.status}
@@ -241,6 +277,7 @@ export const teamColumn = (
       minWidth: 20,
       flex: 1,
       editable: isEditing,
+      sortComparator: statusComparator,
     },
     // {
     //   field: 'GP',

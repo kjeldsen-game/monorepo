@@ -28,6 +28,7 @@ const GeneralEconomyTabView: React.FC<GeneralEconomyTabViewProps> = ({
   const handleCloseModalSponsor = () => {
     setOpenSponsor(false);
   };
+
   const handleCloseModalBillboard = () => {
     setOpenBillboard(false);
   };
