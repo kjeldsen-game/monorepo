@@ -44,7 +44,6 @@ const Team: NextPage = () => {
   };
 
   const handleTeamUpdate = async (players: Player[]) => {
-    console.log(players);
     try {
       const response = await updateTeam(players);
       if (response.status == 500) {

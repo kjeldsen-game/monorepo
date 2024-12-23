@@ -42,8 +42,8 @@ const CompositionTooltip = styled(({ className, ...props }: TooltipProps) => (
 interface TeamProps {
   isEditing: boolean;
   team: Team | undefined;
-  alert: any;
-  setAlert: any;
+  alert?: any;
+  setAlert?: any;
   handlePlayerChange?: (value: Player) => void;
   onTeamUpdate?: (players: Player[]) => void;
 }
@@ -67,8 +67,6 @@ const TeamView: React.FC<TeamProps> = ({
   const [addingStatus, setAddingStatus] = useState<string | undefined>(
     undefined,
   );
-
-  console.log(players);
 
   useEffect(() => {
     if (team?.players) {
@@ -158,7 +156,6 @@ const TeamView: React.FC<TeamProps> = ({
         player.id === newPlayer.id ? { ...player, ...updatedPlayer } : player,
       ),
     );
-    console.log(players);
     setPlayerEdit(status === 'INACTIVE' ? undefined : updatedPlayer);
   };
 

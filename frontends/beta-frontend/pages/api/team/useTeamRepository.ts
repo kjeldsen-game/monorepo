@@ -6,10 +6,8 @@ import { Player } from '@/shared/models/Player';
 
 const API = '/team/';
 
-const fetcher = (teamId?: string, token?: string | null) => {
-  console.log(teamId);
-  console.log(token);
-  if (token === null) {
+const fetcher = (teamId?: string | null | string[], token?: string | null) => {
+  if (token === null || teamId === null) {
     return undefined;
   }
   return connectorAPI<any>(API + teamId, 'GET', undefined, undefined, token);
@@ -17,8 +15,8 @@ const fetcher = (teamId?: string, token?: string | null) => {
 
 const useTeamRepository = (team?: string, token?: string) => {
   const { data, mutate, error, isLoading } = useSWR<Team | undefined>(
-    team ? API + team : null,
-    () => fetcher(team, token ? token : null),
+    token ? API + team : null,
+    () => fetcher(team ? team : null, token ? token : null),
   );
 
   const updateTeamPlayer = (value: Player): void => {
