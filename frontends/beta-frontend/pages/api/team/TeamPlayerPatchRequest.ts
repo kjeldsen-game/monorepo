@@ -1,5 +1,6 @@
 import { PlayerPosition } from '@/shared/models/PlayerPosition';
 import { PlayerOrder } from '../match/models/MatchReportresponse';
+import { TeamModifiers } from '@/shared/models/TeamModifiers';
 
 interface PlayerRequest {
   id: string;
@@ -10,4 +11,5 @@ interface PlayerRequest {
 
 export interface TeamPlayerPatchRequest {
   players: PlayerRequest[];
+  teamModifiers: TeamModifiers;
 }

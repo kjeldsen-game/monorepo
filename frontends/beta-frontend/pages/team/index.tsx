@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useTeamRepository } from '../api/team/useTeamRepository';
 import { Player } from '@/shared/models/Player';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { TeamModifiers } from '@/shared/models/TeamModifiers';
 
 // eslint-disable-next-line react/prop-types
 const Team: NextPage = () => {
@@ -43,10 +44,13 @@ const Team: NextPage = () => {
     // });
   };
 
-  const handleTeamUpdate = async (players: Player[]) => {
+  const handleTeamUpdate = async (
+    players: Player[],
+    teamModifiers: TeamModifiers,
+  ) => {
     try {
-      const response = await updateTeam(players);
-      if (response.status == 500) {
+      const response = await updateTeam(players, teamModifiers);
+      if (response.status == 500 || response.status == 400) {
         setAlert({
           open: true,
           message: response.message,

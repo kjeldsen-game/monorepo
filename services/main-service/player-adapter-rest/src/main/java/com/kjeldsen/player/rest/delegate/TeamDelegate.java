@@ -3,12 +3,14 @@ package com.kjeldsen.player.rest.delegate;
 import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.application.usecases.economy.*;
+import com.kjeldsen.player.application.usecases.player.UpdateTeamModifiersUseCase;
 import com.kjeldsen.player.application.usecases.player.UpdateTeamPlayersUseCase;
 import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerStatus;
 import com.kjeldsen.player.domain.Team.TeamId;
+import com.kjeldsen.player.domain.TeamModifiers;
 import com.kjeldsen.player.domain.repositories.FindTeamsQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
@@ -50,6 +52,7 @@ public class TeamDelegate implements TeamApiDelegate {
 
     // Team
     private final UpdateTeamPlayersUseCase updateTeamPlayersUseCase;
+    private final UpdateTeamModifiersUseCase updateTeamModifiersUseCase;
 
     /***************************** ECONOMY REST API *****************************/
     @Override
@@ -185,7 +188,9 @@ public class TeamDelegate implements TeamApiDelegate {
                 PlayerOrder.valueOf(update.getPlayerOrder().name())
             ))
             .collect(Collectors.toList());
-        Team team = updateTeamPlayersUseCase.update(playerEdits, teamId);
+        TeamModifiers teamModifiers = TeamMapper.INSTANCE.map(editTeamRequest.getTeamModifiers());
+        updateTeamModifiersUseCase.update(teamId, teamModifiers);
+        Team team = updateTeamPlayersUseCase.update(teamModifiers, playerEdits, teamId);
         TeamResponse response = TeamMapper.INSTANCE.map(team);
         return ResponseEntity.ok(response);
     }

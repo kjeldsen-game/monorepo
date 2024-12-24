@@ -730,6 +730,45 @@ components:
               $ref: "#/components/schemas/Error"
 
   schemas:
+
+    Tactic:
+      type: string
+      enum:
+        - DOUBLE_TEAM
+        - MAN_ON_MAN
+        - ZONE
+        - COUNTER_ATTACK
+        - POSSESSION_CONTROL
+        - TIKA_TAKA
+        - WING_PLAY
+        - CATENACCIO
+        - ROUTE_ONE
+        - OFFSIDE_TRAP
+
+    VerticalPressure:
+      type: string
+      enum:
+        - MID_PRESSURE
+        - LOW_PRESSURE
+        - NO_VERTICAL_FOCUS
+
+    HorizontalPressure:
+      type: string
+      enum:
+        - SWARM_CENTRE
+        - SWARM_FLANKS
+        - NO_HORIZONTAL_FOCUS
+
+    TeamModifiers:
+      type: object
+      properties:
+        tactic:
+          $ref: "#/components/schemas/Tactic"
+        verticalPressure:
+          $ref: "#/components/schemas/VerticalPressure"
+        horizontalPressure:
+          $ref: "#/components/schemas/HorizontalPressure"
+
     ######################## PLAYER SCHEMAS START ########################
     PlayerStatus:
       type: string
@@ -1175,6 +1214,8 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/EditPlayerRequest"
+        teamModifiers:
+          $ref: "#/components/schemas/TeamModifiers"
       required:
         - players
 
@@ -1204,6 +1245,8 @@ components:
           $ref: "#/components/schemas/Cantera"
         economy:
           $ref: "#/components/schemas/Economy"
+        teamModifiers:
+          $ref: "#/components/schemas/TeamModifiers"
         players:
           type: array
           items:

@@ -3,6 +3,7 @@ import { Team } from '@/shared/models/Team';
 import useSWR from 'swr';
 import { TeamPlayerPatchRequest } from './TeamPlayerPatchRequest';
 import { Player } from '@/shared/models/Player';
+import { TeamModifiers } from '@/shared/models/TeamModifiers';
 
 const API = '/team/';
 
@@ -53,7 +54,10 @@ const useTeamRepository = (team?: string, token?: string) => {
     });
   };
 
-  const updateTeam = (value: Player[]): Promise<any> => {
+  const updateTeam = (
+    value: Player[],
+    teamModifiers: TeamModifiers,
+  ): Promise<any> => {
     if (!data) {
       return Promise.reject(new Error('Data is not available.'));
     }
@@ -85,6 +89,7 @@ const useTeamRepository = (team?: string, token?: string) => {
           playerOrder: player.playerOrder,
         };
       }),
+      teamModifiers,
     };
 
     return connectorAPI<TeamPlayerPatchRequest>(

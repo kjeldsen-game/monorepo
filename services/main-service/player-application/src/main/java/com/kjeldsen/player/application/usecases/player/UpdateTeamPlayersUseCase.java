@@ -20,7 +20,7 @@ public class UpdateTeamPlayersUseCase {
     private final PlayerReadRepository playerReadRepository;
     private final PlayerWriteRepository playerWriteRepository;
 
-    public Team update(List<PlayerEdit> playerEdits, String teamId) {
+    public Team update(TeamModifiers teamModifiers, List<PlayerEdit> playerEdits, String teamId) {
 
         log.info("UpdateTeamPlayersUseCase for team {} for {} players", teamId, playerEdits.size());
 

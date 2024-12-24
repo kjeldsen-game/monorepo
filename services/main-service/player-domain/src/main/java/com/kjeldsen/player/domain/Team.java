@@ -24,19 +24,20 @@ public class Team {
     private Economy economy;
     private Cantera cantera;
     private Fans fans;
+    private TeamModifiers teamModifiers;
     private Map<Integer, LeagueStats> leagueStats;
     private Buildings buildings;
 
 
-        public record TeamId(String value) {
-            public static TeamId generate() {
-                return new TeamId(java.util.UUID.randomUUID().toString());
-            }
-
-            public static TeamId of(String id) {
-                return new TeamId(id);
-            }
+    public record TeamId(String value) {
+        public static TeamId generate() {
+            return new TeamId(java.util.UUID.randomUUID().toString());
         }
+
+        public static TeamId of(String id) {
+            return new TeamId(id);
+        }
+    }
 
     @Builder
     @Getter
