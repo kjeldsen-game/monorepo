@@ -2,6 +2,7 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.TeamModifiers;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,10 @@ public class CreateTeamUseCase {
                 .traditionLevel(0)
                 .buildingsLevel(0)
                 .build())
+            .teamModifiers(TeamModifiers.builder()
+                .horizontalPressure(TeamModifiers.getRandomValueTeamModifier(TeamModifiers.HorizontalPressure.class))
+                .verticalPressure(TeamModifiers.getRandomValueTeamModifier(TeamModifiers.VerticalPressure.class))
+                .tactic(TeamModifiers.getRandomValueTeamModifier(TeamModifiers.Tactic.class)).build())
             .economy(Team.Economy.builder()
                 .balance(BigDecimal.valueOf(1_000_000))
                 .prices( new HashMap<>(Map.of(

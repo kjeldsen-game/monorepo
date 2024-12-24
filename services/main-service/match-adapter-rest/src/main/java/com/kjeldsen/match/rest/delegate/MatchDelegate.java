@@ -59,6 +59,7 @@ public class MatchDelegate implements MatchApiDelegate {
 
     @Override
     public ResponseEntity<Void> createMatch(CreateMatchRequest request) {
+        // TODO implement usage of the modifiers from the team
         TeamId homeId = TeamId.of(request.getHome().getId());
         com.kjeldsen.player.domain.Team home = teamRepo.findById(homeId)
             .orElseThrow(() -> new RuntimeException("Home team not found"));

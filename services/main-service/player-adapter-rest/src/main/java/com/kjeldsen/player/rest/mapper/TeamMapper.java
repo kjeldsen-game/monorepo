@@ -1,6 +1,7 @@
 package com.kjeldsen.player.rest.mapper;
 
 import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.TeamModifiers;
 import com.kjeldsen.player.rest.model.TeamResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -12,4 +13,5 @@ public interface TeamMapper {
 
     TeamResponse map(Team team);
 
+    TeamModifiers map(com.kjeldsen.player.rest.model.TeamModifiers teamModifiers);
 }
