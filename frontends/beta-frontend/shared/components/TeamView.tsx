@@ -330,23 +330,20 @@ const TeamView: React.FC<TeamProps> = ({
                   sx={{ marginTop: '20px' }}
                   rows={benchPlayers || []}
                   columns={memoizedColumns2}
+                  onRowClick={(params) => {
+                    if (isEditing) {
+                      setOpenModal(true);
+                      setAddingStatus('BENCH');
+                      handlePlayerRowClick(params.row);
+                    }
+                  }}
                 />
               </>
             )}
           </CustomTabPanel>
           <CustomTabPanel value={selectedTab} index={1}>
             {players && (
-              <Grid
-                onRowClick={(params) => {
-                  if (isEditing) {
-                    setOpenModal(true);
-                    setAddingStatus('BENCH');
-                    handlePlayerRowClick(params.row);
-                  }
-                }}
-                rows={players || []}
-                columns={memoizedColumns2}
-              />
+              <Grid rows={players || []} columns={memoizedColumns2} />
             )}
           </CustomTabPanel>
         </Box>
