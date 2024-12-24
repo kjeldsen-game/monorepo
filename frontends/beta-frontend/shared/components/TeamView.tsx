@@ -10,8 +10,6 @@ import {
   tooltipClasses,
 } from '@mui/material';
 import TeamDetails from './TeamDetails';
-import PlayerTactics from './PlayerTactics';
-import TeamTactics from '@/shared/components/TeamTactics';
 import { teamColumn } from '@/shared/components/Grid/Columns/TeamColumn';
 import Grid from './Grid/Grid';
 import { Player } from '../models/Player';
@@ -20,7 +18,6 @@ import { useEffect, useMemo, useState } from 'react';
 import checkTeamComposition from '../utils/TeamCompositionRules';
 import TeamCompositionErrors from './TeamCompositionErrors';
 import { CompositionError } from '../models/CompositionError';
-import { PlayerLineupStatus } from '../models/PlayerLineupStatus';
 import { lineupColumn } from './Grid/Columns/LineupColumn';
 import LineupModal from './Team/LineupModal';
 import { PlayerOrder } from '@/pages/api/match/models/MatchReportresponse';
@@ -30,6 +27,13 @@ import CustomTabs from './CustomTabs';
 import { CustomTabPanel } from './Tab/CustomTabPanel';
 import MarketButton from './Market/MarketButton';
 import Market from '@/pages/market';
+import {
+  HorizontalPressure,
+  Tactic,
+  TeamModifiers,
+  VerticalPressure,
+} from '../models/TeamModifiers';
+import TeamModifiersForm from './Team/TeamModifiers';
 
 const CompositionTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -45,7 +49,7 @@ interface TeamProps {
   alert?: any;
   setAlert?: any;
   handlePlayerChange?: (value: Player) => void;
-  onTeamUpdate?: (players: Player[]) => void;
+  onTeamUpdate?: (players: Player[], teamModifiers: TeamModifiers) => void;
 }
 
 const TeamView: React.FC<TeamProps> = ({
@@ -64,9 +68,25 @@ const TeamView: React.FC<TeamProps> = ({
   const [activePlayers, setActivePlayers] = useState<Player[]>();
   const [benchPlayers, setBenchPlayers] = useState<Player[]>();
   const [players, setPlayers] = useState<Player[]>();
+  const [teamModifiers, setTeamModifiers] = useState<TeamModifiers>();
   const [addingStatus, setAddingStatus] = useState<string | undefined>(
     undefined,
   );
+
+  useEffect(() => {
+    if (team?.teamModifiers) {
+      if (teamModifiers != undefined) {
+      } else {
+        setTeamModifiers(team?.teamModifiers);
+      }
+    } else {
+      setTeamModifiers(undefined);
+    }
+  }, [team?.teamModifiers]);
+
+  useEffect(() => {
+    console.log(teamModifiers);
+  }, [teamModifiers]);
 
   useEffect(() => {
     if (team?.players) {
@@ -197,6 +217,20 @@ const TeamView: React.FC<TeamProps> = ({
     setSelectedTab(newValue);
   };
 
+  const handleTeamModifierChange = (
+    value: Tactic | VerticalPressure | HorizontalPressure,
+    type: string,
+  ) => {
+    console.log('handleTeamModifierChange');
+    console.log(type);
+    console.log(value);
+    setTeamModifiers((prevModifiers: any) => ({
+      ...prevModifiers,
+      [type]: value,
+    }));
+    console.log(teamModifiers);
+  };
+
   return (
     <Box sx={{ width: '100%' }}>
       <LineupModal
@@ -224,8 +258,15 @@ const TeamView: React.FC<TeamProps> = ({
           borderRadius: '8px',
         }}>
         <TeamDetails name={team?.name} />
-        <PlayerTactics />
-        <TeamTactics />
+        {/* <PlayerTactics /> */}
+        {isEditing && (
+          <TeamModifiersForm
+            teamModifiers={teamModifiers}
+            handleModifierChange={handleTeamModifierChange}
+          />
+        )}
+
+        {/* <TeamTactics /> */}
       </Box>
       <Box
         sx={{ paddingTop: '1rem' }}
@@ -255,7 +296,10 @@ const TeamView: React.FC<TeamProps> = ({
               <span>
                 <MarketButton
                   sx={{ marginX: '5px' }}
-                  onClick={() => onTeamUpdate(players)}
+                  onClick={() => {
+                    onTeamUpdate(players, teamModifiers);
+                    console.log(teamModifiers);
+                  }}
                   disabled={compositionErrors.length > 0}>
                   Save
                 </MarketButton>

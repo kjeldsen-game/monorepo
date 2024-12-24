@@ -7,6 +7,7 @@ interface SelectInputProps {
   value: any;
   title: string;
   handleChange: (input: any) => void;
+  disabled?: boolean;
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({
@@ -14,6 +15,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   value,
   title,
   handleChange,
+  disabled = false,
 }) => {
   return (
     <>
@@ -31,6 +33,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
         size="small"
         value={value}
         onChange={handleChange}
+        disabled={disabled}
         sx={{
           backgroundColor: 'white',
           width: '200px',

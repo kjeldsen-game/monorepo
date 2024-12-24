@@ -1,4 +1,5 @@
 import { Player } from './Player';
+import { TeamModifiers } from './TeamModifiers';
 
 export interface Team {
   id: string;
@@ -6,8 +7,8 @@ export interface Team {
   cantera: Cantera;
   economy: TeamEconomy;
   players: Player[];
+  teamModifiers: TeamModifiers;
 }
-
 export interface Cantera {
   score: number;
   economyLevel: number;
