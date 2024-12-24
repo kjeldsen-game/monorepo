@@ -23,7 +23,9 @@ get_db_host() {
 }
 
 get_ssh_host() {
-  SSH_HOST=$(aws ec2 describe-instances --query 'Reservations[0].Instances[0].PublicDnsName' --output text)
+  SSH_HOST=$(aws ec2 describe-instances \
+    --query "Reservations[*].Instances[?State.Name=='running'].PublicDnsName" \
+    --output text)
   if [ -z "$SSH_HOST" ]; then
     echo "Failed to retrieve the SSH host. Exiting."
     exit 1
