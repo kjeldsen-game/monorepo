@@ -6,11 +6,7 @@ import { Moment } from 'moment';
 import Link from 'next/link';
 import { leftColumnConfig, rightColumnConfig } from './ColumnsConfig';
 
-const leagueColumns = (
-  t: TFunction,
-  handleChallengeButtonClick: (id: string, date: Moment) => void,
-  disabledDates: number[],
-): GridColDef[] => [
+const leagueColumns = (): GridColDef[] => [
   {
     field: 'teamName',
     renderHeader: () => <div style={{ paddingInline: '20px' }}>Team Name</div>,

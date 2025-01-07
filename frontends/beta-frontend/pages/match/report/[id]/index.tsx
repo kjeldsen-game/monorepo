@@ -11,15 +11,12 @@ import { useRouter } from 'next/router';
 const MatchReport: NextPage = () => {
   const { data } = useSession({ required: true });
 
-  const router = useRouter();
-
   const {
     data: report,
     error,
     isLoading,
   } = useMatchReportRepository(useRouter().query.id, data?.accessToken);
 
-  console.log(isLoading);
   if (!report) {
     return <CircularProgress></CircularProgress>;
   }

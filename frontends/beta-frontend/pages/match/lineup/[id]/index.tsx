@@ -6,43 +6,128 @@ import { useSession } from 'next-auth/react';
 import { Player } from '@/shared/models/Player';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTeamRepository } from '@/pages/api/team/useTeamRepository';
+import { TeamModifiers } from '@/shared/models/TeamModifiers';
+import { useRouter } from 'next/router';
+import { useMatchTeamRepository } from '@/pages/api/match/useMatchTeamRepository';
+import {
+  filterPlayersByStatus,
+  filterPlayersByTeam,
+} from '@/shared/utils/LineupUtils';
 
-// eslint-disable-next-line react/prop-types
 const Team: NextPage = () => {
   const { data: userData, status: sessionStatus } = useSession({
     required: true,
   });
 
-  const { data, updateTeam } = useTeamRepository(userData?.user.teamId);
+  const { data } = useTeamRepository(
+    userData?.user.teamId,
+    userData?.accessToken,
+  );
+
+  const { updateMatchTeam, matchTeam, error, isLoading } =
+    useMatchTeamRepository(
+      useRouter().query.id,
+      userData?.user.teamId,
+      userData?.accessToken,
+    );
+
+  const [alert, setAlert] = useState<any>({
+    open: false,
+    type: 'success',
+    message: '',
+  });
 
   const [teamPlayers, setTeamPlayers] = useState<Player[]>(data?.players ?? []);
 
   useEffect(() => {
-    setTeamPlayers(data?.players ?? []);
-  }, [data?.players]);
+    let lineupPlayers: any[] = [];
+    let benchPlayers: any[] = [];
+    let inactivePlayers: any[] = [];
+
+    if (!matchTeam?.specificLineup && data?.players) {
+      lineupPlayers = filterPlayersByStatus(data?.players, 'ACTIVE');
+      benchPlayers = filterPlayersByStatus(data?.players, 'BENCH');
+      inactivePlayers = filterPlayersByStatus(data?.players, 'INACTIVE');
+    } else {
+      if (matchTeam?.specificLineup && data?.players) {
+        console.log('Setting specific lineup');
+        lineupPlayers = filterPlayersByTeam(
+          data?.players,
+          matchTeam?.players,
+          'ACTIVE',
+        );
+
+        benchPlayers = filterPlayersByTeam(
+          data?.players,
+          matchTeam?.bench,
+          'BENCH',
+        );
+
+        inactivePlayers =
+          data?.players
+            .filter(
+              (player) =>
+                !matchTeam?.players.some(
+                  (lineupPlayer: Player) => lineupPlayer.id === player.id,
+                ) &&
+                !matchTeam?.bench.some(
+                  (benchPlayer: Player) => benchPlayer.id === player.id,
+                ),
+            )
+            .map((player) => {
+              return {
+                ...player,
+                status: 'INACTIVE',
+              };
+            }) ?? [];
+      } else {
+        lineupPlayers = [];
+        benchPlayers = [];
+        inactivePlayers = [];
+      }
+    }
+    const allPlayers = [...lineupPlayers, ...benchPlayers, ...inactivePlayers];
+    setTeamPlayers(allPlayers);
+  }, [data?.players, matchTeam?.players, matchTeam?.bench]);
+
+  const handleMatchTeamUpdate = async (
+    players: Player[],
+    teamModifiers: TeamModifiers,
+  ) => {
+    try {
+      const response = await updateMatchTeam(players, teamModifiers);
+      if (response.status == 500 || response.status == 400) {
+        setAlert({
+          open: true,
+          message: response.message,
+          type: 'error',
+        });
+      } else {
+        setAlert({
+          open: true,
+          message: 'Team was updated successfully!',
+          type: 'success',
+        });
+      }
+    } catch (error) {
+      console.error('Failed to update team:', error);
+    }
+  };
 
   if (sessionStatus === 'loading' || !data) return <CircularProgress />;
 
-  const handlePlayerChange = (value: Player) => {
-    if (data === undefined) return;
-    setTeamPlayers((prev) => {
-      const index = prev.findIndex((p) => p.id === value.id);
-      const newPlayers = [...prev];
-      newPlayers[index] = { ...value };
-      return newPlayers;
-    });
-  };
-
-  const handleTeamUpdate = () => {
-    // updateTeam(teamPlayers)
-  };
-
   return (
     <TeamView
+      setAlert={setAlert}
+      alert={alert}
       isEditing
-      team={{ ...data, players: teamPlayers }}
-      handlePlayerChange={handlePlayerChange}
-      onTeamUpdate={handleTeamUpdate}></TeamView>
+      team={{
+        ...data,
+        players: teamPlayers,
+        teamModifiers: matchTeam?.modifiers || data?.teamModifiers,
+      }}
+      onTeamUpdate={handleMatchTeamUpdate}
+    />
   );
 };
 

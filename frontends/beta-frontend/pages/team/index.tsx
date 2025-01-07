@@ -33,17 +33,6 @@ const Team: NextPage = () => {
 
   if (sessionStatus === 'loading' || !data) return <CircularProgress />;
 
-  const handlePlayerChange = (players: Player[]) => {
-    setTeamPlayers(players);
-    // if (data === undefined) return;
-    // setTeamPlayers((prev) => {
-    //   const index = prev.findIndex((p) => p.id === value.id);
-    //   const newPlayers = [...prev];
-    //   newPlayers[index] = { ...value };
-    //   return newPlayers;
-    // });
-  };
-
   const handleTeamUpdate = async (
     players: Player[],
     teamModifiers: TeamModifiers,
@@ -74,7 +63,6 @@ const Team: NextPage = () => {
       alert={alert}
       isEditing
       team={{ ...data, players: teamPlayers }}
-      handlePlayerChange={handlePlayerChange}
       onTeamUpdate={handleTeamUpdate}></TeamView>
   );
 };

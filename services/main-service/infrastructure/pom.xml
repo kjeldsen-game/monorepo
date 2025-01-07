@@ -22,7 +22,28 @@
             <groupId>com.kjeldsen</groupId>
             <artifactId>auth-adapter-authorization</artifactId>
         </dependency>
+        <!-- League modules -->
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>league-adapter-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>league-adapter-persistence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>league-adapter-listener</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>league-adapter-publisher</artifactId>
+        </dependency>
         <!-- Match modules -->
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>match-adapter-listener</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>match-adapter-publisher</artifactId>

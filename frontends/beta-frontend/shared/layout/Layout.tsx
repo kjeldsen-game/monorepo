@@ -53,13 +53,19 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
       selected: /^\/market/.test(pathname),
     },
     {
+      name: 'League',
+      icon: 'league',
+      to: '/league',
+      hasDivider: false,
+      selected: /^\/league/.test(pathname),
+    },
+    {
       name: 'Simulator',
       icon: 'simulator',
       to: '/simulator',
       hasDivider: false,
       selected: /^\/simulator/.test(pathname),
     },
-
     // { name: 'Generate Player', icon: 'inbox', to: '/', selected: pathname === '/' },
     // { name: 'Generate Match', icon: 'mail', to: '/', selected: pathname === '/' },
   ];

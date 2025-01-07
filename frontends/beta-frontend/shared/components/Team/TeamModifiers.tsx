@@ -20,8 +20,6 @@ const TeamModifiersForm: React.FC<TeamModifiersFormProps> = ({
   teamModifiers,
   handleModifierChange,
 }) => {
-  console.log(teamModifiers);
-  console.log(teamModifiers?.tactic);
   return (
     <Box
       sx={{

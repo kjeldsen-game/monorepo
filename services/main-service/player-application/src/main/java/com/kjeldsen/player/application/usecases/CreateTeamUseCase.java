@@ -3,6 +3,8 @@ package com.kjeldsen.player.application.usecases;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.TeamModifiers;
+import com.kjeldsen.player.domain.events.TeamCreationEvent;
+import com.kjeldsen.player.domain.publishers.TeamCreationEventPublisher;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,6 +25,7 @@ public class CreateTeamUseCase {
     private final GeneratePlayersUseCase generatePlayersUseCase;
     private final TeamWriteRepository teamWriteRepository;
     private final PlayerWriteRepository playerWriteRepository;
+    private final TeamCreationEventPublisher teamCreationEventPublisher;
 
     public void create(String teamName, Integer numberOfPlayers, String userId) {
         log.info("CreateTeamUseCase name {} with {} players for user {}", teamName, numberOfPlayers, userId);
@@ -77,6 +81,12 @@ public class CreateTeamUseCase {
         //  create(created_team_event) and based on the event it populates itself. Then you save it with the repo
         // TODO notification for the user to know that his team has been created
         teamWriteRepository.save(team);
+        teamCreationEventPublisher.publish(TeamCreationEvent.builder()
+            .teamId(team.getId().value()).teamValue(players.stream()
+                .map(Player::getEconomy)
+                .map(Player.Economy::getSalary)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add)).build());
         players.forEach(playerWriteRepository::save);
     }
 }

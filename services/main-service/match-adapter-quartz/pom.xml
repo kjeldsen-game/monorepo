@@ -23,6 +23,10 @@
             <artifactId>match-service</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>match-application</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

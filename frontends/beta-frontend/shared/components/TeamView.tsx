@@ -48,7 +48,6 @@ interface TeamProps {
   team: Team | undefined;
   alert?: any;
   setAlert?: any;
-  handlePlayerChange?: (value: Player) => void;
   onTeamUpdate?: (players: Player[], teamModifiers: TeamModifiers) => void;
 }
 
@@ -57,9 +56,9 @@ const TeamView: React.FC<TeamProps> = ({
   team,
   alert,
   setAlert,
-  handlePlayerChange,
   onTeamUpdate,
 }: TeamProps) => {
+  console.log(team);
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const [playerEdit, setPlayerEdit] = useState<any>([]);
@@ -74,33 +73,27 @@ const TeamView: React.FC<TeamProps> = ({
   );
 
   useEffect(() => {
+    console.log(teamModifiers);
     if (team?.teamModifiers) {
-      if (teamModifiers != undefined) {
-      } else {
-        setTeamModifiers(team?.teamModifiers);
-      }
+      setTeamModifiers(team?.teamModifiers);
     } else {
       setTeamModifiers(undefined);
     }
   }, [team?.teamModifiers]);
 
   useEffect(() => {
-    console.log(teamModifiers);
-  }, [teamModifiers]);
-
-  useEffect(() => {
+    // If players from the props are present
     if (team?.players) {
+      const active = team.players.filter(
+        (player) => player.status === 'ACTIVE',
+      );
+      const bench = team.players.filter((player) => player.status === 'BENCH');
+      setActivePlayers(active);
+      setBenchPlayers(bench);
+      setPlayers(team?.players);
+      // if there active players are already set, do nothing
       if (activePlayers && activePlayers.length > 0) {
       } else {
-        const active = team.players.filter(
-          (player) => player.status === 'ACTIVE',
-        );
-        const bench = team.players.filter(
-          (player) => player.status === 'BENCH',
-        );
-        setActivePlayers(active);
-        setBenchPlayers(bench);
-        setPlayers(team?.players);
       }
     } else {
       setActivePlayers([]);
@@ -108,15 +101,6 @@ const TeamView: React.FC<TeamProps> = ({
       setPlayers([]);
     }
   }, [team?.players]);
-
-  useEffect(() => {
-    if (players && players.length !== 0) {
-      const active = players.filter((player) => player.status === 'ACTIVE');
-      const bench = players.filter((player) => player.status === 'BENCH');
-      setActivePlayers(active);
-      setBenchPlayers(bench);
-    }
-  }, [players]);
 
   const [compositionErrors, setCompositionErrors] = useState<
     CompositionError[]
@@ -126,6 +110,17 @@ const TeamView: React.FC<TeamProps> = ({
     () => checkTeamComposition(activePlayers ?? []),
     [activePlayers],
   );
+
+  useEffect(() => {
+    if (players) {
+      // console.log('Players changed, setting new active and bench players.');
+      // For the team view of /team/{id} filter have to be done on players array
+      const active = players.filter((player) => player.status === 'ACTIVE');
+      const bench = players.filter((player) => player.status === 'BENCH');
+      setActivePlayers(active);
+      setBenchPlayers(bench);
+    }
+  }, [players]);
 
   useEffect(() => {
     if (players) {
@@ -147,15 +142,7 @@ const TeamView: React.FC<TeamProps> = ({
     setOpenModal(false);
   };
 
-  const memoizedColumns = useMemo(
-    () => teamColumn(isEditing, handlePlayerChange),
-    [isEditing, handlePlayerChange],
-  );
-
-  const memoizedColumns2 = useMemo(
-    () => lineupColumn(isEditing, handlePlayerChange),
-    [isEditing, handlePlayerChange],
-  );
+  const memoizedColumns2 = useMemo(() => lineupColumn(), []);
 
   const handleAddBenchPlayerButton = () => {
     setPlayerEdit(undefined);
@@ -171,6 +158,7 @@ const TeamView: React.FC<TeamProps> = ({
 
   const handleAddPlayer = (newPlayer: Player, status: string) => {
     const updatedPlayer = { ...newPlayer, status: status };
+    // console.log(updatedPlayer);
     setPlayers((prevPlayers: any) =>
       prevPlayers.map((player: Player) =>
         player.id === newPlayer.id ? { ...player, ...updatedPlayer } : player,
@@ -221,14 +209,10 @@ const TeamView: React.FC<TeamProps> = ({
     value: Tactic | VerticalPressure | HorizontalPressure,
     type: string,
   ) => {
-    console.log('handleTeamModifierChange');
-    console.log(type);
-    console.log(value);
     setTeamModifiers((prevModifiers: any) => ({
       ...prevModifiers,
       [type]: value,
     }));
-    console.log(teamModifiers);
   };
 
   return (
@@ -298,7 +282,6 @@ const TeamView: React.FC<TeamProps> = ({
                   sx={{ marginX: '5px' }}
                   onClick={() => {
                     onTeamUpdate(players, teamModifiers);
-                    console.log(teamModifiers);
                   }}
                   disabled={compositionErrors.length > 0}>
                   Save

@@ -30,6 +30,14 @@
         <module>auth-domain</module>
         <module>auth-application</module>
         <module>auth-adapter-persistence</module>
+        <module>league-domain</module>
+        <module>league-application</module>
+        <module>league-adapter-listener</module>
+        <module>league-adapter-publisher</module>
+        <module>match-adapter-listener</module>
+        <module>match-application</module>
+        <module>league-adapter-persistence</module>
+        <module>league-adapter-rest</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -301,6 +309,51 @@
     <dependencyManagement>
         <dependencies>
             <!-- Modules -->
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>league-adapter-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>league-adapter-persistence</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>league-adapter-listener</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>league-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>league-adapter-publisher</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>match-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>match-adapter-listener</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>league-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>league-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
                 <artifactId>auth-domain</artifactId>

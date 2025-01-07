@@ -17,6 +17,7 @@ import Link from 'next/link';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import TerminalIcon from '@mui/icons-material/Terminal';
 const drawerWidth = '180px';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 const providedIcons = {
   inbox: <InboxIcon />,
@@ -25,6 +26,7 @@ const providedIcons = {
   market: <LocalGroceryStoreIcon />,
   team: <Groups2Icon />,
   training: <FitnessCenterIcon />,
+  league: <CalendarMonthIcon />,
   simulator: <TerminalIcon />,
 };
 export interface Item {
