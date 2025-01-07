@@ -55,9 +55,12 @@ const LineupModal: React.FC<LineupModalProps> = ({
   };
 
   const handleRowButtonClick = (newPlayer: Player, oldPlayer = player) => {
+    console.log('click');
     if (player === undefined) {
+      console.log('handlePlayerAdd');
       handlePlayerAdd(newPlayer, addingStatus);
     } else {
+      console.log('handleSelectButtonClick');
       handleSelectButtonClick(newPlayer, oldPlayer);
     }
   };

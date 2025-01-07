@@ -5,9 +5,9 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useAuctionRepository } from '../api/market/useAuctionRepository';
 
-interface MarketProsp {}
+interface MarketProps {}
 
-const Market: NextPage<MarketProsp> = ({}) => {
+const Market: NextPage<MarketProps> = ({}) => {
   const [filter, setFilter] = useState<string>('');
   const [auction, setAuction] = useState<string | undefined>(undefined);
   const { data: userData } = useSession({ required: true });

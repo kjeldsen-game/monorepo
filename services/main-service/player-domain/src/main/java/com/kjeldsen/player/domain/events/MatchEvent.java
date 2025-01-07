@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class MatchEvent extends Event {
 
     String matchId;
+    String leagueId;
     String homeTeamId;
     String awayTeamId;
     Integer homeScore;

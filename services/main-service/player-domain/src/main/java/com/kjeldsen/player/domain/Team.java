@@ -27,6 +27,7 @@ public class Team {
     private TeamModifiers teamModifiers;
     private Map<Integer, LeagueStats> leagueStats;
     private Buildings buildings;
+    private String leagueId;
 
 
     public record TeamId(String value) {

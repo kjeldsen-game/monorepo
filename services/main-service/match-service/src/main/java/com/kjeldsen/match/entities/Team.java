@@ -22,6 +22,7 @@ public class Team {
     TeamRole role;
     List<Player> players;
     List<Player> bench;
+    Boolean specificLineup;
 
     Integer rating;
 

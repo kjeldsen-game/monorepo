@@ -1,29 +1,23 @@
 import {
   GridCellParams,
   GridColDef,
-  GridComparatorFn,
   GridValueGetterParams,
 } from '@mui/x-data-grid';
-import { GridAlignment } from '@mui/x-data-grid';
 import Link from 'next/link';
-import { PlayerOrderSelect } from '../../PlayerOrderSelect';
-import { PlayerPositionSelect } from '../../PlayerPositionSelect';
 import {
   PlayerPosition,
   PlayerPositionColorNew,
 } from '@/shared/models/PlayerPosition';
 import { Player } from '@/shared/models/Player';
-import { PlayerOrder } from '@/shared/models/PlayerOrder';
-import { PlayerStatusSelect } from '../../PlayerStatusSelect';
-import { PlayerLineupStatus } from '@/shared/models/PlayerLineupStatus';
-import { baseColumnConfig, leftColumnConfig } from './ColumnsConfig';
+import {
+  baseColumnConfig,
+  leftColumnConfig,
+  rightColumnConfig,
+} from './ColumnsConfig';
 import { getPositionInitials } from '@/shared/utils/PlayerUtils';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 
-export const lineupColumn = (
-  isEditing?: boolean,
-  handlePlayerChange?: (value: Player) => void,
-) => {
+export const lineupColumn = () => {
   const createSkillColumnConfig = (
     field: string,
     headerName: string,

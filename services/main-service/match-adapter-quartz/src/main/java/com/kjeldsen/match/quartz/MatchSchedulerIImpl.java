@@ -30,7 +30,7 @@ public class MatchSchedulerIImpl implements MatchScheduler {
                 .build();
 
             Trigger trigger = TriggerBuilder.newTrigger()
-                .withIdentity("auctionEndTrigger-" + matchId)
+                .withIdentity("matchTrigger-" + matchId)
                 .startAt(Date.from(matchDate))
                 .build();
 

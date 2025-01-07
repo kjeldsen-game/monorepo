@@ -1,11 +1,14 @@
 package com.kjeldsen.match.rest.delegate;
 
+import com.kjeldsen.match.application.usecases.GetMatchTeamUseCase;
+import com.kjeldsen.match.application.usecases.UpdateMatchLineupUseCase;
 import com.kjeldsen.match.common.RandomHelper;
 import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Player;
 import com.kjeldsen.match.entities.Team;
 import com.kjeldsen.match.publisher.MatchEventPublisher;
 import com.kjeldsen.match.repositories.MatchEventWriteRepository;
+import com.kjeldsen.match.repositories.MatchReadRepository;
 import com.kjeldsen.match.rest.model.EditPlayerRequest;
 import com.kjeldsen.match.rest.model.PlayerPosition;
 import com.kjeldsen.match.rest.model.PlayerStatus;
@@ -19,6 +22,7 @@ import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,12 +39,14 @@ public class MatchDelegateTest {
     private final TeamReadRepository teamReadRepository = Mockito.mock(TeamReadRepository.class);
     private final PlayerReadRepository playerReadRepository = Mockito.mock(PlayerReadRepository.class);
     private final MatchRepository matchRepository = Mockito.mock(MatchRepository.class);
-
+    private final GetMatchTeamUseCase getMatchTeamUseCase = Mockito.mock(GetMatchTeamUseCase.class);
     private final MatchEventPublisher matchEventPublisher = Mockito.mock(MatchEventPublisher.class);
     private final MatchEventWriteRepository matchEventWriteRepository = Mockito.mock(MatchEventWriteRepository.class);
     private final MatchScheduler matchScheduler = Mockito.mock(MatchScheduler.class);
+    private final MatchReadRepository matchReadRepository = Mockito.mock(MatchReadRepository.class);
+    private final UpdateMatchLineupUseCase updateMatchLineupUseCase = Mockito.mock(UpdateMatchLineupUseCase.class);
     private final MatchDelegate matchDelegate = new MatchDelegate(teamReadRepository, playerReadRepository, matchRepository,
-        matchEventPublisher, matchEventWriteRepository, matchScheduler);
+         matchReadRepository, matchEventPublisher, matchEventWriteRepository, matchScheduler, getMatchTeamUseCase, updateMatchLineupUseCase);
 
     private Match match;
 

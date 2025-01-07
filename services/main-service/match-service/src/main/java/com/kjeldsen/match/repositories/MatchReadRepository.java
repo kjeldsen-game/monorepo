@@ -12,4 +12,6 @@ public interface MatchReadRepository {
     Optional<Match> findOneById(String id);
 
     List<Match> findMatchesByTeamId(String teamId);
+
+    List<Match> findMatchesByLeagueId(String leagueId);
 }

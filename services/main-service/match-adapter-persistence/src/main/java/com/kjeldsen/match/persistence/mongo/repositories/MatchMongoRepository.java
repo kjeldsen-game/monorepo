@@ -12,4 +12,7 @@ public interface MatchMongoRepository extends MongoRepository<Match, String> {
 
     @Query("{$or: [{'home.id': ?0}, {'away.id': ?0}]}")
     List<Match> findMatchesByTeamId(String teamId);
+
+    @Query("{'leagueId': ?0}")
+    List<Match> findMatchesByLeagueId(String leagueId);
 }

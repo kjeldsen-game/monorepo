@@ -12,9 +12,9 @@ services:
             MONGO_INITDB_ROOT_USERNAME: admin
             MONGO_INITDB_ROOT_PASSWORD: root
             MONGO_INITDB_DATABASE: admin
-        volumes:
-            # - ./.mongo_data:/data/db # Uncomment to persist data locally if container removed
-            - ./mongodb_init:/docker-entrypoint-initdb.d
+        #volumes:
+        # - ./.mongo_data:/data/db # Uncomment to persist data locally if container removed
+        #- ./mongodb_init:/docker-entrypoint-initdb.d
         healthcheck:
             test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
             interval: 10s

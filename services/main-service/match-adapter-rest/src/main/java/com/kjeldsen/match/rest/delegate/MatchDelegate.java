@@ -2,6 +2,8 @@ package com.kjeldsen.match.rest.delegate;
 
 import com.kjeldsen.domain.EventId;
 import com.kjeldsen.match.Game;
+import com.kjeldsen.match.application.usecases.GetMatchTeamUseCase;
+import com.kjeldsen.match.application.usecases.UpdateMatchLineupUseCase;
 import com.kjeldsen.match.entities.Action;
 import com.kjeldsen.match.entities.Match;
 import com.kjeldsen.match.entities.Match.Status;
@@ -14,7 +16,9 @@ import com.kjeldsen.match.modifers.Tactic;
 import com.kjeldsen.match.modifers.VerticalPressure;
 import com.kjeldsen.match.publisher.MatchEventPublisher;
 import com.kjeldsen.match.repositories.MatchEventWriteRepository;
+import com.kjeldsen.match.repositories.MatchReadRepository;
 import com.kjeldsen.match.rest.api.MatchApiDelegate;
+import com.kjeldsen.match.rest.mapper.TeamMapper;
 import com.kjeldsen.match.rest.model.*;
 import com.kjeldsen.match.schedulers.MatchScheduler;
 import com.kjeldsen.match.state.GameState;
@@ -30,10 +34,13 @@ import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -44,18 +51,63 @@ import java.util.stream.Stream;
 @Component
 public class MatchDelegate implements MatchApiDelegate {
 
+    private static final Logger log = LoggerFactory.getLogger(MatchDelegate.class);
     private final TeamReadRepository teamRepo;
     private final PlayerReadRepository playerRepo;
     private final MatchRepository matchRepo;
+    private final MatchReadRepository matchReadRepository;
     private final MatchEventPublisher matchEventPublisher;
     private final MatchEventWriteRepository matchEventWriteRepository;
     private final MatchScheduler matchScheduler;
+
+    private final GetMatchTeamUseCase getMatchTeamUseCase;
+    private final UpdateMatchLineupUseCase updateMatchLineupUseCase;
 
     /*
      * The match service uses a different internal representation of teams and players so here
      * these entities are mapped from the database version to the engine version, which also
      * includes modifiers that differ for each match (these are passed as match creation params).
      */
+
+
+
+    /*********************** MATCH TEAM START  ***********************/
+
+    @Override
+    public ResponseEntity<TeamResponse> getMatchTeam(String teamId, String matchId) {
+        Team team = getMatchTeamUseCase.get(teamId, matchId);
+        TeamResponse response = TeamMapper.INSTANCE.map(team);
+        if (team.getHorizontalPressure() != null && team.getVerticalPressure() != null && team.getTactic() != null) {
+            response.setModifiers(new Modifiers()
+                .horizontalPressure(com.kjeldsen.match.rest.model.HorizontalPressure.valueOf(team.getHorizontalPressure().name()))
+                .tactic(com.kjeldsen.match.rest.model.Tactic.valueOf(team.getTactic().name()))
+                .verticalPressure(com.kjeldsen.match.rest.model.VerticalPressure.valueOf(team.getVerticalPressure().name())));
+
+        } else {
+            response.setModifiers(null);
+        }
+       return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<Void> updateMatchTeam(String teamId, String matchId, EditMatchTeamRequest editMatchTeamRequest) {
+        List<UpdateMatchLineupUseCase.PlayerUpdateDTO> players = editMatchTeamRequest.getPlayers().stream()
+            .map(player -> UpdateMatchLineupUseCase.PlayerUpdateDTO.builder()
+                .id(player.getId())
+                .playerOrder(
+                    player.getPlayerOrder() != null
+                        ? com.kjeldsen.player.domain.PlayerOrder.valueOf(player.getPlayerOrder().name())
+                        : null
+)                .position(PlayerPosition.valueOf(player.getPosition().name()))
+                .status(PlayerStatus.valueOf(player.getStatus().name()))
+                .build())
+            .toList();
+        com.kjeldsen.match.modifers.TeamModifiers teamModifiers = TeamMapper.INSTANCE.map(editMatchTeamRequest.getTeamModifiers());
+        updateMatchLineupUseCase.update(matchId, teamId, players, teamModifiers);
+        return ResponseEntity.ok().build();
+    }
+
+    /*********************** MATCH LINEUP END  ***********************/
 
     @Override
     public ResponseEntity<Void> createMatch(CreateMatchRequest request) {
@@ -158,9 +210,13 @@ public class MatchDelegate implements MatchApiDelegate {
 
     // TODO REWORK TO USE THE SecurityUtils.getCurrentUserId(); instead of specifying the user
     @Override
-    public ResponseEntity<List<MatchResponse>> getAllMatches(String teamId, Integer size,
+    public ResponseEntity<List<MatchResponse>> getAllMatches(String teamId, String leagueId , Integer size,
         Integer page) {
-        List<Match> matches = matchRepo.findMatchesByTeamId(teamId);
+        log.info("{}", teamId);
+        log.info("{}", leagueId);
+        // TODO filter by query
+        List<Match> matches = leagueId != null ?  matchReadRepository.findMatchesByLeagueId(leagueId)
+            : matchRepo.findMatchesByTeamId(teamId) ;
 
         List<MatchResponse> response = matches.stream()
             .map(match -> {
@@ -428,7 +484,10 @@ public class MatchDelegate implements MatchApiDelegate {
 
         TeamResponse resAwayTeam = buildMatchTeamResponse(match.getAway());
         res.setAway(resAwayTeam);
-
+        if (match.getMatchReport() != null) {
+            MatchReportResponse report = this.buildMatchReportResponse(match.getMatchReport());
+            res.setMatchReport(report);
+        }
         return res;
     }
 
@@ -442,11 +501,19 @@ public class MatchDelegate implements MatchApiDelegate {
             .orElseThrow(() -> new RuntimeException("Team not found"));
         res.setName(team.getName());
 
-        List<PlayerResponse> teamPlayers = matchTeam.getPlayers().stream().map(this::buildPlayerResponse).collect(Collectors.toList());
+        List<PlayerResponse> teamPlayers = Optional.ofNullable(matchTeam.getPlayers())
+            .orElse(Collections.emptyList())
+            .stream()
+            .map(this::buildPlayerResponse)
+            .collect(Collectors.toList());
         res.setPlayers(teamPlayers);
 
         if (matchTeam.getBench() != null) {
-            List<PlayerResponse> benchPlayers = matchTeam.getBench().stream().map(this::buildPlayerResponse).collect(Collectors.toList());
+            List<PlayerResponse> benchPlayers = Optional.of(matchTeam.getBench())
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(this::buildPlayerResponse)
+                .collect(Collectors.toList());
             res.setBench(benchPlayers);
         }
 
@@ -462,7 +529,7 @@ public class MatchDelegate implements MatchApiDelegate {
         if (matchTeam.getVerticalPressure() != null) {
             res.getModifiers().setVerticalPressure(com.kjeldsen.match.rest.model.VerticalPressure.valueOf(matchTeam.getVerticalPressure().name()));
         }
-
+        res.setSpecificLineup(matchTeam.getSpecificLineup());
         return res;
     }
 

@@ -19,10 +19,13 @@ public class Match {
     public enum Status {
         PENDING,
         ACCEPTED,
-        REJECTED
+        REJECTED,
+        SCHEDULED,
+        PLAYED
     }
 
     String id;
+    String leagueId;
     Team home;
     Team away;
     LocalDateTime dateTime;
