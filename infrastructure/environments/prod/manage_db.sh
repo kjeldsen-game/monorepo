@@ -67,7 +67,12 @@ import_data() {
   fi
 }
 
-aws s3 cp s3://my-secure-pem-bucket/pem-key.pem ./pem-key.pem
+aws secretsmanager get-secret-value \
+    --secret-id "kjeldsen-prod-pem-key" \
+    --query SecretString \
+    --output text > kjeldsen-prod-key.pem
+    
+chmod 400 ./kjeldsen-prod-key.pem
 
 # Main Menu
 echo "Select an option:"

@@ -168,25 +168,21 @@ resource "aws_key_pair" "ec2_key" {
   public_key = tls_private_key.ec2_key.public_key_openssh
 }
 
-# Create an S3 bucket to store the private key
-resource "aws_s3_bucket" "pem_key_bucket" {
-  bucket = "my-secure-pem-bucket"
-  # acl    = "private"
+# Store the private key in AWS Secrets Manager
+resource "aws_secretsmanager_secret" "pem_key" {
+  name        = "${var.project}-${var.environment}-pem-key"
+  description = "Private key for SSH access to EC2 instances in the ${var.environment} environment"
 }
 
-# Upload the private key to the S3 bucket
-resource "aws_s3_object" "pem_key_object" {
-  bucket                 = aws_s3_bucket.pem_key_bucket.bucket
-  key                    = "${var.project}-${var.environment}-key.pem" # Name the object as desired
-  content                = tls_private_key.ec2_key.private_key_pem
-  acl                    = "private"
-  server_side_encryption = "AES256" # Ensure the key is encrypted at rest
+resource "aws_secretsmanager_secret_version" "pem_key_version" {
+  secret_id     = aws_secretsmanager_secret.pem_key.id
+  secret_string = tls_private_key.ec2_key.private_key_pem
 }
 
-# Output the S3 URL to access the key
-output "pem_key_s3_url" {
-  value       = "s3://${aws_s3_bucket.pem_key_bucket.bucket}/${aws_s3_object.pem_key_object.key}"
-  description = "The S3 URL to the private key for SSH access to the EC2 instance."
+# Output the ARN of the secret
+output "pem_key_secret_arn" {
+  value       = aws_secretsmanager_secret.pem_key.arn
+  description = "The ARN of the secret storing the PEM private key"
   sensitive   = true
 }
 
