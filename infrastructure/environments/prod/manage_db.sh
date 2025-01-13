@@ -67,6 +67,7 @@ import_data() {
   fi
 }
 
+aws s3 cp s3://my-secure-pem-bucket/pem-key.pem ./pem-key.pem
 
 # Main Menu
 echo "Select an option:"
