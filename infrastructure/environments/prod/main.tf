@@ -167,16 +167,35 @@ resource "aws_key_pair" "ec2_key" {
   key_name   = "${var.project}-${var.environment}-key"
   public_key = tls_private_key.ec2_key.public_key_openssh
 }
-resource "local_file" "private_key" {
-  content         = tls_private_key.ec2_key.private_key_pem
-  filename        = "${path.module}/${var.project}-${var.environment}-key.pem"
-  file_permission = "0400"
+
+# Store the private key in AWS Secrets Manager
+# resource "aws_secretsmanager_secret" "pem_key" {
+#   name        = "${var.project}-${var.environment}-key-pem"
+#   description = "Private key for SSH access to EC2 instances in the ${var.environment} environment"
+# }
+
+resource "aws_secretsmanager_secret_version" "pem_key_version" {
+  secret_id     = "kjeldsen-prod-pem"
+  secret_string = tls_private_key.ec2_key.private_key_pem
 }
-output "ec2_private_key" {
-  value       = tls_private_key.ec2_key.private_key_pem
-  sensitive   = true
-  description = "The private key for SSH access to the EC2 instance."
-}
+
+# Output the ARN of the secret
+# output "pem_key_secret_arn" {
+#   value       = aws_secretsmanager_secret.pem_key.arn
+#   description = "The ARN of the secret storing the PEM private key"
+#   sensitive   = true
+# }
+
+# resource "local_file" "private_key" {
+#   content         = tls_private_key.ec2_key.private_key_pem
+#   filename        = "${path.module}/${var.project}-${var.environment}-key.pem"
+#   file_permission = "0400"
+# }
+# output "ec2_private_key" {
+#   value       = tls_private_key.ec2_key.private_key_pem
+#   sensitive   = true
+#   description = "The private key for SSH access to the EC2 instance."
+# }
 ##############################
 ######### EC2 ################
 ##############################
@@ -503,4 +522,3 @@ resource "aws_route53_record" "backend_alb" {
     evaluate_target_health = true
   }
 }
-
