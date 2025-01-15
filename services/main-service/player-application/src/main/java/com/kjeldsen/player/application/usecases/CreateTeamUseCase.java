@@ -31,7 +31,9 @@ public class CreateTeamUseCase {
         log.info("CreateTeamUseCase name {} with {} players for user {}", teamName, numberOfPlayers, userId);
 
         Team.TeamId newTeamId = Team.TeamId.generate();
-        List<Player> players = generatePlayersUseCase.generate(numberOfPlayers, newTeamId);
+//        List<Player> players = generatePlayersUseCase.generate(numberOfPlayers, newTeamId);
+        List<Player> players = generatePlayersUseCase.generateCustomPlayers(newTeamId);
+
         Team team = Team.builder()
             .id(newTeamId)
             .userId(userId)
