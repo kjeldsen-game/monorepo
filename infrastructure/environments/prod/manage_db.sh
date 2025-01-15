@@ -67,12 +67,18 @@ import_data() {
   fi
 }
 
-aws secretsmanager get-secret-value \
-    --secret-id "kjeldsen-prod-pem-key" \
-    --query SecretString \
-    --output text > kjeldsen-prod-key.pem
-    
-chmod 400 ./kjeldsen-prod-key.pem
+if [ -f "kjeldsen-prod-key.pem" ]; then
+    echo "File kjeldsen-prod-key.pem exists. Removing it..."
+    rm kjeldsen-prod-key.pem
+else
+    echo "File kjeldsen-prod-key.pem does not exist. Retrieving secret and creating the file..."
+    aws secretsmanager get-secret-value \
+        --secret-id "kjeldsen-prod-pem" \
+        --query SecretString \
+        --output text > kjeldsen-prod-key.pem
+    chmod 400 ./kjeldsen-prod-key.pem
+fi
+
 
 # Main Menu
 echo "Select an option:"
@@ -92,4 +98,5 @@ case $CHOICE in
     exit 1
     ;;
 esac
+
 

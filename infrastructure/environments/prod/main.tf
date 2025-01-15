@@ -169,22 +169,22 @@ resource "aws_key_pair" "ec2_key" {
 }
 
 # Store the private key in AWS Secrets Manager
-resource "aws_secretsmanager_secret" "pem_key" {
-  name        = "${var.project}-${var.environment}-pem-key"
-  description = "Private key for SSH access to EC2 instances in the ${var.environment} environment"
-}
+# resource "aws_secretsmanager_secret" "pem_key" {
+#   name        = "${var.project}-${var.environment}-key-pem"
+#   description = "Private key for SSH access to EC2 instances in the ${var.environment} environment"
+# }
 
 resource "aws_secretsmanager_secret_version" "pem_key_version" {
-  secret_id     = aws_secretsmanager_secret.pem_key.id
+  secret_id     = "kjeldsen-prod-pem"
   secret_string = tls_private_key.ec2_key.private_key_pem
 }
 
 # Output the ARN of the secret
-output "pem_key_secret_arn" {
-  value       = aws_secretsmanager_secret.pem_key.arn
-  description = "The ARN of the secret storing the PEM private key"
-  sensitive   = true
-}
+# output "pem_key_secret_arn" {
+#   value       = aws_secretsmanager_secret.pem_key.arn
+#   description = "The ARN of the secret storing the PEM private key"
+#   sensitive   = true
+# }
 
 # resource "local_file" "private_key" {
 #   content         = tls_private_key.ec2_key.private_key_pem
@@ -522,4 +522,3 @@ resource "aws_route53_record" "backend_alb" {
     evaluate_target_health = true
   }
 }
-
