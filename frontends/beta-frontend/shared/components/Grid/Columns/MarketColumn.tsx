@@ -12,96 +12,15 @@ import {
 import MarketButton from '../../Market/MarketButton';
 import { AuctionMarket } from '@/shared/models/Auction';
 import { getPositionInitials } from '@/shared/utils/PlayerUtils';
+import { playerSkillsColumns } from './PlayerSkillsColumns';
+import { playerCommonColumns } from './PlayerCommonColumns';
+import { baseColumnConfig } from './ColumnsConfig';
 
 export const marketColumn = (
   handleButtonClick: (auction: AuctionMarket) => void,
 ) => {
-  const filterCoreSkills = (actualSkills: Record<string, any>) => {
-    return Object.entries(actualSkills)
-      .filter(([, value]) => value.PlayerSkills.playerSkillRelevance === 'CORE')
-      .map(([key]) => key);
-  };
-
-  const baseColumnConfig = {
-    hideSortIcons: true,
-    headerAlign: 'center' as GridAlignment,
-    align: 'center' as GridAlignment,
-    flex: 1,
-  };
-
-  const createSkillColumnConfig = (
-    field: string,
-    headerName: string,
-  ): GridColDef => {
-    return {
-      ...baseColumnConfig,
-      field,
-      renderHeader: () => <div>{headerName}</div>,
-      minWidth: 50,
-      valueGetter: (params: GridValueGetterParams) => {
-        const actual =
-          params.row.player.actualSkills[field]?.PlayerSkills.actual || 0;
-        const potential =
-          params.row.player.actualSkills[field]?.PlayerSkills.potential || 0;
-        return `${actual}/${potential}`;
-      },
-    };
-  };
-
   const columns: GridColDef[] = [
-    {
-      ...baseColumnConfig,
-      field: 'name',
-      renderHeader: () => <div>Name</div>,
-      minWidth: 130,
-      renderCell: (params: GridCellParams) => (
-        <Link
-          style={{ textDecoration: 'none', color: '#000000' }}
-          passHref
-          href={`/player/${params.row.player.id}`}>
-          {params.row.player.name}
-        </Link>
-      ),
-    },
-    {
-      ...baseColumnConfig,
-      field: 'age',
-      renderHeader: () => <div>Age</div>,
-      valueGetter: (params: GridValueGetterParams) =>
-        params.row.player.age.years,
-    },
-    {
-      ...baseColumnConfig,
-      field: 'playerPosition',
-      renderHeader: () => <div>Pos</div>,
-      renderCell: (params) => {
-        const position = params.row.player
-          .position as keyof typeof PlayerPosition;
-        const initials = getPositionInitials(position);
-        return (
-          <div
-            style={{
-              color: '#FFFFFF',
-              padding: '2px 8px 2px 8px',
-              width: '42px',
-              height: '24px',
-              borderRadius: '5px',
-              textAlign: 'center',
-              background: PlayerPositionColorNew[position],
-            }}>
-            {initials}
-          </div>
-        );
-      },
-      minWidth: 50,
-      flex: 1,
-    },
-    createSkillColumnConfig('SCORING', 'SC'),
-    createSkillColumnConfig('OFFENSIVE_POSITIONING', 'OP'),
-    createSkillColumnConfig('BALL_CONTROL', 'BC'),
-    createSkillColumnConfig('PASSING', 'PA'),
-    createSkillColumnConfig('TACKLING', 'TA'),
-    createSkillColumnConfig('DEFENSIVE_POSITIONING', 'DP'),
+    ...playerCommonColumns(true, false),
     {
       ...baseColumnConfig,
       field: 'averageBid',

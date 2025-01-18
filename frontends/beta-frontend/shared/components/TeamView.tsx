@@ -1,23 +1,15 @@
 import {
   Box,
-  Button,
-  CircularProgress,
+  Collapse,
   SnackbarCloseReason,
   Tab,
-  Tooltip,
-  TooltipProps,
-  styled,
-  tooltipClasses,
+  Typography,
 } from '@mui/material';
 import TeamDetails from './TeamDetails';
-import { teamColumn } from '@/shared/components/Grid/Columns/TeamColumn';
 import Grid from './Grid/Grid';
 import { Player } from '../models/Player';
-import { Team } from '../models/Team';
+import { Team, TeamFormationValiation } from '../models/Team';
 import { useEffect, useMemo, useState } from 'react';
-import checkTeamComposition from '../utils/TeamCompositionRules';
-import TeamCompositionErrors from './TeamCompositionErrors';
-import { CompositionError } from '../models/CompositionError';
 import { lineupColumn } from './Grid/Columns/LineupColumn';
 import LineupModal from './Team/LineupModal';
 import { PlayerOrder } from '@/pages/api/match/models/MatchReportresponse';
@@ -26,7 +18,6 @@ import SnackbarAlert from './Common/SnackbarAlert';
 import CustomTabs from './CustomTabs';
 import { CustomTabPanel } from './Tab/CustomTabPanel';
 import MarketButton from './Market/MarketButton';
-import Market from '@/pages/market';
 import {
   HorizontalPressure,
   Tactic,
@@ -34,21 +25,18 @@ import {
   VerticalPressure,
 } from '../models/TeamModifiers';
 import TeamModifiersForm from './Team/TeamModifiers';
-
-const CompositionTooltip = styled(({ className, ...props }: TooltipProps) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))(() => ({
-  [`& .${tooltipClasses.tooltip}`]: {
-    maxWidth: 500,
-  },
-}));
+import DoneIcon from '@mui/icons-material/Done';
+import CloseIcon from '@mui/icons-material/Close';
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import GppMaybeIcon from '@mui/icons-material/GppMaybe';
 
 interface TeamProps {
   isEditing: boolean;
   team: Team | undefined;
+  teamFormationValidation?: TeamFormationValiation;
   alert?: any;
   setAlert?: any;
-  onTeamUpdate?: (players: Player[], teamModifiers: TeamModifiers) => void;
+  onTeamUpdate?: VoidFunction;
 }
 
 const TeamView: React.FC<TeamProps> = ({
@@ -57,10 +45,11 @@ const TeamView: React.FC<TeamProps> = ({
   alert,
   setAlert,
   onTeamUpdate,
+  teamFormationValidation,
 }: TeamProps) => {
-  console.log(team);
+  // console.log(team);
   const [openModal, setOpenModal] = useState<boolean>(false);
-
+  const [showValidation, setShowValidation] = useState<boolean>(false);
   const [playerEdit, setPlayerEdit] = useState<any>([]);
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -71,9 +60,9 @@ const TeamView: React.FC<TeamProps> = ({
   const [addingStatus, setAddingStatus] = useState<string | undefined>(
     undefined,
   );
+  const [activeAddMode, setActiveAddMode] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(teamModifiers);
     if (team?.teamModifiers) {
       setTeamModifiers(team?.teamModifiers);
     } else {
@@ -102,15 +91,6 @@ const TeamView: React.FC<TeamProps> = ({
     }
   }, [team?.players]);
 
-  const [compositionErrors, setCompositionErrors] = useState<
-    CompositionError[]
-  >([]);
-
-  const memoizedCheck = useMemo(
-    () => checkTeamComposition(activePlayers ?? []),
-    [activePlayers],
-  );
-
   useEffect(() => {
     if (players) {
       // console.log('Players changed, setting new active and bench players.');
@@ -121,12 +101,6 @@ const TeamView: React.FC<TeamProps> = ({
       setBenchPlayers(bench);
     }
   }, [players]);
-
-  useEffect(() => {
-    if (players) {
-      setCompositionErrors([...memoizedCheck]);
-    }
-  }, [activePlayers]);
 
   const handleClose = (reason?: SnackbarCloseReason) => {
     if (reason === 'clickaway') {
@@ -140,6 +114,8 @@ const TeamView: React.FC<TeamProps> = ({
 
   const handleModalClose = () => {
     setOpenModal(false);
+    setActiveAddMode(false);
+    onTeamUpdate(players, teamModifiers);
   };
 
   const memoizedColumns2 = useMemo(() => lineupColumn(), []);
@@ -148,23 +124,30 @@ const TeamView: React.FC<TeamProps> = ({
     setPlayerEdit(undefined);
     setOpenModal(true);
     setAddingStatus('BENCH');
+    setActiveAddMode(true);
   };
 
   const handleAddLineupPlayerButton = () => {
     setPlayerEdit(undefined);
     setOpenModal(true);
     setAddingStatus('ACTIVE');
+    setActiveAddMode(true);
   };
 
   const handleAddPlayer = (newPlayer: Player, status: string) => {
+    console.log('running this');
     const updatedPlayer = { ...newPlayer, status: status };
-    // console.log(updatedPlayer);
     setPlayers((prevPlayers: any) =>
       prevPlayers.map((player: Player) =>
         player.id === newPlayer.id ? { ...player, ...updatedPlayer } : player,
       ),
     );
-    setPlayerEdit(status === 'INACTIVE' ? undefined : updatedPlayer);
+    if (activeAddMode) {
+      setPlayerEdit(undefined);
+    } else {
+      setPlayerEdit(status === 'INACTIVE' ? undefined : updatedPlayer);
+    }
+    onTeamUpdate(players, teamModifiers);
   };
 
   const switchPlayerStatuses = (newPlayer: Player, oldPlayer: Player) => {
@@ -186,6 +169,7 @@ const TeamView: React.FC<TeamProps> = ({
       });
     });
     setPlayerEdit(updatedPlayer1);
+    onTeamUpdate(players, teamModifiers);
   };
 
   const handlePlayerFieldChange = (
@@ -195,6 +179,7 @@ const TeamView: React.FC<TeamProps> = ({
   ) => {
     const updatedPlayer: Player = { ...player, [field]: value };
     switchPlayerStatuses(updatedPlayer, player);
+    onTeamUpdate(players, teamModifiers);
   };
 
   const handlePlayerRowClick = (player: Player) => {
@@ -213,6 +198,7 @@ const TeamView: React.FC<TeamProps> = ({
       ...prevModifiers,
       [type]: value,
     }));
+    onTeamUpdate(players, teamModifiers);
   };
 
   return (
@@ -241,16 +227,59 @@ const TeamView: React.FC<TeamProps> = ({
           padding: '10px',
           borderRadius: '8px',
         }}>
-        <TeamDetails name={team?.name} />
-        {/* <PlayerTactics /> */}
-        {isEditing && (
-          <TeamModifiersForm
-            teamModifiers={teamModifiers}
-            handleModifierChange={handleTeamModifierChange}
-          />
-        )}
-
-        {/* <TeamTactics /> */}
+        <Box
+          sx={{
+            width: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            height: '100%',
+            padding: '10px',
+          }}>
+          <TeamDetails name={team?.name} />
+          {/* <PlayerTactics /> */}
+          {isEditing && (
+            <TeamModifiersForm
+              teamModifiers={teamModifiers}
+              handleModifierChange={handleTeamModifierChange}
+            />
+          )}
+        </Box>
+        <Box
+          sx={{
+            padding: '10px',
+            width: '50%',
+            height: 200,
+            overflow: 'scroll',
+          }}>
+          <Collapse in={showValidation} timeout="auto">
+            <div
+              style={{
+                borderRadius: '8px',
+                padding: '10px',
+                maxHeight: '100%',
+                overflowY: 'auto',
+                background: 'white',
+              }}>
+              {teamFormationValidation?.items.map((error, index) => (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                  }}
+                  key={index}>
+                  <Typography>{error.message}</Typography>
+                  <Box
+                    sx={{
+                      color: error.valid ? 'green' : 'red',
+                    }}>
+                    {error.valid ? <DoneIcon /> : <CloseIcon />}
+                  </Box>
+                </Box>
+              ))}
+            </div>
+          </Collapse>
+        </Box>
       </Box>
       <Box
         sx={{ paddingTop: '1rem' }}
@@ -273,21 +302,13 @@ const TeamView: React.FC<TeamProps> = ({
               onClick={handleAddLineupPlayerButton}>
               Add Lineup Player
             </MarketButton>
-            <CompositionTooltip
-              disableHoverListener={compositionErrors.length === 0}
-              placement={'left'}
-              title={<TeamCompositionErrors errors={compositionErrors} />}>
-              <span>
-                <MarketButton
-                  sx={{ marginX: '5px' }}
-                  onClick={() => {
-                    onTeamUpdate(players, teamModifiers);
-                  }}
-                  disabled={compositionErrors.length > 0}>
-                  Save
-                </MarketButton>
-              </span>
-            </CompositionTooltip>
+            <MarketButton onClick={() => setShowValidation(!showValidation)}>
+              {teamFormationValidation?.valid ? (
+                <VerifiedUserIcon />
+              ) : (
+                <GppMaybeIcon />
+              )}
+            </MarketButton>
           </Box>
         ) : (
           <></>

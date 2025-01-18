@@ -9,6 +9,7 @@ import com.kjeldsen.match.modifers.TeamModifiers;
 import com.kjeldsen.match.modifers.VerticalPressure;
 import com.kjeldsen.match.repositories.MatchReadRepository;
 import com.kjeldsen.match.repositories.MatchWriteRepository;
+import com.kjeldsen.match.validation.TeamFormationValidationResult;
 import com.kjeldsen.match.validation.TeamFormationValidator;
 import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
@@ -78,7 +79,6 @@ public class UpdateMatchLineupUseCase {
         team.setHorizontalPressure(teamModifiers.getHorizontalPressure());
         team.setVerticalPressure(teamModifiers.getVerticalPressure());
         team.setTactic(teamModifiers.getTactic());
-        TeamFormationValidator.validate(team);
 
         team.setSpecificLineup(true);
         matchWriteRepository.save(match);

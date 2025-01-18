@@ -9,72 +9,11 @@ import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import { GridAlignment } from '@mui/x-data-grid';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import { isNegative } from '@/shared/utils/EconomyUtils';
+import { playerCommonColumns } from './PlayerCommonColumns';
 
 export const playerTransactionsColumns = () => {
   const columns: GridColDef[] = [
-    {
-      field: 'playerName',
-      renderHeader: () => <div>Player Name</div>,
-      headerAlign: 'center' as GridAlignment,
-      minWidth: 130,
-      flex: 1,
-      renderCell: (params: GridCellParams) => (
-        <Box
-          display={'flex'}
-          justifyContent={'center'}
-          alignItems={'center'}
-          paddingLeft={'40px'}>
-          {params.row.player.name}
-          {params.row.player.status == 'FOR_SALE' ? (
-            <LocalAtmIcon sx={{ color: '#FF3F84', marginLeft: '20px' }} />
-          ) : (
-            <></>
-          )}
-        </Box>
-      ),
-    },
-    {
-      field: 'position',
-      renderHeader: () => <div>Pos</div>,
-      headerAlign: 'center' as GridAlignment,
-      align: 'center' as GridAlignment,
-      renderCell: (params) => {
-        const position = params.row.player
-          .position as keyof typeof PlayerPosition;
-        const initials = position
-          .split('_')
-          .map((word) => word.charAt(0).toUpperCase())
-          .join('');
-
-        return (
-          <div
-            style={{
-              color: '#FFFFFF',
-              padding: '2px 8px 2px 8px',
-              width: '42px',
-              height: '24px',
-              borderRadius: '5px',
-              textAlign: 'center',
-              background: PlayerPositionColorNew[position],
-            }}>
-            {initials}
-          </div>
-        );
-      },
-      minWidth: 50,
-      flex: 1,
-    },
-    {
-      field: 'age',
-      renderHeader: () => <div>Age</div>,
-      headerAlign: 'center' as GridAlignment,
-      align: 'center' as GridAlignment,
-      minWidth: 70,
-      flex: 1,
-      renderCell: (params: GridCellParams) => (
-        <Box>{params.row.player.age.years}</Box>
-      ),
-    },
+    ...playerCommonColumns(true, false),
     {
       field: 'thisWeek',
       renderHeader: () => <div>This Week</div>,

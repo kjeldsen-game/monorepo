@@ -96,7 +96,6 @@ export const calendarColumns = (teamId?: string) => {
             : params.row.home.id === teamId
               ? params.row.home
               : null;
-        // console.log(team);
         return team ? (
           team.specificLineup ? (
             <div>Custom</div>

@@ -30,16 +30,34 @@ export const teamColumn = (
   const createSkillColumnConfig = (
     field: string,
     headerName: string,
+    fieldSecondary?: string,
+    headerNameSecondary?: string,
   ): GridColDef => {
     return {
       ...baseColumnConfig,
       field,
-      renderHeader: () => <div>{headerName}</div>,
+      renderHeader: () => (
+        <div>
+          {headerName}
+          {fieldSecondary}
+        </div>
+      ),
       minWidth: 50,
       valueGetter: (params: GridValueGetterParams) => {
-        const actual = params.row.actualSkills[field]?.PlayerSkills.actual || 0;
+        const actual =
+          fieldSecondary &&
+          headerNameSecondary &&
+          params.row.actualSkills[fieldSecondary]?.PlayerSkills?.actual !== 0
+            ? params.row.actualSkills[fieldSecondary]?.PlayerSkills?.actual
+            : params.row.actualSkills[field]?.PlayerSkills?.actual;
+
         const potential =
-          params.row.actualSkills[field]?.PlayerSkills.potential || 0;
+          fieldSecondary &&
+          headerNameSecondary &&
+          params.row.actualSkills[fieldSecondary]?.PlayerSkills?.potential !== 0
+            ? params.row.actualSkills[fieldSecondary]?.PlayerSkills?.potential
+            : params.row.actualSkills[field]?.PlayerSkills?.potential;
+
         return `${actual}/${potential}`;
       },
     };
@@ -89,11 +107,16 @@ export const teamColumn = (
       flex: 1,
       valueGetter: (params: GridValueGetterParams) => params.row.age.years,
     },
-    createSkillColumnConfig('SCORING', 'SC'),
-    createSkillColumnConfig('OFFENSIVE_POSITIONING', 'OP'),
-    createSkillColumnConfig('BALL_CONTROL', 'BC'),
-    createSkillColumnConfig('PASSING', 'PA'),
-    createSkillColumnConfig('AERIAL', 'AE'),
+    createSkillColumnConfig('SCORING', 'SC', 'REFLEXES', 'RE'),
+    createSkillColumnConfig(
+      'OFFENSIVE_POSITIONING',
+      'OP',
+      'GOALKEEPER_POSITIONING',
+      'GP',
+    ),
+    createSkillColumnConfig('BALL_CONTROL', 'BC', 'INTERCEPTIONS', 'IN'),
+    createSkillColumnConfig('PASSING', 'PA', 'CONTROL', 'CT'),
+    createSkillColumnConfig('AERIAL', 'AE', 'ORGANIZATION', 'OR'),
     createSkillColumnConfig('CONSTITUTION', 'CO'),
     createSkillColumnConfig('TACKLING', 'TA'),
     createSkillColumnConfig('DEFENSIVE_POSITIONING', 'DP'),

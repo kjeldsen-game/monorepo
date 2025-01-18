@@ -310,6 +310,29 @@ components:
               $ref: "#/components/schemas/Error"
 
   schemas:
+
+    ######################## TEAM VALIDATION SCHEMAS START ########################
+
+    TeamFormationValidationResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/TeamFormationValidationItem"
+
+    TeamFormationValidationItem:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        message:
+          type: string
+
+    ######################## TEAM VALIDATION START ########################
+
     Tactic:
       type: string
       example: DOUBLE_TEAM

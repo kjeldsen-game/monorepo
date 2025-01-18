@@ -34,16 +34,16 @@ public class UpdateTeamPlayersUseCase {
             .toList();
         log.info("{}",benchPlayers.size());
 
-        if (playerEdits.stream()
-            .filter(playerEdit -> playerEdit.status().equals(PlayerStatus.BENCH))
-            .toList().size() != 7) {
-            throw new RuntimeException("7 bench players are required!");
-        }
-
-        if (activePlayers.size() != 11) {
-            throw new RuntimeException("11 active players are required!");
-        }
-        validateTeamFormation(activePlayers);
+//        if (playerEdits.stream()
+//            .filter(playerEdit -> playerEdit.status().equals(PlayerStatus.BENCH))
+//            .toList().size() != 7) {
+//            throw new RuntimeException("7 bench players are required!");
+//        }
+//
+//        if (activePlayers.size() != 11) {
+//            throw new RuntimeException("11 active players are required!");
+//        }
+//        validateTeamFormation(activePlayers);
 
         List<Player> teamPlayers = playerReadRepository.findByTeamId(Team.TeamId.of(teamId));
         playerEdits.forEach(update -> {

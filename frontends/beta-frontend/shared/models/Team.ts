@@ -19,3 +19,13 @@ export interface Cantera {
 export interface TeamEconomy {
   balance: number;
 }
+
+export interface TeamFormationValiation {
+  valid: boolean;
+  items: TeamFormationValidationItem[];
+}
+
+export interface TeamFormationValidationItem {
+  valid: boolean;
+  message: string;
+}

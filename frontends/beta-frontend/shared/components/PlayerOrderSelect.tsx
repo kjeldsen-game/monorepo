@@ -22,7 +22,7 @@ export const PlayerOrderSelect: React.FC<PlayerOrderSelectProps> = ({
   };
 
   return (
-    <FormControl sx={{ minWidth: 140, marginTop: '16px' }} size="small">
+    <FormControl sx={{ minWidth: 100, marginTop: '16px' }} size="small">
       <InputLabel id="po1-select-label">PO</InputLabel>
       <Select<PlayerOrder>
         labelId="po1-select-label"

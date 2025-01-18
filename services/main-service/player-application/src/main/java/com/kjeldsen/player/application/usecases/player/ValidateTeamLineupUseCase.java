@@ -1,15 +1,21 @@
-package com.kjeldsen.match.validation;
+package com.kjeldsen.player.application.usecases.player;
 
-import com.kjeldsen.match.entities.Player;
-import com.kjeldsen.match.entities.Team;
+import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerStatus;
+import com.kjeldsen.player.domain.Team;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class TeamFormationValidator {
+@Component
+@RequiredArgsConstructor
+@Slf4j
+public class ValidateTeamLineupUseCase {
 
-    // TODO messages should be externalized.
     static final String BENCH_PLAYERS_NUMBER = "7 bench players are required";
     static final String ACTIVE_PLAYERS_NUMBER = "11 active players are required";
     static final String GOALKEEPER_REQUIRED = "A goalkeeper is required";
@@ -34,14 +40,12 @@ public class TeamFormationValidator {
     static final String MAXIMUM_3_CENTRAL_DEFENDERS_ALLOWED = "A maximum of 3 central defenders are allowed";
     static final String MAXIMUM_1_SWEEPER_IS_ALLOWED = "Only one sweeper is allowed";
 
-    public static TeamFormationValidationResult validate(List<Player> players) {
+    public TeamFormationValidationResult validate(List<Player> players) {
         TeamFormationValidationResult result = new TeamFormationValidationResult();
 
         result.setValid(true);
 
         if (!players.isEmpty()) {
-            // TODO duplicated logic with TeamDelegate.updateTeamById from player-adapter-rest.
-
             List<Player> activePlayers = players.stream().filter(p -> p.getStatus() == PlayerStatus.ACTIVE).toList();
             List<Player> benchPlayers = players.stream().filter(p -> p.getStatus() == PlayerStatus.BENCH).toList();
 
@@ -57,49 +61,9 @@ public class TeamFormationValidator {
                 result.addError(BENCH_PLAYERS_NUMBER);
             }
 
-
             if (activePlayers.stream()
                 .filter(p -> PlayerPosition.GOALKEEPER.equals(p.getPosition()))
                 .toList().size() == 1) {
-                result.addInfo(GOALKEEPER_REQUIRED);
-            } else {
-                result.addError(GOALKEEPER_REQUIRED);
-            }
-
-            validateDefenders(activePlayers, result);
-
-            validateMidfielders(activePlayers, result);
-
-            validateAttackers(activePlayers, result);
-
-            validateBackFlankCoverage(activePlayers, result);
-
-            validateMidfieldFlankCoverage(activePlayers, result);
-
-        }
-
-        return result;
-    }
-
-    public static TeamFormationValidationResult validate(Team team) {
-        TeamFormationValidationResult result = new TeamFormationValidationResult();
-
-        result.setValid(true);
-
-        if (team != null) {
-            // TODO duplicated logic with TeamDelegate.updateTeamById from player-adapter-rest.
-
-            List<Player> activePlayers = team.getPlayers();
-
-            if (activePlayers.size() == 11) {
-                result.addInfo(ACTIVE_PLAYERS_NUMBER);
-            } else {
-                result.addError(ACTIVE_PLAYERS_NUMBER);
-            }
-
-            if (activePlayers.stream()
-                    .filter(p -> PlayerPosition.GOALKEEPER.equals(p.getPosition()))
-                    .toList().size() == 1) {
                 result.addInfo(GOALKEEPER_REQUIRED);
             } else {
                 result.addError(GOALKEEPER_REQUIRED);
@@ -187,9 +151,9 @@ public class TeamFormationValidator {
 
     private static void validateAttackers(List<Player> activePlayers, TeamFormationValidationResult result) {
         List<Player> forwards = activePlayers.stream()
-                .filter(p -> PlayerPosition.FORWARD.equals(p.getPosition())
-                        || PlayerPosition.AERIAL_FORWARD.equals(p.getPosition()))
-                .toList();
+            .filter(p -> PlayerPosition.FORWARD.equals(p.getPosition())
+                || PlayerPosition.AERIAL_FORWARD.equals(p.getPosition()))
+            .toList();
 
         if (forwards.isEmpty()) {
             result.addError(MINIMUM_1_FORWARD_IS_REQUIRED);
@@ -204,9 +168,9 @@ public class TeamFormationValidator {
         }
 
         List<Player> strikers = activePlayers.stream()
-                .filter(p -> PlayerPosition.STRIKER.equals(p.getPosition())
-                        || PlayerPosition.AERIAL_STRIKER.equals(p.getPosition()))
-                .toList();
+            .filter(p -> PlayerPosition.STRIKER.equals(p.getPosition())
+                || PlayerPosition.AERIAL_STRIKER.equals(p.getPosition()))
+            .toList();
 
         if (strikers.size() > 1) {
             result.addError(MAXIMUM_1_STRIKER_IS_ALLOWED);
@@ -217,8 +181,8 @@ public class TeamFormationValidator {
 
     private static void validateMidfielders(List<Player> activePlayers, TeamFormationValidationResult result) {
         List<Player> midfielders = activePlayers.stream()
-                .filter(p -> p.getPosition().isMidfielder())
-                .toList();
+            .filter(p -> p.getPosition().isMidfielder())
+            .toList();
 
         if (midfielders.size() < 3) {
             result.addError(MINIMUM_3_MIDFIELDERS_ARE_REQUIRED);
@@ -239,9 +203,9 @@ public class TeamFormationValidator {
         }
 
         List<Player> defensiveMidfielders = midfielders.stream()
-                .filter(
-                        p -> PlayerPosition.DEFENSIVE_MIDFIELDER.equals(p.getPosition()))
-                .toList();
+            .filter(
+                p -> PlayerPosition.DEFENSIVE_MIDFIELDER.equals(p.getPosition()))
+            .toList();
         if (defensiveMidfielders.size() > 1) {
             result.addError(MAXIMUM_1_DEFENSIVE_MIDFIELDER_IS_ALLOWED);
         } else {
@@ -249,9 +213,9 @@ public class TeamFormationValidator {
         }
 
         List<Player> offensiveMidfielders = midfielders.stream()
-                .filter(
-                        p -> PlayerPosition.OFFENSIVE_MIDFIELDER.equals(p.getPosition()))
-                .toList();
+            .filter(
+                p -> PlayerPosition.OFFENSIVE_MIDFIELDER.equals(p.getPosition()))
+            .toList();
         if (offensiveMidfielders.size() > 1) {
             result.addError(MAXIMUM_1_OFFENSIVE_MIDFIELDER_IS_ALLOWED);
         } else {
@@ -261,9 +225,9 @@ public class TeamFormationValidator {
 
     private static void validateDefenders(List<Player> activePlayers, TeamFormationValidationResult result) {
         List<Player> defenders = activePlayers.stream()
-                .filter(p -> p.getPosition().isDefender()
-                        || p.getPosition().isWingback())
-                .toList();
+            .filter(p -> p.getPosition().isDefender()
+                || p.getPosition().isWingback())
+            .toList();
 
         if (defenders.size() < 3) {
             result.addError(MINIMUM_3_DEFENDERS_REQUIRED);
@@ -278,8 +242,8 @@ public class TeamFormationValidator {
         }
 
         List<Player> centralDefenders = defenders.stream()
-                .filter(defender -> defender.getPosition().isCentral())
-                .toList();
+            .filter(defender -> defender.getPosition().isCentral())
+            .toList();
 
         if (centralDefenders.size() > 3) {
             result.addError(MAXIMUM_3_CENTRAL_DEFENDERS_ALLOWED);
@@ -288,8 +252,8 @@ public class TeamFormationValidator {
         }
 
         List<Player> sweepers = activePlayers.stream()
-                .filter(p -> PlayerPosition.SWEEPER.equals(p.getPosition()))
-                .toList();
+            .filter(p -> PlayerPosition.SWEEPER.equals(p.getPosition()))
+            .toList();
 
         if (sweepers.size() > 1) {
             result.addError(MAXIMUM_1_SWEEPER_IS_ALLOWED);
@@ -297,5 +261,36 @@ public class TeamFormationValidator {
             result.addInfo(MAXIMUM_1_SWEEPER_IS_ALLOWED);
         }
 
+    }
+
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @ToString
+    @Getter
+    @Setter
+    public static class TeamFormationValidationResult {
+        private Boolean valid;
+        private List<TeamFormationValidationItem> items = new ArrayList<>();
+
+        public void addInfo(String info) {
+            this.items.add(new TeamFormationValidationItem(true, info));
+        }
+
+        public void addError(String error) {
+            this.valid = false;
+            this.items.add(new TeamFormationValidationItem(false, error));
+        }
+    }
+
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @ToString
+    @Getter
+    @Setter
+    public static class TeamFormationValidationItem {
+        private Boolean valid;
+        private String message;
     }
 }
