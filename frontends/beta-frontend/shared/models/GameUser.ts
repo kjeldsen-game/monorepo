@@ -1,5 +1,5 @@
-import { User } from 'next-auth'
+import { User } from 'next-auth';
 
 export interface GameUser extends User {
-  teamId: string
+  teamId: string;
 }

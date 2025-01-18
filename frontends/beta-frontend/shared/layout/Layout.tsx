@@ -12,46 +12,46 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
   const { t } = useTranslation('common');
 
   const items: Item[] = [
-    {
-      name: t('Dashboard'),
-      icon: 'inbox',
-      to: '/dashboard',
-      selected: pathname === '/dashboard',
-    },
+    // {
+    //   name: t('Dashboard'),
+    //   icon: 'inbox',
+    //   to: '/dashboard',
+    //   selected: pathname === '/dashboard',
+    // },
     {
       name: 'Team',
       icon: 'team',
       to: '/team',
       selected: pathname === '/team',
     },
-    {
-      name: 'Economy',
-      icon: 'market',
-      to: '/team/economy',
-      hasDivider: false,
-      selected: pathname === '/team/economy',
-    },
-    {
-      name: 'Training',
-      icon: 'training',
-      to: '/training',
-      hasDivider: false,
-      selected: pathname === '/training',
-    },
-    {
-      name: 'Challenge',
-      icon: 'trophy',
-      to: '/challenge',
-      hasDivider: false,
-      selected: /^\/challenge/.test(pathname),
-    },
-    {
-      name: 'Market',
-      icon: 'market',
-      to: '/market',
-      hasDivider: false,
-      selected: /^\/market/.test(pathname),
-    },
+    // {
+    //   name: 'Economy',
+    //   icon: 'market',
+    //   to: '/team/economy',
+    //   hasDivider: false,
+    //   selected: pathname === '/team/economy',
+    // },
+    // {
+    //   name: 'Training',
+    //   icon: 'training',
+    //   to: '/training',
+    //   hasDivider: false,
+    //   selected: pathname === '/training',
+    // },
+    // {
+    //   name: 'Challenge',
+    //   icon: 'trophy',
+    //   to: '/challenge',
+    //   hasDivider: false,
+    //   selected: /^\/challenge/.test(pathname),
+    // },
+    // {
+    //   name: 'Market',
+    //   icon: 'market',
+    //   to: '/market',
+    //   hasDivider: false,
+    //   selected: /^\/market/.test(pathname),
+    // },
     {
       name: 'League',
       icon: 'league',

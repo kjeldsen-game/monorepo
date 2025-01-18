@@ -7,17 +7,23 @@ import { useTeamRepository } from '../api/team/useTeamRepository';
 import { Player } from '@/shared/models/Player';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { TeamModifiers } from '@/shared/models/TeamModifiers';
+import { useTeamFormationValidationRepository } from '../api/team/useTeamFormationValidationRepository';
 
-// eslint-disable-next-line react/prop-types
 const Team: NextPage = () => {
   const { data: userData, status: sessionStatus } = useSession({
     required: true,
   });
 
-  const { data, updateTeam, error, isLoading } = useTeamRepository(
+  const { data, updateTeam } = useTeamRepository(
     userData?.user.teamId,
     userData?.accessToken,
   );
+
+  const { data: formationValidation, refetch } =
+    useTeamFormationValidationRepository(
+      userData?.user.teamId,
+      userData?.accessToken,
+    );
 
   const [alert, setAlert] = useState<any>({
     open: false,
@@ -51,6 +57,7 @@ const Team: NextPage = () => {
           message: 'Team was updated successfully!',
           type: 'success',
         });
+        refetch();
       }
     } catch (error) {
       console.error('Failed to update team:', error);
@@ -61,6 +68,7 @@ const Team: NextPage = () => {
     <TeamView
       setAlert={setAlert}
       alert={alert}
+      teamFormationValidation={formationValidation}
       isEditing
       team={{ ...data, players: teamPlayers }}
       onTeamUpdate={handleTeamUpdate}></TeamView>

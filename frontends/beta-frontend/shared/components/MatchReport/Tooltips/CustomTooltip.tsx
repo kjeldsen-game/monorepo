@@ -15,6 +15,7 @@ interface CustomTooltipProps {
   children: ReactNode;
   tooltipContent: ReactNode;
   heading?: any;
+  clickOpen?: boolean;
 }
 
 const CustomTooltip = styled(
@@ -23,6 +24,7 @@ const CustomTooltip = styled(
     children,
     tooltipContent,
     heading,
+    clickOpen = false,
     ...props
   }: CustomTooltipProps) => {
     const [open, setOpen] = useState(false);
@@ -74,7 +76,9 @@ const CustomTooltip = styled(
         classes={{ popper: className }}
         arrow>
         <span
-          onMouseEnter={handleTooltipOpen}
+          onMouseEnter={!clickOpen ? handleTooltipOpen : undefined}
+          onClick={clickOpen ? handleTooltipOpen : undefined}
+          // onMouseEnter={handleTooltipOpen}
           // onMouseLeave={handleTooltipClose}
         >
           {children}

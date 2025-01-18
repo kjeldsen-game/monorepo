@@ -3,8 +3,10 @@ package com.kjeldsen.player.rest.delegate;
 import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.application.usecases.economy.*;
+import com.kjeldsen.player.application.usecases.player.GetPlayersUseCase;
 import com.kjeldsen.player.application.usecases.player.UpdateTeamModifiersUseCase;
 import com.kjeldsen.player.application.usecases.player.UpdateTeamPlayersUseCase;
+import com.kjeldsen.player.application.usecases.player.ValidateTeamLineupUseCase;
 import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.player.domain.PlayerPosition;
@@ -18,6 +20,7 @@ import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.rest.api.TeamApiDelegate;
 import com.kjeldsen.player.rest.mapper.EconomyMapper;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
+import com.kjeldsen.player.rest.mapper.TeamFormationValidationMapper;
 import com.kjeldsen.player.rest.mapper.TeamMapper;
 import com.kjeldsen.player.rest.model.*;
 
@@ -38,11 +41,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class TeamDelegate implements TeamApiDelegate {
     // Common
     private final GetTeamUseCase getTeamUseCase;
+    private final GetPlayersUseCase getPlayersUseCase;
 
     private final GetTeamTransactionsUseCase getTeamTransactionsUseCase;
     private final TeamReadRepository teamReadRepository;
     private final PlayerReadRepository playerReadRepository;
-    private final PlayerWriteRepository playerWriteRepository;
 
     // Economy
     private final SignSponsorIncomeUseCase signSponsorIncomeUseCase;
@@ -51,6 +54,7 @@ public class TeamDelegate implements TeamApiDelegate {
     private final GetPlayerWagesTransactionsUseCase getPlayerWagesTransactionsUseCase;
 
     // Team
+    private final ValidateTeamLineupUseCase validateTeamLineupUseCase;
     private final UpdateTeamPlayersUseCase updateTeamPlayersUseCase;
     private final UpdateTeamModifiersUseCase updateTeamModifiersUseCase;
 
@@ -162,12 +166,25 @@ public class TeamDelegate implements TeamApiDelegate {
             // TODO filter the response if other team access remove the tactics only show players
         }
 
-        playerReadRepository.findByTeamId(TeamId.of(teamId));
         List<PlayerResponse> players = playerReadRepository.findByTeamId(TeamId.of(teamId))
             .stream()
             .map(PlayerMapper.INSTANCE::playerResponseMap)
             .toList();
         response.setPlayers(players);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<TeamFormationValidationResponse> validateTeamLineup(String teamId) {
+        // Access denied as the path teamId is different that the teamId from Token
+        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        ValidateTeamLineupUseCase.TeamFormationValidationResult result = validateTeamLineupUseCase
+            .validate(getPlayersUseCase.get(teamId));
+
+        TeamFormationValidationResponse response = TeamFormationValidationMapper.INSTANCE.map(result);
         return ResponseEntity.ok(response);
     }
 

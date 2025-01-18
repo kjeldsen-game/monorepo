@@ -301,6 +301,7 @@ public class MatchDelegate implements MatchApiDelegate {
         Match match = matchRepo.findOneById(matchId)
             .orElseThrow(() -> new RuntimeException("Match not found"));
 
+
         Team team = match.getHome().getId().equals(teamId)
             ? match.getHome()
             : match.getAway().getId().equals(teamId)
@@ -390,23 +391,20 @@ public class MatchDelegate implements MatchApiDelegate {
     }
 
     // TODO REWORK TO USE THE SecurityUtils.getCurrentUserId(); instead of specifying the user
-    public ResponseEntity<String> validate(String matchId,
-        String teamId) {
-
-        Match match = matchRepo.findOneById(matchId)
-            .orElseThrow(() -> new RuntimeException("Match not found"));
-
-        Team team = null;
-        if (match.getHome().getId().equals(teamId)) {
-            team = match.getHome();
-        } else if (match.getAway().getId().equals(teamId)) {
-            team = match.getAway();
+    public ResponseEntity<String> validate(String matchId, String teamId) {
+        List<Player> players;
+        Team team = getMatchTeamUseCase.get(teamId, matchId);
+        // get the lineup
+        if (!team.getSpecificLineup()) {
+            List<com.kjeldsen.player.domain.Player> playersDomain = playerRepo.findByTeamId(TeamId.of(teamId));
+            players = playersDomain.stream()
+                .map(p -> buildPlayer(p, team.getRole())).toList();
         } else {
-            throw new RuntimeException("Team not found");
+            players = Stream.concat(team.getPlayers().stream(), team.getBench().stream())
+                .collect(Collectors.toList());
         }
 
-        TeamFormationValidationResult validationResult = TeamFormationValidator.validate(team);
-
+        TeamFormationValidationResult validationResult = TeamFormationValidator.validate(players);
         String response = JsonUtils.prettyPrint(validationResult);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

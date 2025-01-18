@@ -28,5 +28,4 @@ public class TeamFormationValidationResult {
         this.valid = false;
         this.items.add(new TeamFormationValidationItem(false, error));
     }
-
 }

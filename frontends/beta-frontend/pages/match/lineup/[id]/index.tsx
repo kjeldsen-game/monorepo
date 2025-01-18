@@ -13,6 +13,7 @@ import {
   filterPlayersByStatus,
   filterPlayersByTeam,
 } from '@/shared/utils/LineupUtils';
+import { useMatchTeamFormationValidationRepository } from '@/pages/api/match/useMatchTeamFormationValidationRepository';
 
 const Team: NextPage = () => {
   const { data: userData, status: sessionStatus } = useSession({
@@ -23,6 +24,14 @@ const Team: NextPage = () => {
     userData?.user.teamId,
     userData?.accessToken,
   );
+
+  const { data: formationValidation, refetch } =
+    useMatchTeamFormationValidationRepository(
+      userData?.user.teamId,
+      useRouter().query.id as string,
+      userData?.accessToken,
+    );
+  console.log(formationValidation);
 
   const { updateMatchTeam, matchTeam, error, isLoading } =
     useMatchTeamRepository(
@@ -108,6 +117,7 @@ const Team: NextPage = () => {
           message: 'Team was updated successfully!',
           type: 'success',
         });
+        refetch();
       }
     } catch (error) {
       console.error('Failed to update team:', error);
@@ -118,6 +128,7 @@ const Team: NextPage = () => {
 
   return (
     <TeamView
+      teamFormationValidation={formationValidation}
       setAlert={setAlert}
       alert={alert}
       isEditing

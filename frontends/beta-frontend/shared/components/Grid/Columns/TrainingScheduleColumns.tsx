@@ -1,25 +1,12 @@
-import {
-  GridCellParams,
-  GridColDef,
-  GridValueGetterParams,
-} from '@mui/x-data-grid';
-import { GridAlignment } from '@mui/x-data-grid';
-import Link from 'next/link';
-import {
-  PlayerPosition,
-  PlayerPositionColorNew,
-} from '@/shared/models/PlayerPosition';
-import { getPositionInitials } from '@/shared/utils/PlayerUtils';
-import ProgressBar from '../../Training/ProgressBar';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { Box, Typography } from '@mui/material';
-import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
-import { baseColumnConfig, leftColumnConfig } from './ColumnsConfig';
+import { GridCellParams, GridColDef } from '@mui/x-data-grid';
+import { Box } from '@mui/material';
+import { baseColumnConfig } from './ColumnsConfig';
 import { formatPlayerSkills } from '@/shared/utils/ColumnUtils';
 import {
   PlayerSkill,
   PlayerSkillToShortcut,
 } from '@/shared/models/PlayerSkill';
+import { playerCommonColumns } from './PlayerCommonColumns';
 
 export const trainingScheduleColumns = (
   handleCellClick: (
@@ -82,55 +69,7 @@ export const trainingScheduleColumns = (
   };
 
   const columns: GridColDef[] = [
-    {
-      ...leftColumnConfig,
-      field: 'name',
-      renderHeader: () => <div>Name</div>,
-      minWidth: 130,
-      renderCell: (params: GridCellParams) => (
-        <Link
-          style={{ textDecoration: 'none', color: '#000000' }}
-          passHref
-          href={`/player/${params.row.player.id}`}>
-          {params.row.player.name}
-        </Link>
-      ),
-    },
-    {
-      ...baseColumnConfig,
-      field: 'age',
-      renderHeader: () => <div>Age</div>,
-      minWidth: 70,
-      valueGetter: (params: GridValueGetterParams) =>
-        params.row.player.age.years,
-    },
-    {
-      ...baseColumnConfig,
-      field: 'playerPosition',
-      renderHeader: () => <div>Position</div>,
-      renderCell: (params) => {
-        const position = params.row.player
-          .position as keyof typeof PlayerPosition;
-        const initials = getPositionInitials(position);
-
-        return (
-          <div
-            style={{
-              color: '#FFFFFF',
-              padding: '2px 8px 2px 8px',
-              width: '42px',
-              height: '24px',
-              borderRadius: '5px',
-              textAlign: 'center',
-              background: PlayerPositionColorNew[position],
-            }}>
-            {initials}
-          </div>
-        );
-      },
-      minWidth: 50,
-      flex: 1,
-    },
+    ...playerCommonColumns(true, false),
     {
       field: 'cs',
       renderHeader: () => <div>CS</div>,

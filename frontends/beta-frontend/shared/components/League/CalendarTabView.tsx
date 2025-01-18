@@ -36,11 +36,9 @@ const CalendarTabView: React.FC<CalendarTabViewProps> = ({ calendar }) => {
   };
 
   useEffect(() => {
-    console.log(filter);
     const newMatches = filter
       ? calendar.filter((row: Match) => row.status === filter)
       : calendar;
-    console.log(newMatches);
     setFilteredMatches(newMatches);
   }, [filter, calendar]);
 

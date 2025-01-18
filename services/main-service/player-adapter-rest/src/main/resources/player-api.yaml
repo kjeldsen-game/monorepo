@@ -96,6 +96,24 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
+  /team/{teamId}/validate:
+    get:
+      summary: Validate lineup and bench players
+      operationId: validateTeamLineup
+      tags:
+        - team
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      responses:
+        "200":
+          description: Returns the validation of the team lineup
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamFormationValidationResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
 ######################## TEAM ECONOMY START ########################
 
   /team/{teamId}/economy:
@@ -768,6 +786,28 @@ components:
           $ref: "#/components/schemas/VerticalPressure"
         horizontalPressure:
           $ref: "#/components/schemas/HorizontalPressure"
+
+    ######################## TEAM VALIDATION SCHEMAS START ########################
+
+    TeamFormationValidationResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/TeamFormationValidationItem"
+
+    TeamFormationValidationItem:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        message:
+          type: string
+
+    ######################## TEAM VALIDATION START ########################
 
     ######################## PLAYER SCHEMAS START ########################
     PlayerStatus:
