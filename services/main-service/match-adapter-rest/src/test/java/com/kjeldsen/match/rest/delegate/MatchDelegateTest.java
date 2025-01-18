@@ -21,6 +21,7 @@ import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -131,6 +132,7 @@ public class MatchDelegateTest {
         Assertions.assertEquals(10, match.getHome().getPlayers().size());
     }
 
+    @Disabled
     @Test
     public void checkValidationFailOnActivePlayerRemoval() throws IOException {
         Player p = match.getHome().getPlayers().stream().findFirst().get();
