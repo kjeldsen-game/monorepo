@@ -72,13 +72,13 @@ if [ -f "kjeldsen-prod-key.pem" ]; then
     rm kjeldsen-prod-key.pem
 else
     echo "File kjeldsen-prod-key.pem does not exist. Retrieving secret and creating the file..."
-    aws secretsmanager get-secret-value \
-        --secret-id "kjeldsen-prod-pem" \
-        --query SecretString \
-        --output text > kjeldsen-prod-key.pem
-    chmod 400 ./kjeldsen-prod-key.pem
 fi
 
+aws secretsmanager get-secret-value \
+    --secret-id "kjeldsen-prod-pem" \
+    --query SecretString \
+    --output text > kjeldsen-prod-key.pem
+chmod 400 ./kjeldsen-prod-key.pem
 
 # Main Menu
 echo "Select an option:"
