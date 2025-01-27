@@ -6,8 +6,8 @@
 
 ## Docker commands
 
-- `docker build -t 040156513434.dkr.ecr.eu-west-1.amazonaws.com/main-service`
-- `docker push 040156513434.dkr.ecr.eu-west-1.amazonaws.com/main-service:latest`
+- `docker build -t 324037306405.dkr.ecr.eu-west-1.amazonaws.com/main-service`
+- `docker push 324037306405.dkr.ecr.eu-west-1.amazonaws.com/main-service:latest`
 
 ## Open API
 

@@ -7,7 +7,7 @@ DB_NAME="admin"
 DB_USER="kjeldsenprodusername"
 DB_PASS="kjeldsenprodpassword"
 EXPORT_DIR="./mongo_backup"
-S3_BUCKET="docdb-persistence"
+S3_BUCKET="db-persistence"
 SSH_KEY_PATH="./kjeldsen-prod-key.pem"
 
 get_db_host() {

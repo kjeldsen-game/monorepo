@@ -27,7 +27,7 @@ services:
     ##################
 
     main-service:
-        # image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/main-service:latest
+        # image: 324037306405.dkr.ecr.eu-west-1.amazonaws.com/main-service:latest
         build:
             context: ../services/main-service
             dockerfile: ./Dockerfile
@@ -51,7 +51,7 @@ services:
     ######################
 
     beta-frontend:
-        # image: 040156513434.dkr.ecr.eu-west-1.amazonaws.com/beta-frontend:latest
+        # image: 324037306405.dkr.ecr.eu-west-1.amazonaws.com/beta-frontend:latest
         build:
             context: ../frontends/beta-frontend
             dockerfile: ./Dockerfile.local
