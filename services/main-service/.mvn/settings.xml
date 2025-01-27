@@ -18,7 +18,7 @@
             <repositories>
                 <repository>
                     <id>kjeldsen-mvn-snapshots</id>
-                    <url>https://kjeldsen-040156513434.d.codeartifact.eu-west-1.amazonaws.com/maven/mvn-snapshots/</url>
+                    <url>https://kjeldsen-324037306405.d.codeartifact.eu-west-1.amazonaws.com/maven/mvn-snapshots/</url>
                 </repository>
             </repositories>
         </profile>

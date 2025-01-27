@@ -7,7 +7,7 @@ variable "project" {
 variable "s3_bucket" {
   description = "The name of the S3 bucket"
   type        = string
-  default     = "docdb-persistence"
+  default     = "db-persistence"
 }
 
 variable "environment" {

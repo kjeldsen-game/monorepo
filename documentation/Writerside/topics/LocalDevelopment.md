@@ -56,7 +56,7 @@ be required
 ## AWS ECR
 
 Login to ECR to download Docker images
-- `aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 040156513434.dkr.ecr.eu-west-1.amazonaws.com`
+- `aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 324037306405.dkr.ecr.eu-west-1.amazonaws.com`
 
 Update Docker images to latest version
 - `docker compose pull`
@@ -66,8 +66,8 @@ Update Docker images to latest version
 ## AWS Code Artifact
 
 Login to Code Artifact to publish/download libraries
-- `export CODEARTIFACT_AUTH_TOKEN='aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 040156513434 --region eu-west-1 --query authorizationToken --output text'` (Mac)
-- `export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 040156513434 --region eu-west-1 --query authorizationToken --output text)` (Windows - Git Bash) 
+- `export CODEARTIFACT_AUTH_TOKEN='aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 324037306405 --region eu-west-1 --query authorizationToken --output text'` (Mac)
+- `export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain kjeldsen --domain-owner 324037306405 --region eu-west-1 --query authorizationToken --output text)` (Windows - Git Bash) 
 
 ---
 

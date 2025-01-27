@@ -1,7 +1,7 @@
 terraform {
 
   backend "s3" {
-    bucket = "kjeldsen-terraform-state"
+    bucket = "kjeldsen-terraform-state-bucket"
     key    = "terraform.tfstate"
     region = "eu-west-1"
   }
@@ -363,7 +363,7 @@ module "route53_records" {
   create_route53_records_only               = true
   validation_method                         = "DNS"
   distinct_domain_names                     = module.acm.distinct_domain_names
-  zone_id                                   = "Z03138513K6V3S28YCMV7"
+  zone_id                                   = "Z0530348E6EUGD6L57W7"
   acm_certificate_domain_validation_options = module.acm.acm_certificate_domain_validation_options
 }
 ##############################
@@ -503,7 +503,7 @@ resource "aws_lb_listener_rule" "backend_https" {
 ########## DNS ###############
 ##############################
 resource "aws_route53_record" "alb" {
-  zone_id = "Z03138513K6V3S28YCMV7"
+  zone_id = "Z0530348E6EUGD6L57W7"
   name    = "kjeldsengame.com"
   type    = "A"
   alias {
@@ -513,7 +513,7 @@ resource "aws_route53_record" "alb" {
   }
 }
 resource "aws_route53_record" "backend_alb" {
-  zone_id = "Z03138513K6V3S28YCMV7"
+  zone_id = "Z0530348E6EUGD6L57W7"
   name    = "backend.kjeldsengame.com"
   type    = "A"
   alias {
