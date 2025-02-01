@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>com.kjeldsen</groupId>
-            <artifactId>match-service</artifactId>
+            <artifactId>match-domain</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

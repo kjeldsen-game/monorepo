@@ -8,9 +8,12 @@ import {
   rightColumnConfig,
 } from './ColumnsConfig';
 import { formatDateAndTime } from '@/shared/utils/DateUtils';
+import MarketButton from '../../Market/MarketButton';
 
 const incomingMatchesColumns = (
   handleLineupChange: (value: number, teamId: string) => void,
+  handlePlayButtonClick: (matchId: string) => void,
+  teamId: string,
 ): GridColDef[] => [
   {
     field: 'away',
@@ -54,25 +57,34 @@ const incomingMatchesColumns = (
     },
   },
   {
-    field: 'lineupButton',
-    renderHeader: () => <div style={{ paddingInline: '20px' }}>Lineup</div>,
+    field: 'actions',
+    renderHeader: () => <div style={{ paddingInline: '20px' }}>Actions</div>,
     ...rightColumnConfig,
-    renderCell: (val) => {
+    renderCell: (params: GridCellParams) => {
       return (
-        <Select
-          variant="standard"
-          color="info"
-          sx={{ mx: '10px', height: '40px' }}
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          label="Lineup"
-          value={0}
-          onChange={(item) =>
-            handleLineupChange(item.target.value as number, val.row.id)
-          }>
-          <MenuItem value={0}>Default</MenuItem>
-          <MenuItem value={1}>Specific lineup...</MenuItem>
-        </Select>
+        <>
+          {params.row.status === 'ACCEPTED' &&
+            params.row.home.id === teamId && (
+              <MarketButton
+                onClick={() => handlePlayButtonClick(params.row.id)}>
+                Play
+              </MarketButton>
+            )}
+          <Select
+            variant="standard"
+            color="info"
+            sx={{ mx: '10px', height: '40px' }}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Lineup"
+            value={0}
+            onChange={(item) =>
+              handleLineupChange(item.target.value as number, params.row.id)
+            }>
+            <MenuItem value={0}>Default</MenuItem>
+            <MenuItem value={1}>Specific lineup...</MenuItem>
+          </Select>
+        </>
       );
     },
   },

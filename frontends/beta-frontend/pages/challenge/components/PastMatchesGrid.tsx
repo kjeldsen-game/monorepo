@@ -27,6 +27,8 @@ const PastMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
     userData?.accessToken,
   );
 
+  console.log(pastMatches);
+
   useEffect(() => {
     refetch();
   }, []);

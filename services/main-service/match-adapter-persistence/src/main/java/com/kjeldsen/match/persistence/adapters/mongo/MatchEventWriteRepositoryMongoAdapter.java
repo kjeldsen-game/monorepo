@@ -1,7 +1,7 @@
 package com.kjeldsen.match.persistence.adapters.mongo;
 
 import com.kjeldsen.match.persistence.mongo.repositories.MatchEventMongoRepository;
-import com.kjeldsen.match.repositories.MatchEventWriteRepository;
+import com.kjeldsen.match.domain.repositories.MatchEventWriteRepository;
 import com.kjeldsen.player.domain.events.MatchEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

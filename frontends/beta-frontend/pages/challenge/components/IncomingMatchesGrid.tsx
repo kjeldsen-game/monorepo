@@ -6,6 +6,7 @@ import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMat
 import { useTranslation } from 'next-i18next';
 import incomingMatchesColumns from '@/shared/components/Grid/Columns/IncomingMatchesColumns';
 import { useRouter } from 'next/navigation';
+import { useMatchRepository } from '@/pages/api/match/useMatchRepository';
 
 const PAGE_SIZE = 10;
 
@@ -27,6 +28,11 @@ const IncomingMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
     userData?.accessToken,
   );
 
+  const { executeMatch } = useMatchRepository(
+    userData?.accessToken,
+    userData?.user.teamId,
+  );
+
   if (!acceptedMatches || acceptedMatches.length === 0) {
     return (
       <Box sx={{ width: '100%' }}>{t('challenge.no_incoming_challenges')}</Box>
@@ -38,6 +44,12 @@ const IncomingMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
     router.push(`/match/lineup/${matchId}`);
   };
 
+  const handlePlayButtonClick = (matchId: string) => {
+    executeMatch(matchId);
+  };
+
+  console.log(acceptedMatches);
+
   return (
     <Box sx={{ width: '100%' }}>
       <Grid
@@ -45,7 +57,11 @@ const IncomingMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
         rows={acceptedMatches ?? []}
         columns={
           userData?.user.teamId
-            ? incomingMatchesColumns(handleLineupChange)
+            ? incomingMatchesColumns(
+                handleLineupChange,
+                handlePlayButtonClick,
+                userData?.user.teamId,
+              )
             : []
         }
         paginationMode="server"

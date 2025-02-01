@@ -17,7 +17,11 @@ public class MatchEventListenerLeague {
     @EventListener
     public void handleMatchEvent(MatchEvent matchEvent) {
         log.info("MatchEvent received: {}", matchEvent);
-        updateLeagueStandingsUseCase.update(matchEvent.getLeagueId(),
-            matchEvent.getHomeTeamId(), matchEvent.getAwayTeamId(), matchEvent.getHomeScore(), matchEvent.getAwayScore());
+
+        if (matchEvent.getLeagueId() != null) {
+            // Ignore the update league if there was executed challenger match only
+            updateLeagueStandingsUseCase.update(matchEvent.getLeagueId(),
+                matchEvent.getHomeTeamId(), matchEvent.getAwayTeamId(), matchEvent.getHomeScore(), matchEvent.getAwayScore());
+        }
     }
 }

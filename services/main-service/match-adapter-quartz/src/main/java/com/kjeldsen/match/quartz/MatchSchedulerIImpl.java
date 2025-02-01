@@ -1,6 +1,6 @@
 package com.kjeldsen.match.quartz;
 
-import com.kjeldsen.match.schedulers.MatchScheduler;
+import com.kjeldsen.match.domain.schedulers.MatchScheduler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobBuilder;

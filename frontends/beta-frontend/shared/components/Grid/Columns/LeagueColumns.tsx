@@ -1,12 +1,15 @@
 import { CalendarButton } from '@/shared/components/CalendarButton';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
-import { GridAlignment } from '@mui/x-data-grid';
-import { TFunction } from 'i18next';
-import { Moment } from 'moment';
 import Link from 'next/link';
 import { leftColumnConfig, rightColumnConfig } from './ColumnsConfig';
+import { TFunction } from 'next-i18next';
+import { Moment } from 'moment';
 
-const leagueColumns = (): GridColDef[] => [
+const leagueColumns = (
+  t: TFunction,
+  handleChallengeButtonClick: (id: string, date: Moment) => void,
+  disabledDates: number[],
+): GridColDef[] => [
   {
     field: 'teamName',
     renderHeader: () => <div style={{ paddingInline: '20px' }}>Team Name</div>,
@@ -38,7 +41,7 @@ const leagueColumns = (): GridColDef[] => [
           openTo: 'day',
         }}
         onDatePick={(date) => handleChallengeButtonClick(params.row.id, date)}>
-        {t('challenge.challenge')}
+        Challenge
       </CalendarButton>
     ),
   },

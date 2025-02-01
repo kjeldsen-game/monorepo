@@ -1,16 +1,11 @@
 package com.kjeldsen.match.application.usecases;
 
-import com.kjeldsen.match.entities.Match;
-import com.kjeldsen.match.entities.Team;
-import com.kjeldsen.match.entities.TeamRole;
-import com.kjeldsen.match.modifers.HorizontalPressure;
-import com.kjeldsen.match.modifers.Tactic;
-import com.kjeldsen.match.modifers.TeamModifiers;
-import com.kjeldsen.match.modifers.VerticalPressure;
-import com.kjeldsen.match.repositories.MatchReadRepository;
-import com.kjeldsen.match.repositories.MatchWriteRepository;
-import com.kjeldsen.match.validation.TeamFormationValidationResult;
-import com.kjeldsen.match.validation.TeamFormationValidator;
+import com.kjeldsen.match.domain.entities.Match;
+import com.kjeldsen.match.domain.entities.Team;
+import com.kjeldsen.match.domain.entities.TeamRole;
+import com.kjeldsen.match.domain.modifers.TeamModifiers;
+import com.kjeldsen.match.domain.repositories.MatchReadRepository;
+import com.kjeldsen.match.domain.repositories.MatchWriteRepository;
 import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import lombok.Builder;
@@ -30,27 +25,14 @@ import java.util.stream.Stream;
 @Slf4j
 public class UpdateMatchLineupUseCase {
 
-    private final MatchReadRepository matchReadRepository;
     private final MatchWriteRepository matchWriteRepository;
     private final PlayerReadRepository playerReadRepository;
+    private final GetMatchTeamUseCase getMatchTeamUseCase;
 
     public void update(String matchId, String teamId, List<PlayerUpdateDTO> playerList, TeamModifiers teamModifiers) {
         log.info("UpdateMatchLineupUseCase for match={} team={}", matchId, teamId);
-        Match match = matchReadRepository.findOneById(matchId).orElseThrow(
-            () -> new RuntimeException("Match not found"));
 
-        // Retrieve the desired Team
-        Team team = match.getHome().getId().equals(teamId)
-            ? match.getHome()
-            : match.getAway().getId().equals(teamId)
-            ? match.getAway()
-            : null;
-        if (team == null) {
-            throw new RuntimeException("Team not found");
-        }
-
-        TeamRole role = match.getHome().getId().equals(teamId)
-            ? TeamRole.HOME : TeamRole.AWAY;
+        GetMatchTeamUseCase.MatchAndTeam matchAndTeam = getMatchTeamUseCase.getMatchAndTeam(matchId, teamId);
 
         List<Player> domainPlayers = playerList.stream()
             .flatMap(player -> playerReadRepository.findOneById(Player.PlayerId.of(player.getId()))
@@ -63,33 +45,34 @@ public class UpdateMatchLineupUseCase {
                 .orElse(Stream.empty()))
             .toList();
 
-        List<com.kjeldsen.match.entities.Player> newBenchPlayers = domainPlayers.stream()
+        List<com.kjeldsen.match.domain.entities.Player> newBenchPlayers = domainPlayers.stream()
             .filter(domainPlayer -> domainPlayer.getStatus().equals(PlayerStatus.BENCH))
-            .map(player -> buildPlayer(player, role))
+            .map(player -> buildPlayer(player, matchAndTeam.teamRole()))
             .toList();
 
-        List<com.kjeldsen.match.entities.Player> newActivePlayers = domainPlayers.stream()
+        List<com.kjeldsen.match.domain.entities.Player> newActivePlayers = domainPlayers.stream()
             .filter(domainPlayer -> domainPlayer.getStatus().equals(PlayerStatus.ACTIVE))
-            .map(player -> buildPlayer(player, role))
+            .map(player -> buildPlayer(player, matchAndTeam.teamRole()))
             .toList();
 
         // Update players and modifiers for the match
-        team.setPlayers(newActivePlayers);
-        team.setBench(newBenchPlayers);
-        team.setHorizontalPressure(teamModifiers.getHorizontalPressure());
-        team.setVerticalPressure(teamModifiers.getVerticalPressure());
-        team.setTactic(teamModifiers.getTactic());
+        matchAndTeam.team().setPlayers(newActivePlayers);
+        matchAndTeam.team().setBench(newBenchPlayers);
+        matchAndTeam.team().setHorizontalPressure(teamModifiers.getHorizontalPressure());
+        matchAndTeam.team().setVerticalPressure(teamModifiers.getVerticalPressure());
+        matchAndTeam.team().setTactic(teamModifiers.getTactic());
 
-        team.setSpecificLineup(true);
-        matchWriteRepository.save(match);
+        matchAndTeam.team().setSpecificLineup(true);
+        matchWriteRepository.save(matchAndTeam.match());
     }
 
-    private com.kjeldsen.match.entities.Player buildPlayer(com.kjeldsen.player.domain.Player player, TeamRole teamRole) {
+    // TODO switch to private when removed from Delegate
+    public com.kjeldsen.match.domain.entities.Player buildPlayer(com.kjeldsen.player.domain.Player player, TeamRole teamRole) {
         Map<PlayerSkill, Integer> skills = player.getActualSkills().entrySet().stream()
             .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getActual()));
         skills.put(PlayerSkill.INTERCEPTING, 0);
 
-        return com.kjeldsen.match.entities.Player.builder()
+        return com.kjeldsen.match.domain.entities.Player.builder()
             .id(player.getId().value())
             .name(player.getName())
             .status(player.getStatus())

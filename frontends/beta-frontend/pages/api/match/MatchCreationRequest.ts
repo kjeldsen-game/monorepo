@@ -1,16 +1,16 @@
 export interface MatchCreationRequest {
-  home: Away
-  away: Away
-  dateTime: Date
+  home: Away;
+  away: Away;
+  dateTime: Date;
 }
 
 export interface Away {
-  id: string
-  modifiers: Modifiers
+  id: string;
+  // modifiers: Modifiers
 }
 
 export interface Modifiers {
-  tactic: string
-  horizontalPressure: string
-  verticalPressure: string
+  tactic: string;
+  horizontalPressure: string;
+  verticalPressure: string;
 }

@@ -384,16 +384,12 @@ components:
             id:
               type: string
               example: id
-            modifiers:
-              $ref: "#/components/schemas/Modifiers"
         away:
           type: object
           properties:
             id:
               type: string
               example: id
-            modifiers:
-              $ref: "#/components/schemas/Modifiers"
         dateTime:
           type: string
           format: date-time
@@ -604,6 +600,7 @@ components:
         - POSITION
         - TACKLE
         - SHOOT
+        - DRIBBLE
 
     DuelStats:
       type: object

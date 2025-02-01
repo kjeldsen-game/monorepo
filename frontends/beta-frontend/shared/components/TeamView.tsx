@@ -136,6 +136,7 @@ const TeamView: React.FC<TeamProps> = ({
 
   const handleAddPlayer = (newPlayer: Player, status: string) => {
     console.log('running this');
+    console.log(activeAddMode);
     const updatedPlayer = { ...newPlayer, status: status };
     setPlayers((prevPlayers: any) =>
       prevPlayers.map((player: Player) =>

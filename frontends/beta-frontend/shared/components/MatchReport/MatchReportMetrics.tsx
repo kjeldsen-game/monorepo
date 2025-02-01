@@ -93,7 +93,7 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({
             fontSize="18px"
             fontWeight={700}>
             {convertSnakeCaseToTitleCase(
-              teamReport.modifiers.horizontalPressure,
+              teamReport.modifiers?.horizontalPressure,
             )}
           </Typography>
         </Box>
@@ -103,7 +103,9 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({
             sx={{ color: '#E52323' }}
             fontSize="18px"
             fontWeight={700}>
-            {convertSnakeCaseToTitleCase(teamReport.modifiers.verticalPressure)}
+            {convertSnakeCaseToTitleCase(
+              teamReport.modifiers?.verticalPressure,
+            )}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -112,7 +114,7 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({
             sx={{ color: '#E52323' }}
             fontSize="18px"
             fontWeight={700}>
-            {convertSnakeCaseToTitleCase(teamReport.modifiers.tactic)}
+            {convertSnakeCaseToTitleCase(teamReport.modifiers?.tactic)}
           </Typography>
         </Box>
       </Box>

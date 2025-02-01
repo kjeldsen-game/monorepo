@@ -134,7 +134,7 @@
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
-            <artifactId>match-service</artifactId>
+            <artifactId>match-domain</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

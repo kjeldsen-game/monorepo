@@ -4,7 +4,6 @@ package com.kjeldsen.match.listener;
 import com.kjeldsen.league.domain.ScheduleLeagueEvent;
 import com.kjeldsen.match.application.usecases.GenerateMatchScheduleUseCase;
 import com.kjeldsen.match.application.usecases.ScheduleLeagueMatchesUseCase;
-import com.kjeldsen.match.schedulers.MatchScheduler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

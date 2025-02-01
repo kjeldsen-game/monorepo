@@ -15,7 +15,7 @@
         <module>player-domain</module>
         <module>player-adapter-publisher</module>
         <module>player-adapter-quartz</module>
-        <module>match-service</module>
+        <module>match-domain</module>
         <module>match-adapter-rest</module>
         <module>match-adapter-publisher</module>
         <module>match-adapter-persistence</module>
@@ -493,6 +493,11 @@
                 <artifactId>jjwt-impl</artifactId>
                 <version>${jjwt-api.version}</version>
                 <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>2.18.2</version>
             </dependency>
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
