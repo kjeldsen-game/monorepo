@@ -25,14 +25,15 @@ public class GenerateMatchScheduleUseCase {
 
         List<ScheduledMatch> scheduledMatches = new ArrayList<>();
 
-            LocalDateTime startDate = LocalDateTime.now().minusHours(1);
+            LocalDateTime startDate = LocalDateTime.now();
             int numRounds = teamIds.size() - 1;
             int matchIntervalMinutes = 1;
 
             for (int round = 0; round < numRounds * 2; round++) {
                 boolean isSecondRound = round >= numRounds;
 
-                startDate = startDate.plusMinutes(matchIntervalMinutes);
+//                startDate = startDate.plusMinutes(matchIntervalMinutes);
+                startDate = startDate.plusDays(matchIntervalMinutes);
                 generateMatchesForRound(teamIds, scheduledMatches, startDate, isSecondRound);
 
                 try {
