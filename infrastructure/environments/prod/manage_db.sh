@@ -69,7 +69,7 @@ import_data() {
 
 if [ -f "kjeldsen-prod-key.pem" ]; then
     echo "File kjeldsen-prod-key.pem exists. Removing it..."
-    rm kjeldsen-prod-key.pem
+    rm -rf kjeldsen-prod-key.pem
 else
     echo "File kjeldsen-prod-key.pem does not exist. Retrieving secret and creating the file..."
 fi
