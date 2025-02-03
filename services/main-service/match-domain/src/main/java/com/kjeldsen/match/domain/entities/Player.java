@@ -124,6 +124,7 @@ public class Player {
                         .append(", Goalkeeper positioning: ").append(goalkeepingPositioningSkill)
                         .append(", Dice roll: ").append(diceRoll)
                         .append(", Goalkeeper skill (RE/OTO) modified with the addition of: ").append(goalkeepingPositioningModifier);
+                System.out.println(detail.toString());
                 state.getRecorder().record(detail.toString(), state, GameProgressRecord.Type.CALCULATION, GameProgressRecord.DuelStage.DURING);
 
                 goalkeepingSkill += goalkeepingPositioningModifier;

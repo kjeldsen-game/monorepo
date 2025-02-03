@@ -14,13 +14,18 @@ public interface TeamMapper {
     TeamResponse map(Team team);
 
     default Modifiers mapToModifiers(Team team) {
-        if (team == null) return null;
+        if (team == null || team.getTactic() == null || team.getVerticalPressure() == null || team.getHorizontalPressure() == null) {
+            return null;
+        }
         Modifiers modifiers = new Modifiers();
         modifiers.setTactic(Tactic.valueOf(team.getTactic().name()));
         modifiers.setVerticalPressure(VerticalPressure.valueOf(team.getVerticalPressure().name()));
         modifiers.setHorizontalPressure(HorizontalPressure.valueOf(team.getHorizontalPressure().name()));
+
         return modifiers;
     }
+
+
 
     com.kjeldsen.match.domain.modifers.TeamModifiers map(TeamModifiers teamModifiers);
 

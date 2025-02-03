@@ -1,6 +1,7 @@
 package com.kjeldsen.match.application.usecases;
 
 import com.kjeldsen.domain.EventId;
+import com.kjeldsen.match.application.usecases.league.UpdateLeagueStandingsUseCase;
 import com.kjeldsen.match.domain.Game;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.MatchReport;
@@ -43,6 +44,7 @@ public class ExecuteMatchUseCase {
     private final PlayerReadRepository playerReadRepository;
     private final MatchEventPublisher matchEventPublisher;
     private final GetMatchUseCase getMatchUseCase;
+    private final UpdateLeagueStandingsUseCase updateLeagueStandingsUseCase;
 
     public void execute(String matchId) {
         log.info("ExecuteMatchUseCase for match {}", matchId);
@@ -82,6 +84,8 @@ public class ExecuteMatchUseCase {
 
             matchWriteRepository.save(m);
             if (m.getLeagueId() != null){
+                updateLeagueStandingsUseCase.update(matchEvent.getLeagueId(), matchEvent.getHomeTeamId(),
+                    matchEvent.getAwayTeamId(), matchEvent.getHomeScore(), matchEvent.getAwayScore());
                 matchEventPublisher.publishMatchEvent(matchEvent);
             }
         } else {

@@ -1,5 +1,6 @@
 package com.kjeldsen.match.application.usecases;
 
+import com.kjeldsen.match.application.usecases.league.UpdateLeagueStandingsUseCase;
 import com.kjeldsen.match.domain.Game;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.MatchReport;
@@ -18,7 +19,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,13 +39,10 @@ class ExecuteMatchUseCaseTest {
     private final PlayerReadRepository mockedPlayerReadRepository = mock(PlayerReadRepository.class);
     private final MatchEventPublisher mockedMatchEventPublisher = mock(MatchEventPublisher.class);
     private final GetMatchUseCase mockedGetMatchUseCase = mock(GetMatchUseCase.class);
+    private final UpdateLeagueStandingsUseCase mockedUpdateLeagueStandingsUseCase = Mockito.mock(UpdateLeagueStandingsUseCase.class);
     private final ExecuteMatchUseCase executeMatchUseCase = new ExecuteMatchUseCase(mockedGetMatchAttendanceUseCase,
-        mockedTeamReadRepository, mockedMatchWriteRepository, mockedPlayerReadRepository, mockedMatchEventPublisher, mockedGetMatchUseCase);
-
-    @BeforeEach
-    void setUp() {
-
-    }
+        mockedTeamReadRepository, mockedMatchWriteRepository, mockedPlayerReadRepository, mockedMatchEventPublisher,
+        mockedGetMatchUseCase, mockedUpdateLeagueStandingsUseCase);
 
     @Test
     @DisplayName("Should throw error when match status is invalid")

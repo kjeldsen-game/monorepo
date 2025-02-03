@@ -36,7 +36,7 @@ public class MatchSchedulerIImpl implements MatchScheduler {
 
             scheduler.scheduleJob(jobDetail, trigger);
 
-            log.info("Match scheduled for: {} on time {}", matchId, matchId);
+            log.info("Match scheduled for: {} on time {}", matchId, matchDate);
         } catch (SchedulerException e) {
             log.error(e.getMessage(), e);
         }

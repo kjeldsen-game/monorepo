@@ -8,8 +8,76 @@ servers:
 
 tags:
   - name: match
+  - name: league
 
 paths:
+
+  /league:
+    get:
+      summary: Get Leagues
+      operationId: getAllLeagues
+      tags:
+        - league
+      parameters:
+        - name: size
+          in: query
+          description: Number of leagues to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: page
+          in: query
+          description: Page number of the leagues to return
+          required: false
+          schema:
+            default: 0
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: List of filtered players
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LeagueResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /league/{leagueId}:
+    get:
+      summary: Get league
+      operationId: getLeague
+      tags:
+        - league
+      parameters:
+        - $ref: "#/components/parameters/LeagueIdPathParameter"
+      responses:
+        "200":
+          description: Returns the League
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LeagueResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+    put:
+      summary: Schedule league matches
+      operationId: scheduleLeague
+      tags:
+        - league
+      parameters:
+        - $ref: "#/components/parameters/LeagueIdPathParameter"
+      responses:
+        "201":
+          description: League matches were scheduled
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
   /match:
     post:
       summary: Create a match
@@ -298,7 +366,28 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
+################################### Components ###################################
 components:
+  ################################### Parameters ###################################
+  parameters:
+    LeagueIdPathParameter:
+      name: leagueId
+      in: path
+      description: Id of the league
+      required: true
+      schema:
+        type: string
+
+    MatchIdPathParameter:
+      name: matchId
+      in: path
+      description: Id of the match
+      required: true
+      schema:
+        type: string
+
+  ################################### Responses ###################################
+
   responses:
     DefaultErrorResponse:
       description: Unexpected error
@@ -310,6 +399,60 @@ components:
               $ref: "#/components/schemas/Error"
 
   schemas:
+
+    ######################## LEAGUE SCHEMAS START ########################
+    LeagueStats:
+      type: object
+      properties:
+        name:
+          type: string
+        position:
+          type: integer
+        gamesPlayed:
+          type: integer
+          example: 10
+        wins:
+          type: integer
+          example: 6
+        losses:
+          type: integer
+          example: 4
+        draws:
+          type: integer
+          example: 0
+        points:
+          type: integer
+          example: 18
+        goalsScored:
+          type: integer
+        goalsReceived:
+          type: integer
+
+    LeagueResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        name:
+          type: string
+          example: example
+        tier:
+          type: integer
+          format: int32
+        startedAt:
+          type: string
+        season:
+          type: integer
+          format: int32
+        scheduledMatches:
+          type: boolean
+        teams:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LeagueStats'
+
+    ######################## LEAGUE SCHEMAS END ########################
 
     ######################## TEAM VALIDATION SCHEMAS START ########################
 

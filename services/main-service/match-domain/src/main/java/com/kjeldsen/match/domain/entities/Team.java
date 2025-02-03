@@ -19,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Team {
 
+    String name;
     String id;
     TeamRole role;
     List<Player> players;

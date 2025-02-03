@@ -1,6 +1,7 @@
 package com.kjeldsen.infrastructure.config;
 
 import com.kjeldsen.player.quartz.NewDayJob;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ public class QuartzConfiguration {
     @Autowired
     private Scheduler scheduler;
 
-    //@PostConstruct
+    @PostConstruct
     public void setupQuartz() {
         try {
             // TODO Quartz fix the interval in minutes, set to minute while testing

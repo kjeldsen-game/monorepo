@@ -80,7 +80,7 @@ public class MatchDelegate implements MatchApiDelegate {
     @Override
     public ResponseEntity<String> validate(String matchId, String teamId) {
         List<Player> players;
-        GetMatchTeamUseCase.MatchAndTeam matchAndTeam = getMatchTeamUseCase.getMatchAndTeam(teamId, matchId);
+        GetMatchTeamUseCase.MatchAndTeam matchAndTeam = getMatchTeamUseCase.getMatchAndTeam(matchId, teamId);
         // get the lineup
         if (!matchAndTeam.team().getSpecificLineup()) {
             List<com.kjeldsen.player.domain.Player> playersDomain = playerRepo.findByTeamId(TeamId.of(teamId));

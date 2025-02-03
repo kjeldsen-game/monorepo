@@ -80,6 +80,11 @@ public class GeneratePlayersUseCase {
                                 .playerSkillRelevance(PlayerSkillRelevance.CORE)
                                 .actual(stats.get(i).getStats()[4])  // Assuming stats[i][4] corresponds to ORGANIZATION
                                 .potential(stats.get(i).getStats()[4])  // Assuming stats[i][4] corresponds to ORGANIZATION
+                                .build(),
+                            PlayerSkill.ONE_ON_ONE, PlayerSkills.builder()
+                                .playerSkillRelevance(PlayerSkillRelevance.CORE)
+                                .actual(stats.get(i).getStats()[5])  // Assuming stats[i][5] corresponds to ORGANIZATION
+                                .potential(stats.get(i).getStats()[5])  // Assuming stats[i][5] corresponds to ORGANIZATION
                                 .build()
                         )
                         :

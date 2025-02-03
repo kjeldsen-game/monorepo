@@ -48,6 +48,7 @@ public class CreateMatchUseCase {
     private com.kjeldsen.match.domain.entities.Team buildTeam(com.kjeldsen.player.domain.Team home, TeamRole role) {
         return com.kjeldsen.match.domain.entities.Team.builder()
             .id(home.getId().value())
+            .name(home.getName())
             .role(role)
             .specificLineup(false)
             .build();
