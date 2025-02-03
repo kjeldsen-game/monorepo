@@ -28,10 +28,6 @@
             <artifactId>match-application</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>league-domain</artifactId>
-        </dependency>
     </dependencies>
 
 </project>
