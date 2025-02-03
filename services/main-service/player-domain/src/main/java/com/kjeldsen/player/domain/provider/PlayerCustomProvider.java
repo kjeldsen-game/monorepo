@@ -14,10 +14,10 @@ public class PlayerCustomProvider {
 
     static {
         // GK Stats
-        playerStatsList.add(new PlayerStats(PlayerPosition.GOALKEEPER, new int[]{80, 60, 50, 50, 50, 290}));
-        playerStatsList.add(new PlayerStats(PlayerPosition.GOALKEEPER, new int[]{60, 80, 50, 50, 50, 290}));
-        playerStatsList.add(new PlayerStats(PlayerPosition.GOALKEEPER, new int[]{70, 70, 70, 70, 70, 350}));
-        playerStatsList.add(new PlayerStats(PlayerPosition.GOALKEEPER, new int[]{65, 65, 90, 90, 90, 400}));
+        playerStatsList.add(new PlayerStats(PlayerPosition.GOALKEEPER, new int[]{80, 60, 50, 50, 50, 50, 340}));
+        playerStatsList.add(new PlayerStats(PlayerPosition.GOALKEEPER, new int[]{60, 80, 50, 50, 50, 50, 340}));
+        playerStatsList.add(new PlayerStats(PlayerPosition.GOALKEEPER, new int[]{70, 70, 70, 70, 70, 70, 420}));
+        playerStatsList.add(new PlayerStats(PlayerPosition.GOALKEEPER, new int[]{65, 65, 90, 90, 90, 90, 490}));
 
         // CB Stats
         playerStatsList.add(new PlayerStats(PlayerPosition.CENTRE_BACK, new int[]{20, 20, 20, 30, 60, 90, 60, 90, 390}));

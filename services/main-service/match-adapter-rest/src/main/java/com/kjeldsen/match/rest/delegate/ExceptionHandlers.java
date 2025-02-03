@@ -1,9 +1,9 @@
 package com.kjeldsen.match.rest.delegate;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.kjeldsen.match.entities.MatchReport;
-import com.kjeldsen.match.state.GameState;
-import com.kjeldsen.match.state.GameStateException;
+import com.kjeldsen.match.domain.entities.MatchReport;
+import com.kjeldsen.match.domain.state.GameState;
+import com.kjeldsen.match.domain.state.GameStateException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;

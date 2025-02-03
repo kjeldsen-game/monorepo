@@ -38,13 +38,13 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
     //   hasDivider: false,
     //   selected: pathname === '/training',
     // },
-    // {
-    //   name: 'Challenge',
-    //   icon: 'trophy',
-    //   to: '/challenge',
-    //   hasDivider: false,
-    //   selected: /^\/challenge/.test(pathname),
-    // },
+    {
+      name: 'Challenge',
+      icon: 'trophy',
+      to: '/challenge',
+      hasDivider: false,
+      selected: /^\/challenge/.test(pathname),
+    },
     // {
     //   name: 'Market',
     //   icon: 'market',

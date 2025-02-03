@@ -58,7 +58,7 @@ export const playerSkillsColumns = () => {
     createSkillColumnConfig('BALL_CONTROL', 'BC', 'INTERCEPTIONS', 'IN'),
     createSkillColumnConfig('PASSING', 'PA', 'CONTROL', 'CT'),
     createSkillColumnConfig('AERIAL', 'AE', 'ORGANIZATION', 'OR'),
-    createSkillColumnConfig('CONSTITUTION', 'CO'),
+    createSkillColumnConfig('CONSTITUTION', 'CO', 'ONE_ON_ONE', 'OO'),
     createSkillColumnConfig('TACKLING', 'TA'),
     createSkillColumnConfig('DEFENSIVE_POSITIONING', 'DP'),
   ];

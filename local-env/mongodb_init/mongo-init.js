@@ -17108,7 +17108,7 @@ db.Match.insertOne(
                 "awayRating" : NumberInt(-10)
             }
         },
-        "_class" : "com.kjeldsen.match.entities.Match"
+        "_class" : "com.kjeldsen.match.domain.entities.Match"
     }
 
 )

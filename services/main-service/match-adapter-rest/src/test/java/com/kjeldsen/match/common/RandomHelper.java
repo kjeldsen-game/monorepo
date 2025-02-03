@@ -1,11 +1,11 @@
 package com.kjeldsen.match.common;
 
 import com.github.javafaker.Faker;
-import com.kjeldsen.match.entities.Player;
-import com.kjeldsen.match.entities.Team;
-import com.kjeldsen.match.modifers.HorizontalPressure;
-import com.kjeldsen.match.modifers.Tactic;
-import com.kjeldsen.match.modifers.VerticalPressure;
+import com.kjeldsen.match.domain.entities.Player;
+import com.kjeldsen.match.domain.entities.Team;
+import com.kjeldsen.match.domain.modifers.HorizontalPressure;
+import com.kjeldsen.match.domain.modifers.Tactic;
+import com.kjeldsen.match.domain.modifers.VerticalPressure;
 import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerReceptionPreference;

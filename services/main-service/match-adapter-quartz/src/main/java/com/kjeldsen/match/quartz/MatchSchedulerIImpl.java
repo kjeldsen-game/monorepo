@@ -1,6 +1,6 @@
 package com.kjeldsen.match.quartz;
 
-import com.kjeldsen.match.schedulers.MatchScheduler;
+import com.kjeldsen.match.domain.schedulers.MatchScheduler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobBuilder;
@@ -36,7 +36,7 @@ public class MatchSchedulerIImpl implements MatchScheduler {
 
             scheduler.scheduleJob(jobDetail, trigger);
 
-            log.info("Match scheduled for: {} on time {}", matchId, matchId);
+            log.info("Match scheduled for: {} on time {}", matchId, matchDate);
         } catch (SchedulerException e) {
             log.error(e.getMessage(), e);
         }

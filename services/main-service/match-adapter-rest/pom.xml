@@ -116,6 +116,10 @@
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
+            <artifactId>auth-adapter-authorization</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
             <artifactId>match-adapter-publisher</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
@@ -134,7 +138,7 @@
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
-            <artifactId>match-service</artifactId>
+            <artifactId>match-domain</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

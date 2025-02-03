@@ -44,6 +44,7 @@ const Team: NextPage = () => {
     teamModifiers: TeamModifiers,
   ) => {
     try {
+      console.log(players);
       const response = await updateTeam(players, teamModifiers);
       if (response.status == 500 || response.status == 400) {
         setAlert({

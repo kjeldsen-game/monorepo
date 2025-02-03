@@ -15,11 +15,13 @@
         <module>player-domain</module>
         <module>player-adapter-publisher</module>
         <module>player-adapter-quartz</module>
-        <module>match-service</module>
+        <module>match-domain</module>
+        <module>match-application</module>
         <module>match-adapter-rest</module>
         <module>match-adapter-publisher</module>
         <module>match-adapter-persistence</module>
         <module>match-adapter-quartz</module>
+        <module>match-adapter-listener</module>
         <module>market-domain</module>
         <module>market-application</module>
         <module>market-adapter-persistence</module>
@@ -30,14 +32,6 @@
         <module>auth-domain</module>
         <module>auth-application</module>
         <module>auth-adapter-persistence</module>
-        <module>league-domain</module>
-        <module>league-application</module>
-        <module>league-adapter-listener</module>
-        <module>league-adapter-publisher</module>
-        <module>match-adapter-listener</module>
-        <module>match-application</module>
-        <module>league-adapter-persistence</module>
-        <module>league-adapter-rest</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -493,6 +487,11 @@
                 <artifactId>jjwt-impl</artifactId>
                 <version>${jjwt-api.version}</version>
                 <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>2.18.2</version>
             </dependency>
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>

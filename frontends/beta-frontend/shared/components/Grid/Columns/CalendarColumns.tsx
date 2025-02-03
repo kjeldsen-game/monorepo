@@ -73,8 +73,8 @@ export const calendarColumns = (teamId?: string) => {
         <Box>
           {params.row.status === 'PLAYED' ? (
             <Link passHref href={`/match/report/${params.row.id}`}>
-              `${params.row.matchReport.homeScore}-$
-              {params.row.matchReport.awayScore}`
+              {params.row.matchReport.homeScore}-
+              {params.row.matchReport.awayScore}
             </Link>
           ) : (
             <Typography color={'#000000'}>
@@ -110,9 +110,8 @@ export const calendarColumns = (teamId?: string) => {
       renderHeader: () => <div>Actions</div>,
       ...baseColumnConfig,
       renderCell: (params: GridCellParams) =>
-        (params.row.away.id === teamId ||
-          (params.row.home.id === teamId &&
-            params.row.status === 'SCHEDULED')) && (
+        (params.row.away.id === teamId || params.row.home.id === teamId) &&
+        params.row.status == 'SCHEDULED' && (
           <Box>
             <LinkButton link={`/match/lineup/${params.row.id}`}>
               Change Lineup

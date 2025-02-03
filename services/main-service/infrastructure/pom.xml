@@ -22,23 +22,6 @@
             <groupId>com.kjeldsen</groupId>
             <artifactId>auth-adapter-authorization</artifactId>
         </dependency>
-        <!-- League modules -->
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>league-adapter-rest</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>league-adapter-persistence</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>league-adapter-listener</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>league-adapter-publisher</artifactId>
-        </dependency>
         <!-- Match modules -->
         <dependency>
             <groupId>com.kjeldsen</groupId>
@@ -98,6 +81,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.15.2</version>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>

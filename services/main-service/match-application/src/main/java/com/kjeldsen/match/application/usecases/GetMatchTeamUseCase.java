@@ -1,10 +1,12 @@
 package com.kjeldsen.match.application.usecases;
 
 
-import com.kjeldsen.match.entities.Match;
-import com.kjeldsen.match.entities.Team;
-import com.kjeldsen.match.repositories.MatchReadRepository;
+import com.kjeldsen.match.domain.entities.Match;
+import com.kjeldsen.match.domain.entities.Team;
+import com.kjeldsen.match.domain.entities.TeamRole;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -13,13 +15,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class GetMatchTeamUseCase {
 
-    private final MatchReadRepository matchReadRepository;
+    private final GetMatchUseCase getMatchUseCase;
 
-    public Team get(String teamId, String matchId) {
-        Match match = matchReadRepository.findOneById(matchId).orElseThrow(
-            () -> new RuntimeException("Match not found"));
+    public MatchAndTeam getMatchAndTeam(String matchId, String teamId) {
+        log.info("GetMatchTeamUseCase to get MatchAndTeam for teamId={} matchId={}", teamId, matchId);
+        Match match = getMatchUseCase.get(matchId);
 
-        // Retrieve the desired Team
         Team team = match.getHome().getId().equals(teamId)
             ? match.getHome()
             : match.getAway().getId().equals(teamId)
@@ -28,6 +29,13 @@ public class GetMatchTeamUseCase {
         if (team == null) {
             throw new RuntimeException("Team not found");
         }
-        return team;
+
+        TeamRole role = match.getHome().getId().equals(teamId)
+            ? TeamRole.HOME : TeamRole.AWAY;
+
+        return new MatchAndTeam(match, team, role);
+    }
+
+        public record MatchAndTeam(Match match, Team team, TeamRole teamRole) {
     }
 }

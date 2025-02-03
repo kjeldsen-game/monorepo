@@ -103,6 +103,7 @@ const TeamView: React.FC<TeamProps> = ({
   }, [players]);
 
   const handleClose = (reason?: SnackbarCloseReason) => {
+    setActiveAddMode(false);
     if (reason === 'clickaway') {
       return;
     }
@@ -135,19 +136,19 @@ const TeamView: React.FC<TeamProps> = ({
   };
 
   const handleAddPlayer = (newPlayer: Player, status: string) => {
-    console.log('running this');
     const updatedPlayer = { ...newPlayer, status: status };
-    setPlayers((prevPlayers: any) =>
-      prevPlayers.map((player: Player) =>
+    setPlayers((prevPlayers: any) => {
+      const updatedPlayers = prevPlayers.map((player: Player) =>
         player.id === newPlayer.id ? { ...player, ...updatedPlayer } : player,
-      ),
-    );
+      );
+      onTeamUpdate(updatedPlayers, teamModifiers);
+      return updatedPlayers;
+    });
     if (activeAddMode) {
       setPlayerEdit(undefined);
     } else {
       setPlayerEdit(status === 'INACTIVE' ? undefined : updatedPlayer);
     }
-    onTeamUpdate(players, teamModifiers);
   };
 
   const switchPlayerStatuses = (newPlayer: Player, oldPlayer: Player) => {
@@ -158,7 +159,7 @@ const TeamView: React.FC<TeamProps> = ({
     const updatedPlayer2 = { ...oldPlayer, status: newPlayerStatus };
 
     setPlayers((prevPlayers: any) => {
-      return prevPlayers.map((player: Player) => {
+      const updatedPlayers = prevPlayers.map((player: Player) => {
         if (player.id === newPlayer.id) {
           return { ...player, ...updatedPlayer1 };
         }
@@ -167,9 +168,11 @@ const TeamView: React.FC<TeamProps> = ({
         }
         return player;
       });
+      onTeamUpdate(updatedPlayers, teamModifiers);
+      return updatedPlayers;
     });
+
     setPlayerEdit(updatedPlayer1);
-    onTeamUpdate(players, teamModifiers);
   };
 
   const handlePlayerFieldChange = (
@@ -194,11 +197,11 @@ const TeamView: React.FC<TeamProps> = ({
     value: Tactic | VerticalPressure | HorizontalPressure,
     type: string,
   ) => {
-    setTeamModifiers((prevModifiers: any) => ({
-      ...prevModifiers,
-      [type]: value,
-    }));
-    onTeamUpdate(players, teamModifiers);
+    setTeamModifiers((prevModifiers: any) => {
+      const updatedModifiers = { ...prevModifiers, [type]: value };
+      onTeamUpdate(players, updatedModifiers);
+      return updatedModifiers;
+    });
   };
 
   return (
@@ -260,7 +263,7 @@ const TeamView: React.FC<TeamProps> = ({
                 overflowY: 'auto',
                 background: 'white',
               }}>
-              {teamFormationValidation?.items.map((error, index) => (
+              {teamFormationValidation?.items?.map((error, index) => (
                 <Box
                   sx={{
                     display: 'flex',

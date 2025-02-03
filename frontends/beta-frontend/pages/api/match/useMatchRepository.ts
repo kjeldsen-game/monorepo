@@ -25,19 +25,9 @@ const useMatchRepository = (token: string, ownTeamId?: string) => {
     const newData: MatchCreationRequest = {
       home: {
         id: ownTeamId,
-        modifiers: {
-          tactic: 'DOUBLE_TEAM',
-          horizontalPressure: 'SWARM_CENTRE',
-          verticalPressure: 'MID_PRESSURE',
-        },
       },
       away: {
         id: rivalTeamId,
-        modifiers: {
-          tactic: 'DOUBLE_TEAM',
-          horizontalPressure: 'SWARM_CENTRE',
-          verticalPressure: 'MID_PRESSURE',
-        },
       },
       dateTime: date,
     };
@@ -52,6 +42,10 @@ const useMatchRepository = (token: string, ownTeamId?: string) => {
     });
   };
 
+  const executeMatch = async (matchId: string) => {
+    _patchMatch(matchId, { status: 'SCHEDULED' });
+  };
+
   const acceptMatch = async (matchId: string) => {
     _patchMatch(matchId, { status: 'ACCEPTED' });
   };
@@ -61,6 +55,7 @@ const useMatchRepository = (token: string, ownTeamId?: string) => {
   };
 
   return {
+    executeMatch,
     createMatch,
     acceptMatch,
     declineMatch,
