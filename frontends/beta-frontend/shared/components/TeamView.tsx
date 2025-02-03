@@ -170,7 +170,7 @@ const TeamView: React.FC<TeamProps> = ({
       });
     });
     setPlayerEdit(updatedPlayer1);
-    onTeamUpdate(players, teamModifiers);
+    //onTeamUpdate(players, teamModifiers);
   };
 
   const handlePlayerFieldChange = (
@@ -180,7 +180,7 @@ const TeamView: React.FC<TeamProps> = ({
   ) => {
     const updatedPlayer: Player = { ...player, [field]: value };
     switchPlayerStatuses(updatedPlayer, player);
-    onTeamUpdate(players, teamModifiers);
+    //onTeamUpdate(players, teamModifiers);
   };
 
   const handlePlayerRowClick = (player: Player) => {
