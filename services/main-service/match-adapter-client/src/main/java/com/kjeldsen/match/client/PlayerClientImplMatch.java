@@ -19,15 +19,6 @@ public class PlayerClientImplMatch implements PlayerClientMatch {
 
     public List<PlayerDTO> getPlayers(String teamId, String token) {
 
-        String s = webClient.get()
-            .uri(teamId != null ? "/player?size=100&teamId=" + teamId : "/player?size=100")
-            .header("Authorization", "Bearer " + token)
-            .retrieve()
-            .bodyToMono(String.class)
-            .block();
-
-        System.out.println(s);
-
         return webClient.get()
             .uri(teamId != null ? "/player?size=100&teamId=" + teamId : "/player?size=100")
             .header("Authorization", "Bearer " + token)
