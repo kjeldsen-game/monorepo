@@ -1,9 +1,12 @@
 package com.kjeldsen.market.application;
 
+import com.kjeldsen.domain.EventId;
 import com.kjeldsen.market.domain.Auction;
+import com.kjeldsen.market.domain.publishers.BidEventPublisher;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
 import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.events.BidEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +30,8 @@ public class PlaceBidUseCase {
     private final AuctionReadRepository auctionReadRepository;
     private final TeamReadRepository teamReadRepository;
     private final TeamWriteRepository teamWriteRepository;
+    private final BidEventPublisher bidEventPublisher;
+
     private static final Integer AUCTION_BID_REDUCE_TIME = 30;
 
     public Auction placeBid(Auction.AuctionId auctionId, BigDecimal amount, String userId) {
@@ -91,6 +97,8 @@ public class PlaceBidUseCase {
         if (team.getEconomy().getBalance().compareTo(bidAmountDiff.abs()) < 0) {
             throw new RuntimeException("You don't have enough balance to place bid!");
         }
-        team.getEconomy().updateBalance(bidAmountDiff);
+        bidEventPublisher.publishBidEndEvent(BidEvent.builder().amount(bidAmountDiff)
+            .teamId(team.getId().value()).id(EventId.generate()).occurredAt(Instant.now()).build());
+        //team.getEconomy().updateBalance(bidAmountDiff);
     }
 }

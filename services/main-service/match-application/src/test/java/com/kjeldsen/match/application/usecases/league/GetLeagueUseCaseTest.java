@@ -2,13 +2,10 @@ package com.kjeldsen.match.application.usecases.league;
 
 import com.kjeldsen.match.domain.entities.League;
 import com.kjeldsen.match.domain.repositories.LeagueReadRepository;
-import com.kjeldsen.player.domain.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;

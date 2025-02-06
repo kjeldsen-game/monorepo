@@ -105,7 +105,7 @@ public class TeamDelegate implements TeamApiDelegate {
         if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        Team team = teamReadRepository.findById(TeamId.of(teamId)).orElse(null);
+        Team team = teamReadRepository.findById(TeamId.of(teamId)).orElseThrow(() -> new RuntimeException("Team not found"));
 
         Map<String, GetTransactionsUseCaseAbstract.TransactionSummary> transactions =
             getTeamTransactionsUseCase.getTransactions(teamId);
@@ -162,9 +162,7 @@ public class TeamDelegate implements TeamApiDelegate {
         Team team = teamReadRepository.findOneById(Team.TeamId.of(teamId))
             .orElseThrow();
         TeamResponse response = TeamMapper.INSTANCE.map(team);
-        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
-            // TODO filter the response if other team access remove the tactics only show players
-        }
+        //System.out.println(response.toString());
 
         List<PlayerResponse> players = playerReadRepository.findByTeamId(TeamId.of(teamId))
             .stream()

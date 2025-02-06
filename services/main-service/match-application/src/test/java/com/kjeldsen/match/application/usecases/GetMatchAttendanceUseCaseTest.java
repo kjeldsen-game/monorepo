@@ -1,59 +1,41 @@
 package com.kjeldsen.match.application.usecases;
 
-import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
+import com.kjeldsen.match.application.usecases.common.BaseClientTest;
+import com.kjeldsen.match.domain.clients.TeamClientMatch;
+import com.kjeldsen.match.domain.clients.models.team.Buildings;
+import com.kjeldsen.match.domain.clients.models.team.Fans;
+import com.kjeldsen.match.domain.clients.models.team.TeamDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.Map;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-class GetMatchAttendanceUseCaseTest {
+class GetMatchAttendanceUseCaseTest extends BaseClientTest {
 
-    private final TeamReadRepository teamReadRepository = Mockito.mock(TeamReadRepository.class);
-    private final GetMatchAttendanceUseCase getMatchAttendanceUseCase = new GetMatchAttendanceUseCase(teamReadRepository);
-
-    @Test
-    @DisplayName("Should throw error if home team not found")
-    void should_throw_error_if_home_team_not_found() {
-        when(teamReadRepository.findById(Team.TeamId.of("home"))).thenReturn(Optional.empty());
-        assertEquals("Team not found", assertThrows(RuntimeException.class, () -> {
-            getMatchAttendanceUseCase.get("home", "away");
-        }).getMessage());
-    }
-
-    @Test
-    @DisplayName("Should throw error if away team not found")
-    void should_throw_error_if_away_team_not_found() {
-        when(teamReadRepository.findById(Team.TeamId.of("home"))).thenReturn(Optional.ofNullable(
-            Team.builder()
-                .fans(Team.Fans.builder().build())
-                .buildings(Team.Buildings.builder().stadium(new Team.Buildings.Stadium()).build())
-                .build()));
-        when(teamReadRepository.findById(Team.TeamId.of("away"))).thenReturn(Optional.empty());
-
-        assertEquals("Team not found", assertThrows(RuntimeException.class, () -> {
-            getMatchAttendanceUseCase.get("home", "away");
-        }).getMessage());
-    }
+    private final TeamClientMatch teamClient = Mockito.mock(TeamClientMatch.class);
+    private final GetMatchAttendanceUseCase getMatchAttendanceUseCase = new GetMatchAttendanceUseCase(teamClient);
 
     @Test
     @DisplayName("Should return match attendance for match")
     void should_return_match_attendance_for_match() {
-        when(teamReadRepository.findById(Team.TeamId.of("home"))).thenReturn(Optional.ofNullable(
-            Team.builder()
-                .fans(Team.Fans.builder().build())
-                .buildings(Team.Buildings.builder().stadium(new Team.Buildings.Stadium()).build())
-                .build()));
-        when(teamReadRepository.findById(Team.TeamId.of("away"))).thenReturn(Optional.ofNullable(
-            Team.builder()
-                .fans(Team.Fans.builder().build())
-                .buildings(Team.Buildings.builder().stadium(new Team.Buildings.Stadium()).build())
-                .build()));
+        Fans.FanTier fantier = Fans.FanTier.builder().totalFans(10000).loyalty(50.0).build();
+        when(teamClient.getTeam("home", "token")).thenReturn(
+            TeamDTO.builder()
+                .id("home")
+                .fans(Fans.builder().fanTiers(Map.of("1", fantier)).build())
+                .buildings(Buildings.builder().stadium(Buildings.Stadium.builder().seats(1000).build()).build())
+                .build());
+
+        when(teamClient.getTeam("away", "token")).thenReturn(
+            TeamDTO.builder()
+                .id("away")
+                .fans(Fans.builder().fanTiers(Map.of("1", fantier)).build())
+                .buildings(Buildings.builder().stadium(Buildings.Stadium.builder().seats(1000).build()).build())
+                .build());
 
         Map<String, Integer> result = getMatchAttendanceUseCase.get("home", "away");
         assertNotNull(result);

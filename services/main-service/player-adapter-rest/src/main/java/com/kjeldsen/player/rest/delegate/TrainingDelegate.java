@@ -32,7 +32,6 @@ public class TrainingDelegate implements TrainingApiDelegate {
     // Common
     private final GetTeamUseCase getTeamUseCase;
     private final PlayerReadRepository playerReadRepository;
-    private final PlayerTrainingScheduledEventReadRepository playerTrainingScheduledEventReadRepository;
 
 
     private final SchedulePlayerTrainingUseCase schedulePlayerTrainingUseCase;

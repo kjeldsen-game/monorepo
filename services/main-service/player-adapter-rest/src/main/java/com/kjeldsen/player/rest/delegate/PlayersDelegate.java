@@ -6,7 +6,6 @@ import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.application.usecases.player.PlayerSellUseCase;
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Team.TeamId;
 import com.kjeldsen.player.domain.publishers.AuctionCreationEventPublisher;
@@ -17,11 +16,11 @@ import com.kjeldsen.player.rest.mapper.CreatePlayerMapper;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
 import com.kjeldsen.player.rest.model.CreatePlayerRequest;
 import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
+import com.kjeldsen.player.rest.model.PlayerPosition;
 import com.kjeldsen.player.rest.model.PlayerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -56,16 +55,18 @@ public class PlayersDelegate implements PlayerApiDelegate {
     }
 
     @Override
-    public ResponseEntity<List<PlayerResponse>> getAllPlayers(com.kjeldsen.player.rest.model.PlayerPosition position, Integer size, Integer page) {
-        final String currentUserId = SecurityUtils.getCurrentUserId();
-        TeamId teamId = TeamId.of(currentUserId);
+    public ResponseEntity<List<PlayerResponse>> getAllPlayers(String teamId, PlayerPosition position, Integer size, Integer page) {
+        if (teamId == null) {
+            teamId = getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value();
+        }
         FindPlayersQuery query = FindPlayersQuery.builder()
-            .position(position != null ? PlayerPosition.valueOf(position.name()) : null)
-            .teamId(teamId)
+            .position(position != null ? com.kjeldsen.player.domain.PlayerPosition.valueOf(position.name()) : null)
+            .teamId(TeamId.of(teamId))
             .size(size)
             .page(page)
             .build();
         List<Player> players = playerReadRepository.find(query);
+        System.out.println(players.size());
         List<PlayerResponse> response = players.stream().map(PlayerMapper.INSTANCE::playerResponseMap).toList();
         return ResponseEntity.ok(response);
     }
@@ -75,10 +76,6 @@ public class PlayersDelegate implements PlayerApiDelegate {
         Player player = playerReadRepository.findOneById(Player.PlayerId.of(playerId))
             .orElseThrow();
         PlayerResponse response = PlayerMapper.INSTANCE.playerResponseMap(player);
-        if (!player.getTeamId().equals(getTeamUseCase.  get(SecurityUtils.getCurrentUserId()).getId())) {
-            // TODO later
-            //return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
         return ResponseEntity.ok(response);
     }
 

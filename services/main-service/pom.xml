@@ -32,6 +32,8 @@
         <module>auth-domain</module>
         <module>auth-application</module>
         <module>auth-adapter-persistence</module>
+        <module>market-adapter-client</module>
+        <module>match-adapter-client</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -331,6 +333,11 @@
             <dependency>
                 <groupId>com.kjeldsen</groupId>
                 <artifactId>match-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>match-adapter-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

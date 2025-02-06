@@ -25,6 +25,10 @@
         <!-- Match modules -->
         <dependency>
             <groupId>com.kjeldsen</groupId>
+            <artifactId>match-adapter-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
             <artifactId>match-adapter-listener</artifactId>
         </dependency>
         <dependency>
