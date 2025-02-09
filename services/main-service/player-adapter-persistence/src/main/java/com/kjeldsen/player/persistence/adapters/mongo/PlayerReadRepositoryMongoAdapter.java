@@ -46,9 +46,9 @@ public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
 
     @Override
     public List<Player> find(FindPlayersQuery query) {
-        System.out.println(query.getTeamId().value());
+//        System.out.println(query.getTeamId().value());
         Example<Player> playerDocumentExample = Example.of(Player.builder()
-            .teamId(query.getTeamId())
+            .teamId(query.getTeamId() != null ? query.getTeamId() : null)
             .position(query.getPosition() != null ? query.getPosition() : null)
             .build());
         Pageable pageable = PageRequest.of(query.getPage(), query.getSize());

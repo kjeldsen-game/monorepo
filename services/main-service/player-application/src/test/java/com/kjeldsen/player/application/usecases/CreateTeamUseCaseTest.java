@@ -7,6 +7,7 @@ import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.provider.PlayerProvider;
 import com.kjeldsen.player.domain.publishers.TeamCreationEventPublisher;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
+import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,8 +29,9 @@ class CreateTeamUseCaseTest {
     private final GeneratePlayersUseCase mockedGeneratePlayersUseCase = Mockito.mock(GeneratePlayersUseCase.class);
     private final PlayerWriteRepository playerWriteRepository = Mockito.mock(PlayerWriteRepository.class);
     private final TeamCreationEventPublisher mockedTeamCreationEventPublisher = Mockito.mock(TeamCreationEventPublisher.class);
+    private final TeamReadRepository teamReadRepository = Mockito.mock(TeamReadRepository.class);
     private final CreateTeamUseCase createTeamUseCase = new CreateTeamUseCase(mockedGeneratePlayersUseCase, mockedTeamWriteRepository,
-        playerWriteRepository, mockedTeamCreationEventPublisher);
+        playerWriteRepository, mockedTeamCreationEventPublisher, teamReadRepository);
 
     @Test
     @DisplayName("should create new team with generated players")

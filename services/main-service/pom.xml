@@ -4,6 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
+        <module>auth-domain</module>
+        <module>auth-application</module>
+        <module>auth-adapter-persistence</module>
         <module>auth-adapter-authentication</module>
         <module>auth-adapter-authorization</module>
         <module>domain</module>
@@ -22,6 +25,7 @@
         <module>match-adapter-persistence</module>
         <module>match-adapter-quartz</module>
         <module>match-adapter-listener</module>
+        <module>match-adapter-client</module>
         <module>market-domain</module>
         <module>market-application</module>
         <module>market-adapter-persistence</module>
@@ -29,11 +33,7 @@
         <module>market-adapter-rest</module>
         <module>market-adapter-publisher</module>
         <module>market-adapter-quartz</module>
-        <module>auth-domain</module>
-        <module>auth-application</module>
-        <module>auth-adapter-persistence</module>
         <module>market-adapter-client</module>
-        <module>match-adapter-client</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

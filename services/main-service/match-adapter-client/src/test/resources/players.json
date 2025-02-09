@@ -1,0 +1,182 @@
+[
+  {
+    "id": "9fe66f76-9867-406d-9216-c11623f0ebca",
+    "age": {
+      "years": 32,
+      "months": 27.16,
+      "days": 2.29
+    },
+    "name": "Charlyn Smitham",
+    "position": "GOALKEEPER",
+    "playerOrder": "NONE",
+    "status": "BENCH",
+    "category": "SENIOR",
+    "actualSkills": {
+      "REFLEXES": {
+        "PlayerSkills": {
+          "actual": 80,
+          "potential": 80,
+          "playerSkillRelevance": "CORE"
+        }
+      },
+      "ORGANIZATION": {
+        "PlayerSkills": {
+          "actual": 50,
+          "potential": 50,
+          "playerSkillRelevance": "CORE"
+        }
+      },
+      "CONTROL": {
+        "PlayerSkills": {
+          "actual": 50,
+          "potential": 50,
+          "playerSkillRelevance": "CORE"
+        }
+      },
+      "ONE_ON_ONE": {
+        "PlayerSkills": {
+          "actual": 50,
+          "potential": 50,
+          "playerSkillRelevance": "CORE"
+        }
+      },
+      "INTERCEPTIONS": {
+        "PlayerSkills": {
+          "actual": 50,
+          "potential": 50,
+          "playerSkillRelevance": "CORE"
+        }
+      },
+      "GOALKEEPER_POSITIONING": {
+        "PlayerSkills": {
+          "actual": 60,
+          "potential": 60,
+          "playerSkillRelevance": "CORE"
+        }
+      }
+    },
+    "economy": {
+      "salary": 37000
+    }
+  },
+  {
+    "id": "8fdb72a7-fb00-42b1-a896-a41e7258ae05",
+    "age": {
+      "years": 24,
+      "months": 27.55,
+      "days": 1.85
+    },
+    "name": "Issac Hintz",
+    "position": "GOALKEEPER",
+    "playerOrder": "NONE",
+    "status": "ACTIVE",
+    "category": "SENIOR",
+    "actualSkills": {
+      "REFLEXES": {
+        "PlayerSkills": {
+          "actual": 60,
+          "potential": 60,
+          "playerSkillRelevance": "CORE"
+        }
+      },
+      "ORGANIZATION": {
+        "PlayerSkills": {
+          "actual": 50,
+          "potential": 50,
+          "playerSkillRelevance": "CORE"
+        }
+      },
+      "CONTROL": {
+        "PlayerSkills": {
+          "actual": 50,
+          "potential": 50,
+          "playerSkillRelevance": "CORE"
+        }
+      },
+      "ONE_ON_ONE": {
+        "PlayerSkills": {
+          "actual": 50,
+          "potential": 50,
+          "playerSkillRelevance": "CORE"
+        }
+      },
+      "INTERCEPTIONS": {
+        "PlayerSkills": {
+          "actual": 50,
+          "potential": 50,
+          "playerSkillRelevance": "CORE"
+        }
+      },
+      "GOALKEEPER_POSITIONING": {
+        "PlayerSkills": {
+          "actual": 80,
+          "potential": 80,
+          "playerSkillRelevance": "CORE"
+        }
+      }
+    },
+    "economy": {
+      "salary": 37000
+    }
+  },
+  {
+    "id": "6c5a55a6-fc3d-4ba7-bb01-e6ab6d9d695e",
+    "age": {
+      "years": 30,
+      "months": 17.61,
+      "days": 0.81
+    },
+    "name": "Shelton Kub",
+    "position": "GOALKEEPER",
+    "playerOrder": "NONE",
+    "status": "BENCH",
+    "category": "SENIOR",
+    "actualSkills": {
+      "REFLEXES": {
+        "PlayerSkills": {
+          "actual": 70,
+          "potential": 70,
+          "playerSkillRelevance": "CORE"
+        }
+      },
+      "ORGANIZATION": {
+        "PlayerSkills": {
+          "actual": 70,
+          "potential": 70,
+          "playerSkillRelevance": "CORE"
+        }
+      },
+      "CONTROL": {
+        "PlayerSkills": {
+          "actual": 70,
+          "potential": 70,
+          "playerSkillRelevance": "CORE"
+        }
+      },
+      "ONE_ON_ONE": {
+        "PlayerSkills": {
+          "actual": 70,
+          "potential": 70,
+          "playerSkillRelevance": "CORE"
+        }
+      },
+      "INTERCEPTIONS": {
+        "PlayerSkills": {
+          "actual": 70,
+          "potential": 70,
+          "playerSkillRelevance": "CORE"
+        }
+      },
+      "GOALKEEPER_POSITIONING": {
+        "PlayerSkills": {
+          "actual": 70,
+          "potential": 70,
+          "playerSkillRelevance": "CORE"
+        }
+      }
+    },
+    "economy": {
+      "salary": 63000
+    }
+  }
+]

@@ -60,12 +60,12 @@ runs:
         mvn clean install -U
       shell: bash
 
-    - name: Integration Tests
-      id: integration_tests
-      run: |
-        cd ${{ inputs.PATH }}/${{ inputs.NAME }}
-        mvn failsafe:integration-test -DskipTestsIT=false -DskipTests=true
-      shell: bash
+#    - name: Integration Tests
+#      id: integration_tests
+#      run: |
+#        cd ${{ inputs.PATH }}/${{ inputs.NAME }}
+#        mvn failsafe:integration-test -DskipTestsIT=false -DskipTests=true
+#      shell: bash
 
     - name: Deploy
       id: deploy

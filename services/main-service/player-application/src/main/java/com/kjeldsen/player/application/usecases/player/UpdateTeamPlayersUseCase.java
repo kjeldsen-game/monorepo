@@ -61,7 +61,7 @@ public class UpdateTeamPlayersUseCase {
             playerWriteRepository.save(player);
         });
 
-        return teamReadRepository.findOneById(Team.TeamId.of(teamId)).orElseThrow();
+        return teamReadRepository.findById(Team.TeamId.of(teamId)).orElseThrow();
     }
 
     private void validateTeamFormation(List<PlayerEdit> activePlayers) {

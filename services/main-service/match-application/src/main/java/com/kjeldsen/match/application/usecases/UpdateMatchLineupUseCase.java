@@ -34,7 +34,7 @@ public class UpdateMatchLineupUseCase {
 
         GetMatchTeamUseCase.MatchAndTeam matchAndTeam = getMatchTeamUseCase.getMatchAndTeam(matchId, teamId);
 
-        List<PlayerDTO> players = playerClient.getPlayers(null, SecurityUtils.getCurrentUserToken());
+        List<PlayerDTO> players = playerClient.getPlayers(teamId, SecurityUtils.getCurrentUserToken());
 
         playerList.forEach(player -> {
             Optional<PlayerDTO> matchingPlayerDTO = players.stream()

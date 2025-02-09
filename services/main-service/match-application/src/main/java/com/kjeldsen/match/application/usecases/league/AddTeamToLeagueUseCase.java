@@ -64,7 +64,7 @@ public class AddTeamToLeagueUseCase {
 //        }
         // Save leagueId for the team as well to be able to filter league data
         League leagueSaved = leagueWriteRepository.save(league);
-        team.setLeagueId(leagueSaved.getId().value());
+        //team.setLeagueId(leagueSaved.getId().value());
         leagueEventPublisher.publishLeagueEvent(LeagueEvent.builder().id(EventId.generate())
             .teamId(team.getId()).leagueId(league.getId().value()).occurredAt(Instant.now()).build());
     }

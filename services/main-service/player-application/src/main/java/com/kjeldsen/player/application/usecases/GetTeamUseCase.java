@@ -20,7 +20,8 @@ public class GetTeamUseCase {
     }
 
     public Team get(Team.TeamId teamId) {
+        log.info("GetTeamUseCase for teamId={}", teamId.value());
         return teamReadRepository.findById(teamId).orElseThrow(
-            () -> new RuntimeException(String.format("Team not found for id %s", teamId)));
+            () -> new RuntimeException(String.format("Team not found for id %s", teamId.value())));
     }
 }

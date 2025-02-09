@@ -48,7 +48,6 @@ public class TrainingDelegate implements TrainingApiDelegate {
             }
         }
 
-
         com.kjeldsen.player.domain.PlayerSkill skill = PlayerMapper.INSTANCE.map(schedulePlayerTrainingRequest.getSkill().getValue());
         schedulePlayerTrainingUseCase.schedule(Player.PlayerId.of(playerId), skill);
         return ResponseEntity.ok().build();

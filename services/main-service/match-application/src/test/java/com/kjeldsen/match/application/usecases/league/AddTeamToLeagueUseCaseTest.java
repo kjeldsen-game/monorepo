@@ -60,7 +60,6 @@ class AddTeamToLeagueUseCaseTest extends BaseClientTest {
 
         addTeamToLeagueUseCase.add("teamId", BigDecimal.ONE);
 
-        assertEquals("leagueId", team.getLeagueId());
         assertEquals(2, league.getTeams().size());
         verify(mockedLeagueReadRepository, times(1)).findAll();
         verify(mockedLeagueWriteRepository,times(1)).save(any(League.class));

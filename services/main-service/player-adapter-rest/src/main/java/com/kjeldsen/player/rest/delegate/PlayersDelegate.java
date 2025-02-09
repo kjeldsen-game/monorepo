@@ -57,7 +57,9 @@ public class PlayersDelegate implements PlayerApiDelegate {
     @Override
     public ResponseEntity<List<PlayerResponse>> getAllPlayers(String teamId, PlayerPosition position, Integer size, Integer page) {
         if (teamId == null) {
-            teamId = getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value();
+            System.out.println(SecurityUtils.getCurrentUserId());
+            Team team = getTeamUseCase.get(SecurityUtils.getCurrentUserId());
+            teamId = team.getId().value();
         }
         FindPlayersQuery query = FindPlayersQuery.builder()
             .position(position != null ? com.kjeldsen.player.domain.PlayerPosition.valueOf(position.name()) : null)

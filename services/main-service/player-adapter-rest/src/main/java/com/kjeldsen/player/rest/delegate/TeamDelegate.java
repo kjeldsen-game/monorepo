@@ -159,8 +159,7 @@ public class TeamDelegate implements TeamApiDelegate {
     @Override
     public ResponseEntity<TeamResponse> getTeamById(String teamId) {
         // Different user than the team owner is accessing the team
-        Team team = teamReadRepository.findOneById(Team.TeamId.of(teamId))
-            .orElseThrow();
+        Team team = getTeamUseCase.get(TeamId.of(teamId));
         TeamResponse response = TeamMapper.INSTANCE.map(team);
         //System.out.println(response.toString());
 

@@ -32,8 +32,8 @@ public class GenerateMatchScheduleUseCase {
             for (int round = 0; round < numRounds * 2; round++) {
                 boolean isSecondRound = round >= numRounds;
 
-//                startDate = startDate.plusMinutes(matchIntervalMinutes);
-                startDate = startDate.plusDays(matchIntervalMinutes);
+                startDate = startDate.plusMinutes(matchIntervalMinutes);
+//                startDate = startDate.plusDays(matchIntervalMinutes);
                 generateMatchesForRound(teamIds, scheduledMatches, startDate, isSecondRound);
 
                 try {
@@ -60,7 +60,7 @@ public class GenerateMatchScheduleUseCase {
                 away = temp;
             }
 
-            scheduledMatches.add(new ScheduledMatch(home, away, matchDay.plusMinutes(3)));
+            scheduledMatches.add(new ScheduledMatch(home, away, matchDay.plusMinutes(3).minusHours(1)));
         }
     }
 
