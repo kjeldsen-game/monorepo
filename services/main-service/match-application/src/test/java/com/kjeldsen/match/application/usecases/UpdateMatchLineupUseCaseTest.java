@@ -1,5 +1,8 @@
 package com.kjeldsen.match.application.usecases;
 
+import com.kjeldsen.match.application.usecases.common.BaseClientTest;
+import com.kjeldsen.match.domain.clients.PlayerClientMatch;
+import com.kjeldsen.match.domain.clients.models.player.PlayerDTO;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.Team;
 import com.kjeldsen.match.domain.entities.TeamRole;
@@ -7,29 +10,24 @@ import com.kjeldsen.match.domain.modifers.HorizontalPressure;
 import com.kjeldsen.match.domain.modifers.Tactic;
 import com.kjeldsen.match.domain.modifers.TeamModifiers;
 import com.kjeldsen.match.domain.modifers.VerticalPressure;
-import com.kjeldsen.match.domain.repositories.MatchReadRepository;
 import com.kjeldsen.match.domain.repositories.MatchWriteRepository;
 import com.kjeldsen.player.domain.*;
-import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-class UpdateMatchLineupUseCaseTest {
+class UpdateMatchLineupUseCaseTest extends BaseClientTest {
 
     private final MatchWriteRepository mockedMatchWriteRepository  = Mockito.mock(MatchWriteRepository.class);
-    private final PlayerReadRepository mockedPlayerReadRepository  = Mockito.mock(PlayerReadRepository.class);
     private final GetMatchTeamUseCase mockedGetMatchTeamUseCase = Mockito.mock(GetMatchTeamUseCase.class);
+    private final PlayerClientMatch mockedPlayerClient = Mockito.mock(PlayerClientMatch.class);
     private final UpdateMatchLineupUseCase updateMatchLineupUseCase = new UpdateMatchLineupUseCase(
-        mockedMatchWriteRepository, mockedPlayerReadRepository, mockedGetMatchTeamUseCase);
+        mockedMatchWriteRepository, mockedGetMatchTeamUseCase, mockedPlayerClient);
 
 
     @Test
@@ -55,22 +53,24 @@ class UpdateMatchLineupUseCaseTest {
         when(mockedGetMatchTeamUseCase.getMatchAndTeam("matchId", "teamId")).thenReturn(
             matchAndTeam);
 
+        List<PlayerDTO> dtos = new ArrayList<>();
+        com.kjeldsen.match.domain.clients.models.player.PlayerSkills skillPoints = new
+            com.kjeldsen.match.domain.clients.models.player.PlayerSkills(50, 0, "RESIDUAL");
 
-        PlayerSkills skillPoints = new PlayerSkills(50, 0, PlayerSkillRelevance.RESIDUAL);
         for (int a = 1; a <= players.size(); a++) {
             UpdateMatchLineupUseCase.PlayerUpdateDTO player = players.get(a-1);
-            when(mockedPlayerReadRepository.findOneById(Player.PlayerId.of("player" + a)))
-                .thenReturn(Optional.ofNullable(Player.builder()
-                    .id(Player.PlayerId.of(player.getId()))
-                    .name("player" + a)
-                    .teamId(com.kjeldsen.player.domain.Team.TeamId.of("teamId"))
-                    .actualSkills(new HashMap<>(Map.of(PlayerSkill.SCORING, skillPoints)))
-                    .status(PlayerStatus.valueOf(player.getStatus().name()))
-                    .playerOrder(PlayerOrder.valueOf(player.getPlayerOrder().name()))
-                    .position(PlayerPosition.valueOf(player.getPosition().name()))
-                    .build()));
+            dtos.add(PlayerDTO.builder()
+                .id("player" + a)
+                .actualSkills(Map.of("SCORING", skillPoints))
+                .name("player" + a)
+                .teamId("teamId")
+                .playerOrder("NONE")
+                .status(player.getStatus().name())
+                .position(player.getPosition().name())
+                .build());
         }
 
+        when(mockedPlayerClient.getPlayers("teamId", "token")).thenReturn(dtos);
         updateMatchLineupUseCase.update("matchId", "teamId", players, teamModifiers);
 
         assertTrue(matchAndTeam.team().getSpecificLineup());

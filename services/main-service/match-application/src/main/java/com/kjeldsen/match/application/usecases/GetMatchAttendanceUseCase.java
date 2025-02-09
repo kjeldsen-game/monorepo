@@ -1,8 +1,8 @@
 package com.kjeldsen.match.application.usecases;
 
-import com.kjeldsen.match.domain.entities.Match;
-import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
+import com.kjeldsen.auth.authorization.SecurityUtils;
+import com.kjeldsen.match.domain.clients.TeamClientMatch;
+import com.kjeldsen.match.domain.clients.models.team.TeamDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,16 +14,15 @@ import java.util.Map;
 @Slf4j
 public class GetMatchAttendanceUseCase {
 
-    private final TeamReadRepository teamReadRepository;
+    private final TeamClientMatch teamClient;
 
     public Map<String, Integer> get(String homeId, String awayId) {
-        com.kjeldsen.player.domain.Team homeTeam = teamReadRepository.findById(Team.TeamId.of(homeId))
-            .orElseThrow(() -> new RuntimeException("Team not found"));
+        log.info("GetMatchAttendanceUseCase for homeId={}, awayId={}", homeId, awayId);
+        TeamDTO homeTeam = teamClient.getTeam(homeId, SecurityUtils.getCurrentUserToken());
+        TeamDTO awayTeam = teamClient.getTeam(awayId, SecurityUtils.getCurrentUserToken());
+
         Integer capacity = homeTeam.getBuildings().getStadium().getSeats();
         int homeAttendance = Math.round(homeTeam.getFans().getTotalFans() * 0.8f);
-
-        com.kjeldsen.player.domain.Team awayTeam = teamReadRepository.findById(Team.TeamId.of(awayId))
-            .orElseThrow(() -> new RuntimeException("Team not found"));
         Integer awayAttendance = awayTeam.getFans().getTotalFans();
 
         if (homeAttendance + awayAttendance > capacity) {

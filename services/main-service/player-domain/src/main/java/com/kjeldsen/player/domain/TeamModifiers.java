@@ -6,7 +6,6 @@ import lombok.*;
 @Setter
 @Builder
 @ToString
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class TeamModifiers {
     private Tactic tactic;
     private VerticalPressure verticalPressure;

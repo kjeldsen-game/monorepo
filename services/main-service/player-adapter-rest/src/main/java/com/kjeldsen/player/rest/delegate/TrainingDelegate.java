@@ -32,7 +32,6 @@ public class TrainingDelegate implements TrainingApiDelegate {
     // Common
     private final GetTeamUseCase getTeamUseCase;
     private final PlayerReadRepository playerReadRepository;
-    private final PlayerTrainingScheduledEventReadRepository playerTrainingScheduledEventReadRepository;
 
 
     private final SchedulePlayerTrainingUseCase schedulePlayerTrainingUseCase;
@@ -48,7 +47,6 @@ public class TrainingDelegate implements TrainingApiDelegate {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
         }
-
 
         com.kjeldsen.player.domain.PlayerSkill skill = PlayerMapper.INSTANCE.map(schedulePlayerTrainingRequest.getSkill().getValue());
         schedulePlayerTrainingUseCase.schedule(Player.PlayerId.of(playerId), skill);

@@ -1,13 +1,13 @@
 package com.kjeldsen.match.application.usecases;
 
-import com.kjeldsen.match.domain.entities.Match;
-import com.kjeldsen.match.domain.entities.Team;
+import com.kjeldsen.auth.authorization.SecurityUtils;
+import com.kjeldsen.match.domain.clients.PlayerClientMatch;
+import com.kjeldsen.match.domain.clients.models.player.PlayerDTO;
+
 import com.kjeldsen.match.domain.entities.TeamRole;
 import com.kjeldsen.match.domain.modifers.TeamModifiers;
-import com.kjeldsen.match.domain.repositories.MatchReadRepository;
 import com.kjeldsen.match.domain.repositories.MatchWriteRepository;
 import com.kjeldsen.player.domain.*;
-import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 @RequiredArgsConstructor
@@ -26,34 +26,31 @@ import java.util.stream.Stream;
 public class UpdateMatchLineupUseCase {
 
     private final MatchWriteRepository matchWriteRepository;
-    private final PlayerReadRepository playerReadRepository;
     private final GetMatchTeamUseCase getMatchTeamUseCase;
+    private final PlayerClientMatch playerClient;
 
     public void update(String matchId, String teamId, List<PlayerUpdateDTO> playerList, TeamModifiers teamModifiers) {
         log.info("UpdateMatchLineupUseCase for match={} team={}", matchId, teamId);
 
         GetMatchTeamUseCase.MatchAndTeam matchAndTeam = getMatchTeamUseCase.getMatchAndTeam(matchId, teamId);
 
-        List<Player> domainPlayers = playerList.stream()
-            .flatMap(player -> playerReadRepository.findOneById(Player.PlayerId.of(player.getId()))
-                .map(playerDomain -> {
-                    playerDomain.setPosition(player.getPosition());
-                    playerDomain.setStatus(player.getStatus());
-                    playerDomain.setPlayerOrder(player.getPlayerOrder());
-                    return Stream.of(playerDomain);
-                })
-                .orElse(Stream.empty()))
-            .toList();
+        List<PlayerDTO> players = playerClient.getPlayers(teamId, SecurityUtils.getCurrentUserToken());
 
-        List<com.kjeldsen.match.domain.entities.Player> newBenchPlayers = domainPlayers.stream()
-            .filter(domainPlayer -> domainPlayer.getStatus().equals(PlayerStatus.BENCH))
-            .map(player -> buildPlayer(player, matchAndTeam.teamRole()))
-            .toList();
+        playerList.forEach(player -> {
+            Optional<PlayerDTO> matchingPlayerDTO = players.stream()
+                .filter(playerDTO -> playerDTO.getId().equals(player.getId()))
+                .findFirst();
+            matchingPlayerDTO.ifPresent(playerDTO -> {
+                playerDTO.setPosition(player.getPosition().name());
+                playerDTO.setStatus(player.getStatus().name());
+                playerDTO.setPlayerOrder(player.getPlayerOrder().name());
+            });
+        });
 
-        List<com.kjeldsen.match.domain.entities.Player> newActivePlayers = domainPlayers.stream()
-            .filter(domainPlayer -> domainPlayer.getStatus().equals(PlayerStatus.ACTIVE))
-            .map(player -> buildPlayer(player, matchAndTeam.teamRole()))
-            .toList();
+        List<com.kjeldsen.match.domain.entities.Player> newBenchPlayers = filterPlayersByStatus(
+            PlayerStatus.BENCH, players, matchAndTeam.teamRole());
+        List<com.kjeldsen.match.domain.entities.Player> newActivePlayers = filterPlayersByStatus(
+            PlayerStatus.ACTIVE, players, matchAndTeam.teamRole());
 
         // Update players and modifiers for the match
         matchAndTeam.team().setPlayers(newActivePlayers);
@@ -66,8 +63,15 @@ public class UpdateMatchLineupUseCase {
         matchWriteRepository.save(matchAndTeam.match());
     }
 
-    // TODO switch to private when removed from Delegate
-    public com.kjeldsen.match.domain.entities.Player buildPlayer(com.kjeldsen.player.domain.Player player, TeamRole teamRole) {
+    private List<com.kjeldsen.match.domain.entities.Player> filterPlayersByStatus(PlayerStatus status, List<PlayerDTO> players, TeamRole role) {
+        return players.stream()
+            .filter(domainPlayer -> domainPlayer.getStatus().equals(status.name()))
+            .map(player ->  buildPlayer(player, role))
+            .toList();
+    }
+
+    // TODO extract outside of the class
+    public static com.kjeldsen.match.domain.entities.Player buildPlayer(com.kjeldsen.player.domain.Player player, TeamRole teamRole) {
         Map<PlayerSkill, Integer> skills = player.getActualSkills().entrySet().stream()
             .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getActual()));
         skills.put(PlayerSkill.INTERCEPTING, 0);
@@ -81,6 +85,25 @@ public class UpdateMatchLineupUseCase {
             .position(player.getPosition())
             .skills(skills)
             .playerOrder(player.getPlayerOrder())
+            .build();
+    }
+
+    public static com.kjeldsen.match.domain.entities.Player buildPlayer(PlayerDTO player, TeamRole teamRole) {
+        Map<PlayerSkill, Integer> skills = player.getActualSkills().entrySet().stream()
+            .collect(Collectors.toMap(
+                entry -> PlayerSkill.valueOf(entry.getKey()),
+                entry -> entry.getValue().getActual()
+            ));skills.put(PlayerSkill.INTERCEPTING, 0);
+
+        return com.kjeldsen.match.domain.entities.Player.builder()
+            .id(player.getId())
+            .name(player.getName())
+            .status(PlayerStatus.valueOf(player.getStatus()))
+            .teamId(player.getTeamId())
+            .teamRole(teamRole)
+            .position(PlayerPosition.valueOf(player.getPosition()))
+            .skills(skills)
+            .playerOrder(PlayerOrder.valueOf(player.getPlayerOrder()))
             .build();
     }
 

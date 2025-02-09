@@ -37,6 +37,9 @@ springdoc:
 #    tags-sorter: alpha
   show-actuator: true
 
+internal:
+  api:
+    key: my-secret-key
 
 security:
   oauth2:

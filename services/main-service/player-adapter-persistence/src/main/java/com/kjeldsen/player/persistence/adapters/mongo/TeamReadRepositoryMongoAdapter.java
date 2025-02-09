@@ -30,11 +30,6 @@ public class TeamReadRepositoryMongoAdapter implements TeamReadRepository {
     }
 
     @Override
-    public Optional<Team> findOneById(TeamId id) {
-        return teamMongoRepository.findById(id);
-    }
-
-    @Override
     public List<Team> find(FindTeamsQuery query) {
         Example<Team> teamDocumentExample = Example.of(Team.builder()
             .name(query.getName() != null ? query.getName() : null)

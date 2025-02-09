@@ -220,6 +220,12 @@ paths:
       summary: Get all players
       operationId: getAllPlayers
       parameters:
+        - name: teamId
+          in: query
+          description: Team Id of players
+          required: false
+          schema:
+            type: string
         - name: position
           in: query
           description: Position of the player
@@ -1285,6 +1291,10 @@ components:
           $ref: "#/components/schemas/Cantera"
         economy:
           $ref: "#/components/schemas/Economy"
+        buildings:
+          $ref: "#/components/schemas/Buildings"
+        fans:
+          $ref: "#/components/schemas/Fans"
         teamModifiers:
           $ref: "#/components/schemas/TeamModifiers"
         leagueId:
@@ -1294,6 +1304,41 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/PlayerResponse"
+
+    Fans:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/FanTier'
+
+    FanTier:
+      type: object
+      properties:
+        loyalty:
+          type: number
+          description: The loyalty level of the fan tier
+          example: 85
+        totalFans:
+          type: integer
+          description: The number of fans in this tier
+          example: 1000
+
+    Buildings:
+      type: object
+      properties:
+        freeSlots:
+          type: integer
+        stadium:
+          $ref: "#/components/schemas/Stadium"
+
+    Stadium:
+      type: object
+      properties:
+        seats:
+          type: integer
+        level:
+          type: integer
+        maintenanceCost:
+          type: number
 
     Cantera:
       type: object

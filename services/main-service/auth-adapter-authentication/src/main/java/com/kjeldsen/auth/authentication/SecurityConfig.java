@@ -1,10 +1,11 @@
 package com.kjeldsen.auth.authentication;
 
-import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -31,22 +32,32 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    @Value("${internal.api.key}")
+    private String internalApiKey;
+
     private final SecurityProperties securityProperties;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for stateless applications (like JWT)
+            .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for stateless APIs
             .authorizeHttpRequests(requests -> requests
                 .requestMatchers("/v1/auth/**", "/swagger-ui/**", "/api-docs/**", "/actuator/**", "/actuator")
                 .permitAll()
-//                .requestMatchers("/v1/simulator/**")
-//                .hasRole("ADMIN")
+                .requestMatchers(request -> isValidApiKey(request)) // Bypass JWT for internal API key
+                .permitAll()
                 .anyRequest()
-                .authenticated())
+                .authenticated()
+            )
             .oauth2ResourceServer(oauth2 -> oauth2
                 .jwt(jwt -> jwt.decoder(jwtDecoder())));
+
         return http.build();
+    }
+
+    private boolean isValidApiKey(HttpServletRequest request) {
+        String apiKey = request.getHeader("X-Internal-API-Key");
+        return internalApiKey.equals(apiKey);
     }
 
     @Bean
@@ -54,7 +65,7 @@ public class SecurityConfig {
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Base64
             .getDecoder()
             .decode(securityProperties.getPublicKey()));
-        RSAPublicKey publicKey = null;
+        RSAPublicKey publicKey;
         try {
             publicKey = (RSAPublicKey) KeyFactory
                 .getInstance("RSA")

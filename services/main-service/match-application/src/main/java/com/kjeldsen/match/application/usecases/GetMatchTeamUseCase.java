@@ -18,22 +18,25 @@ public class GetMatchTeamUseCase {
     private final GetMatchUseCase getMatchUseCase;
 
     public MatchAndTeam getMatchAndTeam(String matchId, String teamId) {
-        log.info("GetMatchTeamUseCase to get MatchAndTeam for teamId={} matchId={}", teamId, matchId);
+//        log.info("GetMatchTeamUseCase to get MatchAndTeam for teamId={} matchId={}", teamId, matchId);
         Match match = getMatchUseCase.get(matchId);
 
-        Team team = match.getHome().getId().equals(teamId)
-            ? match.getHome()
-            : match.getAway().getId().equals(teamId)
-            ? match.getAway()
-            : null;
-        if (team == null) {
-            throw new RuntimeException("Team not found");
+        if (teamId != null) {
+            Team team = match.getHome().getId().equals(teamId)
+                ? match.getHome()
+                : match.getAway().getId().equals(teamId)
+                ? match.getAway()
+                : null;
+            if (team == null) {
+                throw new RuntimeException("Team not found");
+            }
+
+            TeamRole role = match.getHome().getId().equals(teamId)
+                ? TeamRole.HOME : TeamRole.AWAY;
+
+            return new MatchAndTeam(match, team, role);
         }
-
-        TeamRole role = match.getHome().getId().equals(teamId)
-            ? TeamRole.HOME : TeamRole.AWAY;
-
-        return new MatchAndTeam(match, team, role);
+        return new MatchAndTeam(match, null, null);
     }
 
         public record MatchAndTeam(Match match, Team team, TeamRole teamRole) {

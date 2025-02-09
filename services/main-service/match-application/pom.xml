@@ -20,6 +20,10 @@
     <dependencies>
         <dependency>
             <groupId>com.kjeldsen</groupId>
+            <artifactId>auth-adapter-authorization</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
             <artifactId>match-domain</artifactId>
             <version>${project.version}</version>
         </dependency>
