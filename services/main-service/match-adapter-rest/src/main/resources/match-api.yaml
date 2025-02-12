@@ -566,6 +566,8 @@ components:
           $ref: "#/components/schemas/PlayerPosition"
         playerOrder:
           $ref: "#/components/schemas/PlayerOrder"
+        playerOrderDestinationPitchArea:
+          $ref: "#/components/schemas/PitchArea"
 
     TeamModifiers:
       type: object
@@ -648,6 +650,8 @@ components:
           $ref: "#/components/schemas/PlayerPosition"
         playerOrder:
           $ref: "#/components/schemas/PlayerOrder"
+        playerOrderDestinationPitchArea:
+          $ref: "#/components/schemas/PitchArea"
 
     PlayerStatus:
       type: string

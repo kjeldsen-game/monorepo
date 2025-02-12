@@ -5,7 +5,11 @@ import {
   FormControl,
   SelectChangeEvent,
 } from '@mui/material';
-import { PlayerPosition, PlayerPositionColor } from '../models/PlayerPosition';
+import {
+  PlayerPosition,
+  PlayerPositionColor,
+  PlayerPositionColorNew,
+} from '../models/PlayerPosition';
 import { useTranslation } from 'next-i18next';
 import { getPositionInitials } from '../utils/PlayerUtils';
 
@@ -31,7 +35,7 @@ const PlayerPositionSelect: React.FC<PlayerPositionSelectProps> = ({
   // const initials = getPositionInitials(position);
 
   return (
-    <FormControl sx={{ minWidth: 80, marginTop: '16px' }} size="small">
+    <FormControl sx={{ marginTop: '16px' }} size="small">
       <Select<PlayerPosition>
         labelId="pp-select-label"
         id="playerOrder1-select"
@@ -43,8 +47,7 @@ const PlayerPositionSelect: React.FC<PlayerPositionSelectProps> = ({
         onChange={handleChangePlayerOrder}
         sx={{
           marginBottom: '1rem',
-          minWidth: '80px',
-          backgroundColor: PlayerPositionColor[value],
+          backgroundColor: PlayerPositionColorNew[value],
         }}>
         {Object.values(PlayerPosition).map((pos) => {
           return (

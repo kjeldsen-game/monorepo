@@ -14,6 +14,7 @@ import { playerSkillsColumns } from './PlayerSkillsColumns';
 import { baseColumnConfig, leftColumnConfig } from './ColumnsConfig';
 import { PlayerPositionSelect } from '../../PlayerPositionSelect';
 import { Player } from '@/shared/models/Player';
+import SelectInput from '@mui/material/Select/SelectInput';
 
 export const playerCommonColumns = (
   skills: boolean = false,
@@ -25,7 +26,7 @@ export const playerCommonColumns = (
       ...leftColumnConfig,
       field: 'name',
       renderHeader: () => <div>Name</div>,
-      minWidth: 130,
+      maxWidth: 110,
       renderCell: (params: GridCellParams) => (
         <Link
           style={{ textDecoration: 'none', color: '#000000' }}
@@ -38,19 +39,20 @@ export const playerCommonColumns = (
     {
       ...baseColumnConfig,
       field: 'age',
+      maxWidth: 50,
       renderHeader: () => <div>Age</div>,
       valueGetter: (params: GridValueGetterParams) => params.row.age.years,
     },
     {
       ...baseColumnConfig,
-      minWidth: 100,
       field: 'playerPosition',
-      renderHeader: () => <div>Position</div>,
+      renderHeader: () => <div>POS</div>,
       headerAlign: 'center' as GridAlignment,
       align: 'center' as GridAlignment,
       renderCell: (params) => {
         if (isEditing) {
           return (
+            // <SelectInput/>
             <PlayerPositionSelect
               onChange={(value) =>
                 handlePlayerPositionChange(params.row, value)

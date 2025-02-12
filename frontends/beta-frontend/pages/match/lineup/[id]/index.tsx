@@ -40,6 +40,8 @@ const Team: NextPage = () => {
       userData?.accessToken,
     );
 
+  console.log(matchTeam);
+
   const [alert, setAlert] = useState<any>({
     open: false,
     type: 'success',
