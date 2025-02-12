@@ -189,7 +189,7 @@ public class Orders {
                 .build();
     }
 
-    // Player moves with the the ball to a predefined area.
+    // Player moves with the ball to a predefined area.
     private static DuelParams dribbleToArea(GameState state, DuelParams params) {
 
         // The destination area needs to be specified for the player.
@@ -260,5 +260,4 @@ public class Orders {
                 .appliedPlayerOrder(PlayerOrder.WALL_PASS)
                 .build();
     }
-
 }

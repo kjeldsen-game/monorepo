@@ -15,14 +15,19 @@ export const filterPlayersByTeam = (
         teamList?.some((teamPlayer: Player) => teamPlayer.id === player.id),
       )
       .map((player) => {
-        const playerOrder = teamList?.find(
+        const teamPlayer = teamList?.find(
           (teamPlayer: Player) => teamPlayer.id === player.id,
-        )?.playerOrder;
+        );
+
+        const playerOrder = teamPlayer?.playerOrder;
+        const playerOrderDestinationPitchArea =
+          teamPlayer?.playerOrderDestinationPitchArea;
 
         return {
           ...player,
           status: status,
           playerOrder: playerOrder,
+          playerOrderDestinationPitchArea: playerOrderDestinationPitchArea,
         };
       }) ?? []
   );

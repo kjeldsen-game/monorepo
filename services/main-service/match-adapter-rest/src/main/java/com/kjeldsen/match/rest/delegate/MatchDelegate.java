@@ -56,7 +56,6 @@ public class MatchDelegate implements MatchApiDelegate {
 
     @Override
     public ResponseEntity<TeamResponse> getMatchTeam(String teamId, String matchId) {
-        log.info("getMatchTeam(teamId={}, matchId={})", teamId, matchId);
         GetMatchTeamUseCase.MatchAndTeam matchAndTeam = getMatchTeamUseCase.getMatchAndTeam(matchId, teamId);
         TeamResponse response = TeamMapper.INSTANCE.map(matchAndTeam.team());
        return ResponseEntity.ok(response);
@@ -64,17 +63,24 @@ public class MatchDelegate implements MatchApiDelegate {
 
     @Override
     public ResponseEntity<Void> updateMatchTeam(String teamId, String matchId, EditMatchTeamRequest editMatchTeamRequest) {
+        for (EditPlayerRequest e : editMatchTeamRequest.getPlayers()) {
+            System.out.println(e.getId() + " ----" + e.getPlayerOrderDestinationPitchArea() + "----" + e.getPlayerOrder());
+        }
         List<UpdateMatchLineupUseCase.PlayerUpdateDTO> players = editMatchTeamRequest.getPlayers().stream()
             .map(player -> UpdateMatchLineupUseCase.PlayerUpdateDTO.builder()
                 .id(player.getId())
                 .playerOrder(
                     player.getPlayerOrder() != null
                         ? com.kjeldsen.player.domain.PlayerOrder.valueOf(player.getPlayerOrder().name())
-                        : null
-)                .position(PlayerPosition.valueOf(player.getPosition().name()))
+                        : null)
+                .position(PlayerPosition.valueOf(player.getPosition().name()))
+                .playerOrderDestinationPitchArea(player.getPlayerOrderDestinationPitchArea() != null
+                    ? com.kjeldsen.player.domain.PitchArea.valueOf(player.getPlayerOrderDestinationPitchArea().name())
+                    : null)
                 .status(PlayerStatus.valueOf(player.getStatus().name()))
                 .build())
             .toList();
+
         com.kjeldsen.match.domain.modifers.TeamModifiers teamModifiers = TeamMapper.INSTANCE.map(editMatchTeamRequest.getTeamModifiers());
         updateMatchLineupUseCase.update(matchId, teamId, players, teamModifiers);
         return ResponseEntity.ok().build();
@@ -88,7 +94,7 @@ public class MatchDelegate implements MatchApiDelegate {
         if (!matchAndTeam.team().getSpecificLineup()) {
             List<com.kjeldsen.player.domain.Player> playersDomain = playerRepo.findByTeamId(TeamId.of(teamId));
             players = playersDomain.stream()
-                .map(p -> updateMatchLineupUseCase.buildPlayer(p, matchAndTeam.team().getRole())).toList();
+                .map(p -> UpdateMatchLineupUseCase.buildPlayer(p, matchAndTeam.team().getRole())).toList();
         } else {
             players = Stream.concat(matchAndTeam.team().getPlayers().stream(), matchAndTeam.team().getBench().stream())
                 .collect(Collectors.toList());

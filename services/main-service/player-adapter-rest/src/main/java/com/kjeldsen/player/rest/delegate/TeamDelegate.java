@@ -8,6 +8,7 @@ import com.kjeldsen.player.application.usecases.player.UpdateTeamModifiersUseCas
 import com.kjeldsen.player.application.usecases.player.UpdateTeamPlayersUseCase;
 import com.kjeldsen.player.application.usecases.player.ValidateTeamLineupUseCase;
 import com.kjeldsen.player.domain.*;
+import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerStatus;
@@ -195,22 +196,22 @@ public class TeamDelegate implements TeamApiDelegate {
         }
 
         List<EditPlayerRequest> playerUpdates = editTeamRequest.getPlayers();
-        List<UpdateTeamPlayersUseCase.PlayerEdit> playerEdits = playerUpdates.stream().map(update -> new UpdateTeamPlayersUseCase.PlayerEdit(
+        List<UpdateTeamPlayersUseCase.PlayerEdit> playerEdits = playerUpdates.stream()
+            .map(update -> new UpdateTeamPlayersUseCase.PlayerEdit(
                 update.getId(),
                 PlayerStatus.valueOf(update.getStatus().name()),
                 PlayerPosition.valueOf(update.getPosition().name()),
-                PlayerOrder.valueOf(update.getPlayerOrder().name())
+                PlayerOrder.valueOf(update.getPlayerOrder().name()),
+                update.getPlayerOrderDestinationPitchArea() != null
+                    ? PitchArea.valueOf(update.getPlayerOrderDestinationPitchArea().name())
+                    : null
             ))
             .collect(Collectors.toList());
+
         TeamModifiers teamModifiers = TeamMapper.INSTANCE.map(editTeamRequest.getTeamModifiers());
         updateTeamModifiersUseCase.update(teamId, teamModifiers);
         Team team = updateTeamPlayersUseCase.update(teamModifiers, playerEdits, teamId);
         TeamResponse response = TeamMapper.INSTANCE.map(team);
         return ResponseEntity.ok(response);
-    }
-
-
-    private PlayerStatus extractStatus(EditPlayerRequest playerUpdate) {
-        return PlayerStatus.valueOf(playerUpdate.getStatus().getValue());
     }
 }

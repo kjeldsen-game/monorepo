@@ -1,3 +1,4 @@
+import { PitchArea } from './PitchArea';
 import { PlayerLineupStatus } from './PlayerLineupStatus';
 import { PlayerOrder } from './PlayerOrder';
 import { PlayerPosition } from './PlayerPosition';
@@ -9,6 +10,7 @@ export interface Player {
   position: PlayerPosition;
   category: Category;
   playerOrder: PlayerOrder;
+  playerOrderDestinationPitchArea: PitchArea | any;
   status: PlayerLineupStatus;
   actualSkills: { [key: string]: ActualSkill };
   economy: PlayerEconomy;

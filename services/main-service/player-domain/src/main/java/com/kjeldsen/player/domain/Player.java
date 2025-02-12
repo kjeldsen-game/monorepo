@@ -58,7 +58,9 @@ public class Player {
     private Map<PlayerSkill, PlayerSkills> actualSkills;
     private Team.TeamId teamId;
     private Integer bloomYear;
-//    private PlayerTrainingBloomEvent bloom;
+    private PitchArea playerOrderDestinationPitchArea;
+
+    //    private PlayerTrainingBloomEvent bloom;
     private PlayerTrainingDeclineEvent decline;
     @Builder.Default
     private boolean isFallCliff = false;

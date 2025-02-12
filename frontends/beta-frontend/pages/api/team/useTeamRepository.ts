@@ -79,14 +79,17 @@ const useTeamRepository = (team?: string, token?: string) => {
             position: updatedPlayer.position,
             status: updatedPlayer.status,
             playerOrder: updatedPlayer.playerOrder,
+            playerOrderDestinationPitchArea:
+              updatedPlayer.playerOrderDestinationPitchArea,
           };
         }
-
         return {
           id: player.id,
           position: player.position,
           status: player.status,
           playerOrder: player.playerOrder,
+          playerOrderDestinationPitchArea:
+            player.playerOrderDestinationPitchArea,
         };
       }),
       teamModifiers,

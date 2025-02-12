@@ -24,4 +24,5 @@ public class PlayerDTO {
     @JsonProperty("actualSkills")
     Map<String, PlayerSkills> actualSkills;
     String playerOrder;
+    String playerOrderDestinationPitchArea;
 }

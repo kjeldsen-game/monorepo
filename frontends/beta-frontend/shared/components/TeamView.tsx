@@ -47,7 +47,7 @@ const TeamView: React.FC<TeamProps> = ({
   onTeamUpdate,
   teamFormationValidation,
 }: TeamProps) => {
-  // console.log(team);
+  console.log(team);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [showValidation, setShowValidation] = useState<boolean>(false);
   const [playerEdit, setPlayerEdit] = useState<any>([]);
@@ -175,7 +175,7 @@ const TeamView: React.FC<TeamProps> = ({
 
   const handlePlayerFieldChange = (
     player: Player,
-    value: PlayerOrder | PlayerPosition,
+    value: PlayerOrder | PlayerPosition | any,
     field: string,
   ) => {
     const updatedPlayer: Player = { ...player, [field]: value };

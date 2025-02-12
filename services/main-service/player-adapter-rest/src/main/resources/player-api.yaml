@@ -888,6 +888,19 @@ components:
         - RESIDUAL
       example: CORE
 
+    PitchArea:
+      type: string
+      enum:
+        - LEFT_FORWARD
+        - CENTRE_FORWARD
+        - RIGHT_FORWARD
+        - LEFT_MIDFIELD
+        - CENTRE_MIDFIELD
+        - RIGHT_MIDFIELD
+        - LEFT_BACK
+        - CENTRE_BACK
+        - RIGHT_BACK
+
     PlayerTrainingStatus:
       type: string
       enum:
@@ -1277,6 +1290,8 @@ components:
           $ref: "#/components/schemas/PlayerPosition"
         playerOrder:
           $ref: "#/components/schemas/PlayerOrder"
+        playerOrderDestinationPitchArea:
+          $ref: "#/components/schemas/PitchArea"
 
     TeamResponse:
       type: object
@@ -1495,6 +1510,8 @@ components:
           $ref: "#/components/schemas/PlayerPosition"
         playerOrder:
           $ref: "#/components/schemas/PlayerOrder"
+        playerOrderDestinationPitchArea:
+          $ref: "#/components/schemas/PitchArea"
         status:
           $ref: "#/components/schemas/PlayerStatus"
         category:

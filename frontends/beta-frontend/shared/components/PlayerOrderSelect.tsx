@@ -7,6 +7,8 @@ import {
   InputLabel,
 } from '@mui/material';
 import { PlayerOrder } from '../models/PlayerOrder';
+import SelectInput from './Common/SelectInput';
+import { PITCH_AREAS_ENUM } from '../models/PitchArea';
 
 interface PlayerOrderSelectProps {
   onChange?: (value: PlayerOrder) => void;
@@ -22,7 +24,10 @@ export const PlayerOrderSelect: React.FC<PlayerOrderSelectProps> = ({
   };
 
   return (
-    <FormControl sx={{ minWidth: 100, marginTop: '16px' }} size="small">
+    // <SelectInput>
+
+    // </SelectInput>
+    <FormControl sx={{ marginTop: '16px' }} size="small">
       <InputLabel id="po1-select-label">PO</InputLabel>
       <Select<PlayerOrder>
         labelId="po1-select-label"

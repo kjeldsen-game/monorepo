@@ -1,5 +1,5 @@
 export function convertSnakeCaseToTitleCase(input: string | undefined) {
-  if (input === undefined) {
+  if (input === undefined || input === null) {
     return '';
   }
   return input

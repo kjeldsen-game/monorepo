@@ -15,6 +15,15 @@ export const lineupColumn = () => {
       minWidth: 50,
       flex: 1,
     },
+    {
+      ...baseColumnConfig,
+      field: 'playerOrderSpecification',
+      renderHeader: () => <div>POs</div>,
+      valueGetter: (params: GridValueGetterParams) =>
+        convertSnakeCaseToTitleCase(params.row.playerOrderDestinationPitchArea),
+      minWidth: 50,
+      flex: 1,
+    },
   ];
 
   return columns;

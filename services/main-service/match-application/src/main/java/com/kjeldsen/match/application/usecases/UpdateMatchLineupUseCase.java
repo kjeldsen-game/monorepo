@@ -35,7 +35,6 @@ public class UpdateMatchLineupUseCase {
         GetMatchTeamUseCase.MatchAndTeam matchAndTeam = getMatchTeamUseCase.getMatchAndTeam(matchId, teamId);
 
         List<PlayerDTO> players = playerClient.getPlayers(teamId, SecurityUtils.getCurrentUserToken());
-
         playerList.forEach(player -> {
             Optional<PlayerDTO> matchingPlayerDTO = players.stream()
                 .filter(playerDTO -> playerDTO.getId().equals(player.getId()))
@@ -44,6 +43,9 @@ public class UpdateMatchLineupUseCase {
                 playerDTO.setPosition(player.getPosition().name());
                 playerDTO.setStatus(player.getStatus().name());
                 playerDTO.setPlayerOrder(player.getPlayerOrder().name());
+                if (player.getPlayerOrderDestinationPitchArea() != null) {
+                    playerDTO.setPlayerOrderDestinationPitchArea(player.getPlayerOrderDestinationPitchArea().name());
+                }
             });
         });
 
@@ -83,6 +85,7 @@ public class UpdateMatchLineupUseCase {
             .teamId(player.getTeamId().value())
             .teamRole(teamRole)
             .position(player.getPosition())
+            .playerOrderDestinationPitchArea(player.getPlayerOrderDestinationPitchArea() != null ? player.getPlayerOrderDestinationPitchArea() : null)
             .skills(skills)
             .playerOrder(player.getPlayerOrder())
             .build();
@@ -94,13 +97,14 @@ public class UpdateMatchLineupUseCase {
                 entry -> PlayerSkill.valueOf(entry.getKey()),
                 entry -> entry.getValue().getActual()
             ));skills.put(PlayerSkill.INTERCEPTING, 0);
-
+        System.out.println(player.getPlayerOrderDestinationPitchArea());
         return com.kjeldsen.match.domain.entities.Player.builder()
             .id(player.getId())
             .name(player.getName())
             .status(PlayerStatus.valueOf(player.getStatus()))
             .teamId(player.getTeamId())
             .teamRole(teamRole)
+            .playerOrderDestinationPitchArea(player.getPlayerOrderDestinationPitchArea() != null ? PitchArea.valueOf(player.getPlayerOrderDestinationPitchArea()) : null)
             .position(PlayerPosition.valueOf(player.getPosition()))
             .skills(skills)
             .playerOrder(PlayerOrder.valueOf(player.getPlayerOrder()))
@@ -115,5 +119,6 @@ public class UpdateMatchLineupUseCase {
         private PlayerStatus status;
         private PlayerPosition position;
         private PlayerOrder playerOrder;
+        private PitchArea playerOrderDestinationPitchArea;
     }
 }

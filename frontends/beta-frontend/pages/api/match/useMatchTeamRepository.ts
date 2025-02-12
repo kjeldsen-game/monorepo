@@ -64,6 +64,7 @@ const useMatchTeamRepository = (
         position: player.position,
         status: player.status,
         playerOrder: player.playerOrder,
+        playerOrderDestinationPitchArea: player.playerOrderDestinationPitchArea,
       })),
       teamModifiers,
     };

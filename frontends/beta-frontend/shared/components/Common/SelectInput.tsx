@@ -6,8 +6,9 @@ interface SelectInputProps {
   values: any;
   value: any;
   title: string;
-  handleChange: (input: any) => void;
+  handleChange: (...args: any[]) => void;
   disabled?: boolean;
+  hideDefaultOption?: boolean;
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({
@@ -16,6 +17,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   title,
   handleChange,
   disabled = false,
+  hideDefaultOption = false,
 }) => {
   return (
     <>
@@ -47,7 +49,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
         inputProps={{
           style: { backgroundColor: 'white' },
         }}>
-        <MenuItem value="">-</MenuItem>
+        {!hideDefaultOption && <MenuItem value="">-</MenuItem>}
         {Object.values(values).map((menuValue) => (
           <MenuItem key={String(menuValue)} value={String(menuValue)}>
             {convertSnakeCaseToTitleCase(String(menuValue))}
