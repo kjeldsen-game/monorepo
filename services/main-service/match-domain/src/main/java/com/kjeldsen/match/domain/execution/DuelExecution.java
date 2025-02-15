@@ -145,7 +145,6 @@ public class DuelExecution {
             // Linear transformation. PA = 0 -> OP = -15. PA = 100 -> OP = 15.
             chainActionSequenceModifier = (int) (lowerLimit + ((upperLimit - lowerLimit) * (passingSkill / 100.0)));
             String detail = "Wall pass skill modification. For POSITIONAL " + skillPoints + " and PASSING " + passingSkill + ", the modifier is " + chainActionSequenceModifier + " for a resulting POSITION skill of " + (skillPoints + chainActionSequenceModifier);
-            System.out.println(detail);
             state.getRecorder().record(detail, state, GameProgressRecord.Type.CALCULATION, GameProgressRecord.DuelStage.DURING);
 
         }
@@ -381,7 +380,7 @@ public class DuelExecution {
             DuelRole.CHALLENGER);
 
         Boolean goalkeeperReachedTheBall = initiatorStats.getTotal() < challengerStats.getTotal(); // initiator striker
-        log.info("InitiatorStats {} challengerStats {} booleanResult {}", initiatorStats.getTotal(), challengerStats.getTotal(), goalkeeperReachedTheBall);
+//        log.info("InitiatorStats {} challengerStats {} booleanResult {}", initiatorStats.getTotal(), challengerStats.getTotal(), goalkeeperReachedTheBall);
         // TODO refactor this
         Boolean fumbleOccurred = false;
         if (goalkeeperReachedTheBall) {

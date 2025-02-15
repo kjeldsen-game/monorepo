@@ -3,8 +3,6 @@ import Head from 'next/head';
 import { Typography } from '@mui/material';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useSession } from 'next-auth/react';
-import DoubleDropdown from '@/shared/components/Player/DoubleDropdown';
-import { NestedMenu } from '@/shared/components/Player/NestedMenu';
 
 const Home: NextPage = () => {
   const { data: userData, status: sessionStatus } = useSession({
@@ -20,7 +18,6 @@ const Home: NextPage = () => {
         <Typography variant="h1" component="h1">
           Dashboarda
         </Typography>
-        <NestedMenu />
       </>
     </>
   );

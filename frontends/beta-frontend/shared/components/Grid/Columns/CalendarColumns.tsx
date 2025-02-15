@@ -2,8 +2,6 @@ import { Box, Typography } from '@mui/material';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import { baseColumnConfig, leftColumnConfig } from './ColumnsConfig';
 import Link from 'next/link';
-import MarketButton from '../../Market/MarketButton';
-import { useSession } from 'next-auth/react';
 import { formatDateAndTime } from '@/shared/utils/DateUtils';
 import LinkButton from '../../Common/LinkButton';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';

@@ -265,7 +265,6 @@ export const teamColumn = (
       headerName: 'PO',
       headerAlign: 'center' as GridAlignment,
       align: 'center' as GridAlignment,
-      sortable: false,
       renderCell: (params) => {
         return isEditing ? (
           <PlayerOrderSelect

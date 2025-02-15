@@ -44,7 +44,7 @@ export const simpleTeamColumn = (t: TFunction) => {
       flex: 1,
     },
     {
-      field: 'PLAYER_NAME',
+      field: 'playerName',
       renderHeader: () => (
         <div>
           Name

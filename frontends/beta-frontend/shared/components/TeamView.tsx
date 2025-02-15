@@ -1,11 +1,4 @@
-import {
-  Box,
-  Collapse,
-  SnackbarCloseReason,
-  Tab,
-  Typography,
-} from '@mui/material';
-import TeamDetails from './TeamDetails';
+import { Box, SnackbarCloseReason, Tab } from '@mui/material';
 import Grid from './Grid/Grid';
 import { Player } from '../models/Player';
 import { Team, TeamFormationValiation } from '../models/Team';
@@ -13,7 +6,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { lineupColumn } from './Grid/Columns/LineupColumn';
 import LineupModal from './Team/LineupModal';
 import { PlayerOrder } from '@/pages/api/match/models/MatchReportresponse';
-import { PlayerPosition } from '../models/PlayerPosition';
+import {
+  PlayerPosition,
+  TABLE_PLAYER_POSITION_ORDER_DEFENDERS,
+  TABLE_PLAYER_POSITION_ORDER_FORWARDS,
+  TABLE_PLAYER_POSITION_ORDER_GOALKEEPERS,
+  TABLE_PLAYER_POSITION_ORDER_MIDFIELDERS,
+} from '../models/PlayerPosition';
 import SnackbarAlert from './Common/SnackbarAlert';
 import CustomTabs from './CustomTabs';
 import { CustomTabPanel } from './Tab/CustomTabPanel';
@@ -24,11 +23,12 @@ import {
   TeamModifiers,
   VerticalPressure,
 } from '../models/TeamModifiers';
-import TeamModifiersForm from './Team/TeamModifiers';
-import DoneIcon from '@mui/icons-material/Done';
-import CloseIcon from '@mui/icons-material/Close';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import GppMaybeIcon from '@mui/icons-material/GppMaybe';
+import TeamViewHeader from './Team/TeamViewHeader';
+import { GridRowParams } from '@mui/x-data-grid';
+import TeamGrid from './Team/TeamGrid';
+import { filterPlayersByStatus } from '../utils/LineupUtils';
 
 interface TeamProps {
   isEditing: boolean;
@@ -47,7 +47,7 @@ const TeamView: React.FC<TeamProps> = ({
   onTeamUpdate,
   teamFormationValidation,
 }: TeamProps) => {
-  console.log(team);
+  // console.log(team);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [showValidation, setShowValidation] = useState<boolean>(false);
   const [playerEdit, setPlayerEdit] = useState<any>([]);
@@ -73,17 +73,9 @@ const TeamView: React.FC<TeamProps> = ({
   useEffect(() => {
     // If players from the props are present
     if (team?.players) {
-      const active = team.players.filter(
-        (player) => player.status === 'ACTIVE',
-      );
-      const bench = team.players.filter((player) => player.status === 'BENCH');
-      setActivePlayers(active);
-      setBenchPlayers(bench);
+      setActivePlayers(filterPlayersByStatus(team.players, 'ACTIVE'));
+      setBenchPlayers(filterPlayersByStatus(team.players, 'BENCH'));
       setPlayers(team?.players);
-      // if there active players are already set, do nothing
-      if (activePlayers && activePlayers.length > 0) {
-      } else {
-      }
     } else {
       setActivePlayers([]);
       setBenchPlayers([]);
@@ -93,12 +85,9 @@ const TeamView: React.FC<TeamProps> = ({
 
   useEffect(() => {
     if (players) {
-      // console.log('Players changed, setting new active and bench players.');
       // For the team view of /team/{id} filter have to be done on players array
-      const active = players.filter((player) => player.status === 'ACTIVE');
-      const bench = players.filter((player) => player.status === 'BENCH');
-      setActivePlayers(active);
-      setBenchPlayers(bench);
+      setActivePlayers(filterPlayersByStatus(players, 'ACTIVE'));
+      setBenchPlayers(filterPlayersByStatus(players, 'BENCH'));
     }
   }, [players]);
 
@@ -135,8 +124,6 @@ const TeamView: React.FC<TeamProps> = ({
   };
 
   const handleAddPlayer = (newPlayer: Player, status: string) => {
-    console.log('running this');
-    console.log(activeAddMode);
     const updatedPlayer = { ...newPlayer, status: status };
     setPlayers((prevPlayers: any) =>
       prevPlayers.map((player: Player) =>
@@ -202,6 +189,14 @@ const TeamView: React.FC<TeamProps> = ({
     });
   };
 
+  const handleRowClick = (status: string) => (params: GridRowParams) => {
+    if (isEditing) {
+      setOpenModal(true);
+      setAddingStatus(status);
+      handlePlayerRowClick(params.row);
+    }
+  };
+
   return (
     <Box sx={{ width: '100%' }}>
       <LineupModal
@@ -228,59 +223,14 @@ const TeamView: React.FC<TeamProps> = ({
           padding: '10px',
           borderRadius: '8px',
         }}>
-        <Box
-          sx={{
-            width: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            height: '100%',
-            padding: '10px',
-          }}>
-          <TeamDetails name={team?.name} />
-          {/* <PlayerTactics /> */}
-          {isEditing && (
-            <TeamModifiersForm
-              teamModifiers={teamModifiers}
-              handleModifierChange={handleTeamModifierChange}
-            />
-          )}
-        </Box>
-        <Box
-          sx={{
-            padding: '10px',
-            width: '50%',
-            height: 200,
-            overflow: 'scroll',
-          }}>
-          <Collapse in={showValidation} timeout="auto">
-            <div
-              style={{
-                borderRadius: '8px',
-                padding: '10px',
-                maxHeight: '100%',
-                overflowY: 'auto',
-                background: 'white',
-              }}>
-              {teamFormationValidation?.items?.map((error, index) => (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    width: '100%',
-                  }}
-                  key={index}>
-                  <Typography>{error.message}</Typography>
-                  <Box
-                    sx={{
-                      color: error.valid ? 'green' : 'red',
-                    }}>
-                    {error.valid ? <DoneIcon /> : <CloseIcon />}
-                  </Box>
-                </Box>
-              ))}
-            </div>
-          </Collapse>
-        </Box>
+        <TeamViewHeader
+          name={team?.name}
+          isEditing={isEditing}
+          teamModifiers={teamModifiers}
+          handleTeamModifierChange={handleTeamModifierChange}
+          showValidation={showValidation}
+          teamFormationValidation={teamFormationValidation}
+        />
       </Box>
       <Box
         sx={{ paddingTop: '1rem' }}
@@ -320,36 +270,20 @@ const TeamView: React.FC<TeamProps> = ({
           <CustomTabPanel value={selectedTab} index={0}>
             {players && (
               <>
-                <Grid
-                  rows={activePlayers || []}
-                  columns={memoizedColumns2}
-                  onRowClick={(params) => {
-                    if (isEditing) {
-                      setOpenModal(true);
-                      setAddingStatus('ACTIVE');
-                      handlePlayerRowClick(params.row);
-                    }
-                  }}
+                <TeamGrid
+                  rows={activePlayers}
+                  onRowClick={handleRowClick('ACTIVE')}
                 />
-                <Grid
+                <TeamGrid
+                  rows={benchPlayers}
+                  onRowClick={handleRowClick('BENCH')}
                   sx={{ marginTop: '20px' }}
-                  rows={benchPlayers || []}
-                  columns={memoizedColumns2}
-                  onRowClick={(params) => {
-                    if (isEditing) {
-                      setOpenModal(true);
-                      setAddingStatus('BENCH');
-                      handlePlayerRowClick(params.row);
-                    }
-                  }}
                 />
               </>
             )}
           </CustomTabPanel>
           <CustomTabPanel value={selectedTab} index={1}>
-            {players && (
-              <Grid rows={players || []} columns={memoizedColumns2} />
-            )}
+            {players && <TeamGrid rows={players} />}
           </CustomTabPanel>
         </Box>
       </Box>

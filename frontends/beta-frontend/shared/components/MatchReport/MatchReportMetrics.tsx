@@ -10,6 +10,8 @@ import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 import { Player } from '@/shared/models/Player';
 import { TABLE_PLAYER_POSITION_ORDER } from '@/shared/models/PlayerPosition';
 import { useSession } from 'next-auth/react';
+import { positionComparator } from '@/shared/utils/GridUtils';
+import { GridRowClassNameParams } from '@mui/x-data-grid';
 
 interface MatchReportMetricsProps {
   sx?: React.CSSProperties;
@@ -39,16 +41,6 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({
       );
     }
   };
-
-  function positionComparator(a: Player, b: Player): number {
-    const indexA = TABLE_PLAYER_POSITION_ORDER.indexOf(a.position);
-    const indexB = TABLE_PLAYER_POSITION_ORDER.indexOf(b.position);
-
-    return (
-      (indexA === -1 ? Number.MAX_SAFE_INTEGER : indexA) -
-      (indexB === -1 ? Number.MAX_SAFE_INTEGER : indexB)
-    );
-  }
 
   const memoizedColumns = useMemo(() => simpleTeamColumn(t), [teamId]);
 
@@ -128,10 +120,10 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({
               padding: 0,
             },
             '& .MuiDataGrid-columnHeaders': {
-              padding: 0, // Removes padding from the column header container
+              padding: 0,
             },
             '& .MuiDataGrid-columnHeader': {
-              padding: 0, // Removes padding from each individual header cell
+              padding: 0,
             },
           }}
           showColumnRightBorder

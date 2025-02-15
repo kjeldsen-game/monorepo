@@ -57,7 +57,6 @@ public class ExecuteMatchUseCase {
                 buildTeam(TeamRole.AWAY, m.getAway(), m.getAway().getId());
             }
             m.setStatus(Match.Status.PLAYED);
-            log.info("{}", m);
             GameState state = Game.play(m);
 
             Map<String, Integer> attendance = getMatchAttendanceUseCase.get(m.getHome().getId(), m.getAway().getId());

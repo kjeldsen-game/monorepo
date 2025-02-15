@@ -20,27 +20,49 @@ export enum PlayerPosition {
   GOALKEEPER = 'GOALKEEPER',
 }
 
-export enum PlayerPositionColor {
-  CENTRE_BACK = '#594fc8',
-  AERIAL_CENTRE_BACK = '#6d6394', // Mezcla más clara de #090446 y #786f52
-  SWEEPER = '#f7d197', // Desaturación y cambio de luminosidad de #FEB95F
-  LEFT_BACK = '#d14d6f', // Mezcla más clara de #f71735 y #c2095a
-  RIGHT_BACK = '#cc7da8', // Mezcla más clara de #c2095a y #786f52
-  LEFT_WINGBACK = '#5971a6', // Mezcla más clara de #090446 y #f71735
-  RIGHT_WINGBACK = '#a8907d', // Mezcla más clara de #786f52 y #c2095a
-  DEFENSIVE_MIDFIELDER = '#fbd6a4', // Desaturación y cambio de luminosidad de #FEB95F
-  CENTRE_MIDFIELDER = '#e75c7b', // Mezcla más clara de #f71735 y #c2095a
-  LEFT_MIDFIELDER = '#985377', // Mezcla más clara de #c2095a y #090446
-  RIGHT_MIDFIELDER = '#867e5b', // Mezcla más clara de #090446 y #786f52
-  LEFT_WINGER = '#43d9be', // Completamente diferente a los colores de referencia
-  OFFENSIVE_MIDFIELDER = '#a7608e', // Mezcla más clara de #f71735 y #786f52
-  RIGHT_WINGER = '#fda4a0', // Mezcla más clara de #c2095a y #f71735
-  FORWARD = '#3a9db9', // Mezcla más clara de #c2095a y #090446
-  AERIAL_FORWARD = '#8497bd', // Mezcla más clara de #090446 y #786f52
-  STRIKER = '#fddfb1', // Desaturación y cambio de luminosidad de #FEB95F
-  AERIAL_STRIKER = '#b7738e', // Mezcla más clara de #c2095a y #f71735
-  GOALKEEPER = '#e1798e', // Mezcla más clara de #f71735 y #c2095a
+export enum PlayerPositionAbbreviation {
+  CENTRE_BACK = 'CB',
+  AERIAL_CENTRE_BACK = 'ACB',
+  SWEEPER = 'SWP',
+  LEFT_BACK = 'LB',
+  RIGHT_BACK = 'RB',
+  LEFT_WINGBACK = 'LWB',
+  RIGHT_WINGBACK = 'RWB',
+  DEFENSIVE_MIDFIELDER = 'DM',
+  CENTRE_MIDFIELDER = 'CM',
+  LEFT_MIDFIELDER = 'LM',
+  RIGHT_MIDFIELDER = 'RM',
+  LEFT_WINGER = 'LW',
+  OFFENSIVE_MIDFIELDER = 'OM',
+  RIGHT_WINGER = 'RW',
+  FORWARD = 'FW',
+  AERIAL_FORWARD = 'AFW',
+  STRIKER = 'ST',
+  AERIAL_STRIKER = 'AST',
+  GOALKEEPER = 'GK',
 }
+
+// export enum PlayerPositionColorNew {
+//   CENTRE_BACK = '#a3b3b8', // darker green
+//   AERIAL_CENTRE_BACK = '#a3b3b8', // darker green
+//   SWEEPER = '#a3b3b8', // darker green
+//   LEFT_BACK = '#8b9f91', // darker green3
+//   RIGHT_BACK = '#8b9f91', // darker green3
+//   LEFT_WINGBACK = '#8b9f91', // darker red3
+//   RIGHT_WINGBACK = '#8b9f91', // darker red3
+//   DEFENSIVE_MIDFIELDER = '#e1b3b3', // darker red
+//   CENTRE_MIDFIELDER = '#e1b3b3', // darker red
+//   LEFT_MIDFIELDER = '#d38080', // darker red3
+//   RIGHT_MIDFIELDER = '#d38080', // darker red3
+//   LEFT_WINGER = '#d38080', // darker blue 3
+//   OFFENSIVE_MIDFIELDER = '#b0b8e3', // darker blue
+//   RIGHT_WINGER = '#d38080', // darker blue 3
+//   FORWARD = '#b0b8e3', // darker blue
+//   AERIAL_FORWARD = '#b0b8e3', // darker blue
+//   STRIKER = '#b0b8e3', // darker blue
+//   AERIAL_STRIKER = '#b0b8e3', // darker blue
+//   GOALKEEPER = '#e6cc99', // darker yellow
+// }
 
 export enum PlayerPositionColorNew {
   CENTRE_BACK = '#d0e0e3', // green
@@ -48,15 +70,15 @@ export enum PlayerPositionColorNew {
   SWEEPER = '#d0e0e3', // green
   LEFT_BACK = '#ABCAA9', // green3
   RIGHT_BACK = '#ABCAA9', // green3
-  LEFT_WINGBACK = '#E99898', // red3
-  RIGHT_WINGBACK = '#E99898', // red3
+  LEFT_WINGBACK = '#ABCAA9', // red3
+  RIGHT_WINGBACK = '#ABCAA9', // red3
   DEFENSIVE_MIDFIELDER = '#f4cccc', // red
   CENTRE_MIDFIELDER = '#f4cccc', // red
   LEFT_MIDFIELDER = '#E99898', //red3
   RIGHT_MIDFIELDER = '#E99898', // red3
-  LEFT_WINGER = '#8DB1F8', // blue 3
+  LEFT_WINGER = '#E99898', // blue 3
   OFFENSIVE_MIDFIELDER = '#CCDCFC', // blue
-  RIGHT_WINGER = '#8DB1F8', //blue 3
+  RIGHT_WINGER = '#E99898', //blue 3
   FORWARD = '#CCDCFC', // blue
   AERIAL_FORWARD = '#CCDCFC', // blue
   STRIKER = '#CCDCFC', // blue
@@ -64,32 +86,40 @@ export enum PlayerPositionColorNew {
   GOALKEEPER = '#fff2cc', // yellow
 }
 
-export const TABLE_PLAYER_POSITION_ORDER: PlayerPosition[] = [
+export const TABLE_PLAYER_POSITION_ORDER_GOALKEEPERS: PlayerPosition[] = [
   PlayerPosition.GOALKEEPER,
+];
 
-  // Defenders
+export const TABLE_PLAYER_POSITION_ORDER_DEFENDERS: PlayerPosition[] = [
+  PlayerPosition.LEFT_BACK,
+  PlayerPosition.LEFT_WINGBACK,
   PlayerPosition.CENTRE_BACK,
+  PlayerPosition.RIGHT_WINGBACK,
+  PlayerPosition.RIGHT_BACK,
   PlayerPosition.AERIAL_CENTRE_BACK,
   PlayerPosition.SWEEPER,
-  PlayerPosition.LEFT_BACK,
-  PlayerPosition.RIGHT_BACK,
-  PlayerPosition.LEFT_WINGBACK,
-  PlayerPosition.RIGHT_WINGBACK,
+];
 
-  // Midfielders
+export const TABLE_PLAYER_POSITION_ORDER_MIDFIELDERS: PlayerPosition[] = [
+  PlayerPosition.LEFT_MIDFIELDER,
+  PlayerPosition.LEFT_WINGER,
   PlayerPosition.DEFENSIVE_MIDFIELDER,
   PlayerPosition.CENTRE_MIDFIELDER,
-  PlayerPosition.LEFT_MIDFIELDER,
-  PlayerPosition.RIGHT_MIDFIELDER,
   PlayerPosition.OFFENSIVE_MIDFIELDER,
-
-  // Wingers
-  PlayerPosition.LEFT_WINGER,
   PlayerPosition.RIGHT_WINGER,
+  PlayerPosition.RIGHT_MIDFIELDER,
+];
 
-  // Forwards
+export const TABLE_PLAYER_POSITION_ORDER_FORWARDS: PlayerPosition[] = [
   PlayerPosition.FORWARD,
   PlayerPosition.AERIAL_FORWARD,
   PlayerPosition.STRIKER,
   PlayerPosition.AERIAL_STRIKER,
+];
+
+export const TABLE_PLAYER_POSITION_ORDER: PlayerPosition[] = [
+  ...TABLE_PLAYER_POSITION_ORDER_GOALKEEPERS,
+  ...TABLE_PLAYER_POSITION_ORDER_DEFENDERS,
+  ...TABLE_PLAYER_POSITION_ORDER_MIDFIELDERS,
+  ...TABLE_PLAYER_POSITION_ORDER_FORWARDS,
 ];

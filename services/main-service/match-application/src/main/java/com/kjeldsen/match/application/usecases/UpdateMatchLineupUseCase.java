@@ -97,7 +97,6 @@ public class UpdateMatchLineupUseCase {
                 entry -> PlayerSkill.valueOf(entry.getKey()),
                 entry -> entry.getValue().getActual()
             ));skills.put(PlayerSkill.INTERCEPTING, 0);
-        System.out.println(player.getPlayerOrderDestinationPitchArea());
         return com.kjeldsen.match.domain.entities.Player.builder()
             .id(player.getId())
             .name(player.getName())

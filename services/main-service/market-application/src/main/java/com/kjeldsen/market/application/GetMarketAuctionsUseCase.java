@@ -38,8 +38,6 @@ public class GetMarketAuctionsUseCase {
                 FindAuctionsQuery.builder().auctionStatus(Auction.AuctionStatus.ACTIVE)
                         .maxAverageBid(maxBid).minAverageBid(minBid).playerId(Player.PlayerId.of(playerId)).build());
 
-        System.out.println(auctions.size());
-
         List<Player> players = playerReadRepository.filterMarketPlayers(
                 FilterMarketPlayersQuery.builder()
                         .playerIds(auctions.stream()

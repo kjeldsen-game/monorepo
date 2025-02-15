@@ -24,7 +24,7 @@ const CalendarTabView: React.FC<CalendarTabViewProps> = ({ calendar }) => {
     () => calendarColumns(userData?.user.teamId),
     [userData?.user.teamId],
   );
-  console.log(calendar);
+
   const StyledDataGrid = styled(Grid)(({ theme }) => ({
     '& .super-app-theme--myTeam': {
       backgroundColor: getBackgroundColor('My Team').backgroundColor,

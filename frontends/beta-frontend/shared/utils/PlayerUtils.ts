@@ -1,12 +1,11 @@
-import { PlayerPosition } from '../models/PlayerPosition';
+import { PlayerPositionAbbreviation } from '../models/PlayerPosition';
 
 export function getPositionInitials(position: string | undefined): string {
-  if (position == undefined) {
-    return '';
-  }
+  if (!position) return '';
 
-  return position
-    .split('_')
-    .map((word) => word.charAt(0).toUpperCase())
-    .join('');
+  return (
+    PlayerPositionAbbreviation[
+      position as keyof typeof PlayerPositionAbbreviation
+    ] || ''
+  );
 }

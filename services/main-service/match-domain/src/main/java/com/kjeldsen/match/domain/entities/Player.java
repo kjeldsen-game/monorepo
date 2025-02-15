@@ -72,11 +72,11 @@ public class Player {
                     skillValue = average / consideredSkillsCounter;
                 }
 
-                // TODO this logic should not be hardcoded. design needed.
-                if (duelType.equals(DuelType.HEADER_SHOT)) {
-                    int aerialSkill = skills.get(PlayerSkill.AERIAL);
-                    if (skillValue > aerialSkill + 10) skillValue = aerialSkill + 10;
-                }
+//                // TODO this logic should not be hardcoded. design needed.
+//                if (duelType.equals(DuelType.HEADER_SHOT)) {
+//                    int aerialSkill = skills.get(PlayerSkill.AERIAL);
+//                    if (skillValue > aerialSkill + 10) skillValue = aerialSkill + 10;
+//                }
 
                 // TODO this logic should not be hardcoded. design needed.
                 if (duelType.equals(DuelType.LONG_SHOT)) {
@@ -124,7 +124,7 @@ public class Player {
                         .append(", Goalkeeper positioning: ").append(goalkeepingPositioningSkill)
                         .append(", Dice roll: ").append(diceRoll)
                         .append(", Goalkeeper skill (RE/OTO) modified with the addition of: ").append(goalkeepingPositioningModifier);
-                System.out.println(detail.toString());
+//                System.out.println(detail.toString());
                 state.getRecorder().record(detail.toString(), state, GameProgressRecord.Type.CALCULATION, GameProgressRecord.DuelStage.DURING);
 
                 goalkeepingSkill += goalkeepingPositioningModifier;

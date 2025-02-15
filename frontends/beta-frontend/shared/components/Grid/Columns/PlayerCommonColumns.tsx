@@ -15,6 +15,7 @@ import { baseColumnConfig, leftColumnConfig } from './ColumnsConfig';
 import { PlayerPositionSelect } from '../../PlayerPositionSelect';
 import { Player } from '@/shared/models/Player';
 import SelectInput from '@mui/material/Select/SelectInput';
+import { positionComparator } from '@/shared/utils/GridUtils';
 
 export const playerCommonColumns = (
   skills: boolean = false,
@@ -49,6 +50,8 @@ export const playerCommonColumns = (
       renderHeader: () => <div>POS</div>,
       headerAlign: 'center' as GridAlignment,
       align: 'center' as GridAlignment,
+      sortComparator: positionComparator,
+      valueGetter: (params: GridValueGetterParams) => params.row,
       renderCell: (params) => {
         if (isEditing) {
           return (
@@ -72,7 +75,7 @@ export const playerCommonColumns = (
         return (
           <div
             style={{
-              color: '#FFFFFF',
+              color: 'black',
               padding: '2px 8px',
               width: '42px',
               height: '24px',
