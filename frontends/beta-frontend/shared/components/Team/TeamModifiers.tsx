@@ -26,7 +26,7 @@ const TeamModifiersForm: React.FC<TeamModifiersFormProps> = ({
         display: 'flex',
         flexDirection: 'column',
         minWidth: 120,
-        marginLeft: '3rem',
+        marginLeft: '1rem',
       }}>
       <Typography align="center" variant="h6">
         Team Modifiers
@@ -40,17 +40,20 @@ const TeamModifiersForm: React.FC<TeamModifiersFormProps> = ({
               }
               value={teamModifiers?.tactic}
               values={Tactic}
+              hideDefaultOption={true}
               title={'Tactic'}
             />
             <SelectInput
               handleChange={(e) =>
                 handleModifierChange(e.target.value, 'verticalPressure')
               }
+              hideDefaultOption={true}
               value={teamModifiers?.verticalPressure}
               values={VerticalPressure}
               title={'Vertical Pressure'}
             />
             <SelectInput
+              hideDefaultOption={true}
               handleChange={(e) =>
                 handleModifierChange(e.target.value, 'horizontalPressure')
               }

@@ -29,6 +29,7 @@ import TeamViewHeader from './Team/TeamViewHeader';
 import { GridRowParams } from '@mui/x-data-grid';
 import TeamGrid from './Team/TeamGrid';
 import { filterPlayersByStatus } from '../utils/LineupUtils';
+import TeamValidationModal from './Team/TeamValidationModal';
 
 interface TeamProps {
   isEditing: boolean;
@@ -49,6 +50,8 @@ const TeamView: React.FC<TeamProps> = ({
 }: TeamProps) => {
   // console.log(team);
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openModalValidation, setOpenModalValidation] =
+    useState<boolean>(false);
   const [showValidation, setShowValidation] = useState<boolean>(false);
   const [playerEdit, setPlayerEdit] = useState<any>([]);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -209,6 +212,11 @@ const TeamView: React.FC<TeamProps> = ({
         handleSelectButtonClick={switchPlayerStatuses}
         handlePlayerAdd={handleAddPlayer}
       />
+      <TeamValidationModal
+        teamFormationValidation={teamFormationValidation}
+        open={openModalValidation}
+        handleCloseModal={() => setOpenModalValidation(false)}
+      />
       <SnackbarAlert
         handleClose={handleClose}
         open={alert?.open}
@@ -228,8 +236,6 @@ const TeamView: React.FC<TeamProps> = ({
           isEditing={isEditing}
           teamModifiers={teamModifiers}
           handleTeamModifierChange={handleTeamModifierChange}
-          showValidation={showValidation}
-          teamFormationValidation={teamFormationValidation}
         />
       </Box>
       <Box
@@ -253,7 +259,7 @@ const TeamView: React.FC<TeamProps> = ({
               onClick={handleAddLineupPlayerButton}>
               Add Lineup Player
             </MarketButton>
-            <MarketButton onClick={() => setShowValidation(!showValidation)}>
+            <MarketButton onClick={() => setOpenModalValidation(true)}>
               {teamFormationValidation?.valid ? (
                 <VerifiedUserIcon />
               ) : (

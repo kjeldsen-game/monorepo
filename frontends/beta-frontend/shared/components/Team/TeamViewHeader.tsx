@@ -1,15 +1,16 @@
 import { Box, Collapse, Typography } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import TeamDetails from '../TeamDetails';
 import TeamModifiersForm from './TeamModifiers';
-import DoneIcon from '@mui/icons-material/Done';
-import CloseIcon from '@mui/icons-material/Close';
+
 import {
   HorizontalPressure,
   Tactic,
   TeamModifiers,
   VerticalPressure,
 } from '@/shared/models/TeamModifiers';
+import { getModifierDescription } from '@/shared/utils/TeamModifiersUtils';
+import PressureDescriptionItem from './PressureDescriptionItem';
 
 type TeamModifierChangeHandler = (
   value: Tactic | VerticalPressure | HorizontalPressure,
@@ -21,8 +22,6 @@ interface TeamViewHeaderProps {
   isEditing: boolean;
   teamModifiers: TeamModifiers | undefined;
   handleTeamModifierChange: TeamModifierChangeHandler;
-  showValidation: boolean;
-  teamFormationValidation: any;
 }
 
 const TeamViewHeader: React.FC<TeamViewHeaderProps> = ({
@@ -30,18 +29,25 @@ const TeamViewHeader: React.FC<TeamViewHeaderProps> = ({
   isEditing,
   teamModifiers,
   handleTeamModifierChange,
-  showValidation,
-  teamFormationValidation,
 }) => {
+  const tacticDescription = getModifierDescription(teamModifiers?.tactic);
+  const horizontalPressureDescription = getModifierDescription(
+    teamModifiers?.horizontalPressure,
+  );
+  const verticalPressureDescription = getModifierDescription(
+    teamModifiers?.verticalPressure,
+  );
+
   return (
     <>
       <Box
         sx={{
-          width: '50%',
           display: 'flex',
           alignItems: 'center',
           height: '100%',
           padding: '10px',
+          margin: '20px',
+          width: '30%',
         }}>
         <TeamDetails name={name} />
         {/* <PlayerTactics /> */}
@@ -54,39 +60,38 @@ const TeamViewHeader: React.FC<TeamViewHeaderProps> = ({
       </Box>
       <Box
         sx={{
+          width: '70%',
+          height: '250px',
           padding: '10px',
-          width: '50%',
-          height: 200,
           overflow: 'scroll',
         }}>
-        <Collapse in={showValidation} timeout="auto">
-          <div
-            style={{
-              borderRadius: '8px',
-              padding: '10px',
-              maxHeight: '100%',
-              overflowY: 'auto',
-              background: 'white',
+        <div
+          style={{
+            borderRadius: '8px',
+            padding: '10px',
+            maxHeight: '100%',
+            overflowY: 'auto',
+            background: 'white',
+          }}>
+          <Box
+            sx={{
+              justifyContent: 'space-between',
             }}>
-            {teamFormationValidation?.items?.map((error, index) => (
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  width: '100%',
-                }}
-                key={index}>
-                <Typography>{error.message}</Typography>
-                <Box
-                  sx={{
-                    color: error.valid ? 'green' : 'red',
-                  }}>
-                  {error.valid ? <DoneIcon /> : <CloseIcon />}
-                </Box>
-              </Box>
-            ))}
-          </div>
-        </Collapse>
+            <PressureDescriptionItem
+              name={'Tactic'}
+              description={tacticDescription}
+            />
+
+            <PressureDescriptionItem
+              name={'Horizontal Pressure'}
+              description={horizontalPressureDescription}
+            />
+            <PressureDescriptionItem
+              name={'Vertical Pressure'}
+              description={verticalPressureDescription}
+            />
+          </Box>
+        </div>
       </Box>
     </>
   );
