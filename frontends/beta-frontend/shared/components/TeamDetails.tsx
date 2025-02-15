@@ -14,26 +14,28 @@ const TeamDetails = ({ name }: TeamDetailsProps) => {
   return (
     <Box
       sx={{
-        display: 'flex',
+        display: 'flex-column',
+        justifyItems: 'center',
         alignItems: 'center',
       }}>
       <Avatar />
+
+      <Typography variant="body1">
+        <strong>{name}</strong>
+      </Typography>
       <Box
         sx={{
-          marginLeft: '3rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}>
-        <Typography variant="body1">
-          <strong>{name}</strong>
+        <BarChartIcon
+          sx={{ fontSize: 'large', color: '#A4BC10', marginRight: '4px' }}
+        />
+        <Typography variant="body1" sx={{ color: '#A4BC10' }}>
+          Team League Position
+          {/* {SampleTeam.position} Position */}
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <BarChartIcon
-            sx={{ fontSize: 'large', color: '#A4BC10', marginRight: '4px' }}
-          />
-          <Typography variant="body1" sx={{ color: '#A4BC10' }}>
-            Team League Position
-            {/* {SampleTeam.position} Position */}
-          </Typography>
-        </Box>
       </Box>
     </Box>
   );
