@@ -1,7 +1,18 @@
 import { Player } from '../models/Player';
 
-export const filterPlayersByStatus = (data: Player[], status: string) => {
+export const filterPlayersByStatus = (
+  data: Player[] | undefined,
+  status: string,
+) => {
+  if (data === undefined) return [];
   return data.filter((player) => player.status === status);
+};
+
+export const filterPlayersByPosition = (
+  data: Player[] = [],
+  position: string,
+) => {
+  return data.filter((player) => player.position === position);
 };
 
 export const filterPlayersByTeam = (
@@ -22,10 +33,12 @@ export const filterPlayersByTeam = (
         const playerOrder = teamPlayer?.playerOrder;
         const playerOrderDestinationPitchArea =
           teamPlayer?.playerOrderDestinationPitchArea;
+        const position = teamPlayer?.position;
 
         return {
           ...player,
           status: status,
+          position: position,
           playerOrder: playerOrder,
           playerOrderDestinationPitchArea: playerOrderDestinationPitchArea,
         };

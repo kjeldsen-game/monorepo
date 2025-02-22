@@ -15,3 +15,8 @@ export const convertToKebabCase = (str: string) => {
     .replace(/\s+/g, '-')
     .replace(/[^\w-]+/g, '');
 };
+
+export const toFirstUppercase = (str: string): string => {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};

@@ -26,16 +26,19 @@ const useAllPlayerMatchesRepository = (
   teamId?: string,
   token?: string,
 ) => {
-  const { data: allMatches, mutate } = useSWR<Match[]>([API, teamId], () =>
-    fetcher(page, size, teamId ? teamId : null, token ? token : null),
+  const { data: allMatches, mutate } = useSWR<Match[]>(
+    teamId ? API + teamId + '/challenges' : null,
+    () => fetcher(page, size, teamId ? teamId : null, token ? token : null),
   );
 
   const refetch = () => {
     mutate();
   };
 
+  console.log(allMatches);
+
   const pastMatches = allMatches?.filter(
-    (match) => match.status === 'ACCEPTED',
+    (match) => match.status === 'PLAYED',
     // (match) => new Date(match.dateTime).getTime() < new Date().getTime(),
   );
   const incomingMatches = allMatches?.filter(

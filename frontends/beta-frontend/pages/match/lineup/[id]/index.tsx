@@ -14,6 +14,7 @@ import {
   filterPlayersByTeam,
 } from '@/shared/utils/LineupUtils';
 import { useMatchTeamFormationValidationRepository } from '@/pages/api/match/useMatchTeamFormationValidationRepository';
+import TeamViewNew from '@/shared/components/Team/TeamViewNew';
 
 const Team: NextPage = () => {
   const { data: userData, status: sessionStatus } = useSession({
@@ -31,7 +32,7 @@ const Team: NextPage = () => {
       useRouter().query.id as string,
       userData?.accessToken,
     );
-  console.log(formationValidation);
+  // console.log(formationValidation);
 
   const { updateMatchTeam, matchTeam, error, isLoading } =
     useMatchTeamRepository(
@@ -61,7 +62,6 @@ const Team: NextPage = () => {
       inactivePlayers = filterPlayersByStatus(data?.players, 'INACTIVE');
     } else {
       if (matchTeam?.specificLineup && data?.players) {
-        console.log('Setting specific lineup');
         lineupPlayers = filterPlayersByTeam(
           data?.players,
           matchTeam?.players,
@@ -88,6 +88,7 @@ const Team: NextPage = () => {
             .map((player) => {
               return {
                 ...player,
+                position: null,
                 status: 'INACTIVE',
               };
             }) ?? [];
@@ -105,6 +106,7 @@ const Team: NextPage = () => {
     players: Player[],
     teamModifiers: TeamModifiers,
   ) => {
+    console.log(players);
     try {
       const response = await updateMatchTeam(players, teamModifiers);
       if (response.status == 500 || response.status == 400) {
@@ -129,7 +131,7 @@ const Team: NextPage = () => {
   if (sessionStatus === 'loading' || !data) return <CircularProgress />;
 
   return (
-    <TeamView
+    <TeamViewNew
       teamFormationValidation={formationValidation}
       setAlert={setAlert}
       alert={alert}
@@ -141,6 +143,18 @@ const Team: NextPage = () => {
       }}
       onTeamUpdate={handleMatchTeamUpdate}
     />
+    // <TeamView
+    //   teamFormationValidation={formationValidation}
+    //   setAlert={setAlert}
+    //   alert={alert}
+    //   isEditing
+    //   team={{
+    //     ...data,
+    //     players: teamPlayers,
+    //     teamModifiers: matchTeam?.modifiers || data?.teamModifiers,
+    //   }}
+    //   onTeamUpdate={handleMatchTeamUpdate}
+    // />
   );
 };
 

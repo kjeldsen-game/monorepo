@@ -1,4 +1,5 @@
 import { useTeamRepository } from '@/pages/api/team/useTeamRepository';
+import TeamViewNew from '@/shared/components/Team/TeamViewNew';
 import TeamView from '@/shared/components/TeamView';
 import { Player } from '@/shared/models/Player';
 import { CircularProgress } from '@mui/material';
@@ -29,7 +30,8 @@ const Team: NextPage = () => {
 
   return (
     <>
-      <TeamView isEditing={false} team={{ ...data, players: teamPlayers }} />
+      <TeamViewNew isEditing={false} team={{ ...data, players: teamPlayers }} />
+      {/* <TeamView isEditing={false} team={{ ...data, players: teamPlayers }} /> */}
     </>
   );
 };

@@ -44,6 +44,8 @@ const InviteGrid: React.FC<InviteGridProps> = () => {
     declineMatch(matchId);
   };
 
+  console.log(pendingMatches);
+
   return (
     <Box sx={{ width: '100%' }}>
       <Grid

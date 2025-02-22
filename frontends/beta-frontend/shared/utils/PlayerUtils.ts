@@ -9,3 +9,10 @@ export function getPositionInitials(position: string | undefined): string {
     ] || ''
   );
 }
+
+export const getSurname = (name: string): string => {
+  if (!name) return '';
+
+  const nameParts = name.split(' ');
+  return nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
+};
