@@ -5,10 +5,11 @@ import React from 'react';
 interface SelectInputProps {
   values: any;
   value: any;
-  title: string;
+  title?: string;
   handleChange: (...args: any[]) => void;
   disabled?: boolean;
   hideDefaultOption?: boolean;
+  sx?: object;
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({
@@ -18,18 +19,21 @@ const SelectInput: React.FC<SelectInputProps> = ({
   handleChange,
   disabled = false,
   hideDefaultOption = false,
+  sx,
 }) => {
   return (
     <>
-      <Typography
-        variant="subtitle1"
-        sx={{
-          marginBottom: '2px',
-          opacity: '30%',
-          fontSize: '12px',
-        }}>
-        {title}
-      </Typography>
+      {title && (
+        <Typography
+          variant="subtitle1"
+          sx={{
+            marginBottom: '2px',
+            opacity: '30%',
+            fontSize: '12px',
+          }}>
+          {title}
+        </Typography>
+      )}
       <Select
         autoWidth
         size="small"
@@ -45,6 +49,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
             borderColor: '#FF3F84',
           },
+          ...sx,
         }}
         inputProps={{
           style: { backgroundColor: 'white' },

@@ -73,7 +73,7 @@ public class MatchDelegate implements MatchApiDelegate {
                     player.getPlayerOrder() != null
                         ? com.kjeldsen.player.domain.PlayerOrder.valueOf(player.getPlayerOrder().name())
                         : null)
-                .position(PlayerPosition.valueOf(player.getPosition().name()))
+                .position(player.getPosition() != null ? PlayerPosition.valueOf(player.getPosition().name()) : null)
                 .playerOrderDestinationPitchArea(player.getPlayerOrderDestinationPitchArea() != null
                     ? com.kjeldsen.player.domain.PitchArea.valueOf(player.getPlayerOrderDestinationPitchArea().name())
                     : null)

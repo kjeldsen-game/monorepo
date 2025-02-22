@@ -53,6 +53,7 @@ public class Player {
     private String name;
     private PlayerAge age;
     private PlayerPosition position;
+    private PlayerPosition preferredPosition;
     private PlayerStatus status;
     private PlayerOrder playerOrder;
     private Map<PlayerSkill, PlayerSkills> actualSkills;
@@ -72,6 +73,7 @@ public class Player {
             .id(playerCreationEvent.getPlayerId())
             .name(playerCreationEvent.getName())
             .age(playerCreationEvent.getAge())
+            .preferredPosition(playerCreationEvent.getPosition()          )
             .position(playerCreationEvent.getPosition())
             .playerOrder(PlayerOrder.NONE)
             .status(PlayerStatus.INACTIVE)

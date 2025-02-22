@@ -1,4 +1,4 @@
-import { MenuItem, Select } from '@mui/material';
+import { Box, MenuItem, Select } from '@mui/material';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import { GridAlignment } from '@mui/x-data-grid';
 import Link from 'next/link';
@@ -9,6 +9,7 @@ import {
 } from './ColumnsConfig';
 import { formatDateAndTime } from '@/shared/utils/DateUtils';
 import MarketButton from '../../Market/MarketButton';
+import LinkButton from '../../Common/LinkButton';
 
 const incomingMatchesColumns = (
   handleLineupChange: (value: number, teamId: string) => void,
@@ -57,6 +58,26 @@ const incomingMatchesColumns = (
     },
   },
   {
+    field: 'lineup',
+    renderHeader: () => <div>Lineup</div>,
+    ...baseColumnConfig,
+    renderCell: (params: GridCellParams) => {
+      const team =
+        params.row.away.id === teamId
+          ? params.row.away
+          : params.row.home.id === teamId
+            ? params.row.home
+            : null;
+      return team ? (
+        team.specificLineup ? (
+          <div>Custom</div>
+        ) : (
+          <div>Default</div>
+        )
+      ) : null;
+    },
+  },
+  {
     field: 'actions',
     renderHeader: () => <div style={{ paddingInline: '20px' }}>Actions</div>,
     ...rightColumnConfig,
@@ -66,11 +87,17 @@ const incomingMatchesColumns = (
           {params.row.status === 'ACCEPTED' &&
             params.row.home.id === teamId && (
               <MarketButton
+                sx={{ marginRight: '8px' }}
                 onClick={() => handlePlayButtonClick(params.row.id)}>
                 Play
               </MarketButton>
             )}
-          <Select
+          <Box>
+            <LinkButton link={`/match/lineup/${params.row.id}`}>
+              Change Lineup
+            </LinkButton>
+          </Box>
+          {/* <Select
             variant="standard"
             color="info"
             sx={{ mx: '10px', height: '40px' }}
@@ -83,7 +110,7 @@ const incomingMatchesColumns = (
             }>
             <MenuItem value={0}>Default</MenuItem>
             <MenuItem value={1}>Specific lineup...</MenuItem>
-          </Select>
+          </Select> */}
         </>
       );
     },

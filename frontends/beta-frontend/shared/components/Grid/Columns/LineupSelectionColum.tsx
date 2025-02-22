@@ -14,7 +14,6 @@ import { PlayerOrder } from '@/shared/models/PlayerOrder';
 import CloseIcon from '@mui/icons-material/Close';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { playerCommonColumns } from './PlayerCommonColumns';
-import SelectInput from '../../Common/SelectInput';
 import { PITCH_AREAS } from '@/shared/models/PitchArea';
 import { MenuItem, Select } from '@mui/material';
 
@@ -32,6 +31,7 @@ export const lineupSelectionColumn = (
     player: Player,
     value: PlayerOrder,
   ): void => {
+    console.log(value.target);
     handlePlayerChange?.(player, value, 'playerOrder');
   };
 

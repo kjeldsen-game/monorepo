@@ -4,7 +4,6 @@ import { Player } from '@/shared/models/Player';
 import { lineupColumn } from '../Grid/Columns/LineupColumn';
 import { GridRowParams } from '@mui/x-data-grid';
 import {
-  PlayerPositionColorNew,
   TABLE_PLAYER_POSITION_ORDER_DEFENDERS,
   TABLE_PLAYER_POSITION_ORDER_FORWARDS,
   TABLE_PLAYER_POSITION_ORDER_GOALKEEPERS,
@@ -13,29 +12,49 @@ import {
 
 interface TeamGridProps {
   rows: any;
-  onRowClick?: (params: GridRowParams) => void;
+  onSelectChange: (...args: any[]) => void;
+  onButtonClick: (player: any) => void;
   sx?: object;
+  activePlayer?: Player;
+  isEditing: boolean;
 }
 
-const TeamGrid: React.FC<TeamGridProps> = ({ rows, onRowClick, sx }) => {
-  const columns = useMemo(() => lineupColumn(), []);
+const TeamGrid: React.FC<TeamGridProps> = ({
+  rows,
+  sx,
+  onButtonClick,
+  onSelectChange,
+  activePlayer,
+  isEditing,
+}) => {
+  const columns = useMemo(
+    () => lineupColumn(isEditing, onButtonClick, onSelectChange),
+    [onButtonClick, activePlayer, isEditing, onSelectChange],
+  );
 
   return (
     <Grid
+      autoHeight={false}
       sx={{
+        maxHeight: '600px',
+        minHeight: '400px',
         '& .super-app-theme--goalkeepers': {
           borderLeft: '3px solid #fff2cc', // Yellow border with 30% opacity
         },
         '& .super-app-theme--defenders': {
           borderLeft: '3px solid #ABCAA9', // Green border with 30% opacity
-          backgroundColor: 'rgba(169, 169, 169, 0.1)',
         },
         '& .super-app-theme--midfielders': {
           borderLeft: '3px solid #E99898', // Red border with 30% opacity
         },
         '& .super-app-theme--forwards': {
           borderLeft: '3px solid #CCDCFC', // Blue border with 30% opacity
-          backgroundColor: 'rgba(169, 169, 169, 0.1)',
+        },
+        '& .super-app-theme--selected': {
+          backgroundColor: 'rgba(169, 169, 169, 0.4) !important',
+        },
+        '& .super-app-theme--notselected': {
+          opacity: '10%',
         },
         ...sx,
       }}
@@ -46,28 +65,30 @@ const TeamGrid: React.FC<TeamGridProps> = ({ rows, onRowClick, sx }) => {
       }}
       getRowClassName={(params) => {
         const position = params.row.position;
-        let category = '';
+        const classes: string[] = [];
 
-        switch (true) {
-          case TABLE_PLAYER_POSITION_ORDER_GOALKEEPERS.includes(position):
-            category = 'goalkeepers';
-            break;
-          case TABLE_PLAYER_POSITION_ORDER_DEFENDERS.includes(position):
-            category = 'defenders';
-            break;
-          case TABLE_PLAYER_POSITION_ORDER_MIDFIELDERS.includes(position):
-            category = 'midfielders';
-            break;
-          case TABLE_PLAYER_POSITION_ORDER_FORWARDS.includes(position):
-            category = 'forwards';
-            break;
-          default:
-            category = '';
+        if (TABLE_PLAYER_POSITION_ORDER_GOALKEEPERS.includes(position)) {
+          classes.push('super-app-theme--goalkeepers');
+        }
+        if (TABLE_PLAYER_POSITION_ORDER_DEFENDERS.includes(position)) {
+          classes.push('super-app-theme--defenders');
+        }
+        if (TABLE_PLAYER_POSITION_ORDER_MIDFIELDERS.includes(position)) {
+          classes.push('super-app-theme--midfielders');
+        }
+        if (TABLE_PLAYER_POSITION_ORDER_FORWARDS.includes(position)) {
+          classes.push('super-app-theme--forwards');
         }
 
-        return `super-app-theme--${category}`;
+        if (params.row.id === activePlayer?.id) {
+          classes.push('super-app-theme--selected');
+        }
+        if (activePlayer && params.row.id != activePlayer?.id) {
+          classes.push('super-app-theme--notselected');
+        }
+
+        return classes.join(' ');
       }}
-      onRowClick={onRowClick}
     />
   );
 };

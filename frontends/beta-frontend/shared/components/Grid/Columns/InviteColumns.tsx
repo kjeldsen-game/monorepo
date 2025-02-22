@@ -35,6 +35,28 @@ const inviteColumns = (
     ),
   },
   {
+    field: 'enemy',
+    ...baseColumnConfig,
+    renderHeader: () => <div style={{ paddingInline: '20px' }}>Enemy</div>,
+    renderCell: (params: GridCellParams) => {
+      const { home, away } = params.row;
+      const enemyTeam = home.id === ownTeamId ? away : home;
+
+      return (
+        <Link
+          style={{
+            paddingInline: '20px',
+            color: 'black',
+            textDecoration: 'none',
+          }}
+          passHref
+          href={`/team/${enemyTeam.id}`}>
+          {enemyTeam.name}
+        </Link>
+      );
+    },
+  },
+  {
     field: 'dateTime',
     renderHeader: () => <div style={{ paddingInline: '20px' }}>Date</div>,
     ...baseColumnConfig,

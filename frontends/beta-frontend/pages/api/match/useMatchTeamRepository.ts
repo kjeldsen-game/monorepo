@@ -69,7 +69,6 @@ const useMatchTeamRepository = (
       teamModifiers,
     };
 
-    console.log(newData);
     return connectorAPI<TeamPlayerPatchRequest>(
       `${API}/${matchId}/team/${teamId}`,
       'PUT',

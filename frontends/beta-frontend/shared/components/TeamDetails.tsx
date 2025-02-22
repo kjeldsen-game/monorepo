@@ -1,19 +1,17 @@
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import Avatar from '@/shared/components/Avatar';
-import { SampleTeamStats } from 'data/SampleTeam';
 import BarChartIcon from '@mui/icons-material/BarChart';
 
 interface TeamDetailsProps {
   name?: string;
 }
 
-import React from 'react';
-
 const TeamDetails = ({ name }: TeamDetailsProps) => {
   return (
     <Box
       sx={{
+        width: '25%',
         display: 'flex-column',
         justifyItems: 'center',
         alignItems: 'center',

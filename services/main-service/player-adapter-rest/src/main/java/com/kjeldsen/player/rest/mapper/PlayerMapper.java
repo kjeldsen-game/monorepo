@@ -20,11 +20,11 @@ public interface PlayerMapper {
     PlayerResponse playerResponseMap(Player player);
 
     default PlayerPosition playerPositionMap(com.kjeldsen.player.rest.model.PlayerPosition position) {
-        return PlayerPosition.valueOf(position.name());
+        return position != null ? PlayerPosition.valueOf(position.name()) : null;
     }
 
     default com.kjeldsen.player.rest.model.PlayerPosition playerPositionMap(PlayerPosition position) {
-        return com.kjeldsen.player.rest.model.PlayerPosition.valueOf(position.name());
+        return position != null ? com.kjeldsen.player.rest.model.PlayerPosition.valueOf(position.name()) : null;
     }
 
     default PlayerSkill playerSkillMap(String playerSkill) {

@@ -21,6 +21,7 @@ export enum PlayerPosition {
 }
 
 export enum PlayerPositionAbbreviation {
+  BENCH = 'BN',
   CENTRE_BACK = 'CB',
   AERIAL_CENTRE_BACK = 'ACB',
   SWEEPER = 'SWP',
@@ -65,6 +66,7 @@ export enum PlayerPositionAbbreviation {
 // }
 
 export enum PlayerPositionColorNew {
+  BENCH = '#d0e0e3', // green
   CENTRE_BACK = '#d0e0e3', // green
   AERIAL_CENTRE_BACK = '#d0e0e3', // green
   SWEEPER = '#d0e0e3', // green
@@ -123,3 +125,10 @@ export const TABLE_PLAYER_POSITION_ORDER: PlayerPosition[] = [
   ...TABLE_PLAYER_POSITION_ORDER_MIDFIELDERS,
   ...TABLE_PLAYER_POSITION_ORDER_FORWARDS,
 ];
+
+export const POSITION_FILTER_MAP: Record<string, PlayerPosition[]> = {
+  GK: TABLE_PLAYER_POSITION_ORDER_GOALKEEPERS,
+  DEF: TABLE_PLAYER_POSITION_ORDER_DEFENDERS,
+  MID: TABLE_PLAYER_POSITION_ORDER_MIDFIELDERS,
+  FW: TABLE_PLAYER_POSITION_ORDER_FORWARDS,
+};

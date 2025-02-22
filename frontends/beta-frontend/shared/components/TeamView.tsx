@@ -30,6 +30,7 @@ import { GridRowParams } from '@mui/x-data-grid';
 import TeamGrid from './Team/TeamGrid';
 import { filterPlayersByStatus } from '../utils/LineupUtils';
 import TeamValidationModal from './Team/TeamValidationModal';
+import LineupView from './Team/Lineup/LineupView';
 
 interface TeamProps {
   isEditing: boolean;
@@ -160,7 +161,7 @@ const TeamView: React.FC<TeamProps> = ({
       });
     });
     setPlayerEdit(updatedPlayer1);
-    //onTeamUpdate(players, teamModifiers);
+    onTeamUpdate(players, teamModifiers);
   };
 
   const handlePlayerFieldChange = (
@@ -237,6 +238,7 @@ const TeamView: React.FC<TeamProps> = ({
           teamModifiers={teamModifiers}
           handleTeamModifierChange={handleTeamModifierChange}
         />
+        <LineupView players={players} />
       </Box>
       <Box
         sx={{ paddingTop: '1rem' }}

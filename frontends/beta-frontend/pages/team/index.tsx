@@ -8,6 +8,7 @@ import { Player } from '@/shared/models/Player';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { TeamModifiers } from '@/shared/models/TeamModifiers';
 import { useTeamFormationValidationRepository } from '../api/team/useTeamFormationValidationRepository';
+import TeamViewNew from '@/shared/components/Team/TeamViewNew';
 
 const Team: NextPage = () => {
   const { data: userData, status: sessionStatus } = useSession({
@@ -44,7 +45,6 @@ const Team: NextPage = () => {
     teamModifiers: TeamModifiers,
   ) => {
     try {
-      console.log(players);
       const response = await updateTeam(players, teamModifiers);
       if (response.status == 500 || response.status == 400) {
         setAlert({
@@ -66,13 +66,21 @@ const Team: NextPage = () => {
   };
 
   return (
-    <TeamView
+    // <TeamView
+    //   setAlert={setAlert}
+    //   alert={alert}
+    //   teamFormationValidation={formationValidation}
+    //   isEditing
+    //   team={{ ...data, players: teamPlayers }}
+    //   onTeamUpdate={handleTeamUpdate}></TeamView>
+    <TeamViewNew
       setAlert={setAlert}
       alert={alert}
       teamFormationValidation={formationValidation}
       isEditing
       team={{ ...data, players: teamPlayers }}
-      onTeamUpdate={handleTeamUpdate}></TeamView>
+      onTeamUpdate={handleTeamUpdate}
+    />
   );
 };
 

@@ -1508,6 +1508,8 @@ components:
           example: John Doe
         position:
           $ref: "#/components/schemas/PlayerPosition"
+        preferredPosition:
+          $ref: "#/components/schemas/PlayerPosition"
         playerOrder:
           $ref: "#/components/schemas/PlayerOrder"
         playerOrderDestinationPitchArea:

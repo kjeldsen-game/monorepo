@@ -1,12 +1,12 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
-import SelectInput from '../Common/SelectInput';
 import {
   HorizontalPressure,
   Tactic,
   TeamModifiers,
   VerticalPressure,
 } from '@/shared/models/TeamModifiers';
+import SelectInput from '../../Common/SelectInput';
 
 interface TeamModifiersFormProps {
   teamModifiers: TeamModifiers | undefined;
@@ -26,7 +26,8 @@ const TeamModifiersForm: React.FC<TeamModifiersFormProps> = ({
         display: 'flex',
         flexDirection: 'column',
         minWidth: 120,
-        marginLeft: '1rem',
+        // marginLeft: '1rem',
+        padding: '10px',
       }}>
       <Typography align="center" variant="h6">
         Team Modifiers

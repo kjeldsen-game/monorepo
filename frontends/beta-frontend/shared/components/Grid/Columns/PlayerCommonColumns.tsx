@@ -14,7 +14,6 @@ import { playerSkillsColumns } from './PlayerSkillsColumns';
 import { baseColumnConfig, leftColumnConfig } from './ColumnsConfig';
 import { PlayerPositionSelect } from '../../PlayerPositionSelect';
 import { Player } from '@/shared/models/Player';
-import SelectInput from '@mui/material/Select/SelectInput';
 import { positionComparator } from '@/shared/utils/GridUtils';
 
 export const playerCommonColumns = (
@@ -62,13 +61,42 @@ export const playerCommonColumns = (
               }
               value={
                 PlayerPosition[
-                  params.row.position as keyof typeof PlayerPosition
+                  params.row.preferredPosition as keyof typeof PlayerPosition
                 ] ?? undefined
               }
             />
           );
         }
 
+        const position = params.row
+          .preferredPosition as keyof typeof PlayerPosition;
+        const initials = getPositionInitials(position);
+
+        return (
+          <div
+            style={{
+              color: 'black',
+              padding: '2px 8px',
+              width: '42px',
+              height: '24px',
+              borderRadius: '5px',
+              textAlign: 'center',
+              background: PlayerPositionColorNew[position],
+            }}>
+            {initials}
+          </div>
+        );
+      },
+    },
+    {
+      ...baseColumnConfig,
+      field: 'actualPlayerPosition',
+      renderHeader: () => <div>Act. POS</div>,
+      headerAlign: 'center' as GridAlignment,
+      align: 'center' as GridAlignment,
+      sortComparator: positionComparator,
+      valueGetter: (params: GridValueGetterParams) => params.row,
+      renderCell: (params) => {
         const position = params.row.position as keyof typeof PlayerPosition;
         const initials = getPositionInitials(position);
 

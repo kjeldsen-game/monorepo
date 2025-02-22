@@ -162,7 +162,11 @@ public class TeamDelegate implements TeamApiDelegate {
         // Different user than the team owner is accessing the team
         Team team = getTeamUseCase.get(TeamId.of(teamId));
         TeamResponse response = TeamMapper.INSTANCE.map(team);
-        //System.out.println(response.toString());
+
+        // Hide modifiers
+//        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
+//            response.setTeamModifiers(null);
+//        }
 
         List<PlayerResponse> players = playerReadRepository.findByTeamId(TeamId.of(teamId))
             .stream()
@@ -200,13 +204,16 @@ public class TeamDelegate implements TeamApiDelegate {
             .map(update -> new UpdateTeamPlayersUseCase.PlayerEdit(
                 update.getId(),
                 PlayerStatus.valueOf(update.getStatus().name()),
-                PlayerPosition.valueOf(update.getPosition().name()),
+                update.getPosition() != null
+                    ? PlayerPosition.valueOf(update.getPosition().name())
+                    : null,
                 PlayerOrder.valueOf(update.getPlayerOrder().name()),
                 update.getPlayerOrderDestinationPitchArea() != null
                     ? PitchArea.valueOf(update.getPlayerOrderDestinationPitchArea().name())
                     : null
             ))
             .collect(Collectors.toList());
+
 
         TeamModifiers teamModifiers = TeamMapper.INSTANCE.map(editTeamRequest.getTeamModifiers());
         updateTeamModifiersUseCase.update(teamId, teamModifiers);

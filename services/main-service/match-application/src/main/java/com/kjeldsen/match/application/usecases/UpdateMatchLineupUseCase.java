@@ -40,7 +40,7 @@ public class UpdateMatchLineupUseCase {
                 .filter(playerDTO -> playerDTO.getId().equals(player.getId()))
                 .findFirst();
             matchingPlayerDTO.ifPresent(playerDTO -> {
-                playerDTO.setPosition(player.getPosition().name());
+                playerDTO.setPosition(player.getPosition() != null ? player.getPosition().name() : null);
                 playerDTO.setStatus(player.getStatus().name());
                 playerDTO.setPlayerOrder(player.getPlayerOrder().name());
                 if (player.getPlayerOrderDestinationPitchArea() != null) {
@@ -104,7 +104,7 @@ public class UpdateMatchLineupUseCase {
             .teamId(player.getTeamId())
             .teamRole(teamRole)
             .playerOrderDestinationPitchArea(player.getPlayerOrderDestinationPitchArea() != null ? PitchArea.valueOf(player.getPlayerOrderDestinationPitchArea()) : null)
-            .position(PlayerPosition.valueOf(player.getPosition()))
+            .position(player.getPosition() != null ? PlayerPosition.valueOf(player.getPosition()) : null)
             .skills(skills)
             .playerOrder(PlayerOrder.valueOf(player.getPlayerOrder()))
             .build();

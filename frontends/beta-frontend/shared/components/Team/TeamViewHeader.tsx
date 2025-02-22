@@ -1,7 +1,6 @@
 import { Box, Collapse, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import TeamDetails from '../TeamDetails';
-import TeamModifiersForm from './TeamModifiers';
 
 import {
   HorizontalPressure,
@@ -10,7 +9,8 @@ import {
   VerticalPressure,
 } from '@/shared/models/TeamModifiers';
 import { getModifierDescription } from '@/shared/utils/TeamModifiersUtils';
-import PressureDescriptionItem from './PressureDescriptionItem';
+import PressureDescriptionItem from './Modifiers/PressureDescriptionItem';
+import TeamModifiersForm from './Modifiers/TeamModifiers';
 
 type TeamModifierChangeHandler = (
   value: Tactic | VerticalPressure | HorizontalPressure,
@@ -45,13 +45,8 @@ const TeamViewHeader: React.FC<TeamViewHeaderProps> = ({
           display: 'flex',
           alignItems: 'center',
           height: '100%',
-          padding: '10px',
-          margin: '20px',
-          width: '30%',
         }}>
-        <TeamDetails name={name} />
-        {/* <PlayerTactics /> */}
-        {isEditing && (
+        {isEditing && teamModifiers && (
           <TeamModifiersForm
             teamModifiers={teamModifiers}
             handleModifierChange={handleTeamModifierChange}
@@ -60,38 +55,39 @@ const TeamViewHeader: React.FC<TeamViewHeaderProps> = ({
       </Box>
       <Box
         sx={{
-          width: '70%',
           height: '250px',
           padding: '10px',
           overflow: 'scroll',
         }}>
-        <div
-          style={{
-            borderRadius: '8px',
-            padding: '10px',
-            maxHeight: '100%',
-            overflowY: 'auto',
-            background: 'white',
-          }}>
-          <Box
-            sx={{
-              justifyContent: 'space-between',
+        {teamModifiers && (
+          <div
+            style={{
+              borderRadius: '8px',
+              padding: '10px',
+              maxHeight: '100%',
+              overflowY: 'auto',
+              background: 'white',
             }}>
-            <PressureDescriptionItem
-              name={'Tactic'}
-              description={tacticDescription}
-            />
+            <Box
+              sx={{
+                justifyContent: 'space-between',
+              }}>
+              <PressureDescriptionItem
+                name={'Tactic'}
+                description={tacticDescription}
+              />
 
-            <PressureDescriptionItem
-              name={'Horizontal Pressure'}
-              description={horizontalPressureDescription}
-            />
-            <PressureDescriptionItem
-              name={'Vertical Pressure'}
-              description={verticalPressureDescription}
-            />
-          </Box>
-        </div>
+              <PressureDescriptionItem
+                name={'Horizontal Pressure'}
+                description={horizontalPressureDescription}
+              />
+              <PressureDescriptionItem
+                name={'Vertical Pressure'}
+                description={verticalPressureDescription}
+              />
+            </Box>
+          </div>
+        )}
       </Box>
     </>
   );
