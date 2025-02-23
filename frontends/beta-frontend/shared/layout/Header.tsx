@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   AppBar,
   Box,
@@ -19,12 +19,14 @@ import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { User } from 'next-auth';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
+import { useRouter } from 'next/router';
 
 interface SignedUserProps {
   user?: User;
 }
 
 const SignedUser: FC<SignedUserProps> = ({ user }) => {
+  const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,6 +39,12 @@ const SignedUser: FC<SignedUserProps> = ({ user }) => {
   const handleLogout = async () => {
     await signOut();
   };
+
+  // useEffect(() => {
+  //   if (!user?.email) {
+  //     router.push('/signin');
+  //   }
+  // }, [user, router]);
 
   return (
     <>
@@ -77,7 +85,8 @@ const SignedUser: FC<SignedUserProps> = ({ user }) => {
 
 export const Header: FC = () => {
   const { status, data } = useSession();
-
+  // console.log(status);
+  // console.log(data);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
