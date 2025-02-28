@@ -7,12 +7,14 @@ interface TooltipDataColProps {
   stats: RStats;
   sx?: SxProps;
   heading?: string;
+  showAll?: boolean;
 }
 
 const TooltipDataCol: React.FC<TooltipDataColProps> = ({
   stats,
   sx = {},
   heading,
+  showAll = false,
 }) => {
   return (
     <Grid item xs={6} sx={{ ...sx }} paddingX={'20px'}>
@@ -22,16 +24,32 @@ const TooltipDataCol: React.FC<TooltipDataColProps> = ({
       <TooltipDataItem title={'Skill Points'} value={stats.skillPoints} />
       <TooltipDataItem title={'Performance'} value={stats.performance} />
 
-      {stats.assistance != null ? (
-        <TooltipDataItem title={'Assistance'} value={stats.assistance} />
+      {showAll ? (
+        <>
+          {stats.assistance != null ? (
+            <TooltipDataItem title={'Assistance'} value={stats.assistance} />
+          ) : null}
+          <TooltipDataItem title={'Carryover'} value={stats.carryover || 0} />
+        </>
       ) : (
-        <TooltipDataItem title={'Carryover'} value={stats.carryover} />
+        <TooltipDataItem title={'Carryover'} value={stats.carryover || 0} />
       )}
-      <TooltipDataItem
-        sx={{ borderTop: '1px solid black' }}
-        title={'Total'}
-        value={stats.total}
-      />
+
+      {showAll ? (
+        <>
+          <TooltipDataItem
+            sx={{ borderTop: '1px solid black' }}
+            title={'Total'}
+            value={stats.total}
+          />
+        </>
+      ) : (
+        <TooltipDataItem
+          sx={{ borderTop: '1px solid black' }}
+          title={'Total'}
+          value={stats.skillPoints + stats.performance}
+        />
+      )}
     </Grid>
   );
 };

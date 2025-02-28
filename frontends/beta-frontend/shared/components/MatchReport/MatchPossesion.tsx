@@ -1,20 +1,19 @@
-import { Play } from '@/shared/models/MatchReport';
-import Box from '@mui/material/Box';
-import MatchReportItemMessage from './MatchReportItemMessage';
+import { Box } from '@mui/material';
+import React from 'react';
+import MatchReportItem from './MatchReportItem';
 
-interface MatchReportItemProps {
-  event: Play;
-  sx?: React.CSSProperties;
+interface MatchPossesionProps {
+  possesion: any;
   homeId: string;
   awayId: string;
 }
 
-export const MatchReportItem: React.FC<MatchReportItemProps> = ({
-  sx,
-  event,
+const MatchPossesion: React.FC<MatchPossesionProps> = ({
+  possesion,
   homeId,
+  awayId,
 }) => {
-  console.log(event);
+  console.log(possesion);
   const formatClock = (clock: number): string => {
     const totalMinutes = Math.floor(clock / 4);
     const seconds = (clock % 4) * 15;
@@ -38,28 +37,35 @@ export const MatchReportItem: React.FC<MatchReportItemProps> = ({
         textAlign={'center'}
         sx={{ background: '#A3A3A3', width: '40px' }}
         borderRadius={'5px'}>
-        {/* {formatClock(event.clock)} */}
+        {formatClock(possesion[0].clock)}
         {/* {event.clock}:00 */}
       </Box>
       <Box
+        paddingY={'10px'}
         display={'flex'}
-        // justifyContent={
-        //   event.duel.initiator.teamId != homeId ? 'start' : 'end'
-        // }
-      >
+        // sx={{ background: 'red' }}
+        flexDirection={'column'}
+        alignItems={
+          possesion[0].duel.initiator.teamId != homeId ? 'start' : 'end'
+        }>
         <Box
           // textAlign={event.duel.initiator.teamId != homeId ? 'left' : 'right'}
-          textAlign={'justify'}>
-          <MatchReportItemMessage
-            event={event}
-            homeId={homeId}
-            duel={event.duel}
-            type={event.action}
-          />
+          textAlign={'justify'}
+          sx={{ width: '80%' }}>
+          {possesion.map((possesion, index) => {
+            return (
+              <MatchReportItem
+                key={index}
+                event={possesion}
+                homeId={homeId}
+                awayId={awayId}
+              />
+            );
+          })}
         </Box>
       </Box>
     </Box>
   );
 };
 
-export default MatchReportItem;
+export default MatchPossesion;

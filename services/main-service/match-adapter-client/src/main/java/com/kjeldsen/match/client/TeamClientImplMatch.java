@@ -23,7 +23,6 @@ public class TeamClientImplMatch implements TeamClientMatch {
             return webClient.get()
                 .uri("/team/{id}", teamId)
                 .header("X-Internal-API-Key", "my-secret-key")
-//          .header("Authorization", "Bearer " + token)
                 .retrieve()
                 .onStatus(HttpStatusCode::is5xxServerError, response ->
                     response.bodyToMono(String.class)

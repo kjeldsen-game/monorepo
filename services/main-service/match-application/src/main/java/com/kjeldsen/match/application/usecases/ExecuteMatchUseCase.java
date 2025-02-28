@@ -90,6 +90,7 @@ public class ExecuteMatchUseCase {
 
     private void buildTeam(TeamRole role, com.kjeldsen.match.domain.entities.Team team, String teamId) {
         TeamDTO teamDTO = teamClient.getTeam(teamId, SecurityUtils.getCurrentUserToken());
+        System.out.println(teamDTO);
         Map<PlayerStatus, List<Player>> players = getDefaultLineup(role, teamDTO.getPlayers());
         team.setBench(players.get(PlayerStatus.BENCH));
         team.setPlayers(players.get(PlayerStatus.ACTIVE));

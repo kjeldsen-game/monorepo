@@ -30,16 +30,22 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({
   teamColor,
 }) => {
   const { data: session } = useSession();
+
   const { data } = useTeamRepository(teamId, session?.accessToken);
 
   const { t } = useTranslation(['game']);
 
   const filterTeamPlayers = (players: Player[], data: any) => {
-    if (data != undefined) {
-      return data.filter((player: Player) =>
-        players.some((p) => p.id === player.id),
-      );
-    }
+    if (!data) return [];
+
+    return data
+      .filter((player: Player) => players.some((p) => p.id === player.id))
+      .map((player: Player) => {
+        const matchedPlayer = players.find((p) => p.id === player.id);
+        return matchedPlayer
+          ? { ...player, position: matchedPlayer.position }
+          : player;
+      });
   };
 
   const memoizedColumns = useMemo(() => simpleTeamColumn(t), [teamId]);

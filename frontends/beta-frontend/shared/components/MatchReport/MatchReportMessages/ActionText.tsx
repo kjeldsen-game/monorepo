@@ -5,15 +5,8 @@ interface ActionTextProps {
 }
 
 const ActionText = ({ children }: ActionTextProps) => {
-  return (
-    <span
-      style={{
-        fontWeight: 'bold',
-      }}>
-      {' '}
-      {children}{' '}
-    </span>
-  );
+  const text = children === 'SHOOT' ? 'SHOT' : children;
+  return <span style={{ textTransform: 'lowercase' }}> {text} </span>;
 };
 
 export default ActionText;

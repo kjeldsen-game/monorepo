@@ -29,7 +29,14 @@ const CustomTooltip = styled(
   }: CustomTooltipProps) => {
     const [open, setOpen] = useState(false);
 
-    const handleTooltipOpen = () => setOpen(true);
+    const handleTooltipOpen = () => {
+      if (!open) {
+        setTimeout(() => {
+          setOpen(true);
+        }, 500);
+      }
+    };
+
     const handleTooltipClose = () => setOpen(false);
 
     return (
@@ -37,7 +44,7 @@ const CustomTooltip = styled(
         {...props}
         open={open}
         onClose={handleTooltipClose}
-        disableHoverListener
+        // disableHoverListener
         title={
           <Box
             sx={{ color: 'black' }}
@@ -88,7 +95,7 @@ const CustomTooltip = styled(
   },
 )({
   [`& .${tooltipClasses.tooltip}`]: {
-    maxWidth: 500,
+    maxWidth: 600,
     backgroundColor: 'white',
     border: '2px solid #FF3F84',
     borderRadius: '8px',

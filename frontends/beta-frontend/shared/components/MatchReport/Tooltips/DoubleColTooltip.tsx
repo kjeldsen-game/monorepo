@@ -28,10 +28,12 @@ const DoubleColTooltip = ({
             <TooltipDataCol
               heading={formatName(attackerName)}
               stats={initiatorStats}
+              showAll={true}
             />
             <TooltipDataCol
               heading={formatName(defenderName)}
               stats={challengerStats}
+              showAll={true}
             />
           </Grid>
         </Box>

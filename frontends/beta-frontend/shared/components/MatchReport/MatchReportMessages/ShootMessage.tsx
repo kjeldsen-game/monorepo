@@ -17,8 +17,18 @@ const ShootMessage = ({
   result,
   event,
 }: MessageProps) => {
+  const { label: initLabel, color: initColor } = getRangeLabel(
+    duel.initiatorStats.total,
+    DENOMINATIONS_RANGES,
+  );
+
+  const { label: challLabel, color: challColor } = getRangeLabel(
+    duel.challengerStats.total,
+    DENOMINATIONS_RANGES,
+  );
+
   return (
-    <span style={{ fontSize: '12px' }}>
+    <span style={{ fontSize: '12px', textAlign: 'justify' }}>
       In the{' '}
       <PitchAreaTooltip pitchArea={event.duel.pitchArea}>
         {convertSnakeCaseToTitleCase(duel.pitchArea)}
@@ -30,19 +40,15 @@ const ShootMessage = ({
       />
       attempted a
       <SingleColTooltip stats={duel.initiatorStats}>
-        <QualityText>
-          {getRangeLabel(duel.initiatorStats.total, DENOMINATIONS_RANGES)}
-        </QualityText>
+        <QualityText textColor={initColor}>{initLabel}</QualityText>
       </SingleColTooltip>{' '}
-      <ActionText> {action}</ActionText>, Goalkeeper{' '}
+      <ActionText>{action}</ActionText>, Goalkeeper{' '}
       <MessageText
         children={`${duel.challenger?.name} [${getPositionInitials(duel.challenger?.position)}]`}
         matchEventSide={challengerEventSide}
       />
       <SingleColTooltip stats={duel.challengerStats}>
-        <QualityText>
-          {getRangeLabel(duel.challengerStats.total, DENOMINATIONS_RANGES)}
-        </QualityText>
+        <QualityText textColor={challColor}>{challLabel}</QualityText>
       </SingleColTooltip>{' '}
       save attempt, which led to{' '}
       <DoubleColTooltip

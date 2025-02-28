@@ -4,10 +4,7 @@ import com.kjeldsen.match.domain.entities.Action;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.Play;
 import com.kjeldsen.match.domain.entities.Player;
-import com.kjeldsen.match.domain.entities.duel.Duel;
-import com.kjeldsen.match.domain.entities.duel.DuelDisruptor;
-import com.kjeldsen.match.domain.entities.duel.DuelOrigin;
-import com.kjeldsen.match.domain.entities.duel.DuelType;
+import com.kjeldsen.match.domain.entities.duel.*;
 import com.kjeldsen.match.domain.execution.DuelDTO;
 import com.kjeldsen.match.domain.execution.DuelExecution;
 import com.kjeldsen.match.domain.execution.DuelParams;
@@ -222,7 +219,6 @@ public class Game {
                 .append(play.getDuel().getReceiver() != null ? " to " + play.getDuel().getReceiver().getName() : "")
                 .append(play.getDuel().getReceiver() != null ? " (" + play.getDuel().getReceiver().getPosition() + ")" : "");
         state.getRecorder().record(detail.toString(), state, GameProgressRecord.Type.SUMMARY, GameProgressRecord.DuelStage.AFTER);
-
         //log.debug("Play complete:\n{}", play);
 
         GameState resultingGameState = switch (outcome.getResult()) {
@@ -328,8 +324,10 @@ public class Game {
         Optional<BallState> fromModifier = checkModifiers(state, play);
         BallState newBallState;
         if (fromModifier.isPresent()) {
+            System.out.println("I am present modifier");
             newBallState = fromModifier.get();
         } else {
+            System.out.println("I am not present modifier");
             PitchArea playerArea;
             /*
             if (play.getDuel().getType().movesBall()) {
@@ -344,14 +342,20 @@ public class Game {
                 playerArea = currentArea;
             }*/
             playerArea = currentArea;
-
-            newBallState = new BallState(play.getDuel().getChallenger(), playerArea, state.getBallState().getHeight());
+            // Attacker lose the positional duel but we still wanna have in the Tackle duel as attacker
+            if (play.getDuel().getType().equals(DuelType.POSITIONAL) && play.getDuel().getResult() == DuelResult.LOSE) {
+                System.out.println("Last duel was positional and the duel was lost so i am doing something");
+                newBallState = new BallState(play.getDuel().getInitiator(), state.getBallState().getArea(), state.getBallState().getHeight());
+            } else {
+                newBallState = new BallState(play.getDuel().getChallenger(), playerArea, state.getBallState().getHeight());
+            }
         }
 
         return Optional.of(state)
             .map((before) ->
                 GameState.builder()
-                    .turn(before.getTurn() == Turn.HOME ? Turn.AWAY : Turn.HOME)
+                    .turn(play.getDuel().getType().equals(DuelType.POSITIONAL) && play.getDuel().getResult() == DuelResult.LOSE ? before.getTurn() : before.getTurn() == Turn.HOME ? Turn.AWAY : Turn.HOME)
+//                    .turn(before.getTurn() == Turn.HOME ? Turn.AWAY : Turn.HOME) // TODO
                     .clock(before.getClock() + play.getAction().getDuration())
                     .home(before.getHome())
                     .away(before.getAway())
