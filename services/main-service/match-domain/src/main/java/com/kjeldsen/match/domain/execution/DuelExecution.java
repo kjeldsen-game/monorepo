@@ -166,6 +166,9 @@ public class DuelExecution {
     // Ball control follows a positional duel. Here the factors to determine a winner are (1) skill
     // points, (2) performance, and (3) the assistance carryover from the positional duel.
     public static DuelDTO handleBallControlDuel(DuelParams params) {
+
+        log.info("I am in the ball control duel initiator={} challenger={}", params.getInitiator().getName(), params.getChallenger().getName());
+
         GameState state = params.getState();
         Player initiator = params.getInitiator();
         Player challenger = params.getChallenger();

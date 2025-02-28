@@ -24,6 +24,7 @@ class PlayerMapperTest {
 
         Player player = Player.builder()
             .id(playerId)
+            .teamId(Team.TeamId.of("teamId"))
             .name(playerName)
             .age(playerAge)
             .position(PlayerPosition.FORWARD)

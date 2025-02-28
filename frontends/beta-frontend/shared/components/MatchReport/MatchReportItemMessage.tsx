@@ -30,18 +30,23 @@ export interface MessageProps {
 }
 
 export const getRangeLabel = (
-  score: number,
+  value: number | undefined,
   ranges: DuelResultRange[],
-): string => {
-  if (score < ranges[0].min) {
-    return ranges[0].label;
-  } else if (score > ranges[ranges.length - 1].max) {
-    return ranges[ranges.length - 1].label;
+) => {
+  if (!value) return { label: 'Unknown', color: '#000000' };
+  if (value < ranges[0].min) {
+    return { label: ranges[0].label, color: ranges[0].color };
+  } else if (value > ranges[ranges.length - 1].max) {
+    return {
+      label: ranges[ranges.length - 1].label,
+      color: ranges[ranges.length - 1].color,
+    };
   }
-  return (
-    ranges.find((range) => score >= range.min && score <= range.max)?.label ||
-    'Unknown'
-  );
+
+  const range = ranges.find((r) => value >= r.min && value <= r.max);
+  return range
+    ? { label: range.label, color: range.color }
+    : { label: 'Unknown', color: '#000000' };
 };
 
 const MatchReportItemMessage: React.FC<MatchReportItemMessageProps> = ({
@@ -63,14 +68,16 @@ const MatchReportItemMessage: React.FC<MatchReportItemMessageProps> = ({
   return (
     <>
       {type === 'PASS' && (
-        <PassMessage
-          duel={duel}
-          event={event}
-          initiatorEventSide={eventSides.initiatorEventSide}
-          challengerEventSide={eventSides.challengerEventSide}
-          result={duel.result}
-          action={type}
-        />
+        <>
+          <PassMessage
+            duel={duel}
+            event={event}
+            initiatorEventSide={eventSides.initiatorEventSide}
+            challengerEventSide={eventSides.challengerEventSide}
+            result={duel.result}
+            action={type}
+          />
+        </>
       )}
       {type === 'POSITION' && (
         <PositionMessage

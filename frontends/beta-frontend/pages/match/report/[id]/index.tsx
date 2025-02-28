@@ -17,6 +17,8 @@ const MatchReport: NextPage = () => {
     isLoading,
   } = useMatchReportRepository(useRouter().query.id, data?.accessToken);
 
+  console.log(report);
+
   if (!report) {
     return <CircularProgress></CircularProgress>;
   }

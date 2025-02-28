@@ -1,15 +1,17 @@
 import { ReactNode } from 'react';
+import { text } from 'stream/consumers';
 
 interface QualityTextProps {
   children: ReactNode;
+  textColor: string;
 }
 
-const QualityText = ({ children }: QualityTextProps) => {
+const QualityText = ({ children, textColor }: QualityTextProps) => {
   return (
     <span
       style={{
         fontWeight: 'normal',
-        fontStyle: 'italic',
+        color: textColor,
       }}>
       {' '}
       {children}{' '}

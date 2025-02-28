@@ -60,7 +60,8 @@ public class ChallengerSelection {
         // The ball control duel happens directly after a positional duel is lost, so the challenger
         // here is the player that started and lost the positional duel
         return state.lastPlay()
-            .map(play -> play.getDuel().getInitiator())
+            .map(play -> play.getDuel().getChallenger())
+//            .map(play -> play.getDuel().getInitiator()) // TODO
             .orElseThrow(
                 () -> new GameStateException(state, "A positional duel must be played first"));
     }

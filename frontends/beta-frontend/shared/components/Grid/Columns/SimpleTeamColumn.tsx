@@ -4,6 +4,7 @@ import {
   PlayerPositionColorNew,
 } from '@/shared/models/PlayerPosition';
 import { formatName } from '@/shared/utils/MatchReportUtils';
+import { getPositionInitials } from '@/shared/utils/PlayerUtils';
 import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { GridAlignment } from '@mui/x-data-grid';
 import { TFunction } from 'i18next';
@@ -19,10 +20,7 @@ export const simpleTeamColumn = (t: TFunction) => {
       align: 'center' as GridAlignment,
       renderCell: (params) => {
         const position = params.row.position as keyof typeof PlayerPosition;
-        const initials = position
-          .split('_')
-          .map((word) => word.charAt(0).toUpperCase())
-          .join('');
+        const initials = getPositionInitials(position);
 
         return (
           <div

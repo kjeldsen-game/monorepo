@@ -738,6 +738,14 @@ components:
           $ref: "#/components/schemas/ActionResponse"
         duel:
           $ref: "#/components/schemas/DuelResponse"
+        ballState:
+          $ref: "#/components/schemas/BallStateResponse"
+
+    BallStateResponse:
+      type: object
+      properties:
+        height:
+          $ref: '#/components/schemas/BallHeight'
 
     ActionResponse:
       type: string
@@ -784,6 +792,13 @@ components:
           $ref: "#/components/schemas/DuelStats"
         pitchArea:
           $ref: "#/components/schemas/PitchArea"
+
+    BallHeight:
+      type: string
+      enum:
+        - GROUND
+        - LOW
+        - HIGH
 
     DuelResultResponse:
       type: string

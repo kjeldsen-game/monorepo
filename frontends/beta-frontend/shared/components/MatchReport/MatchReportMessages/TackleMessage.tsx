@@ -16,41 +16,47 @@ const TackleMessage = ({
   action,
   event,
 }: MessageProps) => {
+  const { label: initLabel, color: initColor } = getRangeLabel(
+    duel.initiatorStats.total,
+    DENOMINATIONS_RANGES,
+  );
+
+  const { label: challLabel, color: challColor } = getRangeLabel(
+    duel.challengerStats.total,
+    DENOMINATIONS_RANGES,
+  );
+
   return (
-    <span style={{ fontSize: '12px' }}>
-      Defender
+    <span style={{ fontSize: '12px', textAlign: 'justify' }}>
+      {/* In{' '}
+      <PitchAreaTooltip pitchArea={event.duel.pitchArea}>
+        {convertSnakeCaseToTitleCase(event.duel.pitchArea)}
+      </PitchAreaTooltip>{' '}
+      area */}
       <MessageText
         children={`${duel.initiator.name} [${getPositionInitials(duel.initiator.position)}]`}
         matchEventSide={initiatorEventSide}
       />{' '}
-      , positioned in the{' '}
-      <PitchAreaTooltip pitchArea={event.duel.pitchArea}>
-        {convertSnakeCaseToTitleCase(duel.pitchArea)}
-      </PitchAreaTooltip>{' '}
-      area, made a{' '}
+      attempted a
       <SingleColTooltip stats={duel.initiatorStats}>
-        <QualityText>
-          {getRangeLabel(duel.initiatorStats.total, DENOMINATIONS_RANGES)}
-        </QualityText>
-      </SingleColTooltip>{' '}
-      <ActionText>TACKLE</ActionText>, Attacker
+        <QualityText textColor={initColor}>{initLabel}</QualityText>
+      </SingleColTooltip>
+      dribble,
       <MessageText
         children={`${duel.challenger?.name} [${getPositionInitials(duel.challenger?.position)}]`}
         matchEventSide={challengerEventSide}
       />
-      attempted a
+      made a{' '}
       <SingleColTooltip stats={duel.challengerStats}>
-        <QualityText>
-          {getRangeLabel(duel.initiatorStats.total, DENOMINATIONS_RANGES)}
-        </QualityText>
+        <QualityText textColor={challColor}>{challLabel}</QualityText>
       </SingleColTooltip>
-      dribble,
+      <ActionText>TACKLE</ActionText>,
       {result === 'WIN' ? (
         <> attacker lost the ball.</>
       ) : (
         <> attacker controlled the ball.</>
       )}
-      {` [${event.homeScore}:${event.awayScore}]`}
+      {/* {` [${event.homeScore}:${event.awayScore}]`} */}
     </span>
   );
 };

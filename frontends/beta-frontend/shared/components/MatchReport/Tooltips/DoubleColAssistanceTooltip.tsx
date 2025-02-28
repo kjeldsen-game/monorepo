@@ -25,7 +25,7 @@ const DoubleColAssistanceTooltip = ({
       tooltipContent={
         <Box sx={{ color: 'black' }}>
           <Grid container>
-            <Grid item xs={6}>
+            <Grid>
               <Typography>{formatName(attackerName)}</Typography>
               {attackerStats.teamAssistance &&
                 Object.entries(attackerStats.teamAssistance).map(
@@ -43,7 +43,7 @@ const DoubleColAssistanceTooltip = ({
                 value={attackerStats.assistance}
               />
             </Grid>
-            <Grid item xs={6} paddingLeft={'40px'}>
+            <Grid paddingLeft={'40px'}>
               <Typography>{formatName(defenderName)}</Typography>
               {defenderStats.teamAssistance &&
                 Object.entries(defenderStats.teamAssistance).map(

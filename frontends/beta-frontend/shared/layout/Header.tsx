@@ -85,8 +85,6 @@ const SignedUser: FC<SignedUserProps> = ({ user }) => {
 
 export const Header: FC = () => {
   const { status, data } = useSession();
-  // console.log(status);
-  // console.log(data);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -114,7 +112,7 @@ export const Header: FC = () => {
             </Link>
           </Typography>
 
-          {status === 'authenticated' && !!data ? (
+          {status === 'authenticated' && !!data.user ? (
             <SignedUser user={data.user} />
           ) : (
             <Link href="/signin" passHref>

@@ -5,6 +5,7 @@ import {
   AUTH_CLIENT_SECRET,
   API_AUTH_ENDPOINT,
 } from '@/config';
+import { signOut } from 'next-auth/react';
 
 export default NextAuth({
   providers: [
@@ -80,9 +81,18 @@ export default NextAuth({
 
           if (res.status === 200) {
             const userData = await res.json();
+            if (Object.keys(userData).length === 0) {
+              console.log(
+                'User session is empty, lets signout and clear the session!',
+              );
+              signOut();
+              return { user: undefined, expires: '', accessToken: '' };
+            }
             session.user = userData; // Attach the user data to the session
           } else {
             console.error('Failed to fetch user data:', res.status);
+            signOut();
+            return { user: undefined, expires: '', accessToken: '' };
           }
         } catch (error) {
           console.error('Error fetching user data:', error);
