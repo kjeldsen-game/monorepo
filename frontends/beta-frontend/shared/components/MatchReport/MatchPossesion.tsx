@@ -52,13 +52,18 @@ const MatchPossesion: React.FC<MatchPossesionProps> = ({
           // textAlign={event.duel.initiator.teamId != homeId ? 'left' : 'right'}
           textAlign={'justify'}
           sx={{ width: '80%' }}>
-          {possesion.map((possesion, index) => {
+          {possesion.map((event: any, index: number) => {
+            const isLast = index === possesion.length - 1;
+            console.log(isLast);
+            console.log(index);
             return (
               <MatchReportItem
+                index={index}
                 key={index}
-                event={possesion}
+                event={event}
                 homeId={homeId}
                 awayId={awayId}
+                isLast={isLast}
               />
             );
           })}

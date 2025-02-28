@@ -29,11 +29,11 @@ const ShootMessage = ({
 
   return (
     <span style={{ fontSize: '12px', textAlign: 'justify' }}>
-      In the{' '}
+      {/* In the{' '}
       <PitchAreaTooltip pitchArea={event.duel.pitchArea}>
         {convertSnakeCaseToTitleCase(duel.pitchArea)}
       </PitchAreaTooltip>{' '}
-      area, attacker
+      area, attacker */}
       <MessageText
         children={`${duel.initiator.name} [${getPositionInitials(duel.initiator.position)}]`}
         matchEventSide={initiatorEventSide}
@@ -46,7 +46,8 @@ const ShootMessage = ({
       <MessageText
         children={`${duel.challenger?.name} [${getPositionInitials(duel.challenger?.position)}]`}
         matchEventSide={challengerEventSide}
-      />
+      />{' '}
+      made
       <SingleColTooltip stats={duel.challengerStats}>
         <QualityText textColor={challColor}>{challLabel}</QualityText>
       </SingleColTooltip>{' '}
@@ -58,7 +59,7 @@ const ShootMessage = ({
         challengerStats={duel.challengerStats}>
         {result === 'WIN' ? <>GOAL</> : <>NO GOAL</>}
       </DoubleColTooltip>
-      {` [${event.homeScore}:${event.awayScore}]`}.
+      .{/* {` [${event.homeScore}:${event.awayScore}]`}. */}
     </span>
   );
 };

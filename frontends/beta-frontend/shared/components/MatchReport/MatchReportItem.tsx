@@ -1,18 +1,24 @@
 import { Play } from '@/shared/models/MatchReport';
 import Box from '@mui/material/Box';
 import MatchReportItemMessage from './MatchReportItemMessage';
+import PitchAreaTooltip from './Tooltips/PitchAreaTooltip';
+import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 
 interface MatchReportItemProps {
   event: Play;
   sx?: React.CSSProperties;
   homeId: string;
   awayId: string;
+  index: number;
+  isLast: boolean;
 }
 
 export const MatchReportItem: React.FC<MatchReportItemProps> = ({
   sx,
   event,
   homeId,
+  index,
+  isLast,
 }) => {
   console.log(event);
   const formatClock = (clock: number): string => {
@@ -50,12 +56,26 @@ export const MatchReportItem: React.FC<MatchReportItemProps> = ({
         <Box
           // textAlign={event.duel.initiator.teamId != homeId ? 'left' : 'right'}
           textAlign={'justify'}>
+          {index === 0 && (
+            <span style={{ fontSize: '12px', textAlign: 'justify' }}>
+              In the{' '}
+              <PitchAreaTooltip pitchArea={event.duel.pitchArea}>
+                {convertSnakeCaseToTitleCase(event.duel.pitchArea)}
+              </PitchAreaTooltip>{' '}
+              area,
+            </span>
+          )}
           <MatchReportItemMessage
             event={event}
             homeId={homeId}
             duel={event.duel}
             type={event.action}
           />
+          {isLast && (
+            <span style={{ fontSize: '12px', textAlign: 'justify' }}>
+              {` [${event.homeScore}:${event.awayScore}]`}
+            </span>
+          )}{' '}
         </Box>
       </Box>
     </Box>

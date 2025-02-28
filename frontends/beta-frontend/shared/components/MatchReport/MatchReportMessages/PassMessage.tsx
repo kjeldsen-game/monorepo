@@ -16,11 +16,11 @@ const PassMessage = ({ duel, initiatorEventSide, event }: MessageProps) => {
 
   return (
     <span style={{ fontSize: '12px', textAlign: 'justify' }}>
-      In{' '}
+      {/* In{' '}
       <PitchAreaTooltip pitchArea={event.duel.pitchArea}>
         {convertSnakeCaseToTitleCase(event.duel.pitchArea)}
       </PitchAreaTooltip>{' '}
-      area
+      area */}
       <MessageText
         children={`${duel.initiator.name} [${getPositionInitials(duel.initiator.position)}]`}
         matchEventSide={initiatorEventSide}
@@ -34,7 +34,7 @@ const PassMessage = ({ duel, initiatorEventSide, event }: MessageProps) => {
         children={`${duel.receiver?.name} [${getPositionInitials(duel.receiver?.position)}]`}
         matchEventSide={initiatorEventSide}
       />
-      {`. [${event.homeScore}:${event.awayScore}]`}
+      .{/* {`. [${event.homeScore}:${event.awayScore}]`} */}
     </span>
   );
 };

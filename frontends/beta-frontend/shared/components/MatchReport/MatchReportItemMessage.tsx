@@ -68,14 +68,16 @@ const MatchReportItemMessage: React.FC<MatchReportItemMessageProps> = ({
   return (
     <>
       {type === 'PASS' && (
-        <PassMessage
-          duel={duel}
-          event={event}
-          initiatorEventSide={eventSides.initiatorEventSide}
-          challengerEventSide={eventSides.challengerEventSide}
-          result={duel.result}
-          action={type}
-        />
+        <>
+          <PassMessage
+            duel={duel}
+            event={event}
+            initiatorEventSide={eventSides.initiatorEventSide}
+            challengerEventSide={eventSides.challengerEventSide}
+            result={duel.result}
+            action={type}
+          />
+        </>
       )}
       {type === 'POSITION' && (
         <PositionMessage
