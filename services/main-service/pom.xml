@@ -34,6 +34,8 @@
         <module>market-adapter-publisher</module>
         <module>market-adapter-quartz</module>
         <module>market-adapter-client</module>
+        <module>auth-adapter-client</module>
+        <module>auth-adapter-publisher</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -305,6 +307,16 @@
     <dependencyManagement>
         <dependencies>
             <!-- Modules -->
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>auth-adapter-publisher</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>auth-adapter-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
                 <artifactId>league-adapter-rest</artifactId>

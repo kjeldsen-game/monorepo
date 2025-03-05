@@ -1,0 +1,34 @@
+[{
+  "id": "d1acbce5-ac43-423a-b402-0abc3941f51b",
+  "name": "aa",
+  "cantera": {
+    "score": 0,
+    "economyLevel": 0,
+    "traditionLevel": 0,
+    "buildingsLevel": 0
+  },
+  "economy": {
+    "balance": 1000000
+  },
+  "buildings": {
+    "freeSlots": 25,
+    "stadium": {
+      "seats": 5000,
+      "level": 1,
+      "maintenanceCost": 5000
+    }
+  },
+  "fans": {
+    "1": {
+      "loyalty": 50,
+      "totalFans": 10000
+    }
+  },
+  "teamModifiers": {
+    "tactic": "DOUBLE_TEAM",
+    "verticalPressure": "LOW_PRESSURE",
+    "horizontalPressure": "NO_HORIZONTAL_FOCUS"
+  },
+  "leagueId": "26ee661b-479c-46e4-88e0-6ba946edff11",
+  "players": []
+}]

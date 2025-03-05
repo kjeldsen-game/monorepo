@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>auth-application</artifactId>
+    <artifactId>auth-adapter-client</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -21,16 +21,18 @@
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>auth-domain</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>auth-adapter-authorization</artifactId>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>mockwebserver</artifactId>
+            <version>4.12.0</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers</artifactId>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>

@@ -65,15 +65,24 @@ export const connector = async (
     body: JSON.stringify(body),
   });
 
-  try {
-    const data = await response.json();
-    return data;
-  } catch (e) {
-    if (response.ok) {
-      console.log('Response is ok but no JSON');
+  if (!response.ok) {
+    let errorMessage = `HTTP ${response.status}`;
+    try {
+      const errorData = await response.json();
+      errorMessage += `: ${errorData.message || JSON.stringify(errorData)}`;
+    } catch (e) {
+      console.error('Error parsing response JSON:', e);
     }
+
+    throw new Error(errorMessage);
   }
-  return false;
+
+  try {
+    return await response.json();
+  } catch (e) {
+    console.log('Response is ok but no JSON');
+    return null;
+  }
 };
 
 export const connectorAuth = (url: string, method: Method, body?: unknown) => {

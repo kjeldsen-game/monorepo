@@ -12,6 +12,14 @@
     <modelVersion>4.0.0</modelVersion>
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>player-domain</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>domain</artifactId>
         </dependency>

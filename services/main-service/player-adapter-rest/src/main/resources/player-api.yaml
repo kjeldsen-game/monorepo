@@ -42,6 +42,12 @@ paths:
             default: 0
             type: integer
             format: int32
+        - name: userId
+          in: query
+          description: String value of user Id
+          required: false
+          schema:
+            type: string
       tags:
         - team
       responses:
