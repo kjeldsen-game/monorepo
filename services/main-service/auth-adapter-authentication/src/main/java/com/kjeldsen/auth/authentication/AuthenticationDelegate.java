@@ -9,24 +9,24 @@ import com.kjeldsen.auth.authentication.model.TokenRequest;
 import com.kjeldsen.auth.authentication.model.TokenResponse;
 import com.kjeldsen.auth.authentication.model.UserDetailsResponse;
 import com.kjeldsen.auth.domain.User;
-import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
+import com.kjeldsen.auth.domain.clients.TeamClientAuth;
+import com.kjeldsen.auth.domain.clients.models.TeamDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class AuthenticationDelegate implements AuthApiDelegate {
 
-    private final TeamReadRepository teamReadRepository;
     private final GetUserUseCase getUserUseCase;
     private final RegisterUserUseCase registerUserUseCase;
     private final GenerateTokenUseCase generateTokenUseCase;
+    private final TeamClientAuth teamClientAuth;
 
     @Override
     public ResponseEntity<UserDetailsResponse> me() {
@@ -48,15 +48,10 @@ public class AuthenticationDelegate implements AuthApiDelegate {
     }
 
     private UserDetailsResponse buildUserDetailsResponse(User user) {
-        Optional<Team> team = teamReadRepository.findByUserId(user.getId());
-        if (team.isEmpty()) {
+        List<TeamDTO> teamDTOs = teamClientAuth.getTeam(null, user.getId());
+        if (teamDTOs.isEmpty()) {
             throw new RuntimeException("Team not found");
         }
-
-        UserDetailsResponse details = new UserDetailsResponse();
-        details.setEmail(user.getEmail());
-        details.setId(user.getId());
-        details.setTeamId(team.get().getId().value());
-        return details;
+        return new UserDetailsResponse(user.getId(), user.getEmail(), teamDTOs.get(0).getId());
     }
 }

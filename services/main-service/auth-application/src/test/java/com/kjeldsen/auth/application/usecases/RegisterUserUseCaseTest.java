@@ -2,20 +2,19 @@ package com.kjeldsen.auth.application.usecases;
 
 import com.kjeldsen.auth.domain.Role;
 import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.clients.TeamClientAuth;
+import com.kjeldsen.auth.domain.clients.models.TeamDTO;
+import com.kjeldsen.auth.domain.publishers.UserRegisterPublisher;
 import com.kjeldsen.auth.domain.repositories.UserReadRepository;
 import com.kjeldsen.auth.domain.repositories.UserWriteRepository;
-import com.kjeldsen.player.application.usecases.CreateTeamUseCase;
-import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.repositories.FindTeamsQuery;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
+import com.kjeldsen.player.domain.events.UserRegisterEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -28,11 +27,11 @@ class RegisterUserUseCaseTest {
 
     private final UserReadRepository userReadRepository = Mockito.mock(UserReadRepository.class);
     private final UserWriteRepository userWriteRepository = Mockito.mock(UserWriteRepository.class);
-    private final TeamReadRepository teamReadRepository = Mockito.mock(TeamReadRepository.class);
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
-    private final CreateTeamUseCase createTeamUseCase = Mockito.mock(CreateTeamUseCase.class);
+    private final TeamClientAuth mockedTeamClientAuth = Mockito.mock(TeamClientAuth.class);
+    private final UserRegisterPublisher mockedUserRegisterPublisher = Mockito.mock(UserRegisterPublisher.class);
     private final RegisterUserUseCase registerUserUseCase = new RegisterUserUseCase(
-        userReadRepository, userWriteRepository, teamReadRepository, passwordEncoder, createTeamUseCase);
+        userReadRepository, userWriteRepository, passwordEncoder, mockedTeamClientAuth, mockedUserRegisterPublisher);
 
     @Test
     @DisplayName("Should throw error is email is already Taken")
@@ -49,9 +48,8 @@ class RegisterUserUseCaseTest {
     public void should_throw_error_is_team_name_already_taken() {
         String teamName = "team";
         when(userReadRepository.findByEmail("email")).thenReturn(Optional.empty());
-        when(teamReadRepository.findByTeamName(teamName))
-            .thenReturn(Optional.of(Team.builder().name(teamName).build()));
-
+        when(mockedTeamClientAuth.getTeam(teamName, null))
+            .thenReturn(List.of(TeamDTO.builder().name(teamName).build()));
         assertEquals("Team name taken", assertThrows(RuntimeException.class, () -> {
             registerUserUseCase.register("email", "password", teamName);
         }).getMessage());
@@ -61,8 +59,8 @@ class RegisterUserUseCaseTest {
     @DisplayName("Should register user")
     public void should_register_user() {
         when(userReadRepository.findByEmail("email")).thenReturn(Optional.empty());
-        when(teamReadRepository.findByTeamName("team"))
-            .thenReturn(Optional.empty());
+        when(mockedTeamClientAuth.getTeam("team", null))
+            .thenReturn(Collections.emptyList());
 
         User savedUser = new User();
         savedUser.setId(java.util.UUID.randomUUID().toString());
@@ -80,6 +78,6 @@ class RegisterUserUseCaseTest {
             return true;
         }));
 
-        verify(createTeamUseCase, times(1)).create(eq("team"), any(), any());
+        verify(mockedUserRegisterPublisher, times(1)).publishUserRegisterEvent(any(UserRegisterEvent.class));
     }
 }

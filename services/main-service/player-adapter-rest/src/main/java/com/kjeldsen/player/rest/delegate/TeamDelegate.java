@@ -146,12 +146,15 @@ public class TeamDelegate implements TeamApiDelegate {
     }
 
     @Override
-    public ResponseEntity<List<TeamResponse>> getAllTeams(String name, Integer size, Integer page) {
+    public ResponseEntity<List<TeamResponse>> getAllTeams(String name, Integer size, Integer page, String userId) {
         FindTeamsQuery query = FindTeamsQuery.builder()
             .name(name)
             .size(size)
             .page(page)
+            .userId(userId)
             .build();
+
+        System.out.println(query.getUserId());
         List<Team> teams = teamReadRepository.find(query);
         List<TeamResponse> response = teams.stream().map(TeamMapper.INSTANCE::map).toList();
         return ResponseEntity.ok(response);

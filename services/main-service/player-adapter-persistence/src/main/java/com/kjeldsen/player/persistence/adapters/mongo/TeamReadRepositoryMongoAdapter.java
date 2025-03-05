@@ -31,7 +31,9 @@ public class TeamReadRepositoryMongoAdapter implements TeamReadRepository {
 
     @Override
     public List<Team> find(FindTeamsQuery query) {
+        System.out.println(query.getUserId());
         Example<Team> teamDocumentExample = Example.of(Team.builder()
+            .userId(query.getUserId() != null ? query.getUserId() : null)
             .name(query.getName() != null ? query.getName() : null)
             .build());
         Pageable pageable = PageRequest.of(query.getPage(), query.getSize());

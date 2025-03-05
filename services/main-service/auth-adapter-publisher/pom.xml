@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>auth-application</artifactId>
+    <artifactId>auth-adapter-publisher</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -21,15 +21,6 @@
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>auth-domain</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>auth-adapter-authorization</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

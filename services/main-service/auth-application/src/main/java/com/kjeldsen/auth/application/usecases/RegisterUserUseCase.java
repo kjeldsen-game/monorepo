@@ -2,19 +2,20 @@ package com.kjeldsen.auth.application.usecases;
 
 import com.kjeldsen.auth.domain.Role;
 import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.clients.TeamClientAuth;
+import com.kjeldsen.auth.domain.clients.models.TeamDTO;
+import com.kjeldsen.auth.domain.publishers.UserRegisterPublisher;
 import com.kjeldsen.auth.domain.repositories.UserReadRepository;
 import com.kjeldsen.auth.domain.repositories.UserWriteRepository;
-import com.kjeldsen.player.application.usecases.CreateTeamUseCase;
-import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.repositories.FindTeamsQuery;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
+import com.kjeldsen.domain.EventId;
+import com.kjeldsen.player.domain.events.UserRegisterEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Component
@@ -24,18 +25,20 @@ public class RegisterUserUseCase {
 
     private final UserReadRepository userReadRepository;
     private final UserWriteRepository userWriteRepository;
-    private final TeamReadRepository teamReadRepository;
     private final PasswordEncoder passwordEncoder;
-    private final CreateTeamUseCase createTeamUseCase;
+    private final TeamClientAuth teamClientAuth;
+    private final UserRegisterPublisher userRegisterPublisher;
 
     public void register(String email, String password, String inputTeamName) {
         log.info("RegisterUserUseCase for email {} team {} password ****", email, inputTeamName);
+
         if (userReadRepository.findByEmail(email).isPresent()) {
             throw new RuntimeException("Username taken");
         }
 
-        Optional<Team> team = teamReadRepository.findByTeamName(inputTeamName);
-        if (team.isPresent()) {
+        List<TeamDTO> teamDTOs = teamClientAuth.getTeam(inputTeamName, null);
+
+        if (!teamDTOs.isEmpty()) {
             throw new RuntimeException("Team name taken");
         }
 
@@ -45,6 +48,13 @@ public class RegisterUserUseCase {
         user.setPassword(encodedPassword);
         user.setRoles(Set.of(Role.USER));
         User registered = userWriteRepository.save(user);
-        createTeamUseCase.create(inputTeamName, 50, registered.getId());
+        userRegisterPublisher.publishUserRegisterEvent(
+            UserRegisterEvent.builder()
+                .id(EventId.generate())
+                .occurredAt(Instant.now())
+                .teamName(inputTeamName)
+                .userId(registered.getId())
+                .numberOfPlayers(50)
+                .build());
     }
 }

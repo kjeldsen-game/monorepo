@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public class FindTeamsQuery {
 
+    private String userId;
     private String name;
     private int size;
     private int page;
