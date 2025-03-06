@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMatchesRepository';
 import { useTranslation } from 'next-i18next';
-import incomingMatchesColumns from '@/shared/components/Grid/Columns/IncomingMatchesColumns';
 import { useRouter } from 'next/navigation';
 import { useMatchRepository } from '@/pages/api/match/useMatchRepository';
+import acceptedMatchesColumns from '@/shared/components/Grid/Columns/Challenge/AcceptedMatchesColumns';
 
 const PAGE_SIZE = 10;
 
@@ -39,11 +39,6 @@ const IncomingMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
     );
   }
 
-  const handleLineupChange = (value: number, matchId: string) => {
-    if (value === 0) return;
-    router.push(`/match/lineup/${matchId}`);
-  };
-
   const handlePlayButtonClick = (matchId: string) => {
     executeMatch(matchId);
   };
@@ -57,8 +52,7 @@ const IncomingMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
         rows={acceptedMatches ?? []}
         columns={
           userData?.user.teamId
-            ? incomingMatchesColumns(
-                handleLineupChange,
+            ? acceptedMatchesColumns(
                 handlePlayButtonClick,
                 userData?.user.teamId,
               )

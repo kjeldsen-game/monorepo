@@ -3,18 +3,14 @@ import {
   GridColDef,
   GridValueGetterParams,
 } from '@mui/x-data-grid';
-import { GridAlignment } from '@mui/x-data-grid';
 import Link from 'next/link';
-import {
-  PlayerPosition,
-  PlayerPositionColorNew,
-} from '@/shared/models/PlayerPosition';
-import { getPositionInitials } from '@/shared/utils/PlayerUtils';
+import { PlayerPosition } from '@/shared/models/PlayerPosition';
 import { playerSkillsColumns } from './PlayerSkillsColumns';
 import { baseColumnConfig, leftColumnConfig } from './ColumnsConfig';
 import { PlayerPositionSelect } from '../../PlayerPositionSelect';
 import { Player } from '@/shared/models/Player';
 import { positionComparator } from '@/shared/utils/GridUtils';
+import PlayerPositionLabel from '../../Player/PlayerPositionLabel';
 
 export const playerCommonColumns = (
   skills: boolean = false,
@@ -47,74 +43,25 @@ export const playerCommonColumns = (
       ...baseColumnConfig,
       field: 'playerPosition',
       renderHeader: () => <div>POS</div>,
-      headerAlign: 'center' as GridAlignment,
-      align: 'center' as GridAlignment,
       sortComparator: positionComparator,
       valueGetter: (params: GridValueGetterParams) => params.row,
-      renderCell: (params) => {
-        if (isEditing) {
-          return (
-            // <SelectInput/>
-            <PlayerPositionSelect
-              onChange={(value) =>
-                handlePlayerPositionChange(params.row, value)
-              }
-              value={
-                PlayerPosition[
-                  params.row.preferredPosition as keyof typeof PlayerPosition
-                ] ?? undefined
-              }
-            />
-          );
-        }
-
-        const position = params.row
-          .preferredPosition as keyof typeof PlayerPosition;
-        const initials = getPositionInitials(position);
-
-        return (
-          <div
-            style={{
-              color: 'black',
-              padding: '2px 8px',
-              width: '42px',
-              height: '24px',
-              borderRadius: '5px',
-              textAlign: 'center',
-              background: PlayerPositionColorNew[position],
-            }}>
-            {initials}
-          </div>
-        );
-      },
+      renderCell: (params) => (
+        <PlayerPositionLabel
+          position={params.row.prefferedPosition as keyof typeof PlayerPosition}
+        />
+      ),
     },
     {
       ...baseColumnConfig,
       field: 'actualPlayerPosition',
       renderHeader: () => <div>Act. POS</div>,
-      headerAlign: 'center' as GridAlignment,
-      align: 'center' as GridAlignment,
       sortComparator: positionComparator,
       valueGetter: (params: GridValueGetterParams) => params.row,
-      renderCell: (params) => {
-        const position = params.row.position as keyof typeof PlayerPosition;
-        const initials = getPositionInitials(position);
-
-        return (
-          <div
-            style={{
-              color: 'black',
-              padding: '2px 8px',
-              width: '42px',
-              height: '24px',
-              borderRadius: '5px',
-              textAlign: 'center',
-              background: PlayerPositionColorNew[position],
-            }}>
-            {initials}
-          </div>
-        );
-      },
+      renderCell: (params) => (
+        <PlayerPositionLabel
+          position={params.row.position as keyof typeof PlayerPosition}
+        />
+      ),
     },
     ...(skills ? playerSkillsColumns() : []),
   ];

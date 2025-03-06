@@ -1,13 +1,13 @@
 import { useAllTeamsRepository } from '../../api/team/useAllTeamsRepository';
 import Grid from '@/shared/components/Grid/Grid';
 import { Box } from '@mui/material';
-import { leagueColumns } from '../../../shared/components/Grid/Columns/LeagueColumns';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { Moment } from 'moment';
 import { useSession } from 'next-auth/react';
 import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMatchesRepository';
 import { useMatchRepository } from '@/pages/api/match/useMatchRepository';
+import challengeMatchesColumns from '@/shared/components/Grid/Columns/Challenge/ChallengeMatchesColumns';
 
 const PAGE_SIZE = 10;
 
@@ -50,7 +50,7 @@ const LeagueGrid: React.FC<LeagueGridProps> = () => {
         rows={
           allTeams?.filter((team) => team.id !== userData?.user.teamId) ?? []
         }
-        columns={leagueColumns(
+        columns={challengeMatchesColumns(
           t,
           handleChallengeButtonClick,
           allMatches?.map((match) => new Date(match.dateTime).getTime()) ?? [],

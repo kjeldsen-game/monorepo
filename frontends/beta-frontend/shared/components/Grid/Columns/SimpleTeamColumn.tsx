@@ -1,6 +1,5 @@
 import {
   PlayerPosition,
-  PlayerPositionColor,
   PlayerPositionColorNew,
 } from '@/shared/models/PlayerPosition';
 import { formatName } from '@/shared/utils/MatchReportUtils';
@@ -37,8 +36,6 @@ export const simpleTeamColumn = (t: TFunction) => {
           </div>
         );
       },
-      // minWidth: 20,
-      // maxWidth: 50,
       flex: 1,
     },
     {

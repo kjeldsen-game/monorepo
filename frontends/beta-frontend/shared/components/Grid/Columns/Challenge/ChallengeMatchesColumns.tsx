@@ -1,35 +1,27 @@
 import { CalendarButton } from '@/shared/components/CalendarButton';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
-import Link from 'next/link';
-import { leftColumnConfig, rightColumnConfig } from './ColumnsConfig';
+import { leftColumnConfig, rightColumnConfig } from '../ColumnsConfig';
 import { TFunction } from 'next-i18next';
 import { Moment } from 'moment';
+import ColHeader from '../Common/ColHeader';
+import ColLink from '../Common/ColLink';
 
-const leagueColumns = (
+const challengeMatchesColumns = (
   t: TFunction,
   handleChallengeButtonClick: (id: string, date: Moment) => void,
   disabledDates: number[],
 ): GridColDef[] => [
   {
     field: 'teamName',
-    renderHeader: () => <div style={{ paddingInline: '20px' }}>Team Name</div>,
+    renderHeader: () => <ColHeader header={'Team Name'} align={'left'} />,
     ...leftColumnConfig,
     renderCell: (params: GridCellParams) => (
-      <Link
-        style={{
-          paddingInline: '20px',
-          color: 'black',
-          textDecoration: 'none',
-        }}
-        passHref
-        href={`/team/${params.row.id}`}>
-        {params.row.name}
-      </Link>
+      <ColLink children={params.row.name} urlValue={`/team/${params.row.id}`} />
     ),
   },
   {
     field: 'manager',
-    renderHeader: () => <div style={{ paddingInline: '20px' }}>Manager</div>,
+    renderHeader: () => <ColHeader header={'Manager'} align={'right'} />,
     ...rightColumnConfig,
     renderCell: (params: GridCellParams) => (
       <CalendarButton
@@ -47,5 +39,4 @@ const leagueColumns = (
   },
 ];
 
-export { leagueColumns };
-export default leagueColumns;
+export default challengeMatchesColumns;
