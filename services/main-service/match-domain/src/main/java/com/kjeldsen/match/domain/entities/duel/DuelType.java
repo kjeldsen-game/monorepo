@@ -34,8 +34,8 @@ public enum DuelType {
         return switch (this) {
             case PASSING_LOW, PASSING_HIGH -> List.of(Action.POSITION);
             case DRIBBLE -> List.of(Action.POSITION);
-//            case POSITIONAL -> List.of(Action.TACKLE);
-            case POSITIONAL -> List.of(Action.PASS, Action.SHOOT);
+            case POSITIONAL -> List.of(Action.TACKLE);
+//            case POSITIONAL -> List.of(Action.PASS, Action.SHOOT);
             case BALL_CONTROL -> List.of(Action.PASS, Action.SHOOT);
             case LOW_SHOT, ONE_TO_ONE_SHOT, HEADER_SHOT, LONG_SHOT -> List.of(); // Goal - no valid actions available after scoring
         };
