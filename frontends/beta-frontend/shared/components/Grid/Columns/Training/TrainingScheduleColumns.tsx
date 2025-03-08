@@ -1,14 +1,14 @@
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import { Box } from '@mui/material';
-import { baseColumnConfig } from './ColumnsConfig';
 import { formatPlayerSkills } from '@/shared/utils/ColumnUtils';
 import {
   PlayerSkill,
   PlayerSkillToShortcut,
 } from '@/shared/models/PlayerSkill';
-import { playerCommonColumns } from './PlayerCommonColumns';
 import ColHeader from '../Common/ColHeader';
 import { playerSkillsColumns } from '../PlayerSkillsColumns';
+import { playerCommonColumns } from '../PlayerCommonColumns';
+import { baseColumnConfig } from '../ColumnsConfig';
 
 export const trainingScheduleColumns = (
   handleCellClick: (
@@ -91,7 +91,7 @@ export const trainingScheduleColumns = (
         </Box>
       ),
     },
-    playerSkillsColumns(),
+    ...playerSkillsColumns(),
     // {
     //   field: 'DEFENSIVE_POSITIONING',
     //   renderHeader: () => <div>DP</div>,
