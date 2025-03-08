@@ -4,13 +4,12 @@ import {
   baseColumnConfig,
   leftColumnConfig,
   rightColumnConfig,
-} from './ColumnsConfig';
-import Link from 'next/link';
+} from '../ColumnsConfig';
 import { formatDateAndTime } from '@/shared/utils/DateUtils';
-import LinkButton from '../../Common/LinkButton';
+import LinkButton from '../../../Common/LinkButton';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
-import ColHeader from './Common/ColHeader';
-import ColLink from './Common/ColLink';
+import ColHeader from '../Common/ColHeader';
+import ColLink from '../Common/ColLink';
 
 export const calendarColumns = (teamId?: string) => {
   const getLinkStyle = (isAwayTeam: boolean): React.CSSProperties => ({
@@ -25,7 +24,9 @@ export const calendarColumns = (teamId?: string) => {
       ...leftColumnConfig,
       maxWidth: 80,
       renderCell: (params: GridCellParams) => (
-        <Box>{params.api.getRowIndex(params.id) + 1}</Box>
+        <Box sx={{ paddingLeft: '10px' }}>
+          {params.api.getRowIndex(params.id) + 1}
+        </Box>
       ),
     },
 
@@ -34,25 +35,16 @@ export const calendarColumns = (teamId?: string) => {
       renderHeader: () => <ColHeader header={'Home'} />,
       ...baseColumnConfig,
       renderCell: (params: GridCellParams) => (
-        <ColLink sx={getLinkStyle()} urlValue={'`/team/${params.row.home.id}`'}>
+        <ColLink
+          sx={getLinkStyle(params.row.home.id === teamId)}
+          urlValue={`/team/${params.row.home.id}`}>
           {params.row.home.name}
         </ColLink>
-        // <Link
-        //   style={{
-        //     paddingInline: '20px',
-        //     color: params.row.home.id === teamId ? '#FF3F84' : 'black',
-        //     fontWeight: params.row.home.id === teamId ? 'bold' : 'normal',
-        //     textDecoration: 'none',
-        //   }}
-        //   passHref
-        //   href={`/team/${params.row.home.id}`}>
-
-        // </Link>
       ),
     },
     {
       field: 'date',
-      renderHeader: () => <div>Date</div>,
+      renderHeader: () => <ColHeader header="Date" />,
       ...baseColumnConfig,
       renderCell: (params: GridCellParams) => (
         <Box>{formatDateAndTime(params.row.dateTime)}</Box>
@@ -63,17 +55,11 @@ export const calendarColumns = (teamId?: string) => {
       renderHeader: () => <ColHeader header="Away" />,
       ...baseColumnConfig,
       renderCell: (params: GridCellParams) => (
-        <Link
-          style={{
-            paddingInline: '20px',
-            color: params.row.away.id === teamId ? '#FF3F84' : 'black',
-            fontWeight: params.row.away.id === teamId ? 'bold' : 'normal',
-            textDecoration: 'none',
-          }}
-          passHref
-          href={`/team/${params.row.away.id}`}>
+        <ColLink
+          sx={getLinkStyle(params.row.away.id === teamId)}
+          urlValue={`/team/${params.row.away.id}`}>
           {params.row.away.name}
-        </Link>
+        </ColLink>
       ),
     },
     {
@@ -83,7 +69,7 @@ export const calendarColumns = (teamId?: string) => {
       renderCell: (params: GridCellParams) => (
         <Box>
           {params.row.status === 'PLAYED' ? (
-            <ColLink urlValue={'`/match/report/${params.row.id}`'}>
+            <ColLink urlValue={`/match/report/${params.row.id}`}>
               {params.row.matchReport.homeScore}-
               {params.row.matchReport.awayScore}
             </ColLink>

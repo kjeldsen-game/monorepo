@@ -7,7 +7,7 @@ import { getPositionInitials } from '@/shared/utils/PlayerUtils';
 import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { GridAlignment } from '@mui/x-data-grid';
 import { TFunction } from 'i18next';
-
+// TODO can be removed probably, using PlayerCommonColumns instead
 export const simpleTeamColumn = (t: TFunction) => {
   const columns: GridColDef[] = [
     {

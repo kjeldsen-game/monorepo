@@ -1,14 +1,14 @@
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
-import { baseColumnConfig } from './ColumnsConfig';
+import { baseColumnConfig, rightColumnConfig } from './ColumnsConfig';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 import { playerCommonColumns } from './PlayerCommonColumns';
 import MarketButton from '../../Market/MarketButton';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { Player } from '@/shared/models/Player';
 import { PITCH_AREAS } from '@/shared/models/PitchArea';
-import { MenuItem, Select } from '@mui/material';
 import { PlayerOrder } from '@/shared/models/PlayerOrder';
 import SelectInput from '../../Common/SelectInput';
+import ColHeader from './Common/ColHeader';
 
 export const lineupColumn = (
   isEditing: boolean,
@@ -31,14 +31,14 @@ export const lineupColumn = (
   };
 
   const columns: GridColDef[] = [
-    ...playerCommonColumns(true, false),
+    ...playerCommonColumns(true, true, true),
     ...(isEditing
       ? [
           {
             ...baseColumnConfig,
             field: 'playerOrder',
-            renderHeader: () => <div>PO</div>,
-            renderCell: (params) => (
+            renderHeader: () => <ColHeader header={'PO'} />,
+            renderCell: (params: GridCellParams) => (
               <SelectInput
                 value={params.row.playerOrder || ''}
                 values={PlayerOrder}
@@ -54,20 +54,19 @@ export const lineupColumn = (
           {
             ...baseColumnConfig,
             field: 'playerOrder',
-            renderHeader: () => <div>PO</div>,
-            renderCell: (params) => (
+            renderHeader: () => <ColHeader header={'PO'} />,
+            renderCell: (params: GridCellParams) => (
               <div>{convertSnakeCaseToTitleCase(params.row.playerOrder)}</div>
             ),
           },
         ]),
-
     ...(isEditing
       ? [
           {
             ...baseColumnConfig,
             field: 'orderSpecification',
-            renderHeader: () => <div>PO2</div>,
-            renderCell: (params) =>
+            renderHeader: () => <ColHeader header={'PO2'} />,
+            renderCell: (params: GridCellParams) =>
               params.row.playerOrder === 'PASS_TO_AREA' ||
               params.row.playerOrder === 'DRIBBLE_TO_AREA' ? (
                 <SelectInput
@@ -85,7 +84,7 @@ export const lineupColumn = (
           {
             ...baseColumnConfig,
             field: 'orderSpecification',
-            renderHeader: () => <div>PO2</div>,
+            renderHeader: () => <ColHeader header={'PO2'} />,
             renderCell: (params) => (
               <div>
                 {convertSnakeCaseToTitleCase(
@@ -97,12 +96,17 @@ export const lineupColumn = (
         ]),
 
     {
-      ...baseColumnConfig,
+      ...rightColumnConfig,
       field: 'action',
-      renderHeader: () => <div>Action</div>,
+      renderHeader: () => <ColHeader header={'Action'} align={'right'} />,
       renderCell: (params: GridCellParams) => (
         <MarketButton
-          sx={{ height: '34px', minWidth: '34px', paddingX: '12px' }}
+          sx={{
+            height: '34px',
+            minWidth: '34px',
+            paddingX: '12px',
+            marginRight: '10px',
+          }}
           onClick={() => handleActionButtonClick(params.row)}>
           <PeopleAltIcon />
         </MarketButton>

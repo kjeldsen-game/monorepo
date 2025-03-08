@@ -2,7 +2,7 @@ import { Box, CircularProgress, Tab } from '@mui/material';
 import { useMemo, useState } from 'react';
 import Grid from '../Grid/Grid';
 import DashboardLink from '../DashboardLink';
-import { trainingColumn } from '../Grid/Columns/TrainingColumns';
+import { trainingColumn } from '../Grid/Columns/Training/TrainingColumns';
 import Collapsible from '../Collapsible';
 import CustomTabs from '../CustomTabs';
 import { CustomTabPanel } from '../Tab/CustomTabPanel';

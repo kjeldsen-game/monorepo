@@ -1,7 +1,24 @@
 import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { baseColumnConfig } from './ColumnsConfig';
 
-export const playerSkillsColumns = () => {
+export const playerSkillsColumns = (showPotential: boolean = false) => {
+  const getValue = (
+    field: string,
+    params: GridValueGetterParams,
+    skillType: 'actual' | 'potential',
+    fieldSecondary?: string,
+    headerNameSecondary?: string,
+  ) => {
+    return fieldSecondary &&
+      headerNameSecondary &&
+      params.row.actualSkills[fieldSecondary]?.PlayerSkills?.[skillType] !==
+        undefined
+      ? params.row.actualSkills[fieldSecondary]?.PlayerSkills?.[skillType]
+      : params.row.actualSkills[field]?.PlayerSkills?.[skillType] !== undefined
+        ? params.row.actualSkills[field]?.PlayerSkills?.[skillType]
+        : '';
+  };
+
   const createSkillColumnConfig = (
     field: string,
     headerName: string,
@@ -17,32 +34,27 @@ export const playerSkillsColumns = () => {
           <sup style={{ color: '#FF3F84' }}>{headerNameSecondary}</sup>
         </div>
       ),
-      minWidth: 50,
       valueGetter: (params: GridValueGetterParams) => {
-        const actual =
-          fieldSecondary &&
-          headerNameSecondary &&
-          params.row.actualSkills[fieldSecondary]?.PlayerSkills?.actual !==
-            undefined
-            ? params.row.actualSkills[fieldSecondary]?.PlayerSkills?.actual
-            : params.row.actualSkills[field]?.PlayerSkills?.actual !== undefined
-              ? params.row.actualSkills[field]?.PlayerSkills?.actual
-              : '';
-
-        const potential =
-          fieldSecondary &&
-          headerNameSecondary &&
-          params.row.actualSkills[fieldSecondary]?.PlayerSkills?.potential !==
-            undefined
-            ? params.row.actualSkills[fieldSecondary]?.PlayerSkills?.potential
-            : params.row.actualSkills[field]?.PlayerSkills?.potential !==
-                undefined
-              ? params.row.actualSkills[field]?.PlayerSkills?.potential
-              : '';
+        const actual = getValue(
+          field,
+          params,
+          'actual',
+          fieldSecondary,
+          headerNameSecondary,
+        );
+        const potential = getValue(
+          field,
+          params,
+          'potential',
+          fieldSecondary,
+          headerNameSecondary,
+        );
 
         return actual === '' && potential === ''
           ? ''
-          : `${actual}/${potential}`;
+          : showPotential
+            ? `${actual}/${potential}`
+            : `${actual}`;
       },
     };
   };

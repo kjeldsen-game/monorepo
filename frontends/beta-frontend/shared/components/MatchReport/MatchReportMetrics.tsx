@@ -12,6 +12,7 @@ import { TABLE_PLAYER_POSITION_ORDER } from '@/shared/models/PlayerPosition';
 import { useSession } from 'next-auth/react';
 import { positionComparator } from '@/shared/utils/GridUtils';
 import { GridRowClassNameParams } from '@mui/x-data-grid';
+import { playerCommonColumns } from '../Grid/Columns/PlayerCommonColumns';
 
 interface MatchReportMetricsProps {
   sx?: React.CSSProperties;
@@ -48,7 +49,10 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({
       });
   };
 
-  const memoizedColumns = useMemo(() => simpleTeamColumn(t), [teamId]);
+  const memoizedColumns = useMemo(
+    () => playerCommonColumns(true, false),
+    [teamId],
+  );
 
   return (
     <Box
