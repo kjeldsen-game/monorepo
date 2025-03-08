@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import TeamView from '@/shared/components/TeamView';
 import { CircularProgress } from '@mui/material';
 import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
@@ -66,13 +65,6 @@ const Team: NextPage = () => {
   };
 
   return (
-    // <TeamView
-    //   setAlert={setAlert}
-    //   alert={alert}
-    //   teamFormationValidation={formationValidation}
-    //   isEditing
-    //   team={{ ...data, players: teamPlayers }}
-    //   onTeamUpdate={handleTeamUpdate}></TeamView>
     <TeamViewNew
       setAlert={setAlert}
       alert={alert}

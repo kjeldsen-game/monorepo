@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { useSession } from 'next-auth/react';
 import React, { useMemo } from 'react';
-import { standingsColumns } from '../Grid/Columns/StandingsColumns';
+import { standingsColumns } from '../Grid/Columns/League/StandingsColumns';
 import Grid from '../Grid/Grid';
 import { CircularProgress } from '@mui/material';
 

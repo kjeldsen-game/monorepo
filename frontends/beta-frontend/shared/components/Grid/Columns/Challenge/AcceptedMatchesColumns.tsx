@@ -6,52 +6,42 @@ import {
   baseColumnConfig,
   leftColumnConfig,
   rightColumnConfig,
-} from './ColumnsConfig';
+} from '../ColumnsConfig';
 import { formatDateAndTime } from '@/shared/utils/DateUtils';
-import MarketButton from '../../Market/MarketButton';
-import LinkButton from '../../Common/LinkButton';
+import MarketButton from '../../../Market/MarketButton';
+import LinkButton from '../../../Common/LinkButton';
+import ColHeader from '../Common/ColHeader';
+import ColLink from '../Common/ColLink';
 
-const incomingMatchesColumns = (
-  handleLineupChange: (value: number, teamId: string) => void,
+const acceptedMatchesColumns = (
   handlePlayButtonClick: (matchId: string) => void,
   teamId: string,
 ): GridColDef[] => [
   {
     field: 'away',
     ...leftColumnConfig,
-    renderHeader: () => <div style={{ paddingInline: '20px' }}>Away</div>,
+    renderHeader: () => <ColHeader header="Away" align={'left'} />,
     renderCell: (params: GridCellParams) => (
-      <Link
-        style={{
-          paddingInline: '20px',
-          color: 'black',
-          textDecoration: 'none',
-        }}
-        passHref
-        href={`/team/${params.row.away.id}`}>
-        {params.row.away.name}
-      </Link>
+      <ColLink
+        children={params.row.away.name}
+        urlValue={`/team/${params.row.away.id}`}
+      />
     ),
   },
   {
     field: 'home',
     ...baseColumnConfig,
-    renderHeader: () => <div style={{ paddingInline: '20px' }}>Home</div>,
+    renderHeader: () => <ColHeader header="Home" />,
     renderCell: (params: GridCellParams) => (
-      <Link
-        style={{
-          color: 'black',
-          textDecoration: 'none',
-        }}
-        passHref
-        href={`/team/${params.row.home.id}`}>
-        {params.row.home.name}
-      </Link>
+      <ColLink
+        children={params.row.home.name}
+        urlValue={`/team/${params.row.home.id}`}
+      />
     ),
   },
   {
     field: 'dateTime',
-    renderHeader: () => <div style={{ paddingInline: '20px' }}>Date</div>,
+    renderHeader: () => <ColHeader header="Date" />,
     ...baseColumnConfig,
     renderCell: (params: GridCellParams) => {
       return formatDateAndTime(params.row?.dateTime);
@@ -59,7 +49,7 @@ const incomingMatchesColumns = (
   },
   {
     field: 'lineup',
-    renderHeader: () => <div>Lineup</div>,
+    renderHeader: () => <ColHeader header="Lineup" />,
     ...baseColumnConfig,
     renderCell: (params: GridCellParams) => {
       const team =
@@ -79,7 +69,7 @@ const incomingMatchesColumns = (
   },
   {
     field: 'actions',
-    renderHeader: () => <div style={{ paddingInline: '20px' }}>Actions</div>,
+    renderHeader: () => <ColHeader header="Actions" align={'right'} />,
     ...rightColumnConfig,
     renderCell: (params: GridCellParams) => {
       return (
@@ -97,25 +87,10 @@ const incomingMatchesColumns = (
               Change Lineup
             </LinkButton>
           </Box>
-          {/* <Select
-            variant="standard"
-            color="info"
-            sx={{ mx: '10px', height: '40px' }}
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Lineup"
-            value={0}
-            onChange={(item) =>
-              handleLineupChange(item.target.value as number, params.row.id)
-            }>
-            <MenuItem value={0}>Default</MenuItem>
-            <MenuItem value={1}>Specific lineup...</MenuItem>
-          </Select> */}
         </>
       );
     },
   },
 ];
 
-export { incomingMatchesColumns };
-export default incomingMatchesColumns;
+export default acceptedMatchesColumns;

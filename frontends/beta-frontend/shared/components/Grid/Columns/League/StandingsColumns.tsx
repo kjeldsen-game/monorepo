@@ -1,56 +1,56 @@
 import { Box } from '@mui/material';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
-import { baseColumnConfig, leftColumnConfig } from './ColumnsConfig';
-import Link from 'next/link';
+import {
+  baseColumnConfig,
+  leftColumnConfig,
+  rightColumnConfig,
+} from '../ColumnsConfig';
+import ColHeader from '../Common/ColHeader';
+import ColLink from '../Common/ColLink';
 
 export const standingsColumns = () => {
   const columns: GridColDef[] = [
     {
       field: 'position',
-      renderHeader: () => <div>Pos</div>,
+      renderHeader: () => <ColHeader header={'Pos'} align={'left'} />,
       ...leftColumnConfig,
       maxWidth: 50,
-      renderCell: (params: GridCellParams) => <Box>{params.row.position}</Box>,
+      renderCell: (params: GridCellParams) => (
+        <Box sx={{ paddingLeft: '10px' }}>{params.row.position}</Box>
+      ),
     },
     {
       field: 'team',
-      renderHeader: () => <div>Team</div>,
+      renderHeader: () => <ColHeader header={'Team'} />,
       ...baseColumnConfig,
       renderCell: (params: GridCellParams) => (
-        <Link
-          style={{
-            paddingInline: '20px',
-            color: 'black',
-            fontWeight: 'bold',
-            textDecoration: 'none',
-          }}
-          passHref
-          href={`/team/${params.row.id}`}>
-          {params.row.name}
-        </Link>
+        <ColLink
+          children={params.row.name}
+          urlValue={`/team/${params.row.id}`}
+        />
       ),
     },
     {
       field: 'wins',
-      renderHeader: () => <div>Wins</div>,
+      renderHeader: () => <ColHeader header={'Wins'} />,
       ...baseColumnConfig,
       renderCell: (params: GridCellParams) => <Box>{params.row.wins}</Box>,
     },
     {
       field: 'draws',
-      renderHeader: () => <div>Draws</div>,
+      renderHeader: () => <ColHeader header={'Draws'} />,
       ...baseColumnConfig,
       renderCell: (params: GridCellParams) => <Box>{params.row.draws}</Box>,
     },
     {
       field: 'losses',
-      renderHeader: () => <div>Losses</div>,
+      renderHeader: () => <ColHeader header={'Losses'} />,
       ...baseColumnConfig,
       renderCell: (params: GridCellParams) => <Box>{params.row.losses}</Box>,
     },
     {
       field: 'gamesPlayerd',
-      renderHeader: () => <div>Games Played</div>,
+      renderHeader: () => <ColHeader header={'Games Played'} />,
       ...baseColumnConfig,
       renderCell: (params: GridCellParams) => (
         <Box>{params.row.gamesPlayed}</Box>
@@ -58,7 +58,7 @@ export const standingsColumns = () => {
     },
     {
       field: 'score',
-      renderHeader: () => <div>Score</div>,
+      renderHeader: () => <ColHeader header={'Score'} />,
       ...baseColumnConfig,
       renderCell: (params: GridCellParams) => (
         <Box>
@@ -68,9 +68,11 @@ export const standingsColumns = () => {
     },
     {
       field: 'points',
-      renderHeader: () => <div>Points</div>,
-      ...baseColumnConfig,
-      renderCell: (params: GridCellParams) => <Box>{params.row.points}</Box>,
+      renderHeader: () => <ColHeader header={'Points'} align={'right'} />,
+      ...rightColumnConfig,
+      renderCell: (params: GridCellParams) => (
+        <Box sx={{ paddingRight: '10px' }}>{params.row.points}</Box>
+      ),
     },
   ];
 

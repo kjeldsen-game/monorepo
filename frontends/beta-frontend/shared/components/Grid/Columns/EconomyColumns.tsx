@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import { GridAlignment } from '@mui/x-data-grid';
 import { isNegative } from '@/shared/utils/EconomyUtils';
+import { baseColumnConfig } from './ColumnsConfig';
 
 export const economyColumns = () => {
   const columns: GridColDef[] = [
@@ -32,10 +33,8 @@ export const economyColumns = () => {
     {
       field: 'thisWeek',
       renderHeader: () => <div>This Week</div>,
-      headerAlign: 'center' as GridAlignment,
-      align: 'right' as GridAlignment,
+      ...baseColumnConfig,
       minWidth: 70,
-      flex: 1,
       renderCell: (params: GridCellParams) => (
         <Box
           sx={{
@@ -52,11 +51,9 @@ export const economyColumns = () => {
     },
     {
       field: 'thisSeason',
+      ...baseColumnConfig,
       renderHeader: () => <div>This Season</div>,
-      headerAlign: 'center' as GridAlignment,
-      align: 'right' as GridAlignment,
       minWidth: 70,
-      flex: 1,
       renderCell: (params: GridCellParams) => (
         <Box
           sx={{

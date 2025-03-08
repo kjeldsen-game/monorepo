@@ -1,13 +1,6 @@
-import {
-  PlayerPosition,
-  PlayerPositionColor,
-  PlayerPositionColorNew,
-} from '@/shared/models/PlayerPosition';
-import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 import { Box } from '@mui/material';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import { GridAlignment } from '@mui/x-data-grid';
-import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import { isNegative } from '@/shared/utils/EconomyUtils';
 import { playerCommonColumns } from './PlayerCommonColumns';
 

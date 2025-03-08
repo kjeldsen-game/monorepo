@@ -1,16 +1,9 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Collapsible from '@/shared/components/Collapsible';
-import Box from '@mui/material/Box';
-import Grid from '@/shared/components/Grid/Grid';
-import { players } from '@/data/SamplePlayerTraining';
-import { sampleTrainingColumn } from '@/data/sampleTrainingColumn';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useSession } from 'next-auth/react';
 import { useTrainingRepository } from '../api/training/useTrainingRepository';
 import TrainingView from '@/shared/components/Training/TrainingView';
-import { usePlayerRepository } from '../api/player/usePlayerRepository';
-import { useTeamRepository } from '../api/team/useTeamRepository';
 import { useScheduledTrainingRepository } from '../api/training/useScheduledTrainingRepository';
 
 const Training: NextPage = () => {

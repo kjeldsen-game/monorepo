@@ -1,12 +1,14 @@
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import { Box } from '@mui/material';
-import { baseColumnConfig } from './ColumnsConfig';
 import { formatPlayerSkills } from '@/shared/utils/ColumnUtils';
 import {
   PlayerSkill,
   PlayerSkillToShortcut,
 } from '@/shared/models/PlayerSkill';
-import { playerCommonColumns } from './PlayerCommonColumns';
+import ColHeader from '../Common/ColHeader';
+import { playerSkillsColumns } from '../PlayerSkillsColumns';
+import { playerCommonColumns } from '../PlayerCommonColumns';
+import { baseColumnConfig } from '../ColumnsConfig';
 
 export const trainingScheduleColumns = (
   handleCellClick: (
@@ -72,7 +74,7 @@ export const trainingScheduleColumns = (
     ...playerCommonColumns(true, false),
     {
       field: 'cs',
-      renderHeader: () => <div>CS</div>,
+      renderHeader: () => <ColHeader header={'CS'} />,
       ...baseColumnConfig,
       renderCell: (params: GridCellParams) => (
         <Box
@@ -89,78 +91,79 @@ export const trainingScheduleColumns = (
         </Box>
       ),
     },
-    {
-      field: 'DEFENSIVE_POSITIONING',
-      renderHeader: () => <div>DP</div>,
-      ...baseColumnConfig,
-      renderCell: (params: GridCellParams) => {
-        return renderSkillCell(
-          params,
-          PlayerSkill.DEFENSIVE_POSITIONING,
-          PlayerSkill.CONTROL,
-        );
-      },
-    },
-    {
-      field: 'BALL_CONTROL',
-      renderHeader: () => <div>BC</div>,
-      ...baseColumnConfig,
-      renderCell: (params: GridCellParams) => {
-        return renderSkillCell(
-          params,
-          PlayerSkill.BALL_CONTROL,
-          PlayerSkill.INTERCEPTIONS,
-        );
-      },
-    },
-    {
-      field: 'SCORE',
-      renderHeader: () => <div>SC</div>,
-      ...baseColumnConfig,
-      renderCell: (params: GridCellParams) => {
-        return renderSkillCell(
-          params,
-          PlayerSkill.SCORING,
-          PlayerSkill.ONE_ON_ONE,
-        );
-      },
-    },
-    {
-      field: 'PASSING',
-      renderHeader: () => <div>PA</div>,
-      ...baseColumnConfig,
-      renderCell: (params: GridCellParams) => {
-        return renderSkillCell(
-          params,
-          PlayerSkill.PASSING,
-          PlayerSkill.ORGANIZATION,
-        );
-      },
-    },
-    {
-      field: 'OFFENSIVE_POSITIONING',
-      renderHeader: () => <div>OP</div>,
-      ...baseColumnConfig,
-      renderCell: (params: GridCellParams) => {
-        return renderSkillCell(
-          params,
-          PlayerSkill.OFFENSIVE_POSITIONING,
-          PlayerSkill.REFLEXES,
-        );
-      },
-    },
-    {
-      field: 'TACKLING',
-      renderHeader: () => <div>TA</div>,
-      ...baseColumnConfig,
-      renderCell: (params: GridCellParams) => {
-        return renderSkillCell(
-          params,
-          PlayerSkill.TACKLING,
-          PlayerSkill.REFLEXES,
-        );
-      },
-    },
+    ...playerSkillsColumns(),
+    // {
+    //   field: 'DEFENSIVE_POSITIONING',
+    //   renderHeader: () => <div>DP</div>,
+    //   ...baseColumnConfig,
+    //   renderCell: (params: GridCellParams) => {
+    //     return renderSkillCell(
+    //       params,
+    //       PlayerSkill.DEFENSIVE_POSITIONING,
+    //       PlayerSkill.CONTROL,
+    //     );
+    //   },
+    // },
+    // {
+    //   field: 'BALL_CONTROL',
+    //   renderHeader: () => <div>BC</div>,
+    //   ...baseColumnConfig,
+    //   renderCell: (params: GridCellParams) => {
+    //     return renderSkillCell(
+    //       params,
+    //       PlayerSkill.BALL_CONTROL,
+    //       PlayerSkill.INTERCEPTIONS,
+    //     );
+    //   },
+    // },
+    // {
+    //   field: 'SCORE',
+    //   renderHeader: () => <div>SC</div>,
+    //   ...baseColumnConfig,
+    //   renderCell: (params: GridCellParams) => {
+    //     return renderSkillCell(
+    //       params,
+    //       PlayerSkill.SCORING,
+    //       PlayerSkill.ONE_ON_ONE,
+    //     );
+    //   },
+    // },
+    // {
+    //   field: 'PASSING',
+    //   renderHeader: () => <div>PA</div>,
+    //   ...baseColumnConfig,
+    //   renderCell: (params: GridCellParams) => {
+    //     return renderSkillCell(
+    //       params,
+    //       PlayerSkill.PASSING,
+    //       PlayerSkill.ORGANIZATION,
+    //     );
+    //   },
+    // },
+    // {
+    //   field: 'OFFENSIVE_POSITIONING',
+    //   renderHeader: () => <div>OP</div>,
+    //   ...baseColumnConfig,
+    //   renderCell: (params: GridCellParams) => {
+    //     return renderSkillCell(
+    //       params,
+    //       PlayerSkill.OFFENSIVE_POSITIONING,
+    //       PlayerSkill.REFLEXES,
+    //     );
+    //   },
+    // },
+    // {
+    //   field: 'TACKLING',
+    //   renderHeader: () => <div>TA</div>,
+    //   ...baseColumnConfig,
+    //   renderCell: (params: GridCellParams) => {
+    //     return renderSkillCell(
+    //       params,
+    //       PlayerSkill.TACKLING,
+    //       PlayerSkill.REFLEXES,
+    //     );
+    //   },
+    // },
   ];
 
   return columns;

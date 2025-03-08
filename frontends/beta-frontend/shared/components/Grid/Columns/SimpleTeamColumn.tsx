@@ -1,6 +1,5 @@
 import {
   PlayerPosition,
-  PlayerPositionColor,
   PlayerPositionColorNew,
 } from '@/shared/models/PlayerPosition';
 import { formatName } from '@/shared/utils/MatchReportUtils';
@@ -8,7 +7,7 @@ import { getPositionInitials } from '@/shared/utils/PlayerUtils';
 import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { GridAlignment } from '@mui/x-data-grid';
 import { TFunction } from 'i18next';
-
+// TODO can be removed probably, using PlayerCommonColumns instead
 export const simpleTeamColumn = (t: TFunction) => {
   const columns: GridColDef[] = [
     {
@@ -37,8 +36,6 @@ export const simpleTeamColumn = (t: TFunction) => {
           </div>
         );
       },
-      // minWidth: 20,
-      // maxWidth: 50,
       flex: 1,
     },
     {

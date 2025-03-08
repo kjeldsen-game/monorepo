@@ -57,7 +57,7 @@ const CalendarButton: React.FC<CalendarButtonProps> = ({
             borderColor: 'transparent',
           },
           borderRadius: '4px',
-          marginX: '10px',
+          marginInline: '10px',
         }}
         ref={buttonRef}
         onClick={handleButtonClick}>
