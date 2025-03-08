@@ -1,5 +1,6 @@
 package com.kjeldsen.match.domain.selection;
 
+import com.kjeldsen.match.domain.entities.duel.DuelResult;
 import com.kjeldsen.match.domain.entities.duel.DuelType;
 import com.kjeldsen.match.domain.state.GameState;
 import com.kjeldsen.match.domain.state.GameStateException;
@@ -60,10 +61,10 @@ public class ChallengerSelection {
         // The ball control duel happens directly after a positional duel is lost, so the challenger
         // here is the player that started and lost the positional duel
         return state.lastPlay()
+            // If the last play resulted in a win, then return null (no ball control duel is needed)
+            .filter(play -> !play.getDuel().getResult().equals(DuelResult.WIN))
             .map(play -> play.getDuel().getChallenger())
-//            .map(play -> play.getDuel().getInitiator()) // TODO
-            .orElseThrow(
-                () -> new GameStateException(state, "A positional duel must be played first"));
+            .orElse(null);
     }
 
     // Returns a defender to counter the challenger in a positional duel.

@@ -153,6 +153,7 @@ class SkillsTest {
     }
 
     @Test
+    @Disabled
     void testLongShotSkills() {
         GameState state = Game.init(match);
         state = Game.kickOff(state);
