@@ -46,7 +46,7 @@ export const playerCommonColumns = (
             renderCell: (params: GridCellParams) => (
               <PlayerPositionLabel
                 position={
-                  params.row.prefferedPosition as keyof typeof PlayerPosition
+                  params.row.preferredPosition as keyof typeof PlayerPosition
                 }
               />
             ),
