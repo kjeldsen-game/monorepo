@@ -29,11 +29,13 @@ const TooltipDataCol: React.FC<TooltipDataColProps> = ({
           {stats.assistance != null ? (
             <TooltipDataItem title={'Assistance'} value={stats.assistance} />
           ) : null}
-          <TooltipDataItem title={'Carryover'} value={stats.carryover || 0} />
+          {stats.carryover != null ? (
+            <TooltipDataItem title={'Carryover'} value={stats.carryover} />
+          ) : null}
         </>
-      ) : (
-        <TooltipDataItem title={'Carryover'} value={stats.carryover || 0} />
-      )}
+      ) : stats.carryover != null ? (
+        <TooltipDataItem title={'Carryover'} value={stats.carryover} />
+      ) : null}
 
       {showAll ? (
         <>
@@ -47,7 +49,7 @@ const TooltipDataCol: React.FC<TooltipDataColProps> = ({
         <TooltipDataItem
           sx={{ borderTop: '1px solid black' }}
           title={'Total'}
-          value={stats.skillPoints + stats.performance}
+          value={stats.skillPoints + stats.performance + (stats.carryover || 0)}
         />
       )}
     </Grid>

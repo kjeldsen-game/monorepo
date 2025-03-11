@@ -23,7 +23,7 @@ public class Carryover {
                 int initiatorTotal = duel.getInitiatorStats().getTotal();
                 int challengerTotal = duel.getChallengerStats().getTotal();
                 int diff = Math.abs(initiatorTotal - challengerTotal);
-                int carryover = duel.getChallenger() != null ? diff / 2 : diff / 4;
+                int carryover = diff / 2;
 
                 DuelRole winner =
                     initiatorTotal > challengerTotal

@@ -48,11 +48,6 @@ const PositionMessage = ({
     <>
       {duel.challenger != null ? (
         <span style={{ fontSize: '12px', textAlign: 'justify' }}>
-          {/* In{' '}
-          <PitchAreaTooltip pitchArea={event.duel.pitchArea}>
-            {convertSnakeCaseToTitleCase(event.duel.pitchArea)}
-          </PitchAreaTooltip>{' '}
-          area */}
           <MessageText
             children={`${duel.initiator.name} [${getPositionInitials(duel.initiator.position)}]`}
             matchEventSide={initiatorEventSide}
@@ -86,15 +81,11 @@ const PositionMessage = ({
             challengerStats={duel.challengerStats}>
             <QualityText textColor={posColor}>{posLabel}</QualityText>
           </DoubleColTooltip>
-          .{/* .{` [${event.homeScore}:${event.awayScore}]`} */}
+          .
         </span>
       ) : (
+        // TODO will be probably removed as the positional duel cannot be withuot challenger
         <span style={{ fontSize: '12px', textAlign: 'justify' }}>
-          {/* In{' '}
-          <PitchAreaTooltip pitchArea={event.duel.pitchArea}>
-            {convertSnakeCaseToTitleCase(event.duel.pitchArea)}
-          </PitchAreaTooltip>{' '}
-          area */}
           <MessageText
             children={`${duel.initiator.name} [${getPositionInitials(duel.initiator.position)}]`}
             matchEventSide={initiatorEventSide}
@@ -108,7 +99,6 @@ const PositionMessage = ({
           <SingleColTooltip stats={duel.initiatorStats}>
             <QualityText textColor={posColor}>{posLabel}</QualityText>
           </SingleColTooltip>
-          .{/* .{` [${event.homeScore}:${event.awayScore}]`} */}
         </span>
       )}
     </>

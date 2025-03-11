@@ -10,6 +10,7 @@ const QualityText = ({ children, textColor }: QualityTextProps) => {
   return (
     <span
       style={{
+        fontStyle: 'italic',
         fontWeight: 'normal',
         color: textColor,
       }}>
