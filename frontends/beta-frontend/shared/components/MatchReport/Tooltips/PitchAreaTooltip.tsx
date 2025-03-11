@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import CustomTooltip from './CustomTooltip';
 import { Box, Grid } from '@mui/material';
-import { PITCH_AREAS, PitchArea } from '@/shared/models/PitchArea';
+import { PITCH_AREAS } from '@/shared/models/PitchArea';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 
 interface PitchAreaTooltipProps {
@@ -23,7 +23,6 @@ const PitchAreaTooltip: React.FC<PitchAreaTooltipProps> = ({
                 <Box
                   sx={{
                     height: '30px',
-                    // border: '1px solid black',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -37,7 +36,7 @@ const PitchAreaTooltip: React.FC<PitchAreaTooltipProps> = ({
           </Grid>{' '}
         </Box>
       }>
-      {children}
+      <span style={{ fontStyle: 'italic' }}>{children}</span>
     </CustomTooltip>
   );
 };

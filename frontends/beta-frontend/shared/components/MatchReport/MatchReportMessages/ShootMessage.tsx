@@ -57,7 +57,9 @@ const ShootMessage = ({
         defenderName={duel.challenger?.name}
         initiatorStats={duel.initiatorStats}
         challengerStats={duel.challengerStats}>
-        {result === 'WIN' ? <>GOAL</> : <>NO GOAL</>}
+        <QualityText textColor={'black'}>
+          {result === 'WIN' ? <>GOAL</> : <>NO GOAL</>}
+        </QualityText>
       </DoubleColTooltip>
       .{/* {` [${event.homeScore}:${event.awayScore}]`}. */}
     </span>

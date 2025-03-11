@@ -4,8 +4,8 @@ import { TABLE_PLAYER_POSITION_ORDER } from '../models/PlayerPosition';
 export function positionComparator(a: Player, b: Player): number {
   // console.log('Comparing:', a, b);
 
-  const indexA = TABLE_PLAYER_POSITION_ORDER.indexOf(a.position);
-  const indexB = TABLE_PLAYER_POSITION_ORDER.indexOf(b.position);
+  const indexA = TABLE_PLAYER_POSITION_ORDER.indexOf(a.preferredPosition);
+  const indexB = TABLE_PLAYER_POSITION_ORDER.indexOf(b.preferredPosition);
 
   if (indexA !== indexB) {
     return (

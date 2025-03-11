@@ -84,16 +84,23 @@ public class DuelExecution {
         // In some situations it's possible that there is no challenger present because of rules
         // preventing a defender from being into two consecutive duels. In this case the duel is
         // automatically won by the initiator.
+        // TODO challenger should not be null this part could be removed later
         if (challenger == null) {
             int assistance =
                 (int) (adjustedAssistance.get(DuelRole.CHALLENGER)
                     * Assistance.assistanceFactor(state, DuelRole.CHALLENGER));
             challengerStats = DuelStats.builder()
+//                .skillPoints(0)
+//                .performance(0)
+//                .assistance(assistance)
+//                .teamAssistance(challengerTeamAssistance)
+//                .total(50)
+//                .build();
                 .skillPoints(0)
                 .performance(0)
-                .assistance(assistance)
+                .assistance(0)
                 .teamAssistance(challengerTeamAssistance)
-                .total(50)
+                .total(0)
                 .build();
             result = DuelResult.WIN;
         } else {
@@ -167,7 +174,8 @@ public class DuelExecution {
     // points, (2) performance, and (3) the assistance carryover from the positional duel.
     public static DuelDTO handleBallControlDuel(DuelParams params) {
 
-        log.info("I am in the ball control duel initiator={} challenger={}", params.getInitiator().getName(), params.getChallenger().getName());
+        log.info("I am in the ball control duel initiator={} challenger={}", params.getInitiator().getName(),
+            params.getChallenger() == null ? null : params.getChallenger().getName());
 
         GameState state = params.getState();
         Player initiator = params.getInitiator();
@@ -179,11 +187,16 @@ public class DuelExecution {
             DuelType.BALL_CONTROL,
             DuelRole.INITIATOR);
 
-        DuelStats challengerStats = buildDuelStats(
+        DuelStats challengerStats = params.getChallenger() != null ?  buildDuelStats(
             state,
             challenger,
             DuelType.BALL_CONTROL,
-            DuelRole.CHALLENGER);
+            DuelRole.CHALLENGER) : DuelStats.builder()
+            .skillPoints(0)
+            .performance(0)
+            .carryover(0)
+            .total(0)
+            .build();
 
         DuelResult result =
             (initiatorStats.getTotal() > challengerStats.getTotal())

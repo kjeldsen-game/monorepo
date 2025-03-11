@@ -8,7 +8,7 @@ import {
   tooltipClasses,
   Typography,
 } from '@mui/material';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 
 interface CustomTooltipProps {
   className?: string;
@@ -27,30 +27,43 @@ const CustomTooltip = styled(
     clickOpen = false,
     ...props
   }: CustomTooltipProps) => {
+    const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
+
     const [open, setOpen] = useState(false);
 
-    const handleTooltipOpen = () => {
+    const handleMouseEnter = () => {
       if (!open) {
-        setTimeout(() => {
+        hoverTimeout.current = setTimeout(() => {
           setOpen(true);
-        }, 500);
+        }, 1000);
       }
     };
 
-    const handleTooltipClose = () => setOpen(false);
+    const handleMouseLeave = () => {
+      if (open) {
+        return;
+      }
+      if (hoverTimeout.current) {
+        clearTimeout(hoverTimeout.current);
+        setOpen(false);
+      }
+    };
+
+    const handleTooltipClose = () => {
+      setOpen(false);
+      if (hoverTimeout.current) {
+        clearTimeout(hoverTimeout.current);
+      }
+    };
 
     return (
       <Tooltip
         {...props}
         open={open}
         onClose={handleTooltipClose}
-        // disableHoverListener
+        disableHoverListener
         title={
-          <Box
-            sx={{ color: 'black' }}
-            onMouseEnter={handleTooltipOpen}
-            // onMouseLeave={handleTooltipClose}
-          >
+          <Box sx={{ color: 'black' }}>
             <IconButton
               sx={{
                 width: '12px',
@@ -83,8 +96,8 @@ const CustomTooltip = styled(
         classes={{ popper: className }}
         arrow>
         <span
-          onMouseEnter={!clickOpen ? handleTooltipOpen : undefined}
-          onClick={clickOpen ? handleTooltipOpen : undefined}
+          onMouseLeave={() => handleMouseLeave()}
+          onMouseEnter={!clickOpen ? () => handleMouseEnter() : undefined}
           // onMouseEnter={handleTooltipOpen}
           // onMouseLeave={handleTooltipClose}
         >

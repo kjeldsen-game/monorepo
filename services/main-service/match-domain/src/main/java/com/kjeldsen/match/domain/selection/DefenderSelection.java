@@ -26,7 +26,7 @@ public class DefenderSelection {
                 (candidate.getPosition().isMidfielder() && !candidate.getPosition().isOffensive())
                     || candidate.getPosition().isWingback())
             .filter(candidate -> candidate.getPosition().coverage().contains(pitchArea))
-            .filter(candidate -> isFree(state, candidate))
+//            .filter(candidate -> isFree(state, candidate))
             .toList();
 
         if (candidates.isEmpty()) {
@@ -70,7 +70,7 @@ public class DefenderSelection {
             .filter(candidate -> candidate.getPosition().isDefender())
             .filter(candidate ->
                 candidate.getPosition().coverage().contains(pitchArea))
-            .filter(candidate -> isFree(state, candidate))
+//            .filter(candidate -> isFree(state, candidate))
             .toList();
 
         if (candidates.isEmpty()) {

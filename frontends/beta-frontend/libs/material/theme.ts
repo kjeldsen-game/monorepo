@@ -1,5 +1,5 @@
-import { createTheme } from '@mui/material/styles'
-import { red } from '@mui/material/colors'
+import { createTheme } from '@mui/material/styles';
+import { red } from '@mui/material/colors';
 
 // Create a theme instance.
 export const theme = createTheme({
@@ -17,4 +17,4 @@ export const theme = createTheme({
       main: red.A400,
     },
   },
-})
+});
