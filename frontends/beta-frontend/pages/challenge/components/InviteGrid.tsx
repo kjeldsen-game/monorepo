@@ -1,7 +1,7 @@
 import Grid from '@/shared/components/Grid/Grid';
 import { Box } from '@mui/material';
 import { useState } from 'react';
-import { inviteColumns } from '../../../shared/components/Grid/Columns/InviteColumns';
+import PendingMatchesColumns from '../../../shared/components/Grid/Columns/Challenge/PendingMatchesColumns';
 import { useSession } from 'next-auth/react';
 import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMatchesRepository';
 import { useTranslation } from 'next-i18next';
@@ -53,7 +53,7 @@ const InviteGrid: React.FC<InviteGridProps> = () => {
         rows={pendingMatches ?? []}
         columns={
           userData?.user.teamId
-            ? inviteColumns(
+            ? PendingMatchesColumns(
                 userData?.user.teamId,
                 handleMatchAccept,
                 handleMatchDecline,

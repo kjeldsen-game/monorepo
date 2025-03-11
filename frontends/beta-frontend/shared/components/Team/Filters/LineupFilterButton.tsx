@@ -21,7 +21,7 @@ const LineupFilterButton: React.FC<LineupFilterButtonProps> = ({
         background: '#FFF2CC',
         color: 'black',
         borderRadius: '10px',
-        padding: '0px',
+        padding: '0px 4px 0px 4px',
         '&:hover': {
           background: 'rgba(255, 242, 204, 0.5)',
         },

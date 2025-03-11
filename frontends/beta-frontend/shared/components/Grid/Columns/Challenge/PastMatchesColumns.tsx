@@ -1,14 +1,13 @@
-import { Button, MenuItem, Select } from '@mui/material';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
-import { GridAlignment } from '@mui/x-data-grid';
-import Link from 'next/link';
 import {
   baseColumnConfig,
   leftColumnConfig,
   rightColumnConfig,
-} from './ColumnsConfig';
-import MarketButton from '../../Market/MarketButton';
+} from '../ColumnsConfig';
+import MarketButton from '../../../Market/MarketButton';
 import { formatDateAndTime } from '@/shared/utils/DateUtils';
+import ColHeader from '../Common/ColHeader';
+import ColLink from '../Common/ColLink';
 
 const pastMatchesColumns = (
   onReportSelect: (matchId: string) => void,
@@ -16,39 +15,28 @@ const pastMatchesColumns = (
   {
     field: 'away',
     ...leftColumnConfig,
-    renderHeader: () => <div style={{ paddingInline: '20px' }}>Away</div>,
+    renderHeader: () => <ColHeader header={'Away'} align={'left'} />,
     renderCell: (params: GridCellParams) => (
-      <Link
-        style={{
-          paddingInline: '20px',
-          color: 'black',
-          textDecoration: 'none',
-        }}
-        passHref
-        href={`/team/${params.row.away.id}`}>
-        {params.row.away.name}
-      </Link>
+      <ColLink
+        children={params.row.away.name}
+        urlValue={`/team/${params.row.away.id}`}
+      />
     ),
   },
   {
     field: 'home',
     ...baseColumnConfig,
-    renderHeader: () => <div style={{ paddingInline: '20px' }}>Home</div>,
+    renderHeader: () => <ColHeader header={'Home'} />,
     renderCell: (params: GridCellParams) => (
-      <Link
-        style={{
-          color: 'black',
-          textDecoration: 'none',
-        }}
-        passHref
-        href={`/team/${params.row.home.id}`}>
-        {params.row.home.name}
-      </Link>
+      <ColLink
+        children={params.row.home.name}
+        urlValue={`/team/${params.row.home.id}`}
+      />
     ),
   },
   {
     field: 'dateTime',
-    renderHeader: () => <div style={{ paddingInline: '20px' }}>Date</div>,
+    renderHeader: () => <ColHeader header={'Date'} />,
     ...baseColumnConfig,
     renderCell: (params: GridCellParams) => {
       return formatDateAndTime(params.row?.dateTime);
@@ -56,7 +44,7 @@ const pastMatchesColumns = (
   },
   {
     field: 'reportButton',
-    renderHeader: () => <div style={{ paddingInline: '20px' }}>Report</div>,
+    renderHeader: () => <ColHeader header="Report" align={'right'} />,
     ...rightColumnConfig,
     renderCell: (params: GridCellParams) => {
       return (
@@ -70,5 +58,4 @@ const pastMatchesColumns = (
   },
 ];
 
-export { pastMatchesColumns };
 export default pastMatchesColumns;

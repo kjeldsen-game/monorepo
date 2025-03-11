@@ -256,6 +256,7 @@ const TeamViewNew: React.FC<TeamProps> = ({
             <LineupFilterButton name={'FW'} handleClick={setFilter} />
             <LineupFilterButton name={'ACTIVE'} handleClick={setFilter} />
             <LineupFilterButton name={'BENCH'} handleClick={setFilter} />
+            <LineupFilterButton name={'INACTIVE'} handleClick={setFilter} />
           </Box>
           <Box>
             <MarketButton
@@ -282,7 +283,9 @@ const TeamViewNew: React.FC<TeamProps> = ({
           rows={
             filter === 'ALL'
               ? players ?? []
-              : filter === 'ACTIVE' || filter === 'BENCH'
+              : filter === 'ACTIVE' ||
+                  filter === 'BENCH' ||
+                  filter === 'INACTIVE'
                 ? filterPlayersByStatus(players, filter)
                 : players?.filter((player) =>
                     POSITION_FILTER_MAP[filter]?.includes(

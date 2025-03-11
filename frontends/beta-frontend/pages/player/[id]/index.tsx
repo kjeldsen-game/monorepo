@@ -6,7 +6,6 @@ import PlayerDetails from '@/shared/components/PlayerDetails';
 import { PlayerStats } from '@/data/SamplePlayer';
 import { useRouter } from 'next/router';
 import PlayerAuctionCard from '@/shared/components/Player/PlayerAuctionCard';
-import { useState } from 'react';
 import { usePlayerRepository } from '@/pages/api/player/usePlayerRepository';
 import { useSession } from 'next-auth/react';
 import { useAuctionRepository } from '@/pages/api/market/useAuctionRepository';

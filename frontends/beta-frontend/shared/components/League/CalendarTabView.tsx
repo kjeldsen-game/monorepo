@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useMemo, useState } from 'react';
-import { calendarColumns } from '../Grid/Columns/CalendarColumns';
+import { calendarColumns } from '../Grid/Columns/League/CalendarColumns';
 import { getBackgroundColor } from '@/shared/utils/EconomyUtils';
 import styled from '@emotion/styled';
 import Grid from '../Grid/Grid';

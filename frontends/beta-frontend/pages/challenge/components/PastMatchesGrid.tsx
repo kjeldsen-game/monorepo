@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useAllPlayerMatchesRepository } from '@/pages/api/match/useAllPlayerMatchesRepository';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/navigation';
-import pastMatchesColumns from '@/shared/components/Grid/Columns/PastMatchesColumns';
+import pastMatchesColumns from '@/shared/components/Grid/Columns/Challenge/PastMatchesColumns';
 
 const PAGE_SIZE = 10;
 
