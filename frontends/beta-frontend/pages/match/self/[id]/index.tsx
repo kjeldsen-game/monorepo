@@ -71,7 +71,7 @@ const Team: NextPage = () => {
     let benchPlayers: any[] = [];
     let inactivePlayers: any[] = [];
 
-    if (!match?.away.specificLineup && data?.players) {
+    if (!match?.away?.specificLineup && data?.players) {
       lineupPlayers = filterPlayersByStatus(data?.players, 'ACTIVE');
       benchPlayers = filterPlayersByStatus(data?.players, 'BENCH');
       inactivePlayers = filterPlayersByStatus(data?.players, 'INACTIVE');
@@ -79,13 +79,13 @@ const Team: NextPage = () => {
       if (match?.away && data?.players) {
         lineupPlayers = filterPlayersByTeam(
           data?.players,
-          match?.away.players,
+          match?.away?.players,
           'ACTIVE',
         );
 
         benchPlayers = filterPlayersByTeam(
           data?.players,
-          match?.away.bench,
+          match?.away?.bench,
           'BENCH',
         );
 
@@ -93,10 +93,10 @@ const Team: NextPage = () => {
           data?.players
             .filter(
               (player) =>
-                !match?.away.players.some(
+                !match?.away?.players.some(
                   (lineupPlayer: Player) => lineupPlayer.id === player.id,
                 ) &&
-                !match?.away.bench.some(
+                !match?.away?.bench.some(
                   (benchPlayer: Player) => benchPlayer.id === player.id,
                 ),
             )
@@ -115,28 +115,28 @@ const Team: NextPage = () => {
     }
     const allPlayers = [...lineupPlayers, ...benchPlayers, ...inactivePlayers];
     setTeamPlayers2(allPlayers);
-  }, [data?.players, match?.away.players, match?.away.bench]);
+  }, [data?.players, match?.away?.players, match?.away?.bench]);
 
   useEffect(() => {
     let lineupPlayers: any[] = [];
     let benchPlayers: any[] = [];
     let inactivePlayers: any[] = [];
 
-    if (!match?.home.specificLineup && data?.players) {
+    if (!match?.home?.specificLineup && data?.players) {
       lineupPlayers = filterPlayersByStatus(data?.players, 'ACTIVE');
       benchPlayers = filterPlayersByStatus(data?.players, 'BENCH');
       inactivePlayers = filterPlayersByStatus(data?.players, 'INACTIVE');
     } else {
-      if (match?.home.specificLineup && data?.players) {
+      if (match?.home?.specificLineup && data?.players) {
         lineupPlayers = filterPlayersByTeam(
           data?.players,
-          match?.home.players,
+          match?.home?.players,
           'ACTIVE',
         );
 
         benchPlayers = filterPlayersByTeam(
           data?.players,
-          match?.home.bench,
+          match?.home?.bench,
           'BENCH',
         );
 
@@ -144,10 +144,10 @@ const Team: NextPage = () => {
           data?.players
             .filter(
               (player) =>
-                !match?.home.players.some(
+                !match?.home?.players.some(
                   (lineupPlayer: Player) => lineupPlayer.id === player.id,
                 ) &&
-                !match?.home.bench.some(
+                !match?.home?.bench.some(
                   (benchPlayer: Player) => benchPlayer.id === player.id,
                 ),
             )
@@ -166,7 +166,7 @@ const Team: NextPage = () => {
     }
     const allPlayers = [...lineupPlayers, ...benchPlayers, ...inactivePlayers];
     setTeamPlayers(allPlayers);
-  }, [data?.players, match?.home.players, match?.home.bench]);
+  }, [data?.players, match?.home?.players, match?.home?.bench]);
 
   const handleMatchTeamUpdate = async (
     players: Player[],
@@ -202,7 +202,6 @@ const Team: NextPage = () => {
     try {
       const response = await updateMatchTeam(players, teamModifiers, true);
       if (response.status == 500 || response.status == 400) {
-        console.log('Here ');
         setAlert({
           open: true,
           message: response.message,
@@ -243,7 +242,7 @@ const Team: NextPage = () => {
           team={{
             ...data,
             players: teamPlayers,
-            teamModifiers: match?.home.modifiers || data?.teamModifiers,
+            teamModifiers: match?.home?.modifiers || data?.teamModifiers,
           }}
           onTeamUpdate={handleMatchTeamUpdate}
         />
@@ -257,7 +256,7 @@ const Team: NextPage = () => {
           team={{
             ...data,
             players: teamPlayers2,
-            teamModifiers: match?.away.modifiers || data?.teamModifiers,
+            teamModifiers: match?.away?.modifiers || data?.teamModifiers,
           }}
           onTeamUpdate={handleMatchTeamUpdateAway}
         />
