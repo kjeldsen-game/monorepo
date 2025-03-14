@@ -19,6 +19,8 @@ const Team: NextPage = () => {
     userData?.accessToken,
   );
 
+  console.log(data);
+
   const { data: formationValidation, refetch } =
     useTeamFormationValidationRepository(
       userData?.user.teamId,

@@ -77,8 +77,12 @@ export const connector = async (
     throw new Error(errorMessage);
   }
 
-  return response;
-  response;
+  try {
+    return await response.json();
+  } catch (e) {
+    console.log('Response is ok but no JSON');
+    return response;
+  }
 };
 
 export const connectorAuth = (url: string, method: Method, body?: unknown) => {
