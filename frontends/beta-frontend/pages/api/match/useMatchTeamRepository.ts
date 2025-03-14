@@ -48,6 +48,7 @@ const useMatchTeamRepository = (
   const updateMatchTeam = (
     value: Player[],
     teamModifiers: TeamModifiers,
+    self?: boolean,
   ): Promise<any> => {
     if (!matchTeam) {
       return Promise.reject(new Error('Data is not available.'));
@@ -67,6 +68,7 @@ const useMatchTeamRepository = (
         playerOrderDestinationPitchArea: player.playerOrderDestinationPitchArea,
       })),
       teamModifiers,
+      self,
     };
 
     return connectorAPI<TeamPlayerPatchRequest>(

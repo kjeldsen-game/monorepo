@@ -82,11 +82,22 @@ const acceptedMatchesColumns = (
                 Play
               </MarketButton>
             )}
-          <Box>
-            <LinkButton link={`/match/lineup/${params.row.id}`}>
-              Change Lineup
-            </LinkButton>
-          </Box>
+
+          {params.row.away.name === 'simulationTeam' ? (
+            <Box>
+              <LinkButton
+                sx={{ marginLeft: '8px' }}
+                link={`/match/self/${params.row.id}`}>
+                Set lineups
+              </LinkButton>
+            </Box>
+          ) : (
+            <Box>
+              <LinkButton link={`/match/lineup/${params.row.id}`}>
+                Change Lineup
+              </LinkButton>
+            </Box>
+          )}
         </>
       );
     },
