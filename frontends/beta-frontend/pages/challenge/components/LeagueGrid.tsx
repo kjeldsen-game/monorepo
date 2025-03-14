@@ -47,9 +47,7 @@ const LeagueGrid: React.FC<LeagueGridProps> = () => {
     <Box sx={{ width: '100%' }}>
       <Grid
         isRowSelectable={() => false}
-        rows={
-          allTeams?.filter((team) => team.id !== userData?.user.teamId) ?? []
-        }
+        rows={allTeams ?? []}
         columns={challengeMatchesColumns(
           t,
           handleChallengeButtonClick,

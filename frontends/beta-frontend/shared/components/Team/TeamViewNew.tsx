@@ -190,6 +190,8 @@ const TeamViewNew: React.FC<TeamProps> = ({
     });
   };
 
+  // console.log(alert);
+
   return (
     <Box sx={{ width: '100%' }}>
       <TeamValidationModal

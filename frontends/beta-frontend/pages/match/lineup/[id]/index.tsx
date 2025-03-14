@@ -14,6 +14,7 @@ import {
 } from '@/shared/utils/LineupUtils';
 import { useMatchTeamFormationValidationRepository } from '@/pages/api/match/useMatchTeamFormationValidationRepository';
 import TeamViewNew from '@/shared/components/Team/TeamViewNew';
+import { useMatchReportRepository } from '@/pages/api/match/useMatchReportRepository';
 
 const Team: NextPage = () => {
   const { data: userData, status: sessionStatus } = useSession({
