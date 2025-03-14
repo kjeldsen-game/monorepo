@@ -4,6 +4,7 @@ import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.match.domain.clients.PlayerClientMatch;
 import com.kjeldsen.match.domain.clients.models.player.PlayerDTO;
 
+import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.TeamRole;
 import com.kjeldsen.match.domain.modifers.TeamModifiers;
 import com.kjeldsen.match.domain.repositories.MatchWriteRepository;
@@ -64,6 +65,41 @@ public class UpdateMatchLineupUseCase {
         matchAndTeam.team().setSpecificLineup(true);
         matchWriteRepository.save(matchAndTeam.match());
     }
+
+    public void updateSelf(String teamId, Match match, List<PlayerUpdateDTO> playerList, TeamModifiers teamModifiers) {
+        log.info("UpdateMatchLineupUseCase for match={} for the self clone team", match.getId());
+
+        List<PlayerDTO> players = playerClient.getPlayers(teamId, SecurityUtils.getCurrentUserToken());
+        playerList.forEach(player -> {
+            Optional<PlayerDTO> matchingPlayerDTO = players.stream()
+                .filter(playerDTO -> playerDTO.getId().equals(player.getId()))
+                .findFirst();
+            matchingPlayerDTO.ifPresent(playerDTO -> {
+                playerDTO.setPosition(player.getPosition() != null ? player.getPosition().name() : null);
+                playerDTO.setStatus(player.getStatus().name());
+                playerDTO.setPlayerOrder(player.getPlayerOrder().name());
+                if (player.getPlayerOrderDestinationPitchArea() != null) {
+                    playerDTO.setPlayerOrderDestinationPitchArea(player.getPlayerOrderDestinationPitchArea().name());
+                }
+            });
+        });
+
+        List<com.kjeldsen.match.domain.entities.Player> newBenchPlayers = filterPlayersByStatus(
+            PlayerStatus.BENCH, players, TeamRole.AWAY);
+        List<com.kjeldsen.match.domain.entities.Player> newActivePlayers = filterPlayersByStatus(
+            PlayerStatus.ACTIVE, players, TeamRole.AWAY);
+
+        // Update players and modifiers for the match
+        match.getAway().setPlayers(newActivePlayers);
+        match.getAway().setBench(newBenchPlayers);
+        match.getAway().setHorizontalPressure(teamModifiers.getHorizontalPressure());
+        match.getAway().setVerticalPressure(teamModifiers.getVerticalPressure());
+        match.getAway().setTactic(teamModifiers.getTactic());
+
+        match.getAway().setSpecificLineup(true);
+        matchWriteRepository.save(match);
+    }
+
 
     private List<com.kjeldsen.match.domain.entities.Player> filterPlayersByStatus(PlayerStatus status, List<PlayerDTO> players, TeamRole role) {
         return players.stream()

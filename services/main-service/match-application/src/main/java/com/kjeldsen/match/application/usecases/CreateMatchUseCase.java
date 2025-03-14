@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -29,13 +30,20 @@ public class CreateMatchUseCase {
         com.kjeldsen.match.domain.entities.Team engineHome = buildTeam(home, TeamRole.HOME);
         com.kjeldsen.match.domain.entities.Team engineAway = buildTeam(away, TeamRole.AWAY);
 
+        Match.Status status;
+        if (Objects.equals(away.getName(), "simulationTeam")) {
+            status = Match.Status.ACCEPTED;
+        } else {
+            status = leagueId == null ? Match.Status.PENDING : Match.Status.SCHEDULED;
+        }
+
         Match match = Match.builder()
             .id(java.util.UUID.randomUUID().toString())
             .home(engineHome)
             .leagueId(leagueId)
             .away(engineAway)
             .dateTime(time)
-            .status(leagueId == null ? Match.Status.PENDING : Match.Status.SCHEDULED)
+            .status(status)
             .build();
         return matchWriteRepository.save(match);
     }

@@ -588,6 +588,8 @@ components:
             $ref: "#/components/schemas/EditPlayerRequest"
         teamModifiers:
           $ref: "#/components/schemas/TeamModifiers"
+        self:
+          type: boolean
 
     MatchResponse:
       type: object
