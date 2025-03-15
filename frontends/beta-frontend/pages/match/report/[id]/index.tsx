@@ -32,10 +32,10 @@ const MatchReport: NextPage = () => {
         height: 'calc(100vh - 64px - 42px)',
       }}>
       <MatchReportMetrics
-        teamReport={report.away}
+        teamReport={report.home}
         teamColor={'#29B6F6'}
-        players={report.away.players}
-        teamId={report.away.id}
+        players={report.home.players}
+        teamId={report.home.id}
         side="left"
         sx={{
           width: '25%',
@@ -50,10 +50,10 @@ const MatchReport: NextPage = () => {
         />
       ) : null}
       <MatchReportMetrics
-        teamReport={report.home}
+        teamReport={report.away}
         teamColor={'#A4BC10'}
-        players={report.home.players}
-        teamId={report.home.id}
+        players={report.away.players}
+        teamId={report.away.id}
         side="right"
         sx={{
           width: '25%',

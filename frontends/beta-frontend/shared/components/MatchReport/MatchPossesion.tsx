@@ -46,7 +46,7 @@ const MatchPossesion: React.FC<MatchPossesionProps> = ({
         // sx={{ background: 'red' }}
         flexDirection={'column'}
         alignItems={
-          possesion[0].duel.initiator.teamId != homeId ? 'start' : 'end'
+          possesion[0].duel.initiator.teamRole === 'HOME' ? 'start' : 'end'
         }>
         <Box
           // textAlign={event.duel.initiator.teamId != homeId ? 'left' : 'right'}

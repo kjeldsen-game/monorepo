@@ -6,7 +6,6 @@ interface MatchStatsProps {
 }
 
 const MatchStats: React.FC<MatchStatsProps> = ({ report }) => {
-  // console.log(report.matchReport);
   return (
     <Box
       display={'flex'}
@@ -18,9 +17,9 @@ const MatchStats: React.FC<MatchStatsProps> = ({ report }) => {
         display={'flex'}
         sx={{ width: '80%' }}
         justifyContent={'space-between'}>
-        <Typography>{report.matchReport.awayScore}</Typography>
-        <Typography>Score</Typography>
         <Typography>{report.matchReport.homeScore}</Typography>
+        <Typography>Score</Typography>
+        <Typography>{report.matchReport.awayScore}</Typography>
       </Box>
       <Box
         display={'flex'}

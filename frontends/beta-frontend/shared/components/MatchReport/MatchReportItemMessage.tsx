@@ -5,6 +5,7 @@ import {
   MatchEventSide,
   MatchResult,
   Play,
+  TeamRole,
 } from '@/shared/models/MatchReport';
 import React from 'react';
 
@@ -60,9 +61,9 @@ const MatchReportItemMessage: React.FC<MatchReportItemMessageProps> = ({
     challengerEventSide: MatchEventSide;
   } = {
     initiatorEventSide:
-      duel.initiator.teamId === homeId ? 'HomeTeamEvent' : 'AwayTeamEvent',
+      duel.initiator.teamRole === 'HOME' ? 'HomeTeamEvent' : 'AwayTeamEvent',
     challengerEventSide:
-      duel.challenger?.teamId === homeId ? 'HomeTeamEvent' : 'AwayTeamEvent',
+      duel.challenger?.teamRole === 'HOME' ? 'HomeTeamEvent' : 'AwayTeamEvent',
   };
 
   return (

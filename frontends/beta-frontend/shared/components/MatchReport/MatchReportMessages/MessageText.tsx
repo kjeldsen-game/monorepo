@@ -11,10 +11,10 @@ const colorStyles: Record<MatchEventSide, React.CSSProperties> = {
     color: 'black',
   },
   HomeTeamEvent: {
-    color: '#A4BC10',
+    color: '#29B6F6',
   },
   AwayTeamEvent: {
-    color: '#29B6F6',
+    color: '#A4BC10',
   },
 };
 
