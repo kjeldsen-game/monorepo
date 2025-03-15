@@ -36,19 +36,18 @@ const Team: NextPage = () => {
     );
   // console.log(formationValidation);
 
-  const { data: match } = useMatchReportRepository(
+  const { data: match, refetch: refetchMatch } = useMatchReportRepository(
     useRouter().query.id,
     userData?.accessToken,
   );
 
   // console.log(match);
 
-  const { updateMatchTeam, matchTeam, error, isLoading } =
-    useMatchTeamRepository(
-      useRouter().query.id,
-      userData?.user.teamId,
-      userData?.accessToken,
-    );
+  const { updateMatchTeam } = useMatchTeamRepository(
+    useRouter().query.id,
+    userData?.user.teamId,
+    userData?.accessToken,
+  );
 
   const [alert, setAlert] = useState<any>({
     open: false,
@@ -121,6 +120,7 @@ const Team: NextPage = () => {
     let lineupPlayers: any[] = [];
     let benchPlayers: any[] = [];
     let inactivePlayers: any[] = [];
+    console.log('home usestate');
 
     if (!match?.home?.specificLineup && data?.players) {
       lineupPlayers = filterPlayersByStatus(data?.players, 'ACTIVE');
@@ -172,9 +172,11 @@ const Team: NextPage = () => {
     players: Player[],
     teamModifiers: TeamModifiers,
   ) => {
+    // console.log('home chaneajkea');
     // console.log(players);
     try {
       const response = await updateMatchTeam(players, teamModifiers);
+      refetchMatch();
       console.log(response);
       if (response.status == 500 || response.status == 400) {
         setAlert({
@@ -199,8 +201,11 @@ const Team: NextPage = () => {
     players: Player[],
     teamModifiers: TeamModifiers,
   ) => {
+    // console.log('away chaneajkea');
+    // console.log(players);
     try {
       const response = await updateMatchTeam(players, teamModifiers, true);
+      refetchMatch();
       if (response.status == 500 || response.status == 400) {
         setAlert({
           open: true,

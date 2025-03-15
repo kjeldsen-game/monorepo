@@ -639,6 +639,12 @@ components:
         verticalPressure:
           $ref: "#/components/schemas/VerticalPressure"
 
+    TeamRole:
+      type: string
+      enum:
+        - HOME
+        - AWAY
+
     PlayerResponse:
       type: object
       properties:
@@ -648,6 +654,8 @@ components:
           type: string
         teamId:
           type: string
+        teamRole:
+          $ref: "#/components/schemas/TeamRole"
         position:
           $ref: "#/components/schemas/PlayerPosition"
         playerOrder:

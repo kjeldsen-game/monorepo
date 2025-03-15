@@ -20,17 +20,6 @@ export const MatchReportItem: React.FC<MatchReportItemProps> = ({
   index,
   isLast,
 }) => {
-  console.log(event);
-  const formatClock = (clock: number): string => {
-    const totalMinutes = Math.floor(clock / 4);
-    const seconds = (clock % 4) * 15;
-
-    const formattedMinutes = String(totalMinutes).padStart(2, '0');
-    const formattedSeconds = String(seconds).padStart(2, '0');
-
-    return `${formattedMinutes}:${formattedSeconds}`;
-  };
-
   return (
     <Box
       sx={{
@@ -43,19 +32,9 @@ export const MatchReportItem: React.FC<MatchReportItemProps> = ({
         fontSize={'8px'}
         textAlign={'center'}
         sx={{ background: '#A3A3A3', width: '40px' }}
-        borderRadius={'5px'}>
-        {/* {formatClock(event.clock)} */}
-        {/* {event.clock}:00 */}
-      </Box>
-      <Box
-        display={'flex'}
-        // justifyContent={
-        //   event.duel.initiator.teamId != homeId ? 'start' : 'end'
-        // }
-      >
-        <Box
-          // textAlign={event.duel.initiator.teamId != homeId ? 'left' : 'right'}
-          textAlign={'justify'}>
+        borderRadius={'5px'}></Box>
+      <Box display={'flex'}>
+        <Box textAlign={'justify'}>
           {index === 0 && (
             <span style={{ fontSize: '12px', textAlign: 'justify' }}>
               In the{' '}

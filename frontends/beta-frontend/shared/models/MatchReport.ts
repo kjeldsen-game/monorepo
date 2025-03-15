@@ -54,9 +54,15 @@ export interface Initiator {
   teamId: string;
   name: string;
   position: string;
+  teamRole: TeamRole;
   status: Status;
   skills: { [key: string]: number };
   playerOrder: PlayerOrder;
+}
+
+export enum TeamRole {
+  HOME = 'HOME',
+  AWAY = 'AWAY',
 }
 
 export enum Status {
