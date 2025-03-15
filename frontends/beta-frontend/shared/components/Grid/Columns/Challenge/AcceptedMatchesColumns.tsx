@@ -83,7 +83,7 @@ const acceptedMatchesColumns = (
               </MarketButton>
             )}
 
-          {params.row.away.name === 'simulationTeam' ? (
+          {params.row.away.name === params.row.home.name ? (
             <Box>
               <LinkButton
                 sx={{ marginLeft: '8px' }}

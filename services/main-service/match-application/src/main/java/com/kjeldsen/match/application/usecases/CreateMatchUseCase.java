@@ -31,7 +31,7 @@ public class CreateMatchUseCase {
         com.kjeldsen.match.domain.entities.Team engineAway = buildTeam(away, TeamRole.AWAY);
 
         Match.Status status;
-        if (Objects.equals(away.getName(), "simulationTeam")) {
+        if (Objects.equals(homeTeamId, awayTeamId)) {
             status = Match.Status.ACCEPTED;
         } else {
             status = leagueId == null ? Match.Status.PENDING : Match.Status.SCHEDULED;
