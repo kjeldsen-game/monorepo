@@ -18,7 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
-public class MatchEventListenerIT extends AbstractEventIT {
+class MatchEventListenerIT extends AbstractEventIT {
 
     @MockBean
     private MatchAttendanceIncomeUseCase matchAttendanceIncomeUsecase;
@@ -34,7 +34,7 @@ public class MatchEventListenerIT extends AbstractEventIT {
     private SignSponsorIncomeUseCase signSponsorIncomeUseCase;
 
     @Test
-    public void should_handle_event_and_update_database() {
+    void should_handle_event_and_update_database() {
 
         MatchEvent matchEvent = MatchEvent.builder()
             .id(EventId.generate())

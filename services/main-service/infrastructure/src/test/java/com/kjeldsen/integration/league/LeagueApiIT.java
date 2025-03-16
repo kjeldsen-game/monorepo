@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class LeagueApiIT extends AbstractIT {
+class LeagueApiIT extends AbstractIT {
 
     @Autowired
     private TeamMongoRepository teamMongoRepository;
@@ -43,7 +43,7 @@ public class LeagueApiIT extends AbstractIT {
 
     @Test
     @DisplayName("HTTP get to league by id")
-    public void should_return_200_when_getting_league_by_id() throws Exception {
+    void should_return_200_when_getting_league_by_id() throws Exception {
         League league = League.builder().id(League.LeagueId.of("leagueId")).teams(
             Map.of("exampleTeam", new League.LeagueStats(),
                 "exampleTeam2", new League.LeagueStats())
@@ -65,13 +65,13 @@ public class LeagueApiIT extends AbstractIT {
         LeagueResponse actualResponse = objectMapper.readValue(jsonResponse, LeagueResponse.class);
 
         assertThat(actualResponse.getId()).isEqualTo(response.getId());
-        assertThat(actualResponse.getTeams().size()).isEqualTo(response.getTeams().size());
+        assertThat(actualResponse.getTeams()).hasSameSizeAs(response.getTeams());
         assertThat(actualResponse.getTeams()).containsKeys("exampleTeam", "exampleTeam2");
     }
 
     @Test
     @DisplayName("Should trigger league schedule")
-    public void should_trigger_league_schedule() throws Exception {
+    void should_trigger_league_schedule() throws Exception {
         League league = League.builder().id(League.LeagueId.of("leagueId")).teams(
             Map.of("exampleTeam", new League.LeagueStats(),
                 "exampleTeam2", new League.LeagueStats(),
@@ -89,7 +89,7 @@ public class LeagueApiIT extends AbstractIT {
             .andReturn();
 
         List<Match> matches = matchMongoRepository.findAll();
-        assertThat(matches.isEmpty()).isFalse();
-        assertThat(matches.size()).isEqualTo(12);
+        assertThat(matches).isNotEmpty();
+        assertThat(matches).hasSize(12);
     }
 }

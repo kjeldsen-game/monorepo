@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class TrainingApiIT extends AbstractIT {
+class TrainingApiIT extends AbstractIT {
 
     @Autowired
     private PlayerTrainingScheduledEventReadRepository playerTrainingScheduledEventReadRepository;
@@ -46,7 +46,7 @@ public class TrainingApiIT extends AbstractIT {
     class HttpPostToTrainingShould {
         @Test
         @DisplayName("Should schedule the player training and return 200")
-        public void should_return_200_when_training_is_scheduled() throws Exception {
+        void should_return_200_when_training_is_scheduled() throws Exception {
             Team.TeamId teamId = new Team.TeamId("team1");
             teamMongoRepository.save(Team.builder().id(teamId).build());
             Player examplePlayer = PlayerProvider.generate(teamId, PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,

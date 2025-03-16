@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class PlayerPositionTendencyApiIT extends AbstractIT {
+class PlayerPositionTendencyApiIT extends AbstractIT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -51,7 +51,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
     class HttpGetToPlayerPositionTendencyShould {
         @Test
         @DisplayName("return a list of default and stored player position tendencies")
-        public void return_a_list_player_position_tendencies() throws Exception {
+        void return_a_list_player_position_tendencies() throws Exception {
             PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
                 .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0, PlayerSkillRelevance.CORE)))
@@ -205,7 +205,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
     class HttpGetToPlayerPositionTendencyPositionShould {
         @Test
         @DisplayName("return a default player position tendency of a given position when no player position tendency exists in storage")
-        public void return_a_default_player_position_tendency_of_a_given_position_when_no_player_position_tendency_exists_in_storage() throws Exception {
+        void return_a_default_player_position_tendency_of_a_given_position_when_no_player_position_tendency_exists_in_storage() throws Exception {
             PlayerPositionTendencyResponse expected = new PlayerPositionTendencyResponse()
                 .position(com.kjeldsen.player.rest.model.PlayerPosition.CENTRE_BACK)
                 .tendencies(PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES.getTendencies()
@@ -221,7 +221,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
 
         @Test
         @DisplayName("return a stored player position tendency of a given position when player position tendency exists in storage")
-        public void return_a_stored_player_position_tendency_of_a_given_position_when_player_position_tendency_exists_in_storage() throws Exception {
+        void return_a_stored_player_position_tendency_of_a_given_position_when_player_position_tendency_exists_in_storage() throws Exception {
             PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
                 .position(com.kjeldsen.player.domain.PlayerPosition.FORWARD)
                 .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0, PlayerSkillRelevance.CORE)))
@@ -247,7 +247,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
     class HttpPatchToPlayerPositionTendencyPositionShould {
         @Test
         @DisplayName("return an updated player position tendency of a given position")
-        public void return_an_updated_player_position_tendency_of_a_given_position() throws Exception {
+        void return_an_updated_player_position_tendency_of_a_given_position() throws Exception {
 
             Map<String, UpdatePlayerPositionTendencyRequestValue> request = Map.of(PlayerSkill.SCORING.name(),
                 new UpdatePlayerPositionTendencyRequestValue()
@@ -273,7 +273,7 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
         }
     }
 
-    public static PlayerPositionTendencyResponseTendenciesValue map(
+    private static PlayerPositionTendencyResponseTendenciesValue map(
         Map.Entry<com.kjeldsen.player.domain.PlayerSkill, com.kjeldsen.player.domain.PlayerSkills> mapEntrySkills) {
         PlayerPositionTendencyResponseTendenciesValue playerPositionTendencyResponseTendenciesValue =
             new PlayerPositionTendencyResponseTendenciesValue();
@@ -281,6 +281,4 @@ public class PlayerPositionTendencyApiIT extends AbstractIT {
         playerPositionTendencyResponseTendenciesValue.setPlayerSkills(PlayerMapper.INSTANCE.map(mapEntrySkills.getValue()));
         return playerPositionTendencyResponseTendenciesValue;
     }
-
-
 }
