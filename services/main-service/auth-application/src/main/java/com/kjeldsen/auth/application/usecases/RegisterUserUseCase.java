@@ -4,6 +4,8 @@ import com.kjeldsen.auth.domain.Role;
 import com.kjeldsen.auth.domain.User;
 import com.kjeldsen.auth.domain.clients.TeamClientAuth;
 import com.kjeldsen.auth.domain.clients.models.TeamDTO;
+import com.kjeldsen.auth.domain.exceptions.TeamException;
+import com.kjeldsen.auth.domain.exceptions.UsernameException;
 import com.kjeldsen.auth.domain.publishers.UserRegisterPublisher;
 import com.kjeldsen.auth.domain.repositories.UserReadRepository;
 import com.kjeldsen.auth.domain.repositories.UserWriteRepository;
@@ -33,13 +35,13 @@ public class RegisterUserUseCase {
         log.info("RegisterUserUseCase for email {} team {} password ****", email, inputTeamName);
 
         if (userReadRepository.findByEmail(email).isPresent()) {
-            throw new RuntimeException("Username taken");
+            throw new UsernameException("Username taken!");
         }
 
         List<TeamDTO> teamDTOs = teamClientAuth.getTeam(inputTeamName, null);
 
         if (!teamDTOs.isEmpty()) {
-            throw new RuntimeException("Team name taken");
+            throw new TeamException("Team name taken!");
         }
 
         User user = new User();
