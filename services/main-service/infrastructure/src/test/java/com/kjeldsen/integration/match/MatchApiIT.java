@@ -68,8 +68,7 @@ class MatchApiIT extends AbstractIT {
 
             List<MatchResponse> matches = objectMapper.readValue(jsonResponse, new TypeReference<>() {});
 
-            assertThat(matches).isNotEmpty();
-            assertThat(matches).hasSize(2);
+            assertThat(matches).isNotEmpty().hasSize(2);
             assertThat(matches.get(0).getId()).isEqualTo("matchId");
         }
 
@@ -116,8 +115,7 @@ class MatchApiIT extends AbstractIT {
                 .andReturn();
 
             List<Match> matches = matchMongoRepository.findAll();
-            assertThat(matches).isNotEmpty();
-            assertThat(matches).hasSize(1);
+            assertThat(matches).isNotEmpty().hasSize(1);
             assertThat(matches.get(0).getHome().getId()).isEqualTo("homeId");
         }
     }

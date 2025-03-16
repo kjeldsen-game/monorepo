@@ -89,7 +89,6 @@ class LeagueApiIT extends AbstractIT {
             .andReturn();
 
         List<Match> matches = matchMongoRepository.findAll();
-        assertThat(matches).isNotEmpty();
-        assertThat(matches).hasSize(12);
+        assertThat(matches).isNotEmpty().hasSize(12);
     }
 }
