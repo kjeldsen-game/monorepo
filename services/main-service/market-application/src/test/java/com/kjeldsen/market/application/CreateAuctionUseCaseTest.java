@@ -19,7 +19,7 @@ class CreateAuctionUseCaseTest {
 
     @Test
     @DisplayName("Should create a Auction and save it")
-    public void should_create_auction_and_save_it() {
+    void should_create_auction_and_save_it() {
         Player.PlayerId mockedPlayerId = Player.PlayerId.generate();
         Team.TeamId mockedTeamId = Team.TeamId.generate();
 

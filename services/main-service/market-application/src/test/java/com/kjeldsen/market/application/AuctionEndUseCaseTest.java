@@ -1,6 +1,8 @@
 package com.kjeldsen.market.application;
 
 import com.kjeldsen.market.domain.Auction;
+import com.kjeldsen.market.domain.exceptions.AuctionNotFoundException;
+import com.kjeldsen.market.domain.exceptions.PlaceBidException;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
 import com.kjeldsen.player.domain.Player;
@@ -30,31 +32,31 @@ class AuctionEndUseCaseTest {
 
     @Test
     @DisplayName("Should throw exception if auction is null")
-    public void should_throw_exception_if_auction_is_null() {
+    void should_throw_exception_if_auction_is_null() {
         Auction.AuctionId mockedAuctionId = Mockito.mock(Auction.AuctionId.class);
         when(mockedAuctionReadRepository.findById(mockedAuctionId)).thenReturn(Optional.empty());
 
-        assertEquals("Auction not found", assertThrows(RuntimeException.class, () -> {
+        assertEquals("Auction not found!", assertThrows(AuctionNotFoundException.class, () -> {
             auctionEndUseCase.endAuction(mockedAuctionId);
         }).getMessage());
     }
 
     @Test
     @DisplayName("Should throw exception if there are no bids")
-    public void should_throw_exception_if_there_are_no_bids() {
+    void should_throw_exception_if_there_are_no_bids() {
         Auction.AuctionId mockedAuctionId = Auction.AuctionId.generate();
         Auction mockedAuction = Mockito.mock(Auction.class);
         when(mockedAuction.getBids()).thenReturn(List.of());
         when(mockedAuctionReadRepository.findById(mockedAuctionId)).thenReturn(Optional.of(mockedAuction));
 
-        assertEquals("Auction bid not found", assertThrows(RuntimeException.class, () -> {
+        assertEquals("Auction bid not found!", assertThrows(PlaceBidException.class, () -> {
             auctionEndUseCase.endAuction(mockedAuctionId);
         }).getMessage());
     }
 
     @Test
     @DisplayName("Should return highest bid amount to every team and update auction")
-    public void should_return_highest_bid_amount_to_every_team_and_update_auction() {
+    void should_return_highest_bid_amount_to_every_team_and_update_auction() {
         Team.TeamId creatorTeamId = Team.TeamId.generate();
         Team.TeamId winnerTeamId = Team.TeamId.generate();
         Team creatorTeam = Team.builder().id(creatorTeamId).economy(

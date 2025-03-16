@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -68,7 +67,7 @@ public class GetMarketAuctionsUseCase {
 
     private void parseSkillString(
             List<FilterMarketPlayersQuery.PlayerSkillFilter> filteredSkills, String skillString,
-            Boolean isActualSkills) {
+            boolean isActualSkills) {
         if (skillString != null && !skillString.isEmpty()) {
             String[] skills = skillString.split(",");
             for (String skill : skills) {

@@ -1,8 +1,9 @@
 package com.kjeldsen.market.application;
 
-import com.kjeldsen.domain.Event;
 import com.kjeldsen.domain.EventId;
 import com.kjeldsen.market.domain.Auction;
+import com.kjeldsen.market.domain.exceptions.AuctionNotFoundException;
+import com.kjeldsen.market.domain.exceptions.PlaceBidException;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
 import com.kjeldsen.player.domain.Team;
@@ -33,15 +34,15 @@ public class AuctionEndUseCase {
         log.info("AuctionEndUseCase for auction {}", auctionId );
 
         Auction auction = auctionReadRepository.findById(auctionId).orElseThrow(
-            () -> new RuntimeException("Auction not found"));
+            AuctionNotFoundException::new);
 
         Auction.Bid highestBid = auction.getBids().stream()
             .max(Comparator.comparing(Auction.Bid::getAmount)).orElseThrow(
-            () -> new RuntimeException("Auction bid not found"));
+            () -> new PlaceBidException("Auction bid not found!"));
 
-        // Highest bid is from Team that put player on Market -> return him back to the Team
+        // Highest bid is from Team that put player on Market -> take him back to the Team
         if (!highestBid.getTeamId().equals(auction.getTeamId())) {
-            returnMoneyToNotWinningTeams(auction.getBids(), highestBid.getTeamId());
+            returnMoneyToNotWinningTeams(auction.getBids());
         }
 
         auction.setStatus(Auction.AuctionStatus.COMPLETED);
@@ -57,7 +58,7 @@ public class AuctionEndUseCase {
             .build();
     }
 
-    private void returnMoneyToNotWinningTeams(List<Auction.Bid> bids, Team.TeamId teamToExclude) {
+    private void returnMoneyToNotWinningTeams(List<Auction.Bid> bids) {
         List<Auction.Bid> highestBidsPerTeam =  bids.stream()
             .collect(Collectors.groupingBy(
                 Auction.Bid::getTeamId,

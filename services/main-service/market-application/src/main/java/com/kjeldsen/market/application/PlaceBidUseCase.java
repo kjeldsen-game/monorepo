@@ -2,6 +2,10 @@ package com.kjeldsen.market.application;
 
 import com.kjeldsen.domain.EventId;
 import com.kjeldsen.market.domain.Auction;
+import com.kjeldsen.market.domain.exceptions.AuctionNotFoundException;
+import com.kjeldsen.market.domain.exceptions.InsufficientBalanceException;
+import com.kjeldsen.market.domain.exceptions.PlaceBidException;
+import com.kjeldsen.market.domain.exceptions.TeamNotFoundException;
 import com.kjeldsen.market.domain.publishers.BidEventPublisher;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
@@ -38,15 +42,15 @@ public class PlaceBidUseCase {
         log.info("PlaceBidUseCase for auction {}", auctionId);
 
         Auction auction = auctionReadRepository.findById(auctionId).orElseThrow(
-            () -> new RuntimeException("Auction not found"));
+            AuctionNotFoundException::new);
         Team team = teamReadRepository.findByUserId(userId).orElseThrow(
-            () -> new RuntimeException("Team not found"));
+            TeamNotFoundException::new);
 
         if (Objects.equals(auction.getTeamId(), Team.TeamId.of(userId))) {
-            throw new RuntimeException("Cannot place new bid on auction you created!");
+            throw new PlaceBidException("Cannot place new bid on auction you created!");
         }
         if (team.getId().equals(auction.getTeamId())) {
-           throw new RuntimeException("Auction creator team cannot place bid");
+           throw new PlaceBidException("Auction creator team cannot place bid!");
         }
 
         Auction.Bid highestBid = auction.getBids().stream()
@@ -89,13 +93,13 @@ public class PlaceBidUseCase {
 
     private void validateBidAmount(BigDecimal amount, BigDecimal highestBidAmount) {
         if (amount.compareTo(highestBidAmount) <= 0) {
-            throw new RuntimeException("You cannot place less bid than your latest!");
+            throw new PlaceBidException("You cannot place less bid than your latest!");
         }
     }
 
     private void updateTeamBalance(Team team, BigDecimal bidAmountDiff) {
         if (team.getEconomy().getBalance().compareTo(bidAmountDiff.abs()) < 0) {
-            throw new RuntimeException("You don't have enough balance to place bid!");
+            throw new InsufficientBalanceException();
         }
         bidEventPublisher.publishBidEndEvent(BidEvent.builder().amount(bidAmountDiff)
             .teamId(team.getId().value()).id(EventId.generate()).occurredAt(Instant.now()).build());

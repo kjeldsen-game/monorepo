@@ -1,7 +1,5 @@
 package com.kjeldsen.market.domain.schedulers;
 
-import org.quartz.SchedulerException;
-
 import java.time.Instant;
 
 public interface AuctionEndJobScheduler {
