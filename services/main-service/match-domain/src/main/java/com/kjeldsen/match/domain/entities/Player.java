@@ -129,7 +129,7 @@ public class Player {
 
                 goalkeepingSkill += goalkeepingPositioningModifier;
 
-                skillValue = goalkeepingSkill;;
+                skillValue = goalkeepingSkill;
 
             }
         }

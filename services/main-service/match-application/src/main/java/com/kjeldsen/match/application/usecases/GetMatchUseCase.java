@@ -2,6 +2,7 @@ package com.kjeldsen.match.application.usecases;
 
 
 import com.kjeldsen.match.domain.entities.Match;
+import com.kjeldsen.match.domain.exceptions.MatchNotFoundException;
 import com.kjeldsen.match.domain.repositories.MatchReadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,6 @@ public class GetMatchUseCase {
     public Match get(String matchId) {
 //        log.info("GetMatchUseCase for matchId={}", matchId);
         return matchReadRepository.findOneById(matchId)
-            .orElseThrow(() -> new RuntimeException("Match not found"));
+            .orElseThrow(MatchNotFoundException::new);
     }
 }

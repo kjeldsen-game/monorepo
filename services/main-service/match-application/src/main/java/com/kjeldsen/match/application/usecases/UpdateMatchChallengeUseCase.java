@@ -1,6 +1,7 @@
 package com.kjeldsen.match.application.usecases;
 
 import com.kjeldsen.match.domain.entities.Match;
+import com.kjeldsen.match.domain.exceptions.InvalidMatchStatusException;
 import com.kjeldsen.match.domain.repositories.MatchReadRepository;
 import com.kjeldsen.match.domain.repositories.MatchWriteRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class UpdateMatchChallengeUseCase {
         Match match = getMatchUseCase.get(matchId);
 
         if (match.getStatus() != Match.Status.PENDING) {
-            throw new RuntimeException("Match is not in the PENDING status");
+            throw new InvalidMatchStatusException("Match is not in the PENDING status!");
         }
 
         match.setStatus(status);

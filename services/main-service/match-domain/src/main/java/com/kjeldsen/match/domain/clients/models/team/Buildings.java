@@ -1,6 +1,5 @@
 package com.kjeldsen.match.domain.clients.models.team;
 
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.kjeldsen.player.domain.Team;
 import lombok.*;
 
