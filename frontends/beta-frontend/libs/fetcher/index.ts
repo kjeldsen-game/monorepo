@@ -76,7 +76,6 @@ export const connector = async (
 
     throw new Error(errorMessage);
   }
-
   try {
     return await response.json();
   } catch (e) {

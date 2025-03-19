@@ -1,7 +1,6 @@
 export interface MatchCreationRequest {
   home: Away;
   away: Away;
-  dateTime: Date;
 }
 
 export interface Away {

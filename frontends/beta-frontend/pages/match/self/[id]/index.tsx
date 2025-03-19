@@ -28,13 +28,19 @@ const Team: NextPage = () => {
     userData?.accessToken,
   );
 
+  // console.log(data);
+
   const { data: formationValidation, refetch } =
     useMatchTeamFormationValidationRepository(
       userData?.user.teamId,
       useRouter().query.id as string,
       userData?.accessToken,
+      true,
     );
-  // console.log(formationValidation);
+
+  // console.log(formationValidation[0]);
+
+  // console.log(formationValidation[1]);
 
   const { data: match, refetch: refetchMatch } = useMatchReportRepository(
     useRouter().query.id,
@@ -240,7 +246,7 @@ const Team: NextPage = () => {
       </Box>
       <CustomTabPanel value={selectedTab} index={0}>
         <TeamViewNew
-          teamFormationValidation={formationValidation}
+          teamFormationValidation={formationValidation?.[0]}
           setAlert={setAlert}
           alert={alert}
           isEditing
@@ -254,7 +260,7 @@ const Team: NextPage = () => {
       </CustomTabPanel>
       <CustomTabPanel value={selectedTab} index={1}>
         <TeamViewNew
-          teamFormationValidation={formationValidation}
+          teamFormationValidation={formationValidation?.[1]}
           setAlert={setAlert}
           alert={alert}
           isEditing

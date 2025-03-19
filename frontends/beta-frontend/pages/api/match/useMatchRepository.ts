@@ -9,41 +9,41 @@ const useMatchRepository = (token: string, ownTeamId?: string) => {
   const { mutate } = useSWRConfig();
 
   const _patchMatch = async (matchId: string, params: Partial<Match>) => {
-    connectorAPI<Partial<Match>>(
+    const response = await connectorAPI<Partial<Match>>(
       API + '/' + matchId,
       'PATCH',
       params,
       undefined,
       token,
-    ).then(() => {
-      mutate([API, ownTeamId]);
-    });
+    );
+    console.log(response);
+
+    mutate([API, ownTeamId]);
+    return response;
   };
 
-  const createMatch = async (rivalTeamId: string, date: Date) => {
+  const createMatch = async (rivalTeamId: string) => {
     if (!ownTeamId) return;
+
     const newData: MatchCreationRequest = {
-      home: {
-        id: ownTeamId,
-      },
-      away: {
-        id: rivalTeamId,
-      },
-      dateTime: date,
+      home: { id: ownTeamId },
+      away: { id: rivalTeamId },
     };
-    connectorAPI<MatchCreationRequest>(
+
+    const response = await connectorAPI<MatchCreationRequest>(
       API,
       'POST',
       newData,
       undefined,
       token,
-    ).then(() => {
-      mutate([API, ownTeamId]);
-    });
+    );
+
+    mutate([API, ownTeamId]);
+    return response;
   };
 
   const executeMatch = async (matchId: string) => {
-    _patchMatch(matchId, { status: 'SCHEDULED' });
+    return _patchMatch(matchId, { status: 'SCHEDULED' });
   };
 
   const acceptMatch = async (matchId: string) => {

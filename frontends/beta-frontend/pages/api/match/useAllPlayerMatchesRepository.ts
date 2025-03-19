@@ -34,9 +34,6 @@ const useAllPlayerMatchesRepository = (
   const refetch = () => {
     mutate();
   };
-
-  console.log(allMatches);
-
   const pastMatches = allMatches?.filter(
     (match) => match.status === 'PLAYED',
     // (match) => new Date(match.dateTime).getTime() < new Date().getTime(),

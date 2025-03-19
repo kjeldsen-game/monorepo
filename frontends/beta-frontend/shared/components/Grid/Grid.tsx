@@ -16,8 +16,8 @@ function Grid<T>({ rows, columns, ...props }: GridProps<T>) {
           fontWeight: '600',
           borderRadius: '8%',
         },
-        '& .MuiDataGrid-cell:focus': {
-          outline: 'none',
+        '& .MuiDataGrid-cell:focus-within, .MuiDataGrid-cell:focus': {
+          outline: 'none !important',
         },
         '& .super-app.goalkeeper .MuiDataGrid-cellContent': {
           backgroundColor: '#A4BC10',
@@ -40,8 +40,12 @@ function Grid<T>({ rows, columns, ...props }: GridProps<T>) {
         '.MuiDataGrid-sortIcon': {
           opacity: 'inherit !important',
         },
+        '&.MuiDataGrid-root': {
+          outline: 'none !important',
+        },
       }}>
       <DataGrid
+        disableColumnSelector
         disableColumnMenu
         autoHeight={true}
         rows={rows}

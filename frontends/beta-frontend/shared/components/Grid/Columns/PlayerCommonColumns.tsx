@@ -10,11 +10,13 @@ import { positionComparator } from '@/shared/utils/GridUtils';
 import PlayerPositionLabel from '../../Player/PlayerPositionLabel';
 import ColHeader from './Common/ColHeader';
 import ColLink from './Common/ColLink';
+import { formatName } from '@/shared/utils/PlayerUtils';
 
 export const playerCommonColumns = (
   skills: boolean = false,
   showPotential: boolean = true,
   showPosition: boolean = false,
+  truncateName: boolean = false,
 ) => {
   const columns: GridColDef[] = [
     {
@@ -24,7 +26,7 @@ export const playerCommonColumns = (
       renderHeader: () => <ColHeader header={'Name'} align={'left'} />,
       renderCell: (params: GridCellParams) => (
         <ColLink urlValue={`/player/${params.row.id}`}>
-          {params.row.name}
+          {truncateName ? formatName(params.row.name) : params.row.name}
         </ColLink>
       ),
     },
