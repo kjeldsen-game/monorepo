@@ -39,7 +39,7 @@ public class TeamFormationValidator {
 
         result.setValid(true);
 
-        if (!players.isEmpty()) {
+//        if (!players.isEmpty()) {
             // TODO duplicated logic with TeamDelegate.updateTeamById from player-adapter-rest.
 
             List<Player> activePlayers = players.stream().filter(p -> p.getStatus() == PlayerStatus.ACTIVE).toList();
@@ -76,7 +76,9 @@ public class TeamFormationValidator {
 
             validateMidfieldFlankCoverage(activePlayers, result);
 
-        }
+//        } else {
+//            result.setValid(false);
+//        }
 
         return result;
     }

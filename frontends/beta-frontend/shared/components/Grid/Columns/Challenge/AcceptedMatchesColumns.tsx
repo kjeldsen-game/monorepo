@@ -39,14 +39,14 @@ const acceptedMatchesColumns = (
       />
     ),
   },
-  {
-    field: 'dateTime',
-    renderHeader: () => <ColHeader header="Date" />,
-    ...baseColumnConfig,
-    renderCell: (params: GridCellParams) => {
-      return formatDateAndTime(params.row?.dateTime);
-    },
-  },
+  // {
+  //   field: 'dateTime',
+  //   renderHeader: () => <ColHeader header="Date" />,
+  //   ...baseColumnConfig,
+  //   renderCell: (params: GridCellParams) => {
+  //     return formatDateAndTime(params.row?.dateTime);
+  //   },
+  // },
   {
     field: 'lineup',
     renderHeader: () => <ColHeader header="Lineup" />,

@@ -16,3 +16,8 @@ export const getSurname = (name: string): string => {
   const nameParts = name.split(' ');
   return nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
 };
+
+export const formatName = (name: string): string =>
+  name.trim().includes(' ')
+    ? `${name.trim()[0].toUpperCase()}. ${name.trim().split(' ').slice(1).join(' ')}`
+    : name;

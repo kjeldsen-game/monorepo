@@ -187,7 +187,7 @@ public class DuelExecution {
             DuelType.BALL_CONTROL,
             DuelRole.INITIATOR);
 
-        DuelStats challengerStats = params.getChallenger() != null ?  buildDuelStats(
+        DuelStats challengerStats = params.getChallenger() != null ? buildDuelStats(
             state,
             challenger,
             DuelType.BALL_CONTROL,
@@ -198,10 +198,8 @@ public class DuelExecution {
             .total(0)
             .build();
 
-        DuelResult result =
-            (initiatorStats.getTotal() > challengerStats.getTotal())
-                ? DuelResult.WIN
-                : DuelResult.LOSE;
+        DuelResult result = params.getChallenger() != null ? (initiatorStats.getTotal() > challengerStats.getTotal())
+            ? DuelResult.WIN : DuelResult.LOSE : DuelResult.WIN;
 
         return DuelDTO.builder()
             .result(result)

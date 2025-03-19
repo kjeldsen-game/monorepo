@@ -11,9 +11,11 @@ import challengeMatchesColumns from '@/shared/components/Grid/Columns/Challenge/
 
 const PAGE_SIZE = 100;
 
-interface LeagueGridProps {}
+interface LeagueGridProps {
+  setAlert: (alert: any) => void;
+}
 
-const LeagueGrid: React.FC<LeagueGridProps> = () => {
+const LeagueGrid: React.FC<LeagueGridProps> = ({ setAlert }) => {
   const [selectedPage, setSelectedPage] = useState<number>(0);
 
   const { data: userData } = useSession({ required: true });
@@ -35,12 +37,37 @@ const LeagueGrid: React.FC<LeagueGridProps> = () => {
     userData?.accessToken,
   );
 
-  const handleChallengeButtonClick = (id: string, date: Moment) => {
+  const handleChallengeButtonClick = async (
+    id: string,
+    e: React.MouseEvent,
+  ) => {
     const ownTeamId = userData?.user.teamId;
     if (!ownTeamId) {
       return;
     }
-    createMatch(id, date.toDate());
+    try {
+      const response = await createMatch(id);
+      console.log(response);
+      if (response.status != 201) {
+        setAlert({
+          open: true,
+          message: response.message,
+          type: 'error',
+        });
+      } else {
+        setAlert({
+          open: true,
+          message:
+            userData?.user.teamId === id
+              ? 'Self-challenge was successfully scheduled, go to the Accepted Challenges!'
+              : 'Challenge was successfully scheduled!',
+          type: 'success',
+        });
+        refetch();
+      }
+    } catch (error) {
+      console.error('Failed to update team:', error);
+    }
   };
 
   const getBackgroundColor = (status: string) => {
@@ -96,29 +123,12 @@ const LeagueGrid: React.FC<LeagueGridProps> = () => {
         getRowClassName={(params) => {
           // console.log(params.row);
           const { id } = params.row;
-          console.log(id);
           if (id === userData?.user.teamId) {
             return 'super-app-theme--myTeam';
           }
           return '';
         }}
       />
-      {/* <Grid
-        isRowSelectable={() => false}
-        rows={allTeams ?? []}
-        columns={challengeMatchesColumns(
-          t,
-          handleChallengeButtonClick,
-          allMatches?.map((match) => new Date(match.dateTime).getTime()) ?? [],
-        )}
-        // paginationMode="server"
-        // pagination
-        // pageSize={10}
-        hideFooter={false}
-        // onPageChange={(value) => setSelectedPage(value)}
-        // TODO: Get total of teams from the API
-        // rowCount={10} */}
-      {/* /> */}
     </Box>
   );
 };

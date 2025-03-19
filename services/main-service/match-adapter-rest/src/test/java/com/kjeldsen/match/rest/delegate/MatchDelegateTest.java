@@ -137,14 +137,14 @@ class MatchDelegateTest {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        ResponseEntity<String> preDeleteResponse = matchDelegate.validate(match.getId(), match.getHome().getId());
+        ResponseEntity<String> preDeleteResponse = matchDelegate.validate(match.getId(), match.getHome().getId(), false);
         TeamFormationValidationResult preDeleteResult = objectMapper.readValue(preDeleteResponse.getBody(), TeamFormationValidationResult.class);
 
         Assertions.assertTrue(preDeleteResult.getValid());
 
         matchDelegate.deletePlayer(match.getId(), match.getHome().getId(), p.getId());
 
-        ResponseEntity<String> postDeleteResponse = matchDelegate.validate(match.getId(), match.getHome().getId());
+        ResponseEntity<String> postDeleteResponse = matchDelegate.validate(match.getId(), match.getHome().getId(), false);
         TeamFormationValidationResult result = objectMapper.readValue(postDeleteResponse.getBody(), TeamFormationValidationResult.class);
 
     }

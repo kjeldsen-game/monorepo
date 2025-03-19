@@ -344,6 +344,13 @@ paths:
       tags:
         - lineup
       parameters:
+        - name: selfChallenge
+          in: query
+          description: Boolean representing if its selfChallenge
+          required: false
+          schema:
+            type: boolean
+            default: false
         - name: matchId
           in: path
           required: true
@@ -533,10 +540,6 @@ components:
             id:
               type: string
               example: id
-        dateTime:
-          type: string
-          format: date-time
-          example: 2020-01-01T00:00:00Z
 
     EditMatchRequest:
       type: object

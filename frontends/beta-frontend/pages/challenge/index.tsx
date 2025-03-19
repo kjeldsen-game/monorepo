@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { LeagueGrid } from './components/LeagueGrid';
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { Box, SnackbarCloseReason, Tab, Tabs, Typography } from '@mui/material';
 import { useState } from 'react';
 import { CustomTabPanel } from '@/shared/components/Tab/CustomTabPanel';
 import { useSession } from 'next-auth/react';
@@ -10,6 +10,7 @@ import { useTranslation } from 'next-i18next';
 import IncomingMatchesGrid from './components/IncomingMatchesGrid';
 import PastMatchesGrid from './components/PastMatchesGrid';
 import CustomTabs from '@/shared/components/CustomTabs';
+import SnackbarAlert from '@/shared/components/Common/SnackbarAlert';
 
 const Challenge: NextPage = () => {
   useSession({ required: true });
@@ -22,8 +23,30 @@ const Challenge: NextPage = () => {
     setValue(newValue);
   };
 
+  const [alert, setAlert] = useState<any>({
+    open: false,
+    type: 'success',
+    message: '',
+  });
+
+  const handleClose = (reason?: SnackbarCloseReason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlert((prev: any) => ({
+      ...prev,
+      open: false,
+    }));
+  };
+
   return (
     <Box sx={{ width: '100%' }}>
+      <SnackbarAlert
+        handleClose={handleClose}
+        open={alert?.open}
+        type={alert?.type}
+        message={alert?.message}
+      />
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <CustomTabs
           selectedTab={value}
@@ -39,10 +62,10 @@ const Challenge: NextPage = () => {
         <InviteGrid />
         <Box sx={{ height: '40px' }} />
         <Typography variant="h5">{t('challenge_team')}</Typography>
-        <LeagueGrid />
+        <LeagueGrid setAlert={setAlert} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <IncomingMatchesGrid />
+        <IncomingMatchesGrid setAlert={setAlert} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <PastMatchesGrid />

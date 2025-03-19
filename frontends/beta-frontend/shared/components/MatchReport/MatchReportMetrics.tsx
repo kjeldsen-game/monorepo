@@ -4,15 +4,15 @@ import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '../Grid/Grid';
 import { useMemo } from 'react';
-import { simpleTeamColumn } from '../Grid/Columns/SimpleTeamColumn';
 import { useTranslation } from 'react-i18next';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 import { Player } from '@/shared/models/Player';
-import { TABLE_PLAYER_POSITION_ORDER } from '@/shared/models/PlayerPosition';
 import { useSession } from 'next-auth/react';
 import { positionComparator } from '@/shared/utils/GridUtils';
-import { GridRowClassNameParams } from '@mui/x-data-grid';
 import { playerCommonColumns } from '../Grid/Columns/PlayerCommonColumns';
+import CustomTooltip from './Tooltips/CustomTooltip';
+import PressureDescriptionItem from '../Team/Modifiers/PressureDescriptionItem';
+import { getModifierDescription } from '@/shared/utils/TeamModifiersUtils';
 
 interface MatchReportMetricsProps {
   sx?: React.CSSProperties;
@@ -50,8 +50,18 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({
   };
 
   const memoizedColumns = useMemo(
-    () => playerCommonColumns(true, false),
+    () => playerCommonColumns(true, false, false, true),
     [teamId],
+  );
+
+  const tacticDescription = getModifierDescription(
+    teamReport.modifiers?.tactic,
+  );
+  const horizontalPressureDescription = getModifierDescription(
+    teamReport.modifiers?.horizontalPressure,
+  );
+  const verticalPressureDescription = getModifierDescription(
+    teamReport.modifiers?.verticalPressure,
   );
 
   return (
@@ -78,7 +88,7 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({
         <Typography
           sx={{
             fontSize: '22px',
-            color: '#A4BC10',
+            color: teamColor,
             overflow: 'clip',
             height: '20px',
             lineHeight: '20px',
@@ -90,34 +100,58 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({
         </Box> */}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <HealthAndSafety sx={{ color: '#E52323' }} />
-          <Typography
-            sx={{ color: '#E52323' }}
-            fontSize="18px"
-            fontWeight={700}>
-            {convertSnakeCaseToTitleCase(
-              teamReport.modifiers?.horizontalPressure,
-            )}
-          </Typography>
+          <CustomTooltip
+            tooltipContent={
+              <PressureDescriptionItem
+                name={'Horizontal Pressure'}
+                description={horizontalPressureDescription}
+              />
+            }>
+            <Typography
+              sx={{ color: '#E52323' }}
+              fontSize="18px"
+              fontWeight={700}>
+              {convertSnakeCaseToTitleCase(
+                teamReport.modifiers?.horizontalPressure,
+              )}
+            </Typography>
+          </CustomTooltip>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <HealthAndSafety sx={{ color: '#E52323' }} />
-          <Typography
-            sx={{ color: '#E52323' }}
-            fontSize="18px"
-            fontWeight={700}>
-            {convertSnakeCaseToTitleCase(
-              teamReport.modifiers?.verticalPressure,
-            )}
-          </Typography>
+          <CustomTooltip
+            tooltipContent={
+              <PressureDescriptionItem
+                name={'Vertical Pressure'}
+                description={verticalPressureDescription}
+              />
+            }>
+            <Typography
+              sx={{ color: '#E52323' }}
+              fontSize="18px"
+              fontWeight={700}>
+              {convertSnakeCaseToTitleCase(
+                teamReport.modifiers?.verticalPressure,
+              )}
+            </Typography>
+          </CustomTooltip>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <HealthAndSafety sx={{ color: '#E52323' }} />
-          <Typography
-            sx={{ color: '#E52323' }}
-            fontSize="18px"
-            fontWeight={700}>
-            {convertSnakeCaseToTitleCase(teamReport.modifiers?.tactic)}
-          </Typography>
+          <CustomTooltip
+            tooltipContent={
+              <PressureDescriptionItem
+                name={'Tactic'}
+                description={tacticDescription}
+              />
+            }>
+            <Typography
+              sx={{ color: '#E52323' }}
+              fontSize="18px"
+              fontWeight={700}>
+              {convertSnakeCaseToTitleCase(teamReport.modifiers?.tactic)}
+            </Typography>
+          </CustomTooltip>
         </Box>
       </Box>
       <Box>

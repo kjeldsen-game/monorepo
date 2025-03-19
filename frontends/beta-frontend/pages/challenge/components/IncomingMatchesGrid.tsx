@@ -10,9 +10,13 @@ import acceptedMatchesColumns from '@/shared/components/Grid/Columns/Challenge/A
 
 const PAGE_SIZE = 10;
 
-interface IncomingMatchesGridProps {}
+interface IncomingMatchesGridProps {
+  setAlert: (alert: any) => void;
+}
 
-const IncomingMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
+const IncomingMatchesGrid: React.FC<IncomingMatchesGridProps> = ({
+  setAlert,
+}) => {
   const { data: userData } = useSession({ required: true });
 
   const { t } = useTranslation('common');
@@ -21,7 +25,7 @@ const IncomingMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
 
   const [selectedPage, setSelectedPage] = useState<number>(0);
 
-  const { acceptedMatches } = useAllPlayerMatchesRepository(
+  const { acceptedMatches, refetch } = useAllPlayerMatchesRepository(
     selectedPage,
     10,
     userData?.user.teamId,
@@ -39,11 +43,27 @@ const IncomingMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
     );
   }
 
-  const handlePlayButtonClick = (matchId: string) => {
-    executeMatch(matchId);
+  const handlePlayButtonClick = async (matchId: string) => {
+    try {
+      const response = await executeMatch(matchId);
+      if (response.status != 200) {
+        setAlert({
+          open: true,
+          message: response.message,
+          type: 'error',
+        });
+      } else {
+        setAlert({
+          open: true,
+          message: 'Match was successfully executed!',
+          type: 'success',
+        });
+      }
+      refetch();
+    } catch (error) {
+      console.error('Failed to update team:', error);
+    }
   };
-
-  console.log(acceptedMatches);
 
   return (
     <Box sx={{ width: '100%' }}>
