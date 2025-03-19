@@ -5,10 +5,11 @@ import { TFunction } from 'next-i18next';
 import { Moment } from 'moment';
 import ColHeader from '../Common/ColHeader';
 import ColLink from '../Common/ColLink';
+import MarketButton from '@/shared/components/Market/MarketButton';
 
 const challengeMatchesColumns = (
   t: TFunction,
-  handleChallengeButtonClick: (id: string, date: Moment) => void,
+  handleChallengeButtonClick: (id: string) => void,
   disabledDates: number[],
 ): GridColDef[] => [
   {
@@ -24,17 +25,22 @@ const challengeMatchesColumns = (
     renderHeader: () => <ColHeader header={'Manager'} align={'right'} />,
     ...rightColumnConfig,
     renderCell: (params: GridCellParams) => (
-      <CalendarButton
-        datePickerProps={{
-          shouldDisableTime: (moment, view) =>
-            disabledDates.includes(moment.toDate().getTime()) &&
-            view === 'minutes',
-          minutesStep: 10,
-          openTo: 'day',
-        }}
-        onDatePick={(date) => handleChallengeButtonClick(params.row.id, date)}>
+      <MarketButton
+        sx={{ marginRight: '8px' }}
+        onClick={() => handleChallengeButtonClick(params.row.id)}>
         Challenge
-      </CalendarButton>
+      </MarketButton>
+      // <CalendarButton
+      //   datePickerProps={{
+      //     shouldDisableTime: (moment, view) =>
+      //       disabledDates.includes(moment.toDate().getTime()) &&
+      //       view === 'minutes',
+      //     minutesStep: 10,
+      //     openTo: 'day',
+      //   }}
+      //   onDatePick={(date) => handleChallengeButtonClick(params.row.id, date)}>
+      //   Challenge
+      // </CalendarButton>
     ),
   },
 ];

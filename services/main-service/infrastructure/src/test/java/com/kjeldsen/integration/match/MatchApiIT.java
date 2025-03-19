@@ -104,13 +104,12 @@ public class MatchApiIT extends AbstractIT {
 
             CreateMatchRequest request = new CreateMatchRequest()
                 .home(new CreateMatchRequestHome().id("homeId"))
-                .away(new CreateMatchRequestHome().id("awayId"))
-                .dateTime(LocalDateTime.now());
+                .away(new CreateMatchRequestHome().id("awayId"));
 
             com.fasterxml.jackson.databind.ObjectMapper objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
-            JavaTimeModule javaTimeModule = new JavaTimeModule();
-            objectMapper.registerModule(javaTimeModule);
-            objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+//            JavaTimeModule javaTimeModule = new JavaTimeModule();
+//            objectMapper.registerModule(javaTimeModule);
+//            objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
             mockMvc.perform(post("/v1/match")
                 .contentType(MediaType.APPLICATION_JSON)

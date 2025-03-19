@@ -7,12 +7,13 @@ const fetcher = (
   teamId: string | null,
   token: string | null,
   matchId: string | null,
+  selfChallenge: boolean = false,
 ) => {
   if (token === null || teamId === null || matchId === null) {
     return undefined;
   }
   return connectorAPI<any>(
-    `${API}${matchId}/teams/${teamId}/validate`,
+    `${API}${matchId}/teams/${teamId}/validate?selfChallenge=${selfChallenge}`,
     'GET',
     undefined,
     undefined,
@@ -24,7 +25,9 @@ const useMatchTeamFormationValidationRepository = (
   teamId?: string,
   matchId?: string,
   token?: string,
+  selfChallenge: boolean = false,
 ) => {
+  console.log(selfChallenge);
   const { data, error, isLoading, mutate } = useSWR<any>(
     token ? `${API}${matchId}/teams/${teamId}/validate` : null,
     () =>
@@ -32,6 +35,7 @@ const useMatchTeamFormationValidationRepository = (
         teamId ? teamId : null,
         token ? token : null,
         matchId ? matchId : null,
+        selfChallenge,
       ),
   );
 

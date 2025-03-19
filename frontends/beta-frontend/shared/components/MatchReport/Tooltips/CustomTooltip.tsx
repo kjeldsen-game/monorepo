@@ -11,9 +11,9 @@ import {
 import { ReactNode, useEffect, useRef, useState } from 'react';
 
 interface CustomTooltipProps {
-  className?: string;
   children: ReactNode;
   tooltipContent: ReactNode;
+  className?: string;
   heading?: any;
   clickOpen?: boolean;
 }

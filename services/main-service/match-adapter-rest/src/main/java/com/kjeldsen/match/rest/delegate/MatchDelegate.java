@@ -4,7 +4,6 @@ import com.kjeldsen.match.application.usecases.*;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.Match.Status;
 import com.kjeldsen.match.domain.entities.Player;
-import com.kjeldsen.match.domain.entities.Team;
 import com.kjeldsen.match.domain.entities.TeamRole;
 import com.kjeldsen.match.domain.repositories.MatchWriteRepository;
 import com.kjeldsen.match.rest.api.MatchApiDelegate;
@@ -15,7 +14,6 @@ import com.kjeldsen.match.domain.utils.JsonUtils;
 import com.kjeldsen.match.domain.validation.TeamFormationValidationResult;
 import com.kjeldsen.match.domain.validation.TeamFormationValidator;
 import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.PlayerStatus;
 import com.kjeldsen.player.domain.Team.TeamId;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
@@ -25,9 +23,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -67,10 +64,10 @@ public class MatchDelegate implements MatchApiDelegate {
     @Override
     public ResponseEntity<Void> updateMatchTeam(String teamId, String matchId,
             EditMatchTeamRequest editMatchTeamRequest) {
-        for (EditPlayerRequest e : editMatchTeamRequest.getPlayers()) {
-            System.out.println(
-                    e.getId() + " ----" + e.getPlayerOrderDestinationPitchArea() + "----" + e.getPlayerOrder());
-        }
+//        for (EditPlayerRequest e : editMatchTeamRequest.getPlayers()) {
+//            System.out.println(
+//                    e.getId() + " ----" + e.getPlayerOrderDestinationPitchArea() + "----" + e.getPlayerOrder());
+//        }
         List<UpdateMatchLineupUseCase.PlayerUpdateDTO> players = editMatchTeamRequest.getPlayers().stream()
                 .map(player -> UpdateMatchLineupUseCase.PlayerUpdateDTO.builder()
                         .id(player.getId())
@@ -91,7 +88,7 @@ public class MatchDelegate implements MatchApiDelegate {
         com.kjeldsen.match.domain.modifers.TeamModifiers teamModifiers = TeamMapper.INSTANCE
                 .map(editMatchTeamRequest.getTeamModifiers());
 
-        // Special use case when mvnciyou're challenging your self
+        // Special use case when you're challenging your self
         if (editMatchTeamRequest.getSelf() != null && editMatchTeamRequest.getSelf()) {
             Match match = getMatchUseCase.get(matchId);
             updateMatchLineupUseCase.updateSelf(teamId, match, players, teamModifiers);
@@ -101,10 +98,14 @@ public class MatchDelegate implements MatchApiDelegate {
         return ResponseEntity.ok().build();
     }
 
+    // TODO refactor duplicates of code due to the self challenge
     @Override
-    public ResponseEntity<String> validate(String matchId, String teamId) {
+    public ResponseEntity<String> validate(String matchId, String teamId, Boolean selfChallenge) {
+        Match match = getMatchUseCase.get(matchId);
+        GetMatchTeamUseCase.MatchAndTeam matchAndTeam;
+
+        matchAndTeam = new GetMatchTeamUseCase.MatchAndTeam(match, match.getHome(), TeamRole.HOME);
         List<Player> players;
-        GetMatchTeamUseCase.MatchAndTeam matchAndTeam = getMatchTeamUseCase.getMatchAndTeam(matchId, teamId);
         // get the lineup
         if (!matchAndTeam.team().getSpecificLineup()) {
             List<com.kjeldsen.player.domain.Player> playersDomain = playerRepo.findByTeamId(TeamId.of(teamId));
@@ -117,6 +118,30 @@ public class MatchDelegate implements MatchApiDelegate {
 
         TeamFormationValidationResult validationResult = TeamFormationValidator.validate(players);
         String response = JsonUtils.prettyPrint(validationResult);
+
+        if (selfChallenge) {
+            if (!Objects.equals(match.getHome().getId(), match.getAway().getId())) {
+                throw new RuntimeException("This validation cannot happened, this is not self challenge!");
+            } else {
+                System.out.println("This is validation for away user selfTeam");
+                // No error case
+                List<Player> players2;
+                GetMatchTeamUseCase.MatchAndTeam matchAndTeam2;
+                matchAndTeam2 = new GetMatchTeamUseCase.MatchAndTeam(match, match.getAway(), TeamRole.AWAY);
+                if (!matchAndTeam2.team().getSpecificLineup()) {
+                    List<com.kjeldsen.player.domain.Player> playersDomain = playerRepo.findByTeamId(TeamId.of(teamId));
+                    players2 = playersDomain.stream()
+                        .map(p -> UpdateMatchLineupUseCase.buildPlayer(p, matchAndTeam2.team().getRole())).toList();
+                    System.out.println(players2.size());
+                } else {
+                    players2 = Stream.concat(matchAndTeam2.team().getPlayers().stream(), matchAndTeam2.team().getBench().stream())
+                        .collect(Collectors.toList());
+                }
+                TeamFormationValidationResult validationResult2 = TeamFormationValidator.validate(players2);
+                String response2 = JsonUtils.prettyPrint(validationResult2);
+                response = "[" + response + ", " + response2 + "]";
+            }
+        }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -125,7 +150,7 @@ public class MatchDelegate implements MatchApiDelegate {
     @Override
     public ResponseEntity<Void> createMatch(CreateMatchRequest request) {
         createMatchUseCase.create(request.getHome().getId(),
-                request.getAway().getId(), request.getDateTime(), null);
+                request.getAway().getId(), LocalDateTime.now(), null);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
