@@ -1,5 +1,9 @@
 import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { baseColumnConfig } from './ColumnsConfig';
+import CustomTooltip from '../../MatchReport/Tooltips/CustomTooltip';
+import { PlayerSkillShortcuts } from '@/shared/models/PlayerSkill';
+import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
+import { Box } from '@mui/material';
 
 export const playerSkillsColumns = (showPotential: boolean = false) => {
   const getValue = (
@@ -29,10 +33,31 @@ export const playerSkillsColumns = (showPotential: boolean = false) => {
       ...baseColumnConfig,
       field,
       renderHeader: () => (
-        <div>
-          {headerName}
-          <sup style={{ color: '#FF3F84' }}>{headerNameSecondary}</sup>
-        </div>
+        <CustomTooltip
+          tooltipContent={
+            <Box sx={{ fontSize: '14px' }}>
+              <span>
+                {convertSnakeCaseToTitleCase(PlayerSkillShortcuts[headerName])}
+              </span>
+              {headerNameSecondary && (
+                <>
+                  <span style={{ color: '#FF3F84' }}> / </span>
+                  <span>
+                    {convertSnakeCaseToTitleCase(
+                      PlayerSkillShortcuts[headerNameSecondary],
+                    )}
+                  </span>
+                </>
+              )}
+            </Box>
+          }>
+          <div>
+            {headerName}
+            {headerNameSecondary && (
+              <sup style={{ color: '#FF3F84' }}>{headerNameSecondary}</sup>
+            )}
+          </div>
+        </CustomTooltip>
       ),
       valueGetter: (params: GridValueGetterParams) => {
         const actual = getValue(

@@ -19,8 +19,8 @@ public class UpdateMatchChallengeUseCase {
         log.info("UpdateMatchChallengeUseCase for matchId={} status={}", matchId, status);
         Match match = getMatchUseCase.get(matchId);
 
-        if (match.getStatus() != Match.Status.PENDING) {
-            throw new RuntimeException("Match is not in the PENDING status");
+        if (match.getStatus() != Match.Status.PENDING && !match.getAway().getId().equals(match.getHome().getId())) {
+            throw new RuntimeException("Match is not in the PENDING status!");
         }
 
         match.setStatus(status);

@@ -32,7 +32,7 @@ export const PlayerSkillShortcuts: PlayerSkillShortcutsMap = {
   RE: PlayerSkill.REFLEXES,
   GP: PlayerSkill.GOALKEEPER_POSITIONING,
   IN: PlayerSkill.INTERCEPTIONS,
-  CN: PlayerSkill.CONTROL,
+  CT: PlayerSkill.CONTROL,
   OR: PlayerSkill.ORGANIZATION,
   OO: PlayerSkill.ONE_ON_ONE,
   INT: PlayerSkill.INTERCEPTING, // Currently for engine use only, ignore

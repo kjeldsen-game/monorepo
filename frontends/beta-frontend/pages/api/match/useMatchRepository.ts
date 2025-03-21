@@ -51,7 +51,7 @@ const useMatchRepository = (token: string, ownTeamId?: string) => {
   };
 
   const declineMatch = async (matchId: string) => {
-    _patchMatch(matchId, { status: 'REJECTED' });
+    return _patchMatch(matchId, { status: 'REJECTED' });
   };
 
   return {
