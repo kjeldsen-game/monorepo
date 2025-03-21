@@ -44,18 +44,26 @@ const PastMatchesGrid: React.FC<IncomingMatchesGridProps> = () => {
   return (
     <Box sx={{ width: '100%' }}>
       <Grid
+        autoHeight={false}
+        initialState={{
+          sorting: { sortModel: [{ field: 'dateTime', sort: 'desc' }] },
+        }}
         isRowSelectable={() => false}
         rows={pastMatches ?? []}
         columns={
           userData?.user.teamId ? pastMatchesColumns(handleReportView) : []
         }
-        paginationMode="server"
-        pagination
-        pageSize={PAGE_SIZE}
-        hideFooter={false}
-        onPageChange={(value) => setSelectedPage(value)}
+        sx={{
+          maxHeight: '800px',
+          minHeight: '600px',
+        }}
+        // paginationMode="server"
+        // pagination
+        // pageSize={PAGE_SIZE}
+        // hideFooter={false}
+        // onPageChange={(value) => setSelectedPage(value)}
         // TODO: Get total of teams from the API
-        rowCount={10}
+        // rowCount={10}
       />
     </Box>
   );

@@ -56,13 +56,10 @@ const TeamViewNew: React.FC<TeamProps> = ({
   const [filter, setFilter] = useState<string>('ALL');
   const [activePlayerV2, setActivePlayerV2] = useState<any>();
   const [selectedTab, setSelectedTab] = useState(0);
-
-  // Old states
   const [openModalValidation, setOpenModalValidation] =
     useState<boolean>(false);
   const [players, setPlayers] = useState<Player[]>();
   const [teamModifiers, setTeamModifiers] = useState<TeamModifiers>();
-  // NEW
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
@@ -74,6 +71,17 @@ const TeamViewNew: React.FC<TeamProps> = ({
     position?: string,
     inactive?: boolean,
   ) => {
+    console.log(newPlayer);
+    console.log(oldPlayer);
+    console.log(position);
+    console.log(inactive);
+    if (activePlayerV2 === undefined && !inactive && !newPlayer) {
+      if (oldPlayer === undefined) {
+        return;
+      }
+      setActivePlayerV2(oldPlayer);
+      return;
+    }
     if (!oldPlayer) {
       // Updating player to the BENCH
       if (!position) {
@@ -251,14 +259,46 @@ const TeamViewNew: React.FC<TeamProps> = ({
           justifyContent={'space-between'}
           sx={{ paddingY: 3 }}>
           <Box>
-            <LineupFilterButton name={'ALL'} handleClick={setFilter} />
-            <LineupFilterButton name={'GK'} handleClick={setFilter} />
-            <LineupFilterButton name={'DEF'} handleClick={setFilter} />
-            <LineupFilterButton name={'MID'} handleClick={setFilter} />
-            <LineupFilterButton name={'FW'} handleClick={setFilter} />
-            <LineupFilterButton name={'ACTIVE'} handleClick={setFilter} />
-            <LineupFilterButton name={'BENCH'} handleClick={setFilter} />
-            <LineupFilterButton name={'INACTIVE'} handleClick={setFilter} />
+            <LineupFilterButton
+              active={filter}
+              name={'ALL'}
+              handleClick={setFilter}
+            />
+            <LineupFilterButton
+              active={filter}
+              name={'GK'}
+              handleClick={setFilter}
+            />
+            <LineupFilterButton
+              active={filter}
+              name={'DEF'}
+              handleClick={setFilter}
+            />
+            <LineupFilterButton
+              active={filter}
+              name={'MID'}
+              handleClick={setFilter}
+            />
+            <LineupFilterButton
+              active={filter}
+              name={'FW'}
+              handleClick={setFilter}
+            />
+            <LineupFilterButton
+              active={filter}
+              name={'ACTIVE'}
+              handleClick={setFilter}
+            />
+            <LineupFilterButton
+              active={filter}
+              name={'BENCH'}
+              handleClick={setFilter}
+            />
+            <LineupFilterButton
+              active={filter}
+              name={'INACTIVE'}
+              handleClick={setFilter}
+            />
           </Box>
           <Box>
             <MarketButton

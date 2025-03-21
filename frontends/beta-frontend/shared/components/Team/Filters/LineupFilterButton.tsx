@@ -4,11 +4,13 @@ import React from 'react';
 interface LineupFilterButtonProps {
   name: string;
   handleClick: (filter: string) => void;
+  active: string;
 }
 
 const LineupFilterButton: React.FC<LineupFilterButtonProps> = ({
   name,
   handleClick,
+  active,
 }) => {
   return (
     <Button
@@ -18,7 +20,7 @@ const LineupFilterButton: React.FC<LineupFilterButtonProps> = ({
       sx={{
         marginX: '4px',
         fontWeight: 'bold',
-        background: '#FFF2CC',
+        background: name === active ? 'rgb(245, 203, 77)' : '#FFF2CC',
         color: 'black',
         borderRadius: '10px',
         padding: '0px 4px 0px 4px',
