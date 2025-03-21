@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataMongoTest(includeFilters = @ComponentScan.Filter(classes = Component.class))
 @ActiveProfiles("test")
-public class PlayerReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
+class PlayerReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
 
     @Autowired
     private PlayerMongoRepository playerMongoRepository;
@@ -36,7 +36,7 @@ public class PlayerReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
     private PlayerReadRepository playerReadRepository;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         playerMongoRepository.deleteAll();
     }
 
@@ -58,7 +58,7 @@ public class PlayerReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
 
         @Test
         @DisplayName("Return players under certain age")
-        public void should_return_players_under_certain_age() {
+        void should_return_players_under_certain_age() {
             List<Player> players = List.of(createTestPlayer(), createTestPlayer(), createTestPlayer());
             players.get(1).setAge(PlayerAge.builder().years(25).build());
             players.get(2).setAge(PlayerAge.builder().years(19).build());
@@ -66,14 +66,14 @@ public class PlayerReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
             playerMongoRepository.saveAll(players);
             // Under age = lt not lte
             List<Player> readPlayers = playerReadRepository.findPlayerUnderAge(22);
-            assertThat(readPlayers.size()).isEqualTo(1);
+            assertThat(readPlayers).hasSize(1);
             assertThat(readPlayers).isNotEmpty();
         }
 
 
         @Test
         @DisplayName("Return players over certain age")
-        public void should_return_players_over_certain_age() {
+        void should_return_players_over_certain_age() {
             List<Player> players = List.of(createTestPlayer(), createTestPlayer(), createTestPlayer());
             players.get(1).setAge(PlayerAge.builder().years(25).build());
             players.get(2).setAge(PlayerAge.builder().years(19).build());
@@ -81,13 +81,13 @@ public class PlayerReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
             playerMongoRepository.saveAll(players);
 
             List<Player> readPlayers = playerReadRepository.findPlayerOverAge(22);
-            assertThat(readPlayers.size()).isEqualTo(2);
+            assertThat(readPlayers).hasSize(2);
             assertThat(readPlayers).isNotEmpty();
         }
 
         @Test
         @DisplayName("Return players based on skill filter")
-        public void should_return_players_based_on_skill_filter() {
+        void should_return_players_based_on_skill_filter() {
             Player testPlayer = createTestPlayer();
             testPlayer.setId(Player.PlayerId.of("player1"));
             playerMongoRepository.save(testPlayer);
@@ -102,7 +102,7 @@ public class PlayerReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
 
         @Test
         @DisplayName("Return mot return players because of skill filter")
-        public void should_not_return_player_because_of_skill_filter() {
+        void should_not_return_player_because_of_skill_filter() {
             Player testPlayer = createTestPlayer();
             testPlayer.setId(Player.PlayerId.of("player1"));
             playerMongoRepository.save(testPlayer);

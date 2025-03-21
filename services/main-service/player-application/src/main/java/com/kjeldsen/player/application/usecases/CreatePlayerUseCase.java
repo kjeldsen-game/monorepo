@@ -1,13 +1,12 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.domain.EventId;
-import com.kjeldsen.player.application.publisher.PlayerPublisher;
 import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.events.PlayerCreationEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.provider.PlayerProvider;
-import com.kjeldsen.player.domain.repositories.PlayerCreationEventWriteRepository;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +19,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class CreatePlayerUseCase {
 
-    private final PlayerPublisher playerPublisher;
+    private final PlayerWriteRepository playerWriteRepository;
     private final PlayerPositionTendencyReadRepository playerPositionTendencyReadRepository;
-    private final PlayerCreationEventWriteRepository playerCreationEventWriteRepository;
 
     public void create(NewPlayer newPlayer) {
         log.info("CreatePlayerUseCase for player {}", newPlayer);
@@ -40,9 +38,7 @@ public class CreatePlayerUseCase {
             .playerCategory(newPlayer.getPlayerCategory())
             .build();
 
-        playerCreationEventWriteRepository.save(playerCreationEvent);
-
-        playerPublisher.saveAndPublish(Player.creation(playerCreationEvent));
+        playerWriteRepository.save(Player.creation(playerCreationEvent));
     }
 
     @Builder

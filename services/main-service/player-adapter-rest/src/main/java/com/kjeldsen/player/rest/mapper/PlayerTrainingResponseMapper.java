@@ -41,7 +41,6 @@ public interface PlayerTrainingResponseMapper {
                 Map.Entry::getKey,
                 entry -> entry.getValue().stream()
                     .map(this::fromPlayerTraining)
-                    .collect(Collectors.toList())
-            ));
+                    .toList()));
     }
 }

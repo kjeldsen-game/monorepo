@@ -51,7 +51,6 @@ public class MatchDelegate implements MatchApiDelegate {
      * includes modifiers that differ for each match (these are passed as match
      * creation params).
      */
-
     /*********************** MATCH TEAM START ***********************/
 
     @Override
@@ -119,7 +118,6 @@ public class MatchDelegate implements MatchApiDelegate {
             if (!Objects.equals(match.getHome().getId(), match.getAway().getId())) {
                 throw new RuntimeException("This validation cannot happened, this is not self challenge!");
             } else {
-                System.out.println("This is validation for away user selfTeam");
                 // No error case
                 List<Player> players2;
                 GetMatchTeamUseCase.MatchAndTeam matchAndTeam2;
@@ -128,12 +126,11 @@ public class MatchDelegate implements MatchApiDelegate {
                     List<com.kjeldsen.player.domain.Player> playersDomain = playerRepo.findByTeamId(TeamId.of(teamId));
                     players2 = playersDomain.stream()
                             .map(p -> UpdateMatchLineupUseCase.buildPlayer(p, matchAndTeam2.team().getRole())).toList();
-                    System.out.println(players2.size());
                 } else {
                     players2 = Stream
                             .concat(matchAndTeam2.team().getPlayers().stream(),
                                     matchAndTeam2.team().getBench().stream())
-                            .collect(Collectors.toList());
+                            .toList();
                 }
                 TeamFormationValidationResult validationResult2 = TeamFormationValidator.validate(players2);
                 String response2 = JsonUtils.prettyPrint(validationResult2);

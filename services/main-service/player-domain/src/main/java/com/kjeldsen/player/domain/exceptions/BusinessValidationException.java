@@ -1,4 +1,4 @@
-package com.kjeldsen.player.domain.exception;
+package com.kjeldsen.player.domain.exceptions;
 
 public class BusinessValidationException extends RuntimeException {
 

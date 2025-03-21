@@ -1,7 +1,6 @@
 package com.kjeldsen.player.rest.mapper;
 
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerOrder;
 import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.rest.model.PlayerResponse;
 import com.kjeldsen.player.rest.model.PlayerSkill;

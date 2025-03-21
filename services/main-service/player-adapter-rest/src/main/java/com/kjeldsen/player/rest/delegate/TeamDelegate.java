@@ -16,7 +16,6 @@ import com.kjeldsen.player.domain.Team.TeamId;
 import com.kjeldsen.player.domain.TeamModifiers;
 import com.kjeldsen.player.domain.repositories.FindTeamsQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
-import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.rest.api.TeamApiDelegate;
 import com.kjeldsen.player.rest.mapper.EconomyMapper;
@@ -67,10 +66,9 @@ public class TeamDelegate implements TeamApiDelegate {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        updatePricingRequest.getPrices().forEach(price -> {
+        updatePricingRequest.getPrices().forEach(price ->
             updateTeamPricingUseCase.update(Team.TeamId.of(teamId), price.getValue(),
-                Team.Economy.PricingType.valueOf(price.getType().name()));
-        });
+                Team.Economy.PricingType.valueOf(price.getType().name())));
         return ResponseEntity.ok().build();
     }
 

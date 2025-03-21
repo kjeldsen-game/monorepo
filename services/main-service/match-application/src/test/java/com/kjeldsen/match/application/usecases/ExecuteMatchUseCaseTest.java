@@ -9,6 +9,7 @@ import com.kjeldsen.match.domain.clients.models.team.TeamModifiers;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.MatchReport;
 import com.kjeldsen.match.domain.entities.Team;
+import com.kjeldsen.match.domain.exceptions.InvalidMatchStatusException;
 import com.kjeldsen.match.domain.publisher.MatchEventPublisher;
 import com.kjeldsen.match.domain.repositories.MatchWriteRepository;
 import com.kjeldsen.match.domain.state.GameState;
@@ -41,7 +42,7 @@ class ExecuteMatchUseCaseTest extends BaseClientTest {
     @DisplayName("Should throw error when match status is invalid")
     void should_throw_error_when_match_status_is_invalid() {
         when(mockedGetMatchUseCase.get("matchId")).thenReturn(Match.builder().id("matchId").status(Match.Status.PLAYED).build());
-        assertEquals("Invalid match status", assertThrows(RuntimeException.class, () -> {
+        assertEquals("Invalid match status!", assertThrows(InvalidMatchStatusException.class, () -> {
             executeMatchUseCase.execute("matchId");
         }).getMessage());
     }

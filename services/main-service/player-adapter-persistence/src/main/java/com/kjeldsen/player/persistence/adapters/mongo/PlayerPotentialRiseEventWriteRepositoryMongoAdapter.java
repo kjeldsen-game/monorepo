@@ -8,8 +8,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class PlayerPotentialRiseEventWriteRespositoryMongoAdapter implements PlayerPotentialRiseEventWriteRepository {
-    final private PlayerPotentialRiseEventMongoRepository playerPotentialRiseEventMongoRepository;
+public class PlayerPotentialRiseEventWriteRepositoryMongoAdapter implements PlayerPotentialRiseEventWriteRepository {
+
+    private final PlayerPotentialRiseEventMongoRepository playerPotentialRiseEventMongoRepository;
+
     @Override
     public PlayerPotentialRiseEvent save(PlayerPotentialRiseEvent playerPotentialRiseEvent) {
         return playerPotentialRiseEventMongoRepository.save(playerPotentialRiseEvent);

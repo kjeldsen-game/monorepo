@@ -44,7 +44,7 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceIT extends AbstractM
 
         @Test
         @DisplayName("create a new player position tendency when there is not existed one for provided position")
-        public void create_a_new_player_position_tendency_when_there_is_not_existed_one_for_provided_position() {
+        void create_a_new_player_position_tendency_when_there_is_not_existed_one_for_provided_position() {
             PlayerPositionTendency forwardTendencies = PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
                 .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0, PlayerSkillRelevance.CORE)))
@@ -54,14 +54,14 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceIT extends AbstractM
 
             Optional<PlayerPositionTendency> actual = playerPositionTendencyMongoRepository.findByPosition(PlayerPosition.FORWARD);
 
-            assertThat(actual.isPresent()).isTrue();
+            assertThat(actual).isPresent();
             assertThat(actual.get().getTendencies().get(PlayerSkill.SCORING)).usingRecursiveComparison().isEqualTo(
                 new PlayerSkills(7, 0, PlayerSkillRelevance.CORE));
         }
 
         @Test
         @DisplayName("update an existed player position tendency when there is existed one for provided position")
-        public void update_an_existed_player_position_tendency_when_there_is_existed_one_for_provided_position() {
+        void update_an_existed_player_position_tendency_when_there_is_existed_one_for_provided_position() {
             PlayerPositionTendency forwardTendencyDocument = PlayerPositionTendency.builder()
                 .position(PlayerPosition.FORWARD)
                 .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(7, 0, PlayerSkillRelevance.CORE)))
@@ -77,7 +77,7 @@ class PlayerPositionTendencyWriteRepositoryMongoAdapterSliceIT extends AbstractM
 
             Optional<PlayerPositionTendency> actual = playerPositionTendencyMongoRepository.findByPosition(PlayerPosition.FORWARD);
             PlayerSkills playerSkills = actual.get().getTendencies().get(PlayerSkill.SCORING);
-            assertThat(actual.isPresent()).isTrue();
+            assertThat(actual).isPresent();
             assertThat(playerSkills.getActual()).isEqualTo(10);
         }
     }

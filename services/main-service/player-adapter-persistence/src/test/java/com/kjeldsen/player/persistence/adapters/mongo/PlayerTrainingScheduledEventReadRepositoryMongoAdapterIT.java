@@ -32,13 +32,13 @@ class PlayerTrainingScheduledEventReadRepositoryMongoAdapterIT extends AbstractM
     private PlayerTrainingScheduledEventReadRepository playerTrainingScheduledEventReadRepository;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         playerTrainingScheduledEventMongoRepository.deleteAll();
     }
 
     @Test
     @DisplayName("Should return active scheduled trainings")
-    public void should_return_active_scheduled_trainings() {
+    void should_return_active_scheduled_trainings() {
         PlayerTrainingScheduledEvent event = PlayerTrainingScheduledEvent
             .builder()
             .id(EventId.generate())
@@ -61,7 +61,7 @@ class PlayerTrainingScheduledEventReadRepositoryMongoAdapterIT extends AbstractM
         List<PlayerTrainingScheduledEvent> eventList = playerTrainingScheduledEventReadRepository
             .findAllActiveScheduledTrainings();
 
-        assertThat(eventList.size()).isEqualTo(1);
+        assertThat(eventList).hasSize(1);
         assertThat(eventList.get(0).getId()).isEqualTo(event.getId());
         assertThat(eventList.get(0).getSkill()).isEqualTo(event.getSkill());
     }

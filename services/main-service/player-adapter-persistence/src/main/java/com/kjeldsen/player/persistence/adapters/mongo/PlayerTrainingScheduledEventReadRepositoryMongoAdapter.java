@@ -8,13 +8,12 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class PlayerTrainingScheduledEventReadRepositoryMongoAdapter implements PlayerTrainingScheduledEventReadRepository {
 
-    private final  PlayerTrainingScheduledEventMongoRepository playerTrainingScheduledEventMongoRepository;
+    private final PlayerTrainingScheduledEventMongoRepository playerTrainingScheduledEventMongoRepository;
 
     @Override
     public List<PlayerTrainingScheduledEvent> findAllActiveScheduledTrainings(LocalDate date) {

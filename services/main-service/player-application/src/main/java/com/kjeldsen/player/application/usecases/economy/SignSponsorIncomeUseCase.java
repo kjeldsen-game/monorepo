@@ -1,7 +1,9 @@
 package com.kjeldsen.player.application.usecases.economy;
 
+import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
+import com.kjeldsen.player.domain.exceptions.SponsorDealAlreadySetException;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,23 +18,19 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SignSponsorIncomeUseCase {
 
-    private final TeamReadRepository teamReadRepository;
     private final TeamWriteRepository teamWriteRepository;
     private final CreateTransactionUseCase createTransactionUseCase;
+    private final GetTeamUseCase getTeamUseCase;
 
     public void sign(Team.TeamId teamId, Team.Economy.IncomePeriodicity periodicity, Team.Economy.IncomeMode mode) {
         log.info("SingSponsorUseCase for team {} periodicity {} mode {}", teamId, periodicity, mode);
-        Team team = teamReadRepository.findById(teamId)
-            .orElseThrow(() -> new RuntimeException("Team not found"));
+        Team team = getTeamUseCase.get(teamId);
 
         if (team.getEconomy().getSponsors().get(periodicity) != null) {
-            throw new RuntimeException("Sponsor already exists");
+            throw new SponsorDealAlreadySetException();
         }
-
         team.getEconomy().getSponsors().put(periodicity, mode);
-
         BigDecimal amount = getAmount(mode, periodicity, false);
-        log.info("SingSponsorUseCase amount {}", amount);
 
         teamWriteRepository.save(team);
         createTransactionUseCase.create(teamId, amount, Transaction.TransactionType.SPONSOR);
@@ -41,8 +39,7 @@ public class SignSponsorIncomeUseCase {
 
     public void processBonus(Team.TeamId teamId) {
         log.info("SingSponsorUseCase processBonus for match win {}", teamId);
-        Team team = teamReadRepository.findById(teamId)
-            .orElseThrow(() -> new RuntimeException("Team not found"));
+        Team team = getTeamUseCase.get(teamId);
 
         Map<Team.Economy.IncomePeriodicity, Team.Economy.IncomeMode> sponsors =  team.getEconomy().getSponsors();
         sponsors.forEach((periodicity, mode) -> {

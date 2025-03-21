@@ -1,5 +1,6 @@
 package com.kjeldsen.player.application.usecases.player;
 
+import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.TeamModifiers;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
@@ -13,13 +14,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class UpdateTeamModifiersUseCase {
 
-    private final TeamReadRepository teamReadRepository;
     private final TeamWriteRepository teamWriteRepository;
+    private final GetTeamUseCase getTeamUseCase;
 
     public void update(String teamId, TeamModifiers modifiers) {
 
-        Team team =  teamReadRepository.findById(Team.TeamId.of(teamId))
-            .orElseThrow(() -> new RuntimeException("Team not found"));
+        Team team =  getTeamUseCase.get(teamId);
 
         team.setTeamModifiers(modifiers);
         teamWriteRepository.save(team);

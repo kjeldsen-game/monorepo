@@ -5,7 +5,7 @@ import com.kjeldsen.player.rest.mapper.PlayerTrainingResponseMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class PlayerTrainingResponseMapperTest {
+class PlayerTrainingResponseMapperTest {
 
     @Test
     void should_map_playerSkill_from_playerSkillDomain() {

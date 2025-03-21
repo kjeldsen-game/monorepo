@@ -1,21 +1,14 @@
 package com.kjeldsen.player.domain;
 
-import static com.kjeldsen.player.domain.exception.BusinessValidationException.throwIfNot;
-import static com.kjeldsen.player.domain.exception.ErrorCodes.BLOOM_PLAYER_AGE_INVALID_RANGE;
-import static com.kjeldsen.player.domain.exception.ErrorCodes.BLOOM_SPEED_INVALID_RANGE;
-import static com.kjeldsen.player.domain.exception.ErrorCodes.BLOOM_YEARS_ON_INVALID_RANGE;
-import static com.kjeldsen.player.domain.exception.ErrorCodes.DECLINE_PLAYER_AGE_INVALID_RANGE;
-import static com.kjeldsen.player.domain.exception.ErrorCodes.DECLINE_SPEED_INVALID_RANGE;
+import static com.kjeldsen.player.domain.exceptions.BusinessValidationException.throwIfNot;
+import static com.kjeldsen.player.domain.exceptions.ErrorCodes.DECLINE_PLAYER_AGE_INVALID_RANGE;
 
 import com.kjeldsen.player.domain.events.PlayerCreationEvent;
-import com.kjeldsen.player.domain.events.PlayerTrainingBloomEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.generator.BloomPhaseGenerator;
-import com.kjeldsen.player.domain.generator.PointsGenerator;
 import com.kjeldsen.player.domain.generator.SalaryGenerator;
 import java.math.BigDecimal;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;

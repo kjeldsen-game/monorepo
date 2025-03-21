@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PlayerTrainingBloomEventWriteRepositoryMongoAdapter implements PlayerTrainingBloomEventWriteRepository {
 
-    final private PlayerTrainingBloomEventMongoRepository playerTrainingBloomEventMongoRepository;
+    private final PlayerTrainingBloomEventMongoRepository playerTrainingBloomEventMongoRepository;
 
     @Override
     public PlayerTrainingBloomEvent save(PlayerTrainingBloomEvent playerTrainingBloomEvent) {

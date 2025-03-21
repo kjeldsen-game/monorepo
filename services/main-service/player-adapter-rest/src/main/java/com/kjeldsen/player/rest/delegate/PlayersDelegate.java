@@ -57,7 +57,6 @@ public class PlayersDelegate implements PlayerApiDelegate {
     @Override
     public ResponseEntity<List<PlayerResponse>> getAllPlayers(String teamId, PlayerPosition position, Integer size, Integer page) {
         if (teamId == null) {
-            System.out.println(SecurityUtils.getCurrentUserId());
             Team team = getTeamUseCase.get(SecurityUtils.getCurrentUserId());
             teamId = team.getId().value();
         }
@@ -68,7 +67,6 @@ public class PlayersDelegate implements PlayerApiDelegate {
             .page(page)
             .build();
         List<Player> players = playerReadRepository.find(query);
-        System.out.println(players.size());
         List<PlayerResponse> response = players.stream().map(PlayerMapper.INSTANCE::playerResponseMap).toList();
         return ResponseEntity.ok(response);
     }
@@ -81,12 +79,12 @@ public class PlayersDelegate implements PlayerApiDelegate {
         return ResponseEntity.ok(response);
     }
 
+    @Override
     public ResponseEntity<Void> sellPlayer(String playerId) {
         Optional<Player> optionalPlayer = playerReadRepository.findOneById(Player.PlayerId.of(playerId));
-        if (optionalPlayer.isPresent()) {
-            if (!optionalPlayer.get().getTeamId().equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId())) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
+        if (optionalPlayer.isPresent() && !optionalPlayer.get().getTeamId().equals(
+            getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId())) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
         auctionCreationEventPublisher.publishAuctionCreationEvent(

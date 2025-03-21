@@ -1,5 +1,6 @@
 package com.kjeldsen.player.application.usecases.fanbase;
 
+import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
@@ -21,12 +22,12 @@ public class UpdateLoyaltyUseCase {
     private static final Double LOYALTY_MID = 50.0;
     private static final Integer MAX_TIER = 5;
     private static final Integer MIN_TIER = 1;
-    private final TeamReadRepository teamReadRepository;
+    private final GetTeamUseCase getTeamUseCase;
     private final TeamWriteRepository teamWriteRepository;
 
     public void updateLoyaltyMatch(Team.TeamId teamId, Integer goals, Team.Fans.LoyaltyImpactType loyaltyImpactType) {
         log.info("UpdateLoyaltyUseCase after match for team {}", teamId);
-        Team team = getTeam(teamId);
+        Team team = getTeamUseCase.get(teamId);
 
         List<Double> calculatedLoyaltyPerTier = IntStream.range(0, getLoyaltyGoals(goals, loyaltyImpactType).size())
             .mapToObj(i -> getLoyaltyGoals(goals, loyaltyImpactType).get(i) + getLoyaltyMatch(loyaltyImpactType).get(i))
@@ -40,7 +41,7 @@ public class UpdateLoyaltyUseCase {
     public void updateLoyaltySeason(Team.TeamId teamId) {
         log.info("UpdateLoyaltyUseCase after season for team {}", teamId);
 
-        Team team = getTeam(teamId);
+        Team team = getTeamUseCase.get(teamId);
 
         // Calculated Loyalty based on the position in current (previous) season
         Integer highestKey = team.getLeagueStats().keySet().stream()
@@ -57,15 +58,9 @@ public class UpdateLoyaltyUseCase {
     public void resetLoyalty(Team.TeamId teamId) {
         log.info("UpdateLoyaltyUseCase reset for team {}", teamId);
 
-        Team team = getTeam(teamId);
+        Team team = getTeamUseCase.get(teamId);
         team.getFans().resetLoyalty();
         teamWriteRepository.save(team);
-    }
-
-    private Team getTeam(Team.TeamId teamId) {
-        log.info("UpdateLoyaltyUseCase for team {}", teamId);
-        return teamReadRepository.findById(teamId).orElseThrow(
-            () -> new RuntimeException("Team not found"));
     }
 
     // TODO move this outside of this usecase -> 2 options refactor FansManagementUseCase or create fansTierMovementUseCase

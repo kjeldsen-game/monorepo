@@ -21,7 +21,7 @@ class UpdateMatchChallengeUseCaseTest {
     @DisplayName("Should throw error if invalid status")
     void should_throw_error_if_invalid_status() {
         when(mockedGetMatchUseCase.get("matchId")).thenReturn(Match.builder().status(Match.Status.ACCEPTED).build());
-        assertEquals("Match is not in the PENDING status", assertThrows(RuntimeException.class, () -> {
+        assertEquals("Match is not in the PENDING status!", assertThrows(RuntimeException.class, () -> {
             updateMatchChallengeUseCase.update("matchId", Match.Status.ACCEPTED);
         }).getMessage());
     }

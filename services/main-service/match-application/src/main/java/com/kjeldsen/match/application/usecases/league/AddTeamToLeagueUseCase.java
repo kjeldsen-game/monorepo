@@ -26,7 +26,6 @@ public class AddTeamToLeagueUseCase {
 
     private final LeagueWriteRepository leagueWriteRepository;
     private final LeagueReadRepository leagueReadRepository;
-    // TODO add publisher here and listener in the Team
     private final TeamClientMatch teamClient;
     private final LeagueEventPublisher leagueEventPublisher;
 
@@ -48,7 +47,7 @@ public class AddTeamToLeagueUseCase {
             .startedAt(Instant.now())
             .teams(new HashMap<>())
             .tier(1)
-            .build() : filtered.get(random.nextInt() * leagues.size());
+            .build() : filtered.get(Math.abs(new Random().nextInt()) % leagues.size());
 
         League.LeagueStats stats = new League.LeagueStats();
         stats.setName(team.getName());

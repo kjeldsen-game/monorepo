@@ -233,8 +233,6 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         }
         AtomicInteger nextSkillToTrain = new AtomicInteger(2);
         playerMongoRepository.save(playerForSimulation);
-        System.out.println(simulateDaysRequest.getDays());
-        System.out.println(simulateDaysRequest.getSkills().toString());
         schedulePlayerTrainingUseCase.schedule(playerForSimulation.getId(),
                 PlayerSkill.valueOf(simulateDaysRequest.getSkills().get(0).name()));
         schedulePlayerTrainingUseCase.schedule(playerForSimulation.getId(),
@@ -260,27 +258,6 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
                         .filter(e -> e.getPlayerId().equals(playerForSimulation.getId()))
                         .toList();
                 playerTrainingScheduledEvents.forEach(scheduledTraining -> {
-                    // Actual skill for the skill reach the potential value of the skill, we are
-                    // schedule new skill
-                    // if
-                    // (Objects.equals(playerForSimulation.getActualSkillPoints(scheduledTraining.getSkill()),
-                    // playerForSimulation.getPotentialSkillPoints(scheduledTraining.getSkill()))) {
-                    // if (nextSkillToTrain.get() > simulateDaysRequest.getSkills().size() - 1) {
-                    //
-                    // } else {
-                    // log.info("Training reached the maximum value for actual, choosing another
-                    // skill {} {}",
-                    // scheduledTraining.getSkill(),
-                    // simulateDaysRequest.getSkills().get(nextSkillToTrain.get()));
-                    //
-                    // scheduledTraining.setStatus(PlayerTrainingScheduledEvent.Status.INACTIVE);
-                    // playerTrainingScheduledEventMongoRepository.save(scheduledTraining);
-                    // schedulePlayerTrainingUseCase.schedule(playerForSimulation.getId(),
-                    // PlayerSkill.valueOf(simulateDaysRequest.getSkills().get(nextSkillToTrain.get()).name()));
-                    // nextSkillToTrain.incrementAndGet();
-                    // }
-                    // }
-
                     Optional<PlayerTrainingEvent> latestPlayerTrainingEvent = playerTrainingEventReadRepository
                             .findLastByPlayerTrainingEvent(scheduledTraining.getId().value());
 
@@ -354,7 +331,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
                 .findAllByPlayerId(playerForSimulation.getId());
         declineEventList.stream()
                 .filter(event -> !event.getPointsBeforeTraining().equals(event.getPointsAfterTraining()))
-                .forEach(event -> {
+                .forEach(event ->
                     response.add(new SimulateDaysResponse()
                             .message(event.getFallOfCliffActive() ? "fallOfCliff" : "noFall")
                             .eventType("decline")
@@ -362,14 +339,13 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
                             .date(event.getOccurredAt().toString())
                             .skill(event.getSkill().name())
                             .pointsBefore(event.getPointsBeforeTraining())
-                            .pointsAfter(event.getPointsAfterTraining()));
-                });
+                            .pointsAfter(event.getPointsAfterTraining())));
 
         List<PlayerPotentialRiseEvent> riseEventList = playerPotentialRiseEventMongoRepository
                 .findAllByPlayerId(playerForSimulation.getId());
         riseEventList.stream()
                 .filter(event -> event.getPointsToRise() != 0)
-                .forEach(event -> {
+                .forEach(event ->
                     response.add(new SimulateDaysResponse()
                             .message("")
                             .eventType("rise")
@@ -377,13 +353,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
                             .date(event.getOccurredAt().toString())
                             .skill(event.getSkillThatRisen().name())
                             .pointsBefore(event.getPotentialBeforeRaise())
-                            .pointsAfter(event.getPotentialAfterRaise()));
-                });
-
-        System.out.println(playerTrainingEvents.size());
-        System.out.println(declineEventList.size());
-        System.out.println(riseEventList.size());
-        System.out.println(playerForSimulation);
+                            .pointsAfter(event.getPotentialAfterRaise())));
 
         playerTrainingEventMongoRepository.deleteAll(playerTrainingEvents);
         playerTrainingScheduledEventMongoRepository.deleteAll(playerTrainingScheduledEvents);

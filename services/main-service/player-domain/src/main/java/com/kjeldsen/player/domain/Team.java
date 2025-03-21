@@ -288,11 +288,11 @@ public class Team {
             }
         }
 
-        public void updatePrices(PricingEvent pricingEvent) {
+        public void updatePrices(PricingType pricingType, int price) {
             if (prices == null) {
                 prices = new HashMap<>();
             }
-            prices.put(pricingEvent.getPricingType(), pricingEvent.getPrice());
+            prices.put(pricingType, price);
         }
 
         public void resetSponsorIncome(IncomePeriodicity periodicity) {

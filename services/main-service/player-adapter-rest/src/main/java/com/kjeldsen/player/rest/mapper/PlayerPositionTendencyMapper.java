@@ -30,12 +30,11 @@ public interface PlayerPositionTendencyMapper {
     default Map<String, PlayerPositionTendencyResponseTendenciesValue> madPlayerPositionTendencyResponseTendenciesValue(
         Map<PlayerSkill, PlayerSkills> map) {
         Map<String, PlayerPositionTendencyResponseTendenciesValue> result = new HashMap<>();
-        map.forEach((key, value) -> {
+        map.forEach((key, value) ->
             result.put(
                 key.name(),
                 mapPlayerPositionTendencyResponseTendenciesValue(key, value)
-            );
-        });
+            ));
         return result;
     }
 

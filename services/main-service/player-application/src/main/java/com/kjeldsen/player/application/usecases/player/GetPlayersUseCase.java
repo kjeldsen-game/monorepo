@@ -2,6 +2,7 @@ package com.kjeldsen.player.application.usecases.player;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.exceptions.PlayerNotFoundException;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,11 @@ public class GetPlayersUseCase {
 
     public List<Player> get(String teamId) {
         return playerReadRepository.findByTeamId(Team.TeamId.of(teamId));
+    }
+
+    public Player get(Player.PlayerId playerId) {
+        return playerReadRepository.findOneById(playerId)
+            .orElseThrow(PlayerNotFoundException::new);
     }
 }
 

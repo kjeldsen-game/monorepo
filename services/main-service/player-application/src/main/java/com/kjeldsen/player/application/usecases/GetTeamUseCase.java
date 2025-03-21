@@ -1,5 +1,6 @@
 package com.kjeldsen.player.application.usecases;
 
+import com.kjeldsen.market.domain.exceptions.TeamNotFoundException;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,14 +15,12 @@ public class GetTeamUseCase {
     private final TeamReadRepository teamReadRepository;
 
     public Team get(String userId) {
-//        log.info("GetTeamUseCase for userId {}", userId);
         return teamReadRepository.findByUserId(userId)
             .orElseThrow(() -> new RuntimeException(String.format("Team not found for user with ID %s", userId)));
     }
 
     public Team get(Team.TeamId teamId) {
-//        log.info("GetTeamUseCase for teamId={}", teamId.value());
         return teamReadRepository.findById(teamId).orElseThrow(
-            () -> new RuntimeException(String.format("Team not found for id %s", teamId.value())));
+            TeamNotFoundException::new);
     }
 }

@@ -21,7 +21,7 @@ public class NewDayJob implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-//        log.info("New day in Kjeldsen is here!");
+        log.info("New day in Kjeldsen is here!");
         // PlayerTraining, PlayerDecline, PlayerRiseUp
         processPlayerTrainingUseCase.process();
 //        processPotentialRiseUseCase.process();

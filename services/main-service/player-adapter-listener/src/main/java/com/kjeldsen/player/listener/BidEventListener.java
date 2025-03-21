@@ -3,6 +3,7 @@ package com.kjeldsen.player.listener;
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.BidEvent;
+import com.kjeldsen.player.domain.exceptions.InsufficientBalanceException;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class BidEventListener {
 
     private void updateTeamBalance(Team team, BigDecimal bidAmountDiff) {
         if (team.getEconomy().getBalance().compareTo(bidAmountDiff.abs()) < 0) {
-            throw new RuntimeException("You don't have enough balance to place bid!");
+            throw new InsufficientBalanceException();
         }
         team.getEconomy().updateBalance(bidAmountDiff);
     }

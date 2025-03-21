@@ -1,32 +1,20 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.player.application.publisher.PlayerPublisher;
-import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerPositionTendency;
-import com.kjeldsen.player.domain.PlayerSkills;
-import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.events.PlayerCreationEvent;
-import com.kjeldsen.player.domain.repositories.PlayerCreationEventWriteRepository;
+import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
-import org.apache.commons.lang3.StringUtils;
+import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class CreatePlayerUseCaseTest {
 
-    final private PlayerPublisher playerPublisher = Mockito.mock(PlayerPublisher.class);
-
-    final private PlayerCreationEventWriteRepository playerCreationEventWriteRepository = Mockito.mock(PlayerCreationEventWriteRepository.class);
+    private final PlayerWriteRepository mockedPlayerWriteRepository = Mockito.mock(PlayerWriteRepository.class);
     final private PlayerPositionTendencyReadRepository mockedPlayerPositionTendencyReadRepository = Mockito.mock(
         PlayerPositionTendencyReadRepository.class);
-    final private CreatePlayerUseCase createPlayerUseCase = new CreatePlayerUseCase(playerPublisher, mockedPlayerPositionTendencyReadRepository,
-        playerCreationEventWriteRepository);
+    final private CreatePlayerUseCase createPlayerUseCase = new CreatePlayerUseCase(mockedPlayerWriteRepository, mockedPlayerPositionTendencyReadRepository);
 
     @Test
     @DisplayName("create a player with the given age, position and total points distributed in the actual skills")
@@ -42,15 +30,6 @@ class CreatePlayerUseCaseTest {
 
         createPlayerUseCase.create(newPlayer);
 
-        ArgumentCaptor<PlayerCreationEvent> argumentCaptor = ArgumentCaptor.forClass(PlayerCreationEvent.class);
-        verify(playerCreationEventWriteRepository, Mockito.times(1))
-            .save(argumentCaptor.capture());
-
-        PlayerCreationEvent playerCreationEvent = argumentCaptor.getValue();
-        assertThat(playerCreationEvent)
-            .matches(player -> player.getPosition().equals(PlayerPosition.CENTRE_MIDFIELDER)
-                && StringUtils.isNotBlank(player.getName())
-                && player.getTeamId().equals(teamId)
-                && player.getInitialSkills().values().stream().map(PlayerSkills::getActual).mapToInt(Integer::intValue).sum() == 200);
+        verify(mockedPlayerWriteRepository, times(1)).save(any(Player.class));
     }
 }

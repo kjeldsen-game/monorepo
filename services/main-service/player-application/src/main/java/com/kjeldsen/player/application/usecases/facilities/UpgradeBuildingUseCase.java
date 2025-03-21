@@ -1,5 +1,6 @@
 package com.kjeldsen.player.application.usecases.facilities;
 
+import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.application.usecases.economy.CreateTransactionUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
@@ -16,7 +17,7 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class UpgradeBuildingUseCase {
 
-    private final TeamReadRepository teamReadRepository;
+    private final GetTeamUseCase getTeamUseCase;
     private final TeamWriteRepository teamWriteRepository;
     private final CreateTransactionUseCase createTransactionUseCase;
     private static final BigDecimal FACILITY_PER_LEVEL_UPGRADE = BigDecimal.valueOf(100_000);
@@ -24,10 +25,7 @@ public class UpgradeBuildingUseCase {
     public void upgrade(Team.TeamId teamId, Team.Buildings.Facility facility) {
         log.info("UpgradeBuildingUseCase: upgrading team {} to {}", teamId, facility);
 
-        Team team =  teamReadRepository.findById(teamId)
-                .orElseThrow(() -> new RuntimeException("Team not found"));
-
-        // TODO add BuildingUpgradeEvent
+        Team team = getTeamUseCase.get(teamId);
 
         team.getBuildings().updateFacility(facility);
 

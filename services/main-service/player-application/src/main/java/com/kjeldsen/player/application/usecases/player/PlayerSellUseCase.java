@@ -14,13 +14,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PlayerSellUseCase {
 
-    private final PlayerReadRepository playerReadRepository;
     private final PlayerWriteRepository playerWriteRepository;
+    private final GetPlayersUseCase getPlayersUseCase;
 
     public AuctionCreationEvent sell(Player.PlayerId playerId) {
         log.info("PlayerSellUseCase for player {}", playerId);
-        Player player = playerReadRepository.findOneById(playerId)
-            .orElseThrow(() -> new RuntimeException("Player not found"));
+        Player player = getPlayersUseCase.get(playerId);
 
         if (player.getStatus() == PlayerStatus.FOR_SALE) {
             throw new RuntimeException("Player's status is already FOR_SALE");

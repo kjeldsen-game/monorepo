@@ -2,7 +2,6 @@ package com.kjeldsen.player.application.usecases.economy;
 
 import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TransactionReadRepository;
 import com.kjeldsen.player.domain.repositories.queries.FilterTransactionsQuery;
 import lombok.*;
@@ -13,7 +12,6 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Component

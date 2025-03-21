@@ -2,6 +2,7 @@ package com.kjeldsen.player.application.usecases.economy;
 
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
+import com.kjeldsen.player.domain.exceptions.IllegalAttendanceException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +21,7 @@ public class MatchAttendanceIncomeUseCase {
         log.info("MatchIncomeAttendanceUsecase team {}", teamId);
 
         if (attendanceCount < 0 ) {
-            throw new IllegalArgumentException("Attendance count cannot be negative");
+            throw new IllegalAttendanceException();
         }
 
         BigDecimal amount = getAmount(attendanceCount, 100);
@@ -29,6 +30,6 @@ public class MatchAttendanceIncomeUseCase {
 
     private BigDecimal getAmount(Integer attendanceCount, Integer price) {
         // TODO to be adjusted to calc the amount based on tickets
-        return BigDecimal.valueOf(attendanceCount * price);
+        return BigDecimal.valueOf((long) attendanceCount * price);
     }
 }

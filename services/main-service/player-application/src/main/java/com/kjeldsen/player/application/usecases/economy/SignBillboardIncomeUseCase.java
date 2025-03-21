@@ -1,6 +1,8 @@
 package com.kjeldsen.player.application.usecases.economy;
 
+import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.exceptions.BillboardDealAlreadySetException;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,18 +19,17 @@ import java.util.Random;
 public class SignBillboardIncomeUseCase {
 
     private static final BigDecimal BASE_OFFER = BigDecimal.valueOf(100_000);
-    private final TeamReadRepository teamReadRepository;
     private final TeamWriteRepository teamWriteRepository;
     private final BillboardIncomeUseCase billboardIncomeUseCase;
+    private final GetTeamUseCase getTeamUseCase;
 
     public void sign(Team.TeamId teamId, Team.Economy.BillboardIncomeType type) {
         log.info("SignBillboardIncomeUseCase for team {} w type {}", teamId, type);
 
-        Team team = teamReadRepository.findById(teamId)
-            .orElseThrow(() -> new RuntimeException("Team not found"));
+        Team team = getTeamUseCase.get(teamId);
 
         if (team.getEconomy().getBillboardDeal() != null) {
-            throw new RuntimeException("Billboard deal is already set");
+            throw new BillboardDealAlreadySetException();
         }
 
         Integer lastSeasonPosition = team.getLastSeasonPosition();
