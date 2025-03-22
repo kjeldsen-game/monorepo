@@ -44,7 +44,7 @@ public class ActionSelection {
         List<Action> actions = legalActions.stream()
             // Prevents players in back area from positioning - this is required to force defensive
             // midfielders (who have receded into the back area) to pass the ball forward.
-            .filter(action -> !(action == Action.POSITION && pitchArea.rank() == PitchRank.BACK))
+//            .filter(action -> !(action == Action.POSITION && pitchArea.rank() == PitchRank.BACK))
             // Prevents forwards from passing the ball to area when in penalty box
             .filter(action ->
                 !((action == Action.PASS )
