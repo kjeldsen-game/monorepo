@@ -63,8 +63,6 @@ public enum DuelType {
                 case PASSING_HIGH -> List.of(PlayerSkill.PASSING);
                 case DRIBBLE -> List.of(PlayerSkill.BALL_CONTROL); // TODO confirm use of this skill.
                 case POSITIONAL -> List.of(PlayerSkill.OFFENSIVE_POSITIONING);
-//                case BALL_CONTROL -> BallHeight.HIGH.equals(ballHeight) ?
-//                    List.of(PlayerSkill.TACKLING, PlayerSkill.AERIAL): List.of(PlayerSkill.TACKLING);
                 case BALL_CONTROL -> BallHeight.HIGH.equals(ballHeight) ?
                     List.of(PlayerSkill.BALL_CONTROL, PlayerSkill.AERIAL): List.of(PlayerSkill.BALL_CONTROL);
                 case LOW_SHOT -> List.of(PlayerSkill.SCORING);
@@ -80,8 +78,6 @@ public enum DuelType {
                 case POSITIONAL -> List.of(PlayerSkill.DEFENSIVE_POSITIONING);
                 case BALL_CONTROL -> BallHeight.HIGH.equals(ballHeight) ?
                     List.of(PlayerSkill.TACKLING, PlayerSkill.AERIAL): List.of(PlayerSkill.TACKLING);
-//                case BALL_CONTROL -> BallHeight.HIGH.equals(ballHeight) ?
-//                        List.of(PlayerSkill.BALL_CONTROL, PlayerSkill.AERIAL): List.of(PlayerSkill.BALL_CONTROL);
                 case LOW_SHOT -> List.of(PlayerSkill.REFLEXES);
                 case ONE_TO_ONE_SHOT -> List.of(PlayerSkill.ONE_ON_ONE);
                 case HEADER_SHOT -> List.of(PlayerSkill.REFLEXES);

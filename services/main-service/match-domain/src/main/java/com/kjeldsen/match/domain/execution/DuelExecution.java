@@ -10,6 +10,7 @@ import com.kjeldsen.match.domain.entities.duel.DuelRole;
 import com.kjeldsen.match.domain.entities.duel.DuelType;
 import com.kjeldsen.match.domain.modifers.Orders;
 import com.kjeldsen.match.domain.random.DuelRandomization;
+import com.kjeldsen.match.domain.random.GausDuelRandomizer;
 import com.kjeldsen.match.domain.recorder.GameProgressRecord;
 import com.kjeldsen.match.domain.state.ChainActionSequence;
 import com.kjeldsen.match.domain.state.GameState;
@@ -27,13 +28,16 @@ import java.util.Optional;
 public class DuelExecution {
 
     /*
-     * Determines the outcome of duels. Each duel execution method returns a DuelDTO.
+     * Determines the outcome of duels. Each duel execution method returns a
+     * DuelDTO.
      */
 
     public static DuelDTO executeDuel(GameState state, DuelParams params) {
 
-        // Before we execute a passing duel (besides kickoff or after a shot), player orders are given the opportunity
-        // to change of the parameters for execution - the action (duelType) and challenger - as well
+        // Before we execute a passing duel (besides kickoff or after a shot), player
+        // orders are given the opportunity
+        // to change of the parameters for execution - the action (duelType) and
+        // challenger - as well
         // as the skill points of players involved (this is only temporary).
         if (params.getDuelType().isPassing()) {
             boolean firstPlay = params.getState().getClock() == 1;
@@ -52,27 +56,30 @@ public class DuelExecution {
         };
     }
 
-    // Three things affect the positional duel outcome: (1) the skill points of the players, (2) the
-    // performance of each player, which is randomly generated for each duel and (3) the assistance
-    // each player gets from their teammates. All of these points are added and the player with the
+    // Three things affect the positional duel outcome: (1) the skill points of the
+    // players, (2) the
+    // performance of each player, which is randomly generated for each duel and (3)
+    // the assistance
+    // each player gets from their teammates. All of these points are added and the
+    // player with the
     // highest sum wins the duel.
     public static DuelDTO handlePositionalDuel(DuelParams params) {
         GameState state = params.getState();
         Player initiator = params.getInitiator();
         Player challenger = params.getChallenger();
 
-        // The range of team assistance values can be very high. We need the assistance for both
+        // The range of team assistance values can be very high. We need the assistance
+        // for both
         // players first then the difference can be adjusted to a sensible value.
-        Map<String, Integer> initiatorTeamAssistance =
-            Assistance.teamAssistance(state, initiator, DuelRole.INITIATOR);
-        Map<String, Integer> challengerTeamAssistance =
-            Assistance.teamAssistance(state, challenger, DuelRole.CHALLENGER);
-        // This is actual assistance given to the winner of the duel (the loser gets zero)
-        Map<DuelRole, Integer> adjustedAssistance =
-            Assistance.adjustAssistance(initiatorTeamAssistance, challengerTeamAssistance);
+        Map<String, Integer> initiatorTeamAssistance = Assistance.teamAssistance(state, initiator, DuelRole.INITIATOR);
+        Map<String, Integer> challengerTeamAssistance = Assistance.teamAssistance(state, challenger,
+                DuelRole.CHALLENGER);
+        // This is actual assistance given to the winner of the duel (the loser gets
+        // zero)
+        Map<DuelRole, Integer> adjustedAssistance = Assistance.adjustAssistance(initiatorTeamAssistance,
+                challengerTeamAssistance);
 
-        DuelStats initiatorStats =
-            buildPositionalDuelStats(
+        DuelStats initiatorStats = buildPositionalDuelStats(
                 state,
                 initiator,
                 DuelRole.INITIATOR,
@@ -81,63 +88,65 @@ public class DuelExecution {
 
         DuelStats challengerStats;
         DuelResult result;
-        // In some situations it's possible that there is no challenger present because of rules
-        // preventing a defender from being into two consecutive duels. In this case the duel is
+        // In some situations it's possible that there is no challenger present because
+        // of rules
+        // preventing a defender from being into two consecutive duels. In this case the
+        // duel is
         // automatically won by the initiator.
         // TODO challenger should not be null this part could be removed later
         if (challenger == null) {
-            int assistance =
-                (int) (adjustedAssistance.get(DuelRole.CHALLENGER)
+            int assistance = (int) (adjustedAssistance.get(DuelRole.CHALLENGER)
                     * Assistance.assistanceFactor(state, DuelRole.CHALLENGER));
             challengerStats = DuelStats.builder()
-//                .skillPoints(0)
-//                .performance(0)
-//                .assistance(assistance)
-//                .teamAssistance(challengerTeamAssistance)
-//                .total(50)
-//                .build();
-                .skillPoints(0)
-                .performance(0)
-                .assistance(0)
-                .teamAssistance(challengerTeamAssistance)
-                .total(0)
-                .build();
+                    // .skillPoints(0)
+                    // .performance(0)
+                    // .assistance(assistance)
+                    // .teamAssistance(challengerTeamAssistance)
+                    // .total(50)
+                    // .build();
+                    .skillPoints(0)
+                    .performance(new DuelStats.Performance())
+                    .assistance(0)
+                    .teamAssistance(challengerTeamAssistance)
+                    .total(0)
+                    .build();
             result = DuelResult.WIN;
         } else {
             challengerStats = buildPositionalDuelStats(
-                state,
-                challenger,
-                DuelRole.CHALLENGER,
-                challengerTeamAssistance,
-                adjustedAssistance);
-            result =
-                (initiatorStats.getTotal() > challengerStats.getTotal())
+                    state,
+                    challenger,
+                    DuelRole.CHALLENGER,
+                    challengerTeamAssistance,
+                    adjustedAssistance);
+            result = (initiatorStats.getTotal() > challengerStats.getTotal())
                     ? DuelResult.WIN
                     : DuelResult.LOSE;
         }
 
         return DuelDTO.builder()
-            .result(result)
-            .initiatorStats(initiatorStats)
-            .challengerStats(challengerStats)
-            .origin(params.getOrigin())
-            .disruptor(params.getDisruptor())
-            .params(params)
-            .build();
+                .result(result)
+                .initiatorStats(initiatorStats)
+                .challengerStats(challengerStats)
+                .origin(params.getOrigin())
+                .disruptor(params.getDisruptor())
+                .params(params)
+                .build();
     }
 
-    // Performs the calculations for positional duels, which require assistance. The total in
+    // Performs the calculations for positional duels, which require assistance. The
+    // total in
     // DuelStats is used to determine the overall winner of the duel.
     private static DuelStats buildPositionalDuelStats(
-        GameState state,
-        Player player,
-        DuelRole role,
-        Map<String, Integer> teamAssistance,
-        Map<DuelRole, Integer> adjustedAssistance) {
+            GameState state,
+            Player player,
+            DuelRole role,
+            Map<String, Integer> teamAssistance,
+            Map<DuelRole, Integer> adjustedAssistance) {
 
         int skillPoints = player.duelSkill(DuelType.POSITIONAL, role, state);
-        int performance =
-            DuelRandomization.performance(state, player, DuelType.POSITIONAL, role);
+        // int performance =
+        // DuelRandomization.performance(state, player, DuelType.POSITIONAL, role);
+        DuelStats.Performance performance = GausDuelRandomizer.performance(player, state, DuelType.POSITIONAL, role);
 
         // Apply chain action sequences skill modifiers.
         int chainActionSequenceModifier = 0;
@@ -151,64 +160,69 @@ public class DuelExecution {
 
             // Linear transformation. PA = 0 -> OP = -15. PA = 100 -> OP = 15.
             chainActionSequenceModifier = (int) (lowerLimit + ((upperLimit - lowerLimit) * (passingSkill / 100.0)));
-            String detail = "Wall pass skill modification. For POSITIONAL " + skillPoints + " and PASSING " + passingSkill + ", the modifier is " + chainActionSequenceModifier + " for a resulting POSITION skill of " + (skillPoints + chainActionSequenceModifier);
-            state.getRecorder().record(detail, state, GameProgressRecord.Type.CALCULATION, GameProgressRecord.DuelStage.DURING);
+            String detail = "Wall pass skill modification. For POSITIONAL " + skillPoints + " and PASSING "
+                    + passingSkill + ", the modifier is " + chainActionSequenceModifier
+                    + " for a resulting POSITION skill of " + (skillPoints + chainActionSequenceModifier);
+            state.getRecorder().record(detail, state, GameProgressRecord.Type.CALCULATION,
+                    GameProgressRecord.DuelStage.DURING);
 
         }
 
-        int assistance =
-            (int) (adjustedAssistance.get(role) * Assistance.assistanceFactor(state, role));
+        int assistance = (int) (adjustedAssistance.get(role) * Assistance.assistanceFactor(state, role));
 
-        int total = skillPoints + chainActionSequenceModifier + performance + assistance;
-
+        int total = skillPoints + chainActionSequenceModifier + performance.getTotal().intValue() + assistance;
         return DuelStats.builder()
-            .skillPoints(skillPoints)
-            .performance(performance)
-            .assistance(assistance)
-            .teamAssistance(teamAssistance)
-            .total(total)
-            .build();
+                .skillPoints(skillPoints)
+                .performance(performance)
+                .assistance(assistance)
+                .teamAssistance(teamAssistance)
+                .total(total)
+                .build();
     }
 
-    // Ball control follows a positional duel. Here the factors to determine a winner are (1) skill
-    // points, (2) performance, and (3) the assistance carryover from the positional duel.
+    // Ball control follows a positional duel. Here the factors to determine a
+    // winner are (1) skill
+    // points, (2) performance, and (3) the assistance carryover from the positional
+    // duel.
     public static DuelDTO handleBallControlDuel(DuelParams params) {
 
         log.info("I am in the ball control duel initiator={} challenger={}", params.getInitiator().getName(),
-            params.getChallenger() == null ? null : params.getChallenger().getName());
+                params.getChallenger() == null ? null : params.getChallenger().getName());
 
         GameState state = params.getState();
         Player initiator = params.getInitiator();
         Player challenger = params.getChallenger();
 
         DuelStats initiatorStats = buildDuelStats(
-            state,
-            initiator,
-            DuelType.BALL_CONTROL,
-            DuelRole.INITIATOR);
+                state,
+                initiator,
+                DuelType.BALL_CONTROL,
+                DuelRole.INITIATOR);
 
         DuelStats challengerStats = params.getChallenger() != null ? buildDuelStats(
-            state,
-            challenger,
-            DuelType.BALL_CONTROL,
-            DuelRole.CHALLENGER) : DuelStats.builder()
-            .skillPoints(0)
-            .performance(0)
-            .carryover(0)
-            .total(0)
-            .build();
+                state,
+                challenger,
+                DuelType.BALL_CONTROL,
+                DuelRole.CHALLENGER)
+                : DuelStats.builder()
+                        .skillPoints(0)
+                        .performance(new DuelStats.Performance())
+                        .carryover(0)
+                        .total(0)
+                        .build();
 
         DuelResult result = params.getChallenger() != null ? (initiatorStats.getTotal() > challengerStats.getTotal())
-            ? DuelResult.WIN : DuelResult.LOSE : DuelResult.WIN;
+                ? DuelResult.WIN
+                : DuelResult.LOSE : DuelResult.WIN;
 
         return DuelDTO.builder()
-            .result(result)
-            .initiatorStats(initiatorStats)
-            .challengerStats(challengerStats)
-            .origin(params.getOrigin())
-            .disruptor(params.getDisruptor())
-            .params(params)
-            .build();
+                .result(result)
+                .initiatorStats(initiatorStats)
+                .challengerStats(challengerStats)
+                .origin(params.getOrigin())
+                .disruptor(params.getDisruptor())
+                .params(params)
+                .build();
     }
 
     public static DuelDTO handleDribbleDuel(DuelParams params) {
@@ -228,7 +242,8 @@ public class DuelExecution {
                 params.getDuelType(),
                 DuelRole.CHALLENGER);
 
-        // Dribbling duels always succeed for now but this leaves the possibility of an interception exactly as passing.
+        // Dribbling duels always succeed for now but this leaves the possibility of an
+        // interception exactly as passing.
         DuelResult result = result = DuelResult.WIN;
 
         return DuelDTO.builder()
@@ -250,80 +265,83 @@ public class DuelExecution {
         PitchArea destinationPitchArea = params.getDestinationPitchArea();
 
         Optional.ofNullable(receiver)
-            .orElseThrow(
-                () -> new GameStateException(state, "A receiver was not set for a pass duel"));
+                .orElseThrow(
+                        () -> new GameStateException(state, "A receiver was not set for a pass duel"));
 
         DuelStats initiatorStats = buildDuelStats(
-            state,
-            initiator,
-            params.getDuelType(),
-            DuelRole.INITIATOR);
+                state,
+                initiator,
+                params.getDuelType(),
+                DuelRole.INITIATOR);
 
         DuelResult duelResult;
         DuelDTO result;
 
-        // GK interception is a special type of interception. it's not a duel per se, but a dice roll.
+        // GK interception is a special type of interception. it's not a duel per se,
+        // but a dice roll.
         boolean goalkeeperInterceptionOcurred = false;
         if (PitchArea.CENTRE_FORWARD.equals(params.getDestinationPitchArea())
-            && DuelType.PASSING_HIGH.equals(params.getDuelType())) {
+                && DuelType.PASSING_HIGH.equals(params.getDuelType())) {
             goalkeeperInterceptionOcurred = rollGoalkeeperInterception(state);
         }
 
         if (goalkeeperInterceptionOcurred) {
 
-            // The duel is interrupted by the GK interception event. The GK already won the duel.
+            // The duel is interrupted by the GK interception event. The GK already won the
+            // duel.
             duelResult = DuelResult.LOSE;
 
             // Change the challenger to the goalkeeper.
             challenger = state.defendingTeam().getPlayers().stream()
-                .filter(player -> player.getPosition() == PlayerPosition.GOALKEEPER).findFirst().get();
+                    .filter(player -> player.getPosition() == PlayerPosition.GOALKEEPER).findFirst().get();
 
             DuelParams modifiedParams = DuelParams.builder()
-                .state(state)
-                .duelType(params.getDuelType())
-                .initiator(initiator)
-                .challenger(challenger)
-                .receiver(receiver)
-                .origin(params.getOrigin())
-                .disruptor(DuelDisruptor.GOALKEEPER_INTERCEPTION)
-                .destinationPitchArea(destinationPitchArea)
-                .build();
+                    .state(state)
+                    .duelType(params.getDuelType())
+                    .initiator(initiator)
+                    .challenger(challenger)
+                    .receiver(receiver)
+                    .origin(params.getOrigin())
+                    .disruptor(DuelDisruptor.GOALKEEPER_INTERCEPTION)
+                    .destinationPitchArea(destinationPitchArea)
+                    .build();
 
             DuelStats challengerStats = buildDuelStats(
-                state,
-                challenger,
-                params.getDuelType(),
-                DuelRole.CHALLENGER);
+                    state,
+                    challenger,
+                    params.getDuelType(),
+                    DuelRole.CHALLENGER);
 
             result = DuelDTO.builder()
-                .result(duelResult)
-                .initiatorStats(initiatorStats)
-                .challengerStats(challengerStats)
-                .origin(modifiedParams.getOrigin())
-                .disruptor(modifiedParams.getDisruptor())
-                .destinationPitchArea(destinationPitchArea)
-                .params(modifiedParams)
-                .build();
+                    .result(duelResult)
+                    .initiatorStats(initiatorStats)
+                    .challengerStats(challengerStats)
+                    .origin(modifiedParams.getOrigin())
+                    .disruptor(modifiedParams.getDisruptor())
+                    .destinationPitchArea(destinationPitchArea)
+                    .params(modifiedParams)
+                    .build();
 
         } else {
 
             DuelStats challengerStats = buildDuelStats(
-                state,
-                challenger,
-                params.getDuelType(),
-                DuelRole.CHALLENGER);
+                    state,
+                    challenger,
+                    params.getDuelType(),
+                    DuelRole.CHALLENGER);
 
-            // Passing duels always succeed for now but this leaves the possibility of an interception
+            // Passing duels always succeed for now but this leaves the possibility of an
+            // interception
             duelResult = DuelResult.WIN;
 
             result = DuelDTO.builder()
-                .result(duelResult)
-                .initiatorStats(initiatorStats)
-                .challengerStats(challengerStats)
-                .origin(params.getOrigin())
-                .destinationPitchArea(destinationPitchArea)
-                .params(params)
-                .build();
+                    .result(duelResult)
+                    .initiatorStats(initiatorStats)
+                    .challengerStats(challengerStats)
+                    .origin(params.getOrigin())
+                    .destinationPitchArea(destinationPitchArea)
+                    .params(params)
+                    .build();
         }
 
         return result;
@@ -332,7 +350,7 @@ public class DuelExecution {
     private static boolean rollGoalkeeperInterception(GameState state) {
 
         Player defendingGoalkeeper = state.defendingTeam().getPlayers().stream()
-            .filter(player -> player.getPosition() == PlayerPosition.GOALKEEPER).findFirst().get();
+                .filter(player -> player.getPosition() == PlayerPosition.GOALKEEPER).findFirst().get();
 
         Integer diceRoll = (int) (Math.random() * 100);
         Integer goalkeepingInterceptionsSkill = defendingGoalkeeper.getSkills().get(PlayerSkill.INTERCEPTIONS);
@@ -361,40 +379,45 @@ public class DuelExecution {
             detail.append("Possible interception not attempted: ");
         }
         detail.append("Dice roll: ").append(diceRoll)
-            .append(", GK interceptions skills:").append(goalkeepingInterceptionsSkill)
-            .append(", Interception ocurrence score (skill - roll): ").append(interceptionsAttemptScore)
-            .append(", Interception chance: ").append(interceptionChance);
+                .append(", GK interceptions skills:").append(goalkeepingInterceptionsSkill)
+                .append(", Interception ocurrence score (skill - roll): ").append(interceptionsAttemptScore)
+                .append(", Interception chance: ").append(interceptionChance);
 
-        state.getRecorder().record(detail.toString(), state, GameProgressRecord.Type.CALCULATION, GameProgressRecord.DuelStage.DURING);
+        state.getRecorder().record(detail.toString(), state, GameProgressRecord.Type.CALCULATION,
+                GameProgressRecord.DuelStage.DURING);
 
         return interceptionOcurred;
     }
 
-    // A shot duel can follow many duel types. The contributing factors are (1) skill points, (2)
-    // performance, and (3) the carryover, which is calculated from the total of the previous duel.
+    // A shot duel can follow many duel types. The contributing factors are (1)
+    // skill points, (2)
+    // performance, and (3) the carryover, which is calculated from the total of the
+    // previous duel.
     public static DuelDTO handleShotDuel(DuelParams params) {
         GameState state = params.getState();
         Player initiator = params.getInitiator();
         Player challenger = params.getChallenger();
 
         DuelStats initiatorStats = buildDuelStats(
-            state,
-            initiator,
-            params.getDuelType(),
-            DuelRole.INITIATOR);
+                state,
+                initiator,
+                params.getDuelType(),
+                DuelRole.INITIATOR);
 
         if (challenger.getPosition() != PlayerPosition.GOALKEEPER) {
             throw new IllegalStateException("Player defending shot is not a GOALKEEPER.");
         }
 
         DuelStats challengerStats = buildDuelStats(
-            state,
-            challenger,
-            params.getDuelType(),
-            DuelRole.CHALLENGER);
+                state,
+                challenger,
+                params.getDuelType(),
+                DuelRole.CHALLENGER);
 
         Boolean goalkeeperReachedTheBall = initiatorStats.getTotal() < challengerStats.getTotal(); // initiator striker
-//        log.info("InitiatorStats {} challengerStats {} booleanResult {}", initiatorStats.getTotal(), challengerStats.getTotal(), goalkeeperReachedTheBall);
+        // log.info("InitiatorStats {} challengerStats {} booleanResult {}",
+        // initiatorStats.getTotal(), challengerStats.getTotal(),
+        // goalkeeperReachedTheBall);
         // TODO refactor this
         Boolean fumbleOccurred = false;
         if (goalkeeperReachedTheBall) {
@@ -427,31 +450,36 @@ public class DuelExecution {
                 detail.append("The Goalkeeper managed to control the ball");
             }
             detail.append("Dice roll: ").append(diceRoll)
-                .append(", Control Skill: ").append(controlSkill)
-                .append(", Control result: ").append(controlResult)
-                .append(", Control success change: ").append(controlSuccessChance);
-            state.getRecorder().record(detail.toString(), state, GameProgressRecord.Type.CALCULATION, GameProgressRecord.DuelStage.DURING);
+                    .append(", Control Skill: ").append(controlSkill)
+                    .append(", Control result: ").append(controlResult)
+                    .append(", Control success change: ").append(controlSuccessChance);
+            state.getRecorder().record(detail.toString(), state, GameProgressRecord.Type.CALCULATION,
+                    GameProgressRecord.DuelStage.DURING);
 
         }
 
         DuelResult result = !goalkeeperReachedTheBall || fumbleOccurred ? DuelResult.WIN : DuelResult.LOSE;
 
         return DuelDTO.builder()
-            .result(result)
-            .initiatorStats(initiatorStats)
-            .challengerStats(challengerStats)
-            .origin(params.getOrigin())
-            .disruptor(params.getDisruptor())
-            .params(params)
-            .build();
+                .result(result)
+                .initiatorStats(initiatorStats)
+                .challengerStats(challengerStats)
+                .origin(params.getOrigin())
+                .disruptor(params.getDisruptor())
+                .params(params)
+                .build();
     }
 
-    // Performs the calculations for non-positional duels. These duels involve carry over rather
-    // than assistance. The total in these stats is also used to determine the overall duel winner.
+    // Performs the calculations for non-positional duels. These duels involve carry
+    // over rather
+    // than assistance. The total in these stats is also used to determine the
+    // overall duel winner.
     private static DuelStats buildDuelStats(GameState state, Player player, DuelType type, DuelRole role) {
 
         int skillPoints = player.duelSkill(type, role, state);
-        int performance = DuelRandomization.performance(state, player, type, role);
+        // double performance = (double) DuelRandomization.performance(state, player,
+        // type, role);
+        DuelStats.Performance performance = GausDuelRandomizer.performance(player, state, type, role);
 
         if (type == DuelType.POSITIONAL) {
             throw new IllegalArgumentException("Positional duel not allowed here");
@@ -460,26 +488,28 @@ public class DuelExecution {
         Map<DuelRole, Integer> carryovers = Carryover.getCarryover(state);
         int carryover = carryovers.get(role);
 
-        int total = skillPoints + performance + carryover;
+        int total = skillPoints + performance.getTotal().intValue() + carryover;
 
         return DuelStats.builder()
-            .skillPoints(skillPoints)
-            .performance(performance)
-            .carryover(carryover)
-            .total(total)
-            .build();
+                .skillPoints(skillPoints)
+                .performance(performance)
+                .carryover(carryover)
+                .total(total)
+                .build();
     }
 
-    // The number of consecutive losses for a player for a given duel type, counting from the most
-    // recent play. Returns zero if the player has won the most recent duel of this type.
+    // The number of consecutive losses for a player for a given duel type, counting
+    // from the most
+    // recent play. Returns zero if the player has won the most recent duel of this
+    // type.
     public static int consecutiveLosses(GameState state, Player player, DuelType type) {
         return (int) state.getPlays().stream()
-            .sorted(Comparator.comparingInt(Play::getClock).reversed())
-            .map(Play::getDuel)
-            .filter(
-                duel -> duel.getInitiator().equals(player) || duel.getChallenger().equals(player))
-            .filter(duel -> duel.getType() == type)
-            .takeWhile(duel -> duel.getResult() == DuelResult.LOSE)
-            .count();
+                .sorted(Comparator.comparingInt(Play::getClock).reversed())
+                .map(Play::getDuel)
+                .filter(
+                        duel -> duel.getInitiator().equals(player) || duel.getChallenger().equals(player))
+                .filter(duel -> duel.getType() == type)
+                .takeWhile(duel -> duel.getResult() == DuelResult.LOSE)
+                .count();
     }
 }

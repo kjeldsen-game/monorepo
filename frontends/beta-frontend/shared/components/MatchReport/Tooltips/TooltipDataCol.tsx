@@ -2,6 +2,8 @@ import React from 'react';
 import { SxProps, Grid, Typography } from '@mui/material';
 import { RStats } from '@/shared/models/MatchReport';
 import TooltipDataItem from './ToolTipDataItem';
+import CustomTooltip from './CustomTooltip';
+import PerformanceTooltip from './PerformanceTooltip';
 
 interface TooltipDataColProps {
   stats: RStats;
@@ -22,7 +24,10 @@ const TooltipDataCol: React.FC<TooltipDataColProps> = ({
         {heading}
       </Typography>
       <TooltipDataItem title={'Skill Points'} value={stats.skillPoints} />
-      <TooltipDataItem title={'Performance'} value={stats.performance} />
+      <CustomTooltip
+        tooltipContent={<PerformanceTooltip performance={stats.performance} />}>
+        <TooltipDataItem title={'Random'} value={stats.performance.total} />
+      </CustomTooltip>
 
       {showAll ? (
         <>
@@ -49,7 +54,9 @@ const TooltipDataCol: React.FC<TooltipDataColProps> = ({
         <TooltipDataItem
           sx={{ borderTop: '1px solid black' }}
           title={'Total'}
-          value={stats.skillPoints + stats.performance + (stats.carryover || 0)}
+          value={
+            stats.skillPoints + stats.performance.total + (stats.carryover || 0)
+          }
         />
       )}
     </Grid>

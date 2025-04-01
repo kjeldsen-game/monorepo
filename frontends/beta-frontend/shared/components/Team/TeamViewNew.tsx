@@ -7,15 +7,10 @@ import {
   VerticalPressure,
 } from '@/shared/models/TeamModifiers';
 import { filterPlayersByStatus } from '@/shared/utils/LineupUtils';
-import { Box, Button, SnackbarCloseReason, Tab } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
-import { lineupColumn } from '../Grid/Columns/LineupColumn';
+import { Box, SnackbarCloseReason, Tab } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { PlayerOrder } from '@/pages/api/match/models/MatchReportresponse';
-import {
-  PlayerPosition,
-  POSITION_FILTER_MAP,
-} from '@/shared/models/PlayerPosition';
-import { GridRowParams } from '@mui/x-data-grid';
+import { POSITION_FILTER_MAP } from '@/shared/models/PlayerPosition';
 import TeamValidationModal from './TeamValidationModal';
 import SnackbarAlert from '../Common/SnackbarAlert';
 import TeamViewHeader from './TeamViewHeader';
@@ -26,8 +21,6 @@ import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import GppMaybeIcon from '@mui/icons-material/GppMaybe';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
-import { Close, Edit } from '@mui/icons-material';
-import LineupButton from './Lineup/LineupButton';
 import LineupFilterButton from './Filters/LineupFilterButton';
 import CustomTabs from '../CustomTabs';
 import { CustomTabPanel } from '../Tab/CustomTabPanel';
@@ -51,7 +44,6 @@ const TeamViewNew: React.FC<TeamProps> = ({
   onTeamUpdate,
   teamFormationValidation,
 }: TeamProps) => {
-  // New states
   const [edit, setEdit] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>('ALL');
   const [activePlayerV2, setActivePlayerV2] = useState<any>();
@@ -71,10 +63,10 @@ const TeamViewNew: React.FC<TeamProps> = ({
     position?: string,
     inactive?: boolean,
   ) => {
-    console.log(newPlayer);
-    console.log(oldPlayer);
-    console.log(position);
-    console.log(inactive);
+    // console.log(newPlayer);
+    // console.log(oldPlayer);
+    // console.log(position);
+    // console.log(inactive);
     if (activePlayerV2 === undefined && !inactive && !newPlayer) {
       if (oldPlayer === undefined) {
         return;
@@ -196,6 +188,14 @@ const TeamViewNew: React.FC<TeamProps> = ({
       onTeamUpdate(players, updatedModifiers);
       return updatedModifiers;
     });
+  };
+
+  const handleGridButtonClick = (player: Player) => {
+    if (activePlayerV2) {
+      setActivePlayerV2(undefined);
+    } else {
+      setActivePlayerV2(player);
+    }
   };
 
   // console.log(alert);
@@ -321,7 +321,7 @@ const TeamViewNew: React.FC<TeamProps> = ({
           onSelectChange={handleSelectChange}
           isEditing={edit}
           activePlayer={activePlayerV2}
-          onButtonClick={setActivePlayerV2}
+          onButtonClick={handleGridButtonClick}
           rows={
             filter === 'ALL'
               ? players ?? []
