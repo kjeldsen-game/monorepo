@@ -44,7 +44,7 @@ public class Player {
     PitchArea playerOrderDestinationPitchArea;
     PlayerReceptionPreference receptionPreference;
 
-    // Instead of accessing the skill points directly, this method should be used to determine the
+    // Instead of accessing the skill points directly, this method should be used to determsine the
     // skill level of the player via the duel logic
     public Integer duelSkill(DuelType duelType, DuelRole role, GameState state) {
         List<PlayerSkill> requiredSkills = duelType.requiredSkills(role, state.getBallState().getHeight());

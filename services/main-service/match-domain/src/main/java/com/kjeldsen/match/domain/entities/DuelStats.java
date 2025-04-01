@@ -25,8 +25,6 @@ public class DuelStats {
 
     // The total score that was summed up to determine who won the duel
     Integer total;
-    // How well the player performed in the duel (randomly generated for each duel)
-    Integer performance;
     // The relevant skill points that contributed in this duel
     Integer skillPoints;
     // How much support the player got from each player on his team
@@ -35,4 +33,18 @@ public class DuelStats {
     Integer assistance;
     // Carryover from previous duel
     Integer carryover;
+    // Modifier for the duel based on the random factor and last player's duel of
+    // the same type
+    Performance performance;
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @ToString
+    public static class Performance {
+
+        Double previousTotalImpact = 0.0;
+        Double random = 0.0;
+        Double total = 0.0;
+    }
 }

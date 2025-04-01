@@ -17,6 +17,7 @@ export const MatchReportContent: React.FC<MatchReportContentProps> = ({
   report,
   sx,
 }) => {
+  console.log(report);
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const [possesions, setPossesions] = useState<Play[][]>([]);
 
