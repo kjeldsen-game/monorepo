@@ -41,7 +41,7 @@ class BillboardIncomeUseCaseTest {
         when(mockedTeam.getEconomy()).thenReturn(mockedEconomy);
         when(mockedEconomy.getBillboardDeal()).thenReturn(null);
 
-        assertEquals("BillboardDeal not found", assertThrows(RuntimeException.class, () -> {
+        assertEquals("BillboardDeal not found!", assertThrows(RuntimeException.class, () -> {
             billboardIncomeUseCase.pay(testTeamId);
         }).getMessage());
         verify(mockedGetTeamUseCase).get(testTeamId);

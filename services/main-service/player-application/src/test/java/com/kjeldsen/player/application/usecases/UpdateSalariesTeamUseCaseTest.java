@@ -1,5 +1,6 @@
 package com.kjeldsen.player.application.usecases;
 
+import com.kjeldsen.player.domain.exceptions.TeamNotFoundException;
 import com.kjeldsen.player.application.usecases.economy.UpdateSalariesTeamUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
@@ -7,7 +8,6 @@ import com.kjeldsen.player.domain.PlayerSkills;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,41 +23,28 @@ import com.kjeldsen.player.application.testdata.*;
 
 public class UpdateSalariesTeamUseCaseTest {
 
-    private final TeamReadRepository teamReadRepository = Mockito.mock(TeamReadRepository.class);
     private final PlayerWriteRepository playerWriteRepository = Mockito.mock(PlayerWriteRepository.class);
     private final PlayerReadRepository playerReadRepository = Mockito.mock(PlayerReadRepository.class);
-    private final UpdateSalariesTeamUseCase updateSalariesTeamUseCase = new UpdateSalariesTeamUseCase(teamReadRepository, playerWriteRepository, playerReadRepository);
+    private final UpdateSalariesTeamUseCase updateSalariesTeamUseCase = new UpdateSalariesTeamUseCase(playerWriteRepository,
+        playerReadRepository);
 
     private Team.TeamId mockedTeamId;
-    private Team mockedTeam;
 
     @BeforeEach
     public void setUp() {
         mockedTeamId = TestData.generateTestTeamId();
-        mockedTeam = TestData.generateTestTeam(mockedTeamId);
-    }
-
-    @Test
-    @DisplayName("Should throw exception when team does not exist")
-    public void should_throw_exception_when_team_does_not_exist(){
-        when(teamReadRepository.findById(mockedTeamId)).thenReturn(Optional.empty());
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            updateSalariesTeamUseCase.update(mockedTeamId);
-        });
-        assertEquals("Team not found", exception.getMessage());
-        verifyNoInteractions(playerWriteRepository, playerReadRepository);
+        Team mockedTeam = TestData.generateTestTeam(mockedTeamId);
     }
 
     @Test
     @DisplayName("Should throw exception when team does not have any players")
     public void should_throw_exception_when_team_does_not_have_any_players(){
-        when(teamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
         when(playerReadRepository.findByTeamId(mockedTeamId)).thenReturn(Collections.emptyList());
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+        RuntimeException exception = assertThrows(TeamNotFoundException.class, () -> {
             updateSalariesTeamUseCase.update(mockedTeamId);
         });
-        assertEquals("No players found for team with id" + mockedTeamId, exception.getMessage());
+        assertEquals("Team not found!", exception.getMessage());
         verify(playerReadRepository, times(1)).findByTeamId(mockedTeamId);
         verifyNoInteractions(playerWriteRepository);
     }
@@ -68,13 +55,11 @@ public class UpdateSalariesTeamUseCaseTest {
         // Created player with 10 skill points for each multiplier, after creation salary is null
         Player mockedPlayer = generateMockedPlayer();
 
-        when(playerReadRepository.findByTeamId(mockedTeamId)).thenReturn(Arrays.asList(mockedPlayer));
-        when(teamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
+        when(playerReadRepository.findByTeamId(mockedTeamId)).thenReturn(Collections.singletonList(mockedPlayer));
 
         updateSalariesTeamUseCase.update(mockedTeamId);
         assertEquals(mockedPlayer.getEconomy().getSalary(), BigDecimal.valueOf(92300).setScale(2));
         assertNotNull(mockedPlayer.getEconomy().getSalary());
-        verify(teamReadRepository, times(1)).findById(mockedTeamId);
         verify(playerReadRepository, times(1)).findByTeamId(mockedTeamId);
     }
 

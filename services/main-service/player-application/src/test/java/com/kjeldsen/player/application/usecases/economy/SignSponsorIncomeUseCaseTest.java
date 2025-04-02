@@ -70,12 +70,12 @@ class SignSponsorIncomeUseCaseTest {
         testTeam.getEconomy().getSponsors().put(Team.Economy.IncomePeriodicity.ANNUAL, Team.Economy.IncomeMode.MODERATE);
         testTeam.getEconomy().getSponsors().put(Team.Economy.IncomePeriodicity.WEEKLY, null);
 
-        when(mockedGetTeamUseCase.get(testTeamId)).thenReturn(Optional.of(testTeam));
+        when(mockedGetTeamUseCase.get(testTeamId)).thenReturn(testTeam);
         signSponsorIncomeUseCase.processBonus(testTeamId);
 
         verify(mockedCreateTransactionUseCase).create(eq(testTeamId), eq(BigDecimal.valueOf(200000)),
             eq(Transaction.TransactionType.SPONSOR));
         verifyNoMoreInteractions(mockedCreateTransactionUseCase);
-        verify(mockedTeamReadRepository).findById(testTeamId);
+        verify(mockedGetTeamUseCase).get(testTeamId);
     }
 }

@@ -5,7 +5,6 @@ import com.kjeldsen.player.application.usecases.economy.BuildingMaintenanceExpen
 import com.kjeldsen.player.application.usecases.economy.CreateTransactionUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,17 +13,15 @@ import org.mockito.Mockito;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class BuildingMaintenanceExpenseUseCaseTest {
 
-    private final TeamReadRepository mockedTeamReadRepository = Mockito.mock(TeamReadRepository.class);
+    private final GetTeamUseCase mockedGetTeamUseCase = Mockito.mock(GetTeamUseCase.class);
     private final CreateTransactionUseCase mockedCreateTransactionUseCase = Mockito.mock(CreateTransactionUseCase.class);
     private final BuildingMaintenanceExpenseUseCase buildingMaintenanceExpenseUseCase = new BuildingMaintenanceExpenseUseCase(
-            mockedTeamReadRepository, mockedCreateTransactionUseCase);
+        mockedCreateTransactionUseCase, mockedGetTeamUseCase);
 
 
     private static Team.TeamId mockedTeamId;
@@ -32,19 +29,6 @@ class BuildingMaintenanceExpenseUseCaseTest {
     @BeforeAll
     static void setUpBeforeTestClass() {
         mockedTeamId = TestData.generateTestTeamId();
-    }
-
-    @Test
-    @DisplayName("Should throw exception when team is null")
-    public void should_throw_exception_when_team_is_null() {
-
-        when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.empty());
-
-        assertEquals("Team not found", assertThrows(RuntimeException.class, () -> {
-            buildingMaintenanceExpenseUseCase.expense(mockedTeamId);
-        }).getMessage());
-        verify(mockedTeamReadRepository).findById(mockedTeamId);
-        verifyNoMoreInteractions(mockedTeamReadRepository);
     }
 
     @Test
@@ -60,7 +44,7 @@ class BuildingMaintenanceExpenseUseCaseTest {
             Team.Buildings.Facility.SCOUTS, new Team.Buildings.FacilityData()
         )));
 
-        when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
+        when(mockedGetTeamUseCase.get(mockedTeamId)).thenReturn(mockedTeam);
 
         buildingMaintenanceExpenseUseCase.expense(mockedTeamId);
 

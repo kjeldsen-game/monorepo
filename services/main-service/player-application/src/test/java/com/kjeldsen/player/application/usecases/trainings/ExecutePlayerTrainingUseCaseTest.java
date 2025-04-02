@@ -1,6 +1,7 @@
 package com.kjeldsen.player.application.usecases.trainings;
 
 import com.kjeldsen.player.application.testdata.TestData;
+import com.kjeldsen.player.application.usecases.player.GetPlayersUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.PlayerSkills;
@@ -27,24 +28,10 @@ class ExecutePlayerTrainingUseCaseTest {
     private static final int DAY = 1;
     private final PlayerTrainingEventWriteRepository mockedPlayerTrainingEventWriteRepository =
         Mockito.mock(PlayerTrainingEventWriteRepository.class);
-    private final PlayerReadRepository mockedPlayerReadRepository = Mockito.mock(PlayerReadRepository.class);
+    private final GetPlayersUseCase mockedGetPlayersUseCase = Mockito.mock(GetPlayersUseCase.class);
     private final PlayerWriteRepository mockedPlayerWriteRepository = Mockito.mock(PlayerWriteRepository.class);
     private final ExecutePlayerTrainingUseCase executePlayerTrainingUseCase = new ExecutePlayerTrainingUseCase(
-        mockedPlayerTrainingEventWriteRepository, mockedPlayerReadRepository, mockedPlayerWriteRepository
-    );
-
-    @Test
-    @DisplayName("Should throw error when player is null")
-    public void should_throw_error_when_player_is_null() {
-        Player.PlayerId playerId = Player.PlayerId.generate();
-
-        when(mockedPlayerReadRepository.findOneById(playerId)).thenReturn(Optional.empty());
-
-        assertEquals("Player not found.",
-            assertThrows(RuntimeException.class,
-                () -> executePlayerTrainingUseCase.execute(playerId, PlayerSkill.AERIAL, 3, "eventId")
-            ).getMessage());
-    }
+        mockedPlayerTrainingEventWriteRepository, mockedPlayerWriteRepository, mockedGetPlayersUseCase);
 
     @Test
     @DisplayName("Should update the points and bloom is active")
@@ -53,7 +40,7 @@ class ExecutePlayerTrainingUseCaseTest {
         player.setBloomYear(21);
         player.getAge().setYears(21);
         player.setActualSkills(Map.of(PlayerSkill.AERIAL, PlayerSkills.builder().actual(12).potential(20).build()));
-        when(mockedPlayerReadRepository.findOneById(player.getId())).thenReturn(Optional.of(player));
+        when(mockedGetPlayersUseCase.get(player.getId())).thenReturn(player);
 
         try (
             MockedStatic<PointsGenerator> mockedPointsGenerator = Mockito.mockStatic(PointsGenerator.class);
@@ -64,6 +51,7 @@ class ExecutePlayerTrainingUseCaseTest {
         }
 
         assertEquals(16, player.getActualSkills().get(PlayerSkill.AERIAL).getActual());
+        verify(mockedGetPlayersUseCase, times(1)).get(player.getId());
         verify(mockedPlayerWriteRepository, times(1)).save(any(Player.class));
         verify(mockedPlayerTrainingEventWriteRepository, times(1)).save(any(PlayerTrainingEvent.class));
     }
@@ -75,7 +63,7 @@ class ExecutePlayerTrainingUseCaseTest {
         player.setBloomYear(21);
         player.getAge().setYears(21);
         player.setActualSkills(Map.of(PlayerSkill.AERIAL, PlayerSkills.builder().actual(12).potential(12).build()));
-        when(mockedPlayerReadRepository.findOneById(player.getId())).thenReturn(Optional.of(player));
+        when(mockedGetPlayersUseCase.get(player.getId())).thenReturn(player);
 
         try (
             MockedStatic<PointsGenerator> mockedPointsGenerator = Mockito.mockStatic(PointsGenerator.class);
@@ -87,6 +75,7 @@ class ExecutePlayerTrainingUseCaseTest {
 
         assertEquals(13, player.getActualSkills().get(PlayerSkill.AERIAL).getActual());
         assertEquals(13, player.getActualSkills().get(PlayerSkill.AERIAL).getPotential());
+        verify(mockedGetPlayersUseCase, times(1)).get(player.getId());
         verify(mockedPlayerWriteRepository, times(1)).save(any(Player.class));
         verify(mockedPlayerTrainingEventWriteRepository, times(1)).save(any(PlayerTrainingEvent.class));
     }
@@ -98,7 +87,7 @@ class ExecutePlayerTrainingUseCaseTest {
         player.setBloomYear(21);
         player.getAge().setYears(21);
         player.setActualSkills(Map.of(PlayerSkill.AERIAL, PlayerSkills.builder().actual(12).potential(14).build()));
-        when(mockedPlayerReadRepository.findOneById(player.getId())).thenReturn(Optional.of(player));
+        when(mockedGetPlayersUseCase.get(player.getId())).thenReturn(player);
 
         try (
             MockedStatic<PointsGenerator> mockedPointsGenerator = Mockito.mockStatic(PointsGenerator.class);
@@ -110,6 +99,7 @@ class ExecutePlayerTrainingUseCaseTest {
 
         assertEquals(14, player.getActualSkills().get(PlayerSkill.AERIAL).getActual());
         assertEquals(14, player.getActualSkills().get(PlayerSkill.AERIAL).getPotential());
+        verify(mockedGetPlayersUseCase, times(1)).get(player.getId());
         verify(mockedPlayerWriteRepository, times(1)).save(any(Player.class));
         verify(mockedPlayerTrainingEventWriteRepository, times(1)).save(any(PlayerTrainingEvent.class));
     }
@@ -121,7 +111,7 @@ class ExecutePlayerTrainingUseCaseTest {
         player.setBloomYear(21);
         player.getAge().setYears(21);
         player.setActualSkills(Map.of(PlayerSkill.AERIAL, PlayerSkills.builder().actual(12).potential(20).build()));
-        when(mockedPlayerReadRepository.findOneById(player.getId())).thenReturn(Optional.of(player));
+        when(mockedGetPlayersUseCase.get(player.getId())).thenReturn(player);
         ArgumentCaptor<PlayerTrainingEvent> eventCaptor = ArgumentCaptor.forClass(PlayerTrainingEvent.class);
 
         try (
@@ -136,7 +126,7 @@ class ExecutePlayerTrainingUseCaseTest {
 
         assertNotNull(capturedEvent);
         assertEquals(PlayerSkill.AERIAL, capturedEvent.getSkill());
-
+        verify(mockedGetPlayersUseCase, times(1)).get(player.getId());
         assertEquals(12, player.getActualSkills().get(PlayerSkill.AERIAL).getActual());
         verify(mockedPlayerWriteRepository, times(1)).save(any(Player.class));
     }

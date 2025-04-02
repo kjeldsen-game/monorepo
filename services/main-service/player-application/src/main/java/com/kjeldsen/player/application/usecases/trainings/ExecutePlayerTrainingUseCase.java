@@ -23,7 +23,6 @@ import java.util.Optional;
 public class ExecutePlayerTrainingUseCase {
 
     private final PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository;
-    private final PlayerReadRepository playerReadRepository;
     private final PlayerWriteRepository playerWriteRepository;
     private final GetPlayersUseCase getPlayersUseCase;
 

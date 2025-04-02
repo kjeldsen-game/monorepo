@@ -54,10 +54,10 @@ public class CreateTeamUseCase {
                     Team.Economy.PricingType.MERCHANDISE, 25,
                     Team.Economy.PricingType.RESTAURANT, 10
                 )))
-                .sponsors(new HashMap<>(Map.of(
-                    Team.Economy.IncomePeriodicity.WEEKLY, null,
-                    Team.Economy.IncomePeriodicity.ANNUAL, null
-                )))
+                .sponsors(new HashMap<>() {{
+                    put(Team.Economy.IncomePeriodicity.WEEKLY, null);
+                    put(Team.Economy.IncomePeriodicity.ANNUAL, null);
+                }})
                 .billboardDeal(null)
                 .build())
             .fans(Team.Fans.builder().build())

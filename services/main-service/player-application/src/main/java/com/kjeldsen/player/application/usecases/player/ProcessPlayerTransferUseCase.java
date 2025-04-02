@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class ProcessPlayerTransferUseCase {
 
-    private final PlayerReadRepository playerReadRepository;
     private final PlayerWriteRepository playerWriteRepository;
     private final CreateTransactionUseCase createTransactionUseCase;
     private final GetPlayersUseCase getPlayersUseCase;

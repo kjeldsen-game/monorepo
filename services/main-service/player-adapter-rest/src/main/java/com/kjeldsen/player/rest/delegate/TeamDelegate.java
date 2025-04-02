@@ -218,7 +218,7 @@ public class TeamDelegate implements TeamApiDelegate {
 
         TeamModifiers teamModifiers = TeamMapper.INSTANCE.map(editTeamRequest.getTeamModifiers());
         updateTeamModifiersUseCase.update(teamId, teamModifiers);
-        Team team = updateTeamPlayersUseCase.update(teamModifiers, playerEdits, teamId);
+        Team team = updateTeamPlayersUseCase.update(playerEdits, teamId);
         TeamResponse response = TeamMapper.INSTANCE.map(team);
         return ResponseEntity.ok(response);
     }

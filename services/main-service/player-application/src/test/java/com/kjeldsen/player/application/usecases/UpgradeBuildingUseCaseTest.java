@@ -5,7 +5,6 @@ import com.kjeldsen.player.application.usecases.economy.CreateTransactionUseCase
 import com.kjeldsen.player.application.usecases.facilities.UpgradeBuildingUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -13,17 +12,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UpgradeBuildingUseCaseTest {
 
-    private final TeamReadRepository mockedTeamReadRepository = Mockito.mock(TeamReadRepository.class);
+    private final GetTeamUseCase mockedGetTeamUseCase = Mockito.mock(GetTeamUseCase.class);
     private final TeamWriteRepository mockedTeamWriteRepository = Mockito.mock(TeamWriteRepository.class);
     private final CreateTransactionUseCase mockedCreateTransactionUseCase = Mockito.mock(CreateTransactionUseCase.class);
-    private final UpgradeBuildingUseCase upgradeBuildingUseCase = new UpgradeBuildingUseCase(mockedTeamReadRepository,
+    private final UpgradeBuildingUseCase upgradeBuildingUseCase = new UpgradeBuildingUseCase(mockedGetTeamUseCase,
             mockedTeamWriteRepository, mockedCreateTransactionUseCase);
 
     private static Team.TeamId mockedTeamId;
@@ -33,23 +31,12 @@ class UpgradeBuildingUseCaseTest {
     }
 
     @Test
-    @DisplayName("Should throw exception when team is null")
-    public void should_throw_exception_when_team_is_null() {
-        when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.empty());
-
-        assertEquals("Team not found", assertThrows(RuntimeException.class, () -> upgradeBuildingUseCase.upgrade(
-                mockedTeamId, Team.Buildings.Facility.STADIUM)).getMessage());
-        verify(mockedTeamReadRepository).findById(mockedTeamId);
-        verifyNoMoreInteractions(mockedTeamReadRepository);
-    }
-
-    @Test
     @DisplayName("Should throw exception when there are not free slots")
     public void should_throw_exception_when_there_are_not_free_slots() {
         Team mockedTeam = TestData.generateTestTeam(mockedTeamId);
         mockedTeam.getBuildings().setFreeSlots(1);
         Team.Buildings.Facility mockedFacility = Team.Buildings.Facility.SCOUTS;
-        when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
+        when(mockedGetTeamUseCase.get(mockedTeamId)).thenReturn(mockedTeam);
 
         RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
             upgradeBuildingUseCase.upgrade(mockedTeamId, mockedFacility);
@@ -58,8 +45,8 @@ class UpgradeBuildingUseCaseTest {
         assertEquals("Cannot increase " + mockedFacility + " facility level, because there are no free slots"
                 , thrown.getMessage());
 
-        verify(mockedTeamReadRepository).findById(mockedTeamId);
-        verifyNoMoreInteractions(mockedTeamReadRepository);
+        verify(mockedGetTeamUseCase, times(1)).get(mockedTeamId);
+        verifyNoMoreInteractions(mockedGetTeamUseCase);
     }
 
     @Test
@@ -69,7 +56,7 @@ class UpgradeBuildingUseCaseTest {
         Team.Buildings.Facility mockedFacility = Team.Buildings.Facility.SCOUTS;
         mockedTeam.getBuildings().getFacilities().get(mockedFacility).setLevel(10);
 
-        when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
+        when(mockedGetTeamUseCase.get(mockedTeamId)).thenReturn(mockedTeam);
 
         RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
             upgradeBuildingUseCase.upgrade(mockedTeamId, mockedFacility);
@@ -77,8 +64,8 @@ class UpgradeBuildingUseCaseTest {
         assertEquals("Cannot increase " + mockedFacility + " facility level, because it is on max level"
                 , thrown.getMessage());
 
-        verify(mockedTeamReadRepository).findById(mockedTeamId);
-        verifyNoMoreInteractions(mockedTeamReadRepository);
+        verify(mockedGetTeamUseCase, times(1)).get(mockedTeamId);
+        verifyNoMoreInteractions(mockedGetTeamUseCase);
     }
 
     @Test
@@ -86,7 +73,7 @@ class UpgradeBuildingUseCaseTest {
     public void should_pass_right_values_for_transaction_creation_for_STADIUM() {
         Team mockedTeam = TestData.generateTestTeam(mockedTeamId);
         Team.Buildings.Facility mockedFacility = Team.Buildings.Facility.STADIUM;
-        when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
+        when(mockedGetTeamUseCase.get(mockedTeamId)).thenReturn(mockedTeam);
 
         BigDecimal expectedTransactionAmount = BigDecimal.valueOf(100_000);
         upgradeBuildingUseCase.upgrade(mockedTeamId, mockedFacility);
@@ -111,7 +98,7 @@ class UpgradeBuildingUseCaseTest {
         Team.Buildings.Facility mockedFacility = Team.Buildings.Facility.SCOUTS;
         BigDecimal expectedTransactionAmount = BigDecimal.valueOf(200_000);
 
-        when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
+        when(mockedGetTeamUseCase.get(mockedTeamId)).thenReturn(mockedTeam);
 
         upgradeBuildingUseCase.upgrade(mockedTeamId, mockedFacility);
 
