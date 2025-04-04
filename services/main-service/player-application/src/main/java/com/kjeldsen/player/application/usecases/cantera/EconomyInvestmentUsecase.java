@@ -1,10 +1,6 @@
 package com.kjeldsen.player.application.usecases.cantera;
 
-import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.events.EconomyInvestmentEvent;
-import com.kjeldsen.player.domain.provider.InstantProvider;
-import com.kjeldsen.player.domain.repositories.EconomyInvestmentEventWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +19,6 @@ public class EconomyInvestmentUsecase {
     private static final BigDecimal MAX_INVESTMENT_AMOUNT = BigDecimal.valueOf(1_000_000);
 
     private final TeamReadRepository teamReadRepository;
-    private final EconomyInvestmentEventWriteRepository economyInvestmentEventWriteRepository;
     private final CanteraInvestmentUsecase canteraInvestmentUsecase;
 
     public void invest(Team.TeamId teamId, BigDecimal amount) {
@@ -31,15 +26,6 @@ public class EconomyInvestmentUsecase {
 
         teamReadRepository.findById(teamId)
             .orElseThrow(() -> new RuntimeException("Team not found"));
-
-        EconomyInvestmentEvent economyInvestmentEvent = EconomyInvestmentEvent.builder()
-            .id(EventId.generate())
-            .occurredAt(InstantProvider.now())
-            .teamId(teamId)
-            .amount(amount)
-            .build();
-
-        economyInvestmentEventWriteRepository.save(economyInvestmentEvent);
 
         canteraInvestmentUsecase.investToCanteraCategory(teamId, Team.Cantera.Investment.ECONOMY, amountToPoints(amount));
     }

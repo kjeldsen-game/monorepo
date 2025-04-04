@@ -1,20 +1,15 @@
 package com.kjeldsen.player.domain;
 
-import com.kjeldsen.player.domain.events.FansEvent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import javax.swing.text.TabExpander;
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
 
 public class TeamTest {
 
@@ -97,8 +92,7 @@ public class TeamTest {
     @Test
     public void update_fans_fansEvent_input() {
         Team team = Team.builder().fans(Team.Fans.builder().build()).build();
-        FansEvent testFansEvent = FansEvent.builder().fans(10).build();
-        team.getFans().updateFans(testFansEvent);
+        team.getFans().updateFans(10);
         assertThat(team.getFans().getFanTiers().get(1).getTotalFans()).isEqualTo(10010);
     }
 

@@ -14,7 +14,7 @@ import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerStatus;
 import com.kjeldsen.player.domain.Team.TeamId;
 import com.kjeldsen.player.domain.TeamModifiers;
-import com.kjeldsen.player.domain.repositories.FindTeamsQuery;
+import com.kjeldsen.player.domain.repositories.queries.FindTeamsQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.rest.api.TeamApiDelegate;
@@ -160,6 +160,7 @@ public class TeamDelegate implements TeamApiDelegate {
 
     @Override
     public ResponseEntity<TeamResponse> getTeamById(String teamId) {
+        System.out.println(teamId);
         // Different user than the team owner is accessing the team
         Team team = getTeamUseCase.get(TeamId.of(teamId));
         TeamResponse response = TeamMapper.INSTANCE.map(team);

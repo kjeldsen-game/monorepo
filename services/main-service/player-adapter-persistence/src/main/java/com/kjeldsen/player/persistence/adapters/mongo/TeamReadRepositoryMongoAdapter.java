@@ -2,7 +2,7 @@ package com.kjeldsen.player.persistence.adapters.mongo;
 
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Team.TeamId;
-import com.kjeldsen.player.domain.repositories.FindTeamsQuery;
+import com.kjeldsen.player.domain.repositories.queries.FindTeamsQuery;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.TeamMongoRepository;
 import java.util.List;

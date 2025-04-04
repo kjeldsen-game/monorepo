@@ -1,9 +1,7 @@
 package com.kjeldsen.player.application.usecases;
 
-import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.domain.*;
-import com.kjeldsen.player.domain.events.PlayerCreationEvent;
-import com.kjeldsen.player.domain.provider.InstantProvider;
+import com.kjeldsen.player.domain.generator.BloomPhaseGenerator;
 import com.kjeldsen.player.domain.provider.PlayerProvider;
 import com.kjeldsen.player.domain.repositories.PlayerPositionTendencyReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
@@ -26,19 +24,22 @@ public class CreatePlayerUseCase {
         log.info("CreatePlayerUseCase for player {}", newPlayer);
         PlayerPositionTendency positionTendencies = playerPositionTendencyReadRepository.get(newPlayer.getPosition());
 
-        PlayerCreationEvent playerCreationEvent = PlayerCreationEvent.builder()
-            .id(EventId.generate())
-            .occurredAt(InstantProvider.now())
-            .playerId(Player.PlayerId.generate())
+        Player player = Player.builder()
+            .id(Player.PlayerId.generate())
             .name(PlayerProvider.name())
             .age(PlayerAge.generateAgeOfAPlayer())
-            .position(newPlayer.getPosition())
-            .initialSkills(PlayerProvider.skillsBasedOnTendency(positionTendencies, newPlayer.getPoints()))
+            .preferredPosition(newPlayer.getPosition())
+            .position(null)
+            .playerOrder(PlayerOrder.NONE)
+            .status(PlayerStatus.INACTIVE)
+            .actualSkills(PlayerProvider.skillsBasedOnTendency(positionTendencies, newPlayer.getPoints()))
             .teamId(newPlayer.getTeamId())
-            .playerCategory(newPlayer.getPlayerCategory())
+            .bloomYear(BloomPhaseGenerator.generateBloomPhaseYear())
+            .category(newPlayer.getPlayerCategory())
+            .economy(Player.Economy.builder().build())
             .build();
-
-        playerWriteRepository.save(Player.creation(playerCreationEvent));
+        player.negotiateSalary();
+        playerWriteRepository.save(player);
     }
 
     @Builder
@@ -50,5 +51,4 @@ public class CreatePlayerUseCase {
         private Team.TeamId teamId;
         private PlayerCategory playerCategory;
     }
-
 }

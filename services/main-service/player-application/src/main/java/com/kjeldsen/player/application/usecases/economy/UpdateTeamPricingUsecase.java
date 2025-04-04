@@ -1,12 +1,7 @@
 package com.kjeldsen.player.application.usecases.economy;
 
-import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.events.PricingEvent;
-import com.kjeldsen.player.domain.provider.InstantProvider;
-import com.kjeldsen.player.domain.repositories.PricingEventWriteRepository;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

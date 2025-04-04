@@ -23,6 +23,7 @@ public class TeamClientImplAuth implements TeamClientAuth {
 
     @Override
     public List<TeamDTO> getTeam(String teamName, String userId) {
+
         String uri = buildUri(teamName, userId);
 
         return webClient.get()

@@ -3,6 +3,7 @@ package com.kjeldsen.player.domain.repositories;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.queries.FilterMarketPlayersQuery;
+import com.kjeldsen.player.domain.repositories.queries.FindPlayersQuery;
 
 import java.util.List;
 import java.util.Optional;

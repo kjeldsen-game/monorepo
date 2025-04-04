@@ -1,4 +1,4 @@
-package com.kjeldsen.player.domain.repositories;
+package com.kjeldsen.player.domain.repositories.queries;
 
 import lombok.Builder;
 import lombok.Getter;

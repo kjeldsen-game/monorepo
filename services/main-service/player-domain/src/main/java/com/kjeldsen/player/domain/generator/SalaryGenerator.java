@@ -21,7 +21,7 @@ public class SalaryGenerator {
         return salary;
     }
 
-    public static double calculateSalaryMultiplier(Integer skillPoints) {
+    private static double calculateSalaryMultiplier(Integer skillPoints) {
         if (skillPoints <= 20) {
             return .25;
         } else if (skillPoints <= 30) {

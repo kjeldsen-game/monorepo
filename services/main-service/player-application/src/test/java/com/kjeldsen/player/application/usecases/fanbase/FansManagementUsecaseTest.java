@@ -3,14 +3,10 @@ package com.kjeldsen.player.application.usecases.fanbase;
 import com.kjeldsen.player.application.testdata.TestData;
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.repositories.FansEventWriteRepository;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

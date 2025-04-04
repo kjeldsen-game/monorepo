@@ -9,7 +9,7 @@ import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Team.TeamId;
 import com.kjeldsen.player.domain.publishers.AuctionCreationEventPublisher;
-import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
+import com.kjeldsen.player.domain.repositories.queries.FindPlayersQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.rest.api.PlayerApiDelegate;
 import com.kjeldsen.player.rest.mapper.CreatePlayerMapper;
