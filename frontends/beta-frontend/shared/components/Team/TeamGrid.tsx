@@ -28,7 +28,7 @@ const TeamGrid: React.FC<TeamGridProps> = ({
   isEditing,
 }) => {
   const columns = useMemo(
-    () => lineupColumn(isEditing, onButtonClick, onSelectChange),
+    () => lineupColumn(isEditing, onButtonClick, activePlayer, onSelectChange),
     [onButtonClick, activePlayer, isEditing, onSelectChange],
   );
 

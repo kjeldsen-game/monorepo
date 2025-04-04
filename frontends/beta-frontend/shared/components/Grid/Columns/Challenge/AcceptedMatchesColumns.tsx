@@ -1,20 +1,19 @@
-import { Box, MenuItem, Select } from '@mui/material';
+import { Box } from '@mui/material';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
-import { GridAlignment } from '@mui/x-data-grid';
-import Link from 'next/link';
 import {
   baseColumnConfig,
   leftColumnConfig,
   rightColumnConfig,
 } from '../ColumnsConfig';
-import { formatDateAndTime } from '@/shared/utils/DateUtils';
 import MarketButton from '../../../Market/MarketButton';
 import LinkButton from '../../../Common/LinkButton';
 import ColHeader from '../Common/ColHeader';
 import ColLink from '../Common/ColLink';
+import { flexCenter } from '@/shared/styles/common';
 
 const acceptedMatchesColumns = (
   handlePlayButtonClick: (matchId: string) => void,
+  handleCancelButtonBlick: (matchId: string) => void,
   teamId: string,
 ): GridColDef[] => [
   {
@@ -39,14 +38,6 @@ const acceptedMatchesColumns = (
       />
     ),
   },
-  // {
-  //   field: 'dateTime',
-  //   renderHeader: () => <ColHeader header="Date" />,
-  //   ...baseColumnConfig,
-  //   renderCell: (params: GridCellParams) => {
-  //     return formatDateAndTime(params.row?.dateTime);
-  //   },
-  // },
   {
     field: 'lineup',
     renderHeader: () => <ColHeader header="Lineup" />,
@@ -84,10 +75,13 @@ const acceptedMatchesColumns = (
             )}
 
           {params.row.away.name === params.row.home.name ? (
-            <Box>
-              <LinkButton
-                sx={{ marginLeft: '8px' }}
-                link={`/match/self/${params.row.id}`}>
+            <Box sx={flexCenter}>
+              <MarketButton
+                sx={{ marginRight: '8px' }}
+                onClick={() => handleCancelButtonBlick(params.row.id)}>
+                Cancel
+              </MarketButton>
+              <LinkButton link={`/match/self/${params.row.id}`}>
                 Set lineups
               </LinkButton>
             </Box>

@@ -776,7 +776,7 @@ components:
         total:
           type: integer
         performance:
-          type: integer
+          $ref: "#/components/schemas/Performance"
         skillPoints:
           type: integer
         assistance:
@@ -787,6 +787,16 @@ components:
           type: object
           additionalProperties:
             type: integer
+
+    Performance:
+      type: object
+      properties:
+        random:
+          type: number
+        previousTotalImpact:
+          type: number
+        total:
+          type: number
 
     DuelResponse:
       type: object

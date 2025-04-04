@@ -19,7 +19,6 @@ const useMatchReportRepository = (
   matchId?: string | undefined | string[],
   token?: string,
 ) => {
-  console.log('refetch thisss');
   const { data, isLoading, error, mutate } = useSWR<MatchReport | undefined>(
     token ? API + 'report/' + matchId : null,
     () => fetcher(matchId ? matchId : null, token ? token : null),

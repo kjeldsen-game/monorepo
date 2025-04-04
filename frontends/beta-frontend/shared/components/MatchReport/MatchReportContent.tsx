@@ -17,11 +17,22 @@ export const MatchReportContent: React.FC<MatchReportContentProps> = ({
   report,
   sx,
 }) => {
+  console.log(report);
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const [possesions, setPossesions] = useState<Play[][]>([]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
+  };
+
+  const formatClock = (clock: number): string => {
+    const totalMinutes = Math.floor(clock / 4);
+    const seconds = (clock % 4) * 15;
+
+    const formattedMinutes = String(totalMinutes).padStart(2, '0');
+    const formattedSeconds = String(seconds).padStart(2, '0');
+
+    return `${formattedMinutes}:${formattedSeconds}`;
   };
 
   useEffect(() => {
@@ -61,6 +72,7 @@ export const MatchReportContent: React.FC<MatchReportContentProps> = ({
         <CustomTabs selectedTab={selectedTab} handleChange={handleChange}>
           <Tab label="Match Stats" />
           <Tab label="Match Report" />
+          <Tab label="Highlights" />
         </CustomTabs>
       </Box>
 
@@ -95,14 +107,65 @@ export const MatchReportContent: React.FC<MatchReportContentProps> = ({
                 awayId={report.away.id}
               />
             ))}
-            {/* {report.matchReport.plays.map((event, index) => (
-              <MatchReportItem
-                key={index}
-                event={event}
-                homeId={report.home.id}
-                awayId={report.away.id}
-              />
-            ))} */}
+          </Box>
+        </CustomTabPanel>
+        <CustomTabPanel value={selectedTab} index={2}>
+          <Box
+            display={'flex'}
+            flexDirection={'column'}
+            alignItems={'center'}
+            width={'100%'}
+            sx={{ background: '#F8F8F8', padding: '20px' }}>
+            <Box
+              sx={{
+                background: '#3D3D3D',
+                width: '200px',
+                height: '20px',
+                color: 'white',
+                borderRadius: '5px',
+                textAlign: 'center',
+                fontSize: '12px',
+              }}>
+              MATCH STARTS
+            </Box>
+
+            {report.matchReport.plays
+              .filter((play: Play) => play.action === 'SHOOT')
+              .map((play: Play, index: number) => (
+                <Box
+                  sx={{
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}>
+                  <Box
+                    alignSelf={'center'}
+                    fontSize={'8px'}
+                    textAlign={'center'}
+                    sx={{ background: '#A3A3A3', width: '40px' }}
+                    borderRadius={'5px'}>
+                    {formatClock(play.clock)}
+                  </Box>
+                  <Box
+                    paddingY={'10px'}
+                    display={'flex'}
+                    flexDirection={'column'}
+                    alignItems={
+                      play.duel.initiator.teamRole === 'HOME' ? 'start' : 'end'
+                    }>
+                    <Box textAlign={'justify'} sx={{ width: '80%' }}>
+                      <MatchReportItem
+                        index={0}
+                        key={index}
+                        event={play}
+                        homeId={report.homeId}
+                        awayId={report.awayId}
+                        isLast={true}
+                      />
+                    </Box>
+                  </Box>
+                </Box>
+              ))}
           </Box>
         </CustomTabPanel>
       </Box>

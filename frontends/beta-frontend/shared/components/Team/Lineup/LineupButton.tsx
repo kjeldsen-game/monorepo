@@ -21,7 +21,7 @@ const LineupButton: React.FC<LineupButtonProps> = ({
 }) => {
   const { handleEdit, activePlayer, edit: editValue } = useLineupEdit();
   const [isHovered, setIsHovered] = useState<boolean>(false);
-  const showExitButton = player && isHovered && editValue;
+  const showExitButton = player && isHovered && !activePlayer;
   const borderStyle = activePlayer || !player ? 'dashed' : 'solid';
 
   const borderColor = player
@@ -36,7 +36,7 @@ const LineupButton: React.FC<LineupButtonProps> = ({
 
   return (
     <Button
-      disabled={editValue || activePlayer ? false : true}
+      disabled={player || activePlayer ? false : true}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       sx={{
@@ -50,7 +50,7 @@ const LineupButton: React.FC<LineupButtonProps> = ({
         ...sx,
       }}
       onClick={() => {
-        !editValue && handleEdit(activePlayer, player, position);
+        handleEdit(activePlayer, player, position, false);
       }}>
       {player ? (
         <Box
@@ -98,9 +98,10 @@ const LineupButton: React.FC<LineupButtonProps> = ({
           </div>
           {showExitButton && (
             <LineupCloseButton
-              handleCloseModal={() =>
-                handleEdit(player, undefined, undefined, true)
-              }
+              handleCloseModal={(event) => {
+                event.stopPropagation();
+                handleEdit(player, undefined, undefined, true);
+              }}
             />
           )}
         </Box>

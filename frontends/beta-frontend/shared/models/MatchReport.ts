@@ -71,11 +71,17 @@ export enum Status {
 
 export interface RStats {
   total: number;
-  performance: number;
+  performance: Performance;
   skillPoints: number;
   carryover?: number;
   teamAssistance?: { [key: string]: number };
   assistance?: number;
+}
+
+export interface Performance {
+  total: number;
+  random: number;
+  previousTotalImpact: number;
 }
 
 export enum Origin {

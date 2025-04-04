@@ -7,15 +7,10 @@ import {
   VerticalPressure,
 } from '@/shared/models/TeamModifiers';
 import { filterPlayersByStatus } from '@/shared/utils/LineupUtils';
-import { Box, Button, SnackbarCloseReason, Tab } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
-import { lineupColumn } from '../Grid/Columns/LineupColumn';
+import { Box, SnackbarCloseReason, Tab } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { PlayerOrder } from '@/pages/api/match/models/MatchReportresponse';
-import {
-  PlayerPosition,
-  POSITION_FILTER_MAP,
-} from '@/shared/models/PlayerPosition';
-import { GridRowParams } from '@mui/x-data-grid';
+import { POSITION_FILTER_MAP } from '@/shared/models/PlayerPosition';
 import TeamValidationModal from './TeamValidationModal';
 import SnackbarAlert from '../Common/SnackbarAlert';
 import TeamViewHeader from './TeamViewHeader';
@@ -26,8 +21,6 @@ import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import GppMaybeIcon from '@mui/icons-material/GppMaybe';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
-import { Close, Edit } from '@mui/icons-material';
-import LineupButton from './Lineup/LineupButton';
 import LineupFilterButton from './Filters/LineupFilterButton';
 import CustomTabs from '../CustomTabs';
 import { CustomTabPanel } from '../Tab/CustomTabPanel';
@@ -51,18 +44,14 @@ const TeamViewNew: React.FC<TeamProps> = ({
   onTeamUpdate,
   teamFormationValidation,
 }: TeamProps) => {
-  // New states
   const [edit, setEdit] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>('ALL');
   const [activePlayerV2, setActivePlayerV2] = useState<any>();
   const [selectedTab, setSelectedTab] = useState(0);
-
-  // Old states
   const [openModalValidation, setOpenModalValidation] =
     useState<boolean>(false);
   const [players, setPlayers] = useState<Player[]>();
   const [teamModifiers, setTeamModifiers] = useState<TeamModifiers>();
-  // NEW
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
@@ -74,6 +63,17 @@ const TeamViewNew: React.FC<TeamProps> = ({
     position?: string,
     inactive?: boolean,
   ) => {
+    // console.log(newPlayer);
+    // console.log(oldPlayer);
+    // console.log(position);
+    // console.log(inactive);
+    if (activePlayerV2 === undefined && !inactive && !newPlayer) {
+      if (oldPlayer === undefined) {
+        return;
+      }
+      setActivePlayerV2(oldPlayer);
+      return;
+    }
     if (!oldPlayer) {
       // Updating player to the BENCH
       if (!position) {
@@ -190,6 +190,14 @@ const TeamViewNew: React.FC<TeamProps> = ({
     });
   };
 
+  const handleGridButtonClick = (player: Player) => {
+    if (activePlayerV2) {
+      setActivePlayerV2(undefined);
+    } else {
+      setActivePlayerV2(player);
+    }
+  };
+
   // console.log(alert);
 
   return (
@@ -251,14 +259,46 @@ const TeamViewNew: React.FC<TeamProps> = ({
           justifyContent={'space-between'}
           sx={{ paddingY: 3 }}>
           <Box>
-            <LineupFilterButton name={'ALL'} handleClick={setFilter} />
-            <LineupFilterButton name={'GK'} handleClick={setFilter} />
-            <LineupFilterButton name={'DEF'} handleClick={setFilter} />
-            <LineupFilterButton name={'MID'} handleClick={setFilter} />
-            <LineupFilterButton name={'FW'} handleClick={setFilter} />
-            <LineupFilterButton name={'ACTIVE'} handleClick={setFilter} />
-            <LineupFilterButton name={'BENCH'} handleClick={setFilter} />
-            <LineupFilterButton name={'INACTIVE'} handleClick={setFilter} />
+            <LineupFilterButton
+              active={filter}
+              name={'ALL'}
+              handleClick={setFilter}
+            />
+            <LineupFilterButton
+              active={filter}
+              name={'GK'}
+              handleClick={setFilter}
+            />
+            <LineupFilterButton
+              active={filter}
+              name={'DEF'}
+              handleClick={setFilter}
+            />
+            <LineupFilterButton
+              active={filter}
+              name={'MID'}
+              handleClick={setFilter}
+            />
+            <LineupFilterButton
+              active={filter}
+              name={'FW'}
+              handleClick={setFilter}
+            />
+            <LineupFilterButton
+              active={filter}
+              name={'ACTIVE'}
+              handleClick={setFilter}
+            />
+            <LineupFilterButton
+              active={filter}
+              name={'BENCH'}
+              handleClick={setFilter}
+            />
+            <LineupFilterButton
+              active={filter}
+              name={'INACTIVE'}
+              handleClick={setFilter}
+            />
           </Box>
           <Box>
             <MarketButton
@@ -281,7 +321,7 @@ const TeamViewNew: React.FC<TeamProps> = ({
           onSelectChange={handleSelectChange}
           isEditing={edit}
           activePlayer={activePlayerV2}
-          onButtonClick={setActivePlayerV2}
+          onButtonClick={handleGridButtonClick}
           rows={
             filter === 'ALL'
               ? players ?? []

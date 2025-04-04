@@ -9,10 +9,12 @@ import { PITCH_AREAS } from '@/shared/models/PitchArea';
 import { PlayerOrder } from '@/shared/models/PlayerOrder';
 import SelectInput from '../../Common/SelectInput';
 import ColHeader from './Common/ColHeader';
+import CloseIcon from '@mui/icons-material/Close';
 
 export const lineupColumn = (
   isEditing: boolean,
   handleActionButtonClick: (player: any) => void,
+  activePlayer: Player | undefined,
   handlePlayerChange?: (
     value: Player,
     order: PlayerOrder | any,
@@ -101,14 +103,21 @@ export const lineupColumn = (
       renderHeader: () => <ColHeader header={'Action'} align={'right'} />,
       renderCell: (params: GridCellParams) => (
         <MarketButton
+          disabled={activePlayer && activePlayer?.id !== params.row.id}
           sx={{
             height: '34px',
             minWidth: '34px',
             paddingX: '12px',
             marginRight: '10px',
           }}
-          onClick={() => handleActionButtonClick(params.row)}>
-          <PeopleAltIcon />
+          onClick={() => {
+            handleActionButtonClick(params.row);
+          }}>
+          {activePlayer?.id === params.row.id ? (
+            <CloseIcon />
+          ) : (
+            <PeopleAltIcon />
+          )}
         </MarketButton>
       ),
     },
