@@ -21,6 +21,7 @@ import com.kjeldsen.player.domain.PlayerSkill;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -167,16 +168,22 @@ public class DuelExecution {
         }
 
         GameState.ChainAction counterAttackAction = state.getChainActions().getOrDefault(ChainActionSequence.COUNTER_ATTACK, new GameState.ChainAction());
+        int counterAttackBonus = 0;
         // Counter attack bonus is active
         if (counterAttackAction != null && counterAttackAction.getActive() && role.equals(DuelRole.CHALLENGER)) {
             log.info("Counter Attack action sequence is active and processing bonus!");
-            chainActionSequenceModifier = counterAttackAction.getBonus();
+            counterAttackBonus = counterAttackAction.getBonus();
         }
 
         int assistance = (int) (adjustedAssistance.get(role) * Assistance.assistanceFactor(state, role));
 
-        int total = skillPoints + chainActionSequenceModifier + performance.getTotal().intValue() + assistance;
+        int total = skillPoints + chainActionSequenceModifier + performance.getTotal().intValue() + assistance + counterAttackBonus;
+
+        Map<ChainActionSequence, Integer> chainActionBonuses = new HashMap<>();
+        chainActionBonuses.put(ChainActionSequence.COUNTER_ATTACK, counterAttackBonus);
+
         return DuelStats.builder()
+                .chainActionBonuses(chainActionBonuses)
                 .skillPoints(skillPoints)
                 .performance(performance)
                 .assistance(assistance)
