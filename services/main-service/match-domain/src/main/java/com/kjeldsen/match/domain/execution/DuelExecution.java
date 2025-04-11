@@ -144,8 +144,6 @@ public class DuelExecution {
             Map<DuelRole, Integer> adjustedAssistance) {
 
         int skillPoints = player.duelSkill(DuelType.POSITIONAL, role, state);
-        // int performance =
-        // DuelRandomization.performance(state, player, DuelType.POSITIONAL, role);
         DuelStats.Performance performance = GausDuelRandomizer.performance(player, state, DuelType.POSITIONAL, role);
 
         // Apply chain action sequences skill modifiers.
@@ -166,6 +164,13 @@ public class DuelExecution {
             state.getRecorder().record(detail, state, GameProgressRecord.Type.CALCULATION,
                     GameProgressRecord.DuelStage.DURING);
 
+        }
+
+        GameState.ChainAction counterAttackAction = state.getChainActions().getOrDefault(ChainActionSequence.COUNTER_ATTACK, new GameState.ChainAction());
+        // Counter attack bonus is active
+        if (counterAttackAction != null && counterAttackAction.getActive() && role.equals(DuelRole.CHALLENGER)) {
+            log.info("Counter Attack action sequence is active and processing bonus!");
+            chainActionSequenceModifier = counterAttackAction.getBonus();
         }
 
         int assistance = (int) (adjustedAssistance.get(role) * Assistance.assistanceFactor(state, role));

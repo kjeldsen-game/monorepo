@@ -8,6 +8,7 @@ import com.kjeldsen.match.domain.entities.duel.*;
 import com.kjeldsen.match.domain.execution.DuelDTO;
 import com.kjeldsen.match.domain.execution.DuelExecution;
 import com.kjeldsen.match.domain.execution.DuelParams;
+import com.kjeldsen.match.domain.modifers.Tactic;
 import com.kjeldsen.match.domain.recorder.GameProgressRecord;
 import com.kjeldsen.match.domain.selection.ActionSelection;
 import com.kjeldsen.match.domain.selection.ChallengerSelection;
@@ -28,7 +29,9 @@ import com.kjeldsen.player.domain.PlayerOrder;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -81,7 +84,6 @@ public class Game {
         // selected to start the game.
         log.info("Initialising game state for match {}", match.getId());
         GameState state = GameState.init(match);
-
         //log.info("Home team:\n{}", match.getHome());
         //log.info("Away team:\n{}", match.getAway());
 
@@ -103,6 +105,7 @@ public class Game {
                     .ballState((new BallState(starting, PitchArea.CENTRE_MIDFIELD, BallHeight.GROUND)))
                     .plays(before.getPlays())
                     .recorder(before.getRecorder())
+                    .chainActions(before.getChainActions())
                     .chainActionSequence(before.getChainActionSequence())
                     .build())
             .orElseThrow();
@@ -136,15 +139,15 @@ public class Game {
                     .orElseThrow(() -> new GameStateException(state, "No pitch area to select from"));
 
             // REFACTOR THIS. If inside chained action (wall pass), the last pass is made to a forward area.
-            if (state.getChainActionSequence().isActive()) {
-                if (state.lastPlay().isPresent()) {
-                    Play lastPlay = state.lastPlay().get();
-                    // Rank up the area when finishing the chain action sequence.
-                    if (Action.PASS.equals(action) && lastPlay.getChainActionSequence().isActive()) {
-                        destinationArea = destinationArea.rankUp();
-                    }
-                }
-            }
+//            if (state.getChainActionSequence().isActive()) {
+//                if (state.lastPlay().isPresent()) {
+//                    Play lastPlay = state.lastPlay().get();
+//                    // Rank up the area when finishing the chain action sequence.
+//                    if (Action.PASS.equals(action) && lastPlay.getChainActionSequence().isActive()) {
+//                        destinationArea = destinationArea.rankUp();
+//                    }
+//                }
+//            }
         }
 
         // Generate a duel based on the action of the play. This requires a challenger - the person
@@ -308,6 +311,7 @@ public class Game {
                     .away(before.getAway())
                     .ballState(newBallState)
                     .chainActionSequence(chainActionSequence)
+                    .chainActions(before.getChainActions())
                     .plays(GameState.concatPlay(before.getPlays(), play))
                     .recorder(before.getRecorder())
                     .build())
@@ -319,6 +323,25 @@ public class Game {
         // Since the attacking team lost the last duel, the pitch area needs to be flipped so that
         // it is oriented from the perspective of the current player's team.
         PitchArea currentArea = state.getBallState().getArea().flipPerspective();
+        Map<ChainActionSequence, GameState.ChainAction> sequenceChainActionMap = state.getChainActions();
+
+        TeamState defTeam = state.defendingTeam();
+        // Counter-attack is won by the defender, so the ChainActionSequence is set to active with counter-attack
+        // Defender won with TACKLE and get the ball
+        if (play.getDuel().getType().equals(DuelType.BALL_CONTROL)) {
+            // Check if there is possibility for the Counter attack bonus
+            if (defTeam.getTactic().equals(Tactic.COUNTER_ATTACK)) {
+                // Yes, tactic is active
+                Integer counterAttackBonus = play.getDuel().getChallengerStats().getTotal() - play.getDuel().getInitiatorStats().getTotal();
+                log.info("Activating chain action sequence for Counter Attack w bonus={} for team={}!", counterAttackBonus,
+                    play.getDuel().getChallenger().getTeamRole());
+                sequenceChainActionMap.put(ChainActionSequence.COUNTER_ATTACK, GameState.ChainAction.builder()
+                    .active(true).turn(Turn.valueOf(play.getDuel().getChallenger().getTeamRole().name())).bonus(counterAttackBonus).build());
+            } else {
+                log.info("Enemy team don't have Counter attack Tactic. Removing attacking team Chain sequence bonuses because lost ball!");
+                sequenceChainActionMap.put(ChainActionSequence.COUNTER_ATTACK, GameState.ChainAction.builder().build());
+            }
+        }
 
         // TODO refactor this
         Optional<BallState> fromModifier = checkModifiers(state, play);
@@ -332,7 +355,7 @@ public class Game {
             /*
             if (play.getDuel().getType().movesBall()) {
 
-                // If the change flank order was applied, then ball can move outisde nearby areas.
+                // If the change flank order was applied, then ball can move outside nearby areas.
                 Boolean nearbyOnly = ! PlayerOrder.CHANGE_FLANK.equals(play.getDuel().getAppliedPlayerOrder());
 
                 playerArea = PitchAreaSelection.select(currentArea, play.getDuel().getChallenger(), nearbyOnly)
@@ -344,7 +367,6 @@ public class Game {
             playerArea = currentArea;
             // Attacker lose the positional duel but we still wanna have in the Tackle duel as attacker
             if (play.getDuel().getType().equals(DuelType.POSITIONAL) && play.getDuel().getResult() == DuelResult.LOSE) {
-                System.out.println("Last duel was positional and the duel was lost so i am doing something");
                 newBallState = new BallState(play.getDuel().getInitiator(), state.getBallState().getArea(), state.getBallState().getHeight());
             } else {
                 newBallState = new BallState(play.getDuel().getChallenger(), playerArea, state.getBallState().getHeight());
@@ -360,6 +382,7 @@ public class Game {
                     .home(before.getHome())
                     .away(before.getAway())
                     .ballState(newBallState)
+                    .chainActions(sequenceChainActionMap)
                     .chainActionSequence(ChainActionSequence.NONE) // Losing a duel stops a chained action sequence, if any.
                     .plays(GameState.concatPlay(before.getPlays(), play))
                     .recorder(before.getRecorder())
@@ -406,6 +429,7 @@ public class Game {
                     .home(before.getTurn() == Turn.HOME ? newTeamState : before.getHome())
                     .away(before.getTurn() == Turn.AWAY ? newTeamState : before.getAway())
                     .ballState(newBallState)
+                    .chainActions(new HashMap<>()) // Clear all chained actions
                     .chainActionSequence(ChainActionSequence.NONE) // Goals stops a chained action sequence, if any.
                     .plays(GameState.concatPlay(before.getPlays(), play))
                     .recorder(before.getRecorder())

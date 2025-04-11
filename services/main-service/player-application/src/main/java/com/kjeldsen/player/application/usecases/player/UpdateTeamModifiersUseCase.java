@@ -19,7 +19,7 @@ public class UpdateTeamModifiersUseCase {
 
     public void update(String teamId, TeamModifiers modifiers) {
 
-        Team team =  getTeamUseCase.get(teamId);
+        Team team =  getTeamUseCase.get(Team.TeamId.of(teamId));
 
         team.setTeamModifiers(modifiers);
         teamWriteRepository.save(team);
