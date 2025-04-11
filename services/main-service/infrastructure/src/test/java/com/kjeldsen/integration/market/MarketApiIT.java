@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class MarketApiIT extends AbstractIT {
+class MarketApiIT extends AbstractIT {
 
     @Autowired
     private AuctionWriteRepository auctionWriteRepository;
@@ -33,7 +33,7 @@ public class MarketApiIT extends AbstractIT {
 
     @Test
     @DisplayName("HTTP get to /market/auction/{marketId}")
-    public void should_return_200_when_getting_auction_by_market_id() throws Exception {
+    void should_return_200_when_getting_auction_by_market_id() throws Exception {
         Auction exampleAuction = Auction.builder().id(Auction.AuctionId.of("auction"))
             .bids(new ArrayList<>()).playerId(Player.PlayerId.of("player")).teamId(Team.TeamId.of("team")).build();
 

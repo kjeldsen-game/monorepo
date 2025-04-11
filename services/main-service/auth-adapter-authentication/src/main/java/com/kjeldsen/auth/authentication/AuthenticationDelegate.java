@@ -11,6 +11,7 @@ import com.kjeldsen.auth.authentication.model.UserDetailsResponse;
 import com.kjeldsen.auth.domain.User;
 import com.kjeldsen.auth.domain.clients.TeamClientAuth;
 import com.kjeldsen.auth.domain.clients.models.TeamDTO;
+import com.kjeldsen.auth.domain.exceptions.TeamNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +51,7 @@ public class AuthenticationDelegate implements AuthApiDelegate {
     private UserDetailsResponse buildUserDetailsResponse(User user) {
         List<TeamDTO> teamDTOs = teamClientAuth.getTeam(null, user.getId());
         if (teamDTOs.isEmpty()) {
-            throw new RuntimeException("Team not found");
+            throw new TeamNotFoundException();
         }
         return new UserDetailsResponse(user.getId(), user.getEmail(), teamDTOs.get(0).getId());
     }

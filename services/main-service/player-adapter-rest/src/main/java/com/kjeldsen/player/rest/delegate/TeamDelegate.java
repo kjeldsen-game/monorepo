@@ -14,9 +14,8 @@ import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerStatus;
 import com.kjeldsen.player.domain.Team.TeamId;
 import com.kjeldsen.player.domain.TeamModifiers;
-import com.kjeldsen.player.domain.repositories.FindTeamsQuery;
+import com.kjeldsen.player.domain.repositories.queries.FindTeamsQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
-import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.rest.api.TeamApiDelegate;
 import com.kjeldsen.player.rest.mapper.EconomyMapper;
@@ -67,10 +66,9 @@ public class TeamDelegate implements TeamApiDelegate {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        updatePricingRequest.getPrices().forEach(price -> {
+        updatePricingRequest.getPrices().forEach(price ->
             updateTeamPricingUseCase.update(Team.TeamId.of(teamId), price.getValue(),
-                Team.Economy.PricingType.valueOf(price.getType().name()));
-        });
+                Team.Economy.PricingType.valueOf(price.getType().name())));
         return ResponseEntity.ok().build();
     }
 
@@ -162,6 +160,7 @@ public class TeamDelegate implements TeamApiDelegate {
 
     @Override
     public ResponseEntity<TeamResponse> getTeamById(String teamId) {
+        System.out.println(teamId);
         // Different user than the team owner is accessing the team
         Team team = getTeamUseCase.get(TeamId.of(teamId));
         TeamResponse response = TeamMapper.INSTANCE.map(team);
@@ -220,7 +219,7 @@ public class TeamDelegate implements TeamApiDelegate {
 
         TeamModifiers teamModifiers = TeamMapper.INSTANCE.map(editTeamRequest.getTeamModifiers());
         updateTeamModifiersUseCase.update(teamId, teamModifiers);
-        Team team = updateTeamPlayersUseCase.update(teamModifiers, playerEdits, teamId);
+        Team team = updateTeamPlayersUseCase.update(playerEdits, teamId);
         TeamResponse response = TeamMapper.INSTANCE.map(team);
         return ResponseEntity.ok(response);
     }

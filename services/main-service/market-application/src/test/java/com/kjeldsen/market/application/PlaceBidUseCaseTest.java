@@ -1,6 +1,10 @@
 package com.kjeldsen.market.application;
 
 import com.kjeldsen.market.domain.Auction;
+import com.kjeldsen.market.domain.exceptions.AuctionNotFoundException;
+import com.kjeldsen.market.domain.exceptions.InsufficientBalanceException;
+import com.kjeldsen.market.domain.exceptions.PlaceBidException;
+import com.kjeldsen.market.domain.exceptions.TeamNotFoundException;
 import com.kjeldsen.market.domain.publishers.BidEventPublisher;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
@@ -37,33 +41,33 @@ class PlaceBidUseCaseTest {
 
     @Test
     @DisplayName("Should throw exception if Auction is null")
-    public void should_throw_exception_if_auction_is_null() {
+    void should_throw_exception_if_auction_is_null() {
         Auction.AuctionId mockedAuctionId = Auction.AuctionId.generate();
         String mockedUserId = UUID.randomUUID().toString();
         when(mockedAuctionReadRepository.findById(mockedAuctionId)).thenReturn(Optional.empty());
 
-        assertEquals("Auction not found", assertThrows(RuntimeException.class, () -> {
+        assertEquals("Auction not found!", assertThrows(AuctionNotFoundException.class, () -> {
             placeBidUseCase.placeBid(mockedAuctionId, BigDecimal.ONE, mockedUserId);
         }).getMessage());
     }
 
     @Test
     @DisplayName("Should throw exception if Team is null")
-    public void should_throw_exception_if_team_is_null() {
+    void should_throw_exception_if_team_is_null() {
         Auction.AuctionId mockedAuctionId = Auction.AuctionId.generate();
         Auction mockedAuction = Mockito.mock(Auction.class);
         String mockedUserId = UUID.randomUUID().toString();
         when(mockedAuctionReadRepository.findById(mockedAuctionId)).thenReturn(Optional.of(mockedAuction));
         when(mockedTeamReadRepository.findByUserId(mockedUserId)).thenReturn(Optional.empty());
 
-        assertEquals("Team not found", assertThrows(RuntimeException.class, () -> {
+        assertEquals("Team not found!", assertThrows(TeamNotFoundException.class, () -> {
             placeBidUseCase.placeBid(mockedAuctionId, BigDecimal.ONE, mockedUserId);
         }).getMessage());
     }
 
     @Test
     @DisplayName("Should throw exception if bidding team is auction creator team")
-    public void should_throw_exception_if_bidding_team_is_auction_creator_team() {
+    void should_throw_exception_if_bidding_team_is_auction_creator_team() {
         Auction.AuctionId mockedAuctionId = Auction.AuctionId.generate();
         Auction mockedAuction = Mockito.mock(Auction.class);
         String mockedUserId = UUID.randomUUID().toString();
@@ -74,14 +78,14 @@ class PlaceBidUseCaseTest {
         when(mockedAuction.getTeamId()).thenReturn(mockedTeamId);
         when(mockedTeamReadRepository.findByUserId(mockedUserId)).thenReturn(Optional.of(mockedTeam));
 
-        assertEquals("Auction creator team cannot place bid", assertThrows(RuntimeException.class, () -> {
+        assertEquals("Auction creator team cannot place bid!", assertThrows(PlaceBidException.class, () -> {
             placeBidUseCase.placeBid(mockedAuctionId, BigDecimal.ONE, mockedUserId);
         }).getMessage());
     }
 
     @Test
     @DisplayName("Should throw exception if bid had smaller amount that was already placed by team")
-    public void should_throw_exception_if_bid_had_smaller_amount() {
+    void should_throw_exception_if_bid_had_smaller_amount() {
         Auction.AuctionId mockedAuctionId = Auction.AuctionId.generate();
         String mockedUserId = UUID.randomUUID().toString();
         Team mockedTeam = Mockito.mock(Team.class);
@@ -96,14 +100,14 @@ class PlaceBidUseCaseTest {
         when(mockedTeamReadRepository.findByUserId(mockedUserId)).thenReturn(Optional.of(mockedTeam));
         when(mockedTeam.getId()).thenReturn(mockedTeamId);
 
-        assertEquals("You cannot place less bid than your latest!", assertThrows(RuntimeException.class, () -> {
+        assertEquals("You cannot place less bid than your latest!", assertThrows(PlaceBidException.class, () -> {
             placeBidUseCase.placeBid(mockedAuctionId, BigDecimal.ZERO, mockedUserId);
         }).getMessage());
     }
 
     @Test
     @DisplayName("Should throw exception if team dont have enough amount in balance")
-    public void should_throw_exception_if_team_dont_have_enough_balance() {
+    void should_throw_exception_if_team_dont_have_enough_balance() {
         Auction.AuctionId mockedAuctionId = Auction.AuctionId.generate();
         String mockedUserId = UUID.randomUUID().toString();
         Team.TeamId mockedTeamId = Team.TeamId.generate();
@@ -118,14 +122,14 @@ class PlaceBidUseCaseTest {
         when(mockedAuctionReadRepository.findById(mockedAuctionId)).thenReturn(Optional.of(mockedAuction));
         when(mockedTeamReadRepository.findByUserId(mockedUserId)).thenReturn(Optional.of(mockedTeam));
 
-        assertEquals("You don't have enough balance to place bid!", assertThrows(RuntimeException.class, () -> {
+        assertEquals("You don't have enough balance to place bid!", assertThrows(InsufficientBalanceException.class, () -> {
             placeBidUseCase.placeBid(mockedAuctionId, BigDecimal.valueOf(11), mockedUserId);
         }).getMessage());
     }
 
     @Test
     @DisplayName("Should place a bid and save the auction")
-    public void should_place_bid() {
+    void should_place_bid() {
         Auction.AuctionId mockedAuctionId = Auction.AuctionId.generate();
         String mockedUserId = UUID.randomUUID().toString();
         Team.TeamId mockedTeamId = Team.TeamId.generate();

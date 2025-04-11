@@ -2,11 +2,11 @@ package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.player.application.testdata.TestData;
 import com.kjeldsen.player.application.usecases.economy.CreateTransactionUseCase;
+import com.kjeldsen.player.application.usecases.player.GetPlayersUseCase;
 import com.kjeldsen.player.application.usecases.player.ProcessPlayerTransferUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
-import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -15,18 +15,17 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ProcessPlayerTransferUseCaseTest {
 
-    private final PlayerReadRepository mockedPlayerReadRepository = Mockito.mock(PlayerReadRepository.class);
+    private final GetPlayersUseCase mockedGetPlayersUseCase = Mockito.mock(GetPlayersUseCase.class);
     private final PlayerWriteRepository mockedPlayerWriteRepository = Mockito.mock(PlayerWriteRepository.class);
     private final CreateTransactionUseCase mockedCreateTransactionUseCase = Mockito.mock(CreateTransactionUseCase.class);
     private final ProcessPlayerTransferUseCase processPlayerTransferUseCase = new ProcessPlayerTransferUseCase(
-            mockedPlayerReadRepository, mockedPlayerWriteRepository, mockedCreateTransactionUseCase);
+        mockedPlayerWriteRepository, mockedCreateTransactionUseCase, mockedGetPlayersUseCase);
 
     private static Team.TeamId mockedWinnerTeamId;
     private static Team.TeamId mockedCreatorTeamId;
@@ -41,20 +40,10 @@ class ProcessPlayerTransferUseCaseTest {
     }
 
     @Test
-    @DisplayName("Should throw exception if player not found")
-    public void should_throw_exception_if_player_not_found() {
-        when(mockedPlayerReadRepository.findOneById(mockedPlayerId)).thenReturn(Optional.empty());
-
-        assertEquals("Player not found", assertThrows(RuntimeException.class, () -> {
-            processPlayerTransferUseCase.process(mockedPlayerId, BigDecimal.ONE, mockedWinnerTeamId, mockedCreatorTeamId);
-        }).getMessage());
-    }
-
-    @Test
     @DisplayName("Should update the player and call CreateTransactionUseCase twice")
     public void should_update_the_player_and_call_CreateTransactionUseCase() {
         Player mockedPlayer = TestData.generateTestPlayers(mockedCreatorTeamId, 1).get(0);
-        when(mockedPlayerReadRepository.findOneById(mockedPlayerId)).thenReturn(Optional.of(mockedPlayer));
+        when(mockedGetPlayersUseCase.get(mockedPlayerId)).thenReturn(mockedPlayer);
 
         processPlayerTransferUseCase.process(mockedPlayerId, BigDecimal.TEN, mockedWinnerTeamId, mockedCreatorTeamId);
 

@@ -8,7 +8,6 @@ import com.kjeldsen.player.domain.generator.FallOffCliffGenerator;
 import com.kjeldsen.player.domain.repositories.PlayerFallOffCliffEventWriteRepository;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;

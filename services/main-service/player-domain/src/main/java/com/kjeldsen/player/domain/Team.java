@@ -1,8 +1,5 @@
 package com.kjeldsen.player.domain;
 
-import com.kjeldsen.player.domain.events.CanteraInvestmentEvent;
-import com.kjeldsen.player.domain.events.FansEvent;
-import com.kjeldsen.player.domain.events.PricingEvent;
 import lombok.*;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -109,8 +106,8 @@ public class Team {
             }
         }
 
-        public void updateFans(FansEvent fansEvent) {
-            updateFans(1, fansEvent.getFans());
+        public void updateFans(Integer fans) {
+            updateFans(1, fans);
         }
 
         public void updateFans(Integer tier, Integer fans) {
@@ -288,11 +285,11 @@ public class Team {
             }
         }
 
-        public void updatePrices(PricingEvent pricingEvent) {
+        public void updatePrices(PricingType pricingType, int price) {
             if (prices == null) {
                 prices = new HashMap<>();
             }
-            prices.put(pricingEvent.getPricingType(), pricingEvent.getPrice());
+            prices.put(pricingType, price);
         }
 
         public void resetSponsorIncome(IncomePeriodicity periodicity) {
@@ -346,18 +343,18 @@ public class Team {
             ECONOMY
         }
 
-        public void addEconomyInvestment(CanteraInvestmentEvent canteraInvestmentEvent) {
-            economyLevel = Math.min(economyLevel + canteraInvestmentEvent.getPoints(), MAX_INVESTMENT_LEVEL);
+        public void addEconomyInvestment(Integer points) {
+            economyLevel = Math.min(economyLevel + points, MAX_INVESTMENT_LEVEL);
             recalculateScore();
         }
 
-        public void addTraditionInvestment(CanteraInvestmentEvent canteraInvestmentEvent) {
-            traditionLevel = Math.min(traditionLevel + canteraInvestmentEvent.getPoints(), MAX_INVESTMENT_LEVEL);
+        public void addTraditionInvestment(Integer points ) {
+            traditionLevel = Math.min(traditionLevel + points, MAX_INVESTMENT_LEVEL);
             recalculateScore();
         }
 
-        public void addBuildingsInvestment(CanteraInvestmentEvent canteraInvestmentEvent) {
-            buildingsLevel = Math.min(buildingsLevel + canteraInvestmentEvent.getPoints(), MAX_INVESTMENT_LEVEL);
+        public void addBuildingsInvestment(Integer points) {
+            buildingsLevel = Math.min(buildingsLevel + points, MAX_INVESTMENT_LEVEL);
             recalculateScore();
         }
 

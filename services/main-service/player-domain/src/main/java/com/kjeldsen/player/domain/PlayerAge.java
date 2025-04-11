@@ -57,9 +57,11 @@ public class PlayerAge {
                 .days((double) Math.round(days*100)/100)
                 .build();
     }
+
     public static Integer ageGeneration() {
         return RandomUtils.nextInt(RANGE_OF_AGE_JUNIOR.getMinimum(), RANGE_OF_AGE_SENIOR.getMaximum());
     }
+
     public static PlayerAge gettingOlder(PlayerAge age) throws IllegalArgumentException {
         if (age == null) { throw  new IllegalArgumentException("Age cannot be null"); }
 
@@ -73,6 +75,7 @@ public class PlayerAge {
         }
         return age;
     }
+
     private void incrementDays(){
         days += DAY_KJELDSEN;
     }

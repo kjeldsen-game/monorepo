@@ -32,7 +32,6 @@ public class CreateMatchUseCase {
 
         Match.Status status;
         if (Objects.equals(homeTeamId, awayTeamId)) {
-            System.out.println("hereeeee");
             status = Match.Status.ACCEPTED;
         } else {
             status = leagueId == null ? Match.Status.PENDING : Match.Status.SCHEDULED;

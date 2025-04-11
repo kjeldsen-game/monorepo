@@ -8,7 +8,6 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
@@ -24,6 +23,7 @@ public class TeamClientImplAuth implements TeamClientAuth {
 
     @Override
     public List<TeamDTO> getTeam(String teamName, String userId) {
+
         String uri = buildUri(teamName, userId);
 
         return webClient.get()

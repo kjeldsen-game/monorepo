@@ -3,8 +3,6 @@ package com.kjeldsen.player.application.usecases;
 import com.kjeldsen.player.application.testdata.TestData;
 import com.kjeldsen.player.application.usecases.cantera.CanteraInvestmentUsecase;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.events.CanteraInvestmentEvent;
-import com.kjeldsen.player.domain.repositories.CanteraInvestmentEventWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,9 +22,8 @@ class CanteraInvestmentUsecaseTest {
 
     private final TeamReadRepository mockedTeamReadRepository = Mockito.mock(TeamReadRepository.class);
     private final TeamWriteRepository mockedTeamWriteRepository = Mockito.mock(TeamWriteRepository.class);
-    private final CanteraInvestmentEventWriteRepository mockedCanteraInvestmentEventWriteRepository = Mockito.mock(CanteraInvestmentEventWriteRepository.class);
     private final CanteraInvestmentUsecase canteraInvestmentUsecase = new CanteraInvestmentUsecase(mockedTeamReadRepository,
-          mockedTeamWriteRepository, mockedCanteraInvestmentEventWriteRepository);
+          mockedTeamWriteRepository);
 
     private static Team.TeamId mockedTeamId;
 
@@ -78,16 +75,9 @@ class CanteraInvestmentUsecaseTest {
             case ECONOMY -> assertEquals(20, mockedTeam.getCantera().getEconomyLevel());
         }
 
-        ArgumentCaptor<CanteraInvestmentEvent> canteraInvestmentEvent = ArgumentCaptor.forClass(CanteraInvestmentEvent.class);
-        verify(mockedCanteraInvestmentEventWriteRepository).save(canteraInvestmentEvent.capture());
-        CanteraInvestmentEvent capturedInvestmentEvent = canteraInvestmentEvent.getValue();
-
-        assertEquals(mockedTeamId, capturedInvestmentEvent.getTeamId());
-        assertEquals(canteraInvestment, capturedInvestmentEvent.getInvestment());
-
         verify(mockedTeamReadRepository).findById(mockedTeamId);
         verify(mockedTeamWriteRepository).save(mockedTeam);
         verifyNoMoreInteractions(mockedTeamReadRepository,
-                mockedCanteraInvestmentEventWriteRepository, mockedTeamWriteRepository);
+            mockedTeamWriteRepository);
     }
 }

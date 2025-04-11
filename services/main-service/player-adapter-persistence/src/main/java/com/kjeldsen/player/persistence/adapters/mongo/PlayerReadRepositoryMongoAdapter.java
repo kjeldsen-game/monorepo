@@ -3,12 +3,11 @@ package com.kjeldsen.player.persistence.adapters.mongo;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerStatus;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.repositories.FindPlayersQuery;
+import com.kjeldsen.player.domain.repositories.queries.FindPlayersQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.queries.FilterMarketPlayersQuery;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
 import lombok.RequiredArgsConstructor;
-import org.bson.types.Decimal128;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +16,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +44,6 @@ public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
 
     @Override
     public List<Player> find(FindPlayersQuery query) {
-//        System.out.println(query.getTeamId().value());
         Example<Player> playerDocumentExample = Example.of(Player.builder()
             .teamId(query.getTeamId() != null ? query.getTeamId() : null)
             .position(query.getPosition() != null ? query.getPosition() : null)
@@ -72,7 +69,6 @@ public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
 
         query.addCriteria(Criteria.where("status").is(PlayerStatus.FOR_SALE));
         if (inputQuery.getPosition() != null) {
-            System.out.println("position: " + inputQuery.getPosition());
             query.addCriteria(Criteria.where("position").is(inputQuery.getPosition()));
         }
 

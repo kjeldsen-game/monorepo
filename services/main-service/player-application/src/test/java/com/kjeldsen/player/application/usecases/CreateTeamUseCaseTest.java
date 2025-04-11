@@ -29,9 +29,8 @@ class CreateTeamUseCaseTest {
     private final GeneratePlayersUseCase mockedGeneratePlayersUseCase = Mockito.mock(GeneratePlayersUseCase.class);
     private final PlayerWriteRepository playerWriteRepository = Mockito.mock(PlayerWriteRepository.class);
     private final TeamCreationEventPublisher mockedTeamCreationEventPublisher = Mockito.mock(TeamCreationEventPublisher.class);
-    private final TeamReadRepository teamReadRepository = Mockito.mock(TeamReadRepository.class);
     private final CreateTeamUseCase createTeamUseCase = new CreateTeamUseCase(mockedGeneratePlayersUseCase, mockedTeamWriteRepository,
-        playerWriteRepository, mockedTeamCreationEventPublisher, teamReadRepository);
+        playerWriteRepository, mockedTeamCreationEventPublisher);
 
     @Test
     @DisplayName("should create new team with generated players")

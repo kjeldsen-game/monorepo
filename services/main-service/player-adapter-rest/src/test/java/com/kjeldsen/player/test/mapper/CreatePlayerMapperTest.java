@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CreatePlayerMapperTest {
+class CreatePlayerMapperTest {
 
     @Test
     void should_find_input_and_return_expected_value_between_createPlayerRequest_and_createPlayerUseCase() {

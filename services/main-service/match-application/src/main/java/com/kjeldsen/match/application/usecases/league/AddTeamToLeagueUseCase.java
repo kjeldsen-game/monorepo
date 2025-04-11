@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
@@ -25,11 +26,11 @@ public class AddTeamToLeagueUseCase {
 
     private final LeagueWriteRepository leagueWriteRepository;
     private final LeagueReadRepository leagueReadRepository;
-    // TODO add publisher here and listener in the Team
     private final TeamClientMatch teamClient;
     private final LeagueEventPublisher leagueEventPublisher;
 
     public void add(String teamId, BigDecimal teamValue) {
+        Random random = new Random();
         log.info("AddTeamToLeagueUseCase for teamId={} with teamValue={}", teamId, teamValue );
         // TODO add validation to check if the team don't have already assigned league
         TeamDTO team = teamClient.getTeam(teamId, SecurityUtils.getCurrentUserToken());
@@ -46,7 +47,7 @@ public class AddTeamToLeagueUseCase {
             .startedAt(Instant.now())
             .teams(new HashMap<>())
             .tier(1)
-            .build() : filtered.get((int) (Math.random() * leagues.size()));
+            .build() : filtered.get(Math.abs(new Random().nextInt()) % leagues.size());
 
         League.LeagueStats stats = new League.LeagueStats();
         stats.setName(team.getName());

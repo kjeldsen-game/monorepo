@@ -1,11 +1,9 @@
 package com.kjeldsen.integration.match;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.kjeldsen.integration.AbstractIT;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.persistence.mongo.repositories.MatchMongoRepository;
@@ -23,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class MatchApiIT extends AbstractIT {
+class MatchApiIT extends AbstractIT {
 
     @Autowired
     private PlayerReadRepository playerReadRepository;
@@ -71,8 +68,7 @@ public class MatchApiIT extends AbstractIT {
 
             List<MatchResponse> matches = objectMapper.readValue(jsonResponse, new TypeReference<>() {});
 
-            assertThat(matches).isNotEmpty();
-            assertThat(matches.size()).isEqualTo(2);
+            assertThat(matches).isNotEmpty().hasSize(2);
             assertThat(matches.get(0).getId()).isEqualTo("matchId");
         }
 
@@ -118,8 +114,7 @@ public class MatchApiIT extends AbstractIT {
                 .andReturn();
 
             List<Match> matches = matchMongoRepository.findAll();
-            assertThat(matches).isNotEmpty();
-            assertThat(matches.size()).isEqualTo(1);
+            assertThat(matches).isNotEmpty().hasSize(1);
             assertThat(matches.get(0).getHome().getId()).isEqualTo("homeId");
         }
     }

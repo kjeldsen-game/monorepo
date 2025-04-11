@@ -3,14 +3,12 @@ package com.kjeldsen.match.domain.state;
 import com.kjeldsen.match.domain.entities.Action;
 import com.kjeldsen.match.domain.entities.Play;
 import com.kjeldsen.match.domain.entities.Match;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 
 import com.kjeldsen.match.domain.recorder.GameProgressRecord;
 import com.kjeldsen.match.domain.recorder.GameProgressRecorder;
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
 
 @Value
 @Builder
@@ -44,6 +42,27 @@ public class GameState {
 
     GameProgressRecorder recorder;
     ChainActionSequence chainActionSequence;
+    Map<ChainActionSequence, ChainAction> chainActions;
+
+    @Getter
+    @Setter
+    @Builder
+    @ToString
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ChainAction {
+        Turn turn = null;
+        Boolean active = false;
+        Integer bonus = 0;
+    }
+
+    public void activateChainAction(ChainActionSequence chainActionSequence, ChainAction chainAction) {
+        this.chainActions.put(chainActionSequence, chainAction);
+    }
+
+    public void cleanChainAction(ChainActionSequence chainActionSequence) {
+        this.chainActions.put(chainActionSequence, new ChainAction());
+    }
 
     // The initial game state simply selects a random team to start the game. Everything else is set
     // to a default start value.
@@ -59,6 +78,7 @@ public class GameState {
             .ballState(BallState.init())
             .plays(List.of())
             .recorder(recorder)
+            .chainActions(new HashMap<>())
             .chainActionSequence(ChainActionSequence.NONE)
             .build();
 

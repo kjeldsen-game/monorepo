@@ -1,11 +1,7 @@
 package com.kjeldsen.player.application.usecases.fanbase;
 
-import com.kjeldsen.domain.EventId;
+import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.events.FansEvent;
-import com.kjeldsen.player.domain.provider.InstantProvider;
-import com.kjeldsen.player.domain.repositories.FansEventWriteRepository;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,31 +17,21 @@ public class FansManagementUsecase {
 
     private static final Integer LAST_SEASON_POSITION = 12;
     private static final Integer FANS_PER_RANK = 100;
-    private final TeamReadRepository teamReadRepository;
+    private final GetTeamUseCase getTeamUseCase;
     private final TeamWriteRepository teamWriteRepository;
-    private final FansEventWriteRepository fansEventWriteRepository;
 
 
     public void update(Team.TeamId teamId, Team.Fans.ImpactType impactType) {
         log.info("FansManagementUsecase team {} impact type {}", teamId, impactType);
 
-        Team team =  teamReadRepository.findById(teamId)
-                .orElseThrow(() -> new RuntimeException("Team not found"));
+        Team team =  getTeamUseCase.get(teamId);
 
         Integer newFans = impactType.equals(Team.Fans.ImpactType.SEASON_END) ?
                 getSeasonEndFans(team.getLeagueStats()) : impactType.getFansImpact();
 
-        FansEvent fansEvent = FansEvent.builder()
-            .id(EventId.generate())
-            .occurredAt(InstantProvider.now())
-            .teamId(teamId)
-            .fans(newFans)
-            .fansImpactType(impactType)
-            .build();
 
-        fansEventWriteRepository.save(fansEvent);
-        team.getFans().updateFans(fansEvent);
-        //team.getFans().updateTotalFans(fansEvent);
+        team.getFans().updateFans(newFans);
+//        team.getFans().updateTotalFans(fansEvent);
         teamWriteRepository.save(team);
     }
 

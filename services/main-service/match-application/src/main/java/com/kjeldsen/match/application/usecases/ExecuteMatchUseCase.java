@@ -11,6 +11,7 @@ import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.MatchReport;
 import com.kjeldsen.match.domain.entities.Player;
 import com.kjeldsen.match.domain.entities.TeamRole;
+import com.kjeldsen.match.domain.exceptions.InvalidMatchStatusException;
 import com.kjeldsen.match.domain.modifers.HorizontalPressure;
 import com.kjeldsen.match.domain.modifers.Tactic;
 import com.kjeldsen.match.domain.modifers.VerticalPressure;
@@ -49,7 +50,6 @@ public class ExecuteMatchUseCase {
 
         if (m.getStatus() == Match.Status.SCHEDULED || m.getStatus() == Match.Status.ACCEPTED) {
 
-
             if (!m.getHome().getSpecificLineup()) {
                 buildTeam(TeamRole.HOME, m.getHome(), m.getHome().getId());
             }
@@ -84,13 +84,12 @@ public class ExecuteMatchUseCase {
                 matchEventPublisher.publishMatchEvent(matchEvent);
             }
         } else {
-            throw new RuntimeException("Invalid match status");
+            throw new InvalidMatchStatusException();
         }
     }
 
     private void buildTeam(TeamRole role, com.kjeldsen.match.domain.entities.Team team, String teamId) {
         TeamDTO teamDTO = teamClient.getTeam(teamId, SecurityUtils.getCurrentUserToken());
-        System.out.println(teamDTO);
         Map<PlayerStatus, List<Player>> players = getDefaultLineup(role, teamDTO.getPlayers());
         team.setBench(players.get(PlayerStatus.BENCH));
         team.setPlayers(players.get(PlayerStatus.ACTIVE));

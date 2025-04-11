@@ -21,7 +21,7 @@ class GetMatchTeamUseCaseTest {
             .home(Team.builder().id("home").build())
             .away(Team.builder().id("away").build()).build());
 
-        assertEquals("Team not found", assertThrows(RuntimeException.class, () -> {
+        assertEquals("Team not found!", assertThrows(RuntimeException.class, () -> {
             getMatchTeamUseCase.getMatchAndTeam("matchId", "teamId");
         }).getMessage());
 

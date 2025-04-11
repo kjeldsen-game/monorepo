@@ -5,7 +5,6 @@ import com.kjeldsen.player.application.usecases.economy.CreateTransactionUseCase
 import com.kjeldsen.player.application.usecases.economy.MerchandiseIncomeUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,16 +12,14 @@ import org.mockito.Mockito;
 
 import java.math.BigDecimal;
 import java.util.Map;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class MerchandiseIncomeUseCaseTest {
 
-    private final TeamReadRepository mockedTeamReadRepository = Mockito.mock(TeamReadRepository.class);
+    private final GetTeamUseCase mockedGetTeamUseCase = Mockito.mock(GetTeamUseCase.class);
     private final CreateTransactionUseCase mockedCreateTransactionUseCase = Mockito.mock(CreateTransactionUseCase.class);
-    private final MerchandiseIncomeUseCase merchandiseIncomeUseCase = new MerchandiseIncomeUseCase(mockedTeamReadRepository,
+    private final MerchandiseIncomeUseCase merchandiseIncomeUseCase = new MerchandiseIncomeUseCase(mockedGetTeamUseCase,
             mockedCreateTransactionUseCase);
 
     private static Team.TeamId mockedTeamId;
@@ -32,17 +29,6 @@ class MerchandiseIncomeUseCaseTest {
         mockedTeamId = TestData.generateTestTeamId();
     }
 
-    @Test
-    @DisplayName("Should throw exception when team is null")
-    public void should_throw_exception_when_team_is_null() {
-        when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.empty());
-
-        assertEquals("Team not found", assertThrows(RuntimeException.class, () ->
-                merchandiseIncomeUseCase.income(mockedTeamId, 5000 )).getMessage());
-
-        verify(mockedTeamReadRepository).findById(mockedTeamId);
-        verifyNoMoreInteractions(mockedTeamReadRepository, mockedCreateTransactionUseCase);
-    }
 
     @Test
     @DisplayName("Should pass right values to Transaction UseCase")
@@ -53,7 +39,7 @@ class MerchandiseIncomeUseCaseTest {
                 Team.Economy.PricingType.MERCHANDISE, 5
         ));
 
-        when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
+        when(mockedGetTeamUseCase.get(mockedTeamId)).thenReturn(mockedTeam);
 
         merchandiseIncomeUseCase.income(mockedTeamId, 5000);
 
@@ -65,7 +51,7 @@ class MerchandiseIncomeUseCaseTest {
                 eq(Transaction.TransactionType.MERCHANDISE)
         );
 
-        verify(mockedTeamReadRepository).findById(mockedTeamId);
-        verifyNoMoreInteractions(mockedTeamReadRepository, mockedCreateTransactionUseCase);
+        verify(mockedGetTeamUseCase).get(mockedTeamId);
+        verifyNoMoreInteractions(mockedGetTeamUseCase, mockedCreateTransactionUseCase);
     }
 }

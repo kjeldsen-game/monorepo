@@ -27,17 +27,14 @@ public class TeamClientImplMatch implements TeamClientMatch {
                 .onStatus(HttpStatusCode::is5xxServerError, response ->
                     response.bodyToMono(String.class)
                         .flatMap(errorBody -> {
-                            System.err.println("Server returned 500: " + errorBody);
+                            log.error(errorBody);
                             return Mono.error(new RuntimeException("Server error: " + errorBody));
                         })
                 )
                 .bodyToMono(TeamDTO.class)
                 .block();
-        } catch (WebClientResponseException e) {
-            System.err.println("WebClient Error: " + e.getStatusCode() + " " + e.getResponseBodyAsString());
-            throw e;
         } catch (Exception e) {
-            System.err.println("Unexpected Error: " + e.getMessage());
+            log.error(e.getMessage());
             throw e;
         }
     }

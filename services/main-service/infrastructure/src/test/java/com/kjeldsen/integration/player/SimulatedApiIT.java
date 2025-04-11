@@ -1,6 +1,5 @@
 package com.kjeldsen.integration.player;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.kjeldsen.domain.EventId;
 import com.kjeldsen.integration.AbstractIT;
 import com.kjeldsen.player.domain.Player;
@@ -19,7 +18,6 @@ import com.kjeldsen.player.persistence.mongo.repositories.PlayerTrainingSchedule
 import org.junit.jupiter.api.*;
 import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testcontainers.shaded.org.checkerframework.checker.units.qual.A;
 
 import java.util.List;
 
@@ -28,7 +26,7 @@ import static org.mockito.Mockito.mockStatic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class SimulatedApiIT extends AbstractIT {
+class SimulatedApiIT extends AbstractIT {
     @Autowired
     private PlayerMongoRepository playerMongoRepository;
     @Autowired
@@ -53,7 +51,7 @@ public class SimulatedApiIT extends AbstractIT {
 
         @Test
         @DisplayName("Should process the scheduled trainings and return 200")
-        public void should_return_200_when_training_is_scheduled() throws Exception {
+        void should_return_200_when_training_is_scheduled() throws Exception {
             Player examplePlayer = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
                 PlayerCategory.JUNIOR, 200);
             playerMongoRepository.save(examplePlayer);
@@ -71,7 +69,7 @@ public class SimulatedApiIT extends AbstractIT {
 
         @Test
         @DisplayName("Should process player declines and return 200")
-        public void should_return_200_when_decline_is_executed() throws Exception {
+        void should_return_200_when_decline_is_executed() throws Exception {
             Player examplePlayer = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
                 PlayerCategory.JUNIOR, 200);
             examplePlayer.getAge().setYears(28);
@@ -87,7 +85,7 @@ public class SimulatedApiIT extends AbstractIT {
 
         @Test
         @DisplayName("Should process player potential rises and return 200")
-        public void should_return_200_when_process_potential_rises() throws Exception {
+        void should_return_200_when_process_potential_rises() throws Exception {
             Player examplePlayer1 = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
                 PlayerCategory.JUNIOR, 200);
             examplePlayer1.getAge().setYears(28);

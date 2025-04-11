@@ -13,10 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,7 +24,6 @@ public class CreateTeamUseCase {
     private final TeamWriteRepository teamWriteRepository;
     private final PlayerWriteRepository playerWriteRepository;
     private final TeamCreationEventPublisher teamCreationEventPublisher;
-    private final TeamReadRepository teamReadRepository;
 
     public void create(String teamName, Integer numberOfPlayers, String userId) {
         log.info("CreateTeamUseCase name {} with {} players for user {}", teamName, numberOfPlayers, userId);
@@ -52,7 +48,7 @@ public class CreateTeamUseCase {
                 .tactic(TeamModifiers.getRandomValueTeamModifier(TeamModifiers.Tactic.class)).build())
             .economy(Team.Economy.builder()
                 .balance(BigDecimal.valueOf(1_000_000))
-                .prices( new HashMap<>(Map.of(
+                .prices( new EnumMap<>(Map.of(
                     Team.Economy.PricingType.SEASON_TICKET, 14,
                     Team.Economy.PricingType.DAY_TICKET, 14,
                     Team.Economy.PricingType.MERCHANDISE, 25,
@@ -68,7 +64,7 @@ public class CreateTeamUseCase {
             .buildings(Team.Buildings.builder()
                 .stadium(new Team.Buildings.Stadium())
                 .freeSlots(25)
-                .facilities(new HashMap<>(Map.of(
+                .facilities(new EnumMap<>(Map.of(
                     Team.Buildings.Facility.TRAINING_CENTER, new Team.Buildings.FacilityData(),
                     Team.Buildings.Facility.YOUTH_PITCH, new Team.Buildings.FacilityData(),
                     Team.Buildings.Facility.SPORTS_DOCTORS, new Team.Buildings.FacilityData(),
@@ -80,14 +76,9 @@ public class CreateTeamUseCase {
             1, Team.LeagueStats.builder().tablePosition(12).points(0).build()
             )))
             .build();
-        // TODO apart from saving the team aggregate/projection, we need to store a created_team_event. Then Team domain object should have a
-        //  method like
-        //  create(created_team_event) and based on the event it populates itself. Then you save it with the repo
-        // TODO notification for the user to know that his team has been created
         teamWriteRepository.save(team);
-        List<Team> s = teamReadRepository.findAll();
 
-        log.info("CreateTeamUseCase size{}", s.toString());
+        // Generate team players
         players.forEach(playerWriteRepository::save);
         teamCreationEventPublisher.publish(TeamCreationEvent.builder()
             .teamId(team.getId().value()).teamValue(players.stream()

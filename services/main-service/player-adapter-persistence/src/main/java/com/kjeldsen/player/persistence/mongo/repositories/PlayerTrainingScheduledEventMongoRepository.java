@@ -2,7 +2,6 @@ package com.kjeldsen.player.persistence.mongo.repositories;
 
 import com.kjeldsen.domain.EventId;
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface PlayerTrainingScheduledEventMongoRepository extends MongoRepository<PlayerTrainingScheduledEvent, EventId> {

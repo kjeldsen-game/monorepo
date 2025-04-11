@@ -4,6 +4,8 @@ import com.kjeldsen.auth.domain.Role;
 import com.kjeldsen.auth.domain.User;
 import com.kjeldsen.auth.domain.clients.TeamClientAuth;
 import com.kjeldsen.auth.domain.clients.models.TeamDTO;
+import com.kjeldsen.auth.domain.exceptions.TeamException;
+import com.kjeldsen.auth.domain.exceptions.UsernameException;
 import com.kjeldsen.auth.domain.publishers.UserRegisterPublisher;
 import com.kjeldsen.auth.domain.repositories.UserReadRepository;
 import com.kjeldsen.auth.domain.repositories.UserWriteRepository;
@@ -35,29 +37,29 @@ class RegisterUserUseCaseTest {
 
     @Test
     @DisplayName("Should throw error is email is already Taken")
-    public void should_throw_error_is_email_already_taken() {
+    void should_throw_error_is_email_already_taken() {
         when(userReadRepository.findByEmail("email")).thenReturn(Optional.of(new User()));
 
-        assertEquals("Username taken", assertThrows(RuntimeException.class, () -> {
+        assertEquals("Username taken!", assertThrows(UsernameException.class, () -> {
             registerUserUseCase.register("email", "password", "team");
         }).getMessage());
     }
 
     @Test
     @DisplayName("Should throw error is team name is already Taken")
-    public void should_throw_error_is_team_name_already_taken() {
+    void should_throw_error_is_team_name_already_taken() {
         String teamName = "team";
         when(userReadRepository.findByEmail("email")).thenReturn(Optional.empty());
         when(mockedTeamClientAuth.getTeam(teamName, null))
             .thenReturn(List.of(TeamDTO.builder().name(teamName).build()));
-        assertEquals("Team name taken", assertThrows(RuntimeException.class, () -> {
+        assertEquals("Team name taken!", assertThrows(TeamException.class, () -> {
             registerUserUseCase.register("email", "password", teamName);
         }).getMessage());
     }
 
     @Test
     @DisplayName("Should register user")
-    public void should_register_user() {
+    void should_register_user() {
         when(userReadRepository.findByEmail("email")).thenReturn(Optional.empty());
         when(mockedTeamClientAuth.getTeam("team", null))
             .thenReturn(Collections.emptyList());

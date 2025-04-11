@@ -58,16 +58,8 @@ public class PointsGenerator {
         }
     }
 
-    public static int generatePointsBloom(float probability, int points) {
-        return (int) ((probability * points) / 100);
-    }
-
-    public static int generateDecreasePoints(float probability, int points) {
-        return (int) ((probability * points) / 100);
-    }
-
     public static int generatePotentialPoints(int actualPoints) {
-        Integer result = (int) (increaseMaxPercentage * actualPoints);
+        int result = (int) (increaseMaxPercentage * actualPoints);
         return Math.min(MAX_SKILL_VALUE, result + actualPoints);
     }
 }

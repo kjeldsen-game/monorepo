@@ -2,8 +2,6 @@ package com.kjeldsen.match.rest.mapper;
 
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.MatchReport;
-import com.kjeldsen.match.domain.entities.duel.Duel;
-import com.kjeldsen.match.rest.model.DuelResponse;
 import com.kjeldsen.match.rest.model.MatchReportResponse;
 import com.kjeldsen.match.rest.model.MatchResponse;
 import org.mapstruct.Mapper;

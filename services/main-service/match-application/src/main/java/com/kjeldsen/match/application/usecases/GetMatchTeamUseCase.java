@@ -3,9 +3,8 @@ package com.kjeldsen.match.application.usecases;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.Team;
 import com.kjeldsen.match.domain.entities.TeamRole;
-import lombok.Getter;
+import com.kjeldsen.match.domain.exceptions.TeamNotFoundException;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +17,6 @@ public class GetMatchTeamUseCase {
 
     public MatchAndTeam getMatchAndTeam(String matchId, String teamId) {
         // log.info("GetMatchTeamUseCase to get MatchAndTeam for teamId={} matchId={}",
-        // teamId, matchId);
         Match match = getMatchUseCase.get(matchId);
 
         if (teamId != null) {
@@ -28,7 +26,7 @@ public class GetMatchTeamUseCase {
                             ? match.getAway()
                             : null;
             if (team == null) {
-                throw new RuntimeException("Team not found");
+                throw new TeamNotFoundException();
             }
 
             TeamRole role = match.getHome().getId().equals(teamId)

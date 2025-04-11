@@ -30,7 +30,7 @@ class MatchAttendanceIncomeUseCaseTest {
     @Test
     @DisplayName("Should throw exception when attendance is negative")
     public void should_throw_exception_when_attendance_is_negative() {
-        assertEquals("Attendance count cannot be negative", assertThrows(
+        assertEquals("Attendance count cannot be negative!", assertThrows(
             IllegalArgumentException.class, () -> {
                 matchAttendanceIncomeUsecase.income(mockedTeamId, -1);}).getMessage());
     }

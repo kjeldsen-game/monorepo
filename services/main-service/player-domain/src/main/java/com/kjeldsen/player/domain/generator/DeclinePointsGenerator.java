@@ -19,7 +19,6 @@ public class DeclinePointsGenerator {
         }
     }
 
-
     public static double varianceIncreaseBasedOnYear(int year) {
         return switch (year) {
             case 1 -> 0.97;

@@ -25,10 +25,8 @@ public class AuctionReadRepositoryMongoAdapter implements AuctionReadRepository 
     @Override
     public List<Auction> findAllByQuery(FindAuctionsQuery inputQuery) {
         Query query = new Query();
-        if (inputQuery.getPlayerId() != null) {
-            if (inputQuery.getPlayerId().value() != null) {
-                query.addCriteria(Criteria.where("playerId").is(inputQuery.getPlayerId()));
-            }
+        if (inputQuery.getPlayerId() != null && inputQuery.getPlayerId().value() != null) {
+            query.addCriteria(Criteria.where("playerId").is(inputQuery.getPlayerId()));
         }
         if (inputQuery.getMinAverageBid() != null || inputQuery.getMaxAverageBid() != null) {
             Criteria averageBidCriteria = Criteria.where("averageBid");
@@ -45,7 +43,6 @@ public class AuctionReadRepositoryMongoAdapter implements AuctionReadRepository 
         if (inputQuery.getAuctionStatus() != null) {
             query.addCriteria(Criteria.where("status").is(inputQuery.getAuctionStatus()));
         }
-        System.out.println(query);
         return mongoTemplate.find(query, Auction.class);
     }
 

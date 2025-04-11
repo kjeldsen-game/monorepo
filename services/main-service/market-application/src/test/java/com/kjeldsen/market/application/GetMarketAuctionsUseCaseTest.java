@@ -27,7 +27,7 @@ class GetMarketAuctionsUseCaseTest {
 
     @Test
     @DisplayName("Should return auction player map")
-    public void should_return_auction_player_map() {
+    void should_return_auction_player_map() {
         Player mockedPlayer = Player.builder().id(Player.PlayerId.of("playerId")).build();
         Auction mockedAuction = Auction.builder()
             .status(Auction.AuctionStatus.ACTIVE).playerId(Player.PlayerId.of("playerId"))
@@ -39,13 +39,12 @@ class GetMarketAuctionsUseCaseTest {
             10.0, 5.0, 40, 5, null, null, null, null);
 
         assertEquals(1, result.size());
-        assertThat(result).containsKey(mockedAuction);
-        assertThat(result).containsValue(mockedPlayer);
+        assertThat(result).containsKey(mockedAuction).containsValue(mockedPlayer);
     }
 
     @Test
     @DisplayName("Should return empty auction player map")
-    public void should_return_empty_auction_player_map() {
+    void should_return_empty_auction_player_map() {
         Auction mockedAuction = Auction.builder()
             .status(Auction.AuctionStatus.ACTIVE).playerId(Player.PlayerId.of("playerId"))
             .averageBid(BigDecimal.ONE).build();

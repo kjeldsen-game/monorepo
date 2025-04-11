@@ -31,7 +31,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.when;
 
 @Disabled
-public class MatchDelegateTest {
+class MatchDelegateTest {
 
     private final PlayerReadRepository playerReadRepository = Mockito.mock(PlayerReadRepository.class);
     private final MatchWriteRepository matchRepository = Mockito.mock(MatchWriteRepository.class);
@@ -75,7 +75,7 @@ public class MatchDelegateTest {
     }
 
     @Test
-    public void takePlayerOutOfBench() {
+    void takePlayerOutOfBench() {
         Player p = match.getHome().getBench().stream().findFirst().get();
         EditPlayerRequest req = new EditPlayerRequest();
         req.setId(p.getId());
@@ -85,7 +85,7 @@ public class MatchDelegateTest {
     }
 
     @Test
-    public void sendActivePlayerToBench() {
+    void sendActivePlayerToBench() {
         Player p = match.getHome().getPlayers().stream().findFirst().get();
         EditPlayerRequest req = new EditPlayerRequest();
         req.setId(p.getId());
@@ -95,7 +95,7 @@ public class MatchDelegateTest {
     }
 
     @Test
-    public void changePlayerPositionToCenterMidfielder() {
+    void changePlayerPositionToCenterMidfielder() {
         Player player = match.getHome().getPlayers().stream()
             .filter(
                 p -> !p.getPosition().equals(com.kjeldsen.player.domain.PlayerPosition.CENTRE_MIDFIELDER)) // Filtra los que no son CENTRE_MIDFIELDER
@@ -110,7 +110,7 @@ public class MatchDelegateTest {
     }
 
     @Test
-    public void addActivePlayer() {
+    void addActivePlayer() {
         Player p = match.getHome().getPlayers().stream().findFirst().get();
 
         EditPlayerRequest req = new EditPlayerRequest();
@@ -124,7 +124,7 @@ public class MatchDelegateTest {
     }
 
     @Test
-    public void removeActivePlayer() {
+    void removeActivePlayer() {
         Player p = match.getHome().getPlayers().stream().findFirst().get();
         matchDelegate.deletePlayer(match.getId(), match.getHome().getId(), p.getId());
         Assertions.assertEquals(10, match.getHome().getPlayers().size());
@@ -132,7 +132,7 @@ public class MatchDelegateTest {
 
     @Disabled
     @Test
-    public void checkValidationFailOnActivePlayerRemoval() throws IOException {
+    void checkValidationFailOnActivePlayerRemoval() throws IOException {
         Player p = match.getHome().getPlayers().stream().findFirst().get();
 
         ObjectMapper objectMapper = new ObjectMapper();

@@ -15,7 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class TeamClientIT extends AbstractIT {
+class TeamClientIT extends AbstractIT {
 
     @Autowired
     private TeamClientMatch teamClientMatch;

@@ -1,7 +1,6 @@
 package com.kjeldsen.auth.persistence.adapters.mongo;
 
 import com.kjeldsen.auth.domain.User;
-import com.kjeldsen.auth.domain.repositories.UserReadRepository;
 import com.kjeldsen.auth.domain.repositories.UserWriteRepository;
 import com.kjeldsen.auth.persistence.mongo.repositories.UserMongoRepository;
 import lombok.RequiredArgsConstructor;

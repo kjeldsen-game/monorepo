@@ -5,8 +5,6 @@ import com.kjeldsen.player.domain.TeamModifiers;
 import com.kjeldsen.player.rest.model.FanTier;
 import com.kjeldsen.player.rest.model.TeamResponse;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 import java.util.Collections;

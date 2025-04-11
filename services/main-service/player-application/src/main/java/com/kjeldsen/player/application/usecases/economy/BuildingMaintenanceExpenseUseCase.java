@@ -1,8 +1,8 @@
 package com.kjeldsen.player.application.usecases.economy;
 
+import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,14 +14,13 @@ import java.math.BigDecimal;
 @Slf4j
 public class BuildingMaintenanceExpenseUseCase {
 
-    private final TeamReadRepository teamReadRepository;
     private final CreateTransactionUseCase createTransactionUseCase;
+    private final GetTeamUseCase getTeamUseCase;
 
     public void expense(Team.TeamId teamId) {
         log.info("BuildingMaintenanceExpenseUseCase for team {}", teamId);
 
-        Team team = teamReadRepository.findById(teamId)
-            .orElseThrow(() -> new RuntimeException("Team not found"));
+        Team team = getTeamUseCase.get(teamId);
 
         // TODO To be discussed if there should be Transaction per Facility or it's okay that all happened in one
         BigDecimal maintenanceCost = team.getBuildings().getFacilities().values().stream().map(

@@ -24,8 +24,8 @@ public class Assistance {
 
     public static final int MAX_ASSISTANCE = 25;
     public static final int MIN_ASSISTANCE = 0;
-    public static double BALL_CONTROL_FACTOR = 0.9;
-    public static double TACKLING_FACTOR = 0.9;
+    private static final double BALL_CONTROL_FACTOR = 0.9;
+    private static final double TACKLING_FACTOR = 0.9;
 
     // Calculates the assistance each player on the team provides to the player in the duel
     public static Map<String, Integer> teamAssistance(

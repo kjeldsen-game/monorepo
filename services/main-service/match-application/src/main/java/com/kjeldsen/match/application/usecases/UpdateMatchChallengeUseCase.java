@@ -1,6 +1,7 @@
 package com.kjeldsen.match.application.usecases;
 
 import com.kjeldsen.match.domain.entities.Match;
+import com.kjeldsen.match.domain.exceptions.InvalidMatchStatusException;
 import com.kjeldsen.match.domain.repositories.MatchReadRepository;
 import com.kjeldsen.match.domain.repositories.MatchWriteRepository;
 import lombok.RequiredArgsConstructor;

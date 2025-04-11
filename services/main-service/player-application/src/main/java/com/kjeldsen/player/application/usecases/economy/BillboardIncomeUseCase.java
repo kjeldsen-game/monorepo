@@ -1,8 +1,9 @@
 package com.kjeldsen.player.application.usecases.economy;
 
+import com.kjeldsen.player.application.usecases.GetTeamUseCase;
+import com.kjeldsen.player.domain.exceptions.BillboardDealNotFoundException;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Transaction;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -12,17 +13,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class BillboardIncomeUseCase {
 
-    private final TeamReadRepository teamReadRepository;
+    private final GetTeamUseCase getTeamUseCase;
     private final CreateTransactionUseCase createTransactionUseCase;
 
     public void pay(Team.TeamId teamId) {
         log.info("BillboardIncomeUseCase for team {}", teamId);
 
-        Team team = teamReadRepository.findById(teamId)
-            .orElseThrow(() -> new RuntimeException("Team not found"));
+        Team team = getTeamUseCase.get(teamId);
 
         if (team.getEconomy().getBillboardDeal() == null) {
-            throw new RuntimeException("BillboardDeal not found");
+            throw new BillboardDealNotFoundException();
         }
 
         createTransactionUseCase.create(teamId, team.getEconomy().getBillboardDeal().getOffer(),

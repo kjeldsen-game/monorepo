@@ -5,14 +5,12 @@ import com.kjeldsen.player.domain.Transaction;
 import com.kjeldsen.player.domain.repositories.TransactionReadRepository;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.data.MapEntry;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 // TODO add unit testing
@@ -42,7 +40,6 @@ public class GetTeamTransactionsUseCase extends GetTransactionsUseCaseAbstract {
 
         Instant now = Instant.now();
         Instant fourDaysAgo = now.minus(KJELDSEN_WEEK_LENGTH, ChronoUnit.DAYS);
-        Instant eightDaysAgo = now.minus(KJELDSEN_WEEK_LENGTH * 2, ChronoUnit.DAYS);
         Instant ninetyDaysAgo = now.minus(KJELDSEN_SEASON_LENGTH, ChronoUnit.DAYS);
 
         for (Transaction.TransactionType type : Transaction.TransactionType.values()) {

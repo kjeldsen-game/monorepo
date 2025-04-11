@@ -87,9 +87,8 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceIT extends AbstractMo
                 playerPositionTendency -> playerPositionTendency.getPosition().equals(PlayerPosition.FORWARD)).findFirst().orElseThrow();
             assertThat(playerPositionTendency1.getTendencies().get(PlayerSkill.SCORING)).usingRecursiveComparison().isEqualTo(
                 new PlayerSkills(1, 0, PlayerSkillRelevance.CORE));
-            assertThat(PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES.getTendencies().get(PlayerSkill.SCORING)).isNotEqualTo(
-                playerPositionTendency1.getTendencies().get(PlayerSkill.SCORING));
-
+            assertThat(playerPositionTendency1.getTendencies())
+                .doesNotContainEntry(PlayerSkill.SCORING, playerPositionTendency1.getTendencies().get(PlayerSkill.SCORING));
             PlayerPositionTendency.DEFAULT_TENDENCIES.stream()
                 .filter(playerPositionTendency -> !playerPositionTendency.getPosition().equals(PlayerPosition.FORWARD))
                 .forEach(playerPositionTendency -> assertThat(actual).contains(playerPositionTendency));

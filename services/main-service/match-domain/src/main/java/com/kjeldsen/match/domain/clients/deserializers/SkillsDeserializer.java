@@ -14,7 +14,7 @@ public class SkillsDeserializer extends JsonDeserializer<PlayerSkills> {
 
     @Override
     public PlayerSkills deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-        throws IOException, JsonProcessingException {
+        throws IOException {
         JsonNode rootNode = jsonParser.getCodec().readTree(jsonParser);
         JsonNode node = rootNode.get("PlayerSkills");
 

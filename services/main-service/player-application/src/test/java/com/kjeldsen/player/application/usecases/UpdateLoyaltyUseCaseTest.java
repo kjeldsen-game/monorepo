@@ -3,7 +3,6 @@ package com.kjeldsen.player.application.usecases;
 import com.kjeldsen.player.application.testdata.TestData;
 import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +11,6 @@ import org.mockito.Mockito;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -20,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UpdateLoyaltyUseCaseTest {
 
-    private final TeamReadRepository mockedTeamReadRepository = Mockito.mock(TeamReadRepository.class);
+    private final GetTeamUseCase mockedGetTeamUseCase = Mockito.mock(GetTeamUseCase.class);
     private final TeamWriteRepository mockedTeamWriteRepository = Mockito.mock(TeamWriteRepository.class);
-    private final UpdateLoyaltyUseCase updateLoyaltyUseCase = new UpdateLoyaltyUseCase(mockedTeamReadRepository,
+    private final UpdateLoyaltyUseCase updateLoyaltyUseCase = new UpdateLoyaltyUseCase(mockedGetTeamUseCase,
             mockedTeamWriteRepository);
 
     private static Team.TeamId mockedTeamId;
@@ -32,25 +30,13 @@ class UpdateLoyaltyUseCaseTest {
         mockedTeamId = TestData.generateTestTeamId();
     }
 
-
-    @Test
-    @DisplayName("Should throw exception when team is null")
-    public void should_throw_exception_when_team_is_null() {
-        when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.empty());
-
-        assertEquals("Team not found", assertThrows(RuntimeException.class, () ->
-                updateLoyaltyUseCase.updateLoyaltySeason(mockedTeamId)).getMessage());
-        verify(mockedTeamReadRepository).findById(mockedTeamId);
-        verifyNoMoreInteractions(mockedTeamReadRepository);
-    }
-
     @Test
     @DisplayName("Should reset all loyalty levels to 50")
     public void should_reset_all_loyalty_levels_to_50() {
         Team mockedTeam = TestData.generateTestTeam(mockedTeamId);
         mockedTeam.getFans().updateAllLoyaltyTiers(60.0);
 
-        when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
+        when(mockedGetTeamUseCase.get(mockedTeamId)).thenReturn(mockedTeam);
 
         updateLoyaltyUseCase.resetLoyalty(mockedTeamId);
         Map<Integer, Team.Fans.FanTier> testDataMap = mockedTeam.getFans().getFanTiers();
@@ -70,7 +56,7 @@ class UpdateLoyaltyUseCaseTest {
             put(5, Team.Fans.FanTier.builder().loyalty(50.0).totalFans(100).build());
         }});
 
-        when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
+        when(mockedGetTeamUseCase.get(mockedTeamId)).thenReturn(mockedTeam);
 
         updateLoyaltyUseCase.updateLoyaltyMatch(mockedTeamId, 5, Team.Fans.LoyaltyImpactType.MATCH_WIN);
         // Expected results WIN --> 6.0, 8.0, 9.0, 10.0, 12.0
@@ -92,7 +78,7 @@ class UpdateLoyaltyUseCaseTest {
             put(2, Team.Fans.FanTier.builder().loyalty(50.0).totalFans(100).build());
         }});
 
-        when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
+        when(mockedGetTeamUseCase.get(mockedTeamId)).thenReturn(mockedTeam);
 
         updateLoyaltyUseCase.updateLoyaltyMatch(mockedTeamId, 5, Team.Fans.LoyaltyImpactType.MATCH_WIN);
         // Total + per Tier --> 9.0 , 12.5
@@ -115,7 +101,7 @@ class UpdateLoyaltyUseCaseTest {
             put(5, Team.Fans.FanTier.builder().loyalty(50.0).totalFans(100).build());
         }});
 
-        when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
+        when(mockedGetTeamUseCase.get(mockedTeamId)).thenReturn(mockedTeam);
 
         updateLoyaltyUseCase.updateLoyaltySeason(mockedTeamId);
         // Expected results +10 for 5th place
@@ -136,7 +122,7 @@ class UpdateLoyaltyUseCaseTest {
             put(2, Team.Fans.FanTier.builder().loyalty(50.0).totalFans(100).build());
         }});
 
-        when(mockedTeamReadRepository.findById(mockedTeamId)).thenReturn(Optional.of(mockedTeam));
+        when(mockedGetTeamUseCase.get(mockedTeamId)).thenReturn(mockedTeam);
 
         updateLoyaltyUseCase.updateLoyaltySeason(mockedTeamId);
         // Expected results +10 for 5th place --> loyalty 40%

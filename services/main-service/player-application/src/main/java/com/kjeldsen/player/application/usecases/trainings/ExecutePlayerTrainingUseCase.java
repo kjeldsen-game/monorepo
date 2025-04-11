@@ -1,6 +1,7 @@
 package com.kjeldsen.player.application.usecases.trainings;
 
 import com.kjeldsen.domain.EventId;
+import com.kjeldsen.player.application.usecases.player.GetPlayersUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
@@ -22,8 +23,8 @@ import java.util.Optional;
 public class ExecutePlayerTrainingUseCase {
 
     private final PlayerTrainingEventWriteRepository playerTrainingEventWriteRepository;
-    private final PlayerReadRepository playerReadRepository;
     private final PlayerWriteRepository playerWriteRepository;
+    private final GetPlayersUseCase getPlayersUseCase;
 
     /* ExecutePlayerTrainingUseCase is last use case in workflow of player training use cases. It "execute" the actual
     * training mean that the points are generated based on the previous day streak (probability is calculated). Here
@@ -36,8 +37,7 @@ public class ExecutePlayerTrainingUseCase {
     public void execute(Player.PlayerId playerId, PlayerSkill playerSkill, Integer currentDay, String eventId) {
         log.info("ExecutePlayerTrainingUseCase for player {} skill {} on day {}", playerId, playerSkill, currentDay);
 
-        Player player = playerReadRepository.findOneById(playerId).orElseThrow(
-            () -> new RuntimeException("Player not found."));
+        Player player = getPlayersUseCase.get(playerId);
         log.info("Player bloom year is set to {} {} {}", player.getBloomYear(), player.getBloomYear() != null, player.getAge().getYears());
         log.info("Test {}",  player.getBloomYear() != null && player.getBloomYear().equals(player.getAge().getYears()));
 
@@ -55,7 +55,7 @@ public class ExecutePlayerTrainingUseCase {
         // Generate the number of points playerSkill should rise
         int points = PointsGenerator.generatePointsRise(currentDay);
         if (player.getBloomYear() != null && player.getBloomYear().equals(player.getAge().getYears())) {
-            log.info("Generating poitns with bloom active player age {}", player.getAge().getYears());
+            log.info("Generating points with bloom active player age {}", player.getAge().getYears());
             playerTrainingEvent.setBloom(true);
             points = points * 2;
         }
