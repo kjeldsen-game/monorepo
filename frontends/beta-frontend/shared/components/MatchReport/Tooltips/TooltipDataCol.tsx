@@ -26,7 +26,11 @@ const TooltipDataCol: React.FC<TooltipDataColProps> = ({
       <TooltipDataItem title={'Skill Points'} value={stats.skillPoints} />
       <CustomTooltip
         tooltipContent={<PerformanceTooltip performance={stats.performance} />}>
-        <TooltipDataItem title={'Random'} value={stats.performance.total} />
+        <TooltipDataItem
+          sx={{ color: '#FF3F84' }}
+          title={'Random'}
+          value={stats.performance.total}
+        />
       </CustomTooltip>
 
       {showAll ? (

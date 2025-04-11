@@ -3,6 +3,8 @@ package com.kjeldsen.match.domain.entities;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Map;
+
+import com.kjeldsen.match.domain.state.ChainActionSequence;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,6 +38,8 @@ public class DuelStats {
     // Modifier for the duel based on the random factor and last player's duel of
     // the same type
     Performance performance;
+
+    Map<ChainActionSequence, Integer> chainActionBonuses;
 
     @Data
     @NoArgsConstructor
