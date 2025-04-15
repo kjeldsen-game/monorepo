@@ -28,9 +28,9 @@ export interface BallState {
 }
 
 export enum BallHeight {
-  GROUND,
-  LOW,
-  HIGH,
+  GROUND = 'GROUND',
+  LOW = 'LOW',
+  HIGH = 'HIGH',
 }
 
 export type Action = 'PASS' | 'POSITION' | 'SHOOT' | 'TACKLE';

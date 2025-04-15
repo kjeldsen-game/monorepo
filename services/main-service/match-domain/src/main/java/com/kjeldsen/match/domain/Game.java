@@ -339,7 +339,7 @@ public class Game {
                     .active(true).turn(Turn.valueOf(play.getDuel().getChallenger().getTeamRole().name())).bonus(counterAttackBonus).build());
             } else {
                 log.info("Enemy team don't have Counter attack Tactic. Removing attacking team Chain sequence bonuses because lost ball!");
-                sequenceChainActionMap.put(ChainActionSequence.COUNTER_ATTACK, GameState.ChainAction.builder().build());
+                sequenceChainActionMap.put(ChainActionSequence.COUNTER_ATTACK, new GameState.ChainAction());
             }
         }
 
