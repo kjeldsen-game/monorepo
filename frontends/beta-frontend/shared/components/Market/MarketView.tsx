@@ -39,6 +39,7 @@ const MarketView: React.FC<MarketProps> = ({
   const handleCloseModal = () => {
     setOpen(false);
   };
+
   const handleRowButtonClick = (auction: AuctionMarket) => {
     setActiveAuction(auction);
     setAuction(auction.id);
