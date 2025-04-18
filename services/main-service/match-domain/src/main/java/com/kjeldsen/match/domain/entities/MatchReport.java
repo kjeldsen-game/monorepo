@@ -2,6 +2,7 @@ package com.kjeldsen.match.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.kjeldsen.match.domain.entities.stats.MatchStats;
 import com.kjeldsen.match.domain.processing.Ratings;
 import com.kjeldsen.match.domain.state.GameState;
 import java.util.List;
@@ -31,10 +32,14 @@ public class MatchReport {
 
     List<Play> plays;
 
+    MatchStats homeStats;
+    MatchStats awayStats;
+
     Integer homeScore;
     Integer awayScore;
     Integer homeAttendance;
     Integer awayAttendance;
+
 
     GameStats gameStats; // Illustration of how to add additional information to the report
 
@@ -47,6 +52,8 @@ public class MatchReport {
         this.plays = plays;
         this.homeScore = state.getHome().getScore();
         this.awayScore = state.getAway().getScore();
+        this.homeStats = state.getHome().getMatchStats();
+        this.awayStats = state.getAway().getMatchStats();
         this.homeAttendance = homeAttendance;
         this.awayAttendance = awayAttendance;
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.kjeldsen.match.domain.entities.duel.DuelRole;
 import com.kjeldsen.match.domain.entities.duel.DuelType;
+import com.kjeldsen.match.domain.entities.stats.PlayerStats;
 import com.kjeldsen.match.domain.recorder.GameProgressRecord;
 import com.kjeldsen.match.domain.state.GameState;
 import com.kjeldsen.match.domain.utils.JsonUtils;
@@ -43,6 +44,7 @@ public class Player {
     PlayerOrder playerOrder;
     PitchArea playerOrderDestinationPitchArea;
     PlayerReceptionPreference receptionPreference;
+    PlayerStats playerStats;
 
     // Instead of accessing the skill points directly, this method should be used to determsine the
     // skill level of the player via the duel logic

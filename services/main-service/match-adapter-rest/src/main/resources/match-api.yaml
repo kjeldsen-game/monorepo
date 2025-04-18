@@ -737,6 +737,40 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/PlayResponse"
+        homeStats:
+          $ref: "#/components/schemas/MatchStats"
+        awayStats:
+          $ref: "#/components/schemas/MatchStats"
+
+    PlayerStats:
+      allOf:
+        - $ref: '#/components/schemas/Stats'
+
+    Stats:
+      type: object
+      properties:
+        score:
+          type: integer
+        missed:
+          type: integer
+        passes:
+          type: integer
+        failedPasses:
+          type: integer
+        tackles:
+          type: integer
+        saved:
+          type: integer
+
+    MatchStats:
+      allOf:
+        - $ref: '#/components/schemas/Stats'
+        - type: object
+          properties:
+            playersStats:
+              type: object
+              additionalProperties:
+                $ref: '#/components/schemas/PlayerStats'
 
     PlayResponse:
       type: object

@@ -1,6 +1,6 @@
 import { useTeamRepository } from '@/pages/api/team/useTeamRepository';
 import { HealthAndSafety } from '@mui/icons-material';
-import { Typography } from '@mui/material';
+import { Tooltip, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '../Grid/Grid';
 import { useMemo } from 'react';
@@ -9,10 +9,10 @@ import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 import { Player } from '@/shared/models/Player';
 import { useSession } from 'next-auth/react';
 import { positionComparator } from '@/shared/utils/GridUtils';
-import { playerCommonColumns } from '../Grid/Columns/PlayerCommonColumns';
 import CustomTooltip from './Tooltips/CustomTooltip';
 import PressureDescriptionItem from '../Team/Modifiers/PressureDescriptionItem';
 import { getModifierDescription } from '@/shared/utils/TeamModifiersUtils';
+import { matchReportPlayercolumns } from '../Grid/Columns/MatchReportPlayerColumns';
 
 interface MatchReportMetricsProps {
   sx?: React.CSSProperties;
@@ -21,6 +21,7 @@ interface MatchReportMetricsProps {
   players: any;
   teamReport: any;
   teamColor: string;
+  stats: any;
 }
 
 export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({
@@ -29,6 +30,7 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({
   players,
   teamReport,
   teamColor,
+  stats,
 }) => {
   const { data: session } = useSession();
 
@@ -50,7 +52,8 @@ export const MatchReportMetrics: React.FC<MatchReportMetricsProps> = ({
   };
 
   const memoizedColumns = useMemo(
-    () => playerCommonColumns(true, false, false, true),
+    () =>
+      matchReportPlayercolumns(true, false, false, true, stats?.playersStats),
     [teamId],
   );
 

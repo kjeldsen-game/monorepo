@@ -36,6 +36,7 @@ const MatchReport: NextPage = () => {
         teamColor={'#29B6F6'}
         players={report.home.players}
         teamId={report.home.id}
+        stats={report.matchReport.homeStats}
         side="left"
         sx={{
           width: '25%',
@@ -54,6 +55,7 @@ const MatchReport: NextPage = () => {
         teamColor={'#A4BC10'}
         players={report.away.players}
         teamId={report.away.id}
+        stats={report.matchReport.awayStats}
         side="right"
         sx={{
           width: '25%',
