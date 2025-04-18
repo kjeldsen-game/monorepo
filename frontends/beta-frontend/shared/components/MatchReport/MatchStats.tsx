@@ -61,33 +61,47 @@ const MatchStats: React.FC<MatchStatsProps> = ({ report }) => {
         display={'flex'}
         sx={{ width: '80%' }}
         justifyContent={'space-between'}>
-        <Typography>-</Typography>
-        <Typography>Shots</Typography>
-        <Typography>-</Typography>
+        <Typography>
+          {report.matchReport.homeStats.score +
+            report.matchReport.homeStats.missed}
+        </Typography>
+        <Typography>Total Shots</Typography>
+        <Typography>
+          {report.matchReport.awayStats.score +
+            report.matchReport.awayStats.missed}
+        </Typography>
       </Box>
       <Box
         display={'flex'}
         sx={{ width: '80%' }}
         justifyContent={'space-between'}>
-        <Typography>-</Typography>
-        <Typography>Shots on target</Typography>
-        <Typography>-</Typography>
+        <Typography>{report.matchReport.homeStats.missed}</Typography>{' '}
+        <Typography>Missed Shots</Typography>
+        <Typography>{report.matchReport.awayStats.missed}</Typography>{' '}
       </Box>
       <Box
         display={'flex'}
         sx={{ width: '80%' }}
         justifyContent={'space-between'}>
-        <Typography>-</Typography>
+        <Typography>{report.matchReport.homeStats.saved}</Typography>{' '}
+        <Typography>Saves</Typography>
+        <Typography>{report.matchReport.awayStats.saved}</Typography>{' '}
+      </Box>
+      <Box
+        display={'flex'}
+        sx={{ width: '80%' }}
+        justifyContent={'space-between'}>
+        <Typography>{report.matchReport.homeStats.passes}</Typography>
         <Typography>Passes</Typography>
-        <Typography>-</Typography>
+        <Typography>{report.matchReport.awayStats.passes}</Typography>
       </Box>
       <Box
         display={'flex'}
         sx={{ width: '80%' }}
         justifyContent={'space-between'}>
-        <Typography>-</Typography>
+        <Typography>{report.matchReport.homeStats.tackles}</Typography>
         <Typography>Tackles</Typography>
-        <Typography>-</Typography>
+        <Typography>{report.matchReport.awayStats.tackles}</Typography>
       </Box>
       <Box
         display={'flex'}

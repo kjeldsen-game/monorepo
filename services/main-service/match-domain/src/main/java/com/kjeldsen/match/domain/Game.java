@@ -1,10 +1,9 @@
 package com.kjeldsen.match.domain;
 
-import com.kjeldsen.match.domain.entities.Action;
-import com.kjeldsen.match.domain.entities.Match;
-import com.kjeldsen.match.domain.entities.Play;
-import com.kjeldsen.match.domain.entities.Player;
+import com.kjeldsen.match.domain.entities.*;
 import com.kjeldsen.match.domain.entities.duel.*;
+import com.kjeldsen.match.domain.entities.stats.MatchStats;
+import com.kjeldsen.match.domain.entities.stats.Stats;
 import com.kjeldsen.match.domain.execution.DuelDTO;
 import com.kjeldsen.match.domain.execution.DuelExecution;
 import com.kjeldsen.match.domain.execution.DuelParams;
@@ -303,19 +302,32 @@ public class Game {
                 play.getChainActionSequence() : ChainActionSequence.NONE;
 
         return Optional.of(state)
-            .map((before) ->
-                GameState.builder()
+            .map((before) -> {
+
+                TeamState challengerTeamState = state.defendingTeam();
+                TeamState initiatorTeamState = state.attackingTeam();
+                if (play.getAction().equals(Action.PASS)) {
+                    // Update the goalkeeper stats with successful save attempt
+                    initiatorTeamState = Optional.of(state.attackingTeam())
+                        .map((beforeState) -> {
+                            MatchStats matchStats = beforeState.getMatchStats().handlePassStats(
+                                DuelRole.INITIATOR, play.getDuel().getResult(), play.getDuel().getInitiator().getId());
+                            return TeamState.copyTeamStateAndUpdate(beforeState, matchStats, false);
+                        }).orElseThrow();
+                }
+
+                return GameState.builder()
                     .turn(before.getTurn()) // Keep same team on turn
                     .clock(before.getClock() + play.getAction().getDuration())
-                    .home(before.getHome())
-                    .away(before.getAway())
+                    .home(before.getTurn() == Turn.HOME ? initiatorTeamState : challengerTeamState)
+                    .away(before.getTurn() == Turn.AWAY ? initiatorTeamState : challengerTeamState)
                     .ballState(newBallState)
                     .chainActionSequence(chainActionSequence)
                     .chainActions(before.getChainActions())
                     .plays(GameState.concatPlay(before.getPlays(), play))
                     .recorder(before.getRecorder())
-                    .build())
-            .orElseThrow();
+                    .build();
+            }).orElseThrow();
     }
 
     // For duel losses, we switch sides and give the ball to the challenger.
@@ -373,38 +385,73 @@ public class Game {
             }
         }
 
+
         return Optional.of(state)
-            .map((before) ->
-                GameState.builder()
-                    .turn(play.getDuel().getType().equals(DuelType.POSITIONAL) && play.getDuel().getResult() == DuelResult.LOSE ? before.getTurn() : before.getTurn() == Turn.HOME ? Turn.AWAY : Turn.HOME)
-//                    .turn(before.getTurn() == Turn.HOME ? Turn.AWAY : Turn.HOME) // TODO
+            .map((before) -> {
+                TeamState challengerTeamState = state.defendingTeam();
+                TeamState initiatorTeamState = state.attackingTeam();
+
+                if (play.getAction().equals(Action.TACKLE)) {
+                    challengerTeamState = Optional.of(state.defendingTeam())
+                        .map((beforeState) -> {
+                            MatchStats matchStats = beforeState.getMatchStats().handleTackleStats(
+                                DuelRole.CHALLENGER, play.getDuel().getResult(), play.getDuel().getChallenger().getId());
+                            return TeamState.copyTeamStateAndUpdate(beforeState, matchStats, false);
+                        }).orElseThrow();
+                }
+
+                if (play.getAction().equals(Action.SHOOT)) {
+                    // Update the goalkeeper stats with successful save attempt
+                    challengerTeamState = Optional.of(state.defendingTeam())
+                        .map((beforeState) -> {
+                            MatchStats matchStats = beforeState.getMatchStats().handleGoalStats(
+                                DuelRole.CHALLENGER, play.getDuel().getResult(), play.getDuel().getChallenger().getId());
+                            return TeamState.copyTeamStateAndUpdate(beforeState, matchStats, false);
+                        }).orElseThrow();
+
+                    initiatorTeamState = Optional.of(state.attackingTeam())
+                        .map((beforeState) -> {
+                            MatchStats matchStats = beforeState.getMatchStats().handleGoalStats(
+                                DuelRole.INITIATOR, play.getDuel().getResult(), play.getDuel().getInitiator().getId());
+                            return TeamState.copyTeamStateAndUpdate(beforeState, matchStats, false);
+                        }).orElseThrow();
+                }
+
+                return GameState.builder()
+                    .turn(play.getDuel().getType().equals(DuelType.POSITIONAL) && play.getDuel().getResult() == DuelResult.LOSE
+                        ? before.getTurn()
+                        : before.getTurn() == Turn.HOME ? Turn.AWAY : Turn.HOME)
+                    // .turn(before.getTurn() == Turn.HOME ? Turn.AWAY : Turn.HOME) // TODO
                     .clock(before.getClock() + play.getAction().getDuration())
-                    .home(before.getHome())
-                    .away(before.getAway())
+                    .home(before.getTurn() == Turn.HOME ? initiatorTeamState : challengerTeamState)
+                    .away(before.getTurn() == Turn.AWAY ? initiatorTeamState : challengerTeamState)
                     .ballState(newBallState)
                     .chainActions(sequenceChainActionMap)
                     .chainActionSequence(ChainActionSequence.NONE) // Losing a duel stops a chained action sequence, if any.
                     .plays(GameState.concatPlay(before.getPlays(), play))
                     .recorder(before.getRecorder())
-                    .build())
-            .orElseThrow();
+                    .build();
+            }).orElseThrow();
     }
 
     // For goals, we switch sides and increment the score
     private static GameState handleGoal(GameState state, Play play) {
 
-        TeamState newTeamState = Optional.of(state.attackingTeam())
-            .map((before) ->
-                TeamState.builder()
-                    .players(before.getPlayers())
-                    .bench(before.getBench())
-                    .tactic(before.getTactic())
-                    .verticalPressure(before.getVerticalPressure())
-                    .horizontalPressure(before.getHorizontalPressure())
-                    .score(before.getScore() + 1)
-                    .build())
-            .orElseThrow();
+        TeamState challengerTeamState = Optional.of(state.defendingTeam())
+            .map((before) -> {
+                MatchStats matchStats = before.getMatchStats().handleGoalStats(
+                    DuelRole.CHALLENGER, play.getDuel().getResult(), play.getDuel().getChallenger().getId());
+                return TeamState.copyTeamStateAndUpdate(before, matchStats, false);
+            }).orElseThrow();
 
+        TeamState initiatorTeamState = Optional.of(state.attackingTeam())
+            .map((before) -> {
+                MatchStats matchStats = before.getMatchStats().handleGoalStats(
+                    DuelRole.INITIATOR, play.getDuel().getResult(), play.getDuel().getInitiator().getId());
+                return TeamState.copyTeamStateAndUpdate(before, matchStats, true);
+            }).orElseThrow();
+
+        // TODO will be removed
         if (state.getTurn() == Turn.HOME) { //Attacking team is home
             play.setHomeScore(play.getHomeScore() + 1);
         } else {
@@ -426,8 +473,8 @@ public class Game {
                     .turn(before.getTurn() == Turn.HOME ? Turn.AWAY : Turn.HOME)
                     .clock(before.getClock() + play.getAction().getDuration())
                     // Here we update the team whose turn it was since that's the team that scored
-                    .home(before.getTurn() == Turn.HOME ? newTeamState : before.getHome())
-                    .away(before.getTurn() == Turn.AWAY ? newTeamState : before.getAway())
+                    .home(before.getTurn() == Turn.HOME ? initiatorTeamState : challengerTeamState)
+                    .away(before.getTurn() == Turn.AWAY ? initiatorTeamState : challengerTeamState)
                     .ballState(newBallState)
                     .chainActions(new HashMap<>()) // Clear all chained actions
                     .chainActionSequence(ChainActionSequence.NONE) // Goals stops a chained action sequence, if any.

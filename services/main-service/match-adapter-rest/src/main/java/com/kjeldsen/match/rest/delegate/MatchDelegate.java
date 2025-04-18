@@ -177,7 +177,9 @@ public class MatchDelegate implements MatchApiDelegate {
     public ResponseEntity<MatchResponse> getMatch(String matchId) {
         log.info("getMatchTeam(matchId={})", matchId);
         Match match = getMatchUseCase.get(matchId);
+        System.out.println(match.getMatchReport().getAwayStats());
         MatchResponse response = MatchMapper.INSTANCE.map(match);
+//        System.out.println(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
