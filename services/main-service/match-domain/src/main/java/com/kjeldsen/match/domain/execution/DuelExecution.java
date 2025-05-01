@@ -9,7 +9,6 @@ import com.kjeldsen.match.domain.entities.duel.DuelResult;
 import com.kjeldsen.match.domain.entities.duel.DuelRole;
 import com.kjeldsen.match.domain.entities.duel.DuelType;
 import com.kjeldsen.match.domain.modifers.Orders;
-import com.kjeldsen.match.domain.random.DuelRandomization;
 import com.kjeldsen.match.domain.random.GausDuelRandomizer;
 import com.kjeldsen.match.domain.recorder.GameProgressRecord;
 import com.kjeldsen.match.domain.state.ChainActionSequence;
@@ -69,46 +68,60 @@ public class DuelExecution {
         Player initiator = params.getInitiator();
         Player challenger = params.getChallenger();
 
-        // The range of team assistance values can be very high. We need the assistance
-        // for both
-        // players first then the difference can be adjusted to a sensible value.
-        Map<String, Integer> initiatorTeamAssistance = Assistance.teamAssistance(state, initiator, DuelRole.INITIATOR);
-        Map<String, Integer> challengerTeamAssistance = Assistance.teamAssistance(state, challenger,
-                DuelRole.CHALLENGER);
-        // This is actual assistance given to the winner of the duel (the loser gets
-        // zero)
-        Map<DuelRole, Integer> adjustedAssistance = Assistance.adjustAssistance(initiatorTeamAssistance,
-                challengerTeamAssistance);
+        // How to calculate the assistance
+        // 1. Get the teamAssistance by player
+        // 2. Get the modifiers
+        // 3. Sum the modifiers together
+        // 4. Sum all pieces together
+        // Caulcate adjusted values whenn both of this are done
 
+        // Calculate the teamAssistance for each player in duel and adjust based on scaling
+
+        Map<String, Double> initiatorTeamAssistance = AssistanceProvider.getTeamAssistance(state, initiator, DuelRole.INITIATOR);
+        Map<String, Double> challengerTeamAssistance = AssistanceProvider.getTeamAssistance(state, challenger, DuelRole.CHALLENGER);
+
+        GameState.ChainAction counterAttackAction = state.getChainActions().getOrDefault(
+            ChainActionSequence.COUNTER_ATTACK, new GameState.ChainAction());
+        int counterAttackBonus = 0;
+        // Counter attack bonus is active
+        if (counterAttackAction != null && counterAttackAction.getActive()) {
+            // This is used for the initiator
+            counterAttackBonus = counterAttackAction.getBonus();
+            log.info("Counter Attack usage !!!! with bonus = {} for turn {} usage = {}", counterAttackBonus, counterAttackAction.getTurn(), counterAttackAction.getUsage());
+        }
+        Map<ChainActionSequence, Integer> initiatorModifiers = new HashMap<>();
+        initiatorModifiers.put(ChainActionSequence.COUNTER_ATTACK, counterAttackBonus);
+
+
+        // This return total, adjusted and the team assistance
+        Map<DuelRole, DuelStats.Assistance> adjustedAssistanceByDuelRole = AssistanceProvider.buildAssistanceByDuelRole(
+            initiatorTeamAssistance, challengerTeamAssistance, initiatorModifiers);
+
+        log.info("assisatnce refustdsajkjksa");
         DuelStats initiatorStats = buildPositionalDuelStats(
                 state,
                 initiator,
                 DuelRole.INITIATOR,
-                initiatorTeamAssistance,
-                adjustedAssistance);
+                adjustedAssistanceByDuelRole.get(DuelRole.INITIATOR));
 
         DuelStats challengerStats;
         DuelResult result;
+
         // In some situations it's possible that there is no challenger present because
         // of rules
         // preventing a defender from being into two consecutive duels. In this case the
-        // duel is
-        // automatically won by the initiator.
-        // TODO challenger should not be null this part could be removed later
+        // duel is automatically won by the initiator.
+
         if (challenger == null) {
-            int assistance = (int) (adjustedAssistance.get(DuelRole.CHALLENGER)
-                    * Assistance.assistanceFactor(state, DuelRole.CHALLENGER));
             challengerStats = DuelStats.builder()
-                    // .skillPoints(0)
-                    // .performance(0)
-                    // .assistance(assistance)
-                    // .teamAssistance(challengerTeamAssistance)
-                    // .total(50)
-                    // .build();
                     .skillPoints(0)
                     .performance(new DuelStats.Performance())
-                    .assistance(0)
-                    .teamAssistance(challengerTeamAssistance)
+                    .assistance(DuelStats.Assistance.builder()
+                        .modifiers(new HashMap<>())
+                        .totalModifiers(0.0)
+                        .teamAssistance(new HashMap<>())
+                        .total(0.0)
+                        .adjusted(0.0).build())
                     .total(0)
                     .build();
             result = DuelResult.WIN;
@@ -117,8 +130,7 @@ public class DuelExecution {
                     state,
                     challenger,
                     DuelRole.CHALLENGER,
-                    challengerTeamAssistance,
-                    adjustedAssistance);
+                    adjustedAssistanceByDuelRole.get(DuelRole.CHALLENGER));
             result = (initiatorStats.getTotal() > challengerStats.getTotal())
                     ? DuelResult.WIN
                     : DuelResult.LOSE;
@@ -141,8 +153,7 @@ public class DuelExecution {
             GameState state,
             Player player,
             DuelRole role,
-            Map<String, Integer> teamAssistance,
-            Map<DuelRole, Integer> adjustedAssistance) {
+            DuelStats.Assistance assistance) {
 
         int skillPoints = player.duelSkill(DuelType.POSITIONAL, role, state);
         DuelStats.Performance performance = GausDuelRandomizer.performance(player, state, DuelType.POSITIONAL, role);
@@ -167,29 +178,15 @@ public class DuelExecution {
 
         }
 
-        GameState.ChainAction counterAttackAction = state.getChainActions().getOrDefault(ChainActionSequence.COUNTER_ATTACK, new GameState.ChainAction());
-        int counterAttackBonus = 0;
-        // Counter attack bonus is active
-        if (counterAttackAction != null && counterAttackAction.getActive() && role.equals(DuelRole.CHALLENGER)) {
-            log.info("Counter Attack action sequence is active and processing bonus!");
-            counterAttackBonus = counterAttackAction.getBonus();
-        }
-
-        int assistance = (int) (adjustedAssistance.get(role) * Assistance.assistanceFactor(state, role));
-
-        int total = skillPoints + chainActionSequenceModifier + performance.getTotal().intValue() + assistance + counterAttackBonus;
-
-        Map<ChainActionSequence, Integer> chainActionBonuses = new HashMap<>();
-        chainActionBonuses.put(ChainActionSequence.COUNTER_ATTACK, counterAttackBonus);
+        int total = skillPoints + chainActionSequenceModifier + performance.getTotal().intValue() +
+            assistance.getAdjusted().intValue();
 
         return DuelStats.builder()
-                .chainActionBonuses(chainActionBonuses)
-                .skillPoints(skillPoints)
-                .performance(performance)
-                .assistance(assistance)
-                .teamAssistance(teamAssistance)
-                .total(total)
-                .build();
+            .skillPoints(skillPoints)
+            .performance(performance)
+            .assistance(assistance)
+            .total(total)
+            .build();
     }
 
     // Ball control follows a positional duel. Here the factors to determine a
@@ -197,9 +194,6 @@ public class DuelExecution {
     // points, (2) performance, and (3) the assistance carryover from the positional
     // duel.
     public static DuelDTO handleBallControlDuel(DuelParams params) {
-
-        log.info("I am in the ball control duel initiator={} challenger={}", params.getInitiator().getName(),
-                params.getChallenger() == null ? null : params.getChallenger().getName());
 
         GameState state = params.getState();
         Player initiator = params.getInitiator();

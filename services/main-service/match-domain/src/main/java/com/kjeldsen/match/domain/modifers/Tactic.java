@@ -44,6 +44,8 @@ public enum Tactic {
         };
     }
 
+
+    // TODO REview
     // Tactics that affect assistance return a modifier percentage increase or decrease
     public double assistanceFactor(PlayerPosition position, DuelRole role, PitchArea pitchArea) {
         return switch (this) {
@@ -100,11 +102,10 @@ public enum Tactic {
         };
     }
 
-
+    // TODO review
     private double counterAttack(DuelRole role) {
         return switch (role) {
-            case CHALLENGER -> 1.2;
-            case INITIATOR -> 0.9;
+            case CHALLENGER, INITIATOR -> 1;
         };
     }
 

@@ -11,8 +11,6 @@ public class Carryover {
      * Determines the points to be carried over to the next duel
      */
 
-    public static final int CARRYOVER_LIMIT = Assistance.MAX_ASSISTANCE / 2;
-
     // Carryover from the previous duel is half of the difference of the total duel points of the
     // two players. The carryover value is given to the winner of the (previous) duel and
     // contributes to the (current) duel. This is capped at half of the maximum assistance.

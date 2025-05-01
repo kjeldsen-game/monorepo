@@ -4,6 +4,7 @@ import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.Player;
 import com.kjeldsen.match.domain.entities.Team;
 import com.kjeldsen.match.domain.entities.TeamRole;
+import com.kjeldsen.match.domain.entities.duel.DuelRole;
 import com.kjeldsen.match.domain.entities.stats.MatchStats;
 import com.kjeldsen.match.domain.entities.stats.PlayerStats;
 import com.kjeldsen.match.domain.modifers.HorizontalPressure;
@@ -59,5 +60,12 @@ public class TeamState {
             .matchStats(matchStats)
             .score(isGoal ? teamState.getScore() + 1 : teamState.getScore())
             .build();
+    }
+
+    public static TeamState getTeamByRole(GameState state, DuelRole role) {
+        return switch (role) {
+            case INITIATOR -> state.attackingTeam();
+            case CHALLENGER -> state.defendingTeam();
+        };
     }
 }

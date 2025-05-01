@@ -301,6 +301,19 @@ public class Game {
                 startingChainActionSequence : insideChainedActionSequence ?
                 play.getChainActionSequence() : ChainActionSequence.NONE;
 
+        Map<ChainActionSequence, GameState.ChainAction> sequenceChainActionMap = state.getChainActions();
+        if (sequenceChainActionMap.get(ChainActionSequence.COUNTER_ATTACK) != null &&
+            sequenceChainActionMap.get(ChainActionSequence.COUNTER_ATTACK).getActive()) {
+
+            GameState.ChainAction chainAction = sequenceChainActionMap.get(ChainActionSequence.COUNTER_ATTACK);
+            // If the Counter attack was used in 3 plays refresh and set inactive
+            if (chainAction.getUsage() == 3) {
+                log.info("Removing the active counter attack because it reach maximum value!");
+                sequenceChainActionMap.put(ChainActionSequence.COUNTER_ATTACK, new GameState.ChainAction());
+            }
+        }
+
+
         return Optional.of(state)
             .map((before) -> {
 
@@ -323,7 +336,7 @@ public class Game {
                     .away(before.getTurn() == Turn.AWAY ? initiatorTeamState : challengerTeamState)
                     .ballState(newBallState)
                     .chainActionSequence(chainActionSequence)
-                    .chainActions(before.getChainActions())
+                    .chainActions(sequenceChainActionMap)
                     .plays(GameState.concatPlay(before.getPlays(), play))
                     .recorder(before.getRecorder())
                     .build();
@@ -337,32 +350,29 @@ public class Game {
         PitchArea currentArea = state.getBallState().getArea().flipPerspective();
         Map<ChainActionSequence, GameState.ChainAction> sequenceChainActionMap = state.getChainActions();
 
-        TeamState defTeam = state.defendingTeam();
         // Counter-attack is won by the defender, so the ChainActionSequence is set to active with counter-attack
         // Defender won with TACKLE and get the ball
+        TeamState defTeam = state.defendingTeam();
         if (play.getDuel().getType().equals(DuelType.BALL_CONTROL)) {
             // Check if there is possibility for the Counter attack bonus
             if (defTeam.getTactic().equals(Tactic.COUNTER_ATTACK)) {
-                // Yes, tactic is active
-                Integer counterAttackBonus = play.getDuel().getChallengerStats().getTotal() - play.getDuel().getInitiatorStats().getTotal();
-                log.info("Activating chain action sequence for Counter Attack w bonus={} for team={}!", counterAttackBonus,
-                    play.getDuel().getChallenger().getTeamRole());
+                log.info("Attacking team lost ball control duel and defending team have Counter Attack as Tactic -> Activating Counter attack Boost");
                 sequenceChainActionMap.put(ChainActionSequence.COUNTER_ATTACK, GameState.ChainAction.builder()
-                    .active(true).turn(Turn.valueOf(play.getDuel().getChallenger().getTeamRole().name())).bonus(counterAttackBonus).build());
+                    .active(true).turn(Turn.valueOf(play.getDuel().getChallenger().getTeamRole().name())).usage(0).build());
             } else {
                 log.info("Enemy team don't have Counter attack Tactic. Removing attacking team Chain sequence bonuses because lost ball!");
                 sequenceChainActionMap.put(ChainActionSequence.COUNTER_ATTACK, new GameState.ChainAction());
             }
+        } else {
+            sequenceChainActionMap.put(ChainActionSequence.COUNTER_ATTACK, new GameState.ChainAction());
         }
 
         // TODO refactor this
         Optional<BallState> fromModifier = checkModifiers(state, play);
         BallState newBallState;
         if (fromModifier.isPresent()) {
-            System.out.println("I am present modifier");
             newBallState = fromModifier.get();
         } else {
-            System.out.println("I am not present modifier");
             PitchArea playerArea;
             /*
             if (play.getDuel().getType().movesBall()) {
