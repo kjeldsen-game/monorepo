@@ -83,9 +83,6 @@ public class Game {
         // selected to start the game.
         log.info("Initialising game state for match {}", match.getId());
         GameState state = GameState.init(match);
-        //log.info("Home team:\n{}", match.getHome());
-        //log.info("Away team:\n{}", match.getAway());
-
         return state;
     }
 
@@ -387,7 +384,7 @@ public class Game {
                 playerArea = currentArea;
             }*/
             playerArea = currentArea;
-            // Attacker lose the positional duel but we still wanna have in the Tackle duel as attacker
+            // Attacker lose the positional duel, but we still want to have in the Tackle duel as attacker
             if (play.getDuel().getType().equals(DuelType.POSITIONAL) && play.getDuel().getResult() == DuelResult.LOSE) {
                 newBallState = new BallState(play.getDuel().getInitiator(), state.getBallState().getArea(), state.getBallState().getHeight());
             } else {
@@ -415,14 +412,19 @@ public class Game {
                     challengerTeamState = Optional.of(state.defendingTeam())
                         .map((beforeState) -> {
                             MatchStats matchStats = beforeState.getMatchStats().handleGoalStats(
-                                DuelRole.CHALLENGER, play.getDuel().getResult(), play.getDuel().getChallenger().getId());
+                                DuelRole.CHALLENGER, play.getDuel().getResult(), play.getDuel().getChallenger().getId(),
+                                play.getDuel().getChallengerStats() == null
+                                );
                             return TeamState.copyTeamStateAndUpdate(beforeState, matchStats, false);
                         }).orElseThrow();
 
                     initiatorTeamState = Optional.of(state.attackingTeam())
                         .map((beforeState) -> {
                             MatchStats matchStats = beforeState.getMatchStats().handleGoalStats(
-                                DuelRole.INITIATOR, play.getDuel().getResult(), play.getDuel().getInitiator().getId());
+                                DuelRole.INITIATOR, play.getDuel().getResult(), play.getDuel().getInitiator().getId(),
+                                play.getDuel().getChallengerStats() == null
+                            );
+
                             return TeamState.copyTeamStateAndUpdate(beforeState, matchStats, false);
                         }).orElseThrow();
                 }
@@ -450,14 +452,14 @@ public class Game {
         TeamState challengerTeamState = Optional.of(state.defendingTeam())
             .map((before) -> {
                 MatchStats matchStats = before.getMatchStats().handleGoalStats(
-                    DuelRole.CHALLENGER, play.getDuel().getResult(), play.getDuel().getChallenger().getId());
+                    DuelRole.CHALLENGER, play.getDuel().getResult(), play.getDuel().getChallenger().getId(), false);
                 return TeamState.copyTeamStateAndUpdate(before, matchStats, false);
             }).orElseThrow();
 
         TeamState initiatorTeamState = Optional.of(state.attackingTeam())
             .map((before) -> {
                 MatchStats matchStats = before.getMatchStats().handleGoalStats(
-                    DuelRole.INITIATOR, play.getDuel().getResult(), play.getDuel().getInitiator().getId());
+                    DuelRole.INITIATOR, play.getDuel().getResult(), play.getDuel().getInitiator().getId(), false);
                 return TeamState.copyTeamStateAndUpdate(before, matchStats, true);
             }).orElseThrow();
 

@@ -749,7 +749,9 @@ components:
     Stats:
       type: object
       properties:
-        score:
+        shots:
+          type: integer
+        goals:
           type: integer
         missed:
           type: integer

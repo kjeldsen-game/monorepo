@@ -22,6 +22,23 @@ const ShootMessage = ({
     DENOMINATIONS_RANGES,
   );
 
+  if (duel.challengerStats == null) {
+    return (
+      <span style={{ fontSize: '12px', textAlign: 'justify' }}>
+        <MessageText
+          children={`${duel.initiator.name} [${getPositionInitials(duel.initiator.position)}]`}
+          matchEventSide={initiatorEventSide}
+        />
+        attempted a
+        <SingleColTooltip stats={duel.initiatorStats}>
+          <QualityText textColor={initColor}>{initLabel}</QualityText>
+        </SingleColTooltip>{' '}
+        <ActionText>{action}</ActionText>, but missed the shot, which led total{' '}
+        <QualityText textColor={'black'}>{<>NO GOAL</>}</QualityText>
+      </span>
+    );
+  }
+
   const { label: challLabel, color: challColor } = getRangeLabel(
     duel.challengerStats.total,
     DENOMINATIONS_RANGES,
@@ -29,11 +46,6 @@ const ShootMessage = ({
 
   return (
     <span style={{ fontSize: '12px', textAlign: 'justify' }}>
-      {/* In the{' '}
-      <PitchAreaTooltip pitchArea={event.duel.pitchArea}>
-        {convertSnakeCaseToTitleCase(duel.pitchArea)}
-      </PitchAreaTooltip>{' '}
-      area, attacker */}
       <MessageText
         children={`${duel.initiator.name} [${getPositionInitials(duel.initiator.position)}]`}
         matchEventSide={initiatorEventSide}

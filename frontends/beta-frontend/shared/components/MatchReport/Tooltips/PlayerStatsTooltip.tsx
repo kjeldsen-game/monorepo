@@ -18,13 +18,18 @@ const PlayerStatsTooltip = ({ stats, children }: PlayerStatsTooltipProps) => {
           <Box>
             <TooltipDataItem
               sx={{ color: '#FF3F84' }}
-              title={'Score'}
-              value={stats?.score}
+              title={'Goals'}
+              value={stats?.goals}
             />
             <TooltipDataItem
               sx={{ color: '#FF3F84' }}
               title={'Missed'}
               value={stats?.missed}
+            />
+            <TooltipDataItem
+              sx={{ color: '#FF3F84' }}
+              title={'Total Shots'}
+              value={stats?.shots}
             />
             <TooltipDataItem
               sx={{ color: '#FF3F84' }}

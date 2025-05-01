@@ -5,6 +5,7 @@ import com.kjeldsen.match.domain.entities.duel.DuelResult;
 import com.kjeldsen.match.domain.entities.duel.DuelRole;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Data
 @Document(collection = "MatchStats")
 @TypeAlias("MatchStats")
@@ -20,23 +22,27 @@ public class MatchStats extends Stats {
 
     Map<String, PlayerStats> playersStats = new HashMap<>();
 
-    public MatchStats handleGoalStats(DuelRole role, DuelResult result, String playerId) {
+    public MatchStats handleGoalStats(DuelRole role, DuelResult result, String playerId, boolean missed) {
         PlayerStats playerStats = this.playersStats.computeIfAbsent(playerId, id -> new PlayerStats());
 
         if (role.equals(DuelRole.CHALLENGER)) {
             // From perspective of attacker if he lost duel he did not score
-            if (result.equals(DuelResult.LOSE)) {
+            if (result.equals(DuelResult.LOSE) && !missed) {
                 this.setSaved(this.getSaved() + 1);
                 playerStats.setSaved(playerStats.getSaved() + 1);
             }
         } else {
             if (result.equals(DuelResult.LOSE)) {
-                playerStats.setMissed(playerStats.getMissed() + 1);
-                this.setMissed(this.getMissed() + 1);
+                if (missed) {
+                    playerStats.setMissed(playerStats.getMissed() + 1);
+                    this.setMissed(this.getMissed() + 1);
+                }
             } else {
-                playerStats.setScore(playerStats.getScore() + 1);
-                this.setScore(this.getScore() + 1);
+                playerStats.setGoals(playerStats.getGoals() + 1);
+                this.setGoals(this.getGoals() + 1);
             }
+            playerStats.setShots(playerStats.getShots() + 1);
+            this.setShots(this.getShots() + 1);
         }
         return this;
     }
