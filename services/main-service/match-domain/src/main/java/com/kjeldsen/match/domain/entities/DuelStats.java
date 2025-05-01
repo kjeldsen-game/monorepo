@@ -2,6 +2,8 @@ package com.kjeldsen.match.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import java.util.HashMap;
 import java.util.Map;
 
 import com.kjeldsen.match.domain.state.ChainActionSequence;
@@ -39,6 +41,16 @@ public class DuelStats {
 
     Map<ChainActionSequence, Integer> chainActionBonuses;
 
+    public static DuelStats initDefault() {
+        return DuelStats.builder()
+            .total(0)
+            .skillPoints(0)
+            .carryover(0)
+            .performance(new Performance())
+            .assistance(new Assistance())
+            .build();
+    }
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
@@ -56,10 +68,10 @@ public class DuelStats {
     @ToString
     @Builder
     public static class Assistance {
-        Double total;
-        Double adjusted;
-        Map<String, Double> teamAssistance;
-        Map<ChainActionSequence, Integer> modifiers;
-        Double totalModifiers;
+        Double total = 0.0;
+        Double adjusted = 0.0;
+        Map<String, Double> teamAssistance = new HashMap<String, Double>();
+        Map<ChainActionSequence, Integer> modifiers = new HashMap<>();
+        Double totalModifiers = 0.0;
     }
 }

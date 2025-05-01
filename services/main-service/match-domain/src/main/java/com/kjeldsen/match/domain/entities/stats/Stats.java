@@ -13,8 +13,10 @@ public abstract class Stats {
 //    StatsId id = StatsId.generate();
 
     // Score opportunities stats
-    Integer score = 0;
-    Integer missed = 0;
+    Integer shots = 0;
+//    Integer shotsOnGoal = 0;      ????? in future TODO
+    Integer goals = 0;
+    Integer missed = 0; // The goalkeeper was not included in duel
 
     // Pass stats
     Integer passes = 0;

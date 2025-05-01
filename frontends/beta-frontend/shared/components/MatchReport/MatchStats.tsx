@@ -45,31 +45,25 @@ const MatchStats: React.FC<MatchStatsProps> = ({ report }) => {
         display={'flex'}
         sx={{ width: '80%' }}
         justifyContent={'space-between'}>
-        <Typography>{report.matchReport.homeScore}</Typography>
+        <Typography>{report.matchReport.homeStats.goals}</Typography>
         <Typography>Score</Typography>
-        <Typography>{report.matchReport.awayScore}</Typography>
+        <Typography>{report.matchReport.awayStats.goals}</Typography>
       </Box>
-      <Box
+      {/* <Box
         display={'flex'}
         sx={{ width: '80%' }}
         justifyContent={'space-between'}>
         <Typography>-</Typography>
         <Typography>Possesion %</Typography>
         <Typography>-</Typography>
-      </Box>
+      </Box> */}
       <Box
         display={'flex'}
         sx={{ width: '80%' }}
         justifyContent={'space-between'}>
-        <Typography>
-          {report.matchReport.homeStats.score +
-            report.matchReport.homeStats.missed}
-        </Typography>
+        <Typography>{report.matchReport.homeStats.shots}</Typography>
         <Typography>Total Shots</Typography>
-        <Typography>
-          {report.matchReport.awayStats.score +
-            report.matchReport.awayStats.missed}
-        </Typography>
+        <Typography>{report.matchReport.awayStats.shots}</Typography>
       </Box>
       <Box
         display={'flex'}

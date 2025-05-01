@@ -8,6 +8,7 @@ import com.kjeldsen.match.domain.entities.duel.DuelDisruptor;
 import com.kjeldsen.match.domain.entities.duel.DuelResult;
 import com.kjeldsen.match.domain.entities.duel.DuelRole;
 import com.kjeldsen.match.domain.entities.duel.DuelType;
+import com.kjeldsen.match.domain.generator.RandomGenerator;
 import com.kjeldsen.match.domain.modifers.Orders;
 import com.kjeldsen.match.domain.random.GausDuelRandomizer;
 import com.kjeldsen.match.domain.recorder.GameProgressRecord;
@@ -404,11 +405,35 @@ public class DuelExecution {
         Player initiator = params.getInitiator();
         Player challenger = params.getChallenger();
 
+        // Run a calculation to determinate if the initiator missed the shot
+
+
         DuelStats initiatorStats = buildDuelStats(
                 state,
                 initiator,
                 params.getDuelType(),
                 DuelRole.INITIATOR);
+
+        Integer total = initiatorStats.getTotal();
+        log.info("Total shot checking stuff = {}", total);
+        // Chance that the shot is missed and goalkeeper don't have to make save
+        if (total < 100) {
+            double difference = (double) (100 - total) / 4;
+            int succeed = RandomGenerator.randomInt(0, 100);
+            log.info("Diffreence value = {} and succeeed = {}", difference, succeed);
+            // Shot is missed
+            if (succeed < difference) {
+                log.info("Shot duel resulted in missed shot!");
+                return DuelDTO.builder()
+                    .result(DuelResult.LOSE)
+                    .initiatorStats(initiatorStats)
+                    .challengerStats(null)
+                    .origin(params.getOrigin())
+                    .disruptor(params.getDisruptor())
+                    .params(params)
+                    .build();
+            }
+        }
 
         if (challenger.getPosition() != PlayerPosition.GOALKEEPER) {
             throw new IllegalStateException("Player defending shot is not a GOALKEEPER.");

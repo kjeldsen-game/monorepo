@@ -18,8 +18,8 @@ public class Carryover {
         return state.lastPlay()
             .map(Play::getDuel)
             .map(duel -> {
-                int initiatorTotal = duel.getInitiatorStats().getTotal();
-                int challengerTotal = duel.getChallengerStats().getTotal();
+                int initiatorTotal = duel.getInitiatorStats() != null ? duel.getInitiatorStats().getTotal() : 0;
+                int challengerTotal = duel.getChallengerStats() != null ? duel.getChallengerStats().getTotal() : 0;
                 int diff = Math.abs(initiatorTotal - challengerTotal);
                 int carryover = diff / 2;
 

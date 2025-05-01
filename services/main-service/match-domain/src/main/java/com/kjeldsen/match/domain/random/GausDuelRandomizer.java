@@ -92,11 +92,11 @@ public class GausDuelRandomizer {
                 .map(duel -> {
                     if (Objects.equals(duel.getInitiator().getId(), player.getId()) &&
                             duel.getInitiator().getTeamRole() == player.getTeamRole()) {
-                        return duel.getInitiatorStats();
+                        return duel.getInitiatorStats() != null ? duel.getInitiatorStats() : DuelStats.initDefault();
                     }
                     if (Objects.equals(duel.getChallenger().getId(), player.getId()) &&
                             duel.getChallenger().getTeamRole() == player.getTeamRole()) {
-                        return duel.getChallengerStats();
+                        return duel.getChallengerStats() != null ? duel.getChallengerStats() : DuelStats.initDefault();
                     }
                     throw new RuntimeException("Invalid duel state");
                 })
