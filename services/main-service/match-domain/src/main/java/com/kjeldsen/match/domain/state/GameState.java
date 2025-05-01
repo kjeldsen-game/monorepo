@@ -53,15 +53,18 @@ public class GameState {
     public static class ChainAction {
         Turn turn = null;
         Boolean active = false;
-        Integer bonus = 0;
-    }
+        Integer usage = 0;
 
-    public void activateChainAction(ChainActionSequence chainActionSequence, ChainAction chainAction) {
-        this.chainActions.put(chainActionSequence, chainAction);
-    }
-
-    public void cleanChainAction(ChainActionSequence chainActionSequence) {
-        this.chainActions.put(chainActionSequence, new ChainAction());
+        public Integer getBonus() {
+            int bonus = switch (this.usage) {
+                case 0 -> 50;
+                case 1 -> 35;
+                case 2 -> 20;
+                default -> throw new RuntimeException("Invalid usage number!");
+            };
+            this.usage++;
+            return bonus;
+        }
     }
 
     // The initial game state simply selects a random team to start the game. Everything else is set

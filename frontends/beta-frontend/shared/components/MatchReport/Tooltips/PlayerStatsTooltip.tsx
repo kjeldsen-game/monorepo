@@ -11,8 +11,6 @@ interface PlayerStatsTooltipProps {
 }
 
 const PlayerStatsTooltip = ({ stats, children }: PlayerStatsTooltipProps) => {
-  console.log(stats);
-
   return (
     <CustomTooltip
       tooltipContent={

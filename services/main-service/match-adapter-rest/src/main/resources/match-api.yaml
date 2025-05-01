@@ -811,20 +811,12 @@ components:
           type: integer
         performance:
           $ref: "#/components/schemas/Performance"
-        skillPoints:
-          type: integer
         assistance:
+          $ref: "#/components/schemas/Assistance"
+        skillPoints:
           type: integer
         carryover:
           type: integer
-        teamAssistance:
-          type: object
-          additionalProperties:
-            type: integer
-        chainActionBonuses:
-          type: object
-          additionalProperties:
-            type: integer
 
     Performance:
       type: object
@@ -834,6 +826,24 @@ components:
         previousTotalImpact:
           type: number
         total:
+          type: number
+
+    Assistance:
+      type: object
+      properties:
+        total:
+          type: number
+        adjusted:
+          type: number
+        teamAssistance:
+          type: object
+          additionalProperties:
+            type: number
+        modifiers:
+          type: object
+          additionalProperties:
+            type: number
+        totalModifiers:
           type: number
 
     DuelResponse:

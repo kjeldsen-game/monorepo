@@ -40,7 +40,8 @@ const PositionMessage = ({
   );
 
   const { label: assistLabel, color: assistColor } = getRangeLabel(
-    duel.initiatorStats.assistance - duel.challengerStats.assistance,
+    duel.initiatorStats.assistance?.adjusted -
+      duel.challengerStats.assistance?.adjusted,
     ASSISTANCE_RANGES,
   );
 

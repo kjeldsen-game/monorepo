@@ -72,7 +72,6 @@ public class GausDuelRandomizer {
 
     private static Optional<DuelStats> previousDuel(GameState state, Player player, List<PlayerSkill> skills,
             BallState ballState) {
-        log.info("Skills = {}", skills);
         return state.getPlays().stream()
                 .sorted(Comparator.comparingInt(Play::getClock).reversed()) // Sort by clock descending
                 .map(Play::getDuel)

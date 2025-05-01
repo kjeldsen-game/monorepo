@@ -29,15 +29,13 @@ public class DuelStats {
     Integer total;
     // The relevant skill points that contributed in this duel
     Integer skillPoints;
-    // How much support the player got from each player on his team
-    Map<String, Integer> teamAssistance;
-    // How much support the player got from his team as a whole
-    Integer assistance;
     // Carryover from previous duel
     Integer carryover;
     // Modifier for the duel based on the random factor and last player's duel of
     // the same type
     Performance performance;
+
+    Assistance assistance;
 
     Map<ChainActionSequence, Integer> chainActionBonuses;
 
@@ -50,5 +48,18 @@ public class DuelStats {
         Double previousTotalImpact = 0.0;
         Double random = 0.0;
         Double total = 0.0;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @ToString
+    @Builder
+    public static class Assistance {
+        Double total;
+        Double adjusted;
+        Map<String, Double> teamAssistance;
+        Map<ChainActionSequence, Integer> modifiers;
+        Double totalModifiers;
     }
 }
