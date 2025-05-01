@@ -74,14 +74,21 @@ export interface RStats {
   performance: Performance;
   skillPoints: number;
   carryover?: number;
-  teamAssistance?: { [key: string]: number };
-  assistance?: number;
+  assistance?: Assistance;
 }
 
 export interface Performance {
   total: number;
   random: number;
   previousTotalImpact: number;
+}
+
+export interface Assistance {
+  total: number;
+  totalModifiers: number;
+  adjusted: number;
+  teamAssistance?: { [key: string]: number };
+  modifiers?: { [key: string]: number };
 }
 
 export enum Origin {

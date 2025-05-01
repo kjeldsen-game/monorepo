@@ -11,6 +11,8 @@ interface AssistanceBonusTooltipProps {
 const AssistanceBonusTooltip: React.FC<AssistanceBonusTooltipProps> = ({
   chainActionBonuses,
 }) => {
+  console.log(chainActionBonuses);
+
   return (
     <Grid item xs={6}>
       {chainActionBonuses &&

@@ -21,62 +21,129 @@ const DoubleColAssistanceTooltip = ({
   defenderStats,
   children,
 }: DoubleColAssistanceTooltipProps) => {
+  const total =
+    defenderStats.assistance?.adjusted != 0.0
+      ? defenderStats.assistance?.adjusted
+      : attackerStats.assistance?.adjusted;
+
   return (
     <CustomTooltip
       tooltipContent={
         <Box sx={{ color: 'black' }}>
           <Grid container>
-            <Grid>
-              <Typography>{formatName(attackerName)}</Typography>
-              {attackerStats.teamAssistance &&
-                Object.entries(attackerStats.teamAssistance).map(
-                  ([name, value]) => (
+            <Grid
+              display={'flex'}
+              flexDirection={'column'}
+              justifyContent={'space-between'}>
+              <Box>
+                <Typography>{formatName(attackerName)}</Typography>
+                {attackerStats.assistance?.teamAssistance &&
+                  Object.entries(attackerStats.assistance?.teamAssistance).map(
+                    ([name, value]) => (
+                      <TooltipDataItem
+                        key={name}
+                        title={formatName(name)}
+                        value={value}
+                      />
+                    ),
+                  )}
+                {attackerStats.assistance?.totalModifiers != 0 ? (
+                  <CustomTooltip
+                    tooltipContent={
+                      <AssistanceBonusTooltip
+                        chainActionBonuses={attackerStats.assistance?.modifiers}
+                      />
+                    }>
                     <TooltipDataItem
-                      key={name}
-                      title={formatName(name)}
-                      value={value}
+                      sx={{ color: '#FF3F84' }}
+                      title={'Modifiers'}
+                      value={attackerStats.assistance?.totalModifiers}
                     />
-                  ),
-                )}
-              <CustomTooltip
-                tooltipContent={
-                  <AssistanceBonusTooltip
-                    chainActionBonuses={attackerStats.chainActionBonuses}
+                  </CustomTooltip>
+                ) : (
+                  <TooltipDataItem
+                    title={'Modifiers'}
+                    value={attackerStats.assistance?.totalModifiers}
                   />
-                }>
-                <TooltipDataItem
-                  sx={{ borderTop: '1px solid black', color: '#FF3F84' }}
-                  title={'Total'}
-                  value={attackerStats.assistance}
-                />
-              </CustomTooltip>
+                )}
+              </Box>
+              <TooltipDataItem
+                sx={{
+                  borderTop: '1px solid black',
+                  color: '#FF3F84',
+                }}
+                title={'Total'}
+                value={attackerStats.assistance?.total}
+              />
             </Grid>
-            <Grid paddingLeft={'40px'}>
-              <Typography>{formatName(defenderName)}</Typography>
-              {defenderStats.teamAssistance &&
-                Object.entries(defenderStats.teamAssistance).map(
-                  ([name, value]) => (
+            <Grid
+              paddingLeft={'40px'}
+              display={'flex'}
+              flexDirection={'column'}
+              justifyContent={'space-between'}>
+              <Box>
+                <Typography>{formatName(defenderName)}</Typography>
+                {defenderStats.assistance?.teamAssistance &&
+                  Object.entries(defenderStats.assistance?.teamAssistance).map(
+                    ([name, value]) => (
+                      <TooltipDataItem
+                        key={name}
+                        title={formatName(name)}
+                        value={value}
+                      />
+                    ),
+                  )}
+                {defenderStats.assistance?.totalModifiers != 0 ? (
+                  <CustomTooltip
+                    tooltipContent={
+                      <AssistanceBonusTooltip
+                        chainActionBonuses={defenderStats.assistance?.modifiers}
+                      />
+                    }>
                     <TooltipDataItem
-                      key={name}
-                      title={formatName(name)}
-                      value={value}
+                      sx={{ color: '#FF3F84' }}
+                      title={'Modifiers'}
+                      value={defenderStats.assistance?.totalModifiers}
                     />
-                  ),
-                )}
-              <CustomTooltip
-                tooltipContent={
-                  <AssistanceBonusTooltip
-                    chainActionBonuses={defenderStats.chainActionBonuses}
+                  </CustomTooltip>
+                ) : (
+                  <TooltipDataItem
+                    title={'Modifiers'}
+                    value={defenderStats.assistance?.totalModifiers}
                   />
-                }>
-                <TooltipDataItem
-                  sx={{ borderTop: '1px solid black', color: '#FF3F84' }}
-                  title={'Total'}
-                  value={defenderStats.assistance}
-                />
-              </CustomTooltip>
+                )}
+              </Box>
+              <TooltipDataItem
+                sx={{ borderTop: '1px solid black', color: '#FF3F84' }}
+                title={'Total'}
+                value={defenderStats.assistance?.total}
+              />
             </Grid>
           </Grid>
+          <Box display={'flex'} justifyContent={'center'}>
+            <Box width={'50%'}>
+              <CustomTooltip
+                tooltipContent={
+                  Math.abs(
+                    defenderStats.assistance?.total -
+                      attackerStats.assistance?.total,
+                  ) +
+                  ' = ' +
+                  total
+                }>
+                <TooltipDataItem
+                  sx={{
+                    marginTop: '10px',
+                    borderTop: '1px solid black',
+                    color: '#FF3F84',
+                    justifyContent: 'center',
+                  }}
+                  title={'Total'}
+                  value={total}
+                />
+              </CustomTooltip>
+            </Box>
+          </Box>
         </Box>
       }>
       {children}

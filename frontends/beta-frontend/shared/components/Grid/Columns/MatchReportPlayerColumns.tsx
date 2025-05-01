@@ -21,7 +21,7 @@ export const matchReportPlayercolumns = (
   truncateName: boolean = false,
   stats: any,
 ) => {
-  console.log(stats);
+  // console.log(stats);
 
   const columns: GridColDef[] = [
     {

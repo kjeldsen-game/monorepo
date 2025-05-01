@@ -15,8 +15,8 @@ const MatchStats: React.FC<MatchStatsProps> = ({ report }) => {
     setOpen(false);
   };
 
-  console.log(report.home.players);
-  console.log(report.away.players);
+  // console.log(report.home.players);
+  // console.log(report.away.players);
 
   const homePlayersWRole = report.home.players.map((player) => {
     return player.name + ' [' + player.teamRole.substring(0, 1) + ']';
