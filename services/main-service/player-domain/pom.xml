@@ -12,6 +12,10 @@
     <dependencies>
         <dependency>
             <groupId>com.kjeldsen</groupId>
+            <artifactId>lib-pub-sub</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
             <artifactId>domain</artifactId>
         </dependency>
         <dependency>

@@ -1,5 +1,8 @@
 package com.kjeldsen.match.application.usecases;
 
+import com.kjeldsen.lib.clients.TeamClientApi;
+import com.kjeldsen.lib.model.team.TeamClient;
+import com.kjeldsen.lib.model.team.TeamModifiersClient;
 import com.kjeldsen.match.application.usecases.common.BaseClientTest;
 import com.kjeldsen.match.application.usecases.league.UpdateLeagueStandingsUseCase;
 import com.kjeldsen.match.domain.Game;
@@ -21,6 +24,7 @@ import org.mockito.Mockito;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,7 +38,7 @@ class ExecuteMatchUseCaseTest extends BaseClientTest {
     private final MatchEventPublisher mockedMatchEventPublisher = mock(MatchEventPublisher.class);
     private final GetMatchUseCase mockedGetMatchUseCase = mock(GetMatchUseCase.class);
     private final UpdateLeagueStandingsUseCase mockedUpdateLeagueStandingsUseCase = Mockito.mock(UpdateLeagueStandingsUseCase.class);
-    private final TeamClientMatch mockedTeamClient = Mockito.mock(TeamClientMatch.class);
+    private final TeamClientApi mockedTeamClient = Mockito.mock(TeamClientApi.class);
     private final ExecuteMatchUseCase executeMatchUseCase = new ExecuteMatchUseCase(mockedGetMatchAttendanceUseCase,
         mockedMatchWriteRepository, mockedMatchEventPublisher, mockedGetMatchUseCase, mockedUpdateLeagueStandingsUseCase, mockedTeamClient);
 
@@ -83,12 +87,13 @@ class ExecuteMatchUseCaseTest extends BaseClientTest {
             .build();
 
         when(match.getMatchReport()).thenReturn(testReport);
-        when(mockedTeamClient.getTeam("home-team-id", "token")).thenReturn(
-            TeamDTO.builder().players(Collections.EMPTY_LIST).teamModifiers(TeamModifiers.builder().horizontalPressure("SWARM_CENTRE")
-                .verticalPressure("MID_PRESSURE").tactic("DOUBLE_TEAM").build()).build());
-        when(mockedTeamClient.getTeam("away-team-id", "token")).thenReturn(
-            TeamDTO.builder().players(Collections.EMPTY_LIST).teamModifiers(TeamModifiers.builder().horizontalPressure("SWARM_CENTRE")
-                .verticalPressure("MID_PRESSURE").tactic("DOUBLE_TEAM").build()).build());
+        when(mockedTeamClient.getTeam("home-team-id", null, null)).thenReturn(
+            List.of(TeamClient.builder().players(Collections.EMPTY_LIST).teamModifiers(TeamModifiersClient.builder().horizontalPressure("SWARM_CENTRE")
+                .verticalPressure("MID_PRESSURE").tactic("DOUBLE_TEAM").build()).build()));
+
+        when(mockedTeamClient.getTeam("away-team-id", null, null)).thenReturn(
+            List.of(TeamClient.builder().players(Collections.EMPTY_LIST).teamModifiers(TeamModifiersClient.builder().horizontalPressure("SWARM_CENTRE")
+                .verticalPressure("MID_PRESSURE").tactic("DOUBLE_TEAM").build()).build()));
 
         try (MockedStatic<Game> mockedGame = mockStatic(Game.class)) {
             mockedGame.when(() -> Game.play(any(Match.class))).thenReturn(mockGameState);

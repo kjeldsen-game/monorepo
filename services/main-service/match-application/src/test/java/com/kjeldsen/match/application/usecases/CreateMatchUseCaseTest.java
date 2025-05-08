@@ -1,8 +1,8 @@
 package com.kjeldsen.match.application.usecases;
 
+import com.kjeldsen.lib.clients.TeamClientApi;
+import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.match.application.usecases.common.BaseClientTest;
-import com.kjeldsen.match.domain.clients.TeamClientMatch;
-import com.kjeldsen.match.domain.clients.models.team.TeamDTO;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.repositories.MatchWriteRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +11,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -18,17 +19,17 @@ import static org.mockito.Mockito.*;
 class CreateMatchUseCaseTest extends BaseClientTest {
 
     private final MatchWriteRepository mockedMatchWriteRepository = Mockito.mock(MatchWriteRepository.class);
-    private final TeamClientMatch mockedTeamClient = Mockito.mock(TeamClientMatch.class);
+    private final TeamClientApi mockedTeamClient = Mockito.mock(TeamClientApi.class);
     private final CreateMatchUseCase createMatchUseCase = new CreateMatchUseCase(mockedMatchWriteRepository,
         mockedTeamClient);
 
     @Test
     @DisplayName("Should create match with the PENDING status due no league")
     void should_create_match_without_league() {
-        when(mockedTeamClient.getTeam("home", "token")).thenReturn(
-            TeamDTO.builder().id("home").build());
-        when(mockedTeamClient.getTeam("away", "token")).thenReturn(
-            TeamDTO.builder().id("away").build());
+        when(mockedTeamClient.getTeam("home", null, null)).thenReturn(
+           List.of(TeamClient.builder().id("home").build()));
+        when(mockedTeamClient.getTeam("away", null, null)).thenReturn(
+            List.of(TeamClient.builder().id("away").build()));
 
         createMatchUseCase.create("home", "away", LocalDateTime.now(), null);
         ArgumentCaptor<Match> captor = ArgumentCaptor.forClass(Match.class);
@@ -43,10 +44,10 @@ class CreateMatchUseCaseTest extends BaseClientTest {
     @Test
     @DisplayName("Should create match with the SCHEDULED status due league")
     void should_create_match_with_league() {
-        when(mockedTeamClient.getTeam("home", "token")).thenReturn(
-            TeamDTO.builder().id("home").build());
-        when(mockedTeamClient.getTeam("away", "token")).thenReturn(
-            TeamDTO.builder().id("away").build());
+        when(mockedTeamClient.getTeam("home", null, null)).thenReturn(
+            List.of(TeamClient.builder().id("home").build()));
+        when(mockedTeamClient.getTeam("away", null, null)).thenReturn(
+            List.of(TeamClient.builder().id("away").build()));
 
         createMatchUseCase.create("home", "away", LocalDateTime.now(), "leagueId");
         ArgumentCaptor<Match> captor = ArgumentCaptor.forClass(Match.class);

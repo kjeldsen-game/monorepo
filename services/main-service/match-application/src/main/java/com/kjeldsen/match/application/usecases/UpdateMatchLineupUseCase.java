@@ -1,6 +1,8 @@
 package com.kjeldsen.match.application.usecases;
 
 import com.kjeldsen.auth.authorization.SecurityUtils;
+import com.kjeldsen.lib.clients.PlayerClientApi;
+import com.kjeldsen.lib.model.player.PlayerClient;
 import com.kjeldsen.match.domain.clients.PlayerClientMatch;
 import com.kjeldsen.match.domain.clients.models.player.PlayerDTO;
 
@@ -28,16 +30,16 @@ public class UpdateMatchLineupUseCase {
 
     private final MatchWriteRepository matchWriteRepository;
     private final GetMatchTeamUseCase getMatchTeamUseCase;
-    private final PlayerClientMatch playerClient;
+    private final PlayerClientApi playerClientApi;
 
     public void update(String matchId, String teamId, List<PlayerUpdateDTO> playerList, TeamModifiers teamModifiers) {
         log.info("UpdateMatchLineupUseCase for match={} team={}", matchId, teamId);
 
         GetMatchTeamUseCase.MatchAndTeam matchAndTeam = getMatchTeamUseCase.getMatchAndTeam(matchId, teamId);
 
-        List<PlayerDTO> players = playerClient.getPlayers(teamId, SecurityUtils.getCurrentUserToken());
+        List<PlayerClient> players = playerClientApi.getPlayers(teamId);
         playerList.forEach(player -> {
-            Optional<PlayerDTO> matchingPlayerDTO = players.stream()
+            Optional<PlayerClient> matchingPlayerDTO = players.stream()
                 .filter(playerDTO -> playerDTO.getId().equals(player.getId()))
                 .findFirst();
             matchingPlayerDTO.ifPresent(playerDTO -> {
@@ -69,9 +71,9 @@ public class UpdateMatchLineupUseCase {
     public void updateSelf(String teamId, Match match, List<PlayerUpdateDTO> playerList, TeamModifiers teamModifiers) {
         log.info("UpdateMatchLineupUseCase for match={} for the self clone team", match.getId());
 
-        List<PlayerDTO> players = playerClient.getPlayers(teamId, SecurityUtils.getCurrentUserToken());
+        List<PlayerClient> players = playerClientApi.getPlayers(teamId);
         playerList.forEach(player -> {
-            Optional<PlayerDTO> matchingPlayerDTO = players.stream()
+            Optional<PlayerClient> matchingPlayerDTO = players.stream()
                 .filter(playerDTO -> playerDTO.getId().equals(player.getId()))
                 .findFirst();
             matchingPlayerDTO.ifPresent(playerDTO -> {
@@ -101,7 +103,7 @@ public class UpdateMatchLineupUseCase {
     }
 
 
-    private List<com.kjeldsen.match.domain.entities.Player> filterPlayersByStatus(PlayerStatus status, List<PlayerDTO> players, TeamRole role) {
+    private List<com.kjeldsen.match.domain.entities.Player> filterPlayersByStatus(PlayerStatus status, List<PlayerClient> players, TeamRole role) {
         return players.stream()
             .filter(domainPlayer -> domainPlayer.getStatus().equals(status.name()))
             .map(player ->  buildPlayer(player, role))
@@ -127,7 +129,7 @@ public class UpdateMatchLineupUseCase {
             .build();
     }
 
-    public static com.kjeldsen.match.domain.entities.Player buildPlayer(PlayerDTO player, TeamRole teamRole) {
+    public static com.kjeldsen.match.domain.entities.Player buildPlayer(PlayerClient player, TeamRole teamRole) {
         Map<PlayerSkill, Integer> skills = player.getActualSkills().entrySet().stream()
             .collect(Collectors.toMap(
                 entry -> PlayerSkill.valueOf(entry.getKey()),

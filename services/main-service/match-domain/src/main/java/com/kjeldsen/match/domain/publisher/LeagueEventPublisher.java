@@ -1,6 +1,6 @@
 package com.kjeldsen.match.domain.publisher;
 
-import com.kjeldsen.player.domain.events.LeagueEvent;
+import com.kjeldsen.lib.events.LeagueEvent;
 
 public interface LeagueEventPublisher {
 

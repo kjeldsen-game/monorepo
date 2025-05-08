@@ -18,7 +18,7 @@ public class FilterMarketPlayersQuery {
     private Integer minAge;
     private Integer maxAge;
     private List<PlayerSkillFilter> skills;
-    private List<Player.PlayerId> playerIds;
+    private List<String> playerIds;
 
 
     @Getter

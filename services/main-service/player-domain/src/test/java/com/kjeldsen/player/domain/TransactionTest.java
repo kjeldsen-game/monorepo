@@ -1,6 +1,6 @@
 package com.kjeldsen.player.domain;
 
-import com.kjeldsen.player.domain.events.TransactionEvent;
+import com.kjeldsen.lib.events.TransactionEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,6 @@ class TransactionTest {
         assertNotEquals(transactionId1, transactionId2);
     }
 
-
     @Test
     @DisplayName("Should assign right Id value with of")
     void should_assign_right_id_value_with_of() {
@@ -31,18 +30,18 @@ class TransactionTest {
     @Test
     @DisplayName("Should create a Transaction from TransactionEvent")
     public void should_create_a_Transaction_from_TransactionEvent() {
-        TransactionEvent testTransactionEvent =  TransactionEvent.builder()
-            .occurredAt(Instant.now())
-            .teamId(Team.TeamId.of("example"))
-            .transactionType(Transaction.TransactionType.PLAYER_SALE)
+        com.kjeldsen.lib.events.TransactionEvent testTransactionEvent =  TransactionEvent.builder()
+            .teamId("example")
+            .transactionType(Transaction.TransactionType.PLAYER_SALE.name())
             .transactionAmount(BigDecimal.TEN)
             .prevTransactionBalance(BigDecimal.ZERO)
             .postTransactionBalance(BigDecimal.TEN)
             .build();
+
         Transaction transaction = Transaction.creation(testTransactionEvent);
 
-        assertEquals(testTransactionEvent.getTransactionType(), transaction.getTransactionType());
-        assertEquals(testTransactionEvent.getTeamId(), transaction.getTeamId());
+        assertEquals(testTransactionEvent.getTransactionType(), transaction.getTransactionType().name());
+        assertEquals(testTransactionEvent.getTeamId(), transaction.getTeamId().value());
         assertEquals(testTransactionEvent.getTransactionAmount(), transaction.getTransactionAmount());
         assertEquals(testTransactionEvent.getPrevTransactionBalance(), transaction.getPrevTransactionBalance());
         assertEquals(testTransactionEvent.getPostTransactionBalance(), transaction.getPostTransactionBalance());

@@ -1,12 +1,12 @@
 package com.kjeldsen.player.application.usecases;
 
+import com.kjeldsen.lib.events.AuctionCreationEvent;
 import com.kjeldsen.player.application.testdata.TestData;
 import com.kjeldsen.player.application.usecases.player.GetPlayersUseCase;
 import com.kjeldsen.player.application.usecases.player.PlayerSellUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerStatus;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.events.AuctionCreationEvent;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,8 +50,8 @@ class PlayerSellUseCaseTest {
         AuctionCreationEvent testEvent = playerSellUseCase.sell(mockedPlayerId);
         assertNotNull(testEvent);
         assertEquals(PlayerStatus.FOR_SALE, mockedPlayer.getStatus());
-        assertEquals(mockedPlayerId, testEvent.getPlayerId());
-        assertEquals(mockedTeamId, testEvent.getTeamId());
+        assertEquals(mockedPlayerId.value(), testEvent.getPlayerId());
+        assertEquals(mockedTeamId.value(), testEvent.getTeamId());
         verify(mockedGetPlayersUseCase).get(mockedPlayerId);
     }
 }

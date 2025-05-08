@@ -1,9 +1,9 @@
 package com.kjeldsen.market.quartz;
 
+import com.kjeldsen.lib.events.AuctionEndEvent;
 import com.kjeldsen.market.application.AuctionEndUseCase;
 import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.publishers.AuctionEndEventPublisher;
-import com.kjeldsen.player.domain.events.AuctionEndEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;

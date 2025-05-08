@@ -21,8 +21,8 @@ import java.util.UUID;
 @TypeAlias("Auction")
 public class Auction {
     AuctionId id;
-    Player.PlayerId playerId;
-    Team.TeamId teamId;
+    String playerId;
+    String teamId;
     @Field(targetType = FieldType.DECIMAL128)
     BigDecimal averageBid;
     AuctionStatus status;
@@ -50,7 +50,7 @@ public class Auction {
     @Builder
     @ToString
     public static class Bid {
-        Team.TeamId teamId;
+        String teamId;
         @Field(targetType = FieldType.DECIMAL128)
         BigDecimal amount;
         Instant timestamp;

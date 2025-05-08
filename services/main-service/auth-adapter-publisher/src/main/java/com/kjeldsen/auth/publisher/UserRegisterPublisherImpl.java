@@ -1,7 +1,7 @@
 package com.kjeldsen.auth.publisher;
 
 import com.kjeldsen.auth.domain.publishers.UserRegisterPublisher;
-import com.kjeldsen.player.domain.events.UserRegisterEvent;
+import com.kjeldsen.lib.events.UserRegisterEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;

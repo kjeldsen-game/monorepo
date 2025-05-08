@@ -1,8 +1,7 @@
 package com.kjeldsen.match.application.usecases;
 
-import com.kjeldsen.auth.authorization.SecurityUtils;
-import com.kjeldsen.match.domain.clients.TeamClientMatch;
-import com.kjeldsen.match.domain.clients.models.team.TeamDTO;
+import com.kjeldsen.lib.clients.TeamClientApi;
+import com.kjeldsen.lib.model.team.TeamClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,12 +13,12 @@ import java.util.Map;
 @Slf4j
 public class GetMatchAttendanceUseCase {
 
-    private final TeamClientMatch teamClient;
+    private final TeamClientApi teamClientApi;
 
     public Map<String, Integer> get(String homeId, String awayId) {
         log.info("GetMatchAttendanceUseCase for homeId={}, awayId={}", homeId, awayId);
-        TeamDTO homeTeam = teamClient.getTeam(homeId, SecurityUtils.getCurrentUserToken());
-        TeamDTO awayTeam = teamClient.getTeam(awayId, SecurityUtils.getCurrentUserToken());
+        TeamClient homeTeam = teamClientApi.getTeam(homeId, null, null).get(0);
+        TeamClient awayTeam = teamClientApi.getTeam(awayId, null, null).get(0);
 
         Integer capacity = homeTeam.getBuildings().getStadium().getSeats();
         int homeAttendance = Math.round(homeTeam.getFans().getTotalFans() * 0.8f);

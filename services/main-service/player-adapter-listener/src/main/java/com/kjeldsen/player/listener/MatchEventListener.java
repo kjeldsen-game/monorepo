@@ -1,5 +1,6 @@
 package com.kjeldsen.player.listener;
 
+import com.kjeldsen.lib.events.MatchEvent;
 import com.kjeldsen.player.application.usecases.economy.MatchAttendanceIncomeUseCase;
 import com.kjeldsen.player.application.usecases.economy.MerchandiseIncomeUseCase;
 import com.kjeldsen.player.application.usecases.economy.RestaurantIncomeUseCase;
@@ -7,7 +8,6 @@ import com.kjeldsen.player.application.usecases.economy.SignSponsorIncomeUseCase
 import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
 import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.events.MatchEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -26,7 +26,7 @@ public class MatchEventListener {
     private final SignSponsorIncomeUseCase signSponsorIncomeUseCase;
 
     @EventListener
-    public void handleMatchEvent(MatchEvent matchEvent) {
+    public void handleMatchEvent(com.kjeldsen.lib.events.MatchEvent matchEvent) {
       log.info("MatchEvent received: {}", matchEvent);
 
       Integer totalMatchAttendance = matchEvent.getAwayAttendance() + matchEvent.getHomeAttendance();

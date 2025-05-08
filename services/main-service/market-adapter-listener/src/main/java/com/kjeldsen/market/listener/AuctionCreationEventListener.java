@@ -1,9 +1,9 @@
 package com.kjeldsen.market.listener;
 
+import com.kjeldsen.lib.events.AuctionCreationEvent;
 import com.kjeldsen.market.application.CreateAuctionUseCase;
 import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.schedulers.AuctionEndJobScheduler;
-import com.kjeldsen.player.domain.events.AuctionCreationEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

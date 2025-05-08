@@ -2,13 +2,15 @@ package com.kjeldsen.match.application.usecases.league;
 
 import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.domain.EventId;
+import com.kjeldsen.lib.clients.TeamClientApi;
+import com.kjeldsen.lib.events.LeagueEvent;
+import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.match.domain.clients.TeamClientMatch;
 import com.kjeldsen.match.domain.clients.models.team.TeamDTO;
 import com.kjeldsen.match.domain.entities.League;
 import com.kjeldsen.match.domain.publisher.LeagueEventPublisher;
 import com.kjeldsen.match.domain.repositories.LeagueReadRepository;
 import com.kjeldsen.match.domain.repositories.LeagueWriteRepository;
-import com.kjeldsen.player.domain.events.LeagueEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -26,14 +28,14 @@ public class AddTeamToLeagueUseCase {
 
     private final LeagueWriteRepository leagueWriteRepository;
     private final LeagueReadRepository leagueReadRepository;
-    private final TeamClientMatch teamClient;
     private final LeagueEventPublisher leagueEventPublisher;
+    private final TeamClientApi teamClientApi;
 
     public void add(String teamId, BigDecimal teamValue) {
         Random random = new Random();
         log.info("AddTeamToLeagueUseCase for teamId={} with teamValue={}", teamId, teamValue );
         // TODO add validation to check if the team don't have already assigned league
-        TeamDTO team = teamClient.getTeam(teamId, SecurityUtils.getCurrentUserToken());
+        TeamClient teamClient = teamClientApi.getTeam(teamId, null, null).get(0);
 
         List<League> leagues = leagueReadRepository.findAll();
         // Filter leagues with same tier and it's not full yet
@@ -50,7 +52,7 @@ public class AddTeamToLeagueUseCase {
             .build() : filtered.get(Math.abs(new Random().nextInt()) % leagues.size());
 
         League.LeagueStats stats = new League.LeagueStats();
-        stats.setName(team.getName());
+        stats.setName(teamClient.getName());
         stats.setPosition(league.getTeams().size() + 1); // Assign last position
         league.addTeam(teamId, stats);
         // The league is full, publish event and schedule matches
@@ -66,7 +68,7 @@ public class AddTeamToLeagueUseCase {
         // Save leagueId for the team as well to be able to filter league data
         League leagueSaved = leagueWriteRepository.save(league);
         //team.setLeagueId(leagueSaved.getId().value());
-        leagueEventPublisher.publishLeagueEvent(LeagueEvent.builder().id(EventId.generate())
-            .teamId(team.getId()).leagueId(league.getId().value()).occurredAt(Instant.now()).build());
+        leagueEventPublisher.publishLeagueEvent(LeagueEvent.builder()
+            .teamId(teamClient.getId()).leagueId(league.getId().value()).build());
     }
 }

@@ -23,7 +23,7 @@ class CreateAuctionUseCaseTest {
         Player.PlayerId mockedPlayerId = Player.PlayerId.generate();
         Team.TeamId mockedTeamId = Team.TeamId.generate();
 
-        createAuctionUseCase.create(mockedPlayerId, mockedTeamId);
+        createAuctionUseCase.create(mockedPlayerId.value(), mockedTeamId.value());
 
         verify(auctionWriteRepository).save(any(Auction.class));
 
@@ -32,7 +32,7 @@ class CreateAuctionUseCaseTest {
         Auction savedAuction = auctionCaptor.getValue();
 
         assertNotNull(savedAuction);
-        assertEquals(mockedTeamId, savedAuction.getTeamId());
-        assertEquals(mockedPlayerId, savedAuction.getPlayerId());
+        assertEquals(mockedTeamId.value(), savedAuction.getTeamId());
+        assertEquals(mockedPlayerId.value(), savedAuction.getPlayerId());
     }
 }

@@ -1,5 +1,8 @@
 package com.kjeldsen.match.application.usecases;
 
+import com.kjeldsen.lib.clients.PlayerClientApi;
+import com.kjeldsen.lib.model.player.PlayerClient;
+import com.kjeldsen.lib.model.player.PlayerSkillsClient;
 import com.kjeldsen.match.application.usecases.common.BaseClientTest;
 import com.kjeldsen.match.domain.clients.PlayerClientMatch;
 import com.kjeldsen.match.domain.clients.models.player.PlayerDTO;
@@ -25,7 +28,7 @@ class UpdateMatchLineupUseCaseTest extends BaseClientTest {
 
     private final MatchWriteRepository mockedMatchWriteRepository  = Mockito.mock(MatchWriteRepository.class);
     private final GetMatchTeamUseCase mockedGetMatchTeamUseCase = Mockito.mock(GetMatchTeamUseCase.class);
-    private final PlayerClientMatch mockedPlayerClient = Mockito.mock(PlayerClientMatch.class);
+    private final PlayerClientApi mockedPlayerClient = Mockito.mock(PlayerClientApi.class);
     private final UpdateMatchLineupUseCase updateMatchLineupUseCase = new UpdateMatchLineupUseCase(
         mockedMatchWriteRepository, mockedGetMatchTeamUseCase, mockedPlayerClient);
 
@@ -53,13 +56,12 @@ class UpdateMatchLineupUseCaseTest extends BaseClientTest {
         when(mockedGetMatchTeamUseCase.getMatchAndTeam("matchId", "teamId")).thenReturn(
             matchAndTeam);
 
-        List<PlayerDTO> dtos = new ArrayList<>();
-        com.kjeldsen.match.domain.clients.models.player.PlayerSkills skillPoints = new
-            com.kjeldsen.match.domain.clients.models.player.PlayerSkills(50, 0, "RESIDUAL");
+        List<PlayerClient> dtos = new ArrayList<>();
+        PlayerSkillsClient skillPoints = new PlayerSkillsClient(50, 0, "RESIDUAL");
 
         for (int a = 1; a <= players.size(); a++) {
             UpdateMatchLineupUseCase.PlayerUpdateDTO player = players.get(a-1);
-            dtos.add(PlayerDTO.builder()
+            dtos.add(PlayerClient.builder()
                 .id("player" + a)
                 .actualSkills(Map.of("SCORING", skillPoints))
                 .name("player" + a)
@@ -70,7 +72,7 @@ class UpdateMatchLineupUseCaseTest extends BaseClientTest {
                 .build());
         }
 
-        when(mockedPlayerClient.getPlayers("teamId", "token")).thenReturn(dtos);
+        when(mockedPlayerClient.getPlayers("teamId")).thenReturn(dtos);
         updateMatchLineupUseCase.update("matchId", "teamId", players, teamModifiers);
 
         assertTrue(matchAndTeam.team().getSpecificLineup());

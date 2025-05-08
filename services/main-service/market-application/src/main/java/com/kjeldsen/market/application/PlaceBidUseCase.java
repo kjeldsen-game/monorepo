@@ -1,6 +1,6 @@
 package com.kjeldsen.market.application;
 
-import com.kjeldsen.domain.EventId;
+import com.kjeldsen.lib.events.BidEvent;
 import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.exceptions.AuctionNotFoundException;
 import com.kjeldsen.market.domain.exceptions.InsufficientBalanceException;
@@ -10,7 +10,6 @@ import com.kjeldsen.market.domain.publishers.BidEventPublisher;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.events.BidEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -69,7 +67,7 @@ public class PlaceBidUseCase {
            updateTeamBalance(team, bidAmountDiff);
            Auction.Bid bid = Auction.Bid.builder()
            .timestamp(InstantProvider.now())
-           .teamId(team.getId())
+           .teamId(team.getId().value())
            .amount(amount)
            .build();
            auction.getBids().add(bid);
@@ -102,7 +100,7 @@ public class PlaceBidUseCase {
             throw new InsufficientBalanceException();
         }
         bidEventPublisher.publishBidEndEvent(BidEvent.builder().amount(bidAmountDiff)
-            .teamId(team.getId().value()).id(EventId.generate()).occurredAt(Instant.now()).build());
+            .teamId(team.getId().value()).build());
         //team.getEconomy().updateBalance(bidAmountDiff);
     }
 }

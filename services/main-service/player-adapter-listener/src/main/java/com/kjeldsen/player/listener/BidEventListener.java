@@ -1,8 +1,8 @@
 package com.kjeldsen.player.listener;
 
+import com.kjeldsen.lib.events.BidEvent;
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.events.BidEvent;
 import com.kjeldsen.player.domain.exceptions.InsufficientBalanceException;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,9 @@
 package com.kjeldsen.player.listener;
 
+import com.kjeldsen.lib.events.AuctionEndEvent;
 import com.kjeldsen.player.application.usecases.player.ProcessPlayerTransferUseCase;
-import com.kjeldsen.player.domain.events.AuctionEndEvent;
+import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.Team;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -18,7 +20,10 @@ public class AuctionEndEventListener {
     public void handleAuctionEndEvent(AuctionEndEvent auctionEndEvent) {
         log.info("AuctionEndEvent received: {}", auctionEndEvent);
 
-        processPlayerTransferUseCase.process(auctionEndEvent.getPlayerId(), auctionEndEvent.getAmount(),
-            auctionEndEvent.getAuctionWinner(), auctionEndEvent.getAuctionCreator());
+        processPlayerTransferUseCase.process(
+            Player.PlayerId.of(auctionEndEvent.getPlayerId()),
+            auctionEndEvent.getAmount(),
+            Team.TeamId.of(auctionEndEvent.getAuctionWinner()),
+            Team.TeamId.of(auctionEndEvent.getAuctionCreator()));
     }
 }

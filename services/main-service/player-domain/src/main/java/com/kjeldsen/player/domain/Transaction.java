@@ -1,7 +1,7 @@
 package com.kjeldsen.player.domain;
 
 
-import com.kjeldsen.player.domain.events.TransactionEvent;
+import com.kjeldsen.lib.events.TransactionEvent;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -41,8 +41,8 @@ public class Transaction {
     public static Transaction creation(TransactionEvent transactionEvent) {
         return Transaction.builder()
             .occurredAt(Instant.now())
-            .teamId(transactionEvent.getTeamId())
-            .transactionType(transactionEvent.getTransactionType())
+            .teamId(Team.TeamId.of(transactionEvent.getTeamId()))
+            .transactionType(TransactionType.valueOf(transactionEvent.getTransactionType()))
             .id(TransactionId.generate())
             .transactionAmount(transactionEvent.getTransactionAmount())
             .prevTransactionBalance(transactionEvent.getPrevTransactionBalance())

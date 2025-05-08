@@ -1,6 +1,6 @@
 package com.kjeldsen.match.domain.publisher;
 
-import com.kjeldsen.player.domain.events.LeagueEvent;
+import com.kjeldsen.lib.events.LeagueEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;

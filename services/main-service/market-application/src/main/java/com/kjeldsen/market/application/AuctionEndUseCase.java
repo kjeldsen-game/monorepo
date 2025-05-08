@@ -1,13 +1,13 @@
 package com.kjeldsen.market.application;
 
 import com.kjeldsen.domain.EventId;
+import com.kjeldsen.lib.events.AuctionEndEvent;
 import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.exceptions.AuctionNotFoundException;
 import com.kjeldsen.market.domain.exceptions.PlaceBidException;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.events.AuctionEndEvent;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class AuctionEndUseCase {
     private final TeamReadRepository teamReadRepository;
     private final TeamWriteRepository teamWriteRepository;
 
-    public AuctionEndEvent endAuction(Auction.AuctionId auctionId) {
+    public com.kjeldsen.lib.events.AuctionEndEvent endAuction(Auction.AuctionId auctionId) {
         log.info("AuctionEndUseCase for auction {}", auctionId );
 
         Auction auction = auctionReadRepository.findById(auctionId).orElseThrow(
@@ -49,8 +49,6 @@ public class AuctionEndUseCase {
         auctionWriteRepository.save(auction);
 
         return AuctionEndEvent.builder()
-            .id(EventId.generate())
-            .occurredAt(Instant.now())
             .auctionWinner(highestBid.getTeamId())
             .auctionCreator(auction.getTeamId())
             .amount(highestBid.getAmount())
@@ -70,15 +68,16 @@ public class AuctionEndUseCase {
             .values().stream()
             .filter(Objects::nonNull).toList();
 
-        for (Auction.Bid bid : highestBidsPerTeam) {
-            try {
-                Team team = teamReadRepository.findById(bid.getTeamId()).orElseThrow(
-                    () -> new RuntimeException("Team not found"));
-                team.getEconomy().updateBalance(bid.getAmount());
-                teamWriteRepository.save(team);
-            } catch (RuntimeException e) {
-                log.error(e.getMessage());
-            }
-        }
+        // TODO fix with client calls
+//        for (Auction.Bid bid : highestBidsPerTeam) {
+//            try {
+//                Team team = teamReadRepository.findById(bid.getTeamId()).orElseThrow(
+//                    () -> new RuntimeException("Team not found"));
+//                team.getEconomy().updateBalance(bid.getAmount());
+//                teamWriteRepository.save(team);
+//            } catch (RuntimeException e) {
+//                log.error(e.getMessage());
+//            }
+//        }
     }
 }

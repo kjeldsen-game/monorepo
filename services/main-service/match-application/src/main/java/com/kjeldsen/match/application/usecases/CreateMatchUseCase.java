@@ -1,6 +1,8 @@
 package com.kjeldsen.match.application.usecases;
 
 import com.kjeldsen.auth.authorization.SecurityUtils;
+import com.kjeldsen.lib.clients.TeamClientApi;
+import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.match.domain.clients.TeamClientMatch;
 import com.kjeldsen.match.domain.clients.models.team.TeamDTO;
 import com.kjeldsen.match.domain.entities.Match;
@@ -19,13 +21,13 @@ import java.util.Objects;
 public class CreateMatchUseCase {
 
     private final MatchWriteRepository matchWriteRepository;
-    private final TeamClientMatch teamClient;
+    private final TeamClientApi teamClientApi;
 
 
     public Match create(String homeTeamId, String awayTeamId, LocalDateTime time, String leagueId) {
         log.info("CreateMatchUseCase for homeTeamId={}, awayTeamId={} time={} leagueId={}", homeTeamId, awayTeamId, time, leagueId);
-        TeamDTO home = teamClient.getTeam(homeTeamId, SecurityUtils.getCurrentUserToken());
-        TeamDTO away = teamClient.getTeam(awayTeamId, SecurityUtils.getCurrentUserToken());
+        TeamClient home = teamClientApi.getTeam(homeTeamId, null, null).get(0);
+        TeamClient away = teamClientApi.getTeam(awayTeamId, null, null).get(0);
 
         com.kjeldsen.match.domain.entities.Team engineHome = buildTeam(home, TeamRole.HOME);
         com.kjeldsen.match.domain.entities.Team engineAway = buildTeam(away, TeamRole.AWAY);
@@ -48,7 +50,7 @@ public class CreateMatchUseCase {
         return matchWriteRepository.save(match);
     }
 
-    private com.kjeldsen.match.domain.entities.Team buildTeam(TeamDTO team, TeamRole role) {
+    private com.kjeldsen.match.domain.entities.Team buildTeam(TeamClient team, TeamRole role) {
         return com.kjeldsen.match.domain.entities.Team.builder()
             .id(team.getId())
             .name(team.getName())

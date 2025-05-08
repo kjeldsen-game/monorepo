@@ -1,8 +1,8 @@
 package com.kjeldsen.player.listener;
 
+import com.kjeldsen.lib.events.LeagueEvent;
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.events.LeagueEvent;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

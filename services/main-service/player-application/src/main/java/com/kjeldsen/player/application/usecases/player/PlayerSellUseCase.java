@@ -1,6 +1,6 @@
 package com.kjeldsen.player.application.usecases.player;
 
-import com.kjeldsen.player.domain.events.AuctionCreationEvent;
+import com.kjeldsen.lib.events.AuctionCreationEvent;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerStatus;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
@@ -17,7 +17,7 @@ public class PlayerSellUseCase {
     private final PlayerWriteRepository playerWriteRepository;
     private final GetPlayersUseCase getPlayersUseCase;
 
-    public AuctionCreationEvent sell(Player.PlayerId playerId) {
+    public com.kjeldsen.lib.events.AuctionCreationEvent sell(Player.PlayerId playerId) {
         log.info("PlayerSellUseCase for player {}", playerId);
         Player player = getPlayersUseCase.get(playerId);
 
@@ -29,6 +29,6 @@ public class PlayerSellUseCase {
         playerWriteRepository.save(player);
 
         return AuctionCreationEvent.builder()
-            .playerId(playerId).teamId(player.getTeamId()).build();
+            .playerId(playerId.value()).teamId(player.getTeamId().value()).build();
     }
 }
