@@ -25,7 +25,6 @@
         <module>match-adapter-persistence</module>
         <module>match-adapter-quartz</module>
         <module>match-adapter-listener</module>
-        <module>match-adapter-client</module>
         <module>market-domain</module>
         <module>market-application</module>
         <module>market-adapter-persistence</module>
@@ -33,9 +32,9 @@
         <module>market-adapter-rest</module>
         <module>market-adapter-publisher</module>
         <module>market-adapter-quartz</module>
-        <module>market-adapter-client</module>
-        <module>auth-adapter-client</module>
         <module>auth-adapter-publisher</module>
+        <module>lib-pub-sub</module>
+        <module>lib-client</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -309,12 +308,17 @@
             <!-- Modules -->
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>auth-adapter-publisher</artifactId>
+                <artifactId>lib-pub-sub</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>auth-adapter-client</artifactId>
+                <artifactId>lib-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
+                <artifactId>auth-adapter-publisher</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -345,11 +349,6 @@
             <dependency>
                 <groupId>com.kjeldsen</groupId>
                 <artifactId>match-application</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.kjeldsen</groupId>
-                <artifactId>match-adapter-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

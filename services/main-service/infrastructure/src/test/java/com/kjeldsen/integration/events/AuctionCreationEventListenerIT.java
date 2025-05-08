@@ -1,11 +1,11 @@
 package com.kjeldsen.integration.events;
 
+import com.kjeldsen.lib.events.AuctionCreationEvent;
 import com.kjeldsen.market.application.CreateAuctionUseCase;
 import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.schedulers.AuctionEndJobScheduler;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.events.AuctionCreationEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -29,21 +29,21 @@ class AuctionCreationEventListenerIT extends AbstractEventIT {
 
         Auction auction = Auction.builder()
             .id(Auction.AuctionId.of("auctionId"))
-            .teamId(Team.TeamId.of("teamId"))
-            .playerId(Player.PlayerId.of("playerId"))
+            .teamId("teamId")
+            .playerId("playerId")
             .build();
 
-        when(createAuctionUseCase.create(Player.PlayerId.of("playerId"), Team.TeamId.of("teamId"))).thenReturn(auction);
+        when(createAuctionUseCase.create("playerId","teamId")).thenReturn(auction);
 
-        AuctionCreationEvent auctionCreationEvent = AuctionCreationEvent.builder()
-            .teamId(Team.TeamId.of("teamId"))
-            .playerId(Player.PlayerId.of("playerId"))
+        com.kjeldsen.lib.events.AuctionCreationEvent auctionCreationEvent = AuctionCreationEvent.builder()
+            .teamId("teamId")
+            .playerId("playerId")
             .build();
 
         testEventPublisher.publishEvent(auctionCreationEvent);
 
-        ArgumentCaptor<Player.PlayerId> playerIdCaptor = ArgumentCaptor.forClass(Player.PlayerId.class);
-        ArgumentCaptor<Team.TeamId> teamIdCaptor = ArgumentCaptor.forClass(Team.TeamId.class);
+        ArgumentCaptor<String> playerIdCaptor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<String> teamIdCaptor = ArgumentCaptor.forClass(String.class);
 
         verify(createAuctionUseCase).create(
             playerIdCaptor.capture(),

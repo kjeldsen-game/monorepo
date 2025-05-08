@@ -1,7 +1,7 @@
 package com.kjeldsen.integration.events;
 
 import com.kjeldsen.domain.EventId;
-import com.kjeldsen.player.application.usecases.economy.BillboardIncomeUseCase;
+import com.kjeldsen.lib.events.MatchEvent;
 import com.kjeldsen.player.application.usecases.economy.MatchAttendanceIncomeUseCase;
 import com.kjeldsen.player.application.usecases.economy.MerchandiseIncomeUseCase;
 import com.kjeldsen.player.application.usecases.economy.RestaurantIncomeUseCase;
@@ -9,8 +9,6 @@ import com.kjeldsen.player.application.usecases.economy.SignSponsorIncomeUseCase
 import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
 import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.events.MatchEvent;
-import com.kjeldsen.player.domain.provider.InstantProvider;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -36,9 +34,7 @@ class MatchEventListenerIT extends AbstractEventIT {
     @Test
     void should_handle_event_and_update_database() {
 
-        MatchEvent matchEvent = MatchEvent.builder()
-            .id(EventId.generate())
-            .occurredAt(InstantProvider.now())
+        com.kjeldsen.lib.events.MatchEvent matchEvent = MatchEvent.builder()
             .matchId("matchId")
             .homeTeamId("homeTeamId")
             .awayTeamId("awayTeamId")

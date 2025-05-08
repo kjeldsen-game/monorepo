@@ -20,6 +20,10 @@
     <dependencies>
         <dependency>
             <groupId>com.kjeldsen</groupId>
+            <artifactId>lib-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
             <artifactId>auth-adapter-authorization</artifactId>
         </dependency>
         <dependency>

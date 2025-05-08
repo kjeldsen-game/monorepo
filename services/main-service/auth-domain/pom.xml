@@ -24,6 +24,10 @@
             <artifactId>domain</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>lib-pub-sub</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>

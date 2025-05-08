@@ -6,6 +6,7 @@ import com.kjeldsen.match.domain.entities.Team;
 import com.kjeldsen.match.domain.entities.TeamRole;
 import com.kjeldsen.match.domain.entities.duel.DuelResult;
 import com.kjeldsen.match.domain.entities.duel.DuelRole;
+import com.kjeldsen.player.domain.PlayerPosition;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -88,6 +89,20 @@ class MatchStatsTest {
 
         assertThat(matchStats.getGoals()).isEqualTo(1);
         assertThat(matchStats.getPlayersStats().get(players.get(0).getId()).getGoals()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("Should handle challenger goal stats")
+    public void should_handle_challenger_goal_stats() {
+        MatchStats matchStats = MatchStats.init(players);
+        String goalkeeperId = players.stream().filter(player -> player.getPosition()
+            .equals(PlayerPosition.GOALKEEPER)).toList().get(0).getId();
+
+        matchStats.handleGoalStats(DuelRole.CHALLENGER, DuelResult.LOSE, goalkeeperId,false);
+
+        assertThat(matchStats.getSaved()).isEqualTo(1);
+        assertThat(matchStats.getPlayersStats().get(goalkeeperId).getSaved()).isEqualTo(1);
+
     }
 
 }

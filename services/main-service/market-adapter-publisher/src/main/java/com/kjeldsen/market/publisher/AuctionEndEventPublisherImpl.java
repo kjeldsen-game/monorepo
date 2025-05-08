@@ -1,7 +1,7 @@
 package com.kjeldsen.market.publisher;
 
+import com.kjeldsen.lib.events.AuctionEndEvent;
 import com.kjeldsen.market.domain.publishers.AuctionEndEventPublisher;
-import com.kjeldsen.player.domain.events.AuctionEndEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;

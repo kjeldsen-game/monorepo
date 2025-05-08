@@ -1,6 +1,6 @@
 package com.kjeldsen.auth.domain.publishers;
 
-import com.kjeldsen.player.domain.events.UserRegisterEvent;
+import com.kjeldsen.lib.events.UserRegisterEvent;
 
 public interface UserRegisterPublisher {
     void publishUserRegisterEvent(UserRegisterEvent userRegisterEvent);

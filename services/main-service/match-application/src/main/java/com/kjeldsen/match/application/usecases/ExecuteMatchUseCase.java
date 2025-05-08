@@ -1,12 +1,11 @@
 package com.kjeldsen.match.application.usecases;
 
-import com.kjeldsen.auth.authorization.SecurityUtils;
-import com.kjeldsen.domain.EventId;
+import com.kjeldsen.lib.clients.TeamClientApi;
+import com.kjeldsen.lib.events.MatchEvent;
+import com.kjeldsen.lib.model.player.PlayerClient;
+import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.match.application.usecases.league.UpdateLeagueStandingsUseCase;
 import com.kjeldsen.match.domain.Game;
-import com.kjeldsen.match.domain.clients.TeamClientMatch;
-import com.kjeldsen.match.domain.clients.models.player.PlayerDTO;
-import com.kjeldsen.match.domain.clients.models.team.TeamDTO;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.MatchReport;
 import com.kjeldsen.match.domain.entities.Player;
@@ -19,8 +18,6 @@ import com.kjeldsen.match.domain.publisher.MatchEventPublisher;
 import com.kjeldsen.match.domain.repositories.MatchWriteRepository;
 import com.kjeldsen.match.domain.state.GameState;
 import com.kjeldsen.player.domain.*;
-import com.kjeldsen.player.domain.events.MatchEvent;
-import com.kjeldsen.player.domain.provider.InstantProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -42,7 +39,7 @@ public class ExecuteMatchUseCase {
     private final MatchEventPublisher matchEventPublisher;
     private final GetMatchUseCase getMatchUseCase;
     private final UpdateLeagueStandingsUseCase updateLeagueStandingsUseCase;
-    private final TeamClientMatch teamClient;
+    private final TeamClientApi teamClientApi;
 
     public void execute(String matchId) {
         log.info("ExecuteMatchUseCase for match {}", matchId);
@@ -64,9 +61,7 @@ public class ExecuteMatchUseCase {
                 m.getAway(), attendance.get("homeAttendance"), attendance.get("awayAttendance"));
 
             m.setMatchReport(report);
-            MatchEvent matchEvent = MatchEvent.builder()
-                .id(EventId.generate())
-                .occurredAt(InstantProvider.now())
+            com.kjeldsen.lib.events.MatchEvent matchEvent = MatchEvent.builder()
                 .matchId(m.getId())
                 .leagueId(m.getLeagueId())
                 .homeTeamId(m.getHome().getId())
@@ -89,7 +84,7 @@ public class ExecuteMatchUseCase {
     }
 
     private void buildTeam(TeamRole role, com.kjeldsen.match.domain.entities.Team team, String teamId) {
-        TeamDTO teamDTO = teamClient.getTeam(teamId, SecurityUtils.getCurrentUserToken());
+        TeamClient teamDTO = teamClientApi.getTeam(teamId, null, null).get(0);
         Map<PlayerStatus, List<Player>> players = getDefaultLineup(role, teamDTO.getPlayers());
         team.setBench(players.get(PlayerStatus.BENCH));
         team.setPlayers(players.get(PlayerStatus.ACTIVE));
@@ -98,14 +93,14 @@ public class ExecuteMatchUseCase {
         team.setVerticalPressure(VerticalPressure.valueOf(teamDTO.getTeamModifiers().getVerticalPressure()));
     }
 
-    private List<Player> getPlayersByStatus(List<PlayerDTO> players, PlayerStatus status, TeamRole role) {
+    private List<Player> getPlayersByStatus(List<PlayerClient> players, PlayerStatus status, TeamRole role) {
         return players.stream()
             .filter(player -> Objects.equals(player.getStatus(), status.name()))
             .map(player -> buildPlayer(player, role))
             .toList();
     }
 
-    private Map<PlayerStatus, List<Player>> getDefaultLineup(TeamRole role, List<PlayerDTO> players) {
+    private Map<PlayerStatus, List<Player>> getDefaultLineup(TeamRole role, List<PlayerClient> players) {
         Map<PlayerStatus, List<Player>> lineup = new HashMap<>();
         lineup.put(PlayerStatus.ACTIVE, getPlayersByStatus(players, PlayerStatus.ACTIVE, role));
         lineup.put(PlayerStatus.BENCH, getPlayersByStatus(players, PlayerStatus.BENCH, role));

@@ -1,9 +1,9 @@
 package com.kjeldsen.player.application.usecases;
 
+import com.kjeldsen.lib.events.TeamCreationEvent;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.TeamModifiers;
-import com.kjeldsen.player.domain.events.TeamCreationEvent;
 import com.kjeldsen.player.domain.publishers.TeamCreationEventPublisher;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
