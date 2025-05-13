@@ -26,15 +26,7 @@
             <groupId>com.kjeldsen</groupId>
             <artifactId>auth-adapter-publisher</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>auth-adapter-client</artifactId>
-        </dependency>
         <!-- Match modules -->
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>match-adapter-client</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>match-adapter-listener</artifactId>

@@ -45,7 +45,7 @@ public class AuctionReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
         void return_stored_tendency_for_provided_position_when_exist_in_database() {
             auctionMongoRepository.save(
                 Auction.builder().id(Auction.AuctionId.of("auctionId"))
-                    .averageBid(BigDecimal.TEN).playerId(Player.PlayerId.generate()).status(Auction.AuctionStatus.CANCEL).bids(
+                    .averageBid(BigDecimal.TEN).playerId("playerId").status(Auction.AuctionStatus.CANCEL).bids(
                         List.of(Auction.Bid.builder().build(), Auction.Bid.builder().build()))
                     .build());
 

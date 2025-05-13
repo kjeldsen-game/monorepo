@@ -24,7 +24,8 @@ class GetUserUseCaseTest {
     @DisplayName("Should throw error when user is not logged in")
     void should_throw_error_when_user_is_not_logged_in() {
         when(mockedUserReadRepository.findByUserId("userId")).thenReturn(Optional.empty());
-        assertEquals("User not logged in!", assertThrows(UserNotLoggedException.class, getUserUseCase::getCurrent).getMessage());
+        assertEquals("User not logged in!",
+            assertThrows(UserNotLoggedException.class, getUserUseCase::getCurrent).getMessage());
     }
 
     @Test

@@ -50,7 +50,7 @@ class PlayerReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
             testPlayer.setId(Player.PlayerId.of("player1"));
             playerMongoRepository.save(testPlayer);
             List<Player> readPlayerList = playerReadRepository.filterMarketPlayers(FilterMarketPlayersQuery.builder()
-                .playerIds(List.of(Player.PlayerId.of("player1"))).minAge(19).build());
+                .playerIds(List.of("player1")).minAge(19).build());
 
             assertThat(readPlayerList).isNotEmpty();
             assertThat(readPlayerList).usingRecursiveComparison().isEqualTo(List.of(testPlayer));
@@ -92,7 +92,7 @@ class PlayerReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
             testPlayer.setId(Player.PlayerId.of("player1"));
             playerMongoRepository.save(testPlayer);
             List<Player> readPlayerList = playerReadRepository.filterMarketPlayers(FilterMarketPlayersQuery.builder()
-                .playerIds(List.of(Player.PlayerId.of("player1"))).minAge(19).skills(
+                .playerIds(List.of("player1")).minAge(19).skills(
                     List.of(FilterMarketPlayersQuery.PlayerSkillFilter.builder().minValue(12).playerSkill(PlayerSkill.SCORING).build())
                 ).build());
 
@@ -107,7 +107,7 @@ class PlayerReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
             testPlayer.setId(Player.PlayerId.of("player1"));
             playerMongoRepository.save(testPlayer);
             List<Player> readPlayerList = playerReadRepository.filterMarketPlayers(FilterMarketPlayersQuery.builder()
-                .playerIds(List.of(Player.PlayerId.of("player1"))).minAge(19).skills(
+                .playerIds(List.of("player1")).minAge(19).skills(
                     List.of(FilterMarketPlayersQuery.PlayerSkillFilter.builder().minValue(55).playerSkill(PlayerSkill.SCORING).build())
                 ).build());
 

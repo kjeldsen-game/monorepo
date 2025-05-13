@@ -1,10 +1,9 @@
 package com.kjeldsen.integration.events;
 
-import com.kjeldsen.domain.EventId;
+import com.kjeldsen.lib.events.AuctionEndEvent;
 import com.kjeldsen.player.application.usecases.player.ProcessPlayerTransferUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.events.AuctionEndEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -23,11 +22,10 @@ class AuctionEndEventListenerIT extends AbstractEventIT{
     @Test
     @DisplayName("Should handle the AuctionEndEvent and check values")
     void should_handle_AuctionEndEvent_and_check_values() {
-        AuctionEndEvent testAuctionEndEvent = AuctionEndEvent.builder()
-            .auctionCreator(Team.TeamId.of("auctionCreator"))
-            .auctionWinner(Team.TeamId.of("auctionWinner"))
-            .id(EventId.from("eventId"))
-            .playerId(Player.PlayerId.of("playerId"))
+        com.kjeldsen.lib.events.AuctionEndEvent testAuctionEndEvent = AuctionEndEvent.builder()
+            .auctionCreator("auctionCreator")
+            .auctionWinner("auctionWinner")
+            .playerId("playerId")
             .amount(BigDecimal.TEN)
             .build();
 

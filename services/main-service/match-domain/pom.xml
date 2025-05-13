@@ -100,5 +100,9 @@
             <groupId>com.kjeldsen</groupId>
             <artifactId>player-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>lib-pub-sub</artifactId>
+        </dependency>
     </dependencies>
 </project>

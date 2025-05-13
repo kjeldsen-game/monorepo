@@ -1,6 +1,7 @@
 package com.kjeldsen.market.rest.delegate;
 
 import com.kjeldsen.auth.authorization.SecurityUtils;
+import com.kjeldsen.lib.events.AuctionEndEvent;
 import com.kjeldsen.market.application.AuctionEndUseCase;
 import com.kjeldsen.market.application.GetMarketAuctionsUseCase;
 import com.kjeldsen.market.application.PlaceBidUseCase;
@@ -18,7 +19,6 @@ import com.kjeldsen.market.rest.model.PlaceAuctionBidRequest;
 import com.kjeldsen.market.rest.model.PlayerPosition;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.events.AuctionEndEvent;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -94,7 +94,7 @@ public class MarketDelegate implements MarketApiDelegate {
                         auction.getId().value())
                     .averageBid(auction.getAverageBid())
                     .bidders(auction.getBids().size())
-                    .teamId(auction.getTeamId().value())
+                    .teamId(auction.getTeamId())
                     .bid(highestBid != null ? highestBid.getAmount() : null)
                     .endedAt(auction.getEndedAt().toString())
                     .player(playerResponse);

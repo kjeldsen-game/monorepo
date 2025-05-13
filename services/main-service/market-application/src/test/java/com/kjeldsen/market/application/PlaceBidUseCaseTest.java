@@ -75,7 +75,7 @@ class PlaceBidUseCaseTest {
         Team mockedTeam = Team.builder().id(mockedTeamId).build();
 
         when(mockedAuctionReadRepository.findById(mockedAuctionId)).thenReturn(Optional.of(mockedAuction));
-        when(mockedAuction.getTeamId()).thenReturn(mockedTeamId);
+        when(mockedAuction.getTeamId()).thenReturn(mockedTeamId.value());
         when(mockedTeamReadRepository.findByUserId(mockedUserId)).thenReturn(Optional.of(mockedTeam));
 
         assertEquals("Auction creator team cannot place bid!", assertThrows(PlaceBidException.class, () -> {
@@ -93,7 +93,7 @@ class PlaceBidUseCaseTest {
 
         Auction mockedAuction = Auction.builder()
             .bids(new ArrayList<>(List.of(
-                    Auction.Bid.builder().teamId(mockedTeamId).amount(BigDecimal.TEN).build()
+                    Auction.Bid.builder().teamId(mockedTeamId.value()).amount(BigDecimal.TEN).build()
             ))).build();
 
         when(mockedAuctionReadRepository.findById(mockedAuctionId)).thenReturn(Optional.of(mockedAuction));
@@ -116,7 +116,7 @@ class PlaceBidUseCaseTest {
 
         Auction mockedAuction = Auction.builder()
             .bids(new ArrayList<>(List.of(
-                Auction.Bid.builder().teamId(mockedTeamId).amount(BigDecimal.TEN).build()
+                Auction.Bid.builder().teamId(mockedTeamId.value()).amount(BigDecimal.TEN).build()
             ))).build();
 
         when(mockedAuctionReadRepository.findById(mockedAuctionId)).thenReturn(Optional.of(mockedAuction));
@@ -141,7 +141,7 @@ class PlaceBidUseCaseTest {
 
         Auction mockedAuction = Auction.builder()
             .bids(new ArrayList<>(List.of(
-                    Auction.Bid.builder().teamId(mockedTeamId).amount(BigDecimal.ONE).build()
+                    Auction.Bid.builder().teamId(mockedTeamId.value()).amount(BigDecimal.ONE).build()
             ))).averageBid(BigDecimal.ONE).endedAt(InstantProvider.now()).build();
 
         when(mockedAuctionReadRepository.findById(mockedAuctionId)).thenReturn(Optional.of(mockedAuction));

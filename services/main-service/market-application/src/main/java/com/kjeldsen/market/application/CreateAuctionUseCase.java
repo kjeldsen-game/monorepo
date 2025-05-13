@@ -21,7 +21,7 @@ public class CreateAuctionUseCase {
     private final AuctionWriteRepository auctionWriteRepository;
     private static final int AUCTION_LENGTH = 3;
 
-    public Auction create(Player.PlayerId playerId, Team.TeamId teamId) {
+    public Auction create(String playerId, String teamId) {
         log.info("CreateAuctionUseCase for player {} team {}", playerId, teamId);
 
         Auction auction = Auction.builder()

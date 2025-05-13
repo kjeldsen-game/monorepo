@@ -1,6 +1,6 @@
 package com.kjeldsen.player.publisher;
 
-import com.kjeldsen.player.domain.events.AuctionCreationEvent;
+import com.kjeldsen.lib.events.AuctionCreationEvent;
 import com.kjeldsen.player.domain.publishers.AuctionCreationEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

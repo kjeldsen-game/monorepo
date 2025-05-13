@@ -1,7 +1,7 @@
 package com.kjeldsen.match.domain.publisher;
 
 
-import com.kjeldsen.player.domain.events.MatchEvent;
+import com.kjeldsen.lib.events.MatchEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
