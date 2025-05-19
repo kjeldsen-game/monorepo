@@ -1,9 +1,9 @@
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import MarketButton from '../../Market/MarketButton';
-import { AuctionMarket } from '@/shared/models/Auction';
 import { playerCommonColumns } from './PlayerCommonColumns';
 import { baseColumnConfig, rightColumnConfig } from './ColumnsConfig';
 import ColHeader from './Common/ColHeader';
+import { AuctionMarket } from '@/shared/models/market/Auction';
 
 export const marketColumn = (
   handleButtonClick: (auction: AuctionMarket) => void,

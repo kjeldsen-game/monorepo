@@ -1,11 +1,11 @@
 import { Box, CircularProgress } from '@mui/material';
 import MarketFilter from './MarketFilter';
 import { useEffect, useMemo, useState } from 'react';
-import { Auction, AuctionMarket } from '@/shared/models/Auction';
 import { marketColumn } from '../Grid/Columns/MarketColumn';
 import Grid from '../Grid/Grid';
 import DashboardLink from '../DashboardLink';
 import MarketModal from './MarketModal';
+import { AuctionMarket } from '@/shared/models/market/Auction';
 
 interface MarketProps {
   auctions: AuctionMarket[] | undefined;

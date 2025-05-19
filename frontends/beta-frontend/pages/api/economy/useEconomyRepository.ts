@@ -1,5 +1,5 @@
 import { connectorAPI } from '@/libs/fetcher';
-import { Pricing } from '@/shared/models/Economy';
+import { Pricing } from '@/shared/models/player/Economy';
 import useSWR, { mutate } from 'swr';
 
 const API = '/team/';

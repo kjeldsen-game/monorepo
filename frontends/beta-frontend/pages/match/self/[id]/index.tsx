@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { Box, CircularProgress, Tab } from '@mui/material';
 import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
-import { Player } from '@/shared/models/Player';
+import { Player } from '@/shared/models/player/Player';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTeamRepository } from '@/pages/api/team/useTeamRepository';
-import { TeamModifiers } from '@/shared/models/TeamModifiers';
+import { TeamModifiers } from '@/shared/models/player/TeamModifiers';
 import { useRouter } from 'next/router';
 import { useMatchTeamRepository } from '@/pages/api/match/useMatchTeamRepository';
 import {

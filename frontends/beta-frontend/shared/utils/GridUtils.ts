@@ -1,5 +1,5 @@
-import { Player } from '../models/Player';
-import { TABLE_PLAYER_POSITION_ORDER } from '../models/PlayerPosition';
+import { Player } from '../models/player/Player';
+import { TABLE_PLAYER_POSITION_ORDER } from '../models/player/PlayerPosition';
 
 export function positionComparator(a: Player, b: Player): number {
   // console.log('Comparing:', a, b);

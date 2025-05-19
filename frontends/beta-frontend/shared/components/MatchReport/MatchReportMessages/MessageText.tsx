@@ -1,4 +1,4 @@
-import { MatchEventSide } from '@/shared/models/MatchReport';
+import { MatchEventSide } from '@/shared/models/match/MatchReport';
 import React, { ReactNode } from 'react';
 
 interface MessageTextProps {

@@ -2,15 +2,15 @@ import { ReactNode } from 'react';
 import CustomTooltip from './CustomTooltip';
 import { Box, Grid, Typography } from '@mui/material';
 import TooltipDataItem from './ToolTipDataItem';
-import { RStats } from '@/shared/models/MatchReport';
 import { formatName } from '@/shared/utils/MatchReportUtils';
 import AssistanceBonusTooltip from './AssistanceBonusTooltip';
+import { DuelStats } from '@/shared/models/match/Play';
 
 interface DoubleColAssistanceTooltipProps {
   attackerName: string;
   defenderName?: string;
-  attackerStats: RStats;
-  defenderStats: RStats;
+  attackerStats: DuelStats;
+  defenderStats: DuelStats;
   children: ReactNode;
 }
 
@@ -125,7 +125,7 @@ const DoubleColAssistanceTooltip = ({
               <CustomTooltip
                 tooltipContent={
                   Math.abs(
-                    defenderStats.assistance?.total -
+                    defenderStats?.assistance?.total -
                       attackerStats.assistance?.total,
                   ) +
                   ' = ' +

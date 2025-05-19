@@ -9,4 +9,6 @@ public enum DuelDisruptor {
      */
     NONE,
     GOALKEEPER_INTERCEPTION,
+    MISSED_PASS,
+    MISSED_SHOT,
 }

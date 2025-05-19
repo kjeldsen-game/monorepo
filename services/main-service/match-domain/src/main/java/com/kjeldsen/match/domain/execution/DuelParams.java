@@ -8,10 +8,11 @@ import com.kjeldsen.match.domain.entities.Player;
 import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerOrder;
 import lombok.Builder;
+import lombok.Setter;
 import lombok.Value;
 
 @Value
-@Builder
+@Builder(toBuilder = true)
 public class DuelParams {
 
     GameState state;
@@ -23,4 +24,9 @@ public class DuelParams {
     DuelDisruptor disruptor;
     PlayerOrder appliedPlayerOrder;
     PitchArea destinationPitchArea;
+
+    // Candidates for new values in duel parameters that could happened during duel execution
+    PitchArea candidatePitchArea;
+    Player candidateChallenger;
+    Player candidateReceiver;
 }

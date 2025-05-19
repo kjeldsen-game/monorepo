@@ -3,7 +3,7 @@ import {
   GridColDef,
   GridValueGetterParams,
 } from '@mui/x-data-grid';
-import { PlayerPosition } from '@/shared/models/PlayerPosition';
+import { PlayerPosition } from '@/shared/models/player/PlayerPosition';
 import { playerSkillsColumns } from './PlayerSkillsColumns';
 import { baseColumnConfig, leftColumnConfig } from './ColumnsConfig';
 import { positionComparator } from '@/shared/utils/GridUtils';
@@ -11,7 +11,6 @@ import PlayerPositionLabel from '../../Player/PlayerPositionLabel';
 import ColHeader from './Common/ColHeader';
 import ColLink from './Common/ColLink';
 import { formatName } from '@/shared/utils/PlayerUtils';
-import CustomTooltip from '../../MatchReport/Tooltips/CustomTooltip';
 import PlayerStatsTooltip from '../../MatchReport/Tooltips/PlayerStatsTooltip';
 
 export const matchReportPlayercolumns = (

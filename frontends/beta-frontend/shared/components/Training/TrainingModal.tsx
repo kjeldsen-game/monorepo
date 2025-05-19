@@ -7,7 +7,7 @@ import { useSession } from 'next-auth/react';
 import CustomModal from '../CustomModal';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { CloseOutlined } from '@mui/icons-material';
-import { PlayerSkill } from '@/shared/models/PlayerSkill';
+import { PlayerSkill } from '@/shared/models/player/PlayerSkill';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 import MarketButton from '../Market/MarketButton';

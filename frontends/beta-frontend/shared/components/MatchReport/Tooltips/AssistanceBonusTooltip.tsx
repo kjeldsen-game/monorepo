@@ -1,11 +1,11 @@
 import { Grid } from '@mui/material';
 import React from 'react';
-import TooltipDataCol from './TooltipDataCol';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 import TooltipDataItem from './ToolTipDataItem';
+import { ChainActionSequence } from '@/shared/models/match/Play';
 
 interface AssistanceBonusTooltipProps {
-  chainActionBonuses: any;
+  chainActionBonuses?: Record<ChainActionSequence, number>;
 }
 
 const AssistanceBonusTooltip: React.FC<AssistanceBonusTooltipProps> = ({

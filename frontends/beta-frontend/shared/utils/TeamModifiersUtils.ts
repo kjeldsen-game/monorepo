@@ -6,7 +6,7 @@ import {
   TacticDescriptions,
   VerticalPressure,
   VerticalPressureDescriptions,
-} from '../models/TeamModifiers';
+} from '../models/player/TeamModifiers';
 
 export function getModifierDescription(
   name: HorizontalPressure | VerticalPressure | Tactic | undefined,

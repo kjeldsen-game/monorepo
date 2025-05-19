@@ -4,7 +4,6 @@ import com.kjeldsen.match.domain.entities.Play;
 import com.kjeldsen.match.domain.entities.Player;
 import com.kjeldsen.match.domain.entities.duel.Duel;
 import com.kjeldsen.match.domain.entities.duel.DuelRole;
-import com.kjeldsen.match.domain.entities.duel.DuelType;
 import com.kjeldsen.match.domain.state.BallState;
 import com.kjeldsen.match.domain.state.GameState;
 import com.kjeldsen.player.domain.PlayerSkill;
@@ -14,7 +13,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
-// TODO cleanpup
+// TODO cleanup
 
 public class DuelRandomization {
 

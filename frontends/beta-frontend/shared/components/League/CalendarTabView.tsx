@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import Grid from '../Grid/Grid';
 import { Box, CircularProgress } from '@mui/material';
 import SelectInput from '../Common/SelectInput';
-import { Match, MatchStatusEnum } from '@/shared/models/Match';
+import { Match, MatchStatus } from '@/shared/models/match/Match';
 
 interface CalendarTabViewProps {
   calendar: any;
@@ -63,7 +63,7 @@ const CalendarTabView: React.FC<CalendarTabViewProps> = ({ calendar }) => {
             title={'Status'}
             handleChange={handleFilterChange}
             value={filter}
-            values={MatchStatusEnum}
+            values={MatchStatus}
           />
         </Box>
       </Box>

@@ -1,6 +1,6 @@
 import { useTeamRepository } from '@/pages/api/team/useTeamRepository';
 import TeamViewNew from '@/shared/components/Team/TeamViewNew';
-import { Player } from '@/shared/models/Player';
+import { Player } from '@/shared/models/player/Player';
 import { CircularProgress } from '@mui/material';
 import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';

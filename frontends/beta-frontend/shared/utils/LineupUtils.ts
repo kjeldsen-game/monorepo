@@ -1,4 +1,4 @@
-import { Player } from '../models/Player';
+import { Player } from '../models/player/Player';
 
 export const filterPlayersByStatus = (
   data: Player[] | undefined,

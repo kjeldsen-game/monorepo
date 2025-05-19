@@ -6,7 +6,7 @@ import Grid from '../Grid/Grid';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
-import { Player } from '@/shared/models/Player';
+import { Player } from '@/shared/models/player/Player';
 import { useSession } from 'next-auth/react';
 import { positionComparator } from '@/shared/utils/GridUtils';
 import CustomTooltip from './Tooltips/CustomTooltip';
@@ -18,7 +18,7 @@ interface MatchReportMetricsProps {
   sx?: React.CSSProperties;
   teamId: string;
   side: 'left' | 'right';
-  players: any;
+  players: Player[];
   teamReport: any;
   teamColor: string;
   stats: any;

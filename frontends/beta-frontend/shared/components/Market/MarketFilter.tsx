@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Grid, Button, SelectChangeEvent, Collapse } from '@mui/material';
 import MarketFilterMinMaxInput from './MarketFilterMinMaxInput';
-import { PlayerPosition } from '@/shared/models/PlayerPosition';
+import { PlayerPosition } from '@/shared/models/player/PlayerPosition';
 import MarketButton from './MarketButton';
 import { createAuctionQueryFilter } from '@/shared/utils/MarketUtils';
 import MarketFilterPositionSelect from './MarketFilterPositionSelect';

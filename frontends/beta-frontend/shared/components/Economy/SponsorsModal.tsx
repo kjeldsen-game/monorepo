@@ -1,14 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import {
-  alpha,
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  IconButton,
-} from '@mui/material';
+import { alpha, Card, CardContent, Grid, IconButton } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import CustomModal from '../CustomModal';
 import { CloseOutlined } from '@mui/icons-material';
@@ -18,7 +11,7 @@ import {
   IncomeMode,
   IncomePeriodicity,
   SPONSORS_OFFERS,
-} from '@/shared/models/Economy';
+} from '@/shared/models/player/Economy';
 import { useEconomyRepository } from '@/pages/api/economy/useEconomyRepository';
 
 interface SponsorsModalProps {

@@ -1,5 +1,6 @@
 package com.kjeldsen.match.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.kjeldsen.match.domain.entities.duel.DuelRole;
@@ -19,6 +20,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -45,6 +47,30 @@ public class Player {
     PitchArea playerOrderDestinationPitchArea;
     PlayerReceptionPreference receptionPreference;
     PlayerStats playerStats;
+
+    @JsonIgnore
+    public Player deepCopy() {
+        return Player.builder()
+            .id(this.id)
+            .name(this.name)
+            .status(this.status)
+            .position(this.position)
+            .teamRole(this.teamRole)
+            .receptionPreference(this.receptionPreference)
+            .skills(this.skills != null ? new HashMap<>(this.skills) : null)
+            .playerOrder(this.playerOrder)
+            .build();
+    }
+
+    @JsonIgnore
+    public Player getSimplifiedPlayerData() {
+        return Player.builder()
+            .id(this.getId())
+            .name(this.getName())
+            .position(this.getPosition())
+            .teamRole(this.getTeamRole())
+            .build();
+    }
 
     // Instead of accessing the skill points directly, this method should be used to determsine the
     // skill level of the player via the duel logic

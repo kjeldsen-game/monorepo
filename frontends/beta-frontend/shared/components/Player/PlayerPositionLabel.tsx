@@ -1,7 +1,7 @@
 import {
   PlayerPosition,
   PlayerPositionColorNew,
-} from '@/shared/models/PlayerPosition';
+} from '@/shared/models/player/PlayerPosition';
 import { getPositionInitials } from '@/shared/utils/PlayerUtils';
 import React from 'react';
 

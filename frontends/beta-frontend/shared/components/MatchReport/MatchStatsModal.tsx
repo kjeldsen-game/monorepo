@@ -5,9 +5,9 @@ import CloseButton from '../Common/CloseButton';
 import { matchStatsColumns } from '../Grid/Columns/MatchReport/MatchStatsColumns';
 import Grid from '../Grid/Grid';
 import SelectInput from '../Common/SelectInput';
-import { Action } from '@/pages/api/match/models/MatchReportresponse';
-import { BallHeight } from '@/shared/models/MatchReport';
-import { PITCH_AREAS_ENUM, PitchArea } from '@/shared/models/PitchArea';
+import { PITCH_AREAS_ENUM, PitchArea } from '@/shared/models/match/PitchArea';
+import { Action } from '@/shared/models/match/Play';
+import { BallHeight } from '@/shared/models/match/BallState';
 
 interface MatchStatsModalProps {
   players: any;

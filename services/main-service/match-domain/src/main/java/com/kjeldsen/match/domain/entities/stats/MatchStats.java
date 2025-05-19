@@ -1,8 +1,11 @@
 package com.kjeldsen.match.domain.entities.stats;
 
 import com.kjeldsen.match.domain.entities.Player;
+import com.kjeldsen.match.domain.entities.duel.DuelDisruption;
+import com.kjeldsen.match.domain.entities.duel.DuelDisruptor;
 import com.kjeldsen.match.domain.entities.duel.DuelResult;
 import com.kjeldsen.match.domain.entities.duel.DuelRole;
+import com.kjeldsen.player.domain.PitchArea;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
@@ -58,14 +61,16 @@ public class MatchStats extends Stats {
         return this;
     }
 
-    public MatchStats handlePassStats(DuelRole role, DuelResult result, String playerId) {
+    public MatchStats handlePassStats(DuelRole role, DuelResult result, String playerId, DuelDisruption disruption) {
         PlayerStats playerStats = this.playersStats.get(playerId);
         // Right now the pass is always successful and cannot be failed
         if (role.equals(DuelRole.INITIATOR)) {
-            if (result.equals(DuelResult.WIN)) {
-                playerStats.setPasses(playerStats.getPasses() + 1);
-                this.setPasses(this.getPasses() + 1);
+            if (disruption != null && disruption.getType().equals(DuelDisruptor.MISSED_PASS)) {
+                this.setMissedPasses(this.getMissedPasses() + 1);
+                playerStats.setMissedPasses(playerStats.getMissedPasses() + 1);
             }
+            playerStats.setPasses(playerStats.getPasses() + 1);
+            this.setPasses(this.getPasses() + 1);
         }
         return this;
     }

@@ -2,10 +2,13 @@ package com.kjeldsen.match.domain.selection;
 
 import com.kjeldsen.match.domain.entities.Play;
 import com.kjeldsen.match.domain.entities.Player;
+import com.kjeldsen.match.domain.execution.DuelParams;
+import com.kjeldsen.match.domain.generator.RandomGenerator;
 import com.kjeldsen.match.domain.state.GameState;
 import com.kjeldsen.match.domain.state.GameStateException;
 import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerPosition;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Slf4j
 public class ReceiverSelection {
 
     /*
@@ -29,9 +33,31 @@ public class ReceiverSelection {
      * how ball receivers are selected at the start of an attack.
      */
 
+    public static Player selectUnsuccessfulPassDuel(DuelParams params, PitchArea newPitchArea) {
+        if (newPitchArea.equals(PitchArea.OUT_OF_BOUNDS)) {
+            return null;
+        }
+
+        List<Player> possibleReceivers = params.getState().attackingTeam().getPlayers().stream()
+            .filter(player -> !player.equals(params.getInitiator()) && !player.equals(params.getReceiver()))
+            .filter(player -> player.getPosition().coverage().contains(newPitchArea)).toList();
+
+        if (possibleReceivers.isEmpty()) {
+            return null;
+        } else {
+            return possibleReceivers.get(RandomGenerator.randomInt(0, possibleReceivers.size() - 1));
+        }
+    }
+
     // Returns a player to receive the ball based on the current pitch area.
     public static Player select(GameState state, Player initiator) {
         PitchArea ballArea = state.getBallState().getArea();
+
+        if (state.getBallState().getArea() == PitchArea.OUT_OF_BOUNDS) {
+            log.info("The Ball is out of bound and the new ball owner was selected name = {}", initiator.getName());
+            // Create a logic to select someone from the Centre Middle
+            return  selectFromMidfield(state, initiator);
+        }
 
         // REFACTOR THIS. The chained action sequence should probably have it's own class.
         if (state.getChainActionSequence().isActive()) {
@@ -159,6 +185,11 @@ public class ReceiverSelection {
     }
 
     private static boolean teammateIsNearby(PitchArea playerArea, Player teammate) {
+        if (playerArea.equals(PitchArea.OUT_OF_BOUNDS)) {
+            return teammate.getPosition().coverage().stream()
+                .anyMatch(teammateArea -> teammateArea.isNearby(PitchArea.CENTRE_MIDFIELD) ||
+                    teammateArea.isNearby(PitchArea.LEFT_MIDFIELD) || teammateArea.isNearby(PitchArea.RIGHT_MIDFIELD));
+        }
         return teammate.getPosition().coverage().stream()
             .anyMatch(teammateArea -> teammateArea.isNearby(playerArea));
     }

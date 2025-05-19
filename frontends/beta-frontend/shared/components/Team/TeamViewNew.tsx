@@ -1,16 +1,16 @@
-import { Player } from '@/shared/models/Player';
+import { Player } from '@/shared/models/player/Player';
 import { Team, TeamFormationValiation } from '@/shared/models/Team';
 import {
   HorizontalPressure,
   Tactic,
   TeamModifiers,
   VerticalPressure,
-} from '@/shared/models/TeamModifiers';
+} from '@/shared/models/player/TeamModifiers';
 import { filterPlayersByStatus } from '@/shared/utils/LineupUtils';
 import { Box, SnackbarCloseReason, Tab } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { PlayerOrder } from '@/pages/api/match/models/MatchReportresponse';
-import { POSITION_FILTER_MAP } from '@/shared/models/PlayerPosition';
+import { POSITION_FILTER_MAP } from '@/shared/models/player/PlayerPosition';
 import TeamValidationModal from './TeamValidationModal';
 import SnackbarAlert from '../Common/SnackbarAlert';
 import TeamViewHeader from './TeamViewHeader';

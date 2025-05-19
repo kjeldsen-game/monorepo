@@ -44,7 +44,7 @@ const MatchReport: NextPage = () => {
       />
       {report ? (
         <MatchReportContent
-          report={report}
+          report={report.matchReport}
           sx={{
             width: '50%',
           }}

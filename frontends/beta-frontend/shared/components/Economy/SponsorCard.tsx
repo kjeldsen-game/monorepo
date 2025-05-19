@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
-import { alpha, Box, Button, Card, TextField, Typography } from '@mui/material';
-import { Balance } from '@mui/icons-material';
-import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
-import EconomyCard from './EconomyCard';
+import React from 'react';
+import { Box, Card, Typography } from '@mui/material';
 import SellIcon from '@mui/icons-material/Sell';
 import MarketButton from '../Market/MarketButton';
-import WarningIcon from '@mui/icons-material/Warning';
 
-import { IncomeMode, IncomePeriodicity } from '@/shared/models/Economy';
+import { IncomeMode, IncomePeriodicity } from '@/shared/models/player/Economy';
 import BillboardCardDataItem from './BillboardCardDataItem';
 
 interface SponsorCardProps {

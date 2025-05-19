@@ -7,7 +7,7 @@ import {
   Tactic,
   TeamModifiers,
   VerticalPressure,
-} from '@/shared/models/TeamModifiers';
+} from '@/shared/models/player/TeamModifiers';
 import { getModifierDescription } from '@/shared/utils/TeamModifiersUtils';
 import PressureDescriptionItem from './Modifiers/PressureDescriptionItem';
 import TeamModifiersForm from './Modifiers/TeamModifiers';

@@ -4,7 +4,7 @@ import { formatPlayerSkills } from '@/shared/utils/ColumnUtils';
 import {
   PlayerSkill,
   PlayerSkillToShortcut,
-} from '@/shared/models/PlayerSkill';
+} from '@/shared/models/player/PlayerSkill';
 import ColHeader from '../Common/ColHeader';
 import { playerSkillsColumns } from '../PlayerSkillsColumns';
 import { playerCommonColumns } from '../PlayerCommonColumns';

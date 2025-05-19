@@ -1,12 +1,13 @@
 import Box from '@mui/material/Box';
 import MatchReportItem from './MatchReportItem';
-import { MatchReport, Play } from '@/shared/models/MatchReport';
 import CustomTabs from '../CustomTabs';
 import { Tab } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { CustomTabPanel } from '../Tab/CustomTabPanel';
 import MatchStats from './MatchStats';
 import MatchPossesion from './MatchPossesion';
+import { MatchReport } from '@/shared/models/match/MatchReport';
+import { Play } from '@/shared/models/match/Play';
 
 interface MatchReportContentProps {
   report: MatchReport;
@@ -38,7 +39,7 @@ export const MatchReportContent: React.FC<MatchReportContentProps> = ({
   useEffect(() => {
     let possesions: Play[][] = [];
 
-    report.matchReport.plays.forEach((event: Play) => {
+    report.plays.forEach((event: Play) => {
       let lastGroup = possesions.at(-1);
 
       if (
@@ -129,7 +130,7 @@ export const MatchReportContent: React.FC<MatchReportContentProps> = ({
               MATCH STARTS
             </Box>
 
-            {report.matchReport.plays
+            {report.plays
               .filter((play: Play) => play.action === 'SHOOT')
               .map((play: Play, index: number) => (
                 <Box
@@ -158,8 +159,8 @@ export const MatchReportContent: React.FC<MatchReportContentProps> = ({
                         index={0}
                         key={index}
                         event={play}
-                        homeId={report.homeId}
-                        awayId={report.awayId}
+                        homeId={report.home.id}
+                        awayId={report.away.id}
                         isLast={true}
                       />
                     </Box>

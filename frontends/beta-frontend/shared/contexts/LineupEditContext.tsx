@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { Player } from '../models/Player';
+import { Player } from '../models/player/Player';
 
 interface LineupEditContextType {
   handleEdit: (

@@ -1,5 +1,11 @@
 package com.kjeldsen.player.domain;
 
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Slf4j
 public enum PitchArea {
 
     /*
@@ -43,7 +49,8 @@ public enum PitchArea {
     RIGHT_MIDFIELD,
     LEFT_BACK,
     CENTRE_BACK,
-    RIGHT_BACK;
+    RIGHT_BACK,
+    OUT_OF_BOUNDS;
 
     public enum PitchRank {
         FORWARD,
@@ -62,6 +69,7 @@ public enum PitchArea {
             case LEFT_FORWARD, CENTRE_FORWARD, RIGHT_FORWARD -> PitchRank.FORWARD;
             case LEFT_MIDFIELD, CENTRE_MIDFIELD, RIGHT_MIDFIELD -> PitchRank.MIDDLE;
             case LEFT_BACK, CENTRE_BACK, RIGHT_BACK -> PitchRank.BACK;
+            default -> throw new RuntimeException("Out of bounds don't have pitch rank!");
         };
     }
 
@@ -70,6 +78,7 @@ public enum PitchArea {
             case LEFT_FORWARD, LEFT_MIDFIELD, LEFT_BACK -> PitchFile.LEFT;
             case CENTRE_FORWARD, CENTRE_MIDFIELD, CENTRE_BACK -> PitchFile.CENTRE;
             case RIGHT_FORWARD, RIGHT_MIDFIELD, RIGHT_BACK -> PitchFile.RIGHT;
+            default -> throw new RuntimeException("Out of bounds don't have pitch file!");
         };
     }
 
@@ -81,6 +90,26 @@ public enum PitchArea {
         boolean frontAndBack = this.rank() == PitchRank.FORWARD && area.rank() == PitchRank.BACK;
         boolean backAndFront = this.rank() == PitchRank.BACK && area.rank() == PitchRank.FORWARD;
         return !(leftAndRight || rightAndLeft || frontAndBack || backAndFront);
+    }
+
+    public List<PitchArea> getNearbyAreas() {
+        PitchFile pitchFile = this.file();
+        PitchRank pitchRank = this.rank();
+
+        log.info("Pitch file = {} rank = {}", pitchFile, pitchRank);
+
+        return switch (pitchFile) {
+            case CENTRE -> switch (pitchRank) {
+                case FORWARD -> List.of(PitchArea.LEFT_FORWARD, PitchArea.RIGHT_FORWARD);
+                case MIDDLE -> List.of(PitchArea.LEFT_MIDFIELD, PitchArea.RIGHT_MIDFIELD);
+                case BACK   -> List.of(PitchArea.LEFT_BACK, PitchArea.RIGHT_BACK);
+            };
+            case LEFT, RIGHT -> switch (pitchRank) {
+                case FORWARD -> List.of(PitchArea.CENTRE_FORWARD, PitchArea.OUT_OF_BOUNDS);
+                case MIDDLE -> List.of(PitchArea.CENTRE_MIDFIELD, PitchArea.OUT_OF_BOUNDS);
+                case BACK   -> List.of(PitchArea.CENTRE_BACK, PitchArea.OUT_OF_BOUNDS);
+            };
+        };
     }
 
     // Switches the perspective of the pitch area from the perspective of the attacking team to the
@@ -96,6 +125,7 @@ public enum PitchArea {
             case LEFT_BACK -> RIGHT_FORWARD;
             case CENTRE_BACK -> CENTRE_FORWARD;
             case RIGHT_BACK -> LEFT_FORWARD;
+            default -> throw new RuntimeException("Out of bounds don't have pitch rank");
         };
     }
 
@@ -110,6 +140,7 @@ public enum PitchArea {
             case LEFT_BACK -> RIGHT_BACK;
             case CENTRE_BACK -> CENTRE_BACK;
             case RIGHT_BACK -> LEFT_BACK;
+            default -> throw new RuntimeException("Out of bounds don't have pitch rank");
         };
     }
 
@@ -124,6 +155,7 @@ public enum PitchArea {
             case LEFT_BACK -> LEFT_MIDFIELD;
             case CENTRE_BACK -> CENTRE_MIDFIELD;
             case RIGHT_BACK -> RIGHT_MIDFIELD;
+            default -> throw new RuntimeException("Out of bounds don't have pitch rank");
         };
     }
     public static PitchArea[] midfield() {

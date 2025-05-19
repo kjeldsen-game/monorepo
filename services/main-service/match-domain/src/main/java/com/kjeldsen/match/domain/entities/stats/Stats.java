@@ -20,7 +20,7 @@ public abstract class Stats {
 
     // Pass stats
     Integer passes = 0;
-    Integer failedPasses = 0;
+    Integer missedPasses = 0;
 
     // Tackle Stats
     Integer tackles = 0;

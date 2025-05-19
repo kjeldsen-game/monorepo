@@ -5,6 +5,7 @@ import com.kjeldsen.match.domain.entities.duel.DuelType;
 import com.kjeldsen.match.domain.state.GameState;
 import com.kjeldsen.match.domain.state.GameStateException;
 import com.kjeldsen.match.domain.entities.Player;
+import com.kjeldsen.match.domain.state.TeamState;
 import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerPosition;
 import java.util.List;
@@ -24,6 +25,12 @@ public class ChallengerSelection {
         // The
         // correctly oriented pitch area must be passed down through the selection
         // methods.
+
+        // If there is free throw the Challenger is not present TODO review
+        if (duelType.equals(DuelType.THROW_IN)) {
+            return null;
+        }
+
         PitchArea pitchArea = state.getBallState().getArea().flipPerspective();
         return switch (duelType) {
             case PASSING_LOW, PASSING_HIGH -> passingDuelChallenger(state, pitchArea);
@@ -34,6 +41,7 @@ public class ChallengerSelection {
                     .filter(p -> p.getPosition() == PlayerPosition.GOALKEEPER)
                     .findAny()
                     .orElseThrow(() -> new GameStateException(state, "No goalkeeper found"));
+            case THROW_IN -> null;
         };
     }
 
@@ -65,12 +73,13 @@ public class ChallengerSelection {
         // The ball control duel happens directly after a positional duel is lost, so
         // the challenger
         // here is the player that started and lost the positional duel
-        return state.lastPlay()
-                // If the last play resulted in a win, then return null (no ball control duel is
-                // needed)
-                .filter(play -> !play.getDuel().getResult().equals(DuelResult.WIN))
-                .map(play -> play.getDuel().getChallenger())
-                .orElse(null);
+        Player player = state.lastPlay()
+            // If the last play resulted in a win, then return null (no ball control duel is
+            // needed)
+            .filter(play -> !play.getDuel().getResult().equals(DuelResult.WIN))
+            .map(play -> play.getDuel().getChallenger())
+            .orElse(null);
+        return player != null ? state.defendingTeam().getPlayerById(player.getId()) : null;
     }
 
     // Returns a defender to counter the challenger in a positional duel.

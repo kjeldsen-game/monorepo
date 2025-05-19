@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { alpha, Box, Button } from '@mui/material';
-import { Player } from '@/shared/models/Player';
+import { Player } from '@/shared/models/player/Player';
 import { getPositionInitials, getSurname } from '@/shared/utils/PlayerUtils';
-import { PlayerPositionColorNew } from '@/shared/models/PlayerPosition';
+import { PlayerPositionColorNew } from '@/shared/models/player/PlayerPosition';
 import LineupCloseButton from './LineupCloseButton';
 import { flexCenter } from '@/shared/styles/common';
 import { useLineupEdit } from '@/shared/contexts/LineupEditContext';

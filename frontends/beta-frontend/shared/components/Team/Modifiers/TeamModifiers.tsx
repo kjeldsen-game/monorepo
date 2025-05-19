@@ -5,7 +5,7 @@ import {
   Tactic,
   TeamModifiers,
   VerticalPressure,
-} from '@/shared/models/TeamModifiers';
+} from '@/shared/models/player/TeamModifiers';
 import SelectInput from '../../Common/SelectInput';
 
 interface TeamModifiersFormProps {

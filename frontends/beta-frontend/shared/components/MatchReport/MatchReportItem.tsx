@@ -1,8 +1,8 @@
-import { Play } from '@/shared/models/MatchReport';
 import Box from '@mui/material/Box';
 import MatchReportItemMessage from './MatchReportItemMessage';
 import PitchAreaTooltip from './Tooltips/PitchAreaTooltip';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
+import { Play } from '@/shared/models/match/Play';
 
 interface MatchReportItemProps {
   event: Play;

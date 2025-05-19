@@ -13,7 +13,7 @@ export enum PlayerSkill {
   CONTROL = 'CONTROL',
   ORGANIZATION = 'ORGANIZATION',
   ONE_ON_ONE = 'ONE_ON_ONE',
-  INTERCEPTING = 'INTERCEPTING', // Currently for engine use only, ignore
+  INTERCEPTING = 'INTERCEPTING',
 }
 
 interface PlayerSkillShortcutsMap {

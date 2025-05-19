@@ -1,4 +1,4 @@
-import { ModifierDescription } from '@/shared/models/TeamModifiers';
+import { ModifierDescription } from '@/shared/models/player/TeamModifiers';
 import { Typography } from '@mui/material';
 import React from 'react';
 
