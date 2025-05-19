@@ -1,9 +1,4 @@
 import MessageText from './MessageText';
-import {
-  ASSISTANCE_RANGES,
-  DENOMINATIONS_RANGES,
-  POSITIONAL_RANGES,
-} from '@/shared/models/MatchReport';
 import { getRangeLabel, MessageProps } from '../MatchReportItemMessage';
 import QualityText from './QualityText';
 import ActionText from './ActionText';
@@ -11,9 +6,11 @@ import SingleColTooltip from '../Tooltips/SingleColTooltip';
 import DoubleColTooltip from '../Tooltips/DoubleColTooltip';
 import DoubleColAssistanceTooltip from '../Tooltips/DoubleColAssistanceTooltip';
 import { getPositionInitials } from '@/shared/utils/PlayerUtils';
-import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
-import PitchAreaTooltip from '../Tooltips/PitchAreaTooltip';
-
+import {
+  ASSISTANCE_RANGES,
+  DENOMINATIONS_RANGES,
+  POSITIONAL_RANGES,
+} from '@/shared/models/match/MatchReport';
 const PositionMessage = ({
   duel,
   initiatorEventSide,

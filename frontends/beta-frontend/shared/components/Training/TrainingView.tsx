@@ -7,7 +7,7 @@ import Collapsible from '../Collapsible';
 import CustomTabs from '../CustomTabs';
 import { CustomTabPanel } from '../Tab/CustomTabPanel';
 import TrainingModal from './TrainingModal';
-import { PlayerSkill } from '@/shared/models/PlayerSkill';
+import { PlayerSkill } from '@/shared/models/player/PlayerSkill';
 import { trainingScheduleColumns } from '../Grid/Columns/Training/TrainingScheduleColumns';
 
 interface TrainingViewProps {

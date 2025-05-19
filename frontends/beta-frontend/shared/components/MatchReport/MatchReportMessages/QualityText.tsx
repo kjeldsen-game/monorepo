@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { text } from 'stream/consumers';
 
 interface QualityTextProps {
   children: ReactNode;

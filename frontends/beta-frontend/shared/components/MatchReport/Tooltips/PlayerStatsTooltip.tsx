@@ -1,12 +1,11 @@
 import { ReactNode } from 'react';
 import CustomTooltip from './CustomTooltip';
 import { Box } from '@mui/material';
-import TooltipDataCol from './TooltipDataCol';
-import { RStats } from '@/shared/models/MatchReport';
 import TooltipDataItem from './ToolTipDataItem';
+import { Stats } from '@/shared/models/match/MatchReport';
 
 interface PlayerStatsTooltipProps {
-  stats: any;
+  stats: Stats;
   children: ReactNode;
 }
 

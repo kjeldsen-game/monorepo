@@ -906,6 +906,7 @@ components:
         - LEFT_BACK
         - CENTRE_BACK
         - RIGHT_BACK
+        - OUT_OF_BOUNDS
 
     PlayerTrainingStatus:
       type: string

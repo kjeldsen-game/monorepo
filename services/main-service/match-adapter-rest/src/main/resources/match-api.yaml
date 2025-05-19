@@ -697,7 +697,8 @@ components:
         - LEFT_BACK
         - CENTRE_BACK
         - RIGHT_BACK
-        -
+        - OUT_OF_BOUNDS
+
     PlayerPosition:
       type: string
       example: CENTRE_BACK
@@ -738,15 +739,15 @@ components:
           items:
             $ref: "#/components/schemas/PlayResponse"
         homeStats:
-          $ref: "#/components/schemas/MatchStats"
+          $ref: "#/components/schemas/MatchStatsResponse"
         awayStats:
-          $ref: "#/components/schemas/MatchStats"
+          $ref: "#/components/schemas/MatchStatsResponse"
 
-    PlayerStats:
+    PlayerStatsResponse:
       allOf:
-        - $ref: '#/components/schemas/Stats'
+        - $ref: '#/components/schemas/StatsResponse'
 
-    Stats:
+    StatsResponse:
       type: object
       properties:
         shots:
@@ -757,22 +758,22 @@ components:
           type: integer
         passes:
           type: integer
-        failedPasses:
+        missedPasses:
           type: integer
         tackles:
           type: integer
         saved:
           type: integer
 
-    MatchStats:
+    MatchStatsResponse:
       allOf:
-        - $ref: '#/components/schemas/Stats'
+        - $ref: '#/components/schemas/StatsResponse'
         - type: object
           properties:
             playersStats:
               type: object
               additionalProperties:
-                $ref: '#/components/schemas/PlayerStats'
+                $ref: '#/components/schemas/PlayerStatsResponse'
 
     PlayResponse:
       type: object
@@ -784,7 +785,7 @@ components:
         awayScore:
           type: integer
         action:
-          $ref: "#/components/schemas/ActionResponse"
+          $ref: "#/components/schemas/Action"
         duel:
           $ref: "#/components/schemas/DuelResponse"
         ballState:
@@ -796,7 +797,7 @@ components:
         height:
           $ref: '#/components/schemas/BallHeight'
 
-    ActionResponse:
+    Action:
       type: string
       example: PASS
       enum:
@@ -812,15 +813,15 @@ components:
         total:
           type: integer
         performance:
-          $ref: "#/components/schemas/Performance"
+          $ref: "#/components/schemas/PerformanceResponse"
         assistance:
-          $ref: "#/components/schemas/Assistance"
+          $ref: "#/components/schemas/AssistanceResponse"
         skillPoints:
           type: integer
         carryover:
           type: integer
 
-    Performance:
+    PerformanceResponse:
       type: object
       properties:
         random:
@@ -830,7 +831,7 @@ components:
         total:
           type: number
 
-    Assistance:
+    AssistanceResponse:
       type: object
       properties:
         total:
@@ -848,9 +849,48 @@ components:
         totalModifiers:
           type: number
 
+    DuelType:
+      type: string
+      enum:
+        - PASSING_LOW
+        - PASSING_HIGH
+        - DRIBBLE
+        - POSITIONAL
+        - BALL_CONTROL
+        - LOW_SHOT
+        - ONE_TO_ONE_SHOT
+        - HEADER_SHOT
+        - LONG_SHOT
+        - THROW_IN
+
+    DuelDisruptionType:
+      type: string
+      enum:
+        - NONE
+        - GOALKEEPER_INTERCEPTION
+        - MISSED_PASS
+        - MISSED_SHOT
+
+    DuelDisruptionResponse:
+      properties:
+        type:
+          $ref: "#/components/schemas/DuelDisruptionType"
+        destinationPitchArea:
+          $ref: "#/components/schemas/PitchArea"
+        challenger:
+          $ref: "#/components/schemas/PlayerResponse"
+        receiver:
+          $ref: "#/components/schemas/PlayerResponse"
+        difference:
+          type: number
+        random:
+          type: number
+
     DuelResponse:
       type: object
       properties:
+        type:
+          $ref: "#/components/schemas/DuelType"
         initiator:
           $ref: "#/components/schemas/PlayerResponse"
         challenger:
@@ -865,6 +905,8 @@ components:
           $ref: "#/components/schemas/DuelStats"
         pitchArea:
           $ref: "#/components/schemas/PitchArea"
+        duelDisruption:
+          $ref: "#/components/schemas/DuelDisruptionResponse"
 
     BallHeight:
       type: string

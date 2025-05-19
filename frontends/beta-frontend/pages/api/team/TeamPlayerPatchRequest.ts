@@ -1,7 +1,7 @@
-import { PlayerPosition } from '@/shared/models/PlayerPosition';
+import { PlayerPosition } from '@/shared/models/player/PlayerPosition';
 import { PlayerOrder } from '../match/models/MatchReportresponse';
-import { TeamModifiers } from '@/shared/models/TeamModifiers';
-import { PitchArea } from '@/shared/models/PitchArea';
+import { TeamModifiers } from '@/shared/models/player/TeamModifiers';
+import { PitchArea } from '@/shared/models/match/PitchArea';
 
 interface PlayerRequest {
   id: string;

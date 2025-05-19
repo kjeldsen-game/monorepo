@@ -4,9 +4,10 @@ import { RStats } from '@/shared/models/MatchReport';
 import TooltipDataItem from './ToolTipDataItem';
 import CustomTooltip from './CustomTooltip';
 import PerformanceTooltip from './PerformanceTooltip';
+import { DuelStats } from '@/shared/models/match/Play';
 
 interface TooltipDataColProps {
-  stats: RStats;
+  stats: DuelStats;
   sx?: SxProps;
   heading?: string;
   showAll?: boolean;
@@ -36,7 +37,10 @@ const TooltipDataCol: React.FC<TooltipDataColProps> = ({
       {showAll ? (
         <>
           {stats.assistance != null ? (
-            <TooltipDataItem title={'Assistance'} value={stats.assistance} />
+            <TooltipDataItem
+              title={'Assistance'}
+              value={stats.assistance.total}
+            />
           ) : null}
           {stats.carryover != null ? (
             <TooltipDataItem title={'Carryover'} value={stats.carryover} />

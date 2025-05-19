@@ -43,4 +43,26 @@ public class Team {
     public String toString() {
         return JsonUtils.prettyPrint(this);
     }
+
+    public Team deepCopy() {
+        return Team.builder()
+            .name(this.name)
+            .id(this.id)
+            .role(this.role)
+            .players(this.players != null
+                ? this.players.stream().map(Player::deepCopy).toList()
+                : null)
+            .bench(this.bench != null
+                ? this.bench.stream().map(Player::deepCopy).toList()
+                : null)
+            .specificLineup(this.specificLineup)
+            .rating(this.rating)
+            .modifiers(this.modifiers != null ? this.modifiers.deepCopy() : null)
+            .build();
+    }
+
+    public void cleanPlayers() {
+        this.players = null;
+        this.bench = null;
+    }
 }

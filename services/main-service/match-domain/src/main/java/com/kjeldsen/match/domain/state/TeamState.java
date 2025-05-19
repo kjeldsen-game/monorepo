@@ -36,6 +36,10 @@ public class TeamState {
     VerticalPressure verticalPressure;
     HorizontalPressure horizontalPressure;
 
+    public Player getPlayerById(String playerId) {
+        return players.stream().filter(p -> p.getId().equals(playerId)).findFirst().orElse(null);
+    }
+
     public static TeamState init(Team team) {
         return TeamState.builder()
             .id(team.getId())

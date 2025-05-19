@@ -13,11 +13,11 @@ import lombok.Setter;
 @Setter
 public class Play {
 
+    Integer clock;
     Integer homeScore;
     Integer awayScore;
     Action action;
     Duel duel;
-    Integer clock;
     BallState ballState;
     ChainActionSequence chainActionSequence;
 

@@ -1,5 +1,5 @@
 import { connectorAPI } from '@/libs/fetcher';
-import { PlayerSkill } from '@/shared/models/PlayerSkill';
+import { PlayerSkill } from '@/shared/models/player/PlayerSkill';
 import useSWR from 'swr';
 
 const API = '/training/';

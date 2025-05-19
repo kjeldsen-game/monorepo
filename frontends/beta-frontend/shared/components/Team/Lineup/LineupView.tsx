@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import LineupButton from './LineupButton';
 import { Box } from '@mui/material';
-import { Player } from '@/shared/models/Player';
+import { Player } from '@/shared/models/player/Player';
 import { filterPlayersByStatus } from '@/shared/utils/LineupUtils';
 import { LineupEditProvider } from '@/shared/contexts/LineupEditContext';
 

@@ -13,7 +13,6 @@ import SellIcon from '@mui/icons-material/Sell';
 import PricingDataItem from './PricingDataItem';
 import { useEconomyRepository } from '@/pages/api/economy/useEconomyRepository';
 import { useSession } from 'next-auth/react';
-import { State } from 'swr';
 
 interface GeneralEconomyCardProps {
   balance: number;

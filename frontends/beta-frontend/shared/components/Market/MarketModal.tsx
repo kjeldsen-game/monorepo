@@ -9,9 +9,9 @@ import AuctionDetailData from './AuctionDetailData';
 import CustomModal from '../CustomModal';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { CloseOutlined } from '@mui/icons-material';
-import { AuctionMarket } from '@/shared/models/Auction';
 import { useAuctionRepository } from '@/pages/api/market/useAuctionRepository';
 import { formatDateToDDMMYY } from '@/shared/utils/DateUtils';
+import { AuctionMarket } from '@/shared/models/market/Auction';
 
 interface AuctionProps {
   auction: AuctionMarket | undefined;

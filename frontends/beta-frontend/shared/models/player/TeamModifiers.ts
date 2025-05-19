@@ -31,11 +31,11 @@ export enum HorizontalPressure {
 }
 
 export interface ModifierDescription {
-  name: Tactic;
+  name: Tactic | VerticalPressure | HorizontalPressure;
   effect?: string;
   pros?: string;
   cons?: string;
-  purpose: string;
+  purpose?: string;
 }
 
 export const TacticDescriptions: ModifierDescription[] = [

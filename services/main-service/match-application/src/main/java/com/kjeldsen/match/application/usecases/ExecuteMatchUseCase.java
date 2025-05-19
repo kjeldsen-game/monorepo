@@ -22,10 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static com.kjeldsen.match.application.usecases.UpdateMatchLineupUseCase.buildPlayer;
 
@@ -57,10 +54,15 @@ public class ExecuteMatchUseCase {
             GameState state = Game.play(m);
 
             Map<String, Integer> attendance = getMatchAttendanceUseCase.get(m.getHome().getId(), m.getAway().getId());
-            MatchReport report = new MatchReport(state, state.getPlays(), m.getHome(),
-                m.getAway(), attendance.get("homeAttendance"), attendance.get("awayAttendance"));
+            MatchReport report = new MatchReport(state, state.getPlays(), m.getHome().deepCopy(),
+                m.getAway().deepCopy(), attendance.get("homeAttendance"), attendance.get("awayAttendance"));
 
             m.setMatchReport(report);
+
+            // Clear players duplication because it's already in matchReport
+//            m.getAway().cleanPlayers();
+//            m.getHome().cleanPlayers();
+
             com.kjeldsen.lib.events.MatchEvent matchEvent = MatchEvent.builder()
                 .matchId(m.getId())
                 .leagueId(m.getLeagueId())

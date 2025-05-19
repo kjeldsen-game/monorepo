@@ -2,8 +2,8 @@ import { connectorAPI } from '@/libs/fetcher';
 import { MatchReport } from '@/shared/models/MatchReport';
 import useSWR from 'swr';
 import { TeamPlayerPatchRequest } from '../team/TeamPlayerPatchRequest';
-import { Player } from '@/shared/models/Player';
-import { TeamModifiers } from '@/shared/models/TeamModifiers';
+import { Player } from '@/shared/models/player/Player';
+import { TeamModifiers } from '@/shared/models/player/TeamModifiers';
 
 const API = '/match';
 

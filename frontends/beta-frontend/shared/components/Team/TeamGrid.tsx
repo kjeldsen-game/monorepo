@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import Grid from '../Grid/Grid';
-import { Player } from '@/shared/models/Player';
+import { Player } from '@/shared/models/player/Player';
 import { lineupColumn } from '../Grid/Columns/LineupColumn';
 import { GridRowParams } from '@mui/x-data-grid';
 import {
@@ -8,7 +8,7 @@ import {
   TABLE_PLAYER_POSITION_ORDER_FORWARDS,
   TABLE_PLAYER_POSITION_ORDER_GOALKEEPERS,
   TABLE_PLAYER_POSITION_ORDER_MIDFIELDERS,
-} from '@/shared/models/PlayerPosition';
+} from '@/shared/models/player/PlayerPosition';
 
 interface TeamGridProps {
   rows: any;

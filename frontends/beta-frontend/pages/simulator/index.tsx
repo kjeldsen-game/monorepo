@@ -9,9 +9,9 @@ import {
   Autocomplete,
   Paper,
 } from '@mui/material';
-import { PlayerSkill } from '@/shared/models/PlayerSkill';
-import { PlayerPosition } from '@/shared/models/PlayerPosition';
-import { PlayerCategory } from '@/shared/models/PlayerCategory';
+import { PlayerSkill } from '@/shared/models/player/PlayerSkill';
+import { PlayerPosition } from '@/shared/models/player/PlayerPosition';
+import { PlayerCategory } from '@/shared/models/player/PlayerCategory';
 import { connectorAPI } from '@/libs/fetcher';
 import { useSession } from 'next-auth/react';
 import MarketButton from '@/shared/components/Market/MarketButton';

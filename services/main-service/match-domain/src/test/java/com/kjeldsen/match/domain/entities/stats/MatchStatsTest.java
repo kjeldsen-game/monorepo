@@ -4,6 +4,7 @@ import com.kjeldsen.match.common.RandomHelper;
 import com.kjeldsen.match.domain.entities.Player;
 import com.kjeldsen.match.domain.entities.Team;
 import com.kjeldsen.match.domain.entities.TeamRole;
+import com.kjeldsen.match.domain.entities.duel.DuelDisruptor;
 import com.kjeldsen.match.domain.entities.duel.DuelResult;
 import com.kjeldsen.match.domain.entities.duel.DuelRole;
 import com.kjeldsen.player.domain.PlayerPosition;
@@ -41,7 +42,7 @@ class MatchStatsTest {
         assertEquals(0, result.getMissed());
         assertEquals(0, result.getSaved());
         assertEquals(0, result.getTackles());
-        assertEquals(0, result.getFailedPasses());
+        assertEquals(0, result.getMissedPasses());
         assertEquals(0, result.getPasses());
     }
 
@@ -49,7 +50,7 @@ class MatchStatsTest {
     @DisplayName("Should update the Pass stats")
     public void should_update_the_pass_stats() {
         MatchStats matchStats = MatchStats.init(players);
-        matchStats.handlePassStats(DuelRole.INITIATOR, DuelResult.WIN, players.get(0).getId());
+        matchStats.handlePassStats(DuelRole.INITIATOR, DuelResult.WIN, players.get(0).getId(), null);
 
         assertThat(matchStats.getPasses()).isEqualTo(1);
         assertThat(matchStats.getPlayersStats().get(players.get(0).getId()).getPasses()).isEqualTo(1);

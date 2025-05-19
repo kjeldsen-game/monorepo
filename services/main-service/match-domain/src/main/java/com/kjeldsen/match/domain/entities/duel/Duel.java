@@ -37,4 +37,6 @@ public class Duel {
     // If the play requires the ball to be moved to a new area (a pass), we should know where it's intended destination.
     PitchArea destinationPitchArea;
 
+
+    DuelDisruption duelDisruption;
 }

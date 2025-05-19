@@ -1,15 +1,5 @@
-import {
-  GridCellParams,
-  GridColDef,
-  GridValueGetterParams,
-} from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
 import { GridAlignment } from '@mui/x-data-grid';
-import Link from 'next/link';
-import {
-  PlayerPosition,
-  PlayerPositionColorNew,
-} from '@/shared/models/PlayerPosition';
-import { getPositionInitials } from '@/shared/utils/PlayerUtils';
 import ProgressBar from '../../../Training/ProgressBar';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { Box, Typography } from '@mui/material';

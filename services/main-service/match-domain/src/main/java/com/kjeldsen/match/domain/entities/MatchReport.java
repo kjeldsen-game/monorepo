@@ -40,9 +40,6 @@ public class MatchReport {
     Integer homeAttendance;
     Integer awayAttendance;
 
-
-    GameStats gameStats; // Illustration of how to add additional information to the report
-
     public MatchReport(
         GameState state, List<Play> plays, Team home, Team away,
         Integer homeAttendance, Integer awayAttendance) {
@@ -66,11 +63,5 @@ public class MatchReport {
             result = MatchResult.DRAW;
         }
         Pair<Integer, Integer> ratings = Ratings.eloRatings(homeScore, awayScore, result);
-
-        this.gameStats = new GameStats(ratings.getLeft(), ratings.getRight());
-    }
-
-    public record GameStats(int homeRating, int awayRating) {
-
     }
 }

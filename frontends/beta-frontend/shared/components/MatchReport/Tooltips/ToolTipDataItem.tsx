@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, SxProps, Theme } from '@mui/material';
+import { Box, SxProps } from '@mui/material';
 
 interface TooltipDataItemProps {
   title: string;

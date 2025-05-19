@@ -3,7 +3,7 @@ import {
   GridColDef,
   GridValueGetterParams,
 } from '@mui/x-data-grid';
-import { PlayerPosition } from '@/shared/models/PlayerPosition';
+import { PlayerPosition } from '@/shared/models/player/PlayerPosition';
 import { playerSkillsColumns } from './PlayerSkillsColumns';
 import { baseColumnConfig, leftColumnConfig } from './ColumnsConfig';
 import { positionComparator } from '@/shared/utils/GridUtils';

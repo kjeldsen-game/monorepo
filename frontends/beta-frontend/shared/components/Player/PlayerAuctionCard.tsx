@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Box, Grow, Typography } from '@mui/material';
 import LocalAtmOutlined from '@mui/icons-material/LocalAtmOutlined';
 import MarketModal from '../Market/MarketModal';
 import MarketButton from '../Market/MarketButton';
-import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import { useAuctionRepository } from '@/pages/api/market/useAuctionRepository';
 
 interface PlayerAuctionCardProps {
   auction: any;

@@ -1,6 +1,6 @@
 import { connectorAPI } from '@/libs/fetcher';
 import useSWR, { mutate } from 'swr';
-import { Match } from '@/shared/models/Match';
+import { Match } from '@/shared/models/match/Match';
 
 const API = '/match';
 

@@ -1,13 +1,16 @@
-import { PitchArea } from './PitchArea';
+import { PitchArea } from '../match/PitchArea';
 import { PlayerLineupStatus } from './PlayerLineupStatus';
 import { PlayerOrder } from './PlayerOrder';
 import { PlayerPosition } from './PlayerPosition';
+import { TeamRole } from '../MatchReport';
 
 export interface Player {
   id: string;
   age: number;
   name: string;
-  position: PlayerPosition;
+  teamRole?: TeamRole;
+  position?: PlayerPosition;
+  prepreferredPosition: PlayerPosition;
   category: Category;
   playerOrder: PlayerOrder;
   playerOrderDestinationPitchArea: PitchArea | any;

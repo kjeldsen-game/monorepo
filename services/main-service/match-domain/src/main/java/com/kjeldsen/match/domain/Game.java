@@ -7,6 +7,7 @@ import com.kjeldsen.match.domain.entities.stats.Stats;
 import com.kjeldsen.match.domain.execution.DuelDTO;
 import com.kjeldsen.match.domain.execution.DuelExecution;
 import com.kjeldsen.match.domain.execution.DuelParams;
+import com.kjeldsen.match.domain.generator.RandomGenerator;
 import com.kjeldsen.match.domain.modifers.Tactic;
 import com.kjeldsen.match.domain.recorder.GameProgressRecord;
 import com.kjeldsen.match.domain.selection.ActionSelection;
@@ -25,6 +26,7 @@ import com.kjeldsen.match.domain.state.TeamState;
 import com.kjeldsen.match.domain.validation.TeamFormationValidator;
 import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerOrder;
+import com.kjeldsen.player.domain.PlayerPosition;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 
@@ -112,7 +114,8 @@ public class Game {
     public static GameState nextPlay(GameState state) {
         // At the start of each play a player must have the ball. As long as kick-off is called
         // before the first play this should always be the case.
-        Player initiator = state.getBallState().getPlayer();
+//        Player initiator = state.getBallState().getPlayer();
+        Player initiator = state.attackingTeam().getPlayerById(state.getBallState().getPlayer().getId());
 
         // Next an action is chosen for the player. Action selection happens in two stages: first
         // a list of legal moves is determined, then filters are applied based on rules given by
@@ -181,9 +184,15 @@ public class Game {
 
         Duel duel = Duel.builder()
             .type(outcome.getParams().getDuelType())
-            .initiator(initiator)
-            .receiver(outcome.getParams().getReceiver())
-            .challenger(outcome.getParams().getChallenger())
+            .initiator(initiator.getSimplifiedPlayerData())
+            .challenger(Optional.ofNullable(outcome.getParams().getChallenger())
+                    .map(Player::getSimplifiedPlayerData).orElse(null))
+            .receiver(Optional.ofNullable(outcome.getParams().getReceiver())
+                    .map(Player::getSimplifiedPlayerData).orElse(null))
+
+//            .initiator(initiator)
+//            .receiver(outcome.getParams().getReceiver())
+//            .challenger(outcome.getParams().getChallenger())
             .result(outcome.getResult())
             .pitchArea(outcome.getParams().getState().getBallState().getArea())
             .destinationPitchArea(outcome.getDestinationPitchArea())
@@ -192,6 +201,8 @@ public class Game {
             .origin(outcome.getOrigin())
             .disruptor(outcome.getDisruptor())
             .appliedPlayerOrder(outcome.getParams().getAppliedPlayerOrder())
+            // Candidates after changes
+            .duelDisruption(outcome.getDuelDisruption())
             .build();
 
         // The play is now over. It is saved and the state is transitioned depending on the result.
@@ -220,7 +231,7 @@ public class Game {
         state.getRecorder().record(detail.toString(), state, GameProgressRecord.Type.SUMMARY, GameProgressRecord.DuelStage.AFTER);
         //log.debug("Play complete:\n{}", play);
 
-        GameState resultingGameState = switch (outcome.getResult()) {
+        return switch (outcome.getResult()) {
             case WIN -> {
                 if (play.getAction() == Action.SHOOT) {
                     yield handleGoal(state, play);
@@ -231,8 +242,6 @@ public class Game {
             case LOSE -> handleDuelLoss(state, play);
         };
 
-        return resultingGameState;
-
     }
 
     // For duel wins, we determine who takes control of the ball (depending on whether a receiver
@@ -240,9 +249,7 @@ public class Game {
     private static GameState handleDuelWin(GameState state, Play play) {
         Duel duel = play.getDuel();
         Player player = Optional.ofNullable(duel.getReceiver()).orElseGet(duel::getInitiator);
-
         PitchArea currentArea = state.getBallState().getArea();
-
         PitchArea playerArea;
 
         BallHeight ballHeight = state.getBallState().getHeight();
@@ -272,6 +279,16 @@ public class Game {
         } else {
             playerArea = currentArea;
         }
+
+        // If the change for the Destination Pitch Area happened adjust that in the GameState
+        if (play.getDuel().getDuelDisruption() != null && play.getDuel().getDuelDisruption().getDestinationPitchArea() != null) {
+            playerArea = play.getDuel().getDuelDisruption().getDestinationPitchArea();
+        }
+        // There was change for the Receiver in the Pass because initial pass was miss
+        if (play.getDuel().getDuelDisruption() != null && play.getDuel().getDuelDisruption().getReceiver() != null) {
+            player = play.getDuel().getDuelDisruption().getReceiver();
+        }
+
         BallState newBallState = new BallState(player, playerArea, ballHeight);
 
         // REFACTOR THIS. Player orders may start a chained action sequence.
@@ -320,8 +337,8 @@ public class Game {
                     // Update the goalkeeper stats with successful save attempt
                     initiatorTeamState = Optional.of(state.attackingTeam())
                         .map((beforeState) -> {
-                            MatchStats matchStats = beforeState.getMatchStats().handlePassStats(
-                                DuelRole.INITIATOR, play.getDuel().getResult(), play.getDuel().getInitiator().getId());
+                            MatchStats matchStats = beforeState.getMatchStats().handlePassStats(DuelRole.INITIATOR,
+                                play.getDuel().getResult(), play.getDuel().getInitiator().getId(), play.getDuel().getDuelDisruption());
                             return TeamState.copyTeamStateAndUpdate(beforeState, matchStats, false);
                         }).orElseThrow();
                 }
@@ -346,6 +363,9 @@ public class Game {
         // it is oriented from the perspective of the current player's team.
         PitchArea currentArea = state.getBallState().getArea().flipPerspective();
         Map<ChainActionSequence, GameState.ChainAction> sequenceChainActionMap = state.getChainActions();
+
+
+        // TODO add the part for the out of bounds stuff so we need to choose new player here probalby
 
         // Counter-attack is won by the defender, so the ChainActionSequence is set to active with counter-attack
         // Defender won with TACKLE and get the ball
@@ -386,12 +406,30 @@ public class Game {
             playerArea = currentArea;
             // Attacker lose the positional duel, but we still want to have in the Tackle duel as attacker
             if (play.getDuel().getType().equals(DuelType.POSITIONAL) && play.getDuel().getResult() == DuelResult.LOSE) {
+//                TeamState newBallHolder = Turn.valueOf(play.getDuel().getChallenger().getTeamRole().name()) == Turn.HOME
+//                    ? state.getHome() : state.getAway();
+//                Player player = newBallHolder.getPlayerById(play.getDuel().getInitiator().getId());
+
                 newBallState = new BallState(play.getDuel().getInitiator(), state.getBallState().getArea(), state.getBallState().getHeight());
             } else {
-                newBallState = new BallState(play.getDuel().getChallenger(), playerArea, state.getBallState().getHeight());
+                if (play.getAction().equals(Action.PASS)) {
+                    Turn turn = Turn.valueOf(play.getDuel().getChallenger().getTeamRole().name());
+                    TeamState newBallHolder = turn == Turn.HOME ? state.getHome() : state.getAway();
+
+                    List<Player> players = newBallHolder.getPlayers().stream()
+                        .filter(player -> !player.getPosition().equals(PlayerPosition.GOALKEEPER)).toList();
+
+                    newBallState = new BallState(players.get(RandomGenerator.randomInt(0, players.size() - 1)),
+                        play.getDuel().getDuelDisruption().getDestinationPitchArea() != null ?
+                            play.getDuel().getDuelDisruption().getDestinationPitchArea() :
+                            play.getDuel().getDestinationPitchArea(), BallHeight.GROUND);
+//                    log.info("Handling the PASS LOSS duel and selecting the new ball owner = {}", newBallState);
+
+                } else {
+                    newBallState = new BallState(play.getDuel().getChallenger(), playerArea, state.getBallState().getHeight());
+                }
             }
         }
-
 
         return Optional.of(state)
             .map((before) -> {
@@ -403,6 +441,16 @@ public class Game {
                         .map((beforeState) -> {
                             MatchStats matchStats = beforeState.getMatchStats().handleTackleStats(
                                 DuelRole.CHALLENGER, play.getDuel().getResult(), play.getDuel().getChallenger().getId());
+                            return TeamState.copyTeamStateAndUpdate(beforeState, matchStats, false);
+                        }).orElseThrow();
+                }
+
+                if (play.getAction().equals(Action.PASS)) {
+                    // Update the goalkeeper stats with successful save attempt
+                    initiatorTeamState = Optional.of(state.attackingTeam())
+                        .map((beforeState) -> {
+                            MatchStats matchStats = beforeState.getMatchStats().handlePassStats(DuelRole.INITIATOR,
+                                play.getDuel().getResult(), play.getDuel().getInitiator().getId(), play.getDuel().getDuelDisruption());
                             return TeamState.copyTeamStateAndUpdate(beforeState, matchStats, false);
                         }).orElseThrow();
                 }

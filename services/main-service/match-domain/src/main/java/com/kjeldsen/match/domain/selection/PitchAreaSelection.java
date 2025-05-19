@@ -4,10 +4,8 @@ import com.kjeldsen.match.domain.entities.Player;
 import com.kjeldsen.match.domain.state.BallState;
 import com.kjeldsen.player.domain.PitchArea;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class PitchAreaSelection {
 
@@ -48,13 +46,19 @@ public class PitchAreaSelection {
 
         if (ballChangesPlayer) {
             // If ball is changing from one player to another, the area is selected from the target player coverage.
-            areas = player.getPosition().coverage().stream()
+            if (ballState.getArea().equals(PitchArea.OUT_OF_BOUNDS)) {
+                areas = List.of(PitchArea.midfield());
+            } else {
+                areas = player.getPosition().coverage().stream()
                     .filter(coveredArea -> !nearbyOnly || coveredArea.isNearby(ballArea))
                     .filter(coveredArea -> !PitchArea.PitchRank.MIDDLE.equals(ballArea.rank()) || !PitchArea.PitchRank.BACK.equals(coveredArea.rank()))
                     .toList();
+            }
         } else {
             // If a player is moving himself to another area, then we break from the player normal coverage.
-            List<PitchArea> allAreas = List.of(PitchArea.values());
+            List<PitchArea> allAreas = Arrays.stream(PitchArea.values())
+                .filter(area -> area != PitchArea.OUT_OF_BOUNDS)
+                .toList();
 
             areas = allAreas.stream()
                     .filter(area -> !nearbyOnly || area.isNearby(ballArea))

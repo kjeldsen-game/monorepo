@@ -25,8 +25,6 @@ public class DuelStats {
      * Numerical data about the duel
      */
 
-    Long id;
-
     // The total score that was summed up to determine who won the duel
     Integer total;
     // The relevant skill points that contributed in this duel
@@ -40,6 +38,15 @@ public class DuelStats {
     Assistance assistance;
 
     Map<ChainActionSequence, Integer> chainActionBonuses;
+
+    public static DuelStats initWithoutAssistance() {
+        return DuelStats.builder()
+            .total(0)
+            .skillPoints(0)
+            .carryover(0)
+            .performance(new Performance())
+            .build();
+    }
 
     public static DuelStats initDefault() {
         return DuelStats.builder()
@@ -70,7 +77,7 @@ public class DuelStats {
     public static class Assistance {
         Double total = 0.0;
         Double adjusted = 0.0;
-        Map<String, Double> teamAssistance = new HashMap<String, Double>();
+        Map<String, Double> teamAssistance = new HashMap<>();
         Map<ChainActionSequence, Integer> modifiers = new HashMap<>();
         Double totalModifiers = 0.0;
     }

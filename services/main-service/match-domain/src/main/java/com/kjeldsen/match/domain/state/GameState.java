@@ -11,7 +11,7 @@ import com.kjeldsen.match.domain.recorder.GameProgressRecorder;
 import lombok.*;
 
 @Value
-@Builder
+@Builder(toBuilder = true)
 public class GameState {
 
     /*

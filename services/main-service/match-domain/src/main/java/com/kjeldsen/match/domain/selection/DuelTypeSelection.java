@@ -6,6 +6,7 @@ import com.kjeldsen.match.domain.entities.Player;
 import com.kjeldsen.match.domain.entities.duel.DuelType;
 import com.kjeldsen.match.domain.state.BallHeight;
 import com.kjeldsen.match.domain.state.GameState;
+import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerReceptionPreference;
 
 import java.util.Random;
@@ -19,6 +20,9 @@ public class DuelTypeSelection {
 
         return switch (action) {
             case PASS -> {
+                if (state.getBallState().getArea().equals(PitchArea.OUT_OF_BOUNDS)) {
+                    yield DuelType.THROW_IN;
+                }
                 if (PlayerReceptionPreference.DEMAND_LOW.equals(receiver.getReceptionPreference())) {
                     yield DuelType.PASSING_LOW;
                 }

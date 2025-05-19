@@ -1,4 +1,4 @@
-import { IncomeMode, IncomePeriodicity } from '../models/Economy';
+import { IncomeMode, IncomePeriodicity } from '../models/player/Economy';
 
 export const getBackgroundColor = (status: string) => {
   switch (status) {

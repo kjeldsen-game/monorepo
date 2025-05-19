@@ -1,18 +1,14 @@
-import {
-  Action,
-  Duel,
-  DuelResultRange,
-  MatchEventSide,
-  MatchResult,
-  Play,
-  TeamRole,
-} from '@/shared/models/MatchReport';
 import React from 'react';
+import { Play, Action, Duel, DuelResult } from '@/shared/models/match/Play';
 
 import ShootMessage from './MatchReportMessages/ShootMessage';
 import PassMessage from './MatchReportMessages/PassMessage';
 import TackleMessage from './MatchReportMessages/TackleMessage';
 import PositionMessage from './MatchReportMessages/PositionMessage';
+import {
+  DuelResultRange,
+  MatchEventSide,
+} from '@/shared/models/match/MatchReport';
 
 interface MatchReportItemMessageProps {
   duel: Duel;
@@ -26,7 +22,7 @@ export interface MessageProps {
   initiatorEventSide: MatchEventSide;
   challengerEventSide: MatchEventSide;
   action: Action;
-  result: MatchResult;
+  result: DuelResult;
   event: Play;
 }
 

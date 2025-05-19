@@ -1,7 +1,7 @@
 import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { baseColumnConfig } from './ColumnsConfig';
 import CustomTooltip from '../../MatchReport/Tooltips/CustomTooltip';
-import { PlayerSkillShortcuts } from '@/shared/models/PlayerSkill';
+import { PlayerSkillShortcuts } from '@/shared/models/player/PlayerSkill';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 import { Box } from '@mui/material';
 

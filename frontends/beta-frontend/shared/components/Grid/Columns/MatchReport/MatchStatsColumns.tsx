@@ -6,8 +6,8 @@ import {
   leftColumnConfig,
   rightColumnConfig,
 } from '../ColumnsConfig';
-import { PITCH_AREA_SHORTCUTS } from '@/shared/models/PitchArea';
-import { PlayerPositionAbbreviation } from '@/shared/models/PlayerPosition';
+import { PITCH_AREA_SHORTCUTS } from '@/shared/models/match/PitchArea';
+import { PlayerPositionAbbreviation } from '@/shared/models/player/PlayerPosition';
 import { formatName } from '@/shared/utils/PlayerUtils';
 import CustomTooltip from '@/shared/components/MatchReport/Tooltips/CustomTooltip';
 

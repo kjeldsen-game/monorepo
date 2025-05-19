@@ -2,7 +2,7 @@ import { Box, Grid } from '@mui/material';
 import { useState } from 'react';
 import BillboardModal from './BillboardModal';
 import SponsorsModal from './SponsorsModal';
-import { IncomePeriodicity } from '@/shared/models/Economy';
+import { IncomePeriodicity } from '@/shared/models/player/Economy';
 import GeneralEconomyCard from './GeneralEconomyCard';
 import BillboardCard from './BillboardCard';
 import SponsorCard from './SponsorCard';

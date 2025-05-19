@@ -1,4 +1,4 @@
-import { PlayerPositionAbbreviation } from '../models/PlayerPosition';
+import { PlayerPositionAbbreviation } from '../models/player/PlayerPosition';
 
 export function getPositionInitials(position: string | undefined): string {
   if (!position) return '';

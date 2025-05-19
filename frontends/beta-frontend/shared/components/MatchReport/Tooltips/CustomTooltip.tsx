@@ -2,13 +2,12 @@ import styled from '@emotion/styled';
 import { CloseOutlined } from '@mui/icons-material';
 import {
   Box,
-  Grid,
   IconButton,
   Tooltip,
   tooltipClasses,
   Typography,
 } from '@mui/material';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 
 interface CustomTooltipProps {
   children: ReactNode;

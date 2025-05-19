@@ -1,6 +1,6 @@
 import React from 'react';
 import TooltipDataItem from './ToolTipDataItem';
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Performance } from '@/shared/models/MatchReport';
 
 interface PerformanceTooltipProps {

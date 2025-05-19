@@ -1,7 +1,7 @@
 import { useSWRConfig } from 'swr';
 import { MatchCreationRequest } from './MatchCreationRequest';
 import { connectorAPI } from '@/libs/fetcher';
-import { Match } from '@/shared/models/Match';
+import { Match } from '@/shared/models/match/Match';
 
 const API = '/match';
 
