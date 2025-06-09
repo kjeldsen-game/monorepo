@@ -5,15 +5,15 @@ import com.kjeldsen.match.domain.entities.duel.DuelRole;
 import com.kjeldsen.match.domain.state.GameState;
 import java.util.Map;
 
+/**
+ * Determines the points to be carried over to the next duel.
+ */
 public class Carryover {
 
-    /*
-     * Determines the points to be carried over to the next duel
+    /**
+     * Carryover from the previous duel is half of the difference of the total duel points of two players.
+     * The carryover value is given to the winner of the (previous) duel and contributes current duel.
      */
-
-    // Carryover from the previous duel is half of the difference of the total duel points of the
-    // two players. The carryover value is given to the winner of the (previous) duel and
-    // contributes to the (current) duel. This is capped at half of the maximum assistance.
     public static Map<DuelRole, Integer> getCarryover(GameState state) {
         return state.lastPlay()
             .map(Play::getDuel)
@@ -32,7 +32,6 @@ public class Carryover {
                         ? DuelRole.CHALLENGER
                         : DuelRole.INITIATOR;
 
-                // TODO limiting carryover
                 return Map.of(
                     winner, carryover,
                     loser, 0

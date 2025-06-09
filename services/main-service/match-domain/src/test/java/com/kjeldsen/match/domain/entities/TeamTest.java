@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TeamTest {
 
-
     @Test
     @DisplayName("Should return players")
     void should_return_players() {

@@ -1,251 +1,358 @@
 package com.kjeldsen.match.domain.execution;
 
-import com.kjeldsen.match.domain.Game;
 import com.kjeldsen.match.common.RandomHelper;
-import com.kjeldsen.match.domain.entities.Match;
-import com.kjeldsen.match.domain.entities.Play;
-import com.kjeldsen.match.domain.entities.Player;
-import com.kjeldsen.match.domain.entities.Team;
-import com.kjeldsen.match.domain.entities.TeamRole;
-import com.kjeldsen.match.domain.entities.duel.Duel;
-import com.kjeldsen.match.domain.entities.duel.DuelDisruptor;
-import com.kjeldsen.match.domain.entities.duel.DuelOrigin;
-import com.kjeldsen.match.domain.entities.duel.DuelResult;
-import com.kjeldsen.match.domain.entities.duel.DuelType;
-import com.kjeldsen.match.domain.random.DuelRandomization;
+import com.kjeldsen.match.domain.entities.*;
+import com.kjeldsen.match.domain.entities.duel.*;
+import com.kjeldsen.match.domain.random.GausDuelRandomizer;
+import com.kjeldsen.match.domain.state.BallState;
+import com.kjeldsen.match.domain.state.ChainActionSequence;
 import com.kjeldsen.match.domain.state.GameState;
+import com.kjeldsen.match.domain.state.GameStateException;
+import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerSkill;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.*;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
 @Disabled
 class DuelExecutionTest {
 
-    @Test
-    void goalkeeperCheckOnShotDuelResolution() {
-        Team home = RandomHelper.genTeam(TeamRole.HOME);
-        Team away = RandomHelper.genTeam(TeamRole.AWAY);
+    static Team initiatorTeam;
+    static Team challengerTeam;
+    static Player initiator;
+    static Player challenger;
+    static Player receiver;
 
-        Match match = Match.builder()
-            .id(java.util.UUID.randomUUID().toString())
-            .home(home)
-            .away(away)
-            .build();
-        GameState state = GameState.init(match);
+    GameState mockedState = Mockito.mock(GameState.class);
+    DuelParams mockedParams = Mockito.mock(DuelParams.class);
+    BallState mockedBallState = Mockito.mock(BallState.class);
 
-        Player initiator = home.getPlayers().stream().filter(p -> p.getPosition().equals(PlayerPosition.FORWARD)).findAny().get();
-        initiator.getSkills().put(PlayerSkill.SCORING, 0);
-        Player challenger = away.getPlayers().stream().filter(p -> p.getPosition().equals(PlayerPosition.FORWARD)).findAny().get();
-        challenger.getSkills().put(PlayerSkill.REFLEXES, 100);
+    @BeforeAll
+    static void beforeAll() {
+        initiator = Mockito.mock(Player.class);
+        challenger = Mockito.mock(Player.class);
+        initiatorTeam = RandomHelper.genTeam(TeamRole.HOME);
+        challengerTeam = RandomHelper.genTeam(TeamRole.AWAY);
+    }
 
-        DuelParams params = DuelParams.builder()
-            .state(state)
-            .duelType(DuelType.LOW_SHOT)
-            .initiator(initiator)
-            .challenger(challenger)
-            .origin(DuelOrigin.DEFAULT)
-            .disruptor(DuelDisruptor.NONE)
-            .build();
+    private static Stream<Arguments> handleBallControlDuelTestParameterProvider() {
+        // Challenger, duelResult, challengerSkillValue
+        return Stream.of(
+            Arguments.of(null, DuelResult.WIN, 0),
+            Arguments.of(challenger, DuelResult.LOSE, 50),
+            Arguments.of(challenger, DuelResult.WIN, 10));
+    }
 
-        try {
-            DuelDTO outcome = DuelExecution.executeDuel(state, params);
-            fail();
-        } catch (Exception e) {
-            assertEquals(e.getMessage(), "Player defending shot is not a GOALKEEPER.");
+    @ParameterizedTest
+    @MethodSource("handleBallControlDuelTestParameterProvider")
+    @DisplayName("Should execute handleBallControlDuel")
+    void should_execute_handleBallControlDuel(Player challenger, DuelResult duelResult, int challengerSkillValue)  {
+
+        DuelType duelType = DuelType.BALL_CONTROL;
+        initMocks(duelType);
+
+        try(MockedStatic<GausDuelRandomizer> gausMock = Mockito.mockStatic(GausDuelRandomizer.class);
+            MockedStatic<Carryover> carryoverMock = Mockito.mockStatic(Carryover.class)) {
+
+            carryoverMock.when(() -> Carryover.getCarryover(any())).thenReturn(
+                Map.of(
+                    DuelRole.CHALLENGER, 0,
+                    DuelRole.INITIATOR, 0));
+
+            gausMock.when(() -> GausDuelRandomizer.performance(any(), any(), any(), any())).thenReturn(
+                DuelStats.Performance.builder().total(5.0).random(5.0).previousTotalImpact(0.0).build());
+
+            when(initiator.duelSkill(any(), any(), any())).thenReturn(20);
+
+            if (challenger != null) {
+                when(challenger.duelSkill(any(), any(), any())).thenReturn(challengerSkillValue);
+            }
+
+            when(mockedParams.getDuelType()).thenReturn(duelType);
+
+            DuelDTO result = DuelExecution.executeDuel(mockedState, mockedParams);
+            assertThat(result).isNotNull();
+            assertThat(result.getResult()).isEqualTo(duelResult);
+            assertThat(result.getDuelDisruption()).isNull();
         }
     }
 
-    @Test
-    @Disabled
-    void shotDuelResolutionWinAndLose() {
-        Team home = RandomHelper.genTeam(TeamRole.HOME);
-        Team away = RandomHelper.genTeam(TeamRole.AWAY);
-
-        Match match = Match.builder()
-            .id(java.util.UUID.randomUUID().toString())
-            .home(home)
-            .away(away)
-            .build();
-        GameState state = GameState.init(match);
-
-        Player initiator = home.getPlayers().stream().filter(p -> p.getPosition().equals(PlayerPosition.FORWARD)).findAny().get();
-        initiator.getSkills().put(PlayerSkill.SCORING, 0);
-        Player challenger = away.getPlayers().stream().filter(p -> p.getPosition().equals(PlayerPosition.GOALKEEPER)).findAny().get();
-        challenger.getSkills().put(PlayerSkill.REFLEXES, 100);
-
-        DuelParams params = DuelParams.builder()
-            .state(state)
-            .duelType(DuelType.LOW_SHOT)
-            .initiator(initiator)
-            .challenger(challenger)
-            .origin(DuelOrigin.DEFAULT)
-            .disruptor(DuelDisruptor.NONE)
-            .build();
-
-        DuelDTO outcome = DuelExecution.executeDuel(state, params);
-        assertEquals(outcome.getResult(), DuelResult.WIN);
-
-        initiator.getSkills().put(PlayerSkill.SCORING, 100);
-        challenger.getSkills().put(PlayerSkill.REFLEXES, 0);
-        params = DuelParams.builder()
-            .state(state)
-            .duelType(DuelType.LOW_SHOT)
-            .initiator(initiator)
-            .challenger(challenger)
-            .origin(DuelOrigin.DEFAULT)
-            .disruptor(DuelDisruptor.NONE)
-            .build();
-
-        outcome = DuelExecution.executeDuel(state, params);
-        assertEquals(outcome.getResult(), DuelResult.LOSE);
-
+    @ParameterizedTest
+    @EnumSource(value = DuelType.class, names = {"PASSING_LOW", "PASSING_HIGH", "THROW_IN"})
+    @DisplayName("Should throw error when receiver is null")
+    void should_call_pass_duel_handler(DuelType duelType) {
+        initMocks(duelType);
+        assertThrows(GameStateException.class, () ->
+            DuelExecution.executeDuel(mockedState, mockedParams));
     }
 
-    @Test
-    @Disabled
-    void aerialPassDuelResolution() {
-        Team home = RandomHelper.genTeam(TeamRole.HOME);
-        Team away = RandomHelper.genTeam(TeamRole.AWAY);
+    @ParameterizedTest
+    @MethodSource("handlePassDuelParametersProvider")
+    @DisplayName("Should execute handlePassDuel with disruption")
+    void ds(DuelType duelType, DuelResult duelResult, Optional<DuelDisruption> duelDisruptionOpt , int totalResult ) {
+        initiator = Mockito.mock(Player.class);
+        challenger = Mockito.mock(Player.class);
+        receiver = Mockito.mock(Player.class);
 
-        Match match = Match.builder()
-            .id(java.util.UUID.randomUUID().toString())
-            .home(home)
-            .away(away)
-            .build();
-        GameState state = GameState.init(match);
+        initMocks(duelType);
+        when(mockedParams.getReceiver()).thenReturn(receiver);
 
-        state = Game.kickOff(state);
-        state = Game.nextPlay(state);
+        try (MockedStatic<DisruptionExecution> disruptionMock = Mockito.mockStatic(DisruptionExecution.class);
+             MockedStatic<GausDuelRandomizer> gausMock = Mockito.mockStatic(GausDuelRandomizer.class);
+             MockedStatic<Carryover> carryoverMock = Mockito.mockStatic(Carryover.class)) {
 
-        Player initiator = home.getPlayers().stream().filter(
-            p -> p.getPosition().equals(PlayerPosition.LEFT_MIDFIELDER) || p.getPosition().equals(PlayerPosition.LEFT_WINGER)).findAny().get();
-        initiator.getSkills().put(PlayerSkill.BALL_CONTROL, 0);
-        initiator.getSkills().put(PlayerSkill.AERIAL, 100);
-        Player challenger = away.getPlayers().stream().filter(p -> p.getPosition().equals(PlayerPosition.CENTRE_BACK)).findAny().get();
-        challenger.getSkills().put(PlayerSkill.BALL_CONTROL, 0);
-        challenger.getSkills().put(PlayerSkill.AERIAL, 0);
+            disruptionMock.when(() -> DisruptionExecution.executeDisruption(any(), eq(DuelDisruptor.MISSED_PASS), any(), any()))
+                .thenReturn(duelDisruptionOpt);
 
-        DuelParams params = DuelParams.builder()
-            .state(state)
-            .duelType(DuelType.BALL_CONTROL)
-            .initiator(initiator)
-            .challenger(challenger)
-            .origin(DuelOrigin.DEFAULT)
-            .disruptor(DuelDisruptor.NONE)
-            .build();
+            carryoverMock.when(() -> Carryover.getCarryover(any())).thenReturn(
+                Map.of(
+                    DuelRole.CHALLENGER, 0,
+                    DuelRole.INITIATOR, 0));
 
-        DuelDTO outcome = DuelExecution.executeDuel(state, params);
-        assertEquals(outcome.getResult(), DuelResult.WIN);
+            gausMock.when(() -> GausDuelRandomizer.performance(any(), any(), any(), any())).thenReturn(
+                DuelStats.Performance.builder().total(5.0).random(5.0).previousTotalImpact(0.0).build());
 
-    }
+            when(initiator.duelSkill(any(), any(), any())).thenReturn(20);
+            when(challenger.duelSkill(any(), any(), any())).thenReturn(10);
 
-    @Test
-    @Disabled
-    void viewWinDistribution() {
-        int wins = 0;
-        boolean lostLast = false;
-        for (int i = 0; i < 100; i++) {
-            double p = DuelRandomization.initialWinProbability(40, 60);
-            double rand = new Random().nextDouble();
-            if (lostLast) {
-                rand += 0.05;
-            }
-            if (rand < p) {
-                wins++;
+            DuelDTO result = DuelExecution.executeDuel(mockedState, mockedParams);
+
+            assertThat(result).isNotNull();
+            if (duelDisruptionOpt.isPresent()) {
+                assertThat(result.getDuelDisruption()).isNotNull();
             } else {
-                lostLast = true;
+                assertThat(result.getDuelDisruption()).isNull();
+            }
+            assertThat(result.getInitiatorStats().getPerformance().getTotal()).isEqualTo(5.0);
+            assertThat(result.getInitiatorStats().getTotal()).isEqualTo(25);
+            assertThat(result.getResult()).isEqualTo(duelResult);
+            assertThat(result.getChallengerStats().getTotal()).isEqualTo(totalResult);
+        }
+    }
+
+
+    private void initMocks(DuelType duelType) {
+        when(mockedState.getClock()).thenReturn(1);
+        when(mockedState.getBallState()).thenReturn(mockedBallState);
+        when(mockedParams.getDuelType()).thenReturn(duelType);
+        when(mockedState.lastPlay()).thenReturn(Optional.empty());
+        when(mockedParams.getState()).thenReturn(mockedState);
+        when(mockedParams.getInitiator()).thenReturn(initiator);
+        when(mockedParams.getChallenger()).thenReturn(challenger);
+    }
+
+    private static Stream<Arguments> handlePassDuelParametersProvider() {
+        Optional<DuelDisruption> duelDisruptionOpt = Optional.of(DuelDisruption.builder()
+            .destinationPitchArea(PitchArea.OUT_OF_BOUNDS)
+            .build());
+
+        return Stream.of(
+            Arguments.of(DuelType.PASSING_HIGH, DuelResult.WIN, Optional.empty(), 15),
+            Arguments.of(DuelType.PASSING_LOW, DuelResult.WIN, Optional.empty(), 15),
+            Arguments.of(DuelType.THROW_IN, DuelResult.WIN, Optional.empty(), 0),
+
+            Arguments.of(DuelType.PASSING_HIGH, DuelResult.LOSE, duelDisruptionOpt, 0),
+            Arguments.of(DuelType.PASSING_LOW, DuelResult.LOSE, duelDisruptionOpt, 0),
+            Arguments.of(DuelType.THROW_IN, DuelResult.LOSE, duelDisruptionOpt, 0));
+    }
+
+
+    @ParameterizedTest
+    @EnumSource(value = DuelType.class, names = {"LOW_SHOT", "HEADER_SHOT", "ONE_TO_ONE_SHOT", "LONG_SHOT"})
+    @DisplayName("Should throw error when challenger is not goalkeeper in shot duel")
+    void should_throw_error_when_challenger_is_goalkeeper_in_shot_duel(DuelType duelType) {
+        initMocks(duelType);
+        when(challenger.getPosition()).thenReturn(PlayerPosition.FORWARD);
+        assertThatThrownBy(() -> DuelExecution.executeDuel(mockedState, mockedParams))
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessage("Player defending shot is not a GOALKEEPER.");
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = DuelType.class, names = {"LOW_SHOT", "HEADER_SHOT", "ONE_TO_ONE_SHOT", "LONG_SHOT"})
+    @DisplayName("Should execute handleShotDuel with disruption happened")
+    void should_execute_handleShotDuel_with_disruption_happened(DuelType duelType) {
+
+        initMocks(duelType);
+        when(challenger.getPosition()).thenReturn(PlayerPosition.GOALKEEPER);
+
+        try (MockedStatic<DisruptionExecution> disruptionMock = Mockito.mockStatic(DisruptionExecution.class)) {
+            disruptionMock.when(() -> DisruptionExecution.executeDisruption(any(), any(), any(), any()))
+                .thenReturn(Optional.of(DuelDisruption.builder().type(DuelDisruptor.MISSED_SHOT).build()));
+
+            DuelDTO result = DuelExecution.executeDuel(mockedState, mockedParams);
+            assertThat(result).isNotNull();
+            assertThat(result.getDuelDisruption()).isNotNull();
+            assertThat(result.getChallengerStats()).isNull();
+            assertThat(result.getResult()).isEqualTo(DuelResult.LOSE);
+        }
+    }
+
+    private static Stream<Arguments> handleShotDuelTestParametersProvider() {
+        return Stream.of(Arguments.of(DuelType.LOW_SHOT, DuelResult.WIN, false, 50),
+            Arguments.of(DuelType.ONE_TO_ONE_SHOT, DuelResult.WIN, false, 50),
+            Arguments.of(DuelType.HEADER_SHOT, DuelResult.WIN, false, 50),
+            Arguments.of(DuelType.LONG_SHOT, DuelResult.WIN, false, 50),
+            // Goalkeeper have higher skill and fumble did not happen
+            Arguments.of(DuelType.LOW_SHOT, DuelResult.LOSE, false, 5),
+            Arguments.of(DuelType.ONE_TO_ONE_SHOT, DuelResult.LOSE, false, 5),
+            Arguments.of(DuelType.HEADER_SHOT, DuelResult.LOSE, false, 5),
+            Arguments.of(DuelType.LONG_SHOT, DuelResult.LOSE, false, 5));
+    }
+
+    @ParameterizedTest
+    @MethodSource("handleShotDuelTestParametersProvider")
+    @DisplayName("Should execute handleShotDuel without disruption happened")
+    void should_execute_handleShotDuel_without_disruption_happened(DuelType duelType,
+       DuelResult duelResult, boolean fumbleDisruptionHappened, int initiatorSkillValue) {
+
+        initMocks(duelType);
+        when(challenger.getPosition()).thenReturn(PlayerPosition.GOALKEEPER);
+
+        try (MockedStatic<DisruptionExecution> disruptionMock = Mockito.mockStatic(DisruptionExecution.class);
+            MockedStatic<Carryover> carryoverMock = Mockito.mockStatic(Carryover.class);
+            MockedStatic<GausDuelRandomizer> gausMock = Mockito.mockStatic(GausDuelRandomizer.class)) {
+            disruptionMock.when(() -> DisruptionExecution.executeDisruption(any(), eq(DuelDisruptor.MISSED_SHOT), any(), any()))
+                .thenReturn(Optional.empty());
+
+            disruptionMock.when(() -> DisruptionExecution.executeDisruption(any(),
+                eq(DuelDisruptor.GOALKEEPER_FUMBLE), any(), any())).thenReturn(
+                    fumbleDisruptionHappened ? Optional.of(DuelDisruption.builder()
+                    .type(DuelDisruptor.GOALKEEPER_FUMBLE).build()) : Optional.empty());
+
+            when(initiator.duelSkill(any(), any(), any())).thenReturn(initiatorSkillValue);
+            when(challenger.duelSkill(any(), any(), any())).thenReturn(10);
+
+            carryoverMock.when(() -> Carryover.getCarryover(any())).thenReturn(
+                Map.of(
+                    DuelRole.CHALLENGER, 0,
+                    DuelRole.INITIATOR, 0));
+
+            gausMock.when(() -> GausDuelRandomizer.performance(any(), any(), any(), any())).thenReturn(
+                DuelStats.Performance.builder().total(5.0).random(5.0).previousTotalImpact(0.0).build());
+
+            DuelDTO result = DuelExecution.executeDuel(mockedState, mockedParams);
+
+            assertThat(result).isNotNull();
+            assertThat(result.getResult()).isEqualTo(duelResult);
+            if (initiatorSkillValue == 50) {
+                assertThat(result.getInitiatorStats().getSkillPoints())
+                    .isGreaterThan(result.getChallengerStats().getSkillPoints());
             }
         }
-        System.out.println(wins);
+    }
+
+    private static Stream<Arguments> handlePositionalDuelTestParametersProvider() {
+        return Stream.of(Arguments.of(null, DuelResult.WIN, 0.0, 0),
+            Arguments.of(challenger, DuelResult.WIN, 20.0, 20),
+            Arguments.of(challenger, DuelResult.LOSE, 80.0, 80));
     }
 
 
-    @Test
-    void consecutiveLossesInitiator() {
-        Player initiator = Player.builder().skills(Map.of(PlayerSkill.OFFENSIVE_POSITIONING, 40))
-            .build();
-        Player challenger = Player.builder().skills(Map.of(PlayerSkill.DEFENSIVE_POSITIONING, 60))
-            .build();
+    @ParameterizedTest
+    @MethodSource("handlePositionalDuelTestParametersProvider")
+    @DisplayName("Should execute handlePositionalDuel without counter attack and missed pass ")
+    void should_execute_handlePositionalDuel_without_counterAttack_and_missedPass(Player challengerInput, DuelResult duelResult, double challengerRandom, int challengerTotal) {
 
-        List<DuelResult> results = List.of(
-            DuelResult.WIN,
-            DuelResult.LOSE,
-            DuelResult.LOSE,
-            DuelResult.WIN,
-            DuelResult.LOSE,
-            DuelResult.LOSE,
-            DuelResult.LOSE);
+        Map<ChainActionSequence, GameState.ChainAction> mockedChainActions = mock(Map.class);
 
-        List<Play> plays = new ArrayList<>();
-        for (int i = 0; i < results.size(); i++) {
-            DuelResult result = results.get(i);
-            Duel duel = Duel.builder()
-                .initiator(initiator)
-                .challenger(challenger)
-                .result(result)
-                .type(DuelType.BALL_CONTROL)
-                .build();
-            Play build = Play.builder()
-                .duel(duel)
-                .clock(i)
-                .build();
-            plays.add(build);
+        initMocks(DuelType.POSITIONAL);
+        try(MockedStatic<AssistanceProvider> mockedAssist = Mockito.mockStatic(AssistanceProvider.class);
+            MockedStatic<GausDuelRandomizer> mockedGaus = Mockito.mockStatic(GausDuelRandomizer.class)) {
+            mockedAssist.when(() -> AssistanceProvider.getTeamAssistance(any(), any(), any())).thenReturn(
+                Map.of("player1", 10, "player2", 10));
+
+            mockedAssist.when(() -> AssistanceProvider.buildAssistanceByDuelRole(any(), any(), any()))
+                .thenReturn(Map.of(DuelRole.INITIATOR, new DuelStats.Assistance(), DuelRole.CHALLENGER, new DuelStats.Assistance()));
+
+            mockedGaus.when(() -> GausDuelRandomizer.performance(eq(initiator), any(), any(), any())).thenReturn(
+                DuelStats.Performance.builder().previousTotalImpact(0.0).random(25.0).total(25.0).build());
+
+            if (challengerInput != null) {
+                mockedGaus.when(() -> GausDuelRandomizer.performance(eq(challengerInput), any(), any(), any())).thenReturn(
+                    DuelStats.Performance.builder().previousTotalImpact(0.0).random(challengerRandom).total(challengerRandom).build());
+            }
+
+            when(mockedParams.getChallenger()).thenReturn(challengerInput);
+            when(initiator.duelSkill(any(), any(), any())).thenReturn(10);
+            when(mockedState.getChainActions()).thenReturn(mockedChainActions);
+            when(mockedChainActions.getOrDefault(any(), any())).thenReturn(null);
+            when(mockedState.lastPlay()).thenReturn(Optional.empty());
+
+            DuelDTO result = DuelExecution.executeDuel(mockedState, mockedParams);
+            assertThat(result).isNotNull();
+            assertThat(result.getResult()).isEqualTo(duelResult);
+            assertThat(result.getInitiatorStats().getTotal()).isEqualTo(10 + 25);
+            assertThat(result.getChallengerStats().getTotal()).isEqualTo(challengerTotal);
+
         }
-
-        GameState state = GameState.builder().plays(plays).build();
-
-        int consecutiveLosses =
-            DuelExecution.consecutiveLosses(state, initiator, DuelType.BALL_CONTROL);
-
-        assertEquals(3, consecutiveLosses);
     }
 
-    @Test
-    void consecutiveLossesChallenger() {
-        Player initiator = Player.builder().skills(Map.of(PlayerSkill.OFFENSIVE_POSITIONING, 40))
-            .build();
-        Player challenger = Player.builder().skills(Map.of(PlayerSkill.DEFENSIVE_POSITIONING, 60))
-            .build();
+    private static Stream<Arguments> handlePositionalDuelTestParametersProviderMissedPass() {
+        return Stream.of(
+            Arguments.of( DuelResult.LOSE, 70.0),
+            Arguments.of( DuelResult.WIN, 0.0));
+    }
 
-        List<DuelResult> results = List.of(
-            DuelResult.WIN,
-            DuelResult.LOSE,
-            DuelResult.WIN,
-            DuelResult.LOSE,
-            DuelResult.LOSE,
-            DuelResult.LOSE,
-            DuelResult.LOSE);
 
-        List<Play> plays = new ArrayList<>();
-        for (int i = 0; i < results.size(); i++) {
-            DuelResult result = results.get(i);
-            Duel duel = Duel.builder()
-                .initiator(initiator)
-                .challenger(challenger)
-                .result(result)
-                .type(DuelType.BALL_CONTROL)
-                .build();
-            Play build = Play.builder()
-                .duel(duel)
-                .clock(i)
-                .build();
-            plays.add(build);
+    @ParameterizedTest
+    @MethodSource("handlePositionalDuelTestParametersProviderMissedPass")
+    @DisplayName("Should execute handlePositionalDuel missed pass ")
+    void should_execute_handlePositionalDuel_missedPass(DuelResult duelResult, double challengerRandom) {
+        DuelDisruption duelDisruption = Mockito.mock(DuelDisruption.class);
+        Map<ChainActionSequence, GameState.ChainAction> mockedChainActions = mock(Map.class);
+
+        Play mockedPlay = mock(Play.class);
+        Duel mockedDuel = mock(Duel.class);
+
+        initMocks(DuelType.POSITIONAL);
+        try(MockedStatic<AssistanceProvider> mockedAssist = Mockito.mockStatic(AssistanceProvider.class);
+            MockedStatic<GausDuelRandomizer> mockedGaus = Mockito.mockStatic(GausDuelRandomizer.class)) {
+            mockedAssist.when(() -> AssistanceProvider.getTeamAssistance(any(), any(), any())).thenReturn(
+                Map.of("player1", 10, "player2", 10));
+
+            mockedAssist.when(() -> AssistanceProvider.buildAssistanceByDuelRole(any(), any(), any()))
+                .thenReturn(Map.of(DuelRole.INITIATOR, new DuelStats.Assistance(), DuelRole.CHALLENGER, new DuelStats.Assistance()));
+
+            mockedGaus.when(() -> GausDuelRandomizer.performance(eq(initiator), any(), any(), any())).thenReturn(
+                DuelStats.Performance.builder().previousTotalImpact(0.0).random(80.0).total(80.0).build());
+
+            mockedGaus.when(() -> GausDuelRandomizer.performance(eq(challenger), any(), any(), any())).thenReturn(
+                DuelStats.Performance.builder().previousTotalImpact(0.0).random(challengerRandom).total(challengerRandom).build());
+
+
+            when(mockedParams.getChallenger()).thenReturn(challenger);
+            when(mockedState.lastPlay()).thenReturn(Optional.of(mockedPlay));
+            when(mockedPlay.getDuel()).thenReturn(mockedDuel);
+            when(mockedDuel.getDuelDisruption()).thenReturn(duelDisruption);
+            when(duelDisruption.getDestinationPitchArea()).thenReturn(PitchArea.CENTRE_MIDFIELD);
+            when(initiator.duelSkill(any(), any(), any())).thenReturn(10);
+            when(mockedState.getChainActions()).thenReturn(mockedChainActions);
+
+            when(mockedChainActions.getOrDefault(any(), any())).thenReturn(new GameState.ChainAction());
+
+            DuelDTO result = DuelExecution.executeDuel(mockedState, mockedParams);
+            assertThat(result).isNotNull();
+            assertThat(result.getResult()).isEqualTo(duelResult);
+            assertThat(result.getInitiatorStats().getTotal()).isEqualTo(10 + 80);
+            assertThat(result.getChallengerStats().getAssistance().getModifiersSum()).isEqualTo(50);
+            assertThat(result.getChallengerStats().getAssistance().getModifiers()).containsKeys(ChainActionSequence.MISSED_PASS);
         }
-
-        GameState state = GameState.builder().plays(plays).build();
-
-        int consecutiveLosses =
-            DuelExecution.consecutiveLosses(state, challenger, DuelType.BALL_CONTROL);
-
-        assertEquals(4, consecutiveLosses);
     }
+
 }

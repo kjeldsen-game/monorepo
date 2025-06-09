@@ -61,6 +61,7 @@ public class DuelStats {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
+    @Builder
     @ToString
     public static class Performance {
 
@@ -80,5 +81,10 @@ public class DuelStats {
         Map<String, Double> teamAssistance = new HashMap<>();
         Map<ChainActionSequence, Integer> modifiers = new HashMap<>();
         Double totalModifiers = 0.0;
+
+        public Double getModifiersSum() {
+            this.totalModifiers = this.modifiers.values().stream().mapToDouble(Integer::doubleValue).sum();
+            return totalModifiers;
+        }
     }
 }

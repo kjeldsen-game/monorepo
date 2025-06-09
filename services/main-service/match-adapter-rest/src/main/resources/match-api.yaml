@@ -870,6 +870,7 @@ components:
         - GOALKEEPER_INTERCEPTION
         - MISSED_PASS
         - MISSED_SHOT
+        - GOALKEEPER_FUMBLE
 
     DuelDisruptionResponse:
       properties:
