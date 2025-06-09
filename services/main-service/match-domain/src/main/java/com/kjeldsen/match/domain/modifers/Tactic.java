@@ -4,13 +4,12 @@ import com.kjeldsen.match.domain.entities.duel.DuelRole;
 import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerPosition;
 
+/**
+ * The tactic modifier affects both offensive and defensive assistance, and player selection.
+ * The return values of these methods should be multiplied by the base value i.e. a factor of
+ *  2 means a 100% increase.
+ */
 public enum Tactic {
-
-    /*
-     * The tactic modifier affects both offensive and defensive assistance, and player selection.
-     * The return values of these methods should be multiplied by the base value i.e. a factor of
-     *  2 means a 100% increase.
-     */
 
     DOUBLE_TEAM,
     MAN_ON_MAN,

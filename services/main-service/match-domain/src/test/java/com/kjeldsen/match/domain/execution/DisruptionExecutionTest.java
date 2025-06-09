@@ -14,6 +14,8 @@ import com.kjeldsen.match.domain.state.TeamState;
 import com.kjeldsen.player.domain.PitchArea;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
@@ -132,6 +134,37 @@ class DisruptionExecutionTest {
             assertThat(result.get().getType()).isEqualTo(DuelDisruptor.MISSED_PASS);
             assertThat(result.get().getDestinationPitchArea()).isEqualTo(PitchArea.CENTRE_MIDFIELD);
             assertThat(result.get().getReceiver().getPosition().isCentral()).isTrue();
+        }
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "50, 99, false",
+        "50, 10, true"
+    })
+    @DisplayName("Should execute handleMissedShot disruption without success")
+    void should_execute_handleMissedShot_disruption_without_success(String totalString, String randomString, String booleanString) {
+        int totalSkill = Integer.parseInt(totalString);
+        int random = Integer.parseInt(randomString);
+        boolean booleanValue = Boolean.parseBoolean(booleanString);
+
+        DuelParams mockedParams = Mockito.mock(DuelParams.class);
+        GameState mockedGameState = Mockito.mock(GameState.class);
+
+        DuelDisruptor duelDisruptor = DuelDisruptor.MISSED_SHOT;
+        try (MockedStatic<RandomGenerator> mockedStatic = Mockito.mockStatic(RandomGenerator.class)) {
+            mockedStatic.when(() -> RandomGenerator.randomInt(0, 100)).thenReturn(random);
+            Optional<DuelDisruption> result = DisruptionExecution.executeDisruption(
+                mockedParams, duelDisruptor, mockedGameState, totalSkill);
+
+
+            if (booleanValue) {
+                assertThat(result).isNotEmpty();
+                assertThat(result.get().getType()).isEqualTo(DuelDisruptor.MISSED_SHOT);
+                assertThat(result.get().getDifference()).isEqualTo( 12.5);
+            } else {
+                assertThat(result).isEmpty();
+            }
         }
     }
 }

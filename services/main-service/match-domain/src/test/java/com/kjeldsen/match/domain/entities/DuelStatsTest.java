@@ -1,5 +1,6 @@
 package com.kjeldsen.match.domain.entities;
 
+import com.kjeldsen.match.domain.state.ChainActionSequence;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,5 +30,17 @@ class DuelStatsTest {
         assertThat(duelStats.getCarryover()).isEqualTo(0);
         assertThat(duelStats.getAssistance()).isNotNull();
         assertThat(duelStats.getPerformance()).isNotNull();
+    }
+
+    @Test
+    @DisplayName("Should sum the total of modifiers and return")
+    void should_sum_modifiers_and_return() {
+        DuelStats.Assistance assistance = new DuelStats.Assistance();
+        assistance.getModifiers().put(ChainActionSequence.MISSED_PASS, 150);
+        assistance.getModifiers().put(ChainActionSequence.COUNTER_ATTACK, 50);
+
+        Double result = assistance.getModifiersSum();
+        assertThat(result).isEqualTo(200);
+        assertThat(assistance.getModifiersSum()).isEqualTo(200);
     }
 }

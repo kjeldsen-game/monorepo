@@ -41,7 +41,7 @@ public class DuelExecution {
                 params = Orders.apply(state, params, params.getInitiator().getPlayerOrder());
             }
         }
-
+       // TODO velke pivo + koniferka
         return switch (params.getDuelType()) {
             case POSITIONAL -> handlePositionalDuel(params);
             case BALL_CONTROL -> handleBallControlDuel(params);
@@ -51,32 +51,22 @@ public class DuelExecution {
         };
     }
 
-    // Three things affect the positional duel outcome: (1) the skill points of the
-    // players, (2) the
-    // performance of each player, which is randomly generated for each duel and (3)
-    // the assistance
-    // each player gets from their teammates. All of these points are added and the
-    // player with the
-    // highest sum wins the duel.
+    /**
+     * Positional duel outcome is affected by three things that are skill points, performance and
+     * assistance from the teammates. Positional duel can be affected by some of the tactics or modifiers
+     */
     public static DuelDTO handlePositionalDuel(DuelParams params) {
         GameState state = params.getState();
         Player initiator = params.getInitiator();
         Player challenger = params.getChallenger();
 
-        // How to calculate the assistance
-        // 1. Get the teamAssistance by player
-        // 2. Get the modifiers
-        // 3. Sum the modifiers together
-        // 4. Sum all pieces together
-        // Caulcate adjusted values whenn both of this are done
-
         // Calculate the teamAssistance for each player in duel and adjust based on scaling
-
         Map<String, Double> initiatorTeamAssistance = AssistanceProvider.getTeamAssistance(state, initiator, DuelRole.INITIATOR);
         Map<String, Double> challengerTeamAssistance = AssistanceProvider.getTeamAssistance(state, challenger, DuelRole.CHALLENGER);
 
         GameState.ChainAction counterAttackAction = state.getChainActions().getOrDefault(
             ChainActionSequence.COUNTER_ATTACK, new GameState.ChainAction());
+
         int counterAttackBonus = 0;
         // Counter attack bonus is active
         if (counterAttackAction != null && counterAttackAction.getActive()) {
@@ -84,6 +74,7 @@ public class DuelExecution {
             counterAttackBonus = counterAttackAction.getBonus();
             log.info("Counter Attack usage !!!! with bonus = {} for turn {} usage = {}", counterAttackBonus, counterAttackAction.getTurn(), counterAttackAction.getUsage());
         }
+
         Map<ChainActionSequence, Integer> initiatorModifiers = new HashMap<>();
         initiatorModifiers.put(ChainActionSequence.COUNTER_ATTACK, counterAttackBonus);
 
@@ -107,17 +98,7 @@ public class DuelExecution {
         // duel is automatically won by the initiator.
 
         if (challenger == null) {
-            challengerStats = DuelStats.builder()
-                    .skillPoints(0)
-                    .performance(new DuelStats.Performance())
-                    .assistance(DuelStats.Assistance.builder()
-                        .modifiers(new HashMap<>())
-                        .totalModifiers(0.0)
-                        .teamAssistance(new HashMap<>())
-                        .total(0.0)
-                        .adjusted(0.0).build())
-                    .total(0)
-                    .build();
+            challengerStats = DuelStats.initDefault();
             result = DuelResult.WIN;
         } else {
             challengerStats = buildPositionalDuelStats(
@@ -125,6 +106,7 @@ public class DuelExecution {
                     challenger,
                     DuelRole.CHALLENGER,
                     adjustedAssistanceByDuelRole.get(DuelRole.CHALLENGER));
+
             result = (initiatorStats.getTotal() > challengerStats.getTotal())
                     ? DuelResult.WIN
                     : DuelResult.LOSE;
@@ -140,9 +122,11 @@ public class DuelExecution {
                 .build();
     }
 
-    // Performs the calculations for positional duels, which require assistance. The
-    // total in
-    // DuelStats is used to determine the overall winner of the duel.
+
+    /**
+     * Performs the calculations for positional duels, which require assistance. The
+     * total in DuelStats is used to determine the overall winner of the duel.
+     */
     private static DuelStats buildPositionalDuelStats(
             GameState state,
             Player player,
@@ -154,26 +138,34 @@ public class DuelExecution {
 
         // Apply chain action sequences skill modifiers.
         int chainActionSequenceModifier = 0;
-        if (ChainActionSequence.WALL_PASS == state.getChainActionSequence()
-                && state.lastPlay().isPresent()
-                && state.lastPlay().get().getChainActionSequence().isActive()) {
-            int passingSkill = player.getSkills().get(PlayerSkill.PASSING);
+//        if (ChainActionSequence.WALL_PASS == state.getChainActionSequence()
+//                && state.lastPlay().isPresent()
+//                && state.lastPlay().get().getChainActionSequence().isActive()) {
+//            int passingSkill = player.getSkills().get(PlayerSkill.PASSING);
+//
+//            double lowerLimit = -15;
+//            double upperLimit = 15;
+//
+//            // Linear transformation. PA = 0 -> OP = -15. PA = 100 -> OP = 15.
+//            chainActionSequenceModifier = (int) (lowerLimit + ((upperLimit - lowerLimit) * (passingSkill / 100.0)));
+//            String detail = "Wall pass skill modification. For POSITIONAL " + skillPoints + " and PASSING "
+//                    + passingSkill + ", the modifier is " + chainActionSequenceModifier
+//                    + " for a resulting POSITION skill of " + (skillPoints + chainActionSequenceModifier);
+//            state.getRecorder().record(detail, state, GameProgressRecord.Type.CALCULATION,
+//                    GameProgressRecord.DuelStage.DURING);
+//
+//        }
 
-            double lowerLimit = -15;
-            double upperLimit = 15;
-
-            // Linear transformation. PA = 0 -> OP = -15. PA = 100 -> OP = 15.
-            chainActionSequenceModifier = (int) (lowerLimit + ((upperLimit - lowerLimit) * (passingSkill / 100.0)));
-            String detail = "Wall pass skill modification. For POSITIONAL " + skillPoints + " and PASSING "
-                    + passingSkill + ", the modifier is " + chainActionSequenceModifier
-                    + " for a resulting POSITION skill of " + (skillPoints + chainActionSequenceModifier);
-            state.getRecorder().record(detail, state, GameProgressRecord.Type.CALCULATION,
-                    GameProgressRecord.DuelStage.DURING);
-
+        Optional<Play> previousPlay = state.lastPlay();
+        if (role.equals(DuelRole.CHALLENGER) && previousPlay.isPresent()
+            && previousPlay.get().getDuel().getDuelDisruption() != null
+            && previousPlay.get().getDuel().getDuelDisruption().getDestinationPitchArea() != PitchArea.OUT_OF_BOUNDS) {
+            assistance.getModifiers().put(ChainActionSequence.MISSED_PASS, 50);
+            assistance.setTotal(assistance.getTotal() + assistance.getModifiersSum());
         }
 
         int total = skillPoints + chainActionSequenceModifier + performance.getTotal().intValue() +
-            assistance.getAdjusted().intValue();
+            assistance.getAdjusted().intValue() + assistance.getModifiersSum().intValue();
 
         return DuelStats.builder()
             .skillPoints(skillPoints)
@@ -183,10 +175,10 @@ public class DuelExecution {
             .build();
     }
 
-    // Ball control follows a positional duel. Here the factors to determine a
-    // winner are (1) skill
-    // points, (2) performance, and (3) the assistance carryover from the positional
-    // duel.
+    /**
+    * Ball control follows a positional duel. Here the factors to determine a winner
+    * are skill points, performance and the carryover from positional duel.
+    */
     public static DuelDTO handleBallControlDuel(DuelParams params) {
 
         GameState state = params.getState();
@@ -204,12 +196,7 @@ public class DuelExecution {
                 challenger,
                 DuelType.BALL_CONTROL,
                 DuelRole.CHALLENGER)
-                : DuelStats.builder()
-                        .skillPoints(0)
-                        .performance(new DuelStats.Performance())
-                        .carryover(0)
-                        .total(0)
-                        .build();
+                : DuelStats.initWithoutAssistance();
 
         DuelResult result = params.getChallenger() != null ? (initiatorStats.getTotal() > challengerStats.getTotal())
                 ? DuelResult.WIN
@@ -220,7 +207,6 @@ public class DuelExecution {
                 .initiatorStats(initiatorStats)
                 .challengerStats(challengerStats)
                 .origin(params.getOrigin())
-                .disruptor(params.getDisruptor())
                 .params(params)
                 .build();
     }
@@ -406,6 +392,9 @@ public class DuelExecution {
 
         // Run a calculation to determinate if the initiator missed the shot
 
+        if (challenger.getPosition() != PlayerPosition.GOALKEEPER) {
+            throw new IllegalStateException("Player defending shot is not a GOALKEEPER.");
+        }
 
         DuelStats initiatorStats = buildDuelStats(
                 state,
@@ -414,28 +403,19 @@ public class DuelExecution {
                 DuelRole.INITIATOR);
 
         Integer total = initiatorStats.getTotal();
-        log.info("Total shot checking stuff = {}", total);
-        // Chance that the shot is missed and goalkeeper don't have to make save
-        if (total < 100) {
-            double difference = (double) (100 - total) / 4;
-            int succeed = RandomGenerator.randomInt(0, 100);
-            log.info("Diffreence value = {} and succeeed = {}", difference, succeed);
-            // Shot is missed
-            if (succeed < difference) {
-                log.info("Shot duel resulted in missed shot!");
-                return DuelDTO.builder()
-                    .result(DuelResult.LOSE)
-                    .initiatorStats(initiatorStats)
-                    .challengerStats(null)
-                    .origin(params.getOrigin())
-                    .disruptor(params.getDisruptor())
-                    .params(params)
-                    .build();
-            }
-        }
 
-        if (challenger.getPosition() != PlayerPosition.GOALKEEPER) {
-            throw new IllegalStateException("Player defending shot is not a GOALKEEPER.");
+        Optional<DuelDisruption> disruption = DisruptionExecution.executeDisruption(params,
+            DuelDisruptor.MISSED_SHOT, state, total);
+
+        if (disruption.isPresent()) {
+            return DuelDTO.builder()
+                .result(DuelResult.LOSE)
+                .initiatorStats(initiatorStats)
+                .challengerStats(null)
+                .origin(params.getOrigin())
+                .duelDisruption(disruption.get())
+                .params(params)
+                .build();
         }
 
         DuelStats challengerStats = buildDuelStats(
@@ -444,51 +424,17 @@ public class DuelExecution {
                 params.getDuelType(),
                 DuelRole.CHALLENGER);
 
-        Boolean goalkeeperReachedTheBall = initiatorStats.getTotal() < challengerStats.getTotal(); // initiator striker
-        // log.info("InitiatorStats {} challengerStats {} booleanResult {}",
-        // initiatorStats.getTotal(), challengerStats.getTotal(),
-        // goalkeeperReachedTheBall);
-        // TODO refactor this
-        Boolean fumbleOccurred = false;
+        boolean goalkeeperReachedTheBall = initiatorStats.getTotal() < challengerStats.getTotal(); // initiator striker
+        Optional<DuelDisruption> duelDisruption = Optional.empty();
+
         if (goalkeeperReachedTheBall) {
-
-            Integer diceRoll = (int) (Math.random() * 100);
-            Integer controlSkill = challenger.getSkillValue(PlayerSkill.CONTROL);
-            Integer controlResult = diceRoll - controlSkill;
-            Double controlSuccessChance = Math.random();
-
-            if (controlSkill < diceRoll) {
-                if (controlResult > 75) {
-                    if (controlSuccessChance < 0.1) {
-                        fumbleOccurred = true;
-                    }
-                } else if (controlResult > 50) {
-                    if (controlSuccessChance < 0.25) {
-                        fumbleOccurred = true;
-                    }
-                } else if (controlResult > 30) {
-                    if (controlSuccessChance < 0.50) {
-                        fumbleOccurred = true;
-                    }
-                }
-            }
-
-            StringBuilder detail = new StringBuilder();
-            if (fumbleOccurred) {
-                detail.append("The Goalkeeper made a fumble:");
-            } else {
-                detail.append("The Goalkeeper managed to control the ball");
-            }
-            detail.append("Dice roll: ").append(diceRoll)
-                    .append(", Control Skill: ").append(controlSkill)
-                    .append(", Control result: ").append(controlResult)
-                    .append(", Control success change: ").append(controlSuccessChance);
-            state.getRecorder().record(detail.toString(), state, GameProgressRecord.Type.CALCULATION,
-                    GameProgressRecord.DuelStage.DURING);
-
+            duelDisruption = DisruptionExecution.executeDisruption(params,
+                DuelDisruptor.GOALKEEPER_FUMBLE, state, null);
         }
 
-        DuelResult result = !goalkeeperReachedTheBall || fumbleOccurred ? DuelResult.WIN : DuelResult.LOSE;
+        // Goalkeeper did not save shot or goalkeeper fumble happened
+        DuelResult result = !goalkeeperReachedTheBall || duelDisruption.isPresent() ?
+            DuelResult.WIN : DuelResult.LOSE;
 
         return DuelDTO.builder()
                 .result(result)
@@ -516,8 +462,6 @@ public class DuelExecution {
 
         int skillPoints = player.duelSkill(type, role, state);
         DuelStats.Performance performance = GausDuelRandomizer.performance(player, state, type, role);
-
-
 
         Map<DuelRole, Integer> carryovers = Carryover.getCarryover(state);
         int carryover = carryovers.get(role);

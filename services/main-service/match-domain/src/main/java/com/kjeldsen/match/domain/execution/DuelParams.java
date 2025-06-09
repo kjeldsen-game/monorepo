@@ -8,7 +8,6 @@ import com.kjeldsen.match.domain.entities.Player;
 import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerOrder;
 import lombok.Builder;
-import lombok.Setter;
 import lombok.Value;
 
 @Value

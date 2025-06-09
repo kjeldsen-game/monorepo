@@ -96,12 +96,6 @@ public class AssistanceProvider {
                     Map.Entry::getValue));
     }
 
-    public static Double applyModifierFactor(GameState gameState, DuelRole role) {
-        Map<ChainActionSequence, GameState.ChainAction> chainActions = gameState.getChainActions();
-
-        return null;
-    }
-
     /**
      * Compute the assistance for the player in positional duel based on ballState and role of the player.
      *
