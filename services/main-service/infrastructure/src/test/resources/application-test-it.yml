@@ -1,2 +1,6 @@
+logging:
+  level:
+    org.springframework.boot.autoconfigure: WARN
+    
 server:
   port: 43566
