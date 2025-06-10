@@ -1,5 +1,4 @@
 import { Player } from '@/shared/models/player/Player';
-import { Team, TeamFormationValiation } from '@/shared/models/Team';
 import {
   HorizontalPressure,
   Tactic,
@@ -9,7 +8,6 @@ import {
 import { filterPlayersByStatus } from '@/shared/utils/LineupUtils';
 import { Box, SnackbarCloseReason, Tab } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { PlayerOrder } from '@/pages/api/match/models/MatchReportresponse';
 import { POSITION_FILTER_MAP } from '@/shared/models/player/PlayerPosition';
 import TeamValidationModal from './TeamValidationModal';
 import SnackbarAlert from '../Common/SnackbarAlert';
@@ -26,6 +24,7 @@ import CustomTabs from '../CustomTabs';
 import { CustomTabPanel } from '../Tab/CustomTabPanel';
 import { flexCenter } from '@/shared/styles/common';
 import TeamDetails from '../TeamDetails';
+import { Team, TeamFormationValiation } from '@/shared/models/player/Team';
 
 interface TeamProps {
   isEditing: boolean;
@@ -324,16 +323,16 @@ const TeamViewNew: React.FC<TeamProps> = ({
           onButtonClick={handleGridButtonClick}
           rows={
             filter === 'ALL'
-              ? players ?? []
+              ? (players ?? [])
               : filter === 'ACTIVE' ||
                   filter === 'BENCH' ||
                   filter === 'INACTIVE'
                 ? filterPlayersByStatus(players, filter)
-                : players?.filter((player) =>
+                : (players?.filter((player) =>
                     POSITION_FILTER_MAP[filter]?.includes(
                       player.preferredPosition,
                     ),
-                  ) ?? []
+                  ) ?? [])
           }
         />
       </Box>

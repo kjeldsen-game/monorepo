@@ -1,6 +1,5 @@
 package com.kjeldsen.integration.events;
 
-import com.kjeldsen.domain.EventId;
 import com.kjeldsen.lib.events.MatchEvent;
 import com.kjeldsen.player.application.usecases.economy.MatchAttendanceIncomeUseCase;
 import com.kjeldsen.player.application.usecases.economy.MerchandiseIncomeUseCase;
@@ -10,7 +9,7 @@ import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
 import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
 import com.kjeldsen.player.domain.Team;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -18,17 +17,17 @@ import static org.mockito.Mockito.verify;
 
 class MatchEventListenerIT extends AbstractEventIT {
 
-    @MockBean
+    @MockitoBean
     private MatchAttendanceIncomeUseCase matchAttendanceIncomeUsecase;
-    @MockBean
+    @MockitoBean
     private FansManagementUsecase fansManagementUsecase;
-    @MockBean
+    @MockitoBean
     private MerchandiseIncomeUseCase merchandiseIncomeUseCase;
-    @MockBean
+    @MockitoBean
     private RestaurantIncomeUseCase restaurantIncomeUseCase;
-    @MockBean
+    @MockitoBean
     private UpdateLoyaltyUseCase updateLoyaltyUseCase;
-    @MockBean
+    @MockitoBean
     private SignSponsorIncomeUseCase signSponsorIncomeUseCase;
 
     @Test

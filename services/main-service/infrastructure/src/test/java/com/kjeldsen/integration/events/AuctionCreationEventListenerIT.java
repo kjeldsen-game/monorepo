@@ -9,7 +9,7 @@ import com.kjeldsen.player.domain.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -18,9 +18,9 @@ import static org.mockito.Mockito.when;
 
 class AuctionCreationEventListenerIT extends AbstractEventIT {
 
-    @MockBean
+    @MockitoBean
     private CreateAuctionUseCase createAuctionUseCase;
-    @MockBean
+    @MockitoBean
     private AuctionEndJobScheduler auctionEndJobScheduler;
 
     @Test
@@ -53,8 +53,8 @@ class AuctionCreationEventListenerIT extends AbstractEventIT {
             any(),
             any());
 
-        assertThat(playerIdCaptor.getValue()).isEqualTo(Player.PlayerId.of("playerId"));
-        assertThat(teamIdCaptor.getValue()).isEqualTo(Team.TeamId.of("teamId"));
+        assertThat(playerIdCaptor.getValue()).isEqualTo("playerId");
+        assertThat(teamIdCaptor.getValue()).isEqualTo("teamId");
     }
 
 }

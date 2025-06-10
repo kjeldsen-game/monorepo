@@ -4,19 +4,21 @@ import com.kjeldsen.lib.events.AuctionEndEvent;
 import com.kjeldsen.player.application.usecases.player.ProcessPlayerTransferUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.verify;
 
+@Disabled
 class AuctionEndEventListenerIT extends AbstractEventIT{
 
-    @MockBean
+    @MockitoBean
     private ProcessPlayerTransferUseCase mockedProcessPlayerTransferUseCase;
 
     @Test

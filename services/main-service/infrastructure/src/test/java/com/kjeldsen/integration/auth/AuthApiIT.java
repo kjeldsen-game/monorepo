@@ -13,8 +13,8 @@ import com.kjeldsen.player.persistence.mongo.repositories.TeamMongoRepository;
 import org.junit.jupiter.api.*;
 import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Set;
@@ -32,7 +32,7 @@ public class AuthApiIT extends AbstractIT {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private TeamMongoRepository teamMongoRepository;
-    @MockBean
+    @MockitoBean
     private JwtTokenProvider jwtTokenProvider;
 
     @BeforeEach

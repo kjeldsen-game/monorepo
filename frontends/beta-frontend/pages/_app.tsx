@@ -16,54 +16,54 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
-    getLayout?: (page: ReactElement) => ReactNode;
+  getLayout?: (page: ReactElement) => ReactNode;
 };
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps<P> extends AppProps<P> {
-    Component: NextPageWithLayout;
-    emotionCache?: EmotionCache;
+  Component: NextPageWithLayout;
+  emotionCache?: EmotionCache;
 }
 
 interface GameSession extends Session {
-    user: GameUser;
+  user: GameUser;
 }
 
 interface MyExtendedPageProps {
-    session: GameSession;
+  session: GameSession;
 }
 
 const defaultGetLayout = (page: ReactElement) => <Layout>{page}</Layout>;
 
 function MyApp({
-    Component,
-    emotionCache = clientSideEmotionCache,
-    pageProps: { session, ...pageProps },
+  Component,
+  emotionCache = clientSideEmotionCache,
+  pageProps: { session, ...pageProps },
 }: MyAppProps<MyExtendedPageProps>) {
-    const getLayout = Component.getLayout ?? defaultGetLayout;
+  const getLayout = Component.getLayout ?? defaultGetLayout;
 
-    return (
-        <SessionProvider session={session}>
-            <LocalizationProvider dateAdapter={AdapterMoment}>
-                <CacheProvider value={emotionCache}>
-                    <Head>
-                        <meta
-                            name="viewport"
-                            content="initial-scale=1, width=device-width"
-                        />
-                        <title>Kjeldsen</title>
-                    </Head>
-                    <ThemeProvider theme={theme}>
-                        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                        <CssBaseline />
-                        {getLayout(<Component {...pageProps} />)}
-                    </ThemeProvider>
-                </CacheProvider>
-            </LocalizationProvider>
-        </SessionProvider>
-    );
+  return (
+    <SessionProvider session={session}>
+      <LocalizationProvider dateAdapter={AdapterMoment}>
+        <CacheProvider value={emotionCache}>
+          <Head>
+            <meta
+              name="viewport"
+              content="initial-scale=1, width=device-width"
+            />
+            <title>Kjeldsen</title>
+          </Head>
+          <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            {getLayout(<Component {...pageProps} />)}
+          </ThemeProvider>
+        </CacheProvider>
+      </LocalizationProvider>
+    </SessionProvider>
+  );
 }
 
 export default appWithTranslation(MyApp);

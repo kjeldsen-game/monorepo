@@ -37,7 +37,7 @@ public class AuctionWriteRepositoryMongoAdapterIT extends AbstractMongoDbTest {
 
         Auction result = auctionMongoRepository.findById(auction.getId()).get();
         assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo("exampleId");
+        assertThat(result.getId().value()).isEqualTo("exampleId");
     }
 
 }

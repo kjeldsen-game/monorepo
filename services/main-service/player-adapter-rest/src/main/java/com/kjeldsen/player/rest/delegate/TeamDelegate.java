@@ -160,7 +160,7 @@ public class TeamDelegate implements TeamApiDelegate {
 
     @Override
     public ResponseEntity<TeamResponse> getTeamById(String teamId) {
-        System.out.println(teamId);
+        System.out.println("Received request to get team by id " + teamId);
         // Different user than the team owner is accessing the team
         Team team = getTeamUseCase.get(TeamId.of(teamId));
         TeamResponse response = TeamMapper.INSTANCE.map(team);

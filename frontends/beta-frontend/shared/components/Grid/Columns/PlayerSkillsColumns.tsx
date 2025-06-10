@@ -1,4 +1,4 @@
-import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
 import { baseColumnConfig } from './ColumnsConfig';
 import CustomTooltip from '../../MatchReport/Tooltips/CustomTooltip';
 import { PlayerSkillShortcuts } from '@/shared/models/player/PlayerSkill';
@@ -8,7 +8,7 @@ import { Box } from '@mui/material';
 export const playerSkillsColumns = (showPotential: boolean = false) => {
   const getValue = (
     field: string,
-    params: GridValueGetterParams,
+    params,
     skillType: 'actual' | 'potential',
     fieldSecondary?: string,
     headerNameSecondary?: string,
@@ -32,6 +32,28 @@ export const playerSkillsColumns = (showPotential: boolean = false) => {
     return {
       ...baseColumnConfig,
       field,
+      renderCell: (params) => {
+        const actual = getValue(
+          field,
+          params,
+          'actual',
+          fieldSecondary,
+          headerNameSecondary,
+        );
+        const potential = getValue(
+          field,
+          params,
+          'potential',
+          fieldSecondary,
+          headerNameSecondary,
+        );
+
+        return actual === '' && potential === ''
+          ? ''
+          : showPotential
+            ? `${actual}/${potential}`
+            : `${actual}`;
+      },
       renderHeader: () => (
         <CustomTooltip
           tooltipContent={
@@ -59,28 +81,6 @@ export const playerSkillsColumns = (showPotential: boolean = false) => {
           </div>
         </CustomTooltip>
       ),
-      valueGetter: (params: GridValueGetterParams) => {
-        const actual = getValue(
-          field,
-          params,
-          'actual',
-          fieldSecondary,
-          headerNameSecondary,
-        );
-        const potential = getValue(
-          field,
-          params,
-          'potential',
-          fieldSecondary,
-          headerNameSecondary,
-        );
-
-        return actual === '' && potential === ''
-          ? ''
-          : showPotential
-            ? `${actual}/${potential}`
-            : `${actual}`;
-      },
     };
   };
 
