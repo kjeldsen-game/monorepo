@@ -61,11 +61,18 @@ jobs:
           java-version: '17'
           distribution: 'corretto'
 
+      - name: Cache Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven
+          
       - name: Docker info
         run: docker info
 
       - name: Run Integration Tests
         run: |
           cd ${{ inputs.PROJECT_PATH }}
-          mvn failsafe:integration-test -DskipTestsIT=false -DskipTests=true
+          mvn clean install -DskipTests=true && mvn failsafe:integration-test -DskipTestsIT=false -DskipTests=true
         shell: bash
