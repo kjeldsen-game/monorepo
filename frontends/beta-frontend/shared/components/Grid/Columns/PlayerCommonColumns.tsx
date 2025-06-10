@@ -1,8 +1,4 @@
-import {
-  GridCellParams,
-  GridColDef,
-  GridValueGetterParams,
-} from '@mui/x-data-grid';
+import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import { PlayerPosition } from '@/shared/models/player/PlayerPosition';
 import { playerSkillsColumns } from './PlayerSkillsColumns';
 import { baseColumnConfig, leftColumnConfig } from './ColumnsConfig';
@@ -11,6 +7,7 @@ import PlayerPositionLabel from '../../Player/PlayerPositionLabel';
 import ColHeader from './Common/ColHeader';
 import ColLink from './Common/ColLink';
 import { formatName } from '@/shared/utils/PlayerUtils';
+import { PlayerAge } from '@/shared/models/player/Player';
 
 export const playerCommonColumns = (
   skills: boolean = false,
@@ -35,7 +32,9 @@ export const playerCommonColumns = (
       field: 'age',
       maxWidth: 50,
       renderHeader: () => <ColHeader header={'Age'} />,
-      valueGetter: (params: GridValueGetterParams) => params.row.age.years,
+      valueGetter: (params: PlayerAge) => {
+        return params.years;
+      },
     },
     ...(showPosition
       ? [
@@ -43,8 +42,7 @@ export const playerCommonColumns = (
             ...baseColumnConfig,
             field: 'playerPosition',
             renderHeader: () => <ColHeader header={'Pos'} />,
-            sortComparator: positionComparator,
-            valueGetter: (params: GridValueGetterParams) => params.row,
+            // sortComparator: positionComparator,
             renderCell: (params: GridCellParams) => (
               <PlayerPositionLabel
                 position={
@@ -59,8 +57,6 @@ export const playerCommonColumns = (
       ...baseColumnConfig,
       field: 'actualPlayerPosition',
       renderHeader: () => <ColHeader header={'Act. Pos'} />,
-      sortComparator: positionComparator,
-      valueGetter: (params: GridValueGetterParams) => params.row,
       renderCell: (params: GridCellParams) => (
         <PlayerPositionLabel
           position={params.row.position as keyof typeof PlayerPosition}

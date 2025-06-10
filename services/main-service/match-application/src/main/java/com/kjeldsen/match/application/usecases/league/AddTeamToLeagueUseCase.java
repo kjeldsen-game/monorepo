@@ -34,6 +34,7 @@ public class AddTeamToLeagueUseCase {
     public void add(String teamId, BigDecimal teamValue) {
         Random random = new Random();
         log.info("AddTeamToLeagueUseCase for teamId={} with teamValue={}", teamId, teamValue );
+        System.out.println(teamId);
         // TODO add validation to check if the team don't have already assigned league
         TeamClient teamClient = teamClientApi.getTeam(teamId, null, null).get(0);
 

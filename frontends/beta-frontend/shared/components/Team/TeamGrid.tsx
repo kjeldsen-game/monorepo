@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import Grid from '../Grid/Grid';
 import { Player } from '@/shared/models/player/Player';
 import { lineupColumn } from '../Grid/Columns/LineupColumn';
-import { GridRowParams } from '@mui/x-data-grid';
 import {
   TABLE_PLAYER_POSITION_ORDER_DEFENDERS,
   TABLE_PLAYER_POSITION_ORDER_FORWARDS,

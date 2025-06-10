@@ -7,10 +7,10 @@ COPY . .
 RUN npm run build
 # ENV NODE_ENV=production
 
-ENV NEXTAUTH_URL "http://beta-frontend:3000"
-ENV NEXT_PUBLIC_AUTH_URL "http://main-service:8080/v1"
-ENV NEXT_PUBLIC_BACKEND_URL "http://localhost:15001/v1"
-ENV NEXTAUTH_URL_INTERNAL "http://localhost:3000"
+ENV NEXTAUTH_URL="http://beta-frontend:3000"
+ENV NEXT_PUBLIC_AUTH_URL="http://main-service:8080/v1"
+ENV NEXT_PUBLIC_BACKEND_URL="http://localhost:15001/v1"
+ENV NEXTAUTH_URL_INTERNAL="http://localhost:3000"
 
 # Stage 2: Development
 FROM node:20-bullseye-slim

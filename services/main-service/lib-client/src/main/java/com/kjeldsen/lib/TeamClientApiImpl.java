@@ -23,6 +23,7 @@ public class TeamClientApiImpl extends BaseClientApiImpl implements TeamClientAp
     @Override
     public List<TeamClient> getTeam(String teamId, String teamName, String userId) {
         String uri = buildUri(teamId, teamName, userId);
+        System.out.println(uri);
         if (teamId != null) {
             TeamClient response = executeRequestMono(uri, new ParameterizedTypeReference<>() {});
             return response != null ? Collections.singletonList(response) : Collections.emptyList();
