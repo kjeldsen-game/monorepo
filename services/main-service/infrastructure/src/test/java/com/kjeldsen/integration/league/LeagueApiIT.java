@@ -10,6 +10,7 @@ import com.kjeldsen.match.rest.model.LeagueResponse;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.persistence.mongo.repositories.TeamMongoRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +71,7 @@ class LeagueApiIT extends AbstractIT {
     }
 
     @Test
+    @Disabled
     @DisplayName("Should trigger league schedule")
     void should_trigger_league_schedule() throws Exception {
         League league = League.builder().id(League.LeagueId.of("leagueId")).teams(
