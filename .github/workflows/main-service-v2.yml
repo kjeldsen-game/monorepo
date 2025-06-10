@@ -27,6 +27,8 @@ jobs:
     if: github.event_name == 'pull_request'
     secrets: inherit
     with:
+      SERVICE_NAME: ${{ env.SERVICE_NAME }}
+      PROJECT_PATH: ${{ env.PROJECT_PATH }}
       DOCKER_IMAGE_GENERATION: "false"
 
 
@@ -35,4 +37,6 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     secrets: inherit
     with:
+      SERVICE_NAME: ${{ env.SERVICE_NAME }}
+      PROJECT_PATH: ${{ env.PROJECT_PATH }}
       DOCKER_IMAGE_GENERATION: "true"
