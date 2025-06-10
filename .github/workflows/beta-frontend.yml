@@ -28,10 +28,10 @@ jobs:
     with:
       FE_NAME: "beta-frontend"
 
-  tag-job:
-    uses: ./.github/workflows/default_npm_service.yml
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-    secrets: inherit
-    with:
-      FE_NAME: "beta-frontend"
-      RELEASE: "true"
+  # tag-job:
+  #   uses: ./.github/workflows/default_npm_service.yml
+  #   if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+  #   secrets: inherit
+  #   with:
+  #     FE_NAME: "beta-frontend"
+  #     RELEASE: "true"
