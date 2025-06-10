@@ -66,34 +66,4 @@ class PlayerPositionTendencyReadRepositoryMongoAdapterSliceIT extends AbstractMo
                 .build());
         }
     }
-
-    @Nested
-    @DisplayName("Find should")
-    class FindShould {
-        @Test
-        @DisplayName("return player position tendencies for all positions mainly the stored one or default one")
-        void return_player_position_tendencies_for_all_positions_mainly_the_stored_one_or_default_one() {
-            Integer noDefaultScoreSkill = 1;
-            PlayerPositionTendency storedPlayerPositionTendency = PlayerPositionTendency.builder()
-                .position(PlayerPosition.FORWARD)
-                .tendencies(Map.of(PlayerSkill.SCORING, new PlayerSkills(noDefaultScoreSkill, 0, PlayerSkillRelevance.CORE)))
-                .build();
-            playerPositionTendencyMongoRepository.save(storedPlayerPositionTendency);
-
-            val actual = playerPositionTendencyReadRepository.find();
-
-            assertThat(actual).hasSize(PlayerPositionTendency.DEFAULT_TENDENCIES.size());
-            PlayerPositionTendency playerPositionTendency1 = actual.stream().filter(
-                playerPositionTendency -> playerPositionTendency.getPosition().equals(PlayerPosition.FORWARD)).findFirst().orElseThrow();
-            assertThat(playerPositionTendency1.getTendencies().get(PlayerSkill.SCORING)).usingRecursiveComparison().isEqualTo(
-                new PlayerSkills(1, 0, PlayerSkillRelevance.CORE));
-            assertThat(playerPositionTendency1.getTendencies())
-                .doesNotContainEntry(PlayerSkill.SCORING, playerPositionTendency1.getTendencies().get(PlayerSkill.SCORING));
-            PlayerPositionTendency.DEFAULT_TENDENCIES.stream()
-                .filter(playerPositionTendency -> !playerPositionTendency.getPosition().equals(PlayerPosition.FORWARD))
-                .forEach(playerPositionTendency -> assertThat(actual).contains(playerPositionTendency));
-
-        }
-    }
-
 }

@@ -1,6 +1,14 @@
+spring:
+  application:
+    name: main-service-test-it
+
+
 logging:
   level:
-    org.springframework.boot.autoconfigure: WARN
-    
+    org:
+      springframework:
+        boot:
+          autoconfigure: INFO
+
 server:
   port: 43566
