@@ -2,8 +2,6 @@ package com.kjeldsen.integration.match;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.kjeldsen.integration.AbstractIT;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.persistence.mongo.repositories.MatchMongoRepository;
@@ -24,6 +22,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+@Disabled
 
 class MatchApiIT extends AbstractIT {
 

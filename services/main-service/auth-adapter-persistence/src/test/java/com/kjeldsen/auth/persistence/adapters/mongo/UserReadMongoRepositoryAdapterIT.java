@@ -18,8 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataMongoTest(includeFilters = @ComponentScan.Filter(classes = Component.class))
 @ActiveProfiles("test")
@@ -45,6 +44,7 @@ public class UserReadMongoRepositoryAdapterIT extends AbstractMongoDbTest {
             Optional<User> userOptional = userMongoRepository.findByEmail("email@email.com");
             assertFalse(userOptional.isEmpty());
             assertEquals(user, userOptional.get());
+            assertEquals(true, false);
         }
 
         @Test

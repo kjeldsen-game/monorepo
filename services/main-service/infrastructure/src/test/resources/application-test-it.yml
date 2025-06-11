@@ -2,7 +2,6 @@ spring:
   application:
     name: main-service-test-it
 
-
 logging:
   level:
     org:
