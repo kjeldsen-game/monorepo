@@ -43,7 +43,6 @@ jobs:
           restore-keys: ${{ runner.os }}-maven
 
       - name: Build
-        id: build
         run: |
           cd ${{ inputs.PROJECT_PATH }}
           mvn clean install -U

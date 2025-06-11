@@ -44,7 +44,6 @@ public class UserReadMongoRepositoryAdapterIT extends AbstractMongoDbTest {
             Optional<User> userOptional = userMongoRepository.findByEmail("email@email.com");
             assertFalse(userOptional.isEmpty());
             assertEquals(user, userOptional.get());
-            assertEquals(true, false);
         }
 
         @Test
