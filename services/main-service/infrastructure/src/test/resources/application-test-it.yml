@@ -6,3 +6,9 @@ spring:
 server:
   port: 43566
 
+logging:
+  level:
+    org.springframework.boot.context.config: DEBUG
+    org.springframework.core.env: TRACE
+    org.springframework.test.context.support: DEBUG
+    org.springframework.boot.context.config.ConfigDataEnvironment: DEBUG

@@ -1,6 +1,7 @@
 package com.kjeldsen.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.ClassRule;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.*;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
@@ -27,6 +29,7 @@ public abstract class AbstractIT {
 
     static String MONGO_VERSION = "mongo:5.0";
 
+    @Container
     static MongoDBContainer mongoDbContainer = new MongoDBContainer(DockerImageName.parse(MONGO_VERSION));
 
     static {
@@ -43,6 +46,7 @@ public abstract class AbstractIT {
         System.out.println(mongoDbContainer.getConnectionString());
         System.out.println(mongoDbContainer.getHost());
         System.out.println(mongoDbContainer);
+        System.out.println(mongoDbContainer.getPortBindings());
         registry.add("spring.data.mongodb.uri", mongoDbContainer::getReplicaSetUrl);
         registry.add("quartz.properties.org.quartz.jobStore.mongoUri", mongoDbContainer::getReplicaSetUrl);
     }
