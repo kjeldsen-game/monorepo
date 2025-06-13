@@ -7,18 +7,6 @@ on:
       SERVICE_NAME:
         required: true
         type: string
-      DOCKER_IMAGE_GENERATION:
-        type: string
-        default: "true"
-      AWS_ECR_URI:
-        required: true
-        type: string
-      AWS_CICD_ACCESS_KEY: 
-        required: true
-        type: string
-      AWS_CICD_SECRET_ACCESS_KEY:
-        required: true
-        type: string
 
 jobs:
 
