@@ -19,4 +19,4 @@ jobs:
     secrets: inherit
     with:
       FE_NAME: "beta-frontend"
-      PROJECT_PATH: "services/beta-frontend"
+      PROJECT_PATH: "frontends/beta-frontend"
