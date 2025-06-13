@@ -2,14 +2,10 @@ package com.kjeldsen.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.TestInstance;
-import org.mapstruct.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.*;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -19,8 +15,8 @@ import org.testcontainers.utility.DockerImageName;
 @Testcontainers
 @ActiveProfiles({"test", "test-it"})
 @AutoConfigureMockMvc(addFilters = false)
+@ContextConfiguration(initializers = PropertyLoggingInitializer.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-//@ContextConfiguration(initializers = MongoDBInitializer.class)
 public abstract class AbstractIT {
 
     @Autowired
@@ -34,6 +30,7 @@ public abstract class AbstractIT {
     static MongoDBContainer mongoDbContainer = new MongoDBContainer(DockerImageName.parse(MONGO_VERSION));
 
     static {
+        System.out.println("Starting MongoDB container");
         mongoDbContainer.start();
     }
 
@@ -42,6 +39,11 @@ public abstract class AbstractIT {
         System.out.println("Registering MongoDB container");
         System.out.println("MongoDB container: " + mongoDbContainer.getContainerIpAddress());
         System.out.println("MongoDB container: " + mongoDbContainer.getReplicaSetUrl());
+
+        System.out.println(mongoDbContainer.getConnectionString());
+        System.out.println(mongoDbContainer.getHost());
+        System.out.println(mongoDbContainer);
         registry.add("spring.data.mongodb.uri", mongoDbContainer::getReplicaSetUrl);
+        registry.add("quartz.properties.org.quartz.jobStore.mongoUri", mongoDbContainer::getReplicaSetUrl);
     }
 }

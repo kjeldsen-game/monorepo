@@ -1,13 +1,8 @@
 spring:
   application:
     name: main-service-test-it
-
-logging:
-  level:
-    org:
-      springframework:
-        boot:
-          autoconfigure: INFO
-
+  quartz:
+    auto-startup: true
 server:
   port: 43566
+
