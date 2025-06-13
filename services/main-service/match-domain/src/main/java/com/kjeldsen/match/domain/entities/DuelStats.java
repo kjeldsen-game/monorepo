@@ -64,9 +64,11 @@ public class DuelStats {
     @Builder
     @ToString
     public static class Performance {
-
+        @Builder.Default
         Double previousTotalImpact = 0.0;
+        @Builder.Default
         Double random = 0.0;
+        @Builder.Default
         Double total = 0.0;
     }
 

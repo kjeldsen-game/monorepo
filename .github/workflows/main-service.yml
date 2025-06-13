@@ -1,38 +1,21 @@
-name: main-service.yml
+name: Main Service Workflow
 
 on:
   pull_request:
     paths:
       - "services/main-service/**"
   push:
-    tags:
-      - 'v*.*.*'
     branches:
       - main
     paths:
       - "services/main-service/**"
 
-jobs:
+jobs: 
 
-  merge-request-job:
-    uses: ./.github/workflows/default_mvn_service.yml
-    if: github.event_name == 'pull_request'
+  maven-workflow:
+    uses: ./.github/workflows/maven.yml
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
     secrets: inherit
     with:
       SERVICE_NAME: "main-service"
-      DOCKER_IMAGE_GENERATION: "false"
-
-  push-main-job:
-    uses: ./.github/workflows/default_mvn_service.yml
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    secrets: inherit
-    with:
-      SERVICE_NAME: "main-service"
-       
-  tag-job:
-    uses: ./.github/workflows/default_mvn_service.yml
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-    secrets: inherit
-    with:
-      SERVICE_NAME: "main-service"
-      RELEASE: "true"
+      PROJECT_PATH: "services/main-service"

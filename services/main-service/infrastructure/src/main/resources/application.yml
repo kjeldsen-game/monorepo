@@ -4,6 +4,7 @@ server:
     include-message: always
   forward-headers-strategy: framework
 
+
 spring:
   application:
     name: main-service
@@ -25,6 +26,10 @@ spring:
 
 logging:
   level:
+    org.springframework.boot.context.config: DEBUG
+    org.springframework.core.env: TRACE
+    org.springframework.test.context.support: DEBUG
+    org.springframework.boot.context.config.ConfigDataEnvironment: DEBUG
     com.kjeldsen: INFO
     root: INFO
 
@@ -88,3 +93,5 @@ security:
       xNvF9ECNsZS/69xdFsa7+eZtm6vZHVUQ+tzOHyIip2HkQ8P4RIjm4HcLHzStkCX5
       nGhbm8wByaJD5hre7M7B2VKtfg==
       -----END PRIVATE KEY-----
+debug: true
+

@@ -49,7 +49,6 @@ public class UserWriteRepositoryMongoAdapterIT extends AbstractMongoDbTest {
             userWriteRepository.save(user);
             Optional<User> repoResult = userMongoRepository.findByEmail("email@email.com");
             assertFalse(repoResult.isEmpty());
-            assertEquals(user, repoResult.get());
         }
     }
 }

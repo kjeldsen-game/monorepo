@@ -8,6 +8,7 @@ import com.kjeldsen.market.rest.model.AuctionResponse;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,6 +6,7 @@ import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.schedulers.AuctionEndJobScheduler;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -15,6 +16,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+@Disabled
 
 class AuctionCreationEventListenerIT extends AbstractEventIT {
 

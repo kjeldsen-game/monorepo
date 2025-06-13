@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
@@ -40,7 +41,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath /> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.kjeldsen</groupId>
     <artifactId>main-service</artifactId>
@@ -83,12 +84,12 @@
 
         <apache.commons-collections4.version>4.4</apache.commons-collections4.version>
         <javafaker.version>1.0.2</javafaker.version>
-        <testcontainers-bom.version>1.21.1</testcontainers-bom.version>
+        <testcontainers-bom.version>1.17.6</testcontainers-bom.version>
         <snakeyaml.version>2.4</snakeyaml.version>
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <spring-boot.version>3.5.0</spring-boot.version>
-        <spring-data-mongodb.version>4.5.0</spring-data-mongodb.version>
+        <spring-data-mongodb.version>4.3.5</spring-data-mongodb.version>
         <spring-data-commons.version>3.5.0</spring-data-commons.version>
         <jakarta.version>6.1.0</jakarta.version>
         <spring-security-oauth2-resource-server.version>6.5.0</spring-security-oauth2-resource-server.version>
@@ -114,6 +115,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.4.0</version>
                     <configuration>
+                        <failIfNoTests>false</failIfNoTests>
                         <skipTests>${skipTests}</skipTests>
                         <testFailureIgnore>false</testFailureIgnore>
                         <redirectTestOutputToFile>true</redirectTestOutputToFile>
@@ -216,6 +218,38 @@
             <artifactId>quartz-mongodb</artifactId>
             <version>2.2.0-rc2</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.quartz-scheduler</groupId>-->
+<!--            <artifactId>quartz</artifactId>-->
+<!--            <version>2.3.2</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.fluidsonic.mirror</groupId>-->
+<!--            <artifactId>quartz-mongodb</artifactId>-->
+<!--            <version>2.2.0-rc2</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.3.2</version> <!-- your desired version -->
+            <exclusions>
+                <exclusion>
+                    <groupId>com.zaxxer</groupId>
+                    <artifactId>HikariCP-java7</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-core</artifactId>
+            <version>1.11.0</version> <!-- or latest stable -->
+        </dependency>
         <dependency>
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
@@ -224,15 +258,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-quartz</artifactId>
+            <version>3.3.5</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.flywaydb</groupId>-->
-<!--            <artifactId>flyway-core</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
