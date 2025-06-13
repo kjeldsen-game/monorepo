@@ -92,7 +92,7 @@ jobs:
       - name: Generate ECR Variables
         id: ecr_variables
         run: |
-          echo "ECR_IMAGE_NAME=${{ inputs.AWS_ECR_URI }}/${{ inputs.NAME }}:${{ env.VERSION }}" >> $GITHUB_ENV
+          echo "ECR_IMAGE_NAME=${{ secrets.AWS_ECR_URI }}/${{ inputs.SERVICE_NAME }}:${{ env.VERSION }}" >> $GITHUB_ENV
         shell: bash
 
       - name: AWS ECR Configure
@@ -100,8 +100,8 @@ jobs:
         if: steps.ecr_variables.outcome == 'success'
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-access-key-id: ${{ inputs.AWS_CICD_ACCESS_KEY }}
-          aws-secret-access-key: ${{ inputs.AWS_CICD_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
           aws-region: eu-west-1 
 
       - name: Login to Amazon ECR

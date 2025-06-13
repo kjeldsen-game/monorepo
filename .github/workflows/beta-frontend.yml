@@ -20,6 +20,3 @@ jobs:
     with:
       FE_NAME: "beta-frontend"
       PROJECT_PATH: "services/beta-frontend"
-      AWS_ECR_URI: ${{ secrets.AWS_ECR_URI }}
-      AWS_CICD_ACCESS_KEY: ${{ secrets.AWS_CICD_ACCESS_KEY }}
-      AWS_CICD_SECRET_ACCESS_KEY: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
