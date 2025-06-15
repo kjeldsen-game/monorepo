@@ -75,34 +75,8 @@ jobs:
     runs-on: ubuntu-24.04
     needs: integration-tests
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Generate ECR Variables
-        id: ecr_variables
-        run: |
-          echo "ECR_IMAGE_NAME=${{ secrets.AWS_ECR_URI }}/${{ inputs.SERVICE_NAME }}:${{ env.VERSION }}" >> $GITHUB_ENV
-        shell: bash
-
-      - name: AWS ECR Configure
-        id: ecr_configure
-        if: steps.ecr_variables.outcome == 'success'
-        uses: aws-actions/configure-aws-credentials@v2
+      - name: Docker Build and Push
+        uses: ./.github/actions/docker
         with:
-          aws-access-key-id: ${{ secrets.AWS_CICD_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-1 
-
-      - name: Login to Amazon ECR
-        id: login_ecr
-        if: steps.ecr_configure.outcome == 'success'
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build and push Docker image
-        id: ecr_push
-        if: steps.login_ecr.outcome == 'success'
-        run: |
-          cd ${{ inputs.PROJECT_PATH }}
-          docker build -t ${{ env.ECR_IMAGE_NAME }} .
-          docker push ${{ env.ECR_IMAGE_NAME }}
-        shell: bash  
+          SERVICE_NAME: ${{ inputs.SERVICE_NAME }}
+          PROJECT_PATH: ${{ inputs.PROJECT_PATH }}
