@@ -99,7 +99,6 @@ public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
             }
         }
 
-
         return mongoTemplate.find(query, Player.class);
     }
 

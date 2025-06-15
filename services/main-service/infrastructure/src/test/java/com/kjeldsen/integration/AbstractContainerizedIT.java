@@ -1,5 +1,7 @@
 package com.kjeldsen.integration;
 
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.utility.DockerImageName;
 
@@ -11,6 +13,11 @@ public interface AbstractContainerizedIT {
 
     static void start() {
         mongoDbContainer.start();
-        System.setProperty("spring.data.mongodb.uri", mongoDbContainer.getReplicaSetUrl());
+    }
+
+    @DynamicPropertySource
+    static void registerMongoProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.data.mongodb.uri", mongoDbContainer::getReplicaSetUrl);
+        registry.add("quartz.properties.org.quartz.jobStore.mongoUri", mongoDbContainer::getReplicaSetUrl);
     }
 }

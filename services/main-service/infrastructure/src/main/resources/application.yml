@@ -4,6 +4,7 @@ server:
     include-message: always
   forward-headers-strategy: framework
 
+
 spring:
   application:
     name: main-service

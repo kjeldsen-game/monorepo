@@ -1,4 +1,4 @@
-name: Build documentation
+name: Writerside Documentation
 
 on:
   pull_request:
