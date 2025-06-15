@@ -16,7 +16,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @ActiveProfiles({"test-it"})
 @AutoConfigureMockMvc(addFilters = false)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ContextConfiguration(initializers = PropertyLoggingInitializer.class)
 @Import({TestContainersConfig.class, QuartzTestConfig.class})
 public abstract class AbstractIT implements AbstractContainerizedIT {
 
