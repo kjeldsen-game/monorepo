@@ -17,9 +17,7 @@ public interface AbstractContainerizedIT {
 
     @DynamicPropertySource
     static void registerMongoProperties(DynamicPropertyRegistry registry) {
-        System.out.println("Registering MongoDB container");
-        System.out.println("MongoDB container: " + mongoDbContainer.getContainerIpAddress());
-        System.out.println("MongoDB container: " + mongoDbContainer.getReplicaSetUrl());
         registry.add("spring.data.mongodb.uri", mongoDbContainer::getReplicaSetUrl);
+        registry.add("quartz.properties.org.quartz.jobStore.mongoUri", mongoDbContainer::getReplicaSetUrl);
     }
 }

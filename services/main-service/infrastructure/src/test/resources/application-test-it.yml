@@ -1,8 +1,8 @@
 spring:
   application:
-    name: main-service-test-it
-  quartz:
-    auto-startup: true
+    name: main-service-test
+
+
 server:
   port: 43566
 
