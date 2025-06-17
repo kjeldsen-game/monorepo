@@ -40,7 +40,6 @@ jobs:
         name: Build and Push Docker Image
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         runs-on: ubuntu-24.04
-        needs: integration-tests
         steps:
             - name: Docker Build and Push
               uses: ./.github/actions/docker
