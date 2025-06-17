@@ -1,82 +1,49 @@
-import { FC, PropsWithChildren } from 'react';
-import { Header } from '@/shared/layout/Header';
-import { Main } from '@/shared/layout/Main';
-import { Item, Sidebar } from '@/shared/layout/Sidebar';
+import * as React from 'react';
 import Box from '@mui/material/Box';
-import { useRouter } from 'next/router';
-import { useTranslation } from 'next-i18next';
+import CssBaseline from '@mui/material/CssBaseline';
+import Toolbar from '@mui/material/Toolbar';
+import { Main } from './Main';
 
-export const Layout: FC<PropsWithChildren> = ({ children }) => {
-  const { pathname } = useRouter();
+import MenuSidebar, { DRAWER_WIDTH } from './sidebar/MenuSidebar';
+import Header from './header/Header';
+import Subheader from './header/Subheader';
+import HeaderDivider from './header/HeaderDivider';
 
-  const { t } = useTranslation('common');
+interface Props {
+    children: React.ReactNode;
+}
 
-  const items: Item[] = [
-    // {
-    //   name: t('Dashboard'),
-    //   icon: 'inbox',
-    //   to: '/dashboard',
-    //   selected: pathname === '/dashboard',
-    // },
-    {
-      name: 'Team',
-      icon: 'team',
-      to: '/team',
-      selected: pathname === '/team',
-    },
-    // {
-    //   name: 'Economy',
-    //   icon: 'market',
-    //   to: '/team/economy',
-    //   hasDivider: false,
-    //   selected: pathname === '/team/economy',
-    // },
-    // {
-    //   name: 'Training',
-    //   icon: 'training',
-    //   to: '/training',
-    //   hasDivider: false,
-    //   selected: pathname === '/training',
-    // },
-    {
-      name: 'Challenge',
-      icon: 'trophy',
-      to: '/challenge',
-      hasDivider: false,
-      selected: /^\/challenge/.test(pathname),
-    },
-    // {
-    //   name: 'Market',
-    //   icon: 'market',
-    //   to: '/market',
-    //   hasDivider: false,
-    //   selected: /^\/market/.test(pathname),
-    // },
-    {
-      name: 'League',
-      icon: 'league',
-      to: '/league',
-      hasDivider: false,
-      selected: /^\/league/.test(pathname),
-    },
-    {
-      name: 'Simulator',
-      icon: 'simulator',
-      to: '/simulator',
-      hasDivider: false,
-      selected: /^\/simulator/.test(pathname),
-    },
-    // { name: 'Generate Player', icon: 'inbox', to: '/', selected: pathname === '/' },
-    // { name: 'Generate Match', icon: 'mail', to: '/', selected: pathname === '/' },
-  ];
-  return (
-    <>
-      <Header />
+export const Layout: React.FC<React.PropsWithChildren<Props>> = ({ children }) => {
 
-      <Box sx={{ display: 'flex' }}>
-        <Sidebar items={items} />
-        <Main>{children}</Main>
-      </Box>
-    </>
-  );
+    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [isClosing, setIsClosing] = React.useState(false);
+
+    return (
+        <Box sx={{ display: 'flex' }}>
+            <CssBaseline />
+            <Header
+                isClosing={isClosing}
+                mobileOpen={mobileOpen}
+                setMobileOpen={setMobileOpen}
+            />
+            <HeaderDivider />
+            <Subheader />
+            <MenuSidebar
+                mobileOpen={mobileOpen}
+                setMobileOpen={setMobileOpen}
+                setIsClosing={setIsClosing}
+            />
+            <Box
+                component="main"
+                sx={{
+                    mt: { xs: '56px', sm: '47px' },
+                    flexGrow: 1,
+                    p: 3,
+                    width: { sm: `calc(100% - ${DRAWER_WIDTH}px)` },
+                }}>
+                <Toolbar />
+                <Main>{children}</Main>
+            </Box>
+        </Box>
+    );
 };
