@@ -1,2 +1,2 @@
-export { CenterContainer } from './CenterContainer'
-export { Layout } from './Layout'
+export { CenterContainer } from './CenterContainer';
+export { Layout } from './Layout';

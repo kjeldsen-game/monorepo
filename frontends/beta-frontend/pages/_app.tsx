@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
@@ -9,11 +9,11 @@ import { SessionProvider } from 'next-auth/react';
 import { Session } from 'next-auth';
 import { createEmotionCache } from '@/libs/emotion/cache';
 import { theme } from '@/libs/material/theme';
-import { Layout } from '@/shared/layout';
 import { GameUser } from '@/shared/models/GameUser';
 import { appWithTranslation } from 'next-i18next';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { Layout } from '@/shared/layout/Layout';
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
