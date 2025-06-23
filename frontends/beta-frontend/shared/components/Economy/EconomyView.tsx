@@ -2,10 +2,10 @@ import { Box, CircularProgress, Tab } from '@mui/material';
 import { useState } from 'react';
 import DashboardLink from '../DashboardLink';
 import { CustomTabPanel } from '../Tab/CustomTabPanel';
-import TransactionsTabView from './TransactionsTabView';
 import CustomTabs from '../CustomTabs';
 import WagesTabView from './WagesTabView';
 import GeneralEconomyTabView from './GeneralEconomyTabView';
+import TransactionsTabView from './TransactionsTabView';
 
 interface EconomyViewProps {
   economy: any;

@@ -10,9 +10,12 @@ const EconomyCard: React.FC<EconomyCardProps> = ({
     children,
     sx,
 }: EconomyCardProps) => {
+
     return (
-        <Grid item xs={12} sm={6} md={4} sx={{ padding: '20px' }}>
+        <Grid size={{ xs: 12, sm: 6, md: 4 }} sx={{ padding: '20px' }} data-testid="economy-card-grid"
+        >
             <Card
+                data-testid="economy-card-card"
                 sx={{
                     minHeight: '500px',
                     textAlign: 'center',

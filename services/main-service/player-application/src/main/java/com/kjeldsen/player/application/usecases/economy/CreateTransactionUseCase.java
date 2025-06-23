@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Component
 @Slf4j
@@ -51,6 +52,8 @@ public class CreateTransactionUseCase {
     private Transaction createTransaction(Team team, BigDecimal amount, Transaction.TransactionType transactionType) {
         System.out.println(amount);
         return  Transaction.builder()
+            .id(Transaction.TransactionId.generate())
+            .occurredAt(Instant.now())
             .teamId(team.getId())
             .transactionType(transactionType)
             .transactionAmount(amount)

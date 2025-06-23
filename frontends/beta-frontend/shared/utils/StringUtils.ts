@@ -9,14 +9,15 @@ export function convertSnakeCaseToTitleCase(input: string | undefined) {
     .join(' ');
 }
 
-export const convertToKebabCase = (str: string) => {
+export const convertToKebabCase = (str: string | undefined) => {
+  if (!str) return '';
   return str
     .toLowerCase()
     .replace(/\s+/g, '-')
     .replace(/[^\w-]+/g, '');
 };
 
-export const toFirstUppercase = (str: string): string => {
+export const toFirstUppercase = (str: string | undefined): string => {
   if (!str) return '';
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };

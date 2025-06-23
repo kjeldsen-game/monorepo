@@ -27,6 +27,7 @@ export interface Item {
     icon: keyof typeof MENU_SIDEBAR_ICONS;
     hasDivider?: boolean;
     selected: boolean;
+    beta?: boolean,
 }
 
 const MenuSidebarDrawer = () => {
@@ -46,13 +47,14 @@ const MenuSidebarDrawer = () => {
             to: '/team',
             selected: pathname === '/team',
         },
-        // {
-        //   name: 'Economy',
-        //   icon: 'market',
-        //   to: '/team/economy',
-        //   hasDivider: false,
-        //   selected: pathname === '/team/economy',
-        // },
+        {
+            name: 'Economy',
+            icon: 'market',
+            to: '/team/economy',
+            hasDivider: false,
+            selected: pathname === '/team/economy',
+            beta: true
+        },
         // {
         //   name: 'Training',
         //   icon: 'training',
@@ -113,7 +115,10 @@ const MenuSidebarDrawer = () => {
                             }}>
                             <ListItemButton>
                                 <ListItemIcon>{MENU_SIDEBAR_ICONS[item.icon]}</ListItemIcon>
-                                <ListItemText primary={item.name} />
+                                <ListItemText>
+                                    {item.name}
+                                    {item.beta ? <sup style={{ color: '#FF3F84', paddingLeft: '4px' }}>Beta</sup> : <></>}
+                                </ListItemText>
                             </ListItemButton>
                         </Link>
                         {item.hasDivider ? <Divider /> : <></>}

@@ -1,23 +1,35 @@
 import { Box } from '@mui/material';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
-import { GridAlignment } from '@mui/x-data-grid';
 import { isNegative } from '@/shared/utils/EconomyUtils';
-import { playerCommonColumns } from './PlayerCommonColumns';
+import { baseColumnConfig, leftColumnConfig, rightColumnConfig } from '../ColumnsConfig';
+import ColHeader from '../Common/ColHeader';
+import ColLink from '../Common/ColLink';
+
 
 export const playerTransactionsColumns = () => {
   const columns: GridColDef[] = [
-    ...playerCommonColumns(true, false),
     {
+      ...leftColumnConfig,
+      field: 'name',
+      minWidth: 80,
+      renderHeader: () => <ColHeader header={'Name'} align={'left'} />,
+      renderCell: (params: GridCellParams) => {
+        // console.log(params.row.player.name);
+        return (
+          <ColLink urlValue={`/player/${params.row.player.id}`}>
+            {params.row.player.name}
+          </ColLink>
+        );
+      },
+    },
+    {
+      ...baseColumnConfig,
       field: 'thisWeek',
-      renderHeader: () => <div>This Week</div>,
-      headerAlign: 'center' as GridAlignment,
-      align: 'right' as GridAlignment,
+      renderHeader: () => <ColHeader header='This Week' />,
       minWidth: 70,
-      flex: 1,
       renderCell: (params: GridCellParams) => (
         <Box
           sx={{
-            paddingRight: '20px',
             color: isNegative(params.row.transactionSummary.weekSummary)
               ? '#C51A1A'
               : 'black',
@@ -31,12 +43,10 @@ export const playerTransactionsColumns = () => {
       ),
     },
     {
+      ...rightColumnConfig,
       field: 'thisSeason',
-      renderHeader: () => <div>This Season</div>,
-      headerAlign: 'center' as GridAlignment,
-      align: 'right' as GridAlignment,
+      renderHeader: () => <ColHeader align='right' header='This Season' />,
       minWidth: 70,
-      flex: 1,
       renderCell: (params: GridCellParams) => (
         <Box
           sx={{

@@ -15,6 +15,14 @@ export const filterPlayersByPosition = (
   return data.filter((player) => player.position === position);
 };
 
+export const filterPlayersByField = <T extends keyof Player>(
+  data: Player[] = [],
+  field: T,
+  value: Player[T],
+): Player[] => {
+  return data.filter((player) => player[field] === value);
+};
+
 export const filterPlayersByTeam = (
   players: Player[],
   teamList: Player[] | undefined,

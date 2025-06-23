@@ -7,7 +7,7 @@ import {
   SnackbarCloseReason,
   Typography,
 } from '@mui/material';
-import EconomyCard from './EconomyCard';
+import EconomyCard from './Cards/EconomyCard';
 import MarketButton from '../Market/MarketButton';
 import SellIcon from '@mui/icons-material/Sell';
 import PricingDataItem from './PricingDataItem';
@@ -122,28 +122,27 @@ const GeneralEconomyCard: React.FC<GeneralEconomyCardProps> = ({
               <Typography variant="h5" fontWeight={'900'}>
                 Team Balance
               </Typography>
-              <Box
-                padding={'10px'}
-                display={'flex'}
-                alignItems={'center'}
-                justifyContent={'space-between'}>
-                <Typography
-                  color={'#54595E99'}
-                  sx={{
-                    fontSize: '20px',
-                    paddingY: '10px',
-                    textAlign: 'left',
-                  }}>
-                  Total Balance :
-                </Typography>
-                <Typography fontSize={16} color={'#A4BC10'}>
-                  {balance.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                  {' $'}
-                </Typography>
-              </Box>
+              <Grid container>
+                <Grid size={{ lg: 6, sm: 12, xs: 6 }} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Typography
+                    color={'#54595E99'}
+                    sx={{
+                      fontSize: '20px',
+                      paddingY: '10px',
+                    }}>
+                    Total Balance :
+                  </Typography>
+                </Grid>
+                <Grid size={{ lg: 6, sm: 12, xs: 6 }} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Typography fontSize={16} color={'#A4BC10'}>
+                    {balance.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                    {' $'}
+                  </Typography>
+                </Grid>
+              </Grid>
             </Box>
             <Typography variant="h5" fontWeight={'900'}>
               Pricing
@@ -173,7 +172,6 @@ const GeneralEconomyCard: React.FC<GeneralEconomyCardProps> = ({
               })}
             </Grid>
           </Box>
-          <Box></Box>
         </Box>
         <MarketButton
           variant="outlined"

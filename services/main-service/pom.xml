@@ -209,6 +209,11 @@
     </profiles>
     <dependencies>
         <dependency>
+            <groupId>io.mongock</groupId>
+            <artifactId>mongock-api</artifactId>
+            <version>5.5.1</version>
+        </dependency>
+        <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <scope>provided</scope>

@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { useMemo } from 'react';
 import Grid from '../Grid/Grid';
-import { playerTransactionsColumns } from '../Grid/Columns/PlayerTransactionsColumns';
+import { playerTransactionsColumns } from '../Grid/Columns/Economy/PlayerTransactionsColumns';
 
 interface WagesTabViewProps {
   playerTransactions: any;
@@ -10,7 +10,10 @@ interface WagesTabViewProps {
 const WagesTabView: React.FC<WagesTabViewProps> = ({
   playerTransactions,
 }: WagesTabViewProps) => {
+
   const memoizedColumns = useMemo(() => playerTransactionsColumns(), []);
+
+
   return (
     <Box sx={{ width: '100%' }}>
       <Grid

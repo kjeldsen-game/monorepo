@@ -1,7 +1,7 @@
 import { Box, CircularProgress, styled } from '@mui/material';
 import { useMemo } from 'react';
 import Grid from '../Grid/Grid';
-import { economyColumns } from '../Grid/Columns/EconomyColumns';
+import { economyColumns } from '../Grid/Columns/Economy/EconomyColumns';
 import { getBackgroundColor } from '@/shared/utils/EconomyUtils';
 
 interface TransactionsTabViewProps {

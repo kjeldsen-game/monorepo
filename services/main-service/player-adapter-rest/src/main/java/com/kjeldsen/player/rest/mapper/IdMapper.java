@@ -13,8 +13,13 @@ public interface IdMapper {
     }
 
     default String map(Team.TeamId teamId) {
+        if (teamId == null) {
+            return null;
+        }
         return teamId.value();
     }
 
-    default String map(Transaction.TransactionId transactionId) { return transactionId.value(); }
+    default String map(Transaction.TransactionId transactionId) {
+        return transactionId.value();
+    }
 }

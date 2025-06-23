@@ -1,16 +1,13 @@
 import React from 'react';
 import {
     Box,
-    Button,
     Collapse,
     Grid,
-    SxProps,
     Typography,
 } from '@mui/material';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { Add } from '@mui/icons-material';
 import MarketButton from '../Market/MarketButton';
 
 interface PricingDataItemProps {
@@ -29,7 +26,7 @@ const PricingDataItem: React.FC<PricingDataItemProps> = ({
     handleRemoveButton,
 }) => {
     return (
-        <Grid item xs={6} textAlign={'center'} sx={{ paddingY: '10px' }}>
+        <Grid size={{ xs: 6, sm: 12, lg: 6 }} textAlign={'center'} sx={{ paddingY: '10px' }}>
             <Typography
                 fontSize={20}
                 variant="body2"

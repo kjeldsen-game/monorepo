@@ -22,12 +22,16 @@ public class ResetBillboardIncomeUseCase {
         List<Team> teams = teamReadRepository.findAll();
         teams.forEach(team -> {
             Team.Economy.BillboardDeal deal = team.getEconomy().getBillboardDeal();
+            System.out.println(deal);
             if (deal != null) {
-                Integer seasonNumber = team.getActualSeason();
-                if (deal.getEndSeason() - seasonNumber == 0) { // Deal expired
-                    team.getEconomy().setBillboardDeal(null);
-                    teamWriteRepository.save(team);
-                }
+                // TODO tmp
+                team.getEconomy().setBillboardDeal(null);
+                teamWriteRepository.save(team);
+//                Integer seasonNumber = team.getActualSeason();
+//                if (deal.getEndSeason() - seasonNumber == 0) { // Deal expired
+//                    team.getEconomy().setBillboardDeal(null);
+//                    teamWriteRepository.save(team);
+//                }
             }
         });
     }

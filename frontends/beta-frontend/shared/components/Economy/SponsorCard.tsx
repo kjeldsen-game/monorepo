@@ -20,59 +20,54 @@ const SponsorCard: React.FC<SponsorCardProps> = ({
   type,
 }) => {
   return (
-    <Card sx={{ height: '45%', padding: 2 }}>
+    <Card
+      sx={{ height: '100%', padding: 2 }}
+      data-testid={`sponsor-card-${type?.toLowerCase()}`}
+    >
       <Box
-        sx={{
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-        }}>
+        height={'100%'}
+        display={'flex'}
+        flexDirection={'column'}
+        justifyContent={'space-between'}>
         <Box
-          height={'100%'}
-          display={'flex'}
-          flexDirection={'column'}
-          justifyContent={'space-between'}>
-          <Box
-            sx={{
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}>
-            <SellIcon fontSize="large" sx={{ color: '#FF3F84' }} />
-            <Typography variant="h5" fontWeight={'900'}>
-              {type} Sponsor
-            </Typography>
-            {mode === null ? (
-              <>
-                <Typography
-                  color={'#54595E99'}
-                  fontSize={'12'}
-                  sx={{
-                    height: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                  }}>
-                  You don't have selected Sposor, click on the button to select
-                  one!
-                </Typography>
-              </>
-            ) : (
-              <>
-                <BillboardCardDataItem title="Mode" value={mode} />
-              </>
-            )}
-          </Box>
+          sx={{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+          <SellIcon fontSize="large" sx={{ color: '#FF3F84' }} />
+          <Typography variant="h5" fontWeight={'900'} textAlign={'center'}>
+            {type} Sponsor
+          </Typography>
           {mode === null ? (
-            <MarketButton onClick={() => handleOpenModal(type)}>
-              Choose Offer
-            </MarketButton>
+            <>
+              <Typography
+                color={'#54595E99'}
+                fontSize={'12'}
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                }}>
+                You don't have selected Sposor, click on the button to select
+                one!
+              </Typography>
+            </>
           ) : (
-            <></>
+            <>
+              <BillboardCardDataItem title="Mode" value={mode} />
+            </>
           )}
         </Box>
+        {mode === null ? (
+          <MarketButton onClick={() => handleOpenModal(type)}>
+            Choose Offer
+          </MarketButton>
+        ) : (
+          <></>
+        )}
       </Box>
     </Card>
   );

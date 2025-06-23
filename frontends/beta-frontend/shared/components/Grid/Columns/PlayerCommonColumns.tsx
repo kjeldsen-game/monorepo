@@ -8,6 +8,7 @@ import ColHeader from './Common/ColHeader';
 import ColLink from './Common/ColLink';
 import { formatName } from '@/shared/utils/PlayerUtils';
 import { PlayerAge } from '@/shared/models/player/Player';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 export const playerCommonColumns = (
   skills: boolean = false,
@@ -15,6 +16,7 @@ export const playerCommonColumns = (
   showPosition: boolean = false,
   truncateName: boolean = false,
 ) => {
+
   const columns: GridColDef[] = [
     {
       ...leftColumnConfig,
@@ -27,31 +29,31 @@ export const playerCommonColumns = (
         </ColLink>
       ),
     },
-    {
-      ...baseColumnConfig,
-      field: 'age',
-      maxWidth: 50,
-      renderHeader: () => <ColHeader header={'Age'} />,
-      valueGetter: (params: PlayerAge) => {
-        return params.years;
-      },
-    },
+    // {
+    //   ...baseColumnConfig,
+    //   field: 'age',
+    //   maxWidth: 50,
+    //   renderHeader: () => <ColHeader header={'Age'} />,
+    //   valueGetter: (params: PlayerAge) => {
+    //     return params.years;
+    //   },
+    // },
     ...(showPosition
       ? [
-          {
-            ...baseColumnConfig,
-            field: 'playerPosition',
-            renderHeader: () => <ColHeader header={'Pos'} />,
-            // sortComparator: positionComparator,
-            renderCell: (params: GridCellParams) => (
-              <PlayerPositionLabel
-                position={
-                  params.row.preferredPosition as keyof typeof PlayerPosition
-                }
-              />
-            ),
-          },
-        ]
+        {
+          ...baseColumnConfig,
+          field: 'playerPosition',
+          renderHeader: () => <ColHeader header={'Pos'} />,
+          // sortComparator: positionComparator,
+          renderCell: (params: GridCellParams) => (
+            <PlayerPositionLabel
+              position={
+                params.row.preferredPosition as keyof typeof PlayerPosition
+              }
+            />
+          ),
+        },
+      ]
       : []),
     {
       ...baseColumnConfig,

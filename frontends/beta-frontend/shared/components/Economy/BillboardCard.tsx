@@ -1,20 +1,18 @@
 import React from 'react';
 import { Box, Grid, Typography } from '@mui/material';
-import EconomyCard from './EconomyCard';
+import EconomyCard from './Cards/EconomyCard';
 import MarketButton from '../Market/MarketButton';
 import SellIcon from '@mui/icons-material/Sell';
 import WarningIcon from '@mui/icons-material/Warning';
 import BillboardCardDataItem from './BillboardCardDataItem';
 
 interface BillboardCardProps {
-  open: boolean;
   billboardDeal: any;
   setOpen: (isOpen: boolean) => void;
 }
 
 const BillboardCard: React.FC<BillboardCardProps> = ({
   billboardDeal,
-  open,
   setOpen,
 }) => {
   return (
@@ -84,7 +82,7 @@ const BillboardCard: React.FC<BillboardCardProps> = ({
           )}
         </Box>
         {billboardDeal == undefined || billboardDeal == null ? (
-          <MarketButton variant="outlined" onClick={setOpen}>
+          <MarketButton variant="outlined" onClick={() => setOpen(true)}>
             Choose Offer
           </MarketButton>
         ) : (

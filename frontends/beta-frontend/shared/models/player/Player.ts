@@ -1,4 +1,4 @@
-import { PitchArea } from '../match/PitchArea';
+import { PITCH_AREAS_ENUM } from '../match/PitchArea';
 import { PlayerLineupStatus } from './PlayerLineupStatus';
 import { PlayerOrder } from './PlayerOrder';
 import { PlayerPosition } from './PlayerPosition';
@@ -10,10 +10,10 @@ export interface Player {
   name: string;
   teamRole?: TeamRole;
   position?: PlayerPosition;
-  prepreferredPosition: PlayerPosition;
+  preferredPosition: PlayerPosition;
   category: Category;
   playerOrder: PlayerOrder;
-  playerOrderDestinationPitchArea: PitchArea | any;
+  playerOrderDestinationPitchArea: PITCH_AREAS_ENUM;
   status: PlayerLineupStatus;
   actualSkills: { [key: string]: ActualSkill };
   economy: PlayerEconomy;
@@ -26,8 +26,8 @@ export interface PlayerAge {
 }
 
 export enum Category {
-  Junior = 'JUNIOR',
-  Senior = 'SENIOR',
+  JUNIOR = 'JUNIOR',
+  SENIOR = 'SENIOR',
 }
 
 export interface PlayerEconomy {
@@ -45,7 +45,7 @@ export interface PlayerSkills {
 }
 
 export enum PlayerSkillRelevance {
-  Core = 'CORE',
-  Residual = 'RESIDUAL',
-  Secondary = 'SECONDARY',
+  CORE = 'CORE',
+  RESIDUAL = 'RESIDUAL',
+  SECONDARY = 'SECONDARY',
 }

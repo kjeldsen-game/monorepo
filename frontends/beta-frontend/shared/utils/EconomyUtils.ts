@@ -1,7 +1,7 @@
 import { IncomeMode, IncomePeriodicity } from '../models/player/Economy';
 
-export const getBackgroundColor = (status: string) => {
-  switch (status) {
+export const getBackgroundColor = (name: string) => {
+  switch (name) {
     case 'Total Income':
       return {
         backgroundColor: '#A4BC100D',

@@ -17,7 +17,13 @@ export const getSurname = (name: string): string => {
   return nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
 };
 
-export const formatName = (name: string): string =>
-  name.trim().includes(' ')
-    ? `${name.trim()[0].toUpperCase()}. ${name.trim().split(' ').slice(1).join(' ')}`
-    : name;
+export const formatName = (name: string): string => {
+  if (!name) return '';
+
+  const parts = name.trim().split(' ');
+
+  const firstInitial = parts[0][0].toUpperCase();
+  const lastTwoSurnames = parts.slice(-2).join(' ');
+
+  return `${firstInitial}. ${lastTwoSurnames}`;
+};

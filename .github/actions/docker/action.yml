@@ -1,37 +1,37 @@
 name: Docker Build and Push to ECR
 description: Builds and pushes Docker image to AWS ECR.
 inputs:
-  SERVICE_NAME:
-    description: Name of the service (used for tagging the Docker image)
-    required: true
-  PROJECT_PATH:
-    description: Relative path to the Docker project directory
-    required: true
+    SERVICE_NAME:
+        description: Name of the service (used for tagging the Docker image)
+        required: true
+    PROJECT_PATH:
+        description: Relative path to the Docker project directory
+        required: true
 
 runs:
-  using: "composite"
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+    using: "composite"
+    steps:
+        # - name: Checkout
+        #   uses: actions/checkout@v3
 
-    - name: Generate ECR Variables
-      run: |
-        echo "ECR_IMAGE_NAME=${{ secrets.AWS_ECR_URI }}/${{ inputs.SERVICE_NAME }}:latest" >> $GITHUB_ENV
-      shell: bash
+        - name: Generate ECR Variables
+          run: |
+              echo "ECR_IMAGE_NAME=${{ secrets.AWS_ECR_URI }}/${{ inputs.SERVICE_NAME }}:latest" >> $GITHUB_ENV
+          shell: bash
 
-    - name: AWS ECR Configure
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_CICD_ACCESS_KEY }}
-        aws-secret-access-key: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
-        aws-region: eu-west-1
+        - name: AWS ECR Configure
+          uses: aws-actions/configure-aws-credentials@v2
+          with:
+              aws-access-key-id: ${{ secrets.AWS_CICD_ACCESS_KEY }}
+              aws-secret-access-key: ${{ secrets.AWS_CICD_SECRET_ACCESS_KEY }}
+              aws-region: eu-west-1
 
-    - name: Login to Amazon ECR
-      uses: aws-actions/amazon-ecr-login@v1
+        - name: Login to Amazon ECR
+          uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Build and Push Docker Image
-      run: |
-        cd ${{ inputs.PROJECT_PATH }}
-        docker build -t ${{ env.ECR_IMAGE_NAME }} .
-        docker push ${{ env.ECR_IMAGE_NAME }}
-      shell: bash
+        - name: Build and Push Docker Image
+          run: |
+              cd ${{ inputs.PROJECT_PATH }}
+              docker build -t ${{ env.ECR_IMAGE_NAME }} .
+              docker push ${{ env.ECR_IMAGE_NAME }}
+          shell: bash

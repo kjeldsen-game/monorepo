@@ -41,6 +41,8 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         runs-on: ubuntu-24.04
         steps:
+            - uses: actions/checkout@v3
+
             - name: Docker Build and Push
               uses: ./.github/actions/docker
               with:

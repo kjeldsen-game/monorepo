@@ -30,7 +30,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
     <Modal open={open} onClose={onClose}>
       <Box
         sx={{
-          position: 'absolute',
+          position: 'fixed',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
@@ -45,12 +45,14 @@ const CustomModal: React.FC<CustomModalProps> = ({
           justifyContent: 'center',
           ...sx,
         }}>
-        {title && (
-          <Typography variant="h6" component="h2">
-            {title}
-          </Typography>
-        )}
-        {description && <Typography sx={{ mb: 2 }}>{description}</Typography>}
+        <Box>
+          {title && (
+            <Typography variant="h6" component="h2">
+              {title}
+            </Typography>
+          )}
+          {description && <Typography sx={{ mb: 2 }}>{description}</Typography>}
+        </Box>
         {children}
         {actions && <Box sx={{ mt: 2 }}>{actions}</Box>}
       </Box>
