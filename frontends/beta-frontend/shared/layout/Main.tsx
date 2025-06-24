@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import { Box } from '@mui/material';
 
 export const Main: FC<PropsWithChildren> = ({ children }) => {

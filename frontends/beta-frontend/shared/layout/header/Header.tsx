@@ -20,9 +20,10 @@ interface HeaderProps {
     isClosing: boolean;
     mobileOpen: boolean;
     setMobileOpen: (value: boolean) => void;
+    isMenu: boolean;
 }
 
-const Header: FC<HeaderProps> = ({ isClosing, setMobileOpen, mobileOpen }) => {
+const Header: FC<HeaderProps> = ({ isClosing, setMobileOpen, mobileOpen, isMenu }) => {
     const { status, data } = useSession();
 
     const handleDrawerToggle = () => {
@@ -41,18 +42,29 @@ const Header: FC<HeaderProps> = ({ isClosing, setMobileOpen, mobileOpen }) => {
                 color: 'black',
             }}>
             <Toolbar>
-                <IconButton
-                    data-testid="menu-icon"
-                    color="inherit"
-                    aria-label="open drawer"
-                    edge="start"
-                    onClick={handleDrawerToggle}
-                    sx={{ mr: 2, display: { sm: 'none' } }}>
-                    <MenuIcon />
-                </IconButton>
+                {isMenu &&
+                    <IconButton
+                        data-testid="menu-icon"
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerToggle}
+                        sx={{ mr: 2, display: { sm: 'none' } }}>
+                        <MenuIcon />
+                    </IconButton>
+                }
                 <Box display="flex" alignItems="center" width="100%">
-                    <Box flex={1} />
-                    <Box>
+                    <Box flex={1}>
+                        {/* Left side (menu button already handled above) */}
+                    </Box>
+
+                    <Box
+                        sx={{
+                            flex: '0 0 auto',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}>
                         <Link
                             href="/"
                             style={{
@@ -70,22 +82,21 @@ const Header: FC<HeaderProps> = ({ isClosing, setMobileOpen, mobileOpen }) => {
                             />
                         </Link>
                     </Box>
-                    <Box
-                        flex={1}
-                        display="flex"
-                        justifyContent="flex-end"
-                        alignItems="center">
-                        {status === 'authenticated' && !!data.user ? (
-                            <UserDropdown user={data.user} />
-                        ) : (
-                            <Link href="/signin" passHref data-testid="signin-button">
-                                <Button
-                                    startIcon={<LoginIcon />}
-                                    variant="outlined"
-                                    color="primary">
-                                    Sign In
-                                </Button>
-                            </Link>
+
+                    <Box flex={1} display="flex" justifyContent="flex-end" alignItems="center">
+                        {isMenu && (
+                            status === 'authenticated' && !!data.user ? (
+                                <UserDropdown user={data.user} />
+                            ) : (
+                                <Link href="/signin" passHref data-testid="signin-button">
+                                    <Button
+                                        startIcon={<LoginIcon />}
+                                        variant="outlined"
+                                        color="primary">
+                                        Sign In
+                                    </Button>
+                                </Link>
+                            )
                         )}
                     </Box>
                 </Box>

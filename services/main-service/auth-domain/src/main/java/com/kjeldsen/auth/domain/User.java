@@ -1,5 +1,6 @@
 package com.kjeldsen.auth.domain;
 
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 public class User {
 
     private String id;
+    @Email
     private String email;
     private String password;
     private String teamId;
