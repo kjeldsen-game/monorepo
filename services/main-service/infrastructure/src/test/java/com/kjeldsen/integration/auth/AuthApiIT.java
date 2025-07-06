@@ -46,7 +46,7 @@ public class AuthApiIT extends AbstractIT {
     @Nested
     @DisplayName("HTTP GET to /auth should")
     class HTTPGetToAuthShould {
-
+  
         @Test
         @Disabled
         @DisplayName("return 200 when a user is authenticated")
