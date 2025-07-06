@@ -2,8 +2,7 @@ package com.kjeldsen.auth.application.usecases;
 
 import com.kjeldsen.auth.domain.Role;
 import com.kjeldsen.auth.domain.User;
-import com.kjeldsen.auth.domain.exceptions.TeamException;
-import com.kjeldsen.auth.domain.exceptions.UsernameException;
+import com.kjeldsen.auth.domain.exceptions.BadRequestException;
 import com.kjeldsen.auth.domain.publishers.UserRegisterPublisher;
 import com.kjeldsen.auth.domain.repositories.UserReadRepository;
 import com.kjeldsen.auth.domain.repositories.UserWriteRepository;
@@ -12,6 +11,7 @@ import com.kjeldsen.lib.events.UserRegisterEvent;
 import com.kjeldsen.lib.model.team.TeamClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -29,16 +29,24 @@ public class RegisterUserUseCase {
     private final TeamClientApiImpl teamClientApi;
     private final UserRegisterPublisher userRegisterPublisher;
 
-    public void register(String email, String password, String inputTeamName) {
+    public void register(String email, String password, String inputTeamName, String confirmPassword) {
         log.info("RegisterUserUseCase for email {} team {} password ****", email, inputTeamName);
 
+        if (!EmailValidator.getInstance().isValid(email)) {
+            throw new BadRequestException("Invalid email address format!");
+        }
+
+        if (!password.equals(confirmPassword)) {
+            throw new BadRequestException("Passwords do not match!");
+        }
+
         if (userReadRepository.findByEmail(email).isPresent()) {
-            throw new UsernameException("Username taken!");
+            throw new BadRequestException("Email taken!");
         }
 
         List<TeamClient> clientResponse = teamClientApi.getTeam(null, inputTeamName, null);
         if (!clientResponse.isEmpty()) {
-            throw new TeamException("Team name taken!");
+            throw new BadRequestException("Team name taken!");
         }
 
         User user = new User();

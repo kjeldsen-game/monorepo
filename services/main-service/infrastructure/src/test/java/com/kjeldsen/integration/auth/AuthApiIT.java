@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.List;
 import java.util.Set;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
@@ -47,7 +48,6 @@ public class AuthApiIT extends AbstractIT {
     class HTTPGetToAuthShould {
 
         @Test
-        @Disabled
         @DisplayName("return 200 when a user is authenticated")
         void return_201_status_when_user_is_authenticated() throws Exception {
             User user = saveUser();
@@ -72,18 +72,31 @@ public class AuthApiIT extends AbstractIT {
 
         @Test
         @Disabled
-        @DisplayName("return 200 when user register")
+        @DisplayName("return 200 and registered the new user")
         void return_200_when_user_register() throws Exception {
-            RegisterRequest request =  new RegisterRequest().email("email").password("password")
-                .teamName("team");
+            RegisterRequest request =  new RegisterRequest().email("email@email.com").password("password"
+            ).confirmPassword("password").teamName("team");
 
             mockMvc.perform(post("/v1/auth/register")
                     .contentType("application/json")
                     .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk());
 
+            System.out.println(userMongoRepository.findByEmail("email@email.com").isPresent());
+
             Assertions.assertFalse(userMongoRepository.findAll().isEmpty());
-            Assertions.assertFalse(teamMongoRepository.findAll().isEmpty());
+        }
+
+        @Test
+        @DisplayName("return 400 error when request is invalid")
+        void return_400_error_when_request_is_invalid() throws Exception {
+            RegisterRequest request =  new RegisterRequest().email("email@email.com").password("password"
+            ).confirmPassword("password22").teamName("team");
+
+            mockMvc.perform(post("/v1/auth/register")
+                    .contentType("application/json")
+                    .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
         }
 
         @Test
@@ -107,6 +120,7 @@ public class AuthApiIT extends AbstractIT {
     private User saveUser() {
         User user = new User();
         user.setRoles(Set.of(Role.USER));
+        user.setTeamId("exampleId");
         user.setEmail("test@test.com");
         user.setPassword(passwordEncoder.encode("password"));
         return userMongoRepository.save(user);

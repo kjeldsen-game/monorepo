@@ -65,15 +65,15 @@ export const connector = async (
     body: JSON.stringify(body),
   });
 
+  console.log(response);
   if (!response.ok) {
-    let errorMessage = `HTTP ${response.status}`;
+    let errorMessage = '';
     try {
       const errorData = await response.json();
-      errorMessage += `: ${errorData.message || JSON.stringify(errorData)}`;
+      errorMessage += `${errorData.message || JSON.stringify(errorData)}`;
     } catch (e) {
       console.error('Error parsing response JSON:', e);
     }
-
     throw new Error(errorMessage);
   }
   try {

@@ -29,6 +29,7 @@ public class CreateTeamUseCase {
         log.info("CreateTeamUseCase name {} with {} players for user {}", teamName, numberOfPlayers, userId);
 
         Team.TeamId newTeamId = Team.TeamId.generate();
+        System.out.println("New team id " + newTeamId);
 //        List<Player> players = generatePlayersUseCase.generate(numberOfPlayers, newTeamId);
         List<Player> players = generatePlayersUseCase.generateCustomPlayers(newTeamId);
 

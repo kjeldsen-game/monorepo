@@ -1,4 +1,3 @@
-import { connectorAuth } from '@/libs/fetcher';
 import { signIn } from 'next-auth/react';
 
 export async function apiSignIn(
@@ -20,27 +19,6 @@ export async function apiSignIn(
       .catch((error) => {
         console.error(error);
         reject(error);
-      });
-  });
-}
-
-export async function apiSignup(
-  email: string,
-  password: string,
-  teamName: string,
-): Promise<string | undefined> {
-  return new Promise((resolve, reject) => {
-    connectorAuth('/auth/register', 'POST', {
-      email,
-      password,
-      teamName,
-    })
-      .then(() => {
-        resolve(undefined);
-      })
-      .catch((error) => {
-        console.error(error);
-        reject('Register failed');
       });
   });
 }

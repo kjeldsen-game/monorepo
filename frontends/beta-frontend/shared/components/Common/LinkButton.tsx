@@ -14,7 +14,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({
   children,
   link,
   sx,
-  variant = 'outlined', // default to outlined
+  variant = 'outlined',
 }) => {
   const baseStyles: SxProps<Theme> = {
     padding: '8px 16px',

@@ -9,9 +9,10 @@ import com.kjeldsen.auth.authentication.model.TokenRequest;
 import com.kjeldsen.auth.authentication.model.TokenResponse;
 import com.kjeldsen.auth.authentication.model.UserDetailsResponse;
 import com.kjeldsen.auth.domain.User;
-import com.kjeldsen.auth.domain.exceptions.TeamNotFoundException;
+import com.kjeldsen.auth.domain.exceptions.NotFoundException;
 import com.kjeldsen.lib.clients.TeamClientApi;
 import com.kjeldsen.lib.model.team.TeamClient;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +38,9 @@ public class AuthenticationDelegate implements AuthApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> register(RegisterRequest request) {
-        registerUserUseCase.register(request.getEmail(), request.getPassword(), request.getTeamName());
+    public ResponseEntity<Void> register(@Valid RegisterRequest request) {
+        registerUserUseCase.register(request.getEmail(), request.getPassword(),
+            request.getTeamName(), request.getConfirmPassword());
         return ResponseEntity.ok().build();
     }
 
@@ -51,7 +53,7 @@ public class AuthenticationDelegate implements AuthApiDelegate {
     private UserDetailsResponse buildUserDetailsResponse(User user) {
         List<TeamClient> clientResponse = teamClientApi.getTeam(null, null, user.getId());
         if (clientResponse.isEmpty()) {
-            throw new TeamNotFoundException();
+            throw new NotFoundException("Team not found for user id: " + user.getId());
         }
         return new UserDetailsResponse(user.getId(), user.getEmail(), clientResponse.get(0).getId());
     }

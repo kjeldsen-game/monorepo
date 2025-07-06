@@ -12,7 +12,7 @@ export default NextAuth({
     CredentialsProvider({
       name: 'credentials',
       credentials: {
-        username: {
+        email: {
           label: 'email',
           type: 'text',
         },
@@ -21,12 +21,12 @@ export default NextAuth({
       type: 'credentials',
       authorize: async (credentials) => {
         const payload = {
-          email: credentials?.username || '',
+          email: credentials?.email || '',
           password: credentials?.password || '',
           client_id: AUTH_CLIENT_ID,
           client_secret: AUTH_CLIENT_SECRET,
         };
-
+        console.log(payload);
         try {
           const res = await fetch(`${API_AUTH_ENDPOINT}/auth/token`, {
             method: 'POST',
@@ -36,10 +36,13 @@ export default NextAuth({
             body: JSON.stringify(payload),
           });
 
-          if (res.status !== 200) throw new Error('Invalid credentials');
-
           const data = await res.json();
 
+          if (res.status !== 200) {
+            throw new Error(data.message);
+          }
+
+          // console.log(data);
           // Save the access token as a cookie
           return { accessToken: data.accessToken };
         } catch (error) {

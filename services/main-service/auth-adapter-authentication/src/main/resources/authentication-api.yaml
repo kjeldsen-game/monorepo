@@ -23,7 +23,7 @@ paths:
       responses:
         "201":
           description: Registration successful
-        default:
+        "400":
           $ref: "#/components/responses/DefaultErrorResponse"
 
   /auth/token:
@@ -44,7 +44,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TokenResponse"
-        default:
+        "401":
+          $ref: "#/components/responses/DefaultErrorResponse"
+        "404":
           $ref: "#/components/responses/DefaultErrorResponse"
 
   /auth/me:
@@ -58,7 +60,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserDetailsResponse"
-        default:
+        "401":
+          $ref: "#/components/responses/DefaultErrorResponse"
+        "404":
           $ref: "#/components/responses/DefaultErrorResponse"
 
 components:
@@ -66,11 +70,9 @@ components:
     DefaultErrorResponse:
       description: Unexpected error
       content:
-        "*/*":
+        "application/json":
           schema:
-            type: array
-            items:
-              $ref: "#/components/schemas/Error"
+            $ref: "#/components/schemas/ErrorResponse"
 
   schemas:
     RegisterRequest:
@@ -79,12 +81,15 @@ components:
         - email
         - password
         - teamName
+        - confirmPassword
       properties:
         email:
           type: string
+        teamName:
+          type: string
         password:
           type: string
-        teamName:
+        confirmPassword:
           type: string
 
     TokenRequest:
@@ -92,7 +97,6 @@ components:
       properties:
         email:
           type: string
-          format: email
           description: "The email for authentication"
         password:
           type: string
@@ -106,15 +110,18 @@ components:
           type: string
           description: "JWT token that can be used for authorization"
 
-    Error:
-      type: "object"
+    ErrorResponse:
+      type: object
       required:
+        - status
         - code
         - message
       properties:
         code:
           type: string
         message:
+          type: string
+        status:
           type: string
 
     UserDetailsResponse:

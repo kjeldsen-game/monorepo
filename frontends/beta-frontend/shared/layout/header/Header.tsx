@@ -15,15 +15,16 @@ import {
     Login as LoginIcon,
 } from '@mui/icons-material';
 import UserDropdown from './UserDropdown';
+import MarketButton from '@/shared/components/Market/MarketButton';
 
 interface HeaderProps {
     isClosing: boolean;
     mobileOpen: boolean;
     setMobileOpen: (value: boolean) => void;
-    isMenu: boolean;
+    isMenu?: boolean;
 }
 
-const Header: FC<HeaderProps> = ({ isClosing, setMobileOpen, mobileOpen, isMenu }) => {
+const Header: FC<HeaderProps> = ({ isClosing, setMobileOpen, mobileOpen, isMenu = true }) => {
     const { status, data } = useSession();
 
     const handleDrawerToggle = () => {
@@ -89,12 +90,15 @@ const Header: FC<HeaderProps> = ({ isClosing, setMobileOpen, mobileOpen, isMenu 
                                 <UserDropdown user={data.user} />
                             ) : (
                                 <Link href="/signin" passHref data-testid="signin-button">
-                                    <Button
+                                    <MarketButton>
+                                        <LoginIcon sx={{ marginRight: '8px', paddingLeft: '0px' }} /> Sign In
+                                    </MarketButton>
+                                    {/* <Button
+                                        sx={{ color: 'black' }}
                                         startIcon={<LoginIcon />}
                                         variant="outlined"
-                                        color="primary">
-                                        Sign In
-                                    </Button>
+                                    >
+                                    </Button> */}
                                 </Link>
                             )
                         )}

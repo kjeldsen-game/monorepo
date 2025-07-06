@@ -22,20 +22,23 @@ export const Layout: React.FC<React.PropsWithChildren<Props>> = ({ isMenu = true
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <Header
-                isMenu={isMenu}
-                isClosing={isClosing}
-                mobileOpen={mobileOpen}
-                setMobileOpen={setMobileOpen}
-            />
-            <HeaderDivider />
-            <Subheader isMenu={isMenu} />
+
             {isMenu &&
-                <MenuSidebar
-                    mobileOpen={mobileOpen}
-                    setMobileOpen={setMobileOpen}
-                    setIsClosing={setIsClosing}
-                />
+                <>
+                    <Header
+                        isMenu={isMenu}
+                        isClosing={isClosing}
+                        mobileOpen={mobileOpen}
+                        setMobileOpen={setMobileOpen}
+                    />
+                    <HeaderDivider />
+                    <Subheader isMenu={isMenu} />
+                    <MenuSidebar
+                        mobileOpen={mobileOpen}
+                        setMobileOpen={setMobileOpen}
+                        setIsClosing={setIsClosing}
+                    />
+                </>
             }
             <Box
                 component="main"
