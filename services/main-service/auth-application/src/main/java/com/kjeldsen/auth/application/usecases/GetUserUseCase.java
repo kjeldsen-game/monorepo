@@ -3,14 +3,13 @@ package com.kjeldsen.auth.application.usecases;
 
 import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.auth.domain.User;
-import com.kjeldsen.auth.domain.exceptions.UserNotFoundException;
-import com.kjeldsen.auth.domain.exceptions.UserNotLoggedException;
+import com.kjeldsen.auth.domain.exceptions.NotFoundException;
+import com.kjeldsen.auth.domain.exceptions.UnauthorizedException;
 import com.kjeldsen.auth.domain.repositories.UserReadRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -23,13 +22,13 @@ public class GetUserUseCase {
     public User getCurrent() {
         log.info("GetUserUseCase method getCurrent with id {}" , SecurityUtils.getCurrentUserId());
         if (SecurityUtils.getCurrentUserId() == null) {
-            throw new UserNotLoggedException();
+            throw new UnauthorizedException("User is not logged in.");
         } else {
             Optional<User> optUser = userReadRepository.findByUserId(SecurityUtils.getCurrentUserId());
             if (optUser.isPresent()) {
                 return optUser.get();
             } else {
-                throw new UserNotLoggedException();
+                throw new UnauthorizedException("User not authorized or not found.");
             }
         }
     }
@@ -40,7 +39,7 @@ public class GetUserUseCase {
         if (optUser.isPresent()) {
             return optUser.get();
         } else {
-            throw new UserNotFoundException();
+            throw new NotFoundException("User with email '" + email + "' not found.");
         }
     }
 }

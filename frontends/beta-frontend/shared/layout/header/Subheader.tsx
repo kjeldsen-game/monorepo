@@ -3,7 +3,11 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import StarIcon from '@mui/icons-material/Star';
 
-const Subheader = () => {
+interface SubheaderProps {
+    isMenu: boolean;
+}
+
+const Subheader: React.FC<SubheaderProps> = ({ isMenu = true }) => {
 
     const { pathname } = useRouter();
     const pathSegments = pathname.split('/').filter(Boolean);
@@ -31,18 +35,20 @@ const Subheader = () => {
                     Welcome to <span style={{ fontWeight: 'bold' }}> KJELDSEN </span>{' '}
                     v.1.24
                 </Typography>
-                <Breadcrumbs aria-label="breadcrumb" data-testid="breadcrumbs"
-                    sx={{ paddingLeft: '40px' }}>
-                    {pathSegments.map((segment, index) => (
-                        <Box key={index} display={'flex'}>
-                            <StarIcon sx={{ color: '#0000008A', width: '16px', marginRight: '8px' }} />
-                            <Link style={{ textDecoration: 'none', color: '#0000008A' }} color="inherit" href={`/`}>
-                                {segment.charAt(0).toUpperCase() + segment.slice(1)}
-                            </Link>
-                            {index < pathSegments.length - 1 && ' / '}
-                        </Box>
-                    ))}
-                </Breadcrumbs>
+                {isMenu &&
+                    <Breadcrumbs aria-label="breadcrumb" data-testid="breadcrumbs"
+                        sx={{ paddingLeft: '40px' }}>
+                        {pathSegments.map((segment, index) => (
+                            <Box key={index} display={'flex'}>
+                                <StarIcon sx={{ color: '#0000008A', width: '16px', marginRight: '8px' }} />
+                                <Link style={{ textDecoration: 'none', color: '#0000008A' }} color="inherit" href={`/`}>
+                                    {segment.charAt(0).toUpperCase() + segment.slice(1)}
+                                </Link>
+                                {index < pathSegments.length - 1 && ' / '}
+                            </Box>
+                        ))}
+                    </Breadcrumbs>
+                }
             </Box>
         </AppBar>
     )

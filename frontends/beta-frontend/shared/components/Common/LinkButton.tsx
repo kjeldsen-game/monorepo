@@ -1,5 +1,5 @@
 import { SxProps, Box } from '@mui/material';
-import { Theme } from 'next-auth';
+import { Theme } from '@mui/material/styles';
 import Link from 'next/link';
 import React from 'react';
 
@@ -7,12 +7,26 @@ interface LinkButtonProps {
   sx?: SxProps<Theme>;
   children: React.ReactNode;
   link: string;
+  variant?: 'contained' | 'outlined';
 }
 
-const LinkButton: React.FC<LinkButtonProps> = ({ children, link, sx }) => {
-  const defaultSx: SxProps<Theme> = {
-    padding: '8px',
+const LinkButton: React.FC<LinkButtonProps> = ({
+  children,
+  link,
+  sx,
+  variant = 'outlined',
+}) => {
+  const baseStyles: SxProps<Theme> = {
+    padding: '8px 16px',
     textDecoration: 'none',
+    textAlign: 'center',
+    borderRadius: '4px',
+    fontWeight: 500,
+    transition: 'all 0.3s ease',
+    display: 'inline-block',
+  };
+
+  const outlinedStyles: SxProps<Theme> = {
     border: '1px solid #FF3F84',
     color: '#FF3F84',
     '&:hover': {
@@ -20,13 +34,25 @@ const LinkButton: React.FC<LinkButtonProps> = ({ children, link, sx }) => {
       color: 'white',
       borderColor: 'transparent',
     },
-    borderRadius: '4px',
-    ...sx, // Allow for custom styles to be passed in via the `sx` prop
   };
 
+  const containedStyles: SxProps<Theme> = {
+    boxShadow: '1',
+    backgroundColor: 'white',
+    color: '#FF3F84',
+    '&:hover': {
+      backgroundColor: '#FF3F84',
+      color: 'white'
+    },
+  };
+
+  const variantStyles = variant === 'contained' ? containedStyles : outlinedStyles;
+
   return (
-    <Link style={{ textDecoration: 'none' }} passHref href={link}>
-      <Box sx={defaultSx}>{children}</Box>
+    <Link href={link} passHref style={{ textDecoration: 'none' }}>
+      <Box component="span" sx={{ ...baseStyles, ...variantStyles, ...sx }}>
+        {children}
+      </Box>
     </Link>
   );
 };

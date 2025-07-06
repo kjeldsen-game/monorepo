@@ -6,6 +6,7 @@ import {
     AccountCircle as AccountCircleIcon,
     Logout as LogoutIcon,
 } from '@mui/icons-material';
+import MarketButton from '@/shared/components/Market/MarketButton';
 
 interface UserDropdownProps {
     user?: User;
@@ -28,15 +29,14 @@ const UserDropdown: FC<UserDropdownProps> = ({ user }) => {
 
     return (
         <>
-            <Button
+            <MarketButton
                 aria-controls={open ? 'signed-user-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
                 variant="outlined"
-                color="primary"
                 onClick={handleClick}>
                 {user?.email ?? 'Anonymous'}
-            </Button>
+            </MarketButton>
             <Menu
                 sx={{ marginTop: 1 }}
                 id="basic-menu"

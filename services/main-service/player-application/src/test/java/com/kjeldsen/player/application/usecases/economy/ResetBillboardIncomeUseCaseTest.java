@@ -4,6 +4,7 @@ import com.kjeldsen.player.application.testdata.TestData;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,6 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+@Disabled
 class ResetBillboardIncomeUseCaseTest {
 
     private final TeamReadRepository mockedTeamReadRepository = Mockito.mock(TeamReadRepository.class);

@@ -14,6 +14,8 @@ import { appWithTranslation } from 'next-i18next';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { Layout } from '@/shared/layout/Layout';
+import { ErrorProvider } from '@/shared/contexts/ErrorContext';
+import ErrorSnackbar from '@/shared/components/Common/ErrorSnackbar';
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -56,9 +58,11 @@ function MyApp({
             <title>Kjeldsen</title>
           </Head>
           <ThemeProvider theme={theme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            {getLayout(<Component {...pageProps} />)}
+            <ErrorProvider>
+              <CssBaseline />
+              <ErrorSnackbar />
+              {getLayout(<Component {...pageProps} />)}
+            </ErrorProvider>
           </ThemeProvider>
         </CacheProvider>
       </LocalizationProvider>

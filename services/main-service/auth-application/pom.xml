@@ -19,6 +19,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.7</version> <!-- or latest -->
+        </dependency>
+        <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>lib-client</artifactId>
         </dependency>

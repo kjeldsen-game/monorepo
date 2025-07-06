@@ -10,10 +10,11 @@ import Subheader from './header/Subheader';
 import HeaderDivider from './header/HeaderDivider';
 
 interface Props {
+    isMenu?: boolean;
     children: React.ReactNode;
 }
 
-export const Layout: React.FC<React.PropsWithChildren<Props>> = ({ children }) => {
+export const Layout: React.FC<React.PropsWithChildren<Props>> = ({ isMenu = true, children }) => {
 
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isClosing, setIsClosing] = React.useState(false);
@@ -21,24 +22,30 @@ export const Layout: React.FC<React.PropsWithChildren<Props>> = ({ children }) =
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <Header
-                isClosing={isClosing}
-                mobileOpen={mobileOpen}
-                setMobileOpen={setMobileOpen}
-            />
-            <HeaderDivider />
-            <Subheader />
-            <MenuSidebar
-                mobileOpen={mobileOpen}
-                setMobileOpen={setMobileOpen}
-                setIsClosing={setIsClosing}
-            />
+
+            {isMenu &&
+                <>
+                    <Header
+                        isMenu={isMenu}
+                        isClosing={isClosing}
+                        mobileOpen={mobileOpen}
+                        setMobileOpen={setMobileOpen}
+                    />
+                    <HeaderDivider />
+                    <Subheader isMenu={isMenu} />
+                    <MenuSidebar
+                        mobileOpen={mobileOpen}
+                        setMobileOpen={setMobileOpen}
+                        setIsClosing={setIsClosing}
+                    />
+                </>
+            }
             <Box
                 component="main"
                 sx={{
                     mt: { xs: '56px', sm: '47px' },
                     flexGrow: 1,
-                    p: 3,
+                    p: isMenu ? 3 : 0,
                     width: { sm: `calc(100% - ${DRAWER_WIDTH}px)` },
                 }}>
                 <Toolbar />
