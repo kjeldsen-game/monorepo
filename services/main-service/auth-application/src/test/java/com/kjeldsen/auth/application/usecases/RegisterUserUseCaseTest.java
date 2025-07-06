@@ -59,7 +59,7 @@ class RegisterUserUseCaseTest {
     void should_throw_error_is_email_already_taken() {
         when(userReadRepository.findByEmail("email@email.com")).thenReturn(Optional.of(new User()));
 
-        assertEquals("Username taken!", assertThrows(BadRequestException.class, () -> {
+        assertEquals("Email taken!", assertThrows(BadRequestException.class, () -> {
             registerUserUseCase.register("email@email.com", "password", "team", "password");
         }).getMessage());
     }
