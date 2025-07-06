@@ -35,20 +35,32 @@ const SignUpView = () => {
                     <AuthTextField
                         name={'email'}
                         control={control}
+                        rules={{
+                            required: 'Email required',
+                        }}
                     />
                     <AuthTextField
                         name={'teamName'}
                         control={control}
+                        rules={{
+                            required: 'Team name required',
+                        }}
                     />
                     <AuthTextField
                         name={'password'}
                         type={'password'}
                         control={control}
+                        rules={{
+                            required: 'Password required',
+                        }}
                     />
                     <AuthTextField
                         name={'confirmPassword'}
                         type={'password'}
                         control={control}
+                        rules={{
+                            required: 'Confirm password required',
+                        }}
                     />
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         {loading ? <CircularProgress sx={{ color: '#FF3F84' }} /> :
