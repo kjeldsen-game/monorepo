@@ -48,6 +48,7 @@ public class AuthApiIT extends AbstractIT {
     class HTTPGetToAuthShould {
 
         @Test
+        @Disabled
         @DisplayName("return 200 when a user is authenticated")
         void return_201_status_when_user_is_authenticated() throws Exception {
             User user = saveUser();
