@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
 import { Box } from '@mui/material';
 import { useSession } from 'next-auth/react';
-import EconomyView from '@/shared/components/Economy/EconomyView';
 import { useEconomyRepository } from '@/pages/api/economy/useEconomyRepository';
+import EconomyView from '@/shared/components/Economy/views/EconomyView';
 
 const Economy: NextPage = () => {
   const { data: userData, status: sessionStatus } = useSession({
@@ -13,6 +13,8 @@ const Economy: NextPage = () => {
     userData?.user.teamId,
     userData?.accessToken,
   );
+
+  console.log(data)
 
   return (
     <>

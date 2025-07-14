@@ -1,5 +1,5 @@
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
-import { baseColumnConfig, rightColumnConfig } from './ColumnsConfig';
+import { baseColumnConfig, rightColumnConfig } from './common/config/ColumnsConfig';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 import { playerCommonColumns } from './PlayerCommonColumns';
 import MarketButton from '../../Market/MarketButton';
@@ -8,7 +8,7 @@ import { Player } from '@/shared/models/player/Player';
 import { PITCH_AREAS } from '@/shared/models/match/PitchArea';
 import { PlayerOrder } from '@/shared/models/player/PlayerOrder';
 import SelectInput from '../../Common/SelectInput';
-import ColHeader from './Common/ColHeader';
+import ColHeader from './common/components/ColHeader';
 import CloseIcon from '@mui/icons-material/Close';
 
 export const lineupColumn = (
@@ -36,66 +36,66 @@ export const lineupColumn = (
     ...playerCommonColumns(true, true, true),
     ...(isEditing
       ? [
-          {
-            ...baseColumnConfig,
-            field: 'playerOrder',
-            renderHeader: () => <ColHeader header={'PO'} />,
-            renderCell: (params: GridCellParams) => (
-              <SelectInput
-                value={params.row.playerOrder || ''}
-                values={PlayerOrder}
-                sx={{ width: '80px' }}
-                handleChange={(event) =>
-                  handlePlayerOrderChange(params.row, event.target.value)
-                }
-              />
-            ),
-          },
-        ]
+        {
+          ...baseColumnConfig,
+          field: 'playerOrder',
+          renderHeader: () => <ColHeader header={'PO'} />,
+          renderCell: (params: GridCellParams) => (
+            <SelectInput
+              value={params.row.playerOrder || ''}
+              values={PlayerOrder}
+              sx={{ width: '80px' }}
+              handleChange={(event) =>
+                handlePlayerOrderChange(params.row, event.target.value)
+              }
+            />
+          ),
+        },
+      ]
       : [
-          {
-            ...baseColumnConfig,
-            field: 'playerOrder',
-            renderHeader: () => <ColHeader header={'PO'} />,
-            renderCell: (params: GridCellParams) => (
-              <div>{convertSnakeCaseToTitleCase(params.row.playerOrder)}</div>
-            ),
-          },
-        ]),
+        {
+          ...baseColumnConfig,
+          field: 'playerOrder',
+          renderHeader: () => <ColHeader header={'PO'} />,
+          renderCell: (params: GridCellParams) => (
+            <div>{convertSnakeCaseToTitleCase(params.row.playerOrder)}</div>
+          ),
+        },
+      ]),
     ...(isEditing
       ? [
-          {
-            ...baseColumnConfig,
-            field: 'orderSpecification',
-            renderHeader: () => <ColHeader header={'PO2'} />,
-            renderCell: (params: GridCellParams) =>
-              params.row.playerOrder === 'PASS_TO_AREA' ||
+        {
+          ...baseColumnConfig,
+          field: 'orderSpecification',
+          renderHeader: () => <ColHeader header={'PO2'} />,
+          renderCell: (params: GridCellParams) =>
+            params.row.playerOrder === 'PASS_TO_AREA' ||
               params.row.playerOrder === 'DRIBBLE_TO_AREA' ? (
-                <SelectInput
-                  value={params.row.playerOrderDestinationPitchArea || ''}
-                  values={PITCH_AREAS}
-                  sx={{ width: '80px' }}
-                  handleChange={(event) =>
-                    handlePlayerOrderSpecChange(params.row, event.target.value)
-                  }
-                />
-              ) : null,
-          },
-        ]
+              <SelectInput
+                value={params.row.playerOrderDestinationPitchArea || ''}
+                values={PITCH_AREAS}
+                sx={{ width: '80px' }}
+                handleChange={(event) =>
+                  handlePlayerOrderSpecChange(params.row, event.target.value)
+                }
+              />
+            ) : null,
+        },
+      ]
       : [
-          {
-            ...baseColumnConfig,
-            field: 'orderSpecification',
-            renderHeader: () => <ColHeader header={'PO2'} />,
-            renderCell: (params) => (
-              <div>
-                {convertSnakeCaseToTitleCase(
-                  params.row.playerOrderDestinationPitchArea,
-                )}
-              </div>
-            ),
-          },
-        ]),
+        {
+          ...baseColumnConfig,
+          field: 'orderSpecification',
+          renderHeader: () => <ColHeader header={'PO2'} />,
+          renderCell: (params) => (
+            <div>
+              {convertSnakeCaseToTitleCase(
+                params.row.playerOrderDestinationPitchArea,
+              )}
+            </div>
+          ),
+        },
+      ]),
 
     {
       ...rightColumnConfig,

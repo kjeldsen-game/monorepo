@@ -339,7 +339,7 @@ components:
         name:
           type: string
           example: John Doe
-        position:
+        preferredPosition:
           $ref: "#/components/schemas/PlayerPosition"
         actualSkills:
           additionalProperties:

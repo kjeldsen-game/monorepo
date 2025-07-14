@@ -5,10 +5,10 @@ import {
   PlayerSkill,
   PlayerSkillToShortcut,
 } from '@/shared/models/player/PlayerSkill';
-import ColHeader from '../Common/ColHeader';
+import ColHeader from '../common/components/ColHeader';
 import { playerSkillsColumns } from '../PlayerSkillsColumns';
 import { playerCommonColumns } from '../PlayerCommonColumns';
-import { baseColumnConfig } from '../ColumnsConfig';
+import { baseColumnConfig } from '../common/config/ColumnsConfig';
 
 export const trainingScheduleColumns = (
   handleCellClick: (

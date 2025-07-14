@@ -4,9 +4,9 @@ import {
   baseColumnConfig,
   leftColumnConfig,
   rightColumnConfig,
-} from '../ColumnsConfig';
-import ColHeader from '../Common/ColHeader';
-import ColLink from '../Common/ColLink';
+} from '../common/config/ColumnsConfig';
+import ColHeader from '../common/components/ColHeader';
+import ColLink from '../common/components/ColLink';
 
 export const standingsColumns = () => {
   const columns: GridColDef[] = [

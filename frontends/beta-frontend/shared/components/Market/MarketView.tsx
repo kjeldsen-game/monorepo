@@ -1,16 +1,15 @@
-import { Box, CircularProgress } from '@mui/material';
-import MarketFilter from './MarketFilter';
+import { Alert, Box, useMediaQuery } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import { marketColumn } from '../Grid/Columns/MarketColumn';
 import Grid from '../Grid/Grid';
 import DashboardLink from '../DashboardLink';
-import MarketModal from './MarketModal';
 import { AuctionMarket } from '@/shared/models/market/Auction';
+import { theme } from '@/libs/material/theme';
+import MarketFilter from './filter/MarketFilter';
+import AuctionDialog from './dialog/AuctionDialog';
 
 interface MarketProps {
   auctions: AuctionMarket[] | undefined;
-  refetch: () => void;
-  updateAuction: (auctionId: number) => void;
   setFilter: (filter: string) => void;
   setAuction: (auctionId: string) => void;
 }
@@ -46,12 +45,19 @@ const MarketView: React.FC<MarketProps> = ({
     setOpen(true);
   };
 
-  const memoizedColumns = useMemo(() => marketColumn(handleRowButtonClick), []);
+  const isXs = useMediaQuery(theme.breakpoints.down('sm'));
+  const memoizedColumns = useMemo(() => marketColumn(handleRowButtonClick, isXs), [isXs]);
 
   return (
     <Box sx={{ width: '100%' }}>
       <DashboardLink children={'Back to Dashboard'} />
-      <MarketModal
+
+      <Alert sx={{ mb: '16px' }} severity="warning">
+        Please note: the app is not continuously deployed, so auction end times may behave unexpectedly.
+        That said, the bidding system is fully functional and ready for beta testing — you can place bids on players successfully.
+      </Alert>
+
+      <AuctionDialog
         auction={activeAuction}
         open={open}
         handleClose={handleCloseModal}
@@ -63,29 +69,24 @@ const MarketView: React.FC<MarketProps> = ({
         }}>
         <MarketFilter setFilter={setFilter} />
       </Box>
-      <Box sx={{ width: '100%' }}>
-        {auctions ? (
-          <Grid
-            sx={{
-              '& .MuiDataGrid-columnSeparator': {
-                display: 'none',
-              },
-              '& .MuiDataGrid-columnHeaders': {
-                padding: 0,
-              },
-              '& .MuiDataGrid-columnHeader': {
-                padding: 0,
-              },
-            }}
-            disableColumnMenu={true}
-            getRowId={(row) => row.id}
-            rows={auctions}
-            columns={memoizedColumns}
-          />
-        ) : (
-          <CircularProgress />
-        )}
-      </Box>
+      <Grid
+        loading={auctions === undefined || null}
+        sx={{
+          '& .MuiDataGrid-columnHeaders': {
+            padding: 0,
+          },
+          '& .MuiDataGrid-columnHeader': {
+            padding: 0,
+          },
+          '& .MuiDataGrid-cell': {
+            padding: '0px !important',
+          },
+        }}
+        disableColumnMenu={true}
+        getRowId={(row) => row.id}
+        rows={auctions}
+        columns={memoizedColumns}
+      />
     </Box>
   );
 };

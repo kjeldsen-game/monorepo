@@ -1,14 +1,11 @@
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import { PlayerPosition } from '@/shared/models/player/PlayerPosition';
 import { playerSkillsColumns } from './PlayerSkillsColumns';
-import { baseColumnConfig, leftColumnConfig } from './ColumnsConfig';
-import { positionComparator } from '@/shared/utils/GridUtils';
+import { baseColumnConfig, leftColumnConfig } from './common/config/ColumnsConfig';
 import PlayerPositionLabel from '../../Player/PlayerPositionLabel';
-import ColHeader from './Common/ColHeader';
-import ColLink from './Common/ColLink';
+import ColHeader from './common/components/ColHeader';
+import ColLink from './common/components/ColLink';
 import { formatName } from '@/shared/utils/PlayerUtils';
-import { PlayerAge } from '@/shared/models/player/Player';
-import { useMediaQuery, useTheme } from '@mui/material';
 
 export const playerCommonColumns = (
   skills: boolean = false,
@@ -29,15 +26,6 @@ export const playerCommonColumns = (
         </ColLink>
       ),
     },
-    // {
-    //   ...baseColumnConfig,
-    //   field: 'age',
-    //   maxWidth: 50,
-    //   renderHeader: () => <ColHeader header={'Age'} />,
-    //   valueGetter: (params: PlayerAge) => {
-    //     return params.years;
-    //   },
-    // },
     ...(showPosition
       ? [
         {

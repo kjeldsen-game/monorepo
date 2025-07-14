@@ -5,8 +5,8 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { Box, Typography } from '@mui/material';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 import { playerCommonColumns } from '../PlayerCommonColumns';
-import ColHeader from '../Common/ColHeader';
-import { rightColumnConfig } from '../ColumnsConfig';
+import ColHeader from '../common/components/ColHeader';
+import { rightColumnConfig } from '../common/config/ColumnsConfig';
 
 export const trainingColumn = () => {
   const baseColumnConfig = {

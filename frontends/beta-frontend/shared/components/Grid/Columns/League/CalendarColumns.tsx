@@ -4,12 +4,12 @@ import {
   baseColumnConfig,
   leftColumnConfig,
   rightColumnConfig,
-} from '../ColumnsConfig';
+} from '../common/config/ColumnsConfig';
 import { formatDateAndTime } from '@/shared/utils/DateUtils';
 import LinkButton from '../../../Common/LinkButton';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
-import ColHeader from '../Common/ColHeader';
-import ColLink from '../Common/ColLink';
+import ColHeader from '../common/components/ColHeader';
+import ColLink from '../common/components/ColLink';
 
 export const calendarColumns = (teamId?: string) => {
   const getLinkStyle = (isAwayTeam: boolean): React.CSSProperties => ({

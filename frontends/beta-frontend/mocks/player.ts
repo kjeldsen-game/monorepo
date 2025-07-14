@@ -2,16 +2,23 @@ import { PITCH_AREAS_ENUM } from '@/shared/models/match/PitchArea';
 import {
   Category,
   Player,
+  PlayerAge,
   PlayerSkillRelevance,
 } from '@/shared/models/player/Player';
 import { PlayerLineupStatus } from '@/shared/models/player/PlayerLineupStatus';
 import { PlayerOrder } from '@/shared/models/player/PlayerOrder';
 import { PlayerPosition } from '@/shared/models/player/PlayerPosition';
 
+export const mockPlayerAge: PlayerAge = {
+  years: 25,
+  months: 5,
+  days: 12,
+};
+
 export const mockPlayers: Player[] = [
   {
     id: '49d48f3f-046e-4c2d-a2de-96c03d723016',
-    age: 30,
+    age: mockPlayerAge,
     name: 'Willy Treutel',
     position: undefined,
     teamRole: undefined,
@@ -70,7 +77,7 @@ export const mockPlayers: Player[] = [
   },
   {
     id: '49d48f3f-046e-4c2d-a2de-96c01d723016',
-    age: 30,
+    age: mockPlayerAge,
     name: 'Willy Two',
     position: PlayerPosition.CENTRE_BACK,
     teamRole: undefined,

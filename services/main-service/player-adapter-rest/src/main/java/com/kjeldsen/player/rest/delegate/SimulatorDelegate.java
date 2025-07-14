@@ -88,6 +88,16 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         return ResponseEntity.ok().build();
     }
 
+    private void tes2t() {
+        throw new RuntimeException("Not implemented yet");
+    }
+
+    @Override
+    public ResponseEntity<SimulateHelloWorld200Response> simulateHelloWorld() {
+        tes2t();
+        return ResponseEntity.ok(new SimulateHelloWorld200Response().message("Hello World"));
+    }
+
     @Override
     public ResponseEntity<Void> registerEconomicInvestment(String teamId,
             RegisterEconomicInvestmentRequest registerEconomicInvestmentRequest) {

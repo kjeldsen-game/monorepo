@@ -37,24 +37,30 @@ public class GetMarketAuctionsUseCase {
                 FindAuctionsQuery.builder().auctionStatus(Auction.AuctionStatus.ACTIVE)
                         .maxAverageBid(maxBid).minAverageBid(minBid).playerId(Player.PlayerId.of(playerId)).build());
 
+        System.out.println(auctions.size());
+
         List<Player> players = playerReadRepository.filterMarketPlayers(
                 FilterMarketPlayersQuery.builder()
                         .playerIds(auctions.stream()
                                 .map(Auction::getPlayerId)
                                 .toList())
                         .maxAge(maxAge).minAge(minAge)
-                        .position(position)
+                        .preferredPosition(position)
                         .skills(parsePlayerSkills(skills, potentialSkills))
                         .build());
+
+        System.out.println(players.size());
 
         Map<Player.PlayerId, Player> playerMap = players.stream().collect(
                 Collectors.toMap(Player::getId, player -> player));
 
+        log.info("Player map : {}", playerMap);
+
         return auctions.stream()
-                .filter(auction -> playerMap.get(auction.getPlayerId()) != null)
+                .filter(auction -> playerMap.get(Player.PlayerId.of(auction.getPlayerId())) != null)
                 .collect(Collectors.toMap(
                         auction -> auction,
-                        auction -> playerMap.get(auction.getPlayerId())));
+                        auction -> playerMap.get(Player.PlayerId.of(auction.getPlayerId()))));
     }
 
     private List<FilterMarketPlayersQuery.PlayerSkillFilter> parsePlayerSkills(
@@ -62,6 +68,7 @@ public class GetMarketAuctionsUseCase {
         List<FilterMarketPlayersQuery.PlayerSkillFilter> playerSkills = new ArrayList<>();
         parseSkillString(playerSkills, actualSkillsString, true);
         parseSkillString(playerSkills, potentialSkillsString, false);
+        System.out.println(playerSkills);
         return playerSkills;
     }
 

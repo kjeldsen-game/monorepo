@@ -1,10 +1,10 @@
-import { FormValues, SkillRanges } from '../components/Market/MarketFilter';
+import { MarketFilterForm, SkillRanges } from 'hooks/useMarketFilterForm';
 import { PlayerSkillShortcuts } from '../models/player/PlayerSkill';
 
 const formatSkills = (
   skillRanges: SkillRanges,
-  minLabel: string = 'from',
-  maxLabel: string = 'to',
+  minLabel: string = 'min',
+  maxLabel: string = 'max',
 ): string[] => {
   return Object.entries(skillRanges || {}).reduce<string[]>(
     (acc, [skillKey, skillValue]) => {
@@ -20,7 +20,7 @@ const formatSkills = (
   );
 };
 
-export const createAuctionQueryFilter = (formValues: FormValues) => {
+export const createAuctionQueryFilter = (formValues: MarketFilterForm) => {
   const params = new URLSearchParams();
 
   if (formValues.position) {
@@ -39,6 +39,7 @@ export const createAuctionQueryFilter = (formValues: FormValues) => {
   if (potentialSkills.length > 0) {
     params.set('potentialSkill', potentialSkills.join(','));
   }
+
   Object.entries(formValues.playerOffer || {}).reduce((acc, [key, value]) => {
     if (key === 'min' && value) acc.set('minBid', value);
     if (key === 'max' && value) acc.set('maxBid', value);
@@ -46,8 +47,8 @@ export const createAuctionQueryFilter = (formValues: FormValues) => {
   }, params);
 
   Object.entries(formValues.playerAge || {}).reduce((acc, [key, value]) => {
-    if (key === 'from' && value) acc.set('minAge', value);
-    if (key === 'to' && value) acc.set('maxAge', value);
+    if (key === 'min' && value) acc.set('minAge', value);
+    if (key === 'max' && value) acc.set('maxAge', value);
     return acc;
   }, params);
 

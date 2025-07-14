@@ -46,7 +46,7 @@ export const Layout: React.FC<React.PropsWithChildren<Props>> = ({ isMenu = true
                     mt: { xs: '56px', sm: '47px' },
                     flexGrow: 1,
                     p: isMenu ? 3 : 0,
-                    width: { sm: `calc(100% - ${DRAWER_WIDTH}px)` },
+                    width: { sm: `calc(100% - ${DRAWER_WIDTH}px)`, xs: '100%' },
                 }}>
                 <Toolbar />
                 <Main>{children}</Main>

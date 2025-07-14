@@ -6,7 +6,7 @@ import { TeamRole } from '../MatchReport';
 
 export interface Player {
   id: string;
-  age: number;
+  age: PlayerAge;
   name: string;
   teamRole?: TeamRole;
   position?: PlayerPosition;

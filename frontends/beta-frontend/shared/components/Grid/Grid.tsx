@@ -9,12 +9,21 @@ type GridProps<T> = {
 function Grid<T>({ rows, columns, ...props }: GridProps<T>) {
   return (
     <Box
+
       sx={{
+        width: '100%',
         '& .super-app .MuiDataGrid-cellContent': {
           color: 'white',
           padding: '6px',
           fontWeight: '600',
-          borderRadius: '8%',
+          borderRadius: '828%',
+
+        },
+        '& .MuiDataGrid-columnHeader': {
+          padding: 0,
+        },
+        '& .MuiDataGrid-cell': {
+          padding: '0px !important',
         },
         '& .MuiDataGrid-cell:focus-within, .MuiDataGrid-cell:focus': {
           outline: 'none !important',
@@ -33,6 +42,7 @@ function Grid<T>({ rows, columns, ...props }: GridProps<T>) {
         },
         '& .MuiDataGrid-columnHeaders': {
           fontWeight: 900,
+          padding: 0,
         },
         '.MuiDataGrid-iconButtonContainer': {
           visibility: 'visible',
@@ -45,13 +55,21 @@ function Grid<T>({ rows, columns, ...props }: GridProps<T>) {
         },
       }}>
       <DataGrid
+        // style={{
+        //   '--DataGrid-rowWidth': '800px',
+        // }}
         disableColumnSelector
         disableColumnMenu
-        autoHeight={true}
         rows={rows}
         columns={columns}
         hideFooter={true}
         {...props}
+        slotProps={{
+          loadingOverlay: {
+            variant: 'skeleton',
+            noRowsVariant: 'skeleton',
+          },
+        }}
       />
     </Box>
   );

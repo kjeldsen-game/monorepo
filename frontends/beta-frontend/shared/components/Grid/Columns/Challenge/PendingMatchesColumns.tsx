@@ -4,67 +4,67 @@ import {
   baseColumnConfig,
   leftColumnConfig,
   rightColumnConfig,
-} from '../ColumnsConfig';
+} from '../common/config/ColumnsConfig';
 import { formatDateAndTime } from '@/shared/utils/DateUtils';
-import ColLink from '../Common/ColLink';
-import ColHeader from '../Common/ColHeader';
+import ColLink from '../common/components/ColLink';
+import ColHeader from '../common/components/ColHeader';
 
 const PendingMatchesColumns = (
   ownTeamId: string,
   onChallengeAccept: (matchID: string) => void,
   onChallengeDecline: (matchID: string) => void,
 ): GridColDef[] => [
-  {
-    field: 'enemy',
-    ...leftColumnConfig,
-    renderHeader: () => <ColHeader header="Enemy" align={'left'} />,
-    renderCell: ({ row }: GridCellParams) => {
-      const enemyTeam = row.home.id === ownTeamId ? row.away : row.home;
-      return (
-        <ColLink children={enemyTeam.name} urlValue={`/team/${enemyTeam.id}`} />
-      );
-    },
-  },
-  {
-    field: 'dateTime',
-    renderHeader: () => <ColHeader header="Date" />,
-    ...baseColumnConfig,
-    renderCell: (params: GridCellParams) => {
-      return formatDateAndTime(params.row?.dateTime);
-    },
-  },
-  {
-    field: 'acceptButton',
-    renderHeader: () => <ColHeader header="Action" align={'right'} />,
-    ...rightColumnConfig,
-    renderCell: (params: GridCellParams) => {
-      if (ownTeamId === params.row?.home?.id)
+    {
+      field: 'enemy',
+      ...leftColumnConfig,
+      renderHeader: () => <ColHeader header="Enemy" align={'left'} />,
+      renderCell: ({ row }: GridCellParams) => {
+        const enemyTeam = row.home.id === ownTeamId ? row.away : row.home;
         return (
-          <Button variant="contained" disabled color="info" sx={{ mx: '10px' }}>
-            Pending confirmation
-          </Button>
+          <ColLink children={enemyTeam.name} urlValue={`/team/${enemyTeam.id}`} />
         );
-
-      return (
-        <Box>
-          <Button
-            variant="contained"
-            color="info"
-            sx={{ mx: '10px' }}
-            onClick={() => onChallengeAccept(params.row?.id)}>
-            Accept
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            sx={{ mx: '10px' }}
-            onClick={() => onChallengeDecline(params.row?.id)}>
-            Decline
-          </Button>
-        </Box>
-      );
+      },
     },
-  },
-];
+    {
+      field: 'dateTime',
+      renderHeader: () => <ColHeader header="Date" />,
+      ...baseColumnConfig,
+      renderCell: (params: GridCellParams) => {
+        return formatDateAndTime(params.row?.dateTime);
+      },
+    },
+    {
+      field: 'acceptButton',
+      renderHeader: () => <ColHeader header="Action" align={'right'} />,
+      ...rightColumnConfig,
+      renderCell: (params: GridCellParams) => {
+        if (ownTeamId === params.row?.home?.id)
+          return (
+            <Button variant="contained" disabled color="info" sx={{ mx: '10px' }}>
+              Pending confirmation
+            </Button>
+          );
+
+        return (
+          <Box>
+            <Button
+              variant="contained"
+              color="info"
+              sx={{ mx: '10px' }}
+              onClick={() => onChallengeAccept(params.row?.id)}>
+              Accept
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              sx={{ mx: '10px' }}
+              onClick={() => onChallengeDecline(params.row?.id)}>
+              Decline
+            </Button>
+          </Box>
+        );
+      },
+    },
+  ];
 
 export default PendingMatchesColumns;

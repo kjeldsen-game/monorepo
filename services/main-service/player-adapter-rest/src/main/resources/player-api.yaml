@@ -469,6 +469,26 @@ paths:
 ######################## TRAINING END ########################
 
 ######################## SIMULATOR START ########################
+  /simulator/hello-world:
+    get:
+      summary: Test endpoint
+      operationId: simulateHelloWorld
+      tags:
+        - simulator
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Hello world
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
   /simulator/simulate-days:
     post:
       summary: Simulate number of days
