@@ -5,22 +5,18 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useAuctionRepository } from '../api/market/useAuctionRepository';
 
-interface MarketProps {}
+interface MarketProps { }
 
-const Market: NextPage<MarketProps> = ({}) => {
+const Market: NextPage<MarketProps> = ({ }) => {
   const [filter, setFilter] = useState<string>('');
   const [auction, setAuction] = useState<string | undefined>(undefined);
   const { data: userData } = useSession({ required: true });
 
-  const { auctions, updateAuction, refetch } = useAuctionRepository(
+  const { auctions } = useAuctionRepository(
     auction,
     userData?.accessToken,
     filter,
   );
-
-  useEffect(() => {
-    refetch();
-  }, [filter]);
 
   const handleSetFilter = (filterInput: string) => {
     setFilter(filterInput);
@@ -41,8 +37,6 @@ const Market: NextPage<MarketProps> = ({}) => {
           }}>
           <MarketView
             setAuction={handleAuction}
-            updateAuction={updateAuction}
-            refetch={refetch}
             auctions={auctions}
             setFilter={handleSetFilter}
           />

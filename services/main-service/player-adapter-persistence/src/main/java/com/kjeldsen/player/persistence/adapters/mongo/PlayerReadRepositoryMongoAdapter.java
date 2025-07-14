@@ -68,12 +68,12 @@ public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
         }
 
         query.addCriteria(Criteria.where("status").is(PlayerStatus.FOR_SALE));
-        if (inputQuery.getPosition() != null) {
-            query.addCriteria(Criteria.where("position").is(inputQuery.getPosition()));
+        if (inputQuery.getPreferredPosition() != null) {
+            query.addCriteria(Criteria.where("preferredPosition").is(inputQuery.getPreferredPosition()));
         }
 
         if (inputQuery.getPlayerIds() != null && !inputQuery.getPlayerIds().isEmpty()) {
-            query.addCriteria(Criteria.where("_id").in(inputQuery.getPlayerIds()));
+            query.addCriteria(Criteria.where("_id.value").in(inputQuery.getPlayerIds()));
         }
 
         if (inputQuery.getSkills() != null) {
@@ -98,7 +98,7 @@ public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
                 query.addCriteria(new Criteria().andOperator(criteriaList.toArray(new Criteria[0])));
             }
         }
-
+        System.out.println(query);
         return mongoTemplate.find(query, Player.class);
     }
 

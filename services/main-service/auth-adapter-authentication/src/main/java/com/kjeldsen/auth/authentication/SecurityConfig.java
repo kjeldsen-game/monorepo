@@ -41,7 +41,7 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for stateless APIs
             .authorizeHttpRequests(requests -> requests
-                .requestMatchers("/v1/auth/**", "/swagger-ui/**", "/api-docs/**", "/actuator/**", "/actuator")
+                .requestMatchers("/v1/auth/**", "/swagger-ui/**", "/api-docs/**", "/actuator/**", "/actuator", "/v1/simulator/hello-world")
                 .permitAll()
                 .requestMatchers(this::isValidApiKey) // Bypass JWT for internal API key
                 .permitAll()

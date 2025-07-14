@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Box, Grow, Typography } from '@mui/material';
 import LocalAtmOutlined from '@mui/icons-material/LocalAtmOutlined';
-import MarketModal from '../Market/MarketModal';
 import MarketButton from '../Market/MarketButton';
 import { useSession } from 'next-auth/react';
 
@@ -84,11 +83,11 @@ const PlayerAuctionCard = ({ auction }: PlayerAuctionCardProps) => {
           </Box>
         </Box>
 
-        <MarketModal
+        {/* <MarketModal
           auction={auction[0]}
           open={open}
           handleClose={() => handleOpenModal(false)}
-        />
+        /> */}
 
         <MarketButton
           sx={{

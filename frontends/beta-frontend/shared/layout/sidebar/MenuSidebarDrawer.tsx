@@ -8,6 +8,7 @@ import TerminalIcon from '@mui/icons-material/Terminal';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import Link from 'next/link';
 
 export const MENU_SIDEBAR_ICONS = {
@@ -19,6 +20,7 @@ export const MENU_SIDEBAR_ICONS = {
     training: <FitnessCenterIcon />,
     league: <CalendarMonthIcon />,
     simulator: <TerminalIcon />,
+    economy: <AccountBalanceIcon />
 };
 
 export interface Item {
@@ -49,19 +51,20 @@ const MenuSidebarDrawer = () => {
         },
         {
             name: 'Economy',
-            icon: 'market',
+            icon: 'economy',
             to: '/team/economy',
             hasDivider: false,
             selected: pathname === '/team/economy',
             beta: true
         },
-        // {
-        //   name: 'Training',
-        //   icon: 'training',
-        //   to: '/training',
-        //   hasDivider: false,
-        //   selected: pathname === '/training',
-        // },
+        {
+            name: 'Training',
+            icon: 'training',
+            to: '/training',
+            hasDivider: false,
+            selected: pathname === '/training',
+            beta: true
+        },
         {
             name: 'Challenge',
             icon: 'trophy',
@@ -69,13 +72,14 @@ const MenuSidebarDrawer = () => {
             hasDivider: false,
             selected: /^\/challenge/.test(pathname),
         },
-        // {
-        //   name: 'Market',
-        //   icon: 'market',
-        //   to: '/market',
-        //   hasDivider: false,
-        //   selected: /^\/market/.test(pathname),
-        // },
+        {
+            name: 'Market',
+            icon: 'market',
+            to: '/market',
+            hasDivider: false,
+            selected: /^\/market/.test(pathname),
+            beta: true
+        },
         {
             name: 'League',
             icon: 'league',

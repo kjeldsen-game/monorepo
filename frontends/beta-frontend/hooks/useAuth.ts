@@ -36,7 +36,7 @@ export function useAuth() {
             router.push('/team');
           } else {
             setError(res?.error);
-            reject('Invalid credentials');
+            reject('Invalid credentiasssls');
             setLoading(false);
           }
         })

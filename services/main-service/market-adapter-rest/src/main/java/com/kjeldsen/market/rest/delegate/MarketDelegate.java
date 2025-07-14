@@ -79,14 +79,18 @@ public class MarketDelegate implements MarketApiDelegate {
             position != null ? PlayerMapper.INSTANCE.playerPositionMap(position) : null, skills, potentialSkills,
             playerId);
 
+        System.out.println(auctionPlayerMap);
+
         List<MarketAuctionResponse> marketAuctionResponses = auctionPlayerMap.entrySet().stream()
             .map(entry -> {
                 Auction auction = entry.getKey();
                 Player player = entry.getValue();
                 MarketPlayerResponse playerResponse = PlayerMapper.INSTANCE.playerResponseMap(player);
 
+
+                // Check
                 Auction.Bid highestBid = auction.getBids().stream()
-                    .filter(bid -> bid.getTeamId().equals(team.getId()))
+                    .filter(bid -> bid.getTeamId().equals(team.getId().value()))
                     .max(Comparator.comparing(Auction.Bid::getAmount))
                     .orElse(null);
 

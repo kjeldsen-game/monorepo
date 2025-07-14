@@ -1,5 +1,5 @@
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
-import { Box, MenuItem, Select, Typography } from '@mui/material';
+import { MenuItem, Select, Typography } from '@mui/material';
 import React from 'react';
 
 interface SelectInputProps {

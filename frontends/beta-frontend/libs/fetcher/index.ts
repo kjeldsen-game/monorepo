@@ -1,4 +1,5 @@
 import { API_AUTH_ENDPOINT, API_ENDPOINT } from '@/config';
+import { useError } from '@/shared/contexts/ErrorContext';
 
 type Method =
   | 'CONNECT'
@@ -46,10 +47,10 @@ export default function factory(c?: FetcherConfig) {
 }
 
 //create Auth Connector function to connect REST API with fetch with error handling
-export const connector = async (
+export const connector = async <T = any>(
   url: string,
   method: Method,
-  body?: unknown,
+  body?: T,
   creds?: RequestCredentials,
   token?: string,
 ) => {
@@ -66,16 +67,23 @@ export const connector = async (
   });
 
   console.log(response);
+
   if (!response.ok) {
     let errorMessage = '';
+
     try {
       const errorData = await response.json();
+      // console.error('Full error response:', await response.text());
+
       errorMessage += `${errorData.message || JSON.stringify(errorData)}`;
     } catch (e) {
       console.error('Error parsing response JSON:', e);
+      return;
     }
+    console.error(errorMessage);
     throw new Error(errorMessage);
   }
+
   try {
     return await response.json();
   } catch (e) {
@@ -95,5 +103,9 @@ export const connectorAPI = <T>(
   creds?: RequestCredentials,
   token?: string,
 ) => {
+  // console.log(
+  //   typeof connector(`${API_ENDPOINT}${url}`, method, body, creds, token),
+  // );
+
   return connector(`${API_ENDPOINT}${url}`, method, body, creds, token);
 };

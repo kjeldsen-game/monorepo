@@ -37,22 +37,20 @@ public class PlaceBidUseCase {
     private static final Integer AUCTION_BID_REDUCE_TIME = 30;
 
     public Auction placeBid(Auction.AuctionId auctionId, BigDecimal amount, String userId) {
-        log.info("PlaceBidUseCase for auction {}", auctionId);
+        log.info("PlaceBidUseCase for auction={} of amount={} from userId={}", auctionId, amount, userId);
 
         Auction auction = auctionReadRepository.findById(auctionId).orElseThrow(
             AuctionNotFoundException::new);
+
         Team team = teamReadRepository.findByUserId(userId).orElseThrow(
             TeamNotFoundException::new);
 
-        if (Objects.equals(auction.getTeamId(), Team.TeamId.of(userId))) {
+        if (Objects.equals(auction.getTeamId(), team.getId().value())) {
             throw new PlaceBidException("Cannot place new bid on auction you created!");
-        }
-        if (team.getId().equals(auction.getTeamId())) {
-           throw new PlaceBidException("Auction creator team cannot place bid!");
         }
 
         Auction.Bid highestBid = auction.getBids().stream()
-            .filter(bid -> bid.getTeamId().equals(team.getId()))
+            .filter(bid -> bid.getTeamId().equals(team.getId().value()))
             .max(Comparator.comparing(Auction.Bid::getAmount))
             .orElse(null);
 

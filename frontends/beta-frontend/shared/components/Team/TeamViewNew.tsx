@@ -224,7 +224,6 @@ const TeamViewNew: React.FC<TeamProps> = ({
         <CustomTabs selectedTab={selectedTab} handleChange={handleTabChange}>
           <Tab label="Lineup" />
           <Tab label="Tactics" />
-          {/* <Tab label="Player Orders" /> */}
         </CustomTabs>
         <Box sx={{ ...flexCenter, width: '100%' }}>
           <TeamDetails name={team?.name} />
@@ -325,14 +324,14 @@ const TeamViewNew: React.FC<TeamProps> = ({
             filter === 'ALL'
               ? (players ?? [])
               : filter === 'ACTIVE' ||
-                  filter === 'BENCH' ||
-                  filter === 'INACTIVE'
+                filter === 'BENCH' ||
+                filter === 'INACTIVE'
                 ? filterPlayersByStatus(players, filter)
                 : (players?.filter((player) =>
-                    POSITION_FILTER_MAP[filter]?.includes(
-                      player.preferredPosition,
-                    ),
-                  ) ?? [])
+                  POSITION_FILTER_MAP[filter]?.includes(
+                    player.preferredPosition,
+                  ),
+                ) ?? [])
           }
         />
       </Box>

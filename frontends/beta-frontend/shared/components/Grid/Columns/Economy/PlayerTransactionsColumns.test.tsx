@@ -10,8 +10,8 @@ describe("playerTransactionsColumns", () => {
         const columns = playerTransactionsColumns();
         expect(columns.map(col => col.field)).toEqual([
             'name',
-            'thisWeek',
-            'thisSeason'
+            'weekSummary',
+            'seasonSummary'
         ])
     })
 
@@ -38,10 +38,10 @@ describe("playerTransactionsColumns", () => {
 
 
     it.each([
-        ['thisWeek', 1000, POSITIVE_COLOR],
-        ['thisWeek', -1000, NEGATIVE_COLOR],
-        ['thisSeason', 1000, POSITIVE_COLOR],
-        ['thisSeason', -1000, NEGATIVE_COLOR],
+        ['weekSummary', 1000, POSITIVE_COLOR],
+        ['weekSummary', -1000, NEGATIVE_COLOR],
+        ['seasonSummary', 1000, POSITIVE_COLOR],
+        ['seasonSummary', -1000, NEGATIVE_COLOR],
     ])(
         'renders %s with correct color when value is %d',
         (field: string, value: number, expectedColor: string) => {
@@ -52,7 +52,7 @@ describe("playerTransactionsColumns", () => {
 
             const row = {
                 transactionSummary:
-                    field === 'thisWeek'
+                    field === 'weekSummary'
                         ? { weekSummary: value }
                         : { seasonSummary: value },
             };

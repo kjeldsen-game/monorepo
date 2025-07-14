@@ -7,9 +7,9 @@ import { useTeamRepository } from '../api/team/useTeamRepository';
 import { useEffect, useState } from 'react';
 import { useLeagueMatchesRepository } from '../api/match/useLeagueMatchesRepository';
 
-interface League {}
+interface League { }
 
-const League: NextPage<League> = ({}) => {
+const League: NextPage<League> = ({ }) => {
   const [standings, setStandings] = useState<any>([]);
   const { data: userData, status: sessionStatus } = useSession({
     required: true,

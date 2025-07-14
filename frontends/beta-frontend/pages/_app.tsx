@@ -16,6 +16,8 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { Layout } from '@/shared/layout/Layout';
 import { ErrorProvider } from '@/shared/contexts/ErrorContext';
 import ErrorSnackbar from '@/shared/components/Common/ErrorSnackbar';
+import { NotificationProvider } from '@/shared/contexts/NotificationContext';
+import NotificationSnackbar from '@/shared/components/Common/NotificationSnackbar';
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -59,9 +61,12 @@ function MyApp({
           </Head>
           <ThemeProvider theme={theme}>
             <ErrorProvider>
-              <CssBaseline />
-              <ErrorSnackbar />
-              {getLayout(<Component {...pageProps} />)}
+              <NotificationProvider>
+                <CssBaseline />
+                <ErrorSnackbar />
+                <NotificationSnackbar />
+                {getLayout(<Component {...pageProps} />)}
+              </NotificationProvider>
             </ErrorProvider>
           </ThemeProvider>
         </CacheProvider>

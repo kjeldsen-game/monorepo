@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import AuthViewWrapper from './AuthViewWrapper';
-import { CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import AuthFormCard from './AuthFormCard';
 import { useAuth } from 'hooks/useAuth';
 import CustomButton from '../Common/CustomButton';
@@ -62,12 +62,12 @@ const SignUpView = () => {
                             required: 'Confirm password required',
                         }}
                     />
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Box display={'flex'} paddingTop={1} style={{ justifyContent: 'center' }}>
                         {loading ? <CircularProgress sx={{ color: '#FF3F84' }} /> :
                             <CustomButton type='submit' sx={{ width: '100%' }}>
                                 Sign Up
                             </CustomButton>}
-                    </div>
+                    </Box>
                 </form>
                 <Typography sx={{ color: '#808080', fontSize: '14px' }} textAlign={'center'} mt={'16px'}>
                     Have an account? {" "}

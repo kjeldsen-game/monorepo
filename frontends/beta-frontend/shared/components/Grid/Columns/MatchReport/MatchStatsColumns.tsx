@@ -1,11 +1,11 @@
 import { GridColDef } from '@mui/x-data-grid';
 import { Box, Typography } from '@mui/material';
-import ColHeader from '../Common/ColHeader';
+import ColHeader from '../common/components/ColHeader';
 import {
   baseColumnConfig,
   leftColumnConfig,
   rightColumnConfig,
-} from '../ColumnsConfig';
+} from '../common/config/ColumnsConfig';
 import { PITCH_AREA_SHORTCUTS } from '@/shared/models/match/PitchArea';
 import { PlayerPositionAbbreviation } from '@/shared/models/player/PlayerPosition';
 import { formatName } from '@/shared/utils/PlayerUtils';
@@ -205,7 +205,7 @@ export const matchStatsColumns = () => {
                   {formatName(params.row.duel.challenger.name)}
                   {' [' +
                     PlayerPositionAbbreviation[
-                      params.row.duel.challenger.position
+                    params.row.duel.challenger.position
                     ] +
                     ']' +
                     ' [' +

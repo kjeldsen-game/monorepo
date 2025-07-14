@@ -1,5 +1,5 @@
 import { GridColDef } from '@mui/x-data-grid';
-import { baseColumnConfig } from './ColumnsConfig';
+import { baseColumnConfig } from './common/config/ColumnsConfig';
 import CustomTooltip from '../../MatchReport/Tooltips/CustomTooltip';
 import { PlayerSkillShortcuts } from '@/shared/models/player/PlayerSkill';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
@@ -16,7 +16,7 @@ export const playerSkillsColumns = (showPotential: boolean = false) => {
     return fieldSecondary &&
       headerNameSecondary &&
       params.row.actualSkills[fieldSecondary]?.PlayerSkills?.[skillType] !==
-        undefined
+      undefined
       ? params.row.actualSkills[fieldSecondary]?.PlayerSkills?.[skillType]
       : params.row.actualSkills[field]?.PlayerSkills?.[skillType] !== undefined
         ? params.row.actualSkills[field]?.PlayerSkills?.[skillType]
