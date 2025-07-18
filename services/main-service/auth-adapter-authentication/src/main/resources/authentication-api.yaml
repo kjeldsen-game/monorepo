@@ -8,8 +8,54 @@ servers:
 
 tags:
   - name: auth
-
 paths:
+
+  /auth/profile/change-password:
+    post:
+      summary: Change password when you are logged in
+      operationId: changePassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePasswordRequest"
+      responses:
+        "200":
+          description: Password successfully changed
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /auth/profile:
+    get:
+      summary: Get Profile details including avatar
+      operationId: getProfile
+      responses:
+        "200":
+          description: Successful response with profile details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfileResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /auth/profile/avatar:
+    post:
+      summary: Update the avatar
+      operationId: updateAvatar
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UpdateAvatarRequest"
+      responses:
+        "200":
+          description: Avatar uploaded successfully
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
   /auth/register:
     post:
       summary: Register
@@ -67,6 +113,7 @@ paths:
 
 components:
   responses:
+
     DefaultErrorResponse:
       description: Unexpected error
       content:
@@ -75,6 +122,21 @@ components:
             $ref: "#/components/schemas/ErrorResponse"
 
   schemas:
+
+    ChangePasswordRequest:
+      type: object
+      required:
+        - oldPassword
+        - newPassword
+        - confirmPassword
+      properties:
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+        confirmPassword:
+          type: string
+
     RegisterRequest:
       type: object
       required:
@@ -103,12 +165,37 @@ components:
           format: password
           description: "The password for authentication"
 
+    UpdateAvatarRequest:
+      type: object
+      required:
+        - file
+      properties:
+        file:
+          type: string
+          format: binary
+          description: The avatar image file (JPEG or PNG)
+
     TokenResponse:
       type: object
       properties:
         accessToken:
           type: string
           description: "JWT token that can be used for authorization"
+
+    ProfileResponse:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        teamName:
+          type: string
+          example: "Team Alpha"
+        avatar:
+          type: string
+          description: Base64 encoded avatar image
+          example: "iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAIAAACa7..."
 
     ErrorResponse:
       type: object

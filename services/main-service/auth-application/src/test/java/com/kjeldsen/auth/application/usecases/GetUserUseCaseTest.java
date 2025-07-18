@@ -43,7 +43,7 @@ class GetUserUseCaseTest {
     @Test
     @DisplayName("Should get a user when user is logged in")
     void should_get_user_when_user_is_logged_in() {
-        User user = new User();
+        User user = User.builder().build();
         user.setEmail("email");
         user.setPassword("password");
         user.setId("userId");
@@ -69,7 +69,7 @@ class GetUserUseCaseTest {
     @Test
     @DisplayName("Should return user found by email")
     void should_return_user_when_user_found_by_email() {
-        User user = new User();
+        User user = User.builder().build();
         user.setEmail("email");
         user.setPassword("password");
         user.setId("userId");

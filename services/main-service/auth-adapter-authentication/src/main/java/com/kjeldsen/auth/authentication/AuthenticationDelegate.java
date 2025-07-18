@@ -1,13 +1,10 @@
 package com.kjeldsen.auth.authentication;
 
-import com.kjeldsen.auth.application.usecases.GenerateTokenUseCase;
-import com.kjeldsen.auth.application.usecases.GetUserUseCase;
-import com.kjeldsen.auth.application.usecases.RegisterUserUseCase;
+import com.kjeldsen.auth.application.usecases.*;
 import com.kjeldsen.auth.authentication.api.AuthApiDelegate;
-import com.kjeldsen.auth.authentication.model.RegisterRequest;
-import com.kjeldsen.auth.authentication.model.TokenRequest;
-import com.kjeldsen.auth.authentication.model.TokenResponse;
-import com.kjeldsen.auth.authentication.model.UserDetailsResponse;
+import com.kjeldsen.auth.authentication.mappers.ProfileMapper;
+import com.kjeldsen.auth.authentication.model.*;
+import com.kjeldsen.auth.domain.Profile;
 import com.kjeldsen.auth.domain.User;
 import com.kjeldsen.auth.domain.exceptions.NotFoundException;
 import com.kjeldsen.lib.clients.TeamClientApi;
@@ -17,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -29,12 +27,34 @@ public class AuthenticationDelegate implements AuthApiDelegate {
     private final RegisterUserUseCase registerUserUseCase;
     private final GenerateTokenUseCase generateTokenUseCase;
     private final TeamClientApi teamClientApi;
+    private final UpdateAvatarUseCase updateAvatarUseCase;
+    private final GetProfileUseCase getProfileUseCase;
+    private final ChangePasswordUseCase changePasswordUseCase;
+
+    @Override
+    public ResponseEntity<ProfileResponse> getProfile() {
+        Profile profile = getProfileUseCase.get();
+        ProfileResponse response = ProfileMapper.INSTANCE.map(profile);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<Void> changePassword(ChangePasswordRequest changePasswordRequest) {
+        changePasswordUseCase.changePassword(changePasswordRequest.getOldPassword(),
+            changePasswordRequest.getNewPassword(), changePasswordRequest.getConfirmPassword());
+        return ResponseEntity.ok().build();    }
 
     @Override
     public ResponseEntity<UserDetailsResponse> me() {
         User user = getUserUseCase.getCurrent();
         UserDetailsResponse details = buildUserDetailsResponse(user);
         return ResponseEntity.ok(details);
+    }
+
+    @Override
+    public ResponseEntity<Void> updateAvatar(MultipartFile file) {
+        updateAvatarUseCase.updateAvatar(file);
+        return ResponseEntity.ok().build();
     }
 
     @Override

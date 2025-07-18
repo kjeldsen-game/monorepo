@@ -36,6 +36,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ variant = 'contained', sx, 
         <Button
             variant={variant}
             sx={{
+                textAlign: 'center',
                 borderRadius: 1,
                 transition: 'all 0.3s ease',
                 textDecoration: 'none',

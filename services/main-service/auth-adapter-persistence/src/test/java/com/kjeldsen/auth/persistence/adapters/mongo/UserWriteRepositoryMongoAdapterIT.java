@@ -42,7 +42,7 @@ public class UserWriteRepositoryMongoAdapterIT extends AbstractMongoDbTest {
         @Test
         @DisplayName("return user")
         void should_return_user() {
-            User user = new User();
+            User user = User.builder().build();
             user.setPassword("password");
             user.setRoles(Set.of(Role.USER));
             user.setEmail("email@email.com");

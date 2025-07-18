@@ -75,7 +75,7 @@ public class UserReadMongoRepositoryAdapterIT extends AbstractMongoDbTest {
     }
 
     private User createUser() {
-        User user = new User();
+        User user = User.builder().build();
         user.setPassword("password");
         user.setRoles(Set.of(Role.USER));
         user.setEmail("email@email.com");
