@@ -53,28 +53,35 @@ export const connector = async <T = any>(
   body?: T,
   creds?: RequestCredentials,
   token?: string,
+  headers?: Record<string, string>,
 ) => {
+  if (body instanceof FormData) {
+    for (let pair of body.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+  }
+
   const authHeaders = token && { Authorization: `Bearer ${token}` };
-  const defaultHeaders = { 'Content-Type': 'application/json' };
+
+  const isForm = body instanceof FormData;
 
   const response = await fetch(`${url}`, {
     method: method,
-    headers: {
-      ...defaultHeaders,
-      ...authHeaders,
-    },
-    body: JSON.stringify(body),
+    credentials: creds,
+    headers: isForm
+      ? { ...authHeaders }
+      : {
+          'Content-Type': 'application/json',
+          ...authHeaders,
+          ...(headers || {}),
+        },
+    body: isForm ? body : JSON.stringify(body),
   });
-
-  console.log(response);
 
   if (!response.ok) {
     let errorMessage = '';
-
     try {
       const errorData = await response.json();
-      // console.error('Full error response:', await response.text());
-
       errorMessage += `${errorData.message || JSON.stringify(errorData)}`;
     } catch (e) {
       console.error('Error parsing response JSON:', e);
@@ -102,10 +109,14 @@ export const connectorAPI = <T>(
   body?: T,
   creds?: RequestCredentials,
   token?: string,
+  headers?: Record<string, string>,
 ) => {
-  // console.log(
-  //   typeof connector(`${API_ENDPOINT}${url}`, method, body, creds, token),
-  // );
-
-  return connector(`${API_ENDPOINT}${url}`, method, body, creds, token);
+  return connector(
+    `${API_ENDPOINT}${url}`,
+    method,
+    body,
+    creds,
+    token,
+    headers,
+  );
 };

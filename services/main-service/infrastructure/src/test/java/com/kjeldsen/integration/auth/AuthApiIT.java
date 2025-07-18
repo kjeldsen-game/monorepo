@@ -119,7 +119,7 @@ public class AuthApiIT extends AbstractIT {
     }
 
     private User saveUser() {
-        User user = new User();
+        User user = User.builder().build();
         user.setRoles(Set.of(Role.USER));
         user.setTeamId("exampleId");
         user.setEmail("test@test.com");

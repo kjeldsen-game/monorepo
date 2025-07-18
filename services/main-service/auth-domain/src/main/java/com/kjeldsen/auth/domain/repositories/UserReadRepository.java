@@ -8,5 +8,5 @@ public interface UserReadRepository {
 
     Optional<User> findByEmail(String email);
 
-    Optional<User> findByUserId(String username);
+    Optional<User> findByUserId(String id);
 }
