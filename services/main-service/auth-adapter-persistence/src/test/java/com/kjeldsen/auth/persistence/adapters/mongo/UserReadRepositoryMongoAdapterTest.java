@@ -26,7 +26,7 @@ class UserReadRepositoryMongoAdapterTest {
     @Test
     void shouldCallRepositoryFindByEmail() {
         String email = "test@example.com";
-        User user = new User();
+        User user = User.builder().build();
         when(userMongoRepository.findByEmail(email)).thenReturn(Optional.of(user));
 
         Optional<User> result = userReadRepositoryMongoAdapter.findByEmail(email);
@@ -38,7 +38,7 @@ class UserReadRepositoryMongoAdapterTest {
     @Test
     void shouldCallRepositoryFindById() {
         String userId = "abc123";
-        User user = new User();
+        User user = User.builder().build();
         when(userMongoRepository.findById(userId)).thenReturn(Optional.of(user));
 
         Optional<User> result = userReadRepositoryMongoAdapter.findByUserId(userId);

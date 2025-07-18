@@ -24,7 +24,7 @@ class GenerateTokenUseCaseTest {
     @DisplayName("Should throw exception when password is not same")
     void should_throw_exception_when_password_is_not_same() {
         String inputPassword = "password";
-        User user = new User();
+        User user = User.builder().build();
         user.setPassword("passwordaaa");
         user.setEmail("email@email.com");
         user.setId("id");
@@ -39,7 +39,7 @@ class GenerateTokenUseCaseTest {
     @DisplayName("Should throw exception email is not in mail format")
     void should_throw_exception_when_email_is_not_in_mail_format() {
         String inputPassword = "password";
-        User user = new User();
+        User user = User.builder().build();
         user.setEmail("email");
         user.setId("id");
         when(mockedGetUserUseCase.getUserByEmail("email")).thenReturn(user);
@@ -52,7 +52,7 @@ class GenerateTokenUseCaseTest {
     @Test
     @DisplayName("Should return token")
     void should_return_token() {
-        User user = new User();
+        User user = User.builder().build();
         user.setPassword("password");
         user.setEmail("email@email.com");
         user.setId("id");

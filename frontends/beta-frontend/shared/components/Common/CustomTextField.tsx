@@ -34,6 +34,7 @@ export const CUSTOM_TEXT_FIELD_STYLE = {
     },
     '& .MuiInputBase-input': {
         color: 'black',
+        backgroundColor: 'white'
     },
 };
 
@@ -49,7 +50,6 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({ name, value, type = "
             fullWidth
             sx={{
                 ...CUSTOM_TEXT_FIELD_STYLE,
-                paddingY: '8px',
                 ...sx
             }}
             {...rest}

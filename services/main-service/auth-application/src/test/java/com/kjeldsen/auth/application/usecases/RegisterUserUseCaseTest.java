@@ -37,7 +37,7 @@ class RegisterUserUseCaseTest {
     @Test
     @DisplayName("Should throw error when email is in wrong format")
     void should_throw_error_when_email_is_wrong_format() {
-        when(userReadRepository.findByEmail("emailemail.com")).thenReturn(Optional.of(new User()));
+        when(userReadRepository.findByEmail("emailemail.com")).thenReturn(Optional.of(User.builder().build()));
 
         assertEquals("Invalid email address format!", assertThrows(BadRequestException.class, () -> {
             registerUserUseCase.register("emailemail.com", "password", "team", "password");
@@ -47,7 +47,7 @@ class RegisterUserUseCaseTest {
     @Test
     @DisplayName("Should throw error when passwords don't match")
     void should_throw_error_when_passwords_do_not_match() {
-        when(userReadRepository.findByEmail("email@email.com")).thenReturn(Optional.of(new User()));
+        when(userReadRepository.findByEmail("email@email.com")).thenReturn(Optional.of(User.builder().build()));
 
         assertEquals("Passwords do not match!", assertThrows(BadRequestException.class, () -> {
             registerUserUseCase.register("email@email.com", "password", "team", "pass");
@@ -57,7 +57,7 @@ class RegisterUserUseCaseTest {
     @Test
     @DisplayName("Should throw error is email is already Taken")
     void should_throw_error_is_email_already_taken() {
-        when(userReadRepository.findByEmail("email@email.com")).thenReturn(Optional.of(new User()));
+        when(userReadRepository.findByEmail("email@email.com")).thenReturn(Optional.of(User.builder().build()));
 
         assertEquals("Email taken!", assertThrows(BadRequestException.class, () -> {
             registerUserUseCase.register("email@email.com", "password", "team", "password");
@@ -83,7 +83,7 @@ class RegisterUserUseCaseTest {
         when(mockedTeamClientAuth.getTeam(null,"team", null))
             .thenReturn(Collections.emptyList());
 
-        User savedUser = new User();
+        User savedUser = User.builder().build();
         savedUser.setId(java.util.UUID.randomUUID().toString());
         savedUser.setEmail("email@email.com");
         savedUser.setPassword(passwordEncoder.encode("password"));

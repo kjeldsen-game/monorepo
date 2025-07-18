@@ -46,7 +46,7 @@ const UserDropdown: FC<UserDropdownProps> = ({ user }) => {
                 MenuListProps={{
                     'aria-labelledby': 'signed-user-button',
                 }}>
-                <MenuItem onClick={() => undefined}>
+                <MenuItem onClick={() => window.location.href = '/profile'}>
                     <ListItemIcon>
                         <AccountCircleIcon fontSize="small" />
                     </ListItemIcon>

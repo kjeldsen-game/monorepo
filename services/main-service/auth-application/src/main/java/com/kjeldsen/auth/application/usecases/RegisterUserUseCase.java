@@ -49,7 +49,7 @@ public class RegisterUserUseCase {
             throw new BadRequestException("Team name taken!");
         }
 
-        User user = new User();
+        User user = User.builder().build();
         user.setEmail(email);
         String encodedPassword = passwordEncoder.encode(password);
         user.setPassword(encodedPassword);
