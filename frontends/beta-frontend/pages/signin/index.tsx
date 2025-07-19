@@ -2,8 +2,6 @@ import { NextPageWithLayout } from '@/pages/_app';
 import SignInView from '@/shared/components/Auth/SignInView';
 import LayoutNoMenu from '@/shared/layout/LayoutNoMenu';
 
-
-
 const SignInPage: NextPageWithLayout = () => {
 
   return (

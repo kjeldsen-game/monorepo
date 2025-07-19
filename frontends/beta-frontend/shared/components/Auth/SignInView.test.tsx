@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SignInView from './SignInView';
@@ -36,7 +35,7 @@ describe('SignInView', () => {
     it('renders forgot password link', () => {
         render(<SignInView />);
         expect(screen.getByText('Forgot password?')).toBeInTheDocument();
-        expect(screen.getByText('Forgot password?').closest('a')).toHaveAttribute('href', '/');
+        expect(screen.getByText('Forgot password?').closest('a')).toHaveAttribute('href', '/auth/forget-password');
     });
 
     it('renders "No account? Sign Up" text with link', () => {

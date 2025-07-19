@@ -76,4 +76,22 @@ class GetUserUseCaseTest {
         when(mockedUserReadRepository.findByEmail("email")).thenReturn(Optional.of(user));
         assertEquals("email", user.getEmail());
     }
+
+    @Test
+    @DisplayName("Should throw error when user not find by Id")
+    void should_throw_error_when_user_not_found_by_id() {
+        when(mockedUserReadRepository.findByUserId("userId")).thenReturn(Optional.empty());
+
+        assertEquals("User not found !", assertThrows(NotFoundException.class,
+            () -> getUserUseCase.getUserById("userId")).getMessage());
+    }
+
+    @Test
+    @DisplayName("Should return user by Id")
+    void should_return_user_when_user_found_by_id() {
+        User user = User.builder().id("userId").build();
+        when(mockedUserReadRepository.findByUserId("userId")).thenReturn(Optional.of(user));
+        User resultUser = getUserUseCase.getUserById("userId");
+        assertEquals("userId", resultUser.getId());
+    }
 }

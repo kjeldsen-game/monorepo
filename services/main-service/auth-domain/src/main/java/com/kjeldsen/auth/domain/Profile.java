@@ -11,5 +11,4 @@ public class Profile {
     private String email;
     private String teamName;
     private String avatar;
-
 }

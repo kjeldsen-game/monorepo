@@ -14,6 +14,17 @@ spring:
   management:
     server:
       port: ${ACTUATOR_SERVER_PORT:15002}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: kjeldsen.dev@gmail.com
+    password: oihz lzkx eagn iskx
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   quartz:
     properties:
       org:

@@ -3,8 +3,21 @@ import { useRouter } from 'next/router';
 import { connectorAuth } from '@/libs/fetcher';
 import { useError } from '@/shared/contexts/ErrorContext';
 import { signIn } from 'next-auth/react';
+import { useNotification } from '@/shared/contexts/NotificationContext';
+import { DefaultResponse } from '@/shared/models/Responses';
+
+export interface ForgetPasswordRequest {
+  email: string;
+}
+
+export interface ResetPasswordRequest {
+  token: string;
+  newPassword: string;
+  confirmPassword: string;
+}
 
 export function useAuth() {
+  const { setNotification } = useNotification();
   const { setError } = useError();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -13,13 +26,49 @@ export function useAuth() {
     const handleRouteChangeComplete = () => {
       setLoading(false);
     };
-
     router.events.on('routeChangeComplete', handleRouteChangeComplete);
-
     return () => {
       router.events.off('routeChangeComplete', handleRouteChangeComplete);
     };
   }, [router]);
+
+  const useResetPassword = async (
+    request: ResetPasswordRequest,
+  ): Promise<void> => {
+    setError(null);
+    setLoading(true);
+    try {
+      const response: DefaultResponse = await connectorAuth(
+        '/auth/reset-password',
+        'POST',
+        request,
+      );
+      setNotification(response.message);
+    } catch (error: any) {
+      setError(error.message || 'Password reset failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const useForgetPassword = async (
+    request: ForgetPasswordRequest,
+  ): Promise<void> => {
+    setError(null);
+    setLoading(true);
+    try {
+      const response: DefaultResponse = await connectorAuth(
+        '/auth/forget-password',
+        'POST',
+        request,
+      );
+      setNotification(response.message);
+    } catch (error: any) {
+      setError(error.message || 'Password reset failed');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const apiSignIn = async (email: string, password: string): Promise<void> => {
     setError(null);
@@ -56,15 +105,18 @@ export function useAuth() {
   ): Promise<void> => {
     setLoading(true);
     setError(null);
-
     try {
-      await connectorAuth('/auth/register', 'POST', {
-        email,
-        password,
-        confirmPassword,
-        teamName,
-      });
-
+      const response: DefaultResponse = await connectorAuth(
+        '/auth/register',
+        'POST',
+        {
+          email,
+          password,
+          confirmPassword,
+          teamName,
+        },
+      );
+      setNotification(response.message);
       const status = await apiSignIn(email, password);
       if (status == 200) {
         router.push('/');
@@ -77,5 +129,5 @@ export function useAuth() {
     }
   };
 
-  return { apiSignIn, apiSignUp, loading };
+  return { apiSignIn, apiSignUp, useResetPassword, useForgetPassword, loading };
 }

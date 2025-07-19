@@ -42,4 +42,10 @@ public class GetUserUseCase {
             throw new NotFoundException("User with email '" + email + "' not found.");
         }
     }
+
+    public User getUserById(String id) {
+        log.info("GetUserUseCase method getUserById with id {}", id);
+        return userReadRepository.findByUserId(id).orElseThrow(
+            () -> new NotFoundException("User not found !"));
+    }
 }

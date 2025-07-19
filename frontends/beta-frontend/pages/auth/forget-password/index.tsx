@@ -1,11 +1,10 @@
 import { NextPageWithLayout } from '@/pages/_app';
-import SignUpView from '@/shared/components/Auth/SignUpView';
+import ForgetPasswordView from '@/shared/components/Auth/ForgetPasswordView';
 import LayoutNoMenu from '@/shared/layout/LayoutNoMenu';
 
 const ForgetPasswordPage: NextPageWithLayout = () => {
-
     return (
-        <SignUpView />
+        <ForgetPasswordView />
     );
 };
 
