@@ -24,7 +24,7 @@ class SendEmailUseCaseTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.wopenMocks(this);
+        MockitoAnnotations.openMocks(this);
         sendEmailUseCase = new SendEmailUseCase(javaMailSender);
         TestUtils.setField(sendEmailUseCase, "EMAIL_SENDER_USERNAME", "noreply@example.com");
     }
