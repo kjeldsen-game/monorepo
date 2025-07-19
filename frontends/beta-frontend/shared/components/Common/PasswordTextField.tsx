@@ -6,7 +6,7 @@ import { Visibility } from '@mui/icons-material'
 export type PasswordTextFieldProps = CustomTextFieldProps & {
 
 }
-const PasswordTextField: React.FC<PasswordTextFieldProps> = ({ sx, name, ...rest }) => {
+const PasswordTextField: React.FC<PasswordTextFieldProps> = ({ sx, name, size = 'small', ...rest }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const tooglePasswordVisibility = () => {
@@ -15,6 +15,7 @@ const PasswordTextField: React.FC<PasswordTextFieldProps> = ({ sx, name, ...rest
 
     return (
         <CustomTextField
+            size={size}
             type={showPassword ? 'text' : 'password'}
             slotProps={{
                 input: {

@@ -56,7 +56,7 @@ const SignInView = () => {
                     </StyledLink>
                 </Typography>
             </AuthFormCard>
-            <StyledLink href='/' mt={'16px'}>
+            <StyledLink href='/auth/forget-password' mt={'16px'}>
                 Forgot password?
             </StyledLink>
 

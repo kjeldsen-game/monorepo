@@ -6,6 +6,7 @@ import com.kjeldsen.auth.domain.exceptions.BadRequestException;
 import com.kjeldsen.auth.domain.publishers.UserRegisterPublisher;
 import com.kjeldsen.auth.domain.repositories.UserReadRepository;
 import com.kjeldsen.auth.domain.repositories.UserWriteRepository;
+import com.kjeldsen.auth.domain.utils.PasswordValidator;
 import com.kjeldsen.lib.TeamClientApiImpl;
 import com.kjeldsen.lib.events.UserRegisterEvent;
 import com.kjeldsen.lib.model.team.TeamClient;
@@ -36,9 +37,7 @@ public class RegisterUserUseCase {
             throw new BadRequestException("Invalid email address format!");
         }
 
-        if (!password.equals(confirmPassword)) {
-            throw new BadRequestException("Passwords do not match!");
-        }
+        PasswordValidator.validatePassword(password, confirmPassword);
 
         if (userReadRepository.findByEmail(email).isPresent()) {
             throw new BadRequestException("Email taken!");

@@ -10,6 +10,46 @@ tags:
   - name: auth
 paths:
 
+  /auth/reset-password:
+    post:
+      summary: Reset Password
+      operationId: resetPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPasswordRequest"
+      responses:
+        "200":
+          description: Password was successfully reset.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultSuccessResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /auth/forget-password:
+    post:
+      summary: Request reset password link
+      operationId: requestPasswordResetLink
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PasswordResetLinkRequest"
+      responses:
+        "200":
+          description: Password link successfully generated and sent to mail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultSuccessResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
   /auth/profile/change-password:
     post:
       summary: Change password when you are logged in
@@ -22,7 +62,11 @@ paths:
               $ref: "#/components/schemas/ChangePasswordRequest"
       responses:
         "200":
-          description: Password successfully changed
+          description: Password successfully changed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultSuccessResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -52,7 +96,11 @@ paths:
               $ref: "#/components/schemas/UpdateAvatarRequest"
       responses:
         "200":
-          description: Avatar uploaded successfully
+          description: Avatar successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultSuccessResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -69,6 +117,10 @@ paths:
       responses:
         "201":
           description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultSuccessResponse"
         "400":
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -123,6 +175,27 @@ components:
 
   schemas:
 
+    DefaultSuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Password was successfully changed."
+
+    ResetPasswordRequest:
+      type: object
+      required:
+        - token
+        - newPassword
+        - confirmPassword
+      properties:
+        token:
+          type: string
+        newPassword:
+          type: string
+        confirmPassword:
+          type: string
+
     ChangePasswordRequest:
       type: object
       required:
@@ -153,6 +226,16 @@ components:
           type: string
         confirmPassword:
           type: string
+
+    PasswordResetLinkRequest:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          example: admin@gmail.com
+          description: "Email of the user where reset link will be send"
 
     TokenRequest:
       type: object

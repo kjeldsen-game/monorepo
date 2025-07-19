@@ -1,9 +1,9 @@
-import { Box, Card, CardContent, CardHeader, Grid, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import Head from 'next/head';
 import React, { ReactNode } from 'react';
 import AuthFooter from './AuthFooter';
 
-type AuthTitle = "Sign In" | "Sign Up"
+type AuthTitle = "Sign In" | "Sign Up" | "Forget Password"
 
 interface AuthViewWrapperProps {
     title: AuthTitle;

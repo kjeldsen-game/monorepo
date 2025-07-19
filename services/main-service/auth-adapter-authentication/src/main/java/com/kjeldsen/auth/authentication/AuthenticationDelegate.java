@@ -30,6 +30,8 @@ public class AuthenticationDelegate implements AuthApiDelegate {
     private final UpdateAvatarUseCase updateAvatarUseCase;
     private final GetProfileUseCase getProfileUseCase;
     private final ChangePasswordUseCase changePasswordUseCase;
+    private final GeneratePasswordResetLinkUseCase generatePasswordResetLinkUseCase;
+    private final ResetPasswordUseCase resetPasswordUseCase;
 
     @Override
     public ResponseEntity<ProfileResponse> getProfile() {
@@ -39,10 +41,24 @@ public class AuthenticationDelegate implements AuthApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> changePassword(ChangePasswordRequest changePasswordRequest) {
+    public ResponseEntity<DefaultSuccessResponse> resetPassword(ResetPasswordRequest resetPasswordRequest) {
+        resetPasswordUseCase.resetPassword(resetPasswordRequest.getToken(),
+            resetPasswordRequest.getNewPassword(), resetPasswordRequest.getConfirmPassword());
+        return ResponseEntity.ok(new DefaultSuccessResponse().message("Password was reset successfully!"));
+    }
+
+    @Override
+    public ResponseEntity<DefaultSuccessResponse> requestPasswordResetLink(PasswordResetLinkRequest passwordResetLinkRequest) {
+        generatePasswordResetLinkUseCase.generate(passwordResetLinkRequest.getEmail());
+        return ResponseEntity.ok(new DefaultSuccessResponse().message("Password link was successfully generated and sent!"));
+    }
+
+    @Override
+    public ResponseEntity<DefaultSuccessResponse> changePassword(ChangePasswordRequest changePasswordRequest) {
         changePasswordUseCase.changePassword(changePasswordRequest.getOldPassword(),
             changePasswordRequest.getNewPassword(), changePasswordRequest.getConfirmPassword());
-        return ResponseEntity.ok().build();    }
+        return ResponseEntity.ok(new DefaultSuccessResponse().message("Password was changed successfully!"));
+    }
 
     @Override
     public ResponseEntity<UserDetailsResponse> me() {
@@ -52,16 +68,16 @@ public class AuthenticationDelegate implements AuthApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> updateAvatar(MultipartFile file) {
+    public ResponseEntity<DefaultSuccessResponse> updateAvatar(MultipartFile file) {
         updateAvatarUseCase.updateAvatar(file);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new DefaultSuccessResponse().message("Avatar uploaded successfully!"));
     }
 
     @Override
-    public ResponseEntity<Void> register(@Valid RegisterRequest request) {
+    public ResponseEntity<DefaultSuccessResponse> register(@Valid RegisterRequest request) {
         registerUserUseCase.register(request.getEmail(), request.getPassword(),
             request.getTeamName(), request.getConfirmPassword());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new DefaultSuccessResponse().message("User registered successfully, logging in...!"));
     }
 
     @Override

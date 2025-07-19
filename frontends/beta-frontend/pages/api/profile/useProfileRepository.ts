@@ -1,6 +1,7 @@
 import { connectorAPI } from '@/libs/fetcher';
 import { useError } from '@/shared/contexts/ErrorContext';
 import { useNotification } from '@/shared/contexts/NotificationContext';
+import { DefaultResponse } from '@/shared/models/Responses';
 import { useEffect, useState } from 'react';
 import useSWR, { mutate } from 'swr';
 
@@ -36,8 +37,8 @@ const useProfileRepository = (token?: string) => {
       'include',
       token,
     )
-      .then((response) => {
-        setNotification('Password successfully changed!');
+      .then((response: DefaultResponse) => {
+        setNotification(response.message);
         return response;
       })
       .catch((error) => {
@@ -57,8 +58,8 @@ const useProfileRepository = (token?: string) => {
           'multipart/form-data; boundary=----WebKitFormBoundaryQdiJuMFAyJ22cHcB',
       },
     )
-      .then((response) => {
-        setNotification('Avatar successfully updated!');
+      .then((response: DefaultResponse) => {
+        setNotification(response.message);
         mutate();
         return response;
       })
@@ -67,7 +68,7 @@ const useProfileRepository = (token?: string) => {
       });
   };
 
-  return { data, error, changePassword, changeAvatar };
+  return { data, error, changePassword, changeAvatar, isLoading };
 };
 
 export { useProfileRepository };
