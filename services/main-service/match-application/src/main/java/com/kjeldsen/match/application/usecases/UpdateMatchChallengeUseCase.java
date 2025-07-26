@@ -16,7 +16,7 @@ public class UpdateMatchChallengeUseCase {
     private final GetMatchUseCase getMatchUseCase;
     private final MatchWriteRepository matchWriteRepository;
 
-    public void update(String matchId, Match.Status status) {
+    public Match.Status update(String matchId, Match.Status status) {
         log.info("UpdateMatchChallengeUseCase for matchId={} status={}", matchId, status);
         Match match = getMatchUseCase.get(matchId);
 
@@ -26,5 +26,6 @@ public class UpdateMatchChallengeUseCase {
 
         match.setStatus(status);
         matchWriteRepository.save(match);
+        return match.getStatus();
     }
 }

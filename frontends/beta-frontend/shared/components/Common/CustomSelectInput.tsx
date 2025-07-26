@@ -52,7 +52,7 @@ const CustomSelectInput: React.FC<CustomSelectInputProps> = ({
             )}
             <Select
                 size="small"
-                value={value}
+                value={value ?? ''}
                 onChange={onChange}
                 disabled={disabled}
                 sx={{

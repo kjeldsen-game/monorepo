@@ -9,18 +9,32 @@ type GridProps<T> = {
 function Grid<T>({ rows, columns, ...props }: GridProps<T>) {
   return (
     <Box
-
       sx={{
+        overflow: 'hidden',
+        // '& .MuiDataGrid-scrollbarFiller': {
+        //   display: 'none',
+        // },
+        // '& .MuiDataGrid-filler': {
+        //   display: 'none'
+        // },
+        // '& .MuiDataGrid-scrollbarFiller--header': {
+        //   display: 'none',
+        // },
         width: '100%',
         '& .super-app .MuiDataGrid-cellContent': {
           color: 'white',
           padding: '6px',
           fontWeight: '600',
-          borderRadius: '828%',
-
         },
         '& .MuiDataGrid-columnHeader': {
-          padding: 0,
+          padding: '0px !important',
+        },
+        '& .MuiDataGrid-columnSeparator': {
+          display: 'none',
+        },
+        '& .MuiDataGrid-columnHeaders': {
+          fontWeight: 900,
+          padding: '0px !important',
         },
         '& .MuiDataGrid-cell': {
           padding: '0px !important',
@@ -40,10 +54,6 @@ function Grid<T>({ rows, columns, ...props }: GridProps<T>) {
         '& .super-app.forward .MuiDataGrid-cellContent': {
           backgroundColor: '#E52323',
         },
-        '& .MuiDataGrid-columnHeaders': {
-          fontWeight: 900,
-          padding: 0,
-        },
         '.MuiDataGrid-iconButtonContainer': {
           visibility: 'visible',
         },
@@ -58,6 +68,21 @@ function Grid<T>({ rows, columns, ...props }: GridProps<T>) {
         // style={{
         //   '--DataGrid-rowWidth': '800px',
         // }}
+        sx={{
+          '& .MuiDataGrid-row': {
+            opacity: 0,
+            transform: 'translateY(10px)',
+            animation: `fadeInUp 0.5s ease forwards`,
+          },
+
+          '@keyframes fadeInUp': {
+            'to': {
+              opacity: 1,
+              transform: 'translateY(0)',
+            }
+          }
+        }}
+        rowHeight={40}
         disableColumnSelector
         disableColumnMenu
         rows={rows}
@@ -71,7 +96,7 @@ function Grid<T>({ rows, columns, ...props }: GridProps<T>) {
           },
         }}
       />
-    </Box>
+    </Box >
   );
 }
 

@@ -2,11 +2,11 @@ import React from 'react';
 import Button, { ButtonProps } from '@mui/material/Button';
 
 
-type CustomButtonVariants = "outlined" | "contained"
+export type CustomButtonVariants = "outlined" | "contained"
 
 interface CustomButtonProps extends ButtonProps { }
 
-const variantStylesMap: Record<CustomButtonVariants, object> = {
+export const variantStylesMap: Record<CustomButtonVariants, object> = {
     contained: {
         backgroundColor: '#FF3F84',
         color: '#FFFFFF',
@@ -36,6 +36,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ variant = 'contained', sx, 
         <Button
             variant={variant}
             sx={{
+                padding: '2px 4px',
                 textAlign: 'center',
                 borderRadius: 1,
                 transition: 'all 0.3s ease',

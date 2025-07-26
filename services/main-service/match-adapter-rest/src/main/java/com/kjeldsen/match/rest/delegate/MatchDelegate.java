@@ -143,19 +143,20 @@ public class MatchDelegate implements MatchApiDelegate {
     /*********************** MATCH LINEUP END ***********************/
 
     @Override
-    public ResponseEntity<Void> createMatch(CreateMatchRequest request) {
+    public ResponseEntity<SuccessResponse> createMatch(CreateMatchRequest request) {
         createMatchUseCase.create(request.getHome().getId(),
                 request.getAway().getId(), LocalDateTime.now(), null);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(new SuccessResponse().message("Match was successfully created!"), HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<String> editMatch(String matchId, EditMatchRequest request) {
+    public ResponseEntity<SuccessResponse> editMatch(String matchId, EditMatchRequest request) {
         // For challenges after the match is accepted
         if (request.getStatus().name().equals(Status.SCHEDULED.name())) {
             executeMatchUseCase.execute(matchId);
         } else {
-            updateMatchChallengeUseCase.update(matchId, Status.valueOf(request.getStatus().name()));
+            Status status = updateMatchChallengeUseCase.update(matchId, Status.valueOf(request.getStatus().name()));
+            return ResponseEntity.ok(new SuccessResponse().message(String.format("Match was successfully %s!", status.name().toLowerCase())));
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -179,7 +180,6 @@ public class MatchDelegate implements MatchApiDelegate {
         Match match = getMatchUseCase.get(matchId);
         System.out.println(match.getMatchReport().getAwayStats());
         MatchResponse response = MatchMapper.INSTANCE.map(match);
-//        System.out.println(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

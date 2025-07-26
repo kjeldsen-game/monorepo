@@ -1,4 +1,4 @@
-import { Tabs } from '@mui/material';
+import { Box, Tabs } from '@mui/material';
 import React, { useState } from 'react';
 
 interface CustomTabsProps {

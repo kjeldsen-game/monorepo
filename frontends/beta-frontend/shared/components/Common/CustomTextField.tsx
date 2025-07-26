@@ -47,6 +47,7 @@ const CustomTextField: React.FC<CustomTextFieldProps> = ({ name, value, type = "
             variant="outlined"
             value={value}
             type={type}
+            size='small'
             fullWidth
             sx={{
                 ...CUSTOM_TEXT_FIELD_STYLE,

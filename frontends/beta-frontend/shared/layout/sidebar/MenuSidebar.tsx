@@ -43,6 +43,7 @@ const MenuSidebar: FC<MenuSidebarProps> = ({ mobileOpen, setMobileOpen, setIsClo
                     '& .MuiDrawer-paper': {
                         boxSizing: 'border-box',
                         width: DRAWER_WIDTH,
+                        // background: 'white'
                         background: '#F9F9F9',
                         mt: '30px',
                     },

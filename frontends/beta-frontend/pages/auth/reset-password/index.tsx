@@ -1,6 +1,6 @@
 import { NextPageWithLayout } from '@/pages/_app';
-import ResetPasswordView from '@/shared/components/Auth/ResetPasswordView';
 import LayoutNoMenu from '@/shared/layout/LayoutNoMenu';
+import ResetPasswordView from 'modules/auth/components/reset-password/ResetPasswordView';
 
 const ResetPasswordPage: NextPageWithLayout = () => {
     return (

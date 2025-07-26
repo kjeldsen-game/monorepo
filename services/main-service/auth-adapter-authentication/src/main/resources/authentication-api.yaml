@@ -22,11 +22,7 @@ paths:
               $ref: "#/components/schemas/ResetPasswordRequest"
       responses:
         "200":
-          description: Password was successfully reset.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DefaultSuccessResponse"
+          $ref: "#/components/responses/DefaultSuccessResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -42,11 +38,7 @@ paths:
               $ref: "#/components/schemas/PasswordResetLinkRequest"
       responses:
         "200":
-          description: Password link successfully generated and sent to mail
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DefaultSuccessResponse"
+          $ref: "#/components/responses/DefaultSuccessResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -62,11 +54,7 @@ paths:
               $ref: "#/components/schemas/ChangePasswordRequest"
       responses:
         "200":
-          description: Password successfully changed.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DefaultSuccessResponse"
+          $ref: "#/components/responses/DefaultSuccessResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -96,11 +84,7 @@ paths:
               $ref: "#/components/schemas/UpdateAvatarRequest"
       responses:
         "200":
-          description: Avatar successfully updated.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DefaultSuccessResponse"
+          $ref: "#/components/responses/DefaultSuccessResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -116,11 +100,7 @@ paths:
               $ref: "#/components/schemas/RegisterRequest"
       responses:
         "201":
-          description: Registration successful
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/DefaultSuccessResponse"
+          $ref: "#/components/responses/DefaultSuccessResponse"
         "400":
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -173,9 +153,15 @@ components:
           schema:
             $ref: "#/components/schemas/ErrorResponse"
 
-  schemas:
-
     DefaultSuccessResponse:
+      description: "Success response"
+      content:
+        "application/json":
+          schema:
+            $ref: "#/components/schemas/SuccessResponse"
+
+  schemas:
+    SuccessResponse:
       type: object
       properties:
         message:

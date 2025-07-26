@@ -12,11 +12,7 @@ import com.kjeldsen.market.domain.schedulers.AuctionEndJobScheduler;
 import com.kjeldsen.market.rest.api.MarketApiDelegate;
 import com.kjeldsen.market.rest.mapper.AuctionMapper;
 import com.kjeldsen.market.rest.mapper.PlayerMapper;
-import com.kjeldsen.market.rest.model.AuctionResponse;
-import com.kjeldsen.market.rest.model.MarketAuctionResponse;
-import com.kjeldsen.market.rest.model.MarketPlayerResponse;
-import com.kjeldsen.market.rest.model.PlaceAuctionBidRequest;
-import com.kjeldsen.market.rest.model.PlayerPosition;
+import com.kjeldsen.market.rest.model.*;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
@@ -50,12 +46,12 @@ public class MarketDelegate implements MarketApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> placeAuctionBid(String auctionId, PlaceAuctionBidRequest placeAuctionBidRequest) {
+    public ResponseEntity<SuccessResponse> placeAuctionBid(String auctionId, PlaceAuctionBidRequest placeAuctionBidRequest) {
         String currentUseId = SecurityUtils.getCurrentUserId();
         BigDecimal amount = BigDecimal.valueOf(placeAuctionBidRequest.getAmount());
         Auction auction = placeBidUseCase.placeBid(Auction.AuctionId.of(auctionId), amount, currentUseId);
         //auctionEndJobScheduler.rescheduleAuctionEndJob(auctionId, auction.getEndedAt());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new SuccessResponse().message(String.format("Successfully placed auction bid of %s $!", amount)));
     }
 
     @Override

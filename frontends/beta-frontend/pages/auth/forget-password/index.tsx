@@ -1,6 +1,6 @@
 import { NextPageWithLayout } from '@/pages/_app';
-import ForgetPasswordView from '@/shared/components/Auth/ForgetPasswordView';
 import LayoutNoMenu from '@/shared/layout/LayoutNoMenu';
+import ForgetPasswordView from 'modules/auth/components/forget-password/ForgetPasswordView';
 
 const ForgetPasswordPage: NextPageWithLayout = () => {
     return (

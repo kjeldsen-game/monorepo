@@ -41,23 +41,23 @@ public class AuthenticationDelegate implements AuthApiDelegate {
     }
 
     @Override
-    public ResponseEntity<DefaultSuccessResponse> resetPassword(ResetPasswordRequest resetPasswordRequest) {
+    public ResponseEntity<SuccessResponse> resetPassword(ResetPasswordRequest resetPasswordRequest) {
         resetPasswordUseCase.resetPassword(resetPasswordRequest.getToken(),
             resetPasswordRequest.getNewPassword(), resetPasswordRequest.getConfirmPassword());
-        return ResponseEntity.ok(new DefaultSuccessResponse().message("Password was reset successfully!"));
+        return ResponseEntity.ok(new SuccessResponse().message("Password was reset successfully!"));
     }
 
     @Override
-    public ResponseEntity<DefaultSuccessResponse> requestPasswordResetLink(PasswordResetLinkRequest passwordResetLinkRequest) {
+    public ResponseEntity<SuccessResponse> requestPasswordResetLink(PasswordResetLinkRequest passwordResetLinkRequest) {
         generatePasswordResetLinkUseCase.generate(passwordResetLinkRequest.getEmail());
-        return ResponseEntity.ok(new DefaultSuccessResponse().message("Password link was successfully generated and sent!"));
+        return ResponseEntity.ok(new SuccessResponse().message("Password link was successfully generated and sent!"));
     }
 
     @Override
-    public ResponseEntity<DefaultSuccessResponse> changePassword(ChangePasswordRequest changePasswordRequest) {
+    public ResponseEntity<SuccessResponse> changePassword(ChangePasswordRequest changePasswordRequest) {
         changePasswordUseCase.changePassword(changePasswordRequest.getOldPassword(),
             changePasswordRequest.getNewPassword(), changePasswordRequest.getConfirmPassword());
-        return ResponseEntity.ok(new DefaultSuccessResponse().message("Password was changed successfully!"));
+        return ResponseEntity.ok(new SuccessResponse().message("Password was changed successfully!"));
     }
 
     @Override
@@ -68,16 +68,16 @@ public class AuthenticationDelegate implements AuthApiDelegate {
     }
 
     @Override
-    public ResponseEntity<DefaultSuccessResponse> updateAvatar(MultipartFile file) {
+    public ResponseEntity<SuccessResponse> updateAvatar(MultipartFile file) {
         updateAvatarUseCase.updateAvatar(file);
-        return ResponseEntity.ok(new DefaultSuccessResponse().message("Avatar uploaded successfully!"));
+        return ResponseEntity.ok(new SuccessResponse().message("Avatar uploaded successfully!"));
     }
 
     @Override
-    public ResponseEntity<DefaultSuccessResponse> register(@Valid RegisterRequest request) {
+    public ResponseEntity<SuccessResponse> register(@Valid RegisterRequest request) {
         registerUserUseCase.register(request.getEmail(), request.getPassword(),
             request.getTeamName(), request.getConfirmPassword());
-        return ResponseEntity.ok(new DefaultSuccessResponse().message("User registered successfully, logging in...!"));
+        return ResponseEntity.ok(new SuccessResponse().message("User registered successfully, logging in...!"));
     }
 
     @Override

@@ -1,7 +1,8 @@
-import { SxProps, Box } from '@mui/material';
+import { SxProps } from '@mui/material';
 import { Theme } from '@mui/material/styles';
-import Link from 'next/link';
 import React from 'react';
+import CustomButton from './CustomButton';
+import { useRouter } from 'next/router';
 
 interface LinkButtonProps {
   sx?: SxProps<Theme>;
@@ -13,47 +14,13 @@ interface LinkButtonProps {
 const LinkButton: React.FC<LinkButtonProps> = ({
   children,
   link,
-  sx,
-  variant = 'outlined',
 }) => {
-  const baseStyles: SxProps<Theme> = {
-    padding: '8px 16px',
-    textDecoration: 'none',
-    textAlign: 'center',
-    borderRadius: '4px',
-    fontWeight: 500,
-    transition: 'all 0.3s ease',
-    display: 'inline-block',
-  };
-
-  const outlinedStyles: SxProps<Theme> = {
-    border: '1px solid #FF3F84',
-    color: '#FF3F84',
-    '&:hover': {
-      backgroundColor: '#FF3F84',
-      color: 'white',
-      borderColor: 'transparent',
-    },
-  };
-
-  const containedStyles: SxProps<Theme> = {
-    boxShadow: '1',
-    backgroundColor: 'white',
-    color: '#FF3F84',
-    '&:hover': {
-      backgroundColor: '#FF3F84',
-      color: 'white'
-    },
-  };
-
-  const variantStyles = variant === 'contained' ? containedStyles : outlinedStyles;
+  const router = useRouter();
 
   return (
-    <Link href={link} passHref style={{ textDecoration: 'none' }}>
-      <Box component="span" sx={{ ...baseStyles, ...variantStyles, ...sx }}>
-        {children}
-      </Box>
-    </Link>
+    <CustomButton variant='outlined' onClick={() => router.push(link)}>
+      {children}
+    </CustomButton>
   );
 };
 

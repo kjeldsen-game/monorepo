@@ -13,9 +13,15 @@ export const PlayerNameColumn = (
         field: 'name',
         renderHeader: () => <ColHeader header="Name" align={alignment} />,
         renderCell: (params: GridCellParams) => {
+            const paddingStyle =
+                alignment === 'left'
+                    ? { paddingLeft: '10px' }
+                    : alignment === 'right'
+                        ? { paddingRight: '10px' }
+                        : {};
             const player: Player = getPlayerValue(params.row);
             return (
-                <ColLink urlValue={`/player/${player.id}`}>
+                <ColLink sx={{ ...paddingStyle }} urlValue={`/player/${player.id}`}>
                     {player.name}
                 </ColLink>
             );
