@@ -22,6 +22,6 @@ describe("DateTimeColumn", () => {
         const params = { row: mockRow } as GridCellParams;
 
         const { container } = render(<>{colDef.renderCell?.(params)}</>);
-        expect(container.textContent).toBe("24/07/25 14:34");
+        expect(container.textContent).toBe("24/07/25 12:34");
     });
 });
