@@ -4,7 +4,7 @@ import SellIcon from '@mui/icons-material/Sell';
 
 import { IncomeMode, IncomePeriodicity } from '@/shared/models/player/Economy';
 import BillboardCardDataItem from '../Items/BillboardCardDataItem';
-import MarketButton from '../../Market/MarketButton';
+import CustomButton from '../../Common/CustomButton';
 
 interface SponsorCardProps {
   open: boolean;
@@ -62,9 +62,9 @@ const SponsorCard: React.FC<SponsorCardProps> = ({
           )}
         </Box>
         {mode === null ? (
-          <MarketButton onClick={() => handleOpenModal(type)}>
+          <CustomButton onClick={() => handleOpenModal(type)}>
             Choose Offer
-          </MarketButton>
+          </CustomButton>
         ) : (
           <></>
         )}

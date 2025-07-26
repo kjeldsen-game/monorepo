@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { Box } from '@mui/material';
-import ProfileView from '@/shared/components/profile/ProfileView';
+import ProfileView from 'modules/auth/components/profile/ProfileView';
 
 interface ProfileProps { }
 

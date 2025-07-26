@@ -20,8 +20,8 @@ export const economyColumns = () => {
             params.row.context !== 'Total Income' &&
               params.row.context !== 'Total Outcome' &&
               params.row.context !== 'Total Balance'
-              ? '20px'
-              : '0px'
+              ? '10px'
+              : '5px'
           }>
           {params.row.context.includes('Total')
             ? params.row.context

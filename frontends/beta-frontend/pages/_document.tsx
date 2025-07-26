@@ -24,7 +24,9 @@ export default class MyDocument extends Document {
             (this.props as any).emotionStyleTags
           }
         </Head>
-        <body>
+        <body style={{ background: 'white' }}>
+
+          {/* <body style={{ background: '#F9F9F9' }}> */}
           {/* <script
             dangerouslySetInnerHTML={{
               __html: `

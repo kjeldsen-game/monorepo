@@ -132,7 +132,7 @@ paths:
               $ref: "#/components/schemas/PlaceAuctionBidRequest"
       responses:
         "200":
-          description: New bid placed successfully
+          $ref: "#/components/responses/DefaultSuccessResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -173,9 +173,21 @@ components:
             items:
               $ref: "#/components/schemas/Error"
 
-
+    DefaultSuccessResponse:
+      description: "Success response"
+      content:
+        "application/json":
+          schema:
+            $ref: "#/components/schemas/SuccessResponse"
   schemas:
 ################################### Enums ###################################
+
+    SuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Password was successfully changed."
 
     PlayerSkill:
       type: string

@@ -27,6 +27,6 @@
       "@/data/*": ["data/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "modules/match/hooks"],
   "exclude": ["node_modules"]
 }

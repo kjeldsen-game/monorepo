@@ -103,7 +103,7 @@ describe("economyColumns", () => {
             : convertSnakeCaseToTitleCase(context);
 
         const element = getByText(expectedText).closest('div');
-        const expectedPadding = context.includes('Total') ? '0px' : '20px';
+        const expectedPadding = context.includes('Total') ? '5px' : '10px';
 
         expect(element).toHaveStyle(`padding-left: ${expectedPadding}`);
         expect(element).toHaveStyle(`padding-right: ${expectedPadding}`);

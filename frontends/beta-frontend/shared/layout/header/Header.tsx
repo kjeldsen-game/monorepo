@@ -15,7 +15,7 @@ import {
     Login as LoginIcon,
 } from '@mui/icons-material';
 import UserDropdown from './UserDropdown';
-import MarketButton from '@/shared/components/Market/MarketButton';
+import CustomButton from '@/shared/components/Common/CustomButton';
 
 interface HeaderProps {
     isClosing: boolean;
@@ -89,16 +89,10 @@ const Header: FC<HeaderProps> = ({ isClosing, setMobileOpen, mobileOpen, isMenu 
                             status === 'authenticated' && !!data.user ? (
                                 <UserDropdown user={data.user} />
                             ) : (
-                                <Link href="/signin" passHref data-testid="signin-button">
-                                    <MarketButton>
+                                <Link href="/auth/signin" passHref data-testid="signin-button">
+                                    <CustomButton>
                                         <LoginIcon sx={{ marginRight: '8px', paddingLeft: '0px' }} /> Sign In
-                                    </MarketButton>
-                                    {/* <Button
-                                        sx={{ color: 'black' }}
-                                        startIcon={<LoginIcon />}
-                                        variant="outlined"
-                                    >
-                                    </Button> */}
+                                    </CustomButton>
                                 </Link>
                             )
                         )}

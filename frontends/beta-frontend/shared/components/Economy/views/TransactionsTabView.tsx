@@ -36,7 +36,6 @@ const TransactionsTabView: React.FC<TransactionsTabViewProps> = ({
         <Box sx={{ width: '100%' }}>
             {transactions ? (
                 <StyledDataGrid
-                    rowHeight={40}
                     getRowClassName={(params) => {
                         const { context } = params.row;
                         if (context === 'Total Income') {
@@ -48,15 +47,15 @@ const TransactionsTabView: React.FC<TransactionsTabViewProps> = ({
                         }
                         return '';
                     }}
-                    sx={{
-                        fontSize: '14px',
-                        '& .MuiDataGrid-columnSeparator': {
-                            display: 'none',
-                        },
-                        '& .MuiDataGrid-row': {
-                            borderBottom: 'none',
-                        },
-                    }}
+                    // sx={{
+                    //     fontSize: '14px',
+                    //     '& .MuiDataGrid-columnSeparator': {
+                    //         display: 'none',
+                    //     },
+                    //     '& .MuiDataGrid-row': {
+                    //         borderBottom: 'none',
+                    //     },
+                    // }}
                     disableColumnMenu={true}
                     getRowId={(row) => row.context}
                     rows={transactions}

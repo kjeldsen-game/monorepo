@@ -1,11 +1,11 @@
 import type { NextPage } from 'next';
 import { Box } from '@mui/material';
-import LeagueView from '@/shared/components/League/LeagueView';
 import { useLeagueRepository } from '../api/league/useLeagueRepository';
 import { useSession } from 'next-auth/react';
 import { useTeamRepository } from '../api/team/useTeamRepository';
 import { useEffect, useState } from 'react';
 import { useLeagueMatchesRepository } from '../api/match/useLeagueMatchesRepository';
+import LeagueView from 'modules/match/components/league/LeagueView';
 
 interface League { }
 
@@ -31,17 +31,17 @@ const League: NextPage<League> = ({ }) => {
     userData?.accessToken,
   );
 
-  useEffect(() => {
-    if (leagueData?.teams) {
-      const arrayWithIds = Object.entries(leagueData?.teams).map(
-        ([id, obj]) => ({
-          id,
-          ...obj,
-        }),
-      );
-      setStandings(arrayWithIds);
-    }
-  }, leagueData?.teams);
+  // useEffect(() => {
+  //   if (leagueData?.teams) {
+  //     const arrayWithIds = Object.entries(leagueData?.teams).map(
+  //       ([id, obj]) => ({
+  //         id,
+  //         ...obj,
+  //       }),
+  //     );
+  //     setStandings(arrayWithIds);
+  //   }
+  // }, leagueData?.teams);
 
   return (
     <>
@@ -52,7 +52,8 @@ const League: NextPage<League> = ({ }) => {
             marginBottom: '2rem',
             alignItems: 'center',
           }}>
-          <LeagueView league={standings} calendar={leagueMatches} />
+          <LeagueView />
+          {/* <LeagueView league={standings} calendar={leagueMatches} /> */}
         </Box>
       </Box>
     </>

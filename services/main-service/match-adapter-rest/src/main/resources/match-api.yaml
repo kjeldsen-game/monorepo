@@ -92,7 +92,7 @@ paths:
               $ref: "#/components/schemas/CreateMatchRequest"
       responses:
         "201":
-          description: Match was created
+          $ref: "#/components/responses/DefaultSuccessResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
     get:
@@ -183,12 +183,7 @@ paths:
               $ref: "#/components/schemas/EditMatchRequest"
       responses:
         "200":
-          description: Match was edited
-          # Returning the match report as string for testing
-          content:
-            application/json:
-              schema:
-                type: string
+          $ref: "#/components/responses/DefaultSuccessResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -405,7 +400,21 @@ components:
             items:
               $ref: "#/components/schemas/Error"
 
+    DefaultSuccessResponse:
+      description: "Success response"
+      content:
+        "application/json":
+          schema:
+            $ref: "#/components/schemas/SuccessResponse"
+
   schemas:
+
+    SuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Password was successfully changed."
 
     ######################## LEAGUE SCHEMAS START ########################
     LeagueStats:
