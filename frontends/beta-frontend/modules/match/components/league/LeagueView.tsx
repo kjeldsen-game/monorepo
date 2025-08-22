@@ -1,13 +1,13 @@
 import CustomTabs from '@/shared/components/CustomTabs';
 import DashboardLink from '@/shared/components/DashboardLink';
 import { CustomTabPanel } from '@/shared/components/Tab/CustomTabPanel';
-import { Box, Tab } from '@mui/material';
+import { Alert, Box, Tab, Typography } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import StandingsTabView from './tabs/StandingsTabView';
 import CalendarTabView from './tabs/CalendarTabView';
 import { useLeagueApi } from 'modules/match/hooks/useLeagueApi';
-import { useTeamApi } from 'modules/player/hooks/useTeamApi';
+import { useTeamApi } from 'modules/player/hooks/api/useTeamApi';
 
 interface LeagueViewProps {
     // league: Array<any>;
@@ -32,9 +32,24 @@ const LeagueView: React.FC<LeagueViewProps> = ({
 
     console.log(matches)
 
-    return (
-        <Box sx={{ width: '100%' }}>
-            <DashboardLink children={'Back to Dashboard'} />
+    return (<>
+        <Alert sx={{
+            borderTopLeftRadius: '0px',
+            borderBottomLeftRadius: '0px',
+            mb: '16px', borderLeft: '8px solid #FF3F84', color: '#FF3F84',
+            backgroundColor: '#ffe0ecff',
+            '& .MuiAlert-icon': {
+                color: '#FF3F84',
+            },
+        }} severity="warning">
+            <Typography fontWeight={'bold'}>
+                Beta Testing
+            </Typography>
+            <Typography variant='body1'>
+                Module is in the beta testing.
+            </Typography>
+        </Alert>
+        <Box sx={{ width: '100%', background: 'white' }} padding={2} borderRadius={2} boxShadow={1}>
             <Box sx={{ width: '100%' }}>
                 <Box>
                     <CustomTabs selectedTab={selectedTab} handleChange={handleChange}>
@@ -53,6 +68,7 @@ const LeagueView: React.FC<LeagueViewProps> = ({
                 </Box>
             </Box>
         </Box>
+    </>
     );
 };
 

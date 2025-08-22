@@ -1,0 +1,3906 @@
+{
+    "id": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+    "name": "admin",
+    "cantera": {
+        "score": 0.0,
+        "economyLevel": 0.0,
+        "traditionLevel": 0.0,
+        "buildingsLevel": 0.0
+    },
+    "economy": {
+        "balance": 1000000.0
+    },
+    "buildings": {
+        "freeSlots": 25,
+        "stadium": {
+            "seats": 5000,
+            "level": 1,
+            "maintenanceCost": 5000
+        }
+    },
+    "fans": {
+        "1": {
+            "loyalty": 50.0,
+            "totalFans": 10000
+        }
+    },
+    "teamModifiers": {
+        "tactic": "MAN_ON_MAN",
+        "verticalPressure": "LOW_PRESSURE",
+        "horizontalPressure": "SWARM_CENTRE"
+    },
+    "leagueId": "c9fdb1bf-3d48-4302-b6a9-945be6ccf62a",
+    "players": [
+        {
+            "id": "d74605e3-5f2e-41d7-885d-e37e05ed7650",
+            "age": {
+                "years": 31,
+                "months": 25.66,
+                "days": 0.56
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Patrick Spencer",
+            "position": "GOALKEEPER",
+            "preferredPosition": "GOALKEEPER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "ACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "INTERCEPTIONS": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "GOALKEEPER_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "ORGANIZATION": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "REFLEXES": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "ONE_ON_ONE": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 37000.0
+            }
+        },
+        {
+            "id": "9774b9e5-96dc-4dcc-994c-1ecd3ef9b3c1",
+            "age": {
+                "years": 28,
+                "months": 8.17,
+                "days": 2.16
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Krishna Durgan",
+            "position": null,
+            "preferredPosition": "GOALKEEPER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "BENCH",
+            "category": "SENIOR",
+            "actualSkills": {
+                "CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "INTERCEPTIONS": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "GOALKEEPER_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "ORGANIZATION": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "REFLEXES": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "ONE_ON_ONE": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 37000.0
+            }
+        },
+        {
+            "id": "f05a465f-b56e-4648-acf5-11d705664622",
+            "age": {
+                "years": 23,
+                "months": 25.33,
+                "days": 2.72
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Elisha Ledner",
+            "position": "LEFT_MIDFIELDER",
+            "preferredPosition": "GOALKEEPER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "ACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "INTERCEPTIONS": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "GOALKEEPER_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "ORGANIZATION": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "REFLEXES": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "ONE_ON_ONE": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 63000.0
+            }
+        },
+        {
+            "id": "5e0ca0d2-7693-4911-b3f7-b53394e40c1a",
+            "age": {
+                "years": 22,
+                "months": 5.48,
+                "days": 1.64
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Dean Adams",
+            "position": null,
+            "preferredPosition": "GOALKEEPER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "BENCH",
+            "category": "SENIOR",
+            "actualSkills": {
+                "CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "INTERCEPTIONS": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "GOALKEEPER_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 65,
+                        "potential": 65,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "ORGANIZATION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "REFLEXES": {
+                    "PlayerSkills": {
+                        "actual": 65,
+                        "potential": 65,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "ONE_ON_ONE": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 109500.0
+            }
+        },
+        {
+            "id": "f53d08b7-dde5-40e5-b2d3-0a7948d7cb8f",
+            "age": {
+                "years": 30,
+                "months": 11.01,
+                "days": 3.12
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Jamie Denesik",
+            "position": "CENTRE_BACK",
+            "preferredPosition": "CENTRE_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "ACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 59550.0
+            }
+        },
+        {
+            "id": "f97ed47a-971c-4e12-89bd-5b318784fa5f",
+            "age": {
+                "years": 28,
+                "months": 14.63,
+                "days": 1.92
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Ozzie Boyer",
+            "position": "CENTRE_BACK",
+            "preferredPosition": "CENTRE_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "ACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 59550.0
+            }
+        },
+        {
+            "id": "b0ffce97-477e-45f3-8259-002cc1972ec1",
+            "age": {
+                "years": 21,
+                "months": 9.16,
+                "days": 0.11
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Zana Ryan",
+            "position": "CENTRE_BACK",
+            "preferredPosition": "CENTRE_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "ACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 75,
+                        "potential": 75,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 75,
+                        "potential": 75,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 61050.0
+            }
+        },
+        {
+            "id": "616589e8-2a00-474c-af02-812ad0a9beb2",
+            "age": {
+                "years": 32,
+                "months": 3.5,
+                "days": 3.19
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Federico Ernser",
+            "position": null,
+            "preferredPosition": "CENTRE_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "BENCH",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 75,
+                        "potential": 75,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 75,
+                        "potential": 75,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 61050.0
+            }
+        },
+        {
+            "id": "dba0b9fd-e13f-4755-8916-a886fe2d9a6e",
+            "age": {
+                "years": 28,
+                "months": 11.84,
+                "days": 2.39
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Latisha DuBuque",
+            "position": null,
+            "preferredPosition": "CENTRE_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "BENCH",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 85,
+                        "potential": 85,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 85,
+                        "potential": 85,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 61550.0
+            }
+        },
+        {
+            "id": "cde041e2-869e-43ce-af80-fbcf0ddced6b",
+            "age": {
+                "years": 21,
+                "months": 19.14,
+                "days": 2.88
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Genny Christiansen",
+            "position": null,
+            "preferredPosition": "CENTRE_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "BENCH",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 65,
+                        "potential": 65,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 65,
+                        "potential": 65,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 60550.0
+            }
+        },
+        {
+            "id": "32fb91d8-3510-4ac1-9d3d-422da91674b0",
+            "age": {
+                "years": 30,
+                "months": 19.13,
+                "days": 1.74
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Madelaine Kessler",
+            "position": null,
+            "preferredPosition": "CENTRE_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "BENCH",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 100,
+                        "potential": 100,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 71550.0
+            }
+        },
+        {
+            "id": "7f174cf1-d4d9-4285-989c-291db9c85dc3",
+            "age": {
+                "years": 32,
+                "months": 11.08,
+                "days": 1.44
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Darnell Rowe",
+            "position": null,
+            "preferredPosition": "CENTRE_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "BENCH",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 100,
+                        "potential": 100,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 71550.0
+            }
+        },
+        {
+            "id": "3664fb39-bfa4-4418-b8f3-a81c4e657fe9",
+            "age": {
+                "years": 30,
+                "months": 22.11,
+                "days": 0.98
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Leland Lindgren",
+            "position": null,
+            "preferredPosition": "CENTRE_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 65,
+                        "potential": 65,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 65,
+                        "potential": 65,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 56050.0
+            }
+        },
+        {
+            "id": "529ad0f3-9f54-4ce8-a647-a349aeeb62dd",
+            "age": {
+                "years": 30,
+                "months": 4.74,
+                "days": 1.57
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Lonnie Bode",
+            "position": null,
+            "preferredPosition": "CENTRE_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 65,
+                        "potential": 65,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 65,
+                        "potential": 65,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 56050.0
+            }
+        },
+        {
+            "id": "a576bc83-dd3e-4f6f-b88b-f4bdecead7ce",
+            "age": {
+                "years": 31,
+                "months": 27.39,
+                "days": 1.95
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Almeta Kiehn",
+            "position": null,
+            "preferredPosition": "LEFT_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 49125.0
+            }
+        },
+        {
+            "id": "94c189ba-584e-4d35-9b39-a7a1692be6bf",
+            "age": {
+                "years": 26,
+                "months": 21.39,
+                "days": 1.91
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Irina Hoppe",
+            "position": null,
+            "preferredPosition": "LEFT_WINGBACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 49125.0
+            }
+        },
+        {
+            "id": "aee0a90c-6958-4a02-8ac1-3443a8f3e32d",
+            "age": {
+                "years": 28,
+                "months": 4.38,
+                "days": 1.67
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Caleb Larson",
+            "position": null,
+            "preferredPosition": "LEFT_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 46875.0
+            }
+        },
+        {
+            "id": "9737d7bf-0c05-40c1-a7c3-04397bc98131",
+            "age": {
+                "years": 27,
+                "months": 11.58,
+                "days": 3.12
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Jamel Hane",
+            "position": null,
+            "preferredPosition": "LEFT_WINGBACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 50925.0
+            }
+        },
+        {
+            "id": "d9be7130-5c48-46f1-a097-b81bec38b657",
+            "age": {
+                "years": 24,
+                "months": 27.31,
+                "days": 0.59
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Landon VonRueden",
+            "position": null,
+            "preferredPosition": "LEFT_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 55,
+                        "potential": 55,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 48300.0
+            }
+        },
+        {
+            "id": "d1368e85-0cde-41c2-871a-df94dfa8ee55",
+            "age": {
+                "years": 28,
+                "months": 21.15,
+                "days": 1.72
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Vella Doyle",
+            "position": null,
+            "preferredPosition": "LEFT_WINGBACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 55,
+                        "potential": 55,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 48300.0
+            }
+        },
+        {
+            "id": "8788352a-a028-4a23-a4dc-9ede6e0129dc",
+            "age": {
+                "years": 25,
+                "months": 21.94,
+                "days": 1.94
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Elouise Kreiger",
+            "position": "LEFT_BACK",
+            "preferredPosition": "LEFT_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "ACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 49125.0
+            }
+        },
+        {
+            "id": "d69b1bf5-fbd7-4f1e-8b52-146b1952d160",
+            "age": {
+                "years": 28,
+                "months": 0.13,
+                "days": 3.05
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Charlotte Hahn",
+            "position": null,
+            "preferredPosition": "LEFT_WINGBACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 49125.0
+            }
+        },
+        {
+            "id": "6d7e048c-5fef-4d98-b8be-888ace4a73f0",
+            "age": {
+                "years": 28,
+                "months": 18.88,
+                "days": 3.61
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Lavera Hickle",
+            "position": null,
+            "preferredPosition": "LEFT_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 46875.0
+            }
+        },
+        {
+            "id": "5845bb93-854d-4439-a09c-7979fdaf0e7b",
+            "age": {
+                "years": 22,
+                "months": 8.19,
+                "days": 1.1
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Eleonora Champlin",
+            "position": null,
+            "preferredPosition": "LEFT_WINGBACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 50925.0
+            }
+        },
+        {
+            "id": "2d252b52-e64f-4c04-99cb-206224e020a7",
+            "age": {
+                "years": 30,
+                "months": 28.92,
+                "days": 2.22
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Claudia Cruickshank",
+            "position": "RIGHT_BACK",
+            "preferredPosition": "LEFT_BACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "ACTIVE",
+            "category": "SENIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 55,
+                        "potential": 55,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 48300.0
+            }
+        },
+        {
+            "id": "8092947b-78fd-4f20-a01a-6f0e93f24496",
+            "age": {
+                "years": 19,
+                "months": 14.0,
+                "days": 2.56
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Denis Gutmann",
+            "position": null,
+            "preferredPosition": "LEFT_WINGBACK",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 55,
+                        "potential": 55,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 48300.0
+            }
+        },
+        {
+            "id": "c0a9161f-e896-427d-afee-cb4e72f2b9e1",
+            "age": {
+                "years": 16,
+                "months": 28.51,
+                "days": 2.8
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Shante Mante",
+            "position": null,
+            "preferredPosition": "DEFENSIVE_MIDFIELDER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 47300.0
+            }
+        },
+        {
+            "id": "fca46f11-8d4f-4ded-bc73-9cafad60218e",
+            "age": {
+                "years": 17,
+                "months": 2.63,
+                "days": 0.01
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Gilbert Crooks",
+            "position": "CENTRE_MIDFIELDER",
+            "preferredPosition": "CENTRE_MIDFIELDER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "ACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 47300.0
+            }
+        },
+        {
+            "id": "71b87767-aae6-43eb-81ea-d6297daf1ce2",
+            "age": {
+                "years": 18,
+                "months": 24.55,
+                "days": 0.24
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Florine Bernier",
+            "position": null,
+            "preferredPosition": "DEFENSIVE_MIDFIELDER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 65,
+                        "potential": 65,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 65,
+                        "potential": 65,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 54050.0
+            }
+        },
+        {
+            "id": "5363b0a8-0992-4d2b-87d2-5ff7a18ca1ec",
+            "age": {
+                "years": 19,
+                "months": 14.45,
+                "days": 0.37
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Efren Waelchi",
+            "position": null,
+            "preferredPosition": "CENTRE_MIDFIELDER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 51050.0
+            }
+        },
+        {
+            "id": "1dfdb11b-8950-43c7-a2c0-e34ec9c3f1d7",
+            "age": {
+                "years": 15,
+                "months": 13.87,
+                "days": 0.51
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Rocky Upton",
+            "position": null,
+            "preferredPosition": "DEFENSIVE_MIDFIELDER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 51050.0
+            }
+        },
+        {
+            "id": "b48899cb-75e1-4d14-b595-c185a03801a7",
+            "age": {
+                "years": 19,
+                "months": 29.23,
+                "days": 3.44
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Dee Mohr",
+            "position": null,
+            "preferredPosition": "CENTRE_MIDFIELDER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 45,
+                        "potential": 45,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 54300.0
+            }
+        },
+        {
+            "id": "f79687c6-620d-4fbc-bfd0-fc85d8551038",
+            "age": {
+                "years": 19,
+                "months": 9.03,
+                "days": 1.31
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Gayle Turner",
+            "position": null,
+            "preferredPosition": "LEFT_MIDFIELDER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 53750.0
+            }
+        },
+        {
+            "id": "f34dfb4d-dbd7-45d4-a5c6-7ba7347c99a7",
+            "age": {
+                "years": 19,
+                "months": 13.77,
+                "days": 2.93
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Annabelle Brown",
+            "position": null,
+            "preferredPosition": "LEFT_WINGER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 54750.0
+            }
+        },
+        {
+            "id": "73d14852-3cbc-4893-b08d-3a8d1346bef9",
+            "age": {
+                "years": 15,
+                "months": 2.48,
+                "days": 3.68
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Thuy Quigley",
+            "position": null,
+            "preferredPosition": "LEFT_MIDFIELDER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 54750.0
+            }
+        },
+        {
+            "id": "697367fa-29e0-4e25-b223-6ad28ccc6653",
+            "age": {
+                "years": 19,
+                "months": 18.19,
+                "days": 0.97
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Migdalia Treutel",
+            "position": null,
+            "preferredPosition": "LEFT_WINGER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 64250.0
+            }
+        },
+        {
+            "id": "5ad1d7d1-ed9e-4e5a-b664-8a6d949fc6cb",
+            "age": {
+                "years": 17,
+                "months": 0.74,
+                "days": 0.39
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Louis Willms",
+            "position": null,
+            "preferredPosition": "LEFT_MIDFIELDER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 65250.0
+            }
+        },
+        {
+            "id": "147be533-1aaa-4188-a7ae-1fd59f979158",
+            "age": {
+                "years": 16,
+                "months": 3.25,
+                "days": 3.33
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Hubert Schoen",
+            "position": null,
+            "preferredPosition": "LEFT_WINGER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 65250.0
+            }
+        },
+        {
+            "id": "d40a0729-1552-4078-9bfa-ce93abb7302e",
+            "age": {
+                "years": 15,
+                "months": 3.37,
+                "days": 3.02
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Ricky Flatley",
+            "position": null,
+            "preferredPosition": "LEFT_MIDFIELDER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 54750.0
+            }
+        },
+        {
+            "id": "d6de0897-5925-4f18-8d7f-ebf25b660013",
+            "age": {
+                "years": 17,
+                "months": 17.87,
+                "days": 2.98
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Farrah Mertz",
+            "position": null,
+            "preferredPosition": "RIGHT_MIDFIELDER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 53750.0
+            }
+        },
+        {
+            "id": "dfc46812-d605-47ed-9f63-32a7a94cc274",
+            "age": {
+                "years": 15,
+                "months": 21.59,
+                "days": 1.13
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Ted Armstrong",
+            "position": null,
+            "preferredPosition": "RIGHT_WINGER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 54750.0
+            }
+        },
+        {
+            "id": "c0bb4b2b-16cc-4688-b815-fcbf42319217",
+            "age": {
+                "years": 15,
+                "months": 20.45,
+                "days": 1.23
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Ed Rolfson",
+            "position": null,
+            "preferredPosition": "RIGHT_MIDFIELDER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 54750.0
+            }
+        },
+        {
+            "id": "8581531c-f70a-4e57-b830-647758066841",
+            "age": {
+                "years": 19,
+                "months": 2.55,
+                "days": 3.99
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Ophelia Kunze",
+            "position": null,
+            "preferredPosition": "RIGHT_WINGER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 64250.0
+            }
+        },
+        {
+            "id": "bba9f08b-7fb3-4381-9ac5-1b7191b0f167",
+            "age": {
+                "years": 17,
+                "months": 0.56,
+                "days": 3.39
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Terrence Heaney",
+            "position": "RIGHT_MIDFIELDER",
+            "preferredPosition": "RIGHT_MIDFIELDER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "ACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 65250.0
+            }
+        },
+        {
+            "id": "3ef89a1f-e011-4c82-9729-b6ed47b284e6",
+            "age": {
+                "years": 17,
+                "months": 27.55,
+                "days": 1.31
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Dee Emard",
+            "position": null,
+            "preferredPosition": "RIGHT_WINGER",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 20,
+                        "potential": 20,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 65250.0
+            }
+        },
+        {
+            "id": "0233d92b-eb96-4afb-8070-6000aa73779c",
+            "age": {
+                "years": 17,
+                "months": 23.31,
+                "days": 2.8
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Alphonso Kuvalis",
+            "position": "FORWARD",
+            "preferredPosition": "FORWARD",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "ACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 63800.0
+            }
+        },
+        {
+            "id": "0cafa994-2125-4e57-a1c9-76e9f18329e4",
+            "age": {
+                "years": 16,
+                "months": 25.93,
+                "days": 1.92
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Rosalie Stokes",
+            "position": "FORWARD",
+            "preferredPosition": "FORWARD",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "ACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 75800.0
+            }
+        },
+        {
+            "id": "1c2b232b-aaaa-4cf2-b176-962e37effd9f",
+            "age": {
+                "years": 18,
+                "months": 22.06,
+                "days": 1.83
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Helaine Kulas",
+            "position": "FORWARD",
+            "preferredPosition": "FORWARD",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "ACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 30,
+                        "potential": 30,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 60,
+                        "potential": 60,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 75800.0
+            }
+        },
+        {
+            "id": "dbdb965f-0fcb-4515-bf59-08ed8bee7435",
+            "age": {
+                "years": 15,
+                "months": 25.5,
+                "days": 3.53
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Jamar Thiel",
+            "position": null,
+            "preferredPosition": "FORWARD",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 85750.0
+            }
+        },
+        {
+            "id": "ae0ca40d-4d36-49ae-93cb-b86694b9c9df",
+            "age": {
+                "years": 17,
+                "months": 5.1,
+                "days": 3.9
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Benjamin Bayer",
+            "position": null,
+            "preferredPosition": "FORWARD",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 40,
+                        "potential": 40,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 70,
+                        "potential": 70,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 92250.0
+            }
+        },
+        {
+            "id": "ab5b7dad-9e70-4226-a835-553d22e818ad",
+            "age": {
+                "years": 15,
+                "months": 19.12,
+                "days": 0.05
+            },
+            "teamId": "46442f0a-9de6-4062-88cb-35fc3e0da177",
+            "name": "Jamar Kutch",
+            "position": null,
+            "preferredPosition": "FORWARD",
+            "playerOrder": "NONE",
+            "playerOrderDestinationPitchArea": null,
+            "status": "INACTIVE",
+            "category": "JUNIOR",
+            "actualSkills": {
+                "SCORING": {
+                    "PlayerSkills": {
+                        "actual": 50,
+                        "potential": 50,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "CONSTITUTION": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "OFFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "AERIAL": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "BALL_CONTROL": {
+                    "PlayerSkills": {
+                        "actual": 90,
+                        "potential": 90,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "PASSING": {
+                    "PlayerSkills": {
+                        "actual": 80,
+                        "potential": 80,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "DEFENSIVE_POSITIONING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                },
+                "TACKLING": {
+                    "PlayerSkills": {
+                        "actual": 25,
+                        "potential": 25,
+                        "playerSkillRelevance": "CORE"
+                    }
+                }
+            },
+            "economy": {
+                "salary": 98500.0
+            }
+        }
+    ]
+}

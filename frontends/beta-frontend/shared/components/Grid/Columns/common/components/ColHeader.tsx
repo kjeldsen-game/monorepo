@@ -1,12 +1,13 @@
 import { GridAlignment } from '@mui/x-data-grid';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 interface ColHeaderProps {
   header: string;
+  children?: ReactNode;
   align?: GridAlignment
 }
 
-const ColHeader: React.FC<ColHeaderProps> = ({ header, align = "center" }) => {
+const ColHeader: React.FC<ColHeaderProps> = ({ header, align = "center", children }) => {
   const paddingStyle = align
     ? {
       paddingLeft: align === 'left' ? '10px' : undefined,
@@ -15,7 +16,7 @@ const ColHeader: React.FC<ColHeaderProps> = ({ header, align = "center" }) => {
     }
     : {};
 
-  return <div style={paddingStyle}>{header}</div>;
+  return <div style={paddingStyle}>{header}{children}</div>;
 };
 
 export default ColHeader;

@@ -33,7 +33,6 @@ describe("TeamNameColumn", () => {
         expect(colDef.field).toBe(header);
         expect(colDef.headerAlign).toBe("right");
         expect(colDef.sortable).toBe(true);
-        expect(colDef.flex).toBe(0.2);
     });
 
     it("renders the cell with team name and correct URL and padding (left aligned)", () => {

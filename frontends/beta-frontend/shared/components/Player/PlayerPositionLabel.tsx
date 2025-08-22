@@ -3,15 +3,17 @@ import {
   PlayerPositionColorNew,
 } from '@/shared/models/player/PlayerPosition';
 import { getPositionInitials } from '@/shared/utils/PlayerUtils';
-import { Box } from '@mui/material';
+import { Box, SxProps } from '@mui/material';
 import React from 'react';
 
 interface PlayerPositionLabelProps {
   position: string;
+  sx?: SxProps;
 }
 
 const PlayerPositionLabel: React.FC<PlayerPositionLabelProps> = ({
   position,
+  sx,
 }) => {
   const initials = getPositionInitials(position);
 
@@ -22,9 +24,11 @@ const PlayerPositionLabel: React.FC<PlayerPositionLabelProps> = ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-      }}>
-      <div
-        style={{
+      }}
+    >
+      <Box
+        sx={{
+          fontWeight: 'bold',
           justifyContent: 'center',
           display: 'flex',
           alignItems: 'center',
@@ -35,9 +39,11 @@ const PlayerPositionLabel: React.FC<PlayerPositionLabelProps> = ({
           borderRadius: '5px',
           textAlign: 'center',
           background: PlayerPositionColorNew[position as PlayerPosition],
-        }}>
+          ...sx,
+        }}
+      >
         {initials}
-      </div>
+      </Box>
     </Box>
   );
 };

@@ -31,7 +31,7 @@ const SkillRowFilter: React.FC<SkillRowFilterProps> = ({
 }: SkillRowFilterProps) => {
     return (
         <Grid container spacing={1} sx={{ justifyContent: 'space-between' }}>
-            <Grid size={{ md: 10, sm: 12, xs: 12 }}>
+            <Grid size={{ md: 12 }}>
                 <Grid
                     container
                     spacing={1}

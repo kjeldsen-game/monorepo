@@ -2,6 +2,7 @@ import { connectorAPI } from '@/libs/fetcher';
 import { useError } from '@/shared/contexts/ErrorContext';
 import { useNotification } from '@/shared/contexts/NotificationContext';
 import { Pricing } from '@/shared/models/player/Economy';
+import { PricingEditRequest } from 'modules/player/types/Requests';
 import useSWR, { mutate } from 'swr';
 
 const API = '/team/';

@@ -34,6 +34,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ variant = 'contained', sx, 
 
     return (
         <Button
+            loadingPosition="start"
             variant={variant}
             sx={{
                 padding: '2px 4px',

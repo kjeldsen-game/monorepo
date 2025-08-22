@@ -15,48 +15,9 @@ const League: NextPage<League> = ({ }) => {
     required: true,
   });
 
-  const {
-    data: teamData,
-    error,
-    isLoading,
-  } = useTeamRepository(userData?.user.teamId, userData?.accessToken);
-
-  const { data: leagueData } = useLeagueRepository(
-    teamData?.leagueId,
-    userData?.accessToken,
-  );
-
-  const { data: leagueMatches } = useLeagueMatchesRepository(
-    teamData?.leagueId,
-    userData?.accessToken,
-  );
-
-  // useEffect(() => {
-  //   if (leagueData?.teams) {
-  //     const arrayWithIds = Object.entries(leagueData?.teams).map(
-  //       ([id, obj]) => ({
-  //         id,
-  //         ...obj,
-  //       }),
-  //     );
-  //     setStandings(arrayWithIds);
-  //   }
-  // }, leagueData?.teams);
 
   return (
-    <>
-      <Box>
-        <Box
-          sx={{
-            display: 'flex',
-            marginBottom: '2rem',
-            alignItems: 'center',
-          }}>
-          <LeagueView />
-          {/* <LeagueView league={standings} calendar={leagueMatches} /> */}
-        </Box>
-      </Box>
-    </>
+    <LeagueView />
   );
 };
 

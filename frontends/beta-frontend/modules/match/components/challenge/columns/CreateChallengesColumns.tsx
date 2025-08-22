@@ -14,7 +14,7 @@ const CreateChallengesColumns = (
             renderHeader: () => <ColHeader header={'Action'} align={'right'} />,
             ...getColumnConfig('right'),
             renderCell: (params: GridCellParams) => (
-                <Box sx={{ height: '100%' }} display={'flex'} justifyContent={'end'} alignItems={'center'}>
+                <Box sx={{ height: '100%' }} display={'flex'} justifyContent={'flex-end'} alignItems={'center'}>
                     <CustomButton
                         sx={{ marginRight: '10px' }}
                         onClick={() => handleChallengeButtonClick(params.row.id)}>

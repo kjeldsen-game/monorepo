@@ -35,11 +35,11 @@ const PendingChallengesColumns = (
                             </>
                         ) : (
                             <>
-                                <Box sx={{ height: '100%' }} display={'flex'} justifyContent={'end'} alignItems={'center'}>
+                                <Box sx={{ height: '100%' }} display={'flex'} justifyContent={'flex-end'} alignItems={'center'}>
                                     <CustomIconButton sx={{ marginRight: '4px' }} onClick={() => onChallengeAccept(params.row?.id)}>
                                         <DoneIcon />
                                     </CustomIconButton>
-                                    <CustomIconButton sx={{ marginRight: '4px' }} onClick={() => onChallengeDecline(params.row?.id)}>
+                                    <CustomIconButton onClick={() => onChallengeDecline(params.row?.id)}>
                                         <ClearIcon />
                                     </CustomIconButton>
                                 </Box>

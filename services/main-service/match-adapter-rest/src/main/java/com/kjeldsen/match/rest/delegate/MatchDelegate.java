@@ -61,8 +61,9 @@ public class MatchDelegate implements MatchApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> updateMatchTeam(String teamId, String matchId,
+    public ResponseEntity<SuccessResponse> updateMatchTeam(String teamId, String matchId,
             EditMatchTeamRequest editMatchTeamRequest) {
+        log.info("Update match team endpoint for teamId: {} matchId: {} self: {}", teamId, matchId, editMatchTeamRequest.getSelf());
         List<UpdateMatchLineupUseCase.PlayerUpdateDTO> players = editMatchTeamRequest.getPlayers().stream()
                 .map(player -> UpdateMatchLineupUseCase.PlayerUpdateDTO.builder()
                         .id(player.getId())
@@ -79,18 +80,21 @@ public class MatchDelegate implements MatchApiDelegate {
                         .status(PlayerStatus.valueOf(player.getStatus().name()))
                         .build())
                 .toList();
-
+        log.info("Players: {}", players);
         com.kjeldsen.match.domain.modifers.TeamModifiers teamModifiers = TeamMapper.INSTANCE
                 .map(editMatchTeamRequest.getTeamModifiers());
 
+        String message;
         // Special use case when you're challenging your self
         if (editMatchTeamRequest.getSelf() != null && editMatchTeamRequest.getSelf()) {
             Match match = getMatchUseCase.get(matchId);
+            message = "Match team in self challenge was successfully updated!";
             updateMatchLineupUseCase.updateSelf(teamId, match, players, teamModifiers);
         } else {
+            message = "Match team was successfully updated!";
             updateMatchLineupUseCase.update(matchId, teamId, players, teamModifiers);
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new SuccessResponse().message(message));
     }
 
     // TODO refactor duplicates of code due to the self challenge
@@ -151,7 +155,6 @@ public class MatchDelegate implements MatchApiDelegate {
 
     @Override
     public ResponseEntity<SuccessResponse> editMatch(String matchId, EditMatchRequest request) {
-        // For challenges after the match is accepted
         if (request.getStatus().name().equals(Status.SCHEDULED.name())) {
             executeMatchUseCase.execute(matchId);
         } else {
@@ -162,7 +165,6 @@ public class MatchDelegate implements MatchApiDelegate {
     }
 
     // TODO REWORK TO USE THE SecurityUtils.getCurrentUserId(); instead of
-    // specifying the user
     @Override
     public ResponseEntity<List<MatchResponse>> getAllMatches(String teamId, String leagueId, Integer size,
             Integer page) {
@@ -178,7 +180,6 @@ public class MatchDelegate implements MatchApiDelegate {
     public ResponseEntity<MatchResponse> getMatch(String matchId) {
         log.info("getMatchTeam(matchId={})", matchId);
         Match match = getMatchUseCase.get(matchId);
-        System.out.println(match.getMatchReport().getAwayStats());
         MatchResponse response = MatchMapper.INSTANCE.map(match);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

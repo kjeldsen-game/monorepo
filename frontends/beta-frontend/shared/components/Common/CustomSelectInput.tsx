@@ -27,16 +27,17 @@ const CustomSelectInput: React.FC<CustomSelectInputProps> = ({
     sx,
     ...selectProps
 }) => {
-    const options = Array.isArray(values)
-        ? values
-        : Object.values(values);
+
+    const options = values
+        ? (Array.isArray(values) ? values : Object.values(values))
+        : [];
 
     return (
         <Box
             height={'100%'}
             display={'flex'}
             flexDirection={'column'}
-            justifyContent={'space-between'}
+            justifyContent={title ? 'space-between' : 'center  '}
         >
             {title && (
                 <Typography

@@ -1,11 +1,11 @@
 import Grid from '@/shared/components/Grid/Grid';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import { useMatchChallengeActions } from 'modules/match/hooks/useMatchChallengeActions';
 import { useMatchChallengeData } from 'modules/match/hooks/useMatchChallengeData';
 import { useMemo } from 'react';
 import { StyledMyTeamDatagrid } from 'modules/match/utils/ChallengeUtils';
-import { useTeamsApi } from 'modules/player/hooks/useTeamsApi';
+import { useTeamsApi } from 'modules/player/hooks/api/useTeamsApi';
 import CreateChallengesColumns from '../columns/CreateChallengesColumns';
 import PendingChallengesColumns from '../columns/PendingChallengesColumns';
 
@@ -27,6 +27,11 @@ const GeneralTabView = () => {
 
     return (
         <>
+            <Box paddingY={2} >
+                <Typography fontWeight={'bold'} color={'grey'}>
+                    Pending Challenges
+                </Typography>
+            </Box>
             <Grid
                 loading={isLoading}
                 rows={pendingMatches}
@@ -38,7 +43,11 @@ const GeneralTabView = () => {
                     )
                 }
             />
-            <Box height={30} />
+            <Box paddingY={2} >
+                <Typography fontWeight={'bold'} color={'grey'}>
+                    Challenge a team
+                </Typography>
+            </Box>
             <StyledMyTeamDatagrid
                 loading={isLoading}
                 disableColumnMenu={true}

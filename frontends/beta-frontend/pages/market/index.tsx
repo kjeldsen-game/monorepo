@@ -23,22 +23,11 @@ const Market: NextPage<MarketProps> = ({ }) => {
   };
 
   return (
-    <>
-      <Box>
-        <Box
-          sx={{
-            display: 'flex',
-            marginBottom: '2rem',
-            alignItems: 'center',
-          }}>
-          <MarketView
-            setAuction={handleAuction}
-            auctions={auctions}
-            setFilter={handleSetFilter}
-          />
-        </Box>
-      </Box>
-    </>
+    <MarketView
+      setAuction={handleAuction}
+      auctions={auctions}
+      setFilter={handleSetFilter}
+    />
   );
 };
 

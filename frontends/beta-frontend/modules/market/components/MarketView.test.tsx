@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import MarketView from './MarketView';
 import { AuctionMarket } from '@/shared/models/market/Auction';
-import { mockPlayers } from 'mocks/player';
+import { mockPlayers } from '__mocks__/player';
 
 jest.mock('./dialog/AuctionDialog', () => () => <div data-testid="auction-dialog" />);
 jest.mock('./filter/MarketFilter', () => ({ setFilter }: any) => (

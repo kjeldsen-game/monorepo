@@ -5,6 +5,7 @@ import React, { useMemo } from 'react';
 import { StandingsColumns } from '../columns/StandingsColumns';
 import { StyledMyTeamDatagrid } from 'modules/match/utils/ChallengeUtils';
 import { LeagueStats } from 'modules/match/types/LeagueResponses';
+import { Box, Typography } from '@mui/material';
 
 interface StandingsTabViewProps {
     leagueTeams: Record<string, LeagueStats>;
@@ -16,7 +17,12 @@ const StandingsTabView: React.FC<StandingsTabViewProps> = ({ leagueTeams, isLoad
     const { data: userData } = useSession()
     const memoizedColumnsStadings = useMemo(() => StandingsColumns(), []);
 
-    return (
+    return (<>
+        <Box paddingY={2} >
+            <Typography fontWeight={'bold'} color={'grey'}>
+                League Standings
+            </Typography>
+        </Box>
         <StyledMyTeamDatagrid
             loading={isLoading}
             disableColumnMenu={true}
@@ -39,6 +45,7 @@ const StandingsTabView: React.FC<StandingsTabViewProps> = ({ leagueTeams, isLoad
                 return '';
             }}
         />
+    </>
     );
 };
 

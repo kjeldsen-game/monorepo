@@ -1,0 +1,102 @@
+import { Player } from '@/shared/models/player/Player';
+
+export enum IncomeMode {
+  CONSERVATIVE = 'Conservative',
+  MODERATE = 'Moderate',
+  AGGRESSIVE = 'Aggressive',
+}
+
+export enum IncomePeriodicity {
+  WEEKLY = 'Weekly',
+  ANNUAL = 'Annual',
+}
+
+export interface Sponsor {
+  periodicity: IncomePeriodicity;
+  mode: IncomeMode | null;
+}
+
+export const SPONSORS_OFFERS = {
+  [IncomePeriodicity.ANNUAL]: {
+    [IncomeMode.CONSERVATIVE]: {
+      base: 1000000,
+      bonus: 100000,
+    },
+    [IncomeMode.MODERATE]: {
+      base: 750000,
+      bonus: 200000,
+    },
+    [IncomeMode.AGGRESSIVE]: {
+      base: 500000,
+      bonus: 300000,
+    },
+  },
+  [IncomePeriodicity.WEEKLY]: {
+    [IncomeMode.CONSERVATIVE]: {
+      base: 100000,
+      bonus: 0,
+    },
+    [IncomeMode.MODERATE]: {
+      base: 50000,
+      bonus: 100000,
+    },
+    [IncomeMode.AGGRESSIVE]: {
+      base: 0,
+      bonus: 200000,
+    },
+  },
+};
+
+export interface PriceItem {
+  pricingType: PricingType;
+  price: number;
+}
+
+export enum PricingType {
+  SEASON_TICKET = 'Season Ticket',
+  DAY_TICKET = 'Day Ticket',
+  MERCHANDISE = 'Merchandise',
+  RESTAURANT = 'Restaurant',
+}
+export type TransactionContext =
+  | 'SPONSOR'
+  | 'PLAYER_SALE'
+  | 'PLAYER_PURCHASE'
+  | 'ATTENDANCE'
+  | 'MERCHANDISE'
+  | 'PLAYER_WAGE'
+  | 'BUILDING_UPGRADE'
+  | 'BUILDING_MAINTENANCE'
+  | 'RESTAURANT'
+  | 'BILLBOARDS'
+  | 'Total Income'
+  | 'Total Outcome'
+  | 'Total Balance';
+
+export interface Transaction {
+  context: TransactionContext;
+  thisWeekAmount: number;
+  thisSeasonAmount: number;
+}
+
+export interface PlayerWage {
+  player: Partial<Player>;
+  transactionSummary: PlaywerWageSummary;
+}
+
+export interface PlaywerWageSummary {
+  weekSummary: number;
+  seasonSummary: number;
+}
+
+export enum BillboaradDealType {
+  SHORT = 'Short',
+  MEDIUM = 'Medium',
+  LONG = 'Long',
+}
+export interface BillboardDeal {
+  endSeason: number;
+  offer: number;
+  startSeason: number;
+  type: BillboaradDealType;
+}

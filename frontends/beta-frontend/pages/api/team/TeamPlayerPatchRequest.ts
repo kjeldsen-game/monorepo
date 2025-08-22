@@ -3,7 +3,7 @@ import { PlayerOrder } from '../match/models/MatchReportresponse';
 import { TeamModifiers } from '@/shared/models/player/TeamModifiers';
 import { PitchArea } from '@/shared/models/match/PitchArea';
 
-interface PlayerRequest {
+export interface PlayerRequest {
   id: string;
   status: string;
   position: PlayerPosition;
