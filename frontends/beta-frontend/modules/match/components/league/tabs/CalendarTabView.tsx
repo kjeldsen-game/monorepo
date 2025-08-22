@@ -1,7 +1,5 @@
 import { useSession } from 'next-auth/react';
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import { getBackgroundColor } from '@/shared/utils/EconomyUtils';
-import styled from '@emotion/styled';
 import { Box, CircularProgress } from '@mui/material';
 import { Match, MatchStatus } from '@/shared/models/match/Match';
 import { CalendarColumns } from '../columns/CalendarColumns';
@@ -39,7 +37,8 @@ const CalendarTabView: React.FC<CalendarTabViewProps> = ({ calendar }) => {
     }, [filter, calendar]);
 
     return (
-        <Box>
+        <Box >
+
             <Box
                 sx={{
                     marginBottom: '2rem',
@@ -61,23 +60,23 @@ const CalendarTabView: React.FC<CalendarTabViewProps> = ({ calendar }) => {
             </Box>
 
             <StyledMyTeamDatagrid
-                sx={{
-                    '& .MuiDataGrid-columnHeader': {
-                        padding: 0,
-                        '&:nth-of-type(3), &:nth-of-type(5)': {
-                            backgroundColor: '#FF3F840D',
-                            color: 'black',
-                            fontWeight: 'bold',
-                        },
-                    },
-                    '& .MuiDataGrid-cell': {
-                        '&:nth-of-type(3), &:nth-of-type(5)': {
-                            backgroundColor: '#FF3F840D',
-                            color: 'black',
-                            fontWeight: 'bold',
-                        },
-                    },
-                }}
+                // sx={{
+                //     '& .MuiDataGrid-columnHeader': {
+                //         padding: 0,
+                //         '&:nth-of-type(3), &:nth-of-type(5)': {
+                //             backgroundColor: '#FF3F840D',
+                //             color: 'black',
+                //             fontWeight: 'bold',
+                //         },
+                //     },
+                //     '& .MuiDataGrid-cell': {
+                //         '&:nth-of-type(3), &:nth-of-type(5)': {
+                //             backgroundColor: '#FF3F840D',
+                //             color: 'black',
+                //             fontWeight: 'bold',
+                //         },
+                //     },
+                // }}
                 disableColumnMenu={true}
                 getRowId={(row) => row.id}
                 rows={filteredMatches}

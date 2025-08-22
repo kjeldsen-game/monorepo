@@ -46,6 +46,13 @@ export const SPONSORS_OFFERS = {
 };
 
 export interface Pricing {
-  pricingType: string;
+  pricingType: PricingType;
   price: number;
+}
+
+export enum PricingType {
+  SEASON_TICKET = 'Season Ticket',
+  DAY_TICKET = 'Day Ticket',
+  MERCHANDISE = 'Merchandise',
+  RESTAURANT = 'Restaurant',
 }

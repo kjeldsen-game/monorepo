@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import CustomTooltip from './CustomTooltip';
 import { Box, Grid } from '@mui/material';
-import { PITCH_AREAS_ENUM } from '@/shared/models/match/PitchArea';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
+import { PitchArea } from 'modules/player/types/Player';
 
 interface PitchAreaTooltipProps {
   children: ReactNode;
@@ -18,8 +18,8 @@ const PitchAreaTooltip: React.FC<PitchAreaTooltipProps> = ({
       tooltipContent={
         <Box sx={{ color: 'black' }}>
           <Grid container width={'300px'}>
-            {Object.values(PITCH_AREAS_ENUM).map((area, index) =>
-              area !== PITCH_AREAS_ENUM.OUT_OF_BOUNDS ? (
+            {Object.values(PitchArea).map((area, index) =>
+              area !== PitchArea.OUT_OF_BOUNDS ? (
                 <Grid key={index} item xs={4}>
                   <Box
                     sx={{

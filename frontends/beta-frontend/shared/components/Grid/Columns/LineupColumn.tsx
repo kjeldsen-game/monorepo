@@ -5,7 +5,6 @@ import { playerCommonColumns } from './PlayerCommonColumns';
 import MarketButton from '../../Market/MarketButton';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { Player } from '@/shared/models/player/Player';
-import { PITCH_AREAS } from '@/shared/models/match/PitchArea';
 import { PlayerOrder } from '@/shared/models/player/PlayerOrder';
 import SelectInput from '../../Common/SelectInput';
 import ColHeader from './common/components/ColHeader';
@@ -34,6 +33,7 @@ export const lineupColumn = (
 
   const columns: GridColDef[] = [
     ...playerCommonColumns(true, true, true),
+
     ...(isEditing
       ? [
         {

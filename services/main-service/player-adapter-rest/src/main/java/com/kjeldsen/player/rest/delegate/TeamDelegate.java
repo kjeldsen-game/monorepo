@@ -60,7 +60,7 @@ public class TeamDelegate implements TeamApiDelegate {
 
     /***************************** ECONOMY REST API *****************************/
     @Override
-    public ResponseEntity<Void> updatePricing(String teamId, UpdatePricingRequest updatePricingRequest) {
+    public ResponseEntity<SuccessResponse> updatePricing(String teamId, UpdatePricingRequest updatePricingRequest) {
         // Access denied as the path teamId is different that the teamId from Token
         if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -69,11 +69,11 @@ public class TeamDelegate implements TeamApiDelegate {
         updatePricingRequest.getPrices().forEach(price ->
             updateTeamPricingUseCase.update(Team.TeamId.of(teamId), price.getValue(),
                 Team.Economy.PricingType.valueOf(price.getType().name())));
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new SuccessResponse().message("Successfully updated price."));
     }
 
     @Override
-    public ResponseEntity<Void> signBillboard(String teamId, SignBillboardRequest signBillboardRequest) {
+    public ResponseEntity<SuccessResponse> signBillboard(String teamId, SignBillboardRequest signBillboardRequest) {
         // Access denied as the path teamId is different that the teamId from Token
         if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -82,11 +82,12 @@ public class TeamDelegate implements TeamApiDelegate {
         Team.Economy.BillboardIncomeType mode = Team.Economy.BillboardIncomeType.valueOf(
             signBillboardRequest.getMode().name());
         signBillboardIncomeUseCase.sign(TeamId.of(teamId), mode);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new SuccessResponse().message(String.
+            format("Successfully signed billboard of type %s", signBillboardRequest.getMode().name())));
     }
 
     @Override
-    public ResponseEntity<Void> signSponsor(String teamId, SignSponsorRequest signSponsorRequest) {
+    public ResponseEntity<SuccessResponse> signSponsor(String teamId, SignSponsorRequest signSponsorRequest) {
         // Access denied as the path teamId is different that the teamId from Token
         if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -95,7 +96,9 @@ public class TeamDelegate implements TeamApiDelegate {
         signSponsorIncomeUseCase.sign(TeamId.of(teamId),
             Team.Economy.IncomePeriodicity.valueOf(signSponsorRequest.getPeriodicity().name()),
             Team.Economy.IncomeMode.valueOf(signSponsorRequest.getMode().name()));
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new SuccessResponse().message(String.
+            format("Successfully signed billboard of mode %s periodicity %s",
+                signSponsorRequest.getMode().name(), signSponsorRequest.getPeriodicity().name())));
     }
 
     @Override

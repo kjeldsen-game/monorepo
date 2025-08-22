@@ -18,6 +18,7 @@ import { ErrorProvider } from '@/shared/contexts/ErrorContext';
 import ErrorSnackbar from '@/shared/components/Common/ErrorSnackbar';
 import { NotificationProvider } from '@/shared/contexts/NotificationContext';
 import NotificationSnackbar from '@/shared/components/Common/NotificationSnackbar';
+import { SnackbarProvider } from 'notistack';
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -60,14 +61,20 @@ function MyApp({
             <title>Kjeldsen</title>
           </Head>
           <ThemeProvider theme={theme}>
-            <ErrorProvider>
-              <NotificationProvider>
-                <CssBaseline />
-                <ErrorSnackbar />
-                <NotificationSnackbar />
-                {getLayout(<Component {...pageProps} />)}
-              </NotificationProvider>
-            </ErrorProvider>
+            <SnackbarProvider
+              maxSnack={4}
+              autoHideDuration={1500}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            >
+              <ErrorProvider>
+                <NotificationProvider>
+                  <CssBaseline />
+                  <ErrorSnackbar />
+                  <NotificationSnackbar />
+                  {getLayout(<Component {...pageProps} />)}
+                </NotificationProvider>
+              </ErrorProvider>
+            </SnackbarProvider>
           </ThemeProvider>
         </CacheProvider>
       </LocalizationProvider>

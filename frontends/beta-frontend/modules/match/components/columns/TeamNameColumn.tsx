@@ -11,7 +11,6 @@ export const TeamNameColumn = (
     return {
         ...getColumnConfig(alignment),
         field: header,
-        flex: 0.2,
         renderHeader: () => <ColHeader header={header} align={alignment} />,
         renderCell: (params: GridCellParams) => {
             const paddingStyle =

@@ -1,6 +1,6 @@
 import React from 'react'
 import SkillRowFilter from './SkillRowFilter'
-import { SkillRanges } from 'hooks/useMarketFilterForm';
+import { SkillRanges } from 'modules/market/types/filterForm';
 
 interface SkillFilterSectionProps {
     formValues: SkillRanges;

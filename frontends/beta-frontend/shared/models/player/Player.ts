@@ -1,8 +1,8 @@
-import { PITCH_AREAS_ENUM } from '../match/PitchArea';
 import { PlayerLineupStatus } from './PlayerLineupStatus';
 import { PlayerOrder } from './PlayerOrder';
 import { PlayerPosition } from './PlayerPosition';
 import { TeamRole } from '../MatchReport';
+import { PitchArea } from 'modules/player/types/Player';
 
 export interface Player {
   id: string;
@@ -13,7 +13,7 @@ export interface Player {
   preferredPosition: PlayerPosition;
   category: Category;
   playerOrder: PlayerOrder;
-  playerOrderDestinationPitchArea: PITCH_AREAS_ENUM;
+  playerOrderDestinationPitchArea: PitchArea;
   status: PlayerLineupStatus;
   actualSkills: { [key: string]: ActualSkill };
   economy: PlayerEconomy;

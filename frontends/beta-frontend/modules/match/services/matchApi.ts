@@ -2,6 +2,7 @@ import { connectorAPI } from '@/libs/fetcher';
 import { MatchStatus } from '@/shared/models/match/Match';
 import { CreateMatchRequest, PatchMatchRequest } from '../types/MatchRequests';
 import { DefaultResponse } from '@/shared/models/Responses';
+import { TeamFormationValiation } from '@/shared/models/player/Team';
 
 const MATCH_API = '/match';
 
@@ -64,4 +65,36 @@ export const acceptMatch = async (token: string, matchId: string) => {
 
 export const declineMatch = async (token: string, matchId: string) => {
   return _patchMatch(token, matchId, { status: MatchStatus.REJECTED });
+};
+
+export const validateMatchTeams = async (
+  teamId?: string,
+  matchId?: string,
+  token?: string,
+  selfChallenge: boolean = false,
+): Promise<TeamFormationValiation[]> => {
+  if (token === undefined || matchId === undefined || teamId === undefined) {
+    return undefined;
+  }
+  return connectorAPI<any>(
+    `${MATCH_API}/${matchId}/teams/${teamId}/validate?selfChallenge=${selfChallenge}`,
+    'GET',
+    undefined,
+    undefined,
+    token,
+  );
+};
+
+export const getMatchById = async (matchId: string, token?: string) => {
+  if (token === undefined || matchId === undefined) {
+    return undefined;
+  }
+  console.log('Fetching match by ID:', matchId);
+  return connectorAPI<any>(
+    `${MATCH_API}/${matchId}`,
+    'GET',
+    undefined,
+    undefined,
+    token,
+  );
 };

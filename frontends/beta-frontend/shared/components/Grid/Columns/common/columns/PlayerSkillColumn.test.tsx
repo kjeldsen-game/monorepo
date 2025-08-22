@@ -35,7 +35,7 @@ describe("PlayerSkillColumn", () => {
 
     it("Should return column config with width props when isXs is false", () => {
         const col = PlayerSkillColumn(getValue, PlayerSkill.SCORING, PlayerSkill.AERIAL, false);
-        expect(col.width).toBe(50);
+        expect(col.width).toBeUndefined();
         expect(col.maxWidth).toBeUndefined();
         expect(col.minWidth).toBeUndefined()
     })

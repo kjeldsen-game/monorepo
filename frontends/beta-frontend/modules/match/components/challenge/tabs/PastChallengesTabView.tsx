@@ -1,5 +1,5 @@
 import Grid from '@/shared/components/Grid/Grid'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useMatchChallengeData } from 'modules/match/hooks/useMatchChallengeData'
 import PastChallengesColumns from '../columns/PastChallengesColumns'
@@ -16,6 +16,11 @@ const PastChallengesTabView = () => {
 
     return (
         <Box sx={{ width: '100%' }}>
+            <Box paddingY={2} >
+                <Typography fontWeight={'bold'} color={'#555F6C'}>
+                    Past Challenges
+                </Typography>
+            </Box>
             <Grid
                 initialState={{
                     sorting: { sortModel: [{ field: 'dateTime', sort: 'desc' }] },

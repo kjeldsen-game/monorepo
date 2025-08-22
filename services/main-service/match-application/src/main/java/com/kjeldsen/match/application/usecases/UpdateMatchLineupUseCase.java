@@ -36,7 +36,7 @@ public class UpdateMatchLineupUseCase {
         log.info("UpdateMatchLineupUseCase for match={} team={}", matchId, teamId);
 
         GetMatchTeamUseCase.MatchAndTeam matchAndTeam = getMatchTeamUseCase.getMatchAndTeam(matchId, teamId);
-
+        log.info("old players={}", matchAndTeam.team().getPlayers());
         List<PlayerClient> players = playerClientApi.getPlayers(teamId);
         playerList.forEach(player -> {
             Optional<PlayerClient> matchingPlayerDTO = players.stream()
@@ -56,6 +56,8 @@ public class UpdateMatchLineupUseCase {
             PlayerStatus.BENCH, players, matchAndTeam.teamRole());
         List<com.kjeldsen.match.domain.entities.Player> newActivePlayers = filterPlayersByStatus(
             PlayerStatus.ACTIVE, players, matchAndTeam.teamRole());
+
+        log.info("New active players: {}", newActivePlayers);
 
         // Update players and modifiers for the match
         matchAndTeam.team().setPlayers(newActivePlayers);

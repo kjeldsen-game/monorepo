@@ -1,5 +1,5 @@
 import Grid from '@/shared/components/Grid/Grid'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useSession } from 'next-auth/react';
 import { useMatchChallengeData } from 'modules/match/hooks/useMatchChallengeData';
 import { useMatchChallengeActions } from 'modules/match/hooks/useMatchChallengeActions';
@@ -22,6 +22,11 @@ const AcceptedChallengesTabView = () => {
 
     return (
         <Box sx={{ width: '100%' }}>
+            <Box paddingY={2} >
+                <Typography fontWeight={'bold'} color={'grey'}>
+                    Accepted Challenges
+                </Typography>
+            </Box>
             <Grid
                 initialState={{
                     sorting: { sortModel: [{ field: 'dateTime', sort: 'desc' }] },

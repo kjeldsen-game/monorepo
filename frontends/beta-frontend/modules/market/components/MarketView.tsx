@@ -49,34 +49,38 @@ const MarketView: React.FC<MarketProps> = ({
   const memoizedColumns = useMemo(() => MarketColumns(handleRowButtonClick, isXs), [isXs]);
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <>
       <DashboardLink children={'Back to Dashboard'} />
 
-      <Alert sx={{ mb: '16px' }} severity="warning">
+      <Alert sx={{ mb: '16px', borderLeft: '8px solid #EF7B2B' }} severity="warning">
         Please note: the app is not continuously deployed, so auction end times may behave unexpectedly.
         That said, the bidding system is fully functional and ready for beta testing — you can place bids on players successfully.
       </Alert>
 
-      <AuctionDialog
-        auction={activeAuction}
-        open={open}
-        handleClose={handleCloseModal}
-      />
-      <Box
-        sx={{
-          marginBottom: '2rem',
-          alignItems: 'center',
-        }}>
-        <MarketFilter setFilter={setFilter} />
-      </Box>
-      <Grid
-        loading={auctions === undefined || null}
-        disableColumnMenu={true}
-        getRowId={(row) => row.id}
-        rows={auctions}
-        columns={memoizedColumns}
-      />
-    </Box>
+      <Box sx={{ width: '100%', background: 'white' }} padding={2} borderRadius={2} boxShadow={1}>
+
+        <AuctionDialog
+          auction={activeAuction}
+          open={open}
+          handleClose={handleCloseModal}
+        />
+        <Box
+          sx={{
+            marginBottom: '2rem',
+            alignItems: 'center',
+          }}>
+          <MarketFilter setFilter={setFilter} />
+        </Box>
+        <Grid
+          loading={auctions === undefined || null}
+          disableColumnMenu={true}
+          getRowId={(row) => row.id}
+          rows={auctions}
+          columns={memoizedColumns}
+        />
+      </Box >
+    </>
+
   );
 };
 

@@ -7,7 +7,7 @@ const NotificationSnackbar = () => {
 
     return (
 
-        <Snackbar open={!!notification} autoHideDuration={1500} onClose={() => setNotification(null)} message={notification} >
+        <Snackbar open={!!notification} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} autoHideDuration={1500} onClose={() => setNotification(null)} message={notification} >
             <Alert severity={'success'} sx={{ width: '100%' }}>
                 {notification}
             </Alert>

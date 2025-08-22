@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import { CircularProgress, Typography } from '@mui/material';
-import Avatar from '@/shared/components/Avatar';
 import TransferWithinAStationIcon from '@mui/icons-material/TransferWithinAStation';
 import ElderlyIcon from '@mui/icons-material/Elderly';
 import { FC } from 'react';
@@ -51,7 +50,6 @@ export const PlayerDetails: FC<PlayerDetailsProps> = ({ player }) => {
         marginBottom: '2rem',
         alignItems: 'center',
       }}>
-      <Avatar />
       <Box
         sx={{
           marginLeft: '3rem',
