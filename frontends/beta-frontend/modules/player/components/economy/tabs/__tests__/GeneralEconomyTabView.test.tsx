@@ -2,11 +2,11 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import GeneralEconomyTabView from '../GeneralEconomyTabView';
 import { IncomePeriodicity } from '@/shared/models/player/Economy';
 
-jest.mock('../../Cards/GeneralEconomyCard', () => () => <div>GeneralEconomyCard</div>);
-jest.mock('../../Cards/BillboardCard', () => (props: any) => (
+jest.mock('../../cards/GeneralEconomyCard', () => () => <div>GeneralEconomyCard</div>);
+jest.mock('../../cards/BillboardCard', () => (props: any) => (
     <div onClick={() => props.setOpen(true)}>BillboardCard</div>
 ));
-jest.mock('../../Cards/SponsorCard', () => (props: any) => (
+jest.mock('../../cards/SponsorCard', () => (props: any) => (
     <div onClick={() => props.handleOpenModal(props.type)}>SponsorCard {props.type}</div>
 ));
 jest.mock('../../dialogs/BillboardDialog', () => (props: any) =>
