@@ -10,9 +10,9 @@ import { Player } from '@/shared/models/player/Player';
 import { useSession } from 'next-auth/react';
 import { positionComparator } from '@/shared/utils/GridUtils';
 import CustomTooltip from './Tooltips/CustomTooltip';
-import PressureDescriptionItem from '../Team/Modifiers/PressureDescriptionItem';
 import { getModifierDescription } from '@/shared/utils/TeamModifiersUtils';
 import { matchReportPlayercolumns } from '../Grid/Columns/MatchReportPlayerColumns';
+import PressureDescriptionItem from 'modules/player/components/team/tactics/PressureDescriptionItem';
 
 interface MatchReportMetricsProps {
   sx?: React.CSSProperties;
