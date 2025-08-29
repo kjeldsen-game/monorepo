@@ -4,18 +4,26 @@ import * as teamsApi from '../../services/teamApi';
 import { useSnackbar } from 'notistack';
 import { TeamPlayerPatchRequest } from 'modules/player/types/Requests';
 
-export const useTeamApi = () => {
+export const useTeamApi = (teamId?: string) => {
   const { mutate: mutateTeamValidation } = useSWRConfig();
   const { enqueueSnackbar } = useSnackbar();
   const { data: userData } = useSession();
 
   const { data, error, isLoading, mutate } = useSWR(
-    userData?.accessToken ? teamsApi.TEAMS_API + userData?.user?.teamId : null,
-    () => teamsApi.getTeam(userData?.user?.teamId, userData?.accessToken),
+    userData?.accessToken
+      ? teamsApi.TEAMS_API + (teamId ? teamId : userData?.user?.teamId)
+      : null,
+    () =>
+      teamsApi.getTeam(
+        teamId ? teamId : userData?.user?.teamId,
+        userData?.accessToken,
+      ),
     {
       onSuccess: () =>
         mutateTeamValidation(
-          teamsApi.TEAMS_API + 'validation' + userData?.user?.teamId,
+          teamsApi.TEAMS_API +
+            'validation' +
+            (teamId ? teamId : userData?.user?.teamId),
         ),
     },
   );

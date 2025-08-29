@@ -1,20 +1,16 @@
 import { GridColDef } from '@mui/x-data-grid';
 import { Box, Typography } from '@mui/material';
 import ColHeader from '../common/components/ColHeader';
-import {
-  baseColumnConfig,
-  leftColumnConfig,
-  rightColumnConfig,
-} from '../common/config/ColumnsConfig';
 import { PITCH_AREA_SHORTCUTS } from '@/shared/models/match/PitchArea';
 import { PlayerPositionAbbreviation } from '@/shared/models/player/PlayerPosition';
 import { formatName } from '@/shared/utils/PlayerUtils';
-import CustomTooltip from '@/shared/components/MatchReport/Tooltips/CustomTooltip';
+import { getColumnConfig } from '../common/config/ColumnsConfig';
+import CustomTooltip from 'modules/match/components/report/tooltips/CustomTooltip';
 
 export const matchStatsColumns = () => {
   const columns: GridColDef[] = [
     {
-      ...leftColumnConfig,
+      ...getColumnConfig("left"),
       field: 'clock',
       renderHeader: () => <ColHeader header={'Clk'} align={'left'} />,
       renderCell: (params) => {
@@ -26,7 +22,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'action',
       renderHeader: () => <ColHeader header={'Act'} />,
       renderCell: (params) => {
@@ -38,7 +34,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'ballHeight',
       renderHeader: () => <ColHeader header={'Ball'} />,
       renderCell: (params) => {
@@ -50,7 +46,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'fieldArea',
       renderHeader: () => <ColHeader header={'Fiel'} />,
       renderCell: (params) => {
@@ -62,7 +58,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'initiator',
       renderHeader: () => <ColHeader header={'Att'} />,
       minWidth: 130,
@@ -79,7 +75,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'skillPointInitiator',
       renderHeader: () => <ColHeader header={'Pts'} />,
       renderCell: (params) => {
@@ -92,7 +88,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'randomInitiator',
       renderHeader: () => <ColHeader header={'Ran'} />,
       renderCell: (params) => {
@@ -105,7 +101,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'randomPrevInitiator',
       renderHeader: () => <ColHeader header={'RanPrev'} />,
       renderCell: (params) => {
@@ -122,7 +118,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'randomTotalInitiator',
       renderHeader: () => <ColHeader header={'RanTot'} />,
       renderCell: (params) => {
@@ -135,7 +131,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'carryOverInitiator',
       renderHeader: () => <ColHeader header={'CarryO'} />,
       renderCell: (params) => {
@@ -149,7 +145,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'assitanceInitiator',
       renderHeader: () => <ColHeader header={'Assist'} />,
       renderCell: (params) => {
@@ -162,7 +158,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'totalInitiator',
       renderHeader: () => <ColHeader header={'Tot'} />,
       renderCell: (params) => {
@@ -175,7 +171,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'passReceiver',
       renderHeader: () => <ColHeader header={'Pass'} />,
       minWidth: 100,
@@ -192,7 +188,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'challenger',
       minWidth: 130,
       renderHeader: () => <ColHeader header={'Def'} />,
@@ -219,7 +215,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'skillPointChallenger',
       renderHeader: () => <ColHeader header={'Pts'} />,
       renderCell: (params) => {
@@ -232,7 +228,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'randomChallenger',
       renderHeader: () => <ColHeader header={'Ran'} />,
       renderCell: (params) => {
@@ -245,7 +241,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'randomPrevChallenger',
       renderHeader: () => <ColHeader header={'RanPrev'} />,
       renderCell: (params) => {
@@ -262,7 +258,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'randomTotalChallenger',
       renderHeader: () => <ColHeader header={'RanTot'} />,
       renderCell: (params) => {
@@ -275,7 +271,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'carryOverChallenger',
       renderHeader: () => <ColHeader header={'CarryO'} />,
       renderCell: (params) => {
@@ -288,7 +284,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'assitanceChallenger',
       renderHeader: () => <ColHeader header={'Assist'} />,
       renderCell: (params) => {
@@ -301,7 +297,7 @@ export const matchStatsColumns = () => {
       },
     },
     {
-      ...rightColumnConfig,
+      ...getColumnConfig(),
       field: 'totalChallenger',
       renderHeader: () => <ColHeader header={'Tot'} align={'right'} />,
       renderCell: (params) => {

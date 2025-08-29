@@ -6,8 +6,8 @@ import {
   PlayerSkillToShortcut,
 } from '@/shared/models/player/PlayerSkill';
 import ColHeader from '../common/components/ColHeader';
-import { playerSkillsColumns } from '../PlayerSkillsColumns';
-import { playerCommonColumns } from '../PlayerCommonColumns';
+// import { playerSkillsColumns } from '../PlayerSkillsColumns';
+// import { playerCommonColumns } from '../PlayerCommonColumns';
 import { baseColumnConfig } from '../common/config/ColumnsConfig';
 
 export const trainingScheduleColumns = (
@@ -71,7 +71,7 @@ export const trainingScheduleColumns = (
   };
 
   const columns: GridColDef[] = [
-    ...playerCommonColumns(true, false),
+    // ...playerCommonColumns(true, false),
     {
       field: 'cs',
       renderHeader: () => <ColHeader header={'CS'} />,
@@ -91,7 +91,7 @@ export const trainingScheduleColumns = (
         </Box>
       ),
     },
-    ...playerSkillsColumns(),
+    // ...playerSkillsColumns(),
     // {
     //   field: 'DEFENSIVE_POSITIONING',
     //   renderHeader: () => <div>DP</div>,
