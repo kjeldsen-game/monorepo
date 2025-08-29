@@ -7,6 +7,7 @@ import GeneralTabView from './tabs/GeneralTabView'
 import PastChallengesTabView from './tabs/PastChallengesTabView'
 import AcceptedChallengesTabView from './tabs/AcceptedChallengesTabView'
 import DashboardLink from '@/shared/components/DashboardLink'
+import PreAlphaAlert from '@/shared/components/PreAlphaAlert'
 
 const ChallengeView = () => {
 
@@ -19,7 +20,11 @@ const ChallengeView = () => {
     return (
         <>
             {/* <DashboardLink children={'Back to Dashboard'} /> */}
-            <Alert sx={{
+
+
+            <PreAlphaAlert />
+
+            {/* <Alert sx={{
                 borderTopLeftRadius: '0px',
                 borderBottomLeftRadius: '0px',
                 mb: '16px', borderLeft: '8px solid #FF3F84', color: '#FF3F84',
@@ -34,7 +39,7 @@ const ChallengeView = () => {
                 <Typography variant='body1'>
                     Module is in the beta testing.
                 </Typography>
-            </Alert>
+            </Alert> */}
             <Box sx={{ width: '100%', background: 'white' }} padding={2} borderRadius={2} boxShadow={1} >
                 <Box>
                     <CustomTabs selectedTab={selectedTab} handleChange={handleTabChange} >

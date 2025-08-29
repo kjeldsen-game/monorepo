@@ -56,10 +56,9 @@ const SignInView = () => {
                         control={control}
                     />
                     <Box display={'flex'} paddingTop={1} style={{ justifyContent: 'center' }}>
-                        {loading ? <CircularProgress sx={{ color: '#FF3F84' }} /> :
-                            <CustomButton type='submit' sx={{ width: '100%' }}>
-                                Sign In
-                            </CustomButton>}
+                        <CustomButton loadingPosition="center" loading={loading} type='submit' sx={{ width: '100%' }}>
+                            Sign In
+                        </CustomButton>
                     </Box>
                 </form>
                 <Typography sx={{ color: '#808080', fontSize: '14px' }} textAlign={'center'} mt={'16px'}>

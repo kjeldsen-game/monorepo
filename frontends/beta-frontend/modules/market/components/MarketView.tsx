@@ -50,7 +50,7 @@ const MarketView: React.FC<MarketProps> = ({
 
   return (
     <>
-      <DashboardLink children={'Back to Dashboard'} />
+      {/* <DashboardLink children={'Back to Dashboard'} /> */}
 
       <Alert sx={{ mb: '16px', borderLeft: '8px solid #EF7B2B' }} severity="warning">
         Please note: the app is not continuously deployed, so auction end times may behave unexpectedly.

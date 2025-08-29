@@ -4,7 +4,6 @@ import ProgressBar from '../../../Training/ProgressBar';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { Box, Typography } from '@mui/material';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
-import { playerCommonColumns } from '../PlayerCommonColumns';
 import ColHeader from '../common/components/ColHeader';
 import { rightColumnConfig } from '../common/config/ColumnsConfig';
 
@@ -17,7 +16,7 @@ export const trainingColumn = () => {
   };
 
   const columns: GridColDef[] = [
-    ...playerCommonColumns(false, false, true),
+    // ...playerCommonColumns(false, false, true),
     // {
     //   ...baseColumnConfig,
     //   field: 'name',
