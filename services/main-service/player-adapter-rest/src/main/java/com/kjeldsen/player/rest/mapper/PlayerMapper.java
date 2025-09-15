@@ -2,6 +2,7 @@ package com.kjeldsen.player.rest.mapper;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.rest.mapper.common.EnumMapper;
 import com.kjeldsen.player.rest.model.PlayerResponse;
 import com.kjeldsen.player.rest.model.PlayerSkill;
 import com.kjeldsen.player.rest.model.PlayerSkillRelevance;
@@ -19,11 +20,19 @@ public interface PlayerMapper {
     PlayerResponse playerResponseMap(Player player);
 
     default PlayerPosition playerPositionMap(com.kjeldsen.player.rest.model.PlayerPosition position) {
-        return position != null ? PlayerPosition.valueOf(position.name()) : null;
+        return EnumMapper.mapEnum(position, PlayerPosition.class);
     }
 
     default com.kjeldsen.player.rest.model.PlayerPosition playerPositionMap(PlayerPosition position) {
-        return position != null ? com.kjeldsen.player.rest.model.PlayerPosition.valueOf(position.name()) : null;
+        return EnumMapper.mapEnum(position, com.kjeldsen.player.rest.model.PlayerPosition.class);
+    }
+
+    default PlayerSkill mapPlayerSkill(com.kjeldsen.player.domain.PlayerSkill skill) {
+        return EnumMapper.mapEnum(skill, PlayerSkill.class);
+    }
+
+    default com.kjeldsen.player.domain.PlayerSkill mapPlayerSkill(PlayerSkill skill) {
+        return EnumMapper.mapEnum(skill, com.kjeldsen.player.domain.PlayerSkill.class);
     }
 
     default PlayerSkill playerSkillMap(String playerSkill) {

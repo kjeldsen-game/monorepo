@@ -33,7 +33,7 @@ const MarketFilter: React.FC<MarketFilterProps> = ({ setFilter }) => {
             defaultExpanded={false}
             sx={{
                 boxShadow: 'none',
-                background: '#F9F9F9',
+                background: '#F3F4F6',
                 borderRadius: '8px !important',
             }}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />} >

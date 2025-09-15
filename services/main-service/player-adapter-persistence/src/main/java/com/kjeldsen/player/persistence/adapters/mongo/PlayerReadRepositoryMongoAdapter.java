@@ -98,7 +98,6 @@ public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
                 query.addCriteria(new Criteria().andOperator(criteriaList.toArray(new Criteria[0])));
             }
         }
-        System.out.println(query);
         return mongoTemplate.find(query, Player.class);
     }
 

@@ -25,7 +25,7 @@ public class QuartzConfiguration {
             // TODO Quartz fix the interval in minutes, set to minute while testing
             scheduleJob(NewDayJob.class, "newDayJob", "newDayJob",
                 SimpleScheduleBuilder.simpleSchedule()
-                    .withIntervalInMinutes(2)  //617 10.28 hours = 617 minutes
+                    .withIntervalInMinutes(30)  //617 10.28 hours = 617 minutes
                     .repeatForever()
                     .withMisfireHandlingInstructionFireNow());
 //

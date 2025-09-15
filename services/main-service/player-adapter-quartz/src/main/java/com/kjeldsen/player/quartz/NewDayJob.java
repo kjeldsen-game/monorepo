@@ -1,8 +1,8 @@
 package com.kjeldsen.player.quartz;
 
-import com.kjeldsen.player.application.usecases.trainings.ProcessDeclineTrainingUseCase;
-import com.kjeldsen.player.application.usecases.trainings.ProcessPlayerTrainingUseCase;
-import com.kjeldsen.player.application.usecases.trainings.ProcessPotentialRiseUseCase;
+import com.kjeldsen.player.application.usecases.trainings.decline.ProcessDeclineTrainingUseCase;
+import com.kjeldsen.player.application.usecases.trainings.player.ProcessPlayerTrainingUseCase;
+import com.kjeldsen.player.application.usecases.trainings.potential.ProcessPotentialRiseUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
@@ -24,7 +24,7 @@ public class NewDayJob implements Job {
         log.info("New day in Kjeldsen is here!");
         // PlayerTraining, PlayerDecline, PlayerRiseUp
         processPlayerTrainingUseCase.process();
-//        processPotentialRiseUseCase.process();
-//        processDeclineTrainingUseCase.process();
+        processPotentialRiseUseCase.process();
+        processDeclineTrainingUseCase.process();
     }
 }

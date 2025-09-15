@@ -5,6 +5,7 @@ import { useMatchChallengeData } from 'modules/match/hooks/useMatchChallengeData
 import { useMatchChallengeActions } from 'modules/match/hooks/useMatchChallengeActions';
 import { useMemo } from 'react';
 import AcceptedChallengesColumns from '../columns/AcceptedChallengesColumns';
+import { theme } from '@/libs/material/theme';
 
 const AcceptedChallengesTabView = () => {
     const { data: userData } = useSession();
@@ -23,7 +24,7 @@ const AcceptedChallengesTabView = () => {
     return (
         <Box sx={{ width: '100%' }}>
             <Box paddingY={2} >
-                <Typography fontWeight={'bold'} color={'grey'}>
+                <Typography fontWeight={'bold'} color={theme.palette.quaternary.main}>
                     Accepted Challenges
                 </Typography>
             </Box>

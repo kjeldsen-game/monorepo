@@ -8,6 +8,7 @@ import { StyledMyTeamDatagrid } from 'modules/match/utils/ChallengeUtils';
 import { useTeamsApi } from 'modules/player/hooks/api/useTeamsApi';
 import CreateChallengesColumns from '../columns/CreateChallengesColumns';
 import PendingChallengesColumns from '../columns/PendingChallengesColumns';
+import { theme } from '@/libs/material/theme';
 
 const GeneralTabView = () => {
     const { data: userData } = useSession();
@@ -28,7 +29,7 @@ const GeneralTabView = () => {
     return (
         <>
             <Box paddingY={2} >
-                <Typography fontWeight={'bold'} color={'grey'}>
+                <Typography fontWeight={'bold'} color={theme.palette.quaternary.main}>
                     Pending Challenges
                 </Typography>
             </Box>
@@ -44,7 +45,7 @@ const GeneralTabView = () => {
                 }
             />
             <Box paddingY={2} >
-                <Typography fontWeight={'bold'} color={'grey'}>
+                <Typography fontWeight={'bold'} color={theme.palette.quaternary.main}>
                     Challenge a team
                 </Typography>
             </Box>
