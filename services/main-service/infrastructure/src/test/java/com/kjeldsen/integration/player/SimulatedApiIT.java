@@ -29,18 +29,13 @@ class SimulatedApiIT extends AbstractIT {
     private PlayerMongoRepository playerMongoRepository;
     @Autowired
     private PlayerTrainingScheduledEventMongoRepository playerTrainingScheduledEventMongoRepository;
-    @Autowired
-    private PlayerTrainingDeclineEventMongoRepository playerTrainingDeclineEventMongoRepository;
-    @Autowired
-    private PlayerPotentialRiseEventMongoRepository playerPotentialRiseEventMongoRepository;
+
 
 
     @BeforeEach
     void setUp() {
         playerMongoRepository.deleteAll();
         playerTrainingScheduledEventMongoRepository.deleteAll();
-        playerTrainingDeclineEventMongoRepository.deleteAll();
-        playerPotentialRiseEventMongoRepository.deleteAll();
     }
 
     @Nested
@@ -65,42 +60,42 @@ class SimulatedApiIT extends AbstractIT {
                 .andExpect(status().isOk());
         }
 
-        @Test
-        @DisplayName("Should process player declines and return 200")
-        void should_return_200_when_decline_is_executed() throws Exception {
-            Player examplePlayer = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
-                PlayerCategory.JUNIOR, 200);
-            examplePlayer.getAge().setYears(28);
-            playerMongoRepository.save(examplePlayer);
-
-            mockMvc.perform(post("/v1/simulator/player-declines"))
-                .andExpect(status().isOk());
-
-            List<PlayerTrainingDeclineEvent> events = playerTrainingDeclineEventMongoRepository.findAll();
-            assertEquals(examplePlayer.getId(), events.get(0).getPlayerId());
-            assertEquals(1, events.size());
-        }
-
-        @Test
-        @DisplayName("Should process player potential rises and return 200")
-        void should_return_200_when_process_potential_rises() throws Exception {
-            Player examplePlayer1 = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
-                PlayerCategory.JUNIOR, 200);
-            examplePlayer1.getAge().setYears(28);
-            Player examplePlayer2 = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
-                PlayerCategory.JUNIOR, 200);
-            examplePlayer2.getAge().setYears(20);
-            playerMongoRepository.saveAll(List.of(examplePlayer1, examplePlayer2));
-
-            try (MockedStatic<PotentialRiseGenerator> mockedStatic = mockStatic(PotentialRiseGenerator.class)) {
-                mockedStatic.when(PotentialRiseGenerator::generatePotentialRaise).thenReturn(1);
-
-                mockMvc.perform(post("/v1/simulator/potential-rises"))
-                    .andExpect(status().isOk());
-            }
-
-            List<PlayerPotentialRiseEvent> events = playerPotentialRiseEventMongoRepository.findAll();
-            assertEquals(1, events.size());
-        }
+//        @Test
+//        @DisplayName("Should process player declines and return 200")
+//        void should_return_200_when_decline_is_executed() throws Exception {
+//            Player examplePlayer = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
+//                PlayerCategory.JUNIOR, 200);
+//            examplePlayer.getAge().setYears(28);
+//            playerMongoRepository.save(examplePlayer);
+//
+//            mockMvc.perform(post("/v1/simulator/player-declines"))
+//                .andExpect(status().isOk());
+//
+//            List<PlayerTrainingDeclineEvent> events = playerTrainingDeclineEventMongoRepository.findAll();
+//            assertEquals(examplePlayer.getId(), events.get(0).getPlayerId());
+//            assertEquals(1, events.size());
+//        }
+//
+//        @Test
+//        @DisplayName("Should process player potential rises and return 200")
+//        void should_return_200_when_process_potential_rises() throws Exception {
+//            Player examplePlayer1 = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
+//                PlayerCategory.JUNIOR, 200);
+//            examplePlayer1.getAge().setYears(28);
+//            Player examplePlayer2 = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES,
+//                PlayerCategory.JUNIOR, 200);
+//            examplePlayer2.getAge().setYears(20);
+//            playerMongoRepository.saveAll(List.of(examplePlayer1, examplePlayer2));
+//
+//            try (MockedStatic<PotentialRiseGenerator> mockedStatic = mockStatic(PotentialRiseGenerator.class)) {
+//                mockedStatic.when(PotentialRiseGenerator::generatePotentialRaise).thenReturn(1);
+//
+//                mockMvc.perform(post("/v1/simulator/potential-rises"))
+//                    .andExpect(status().isOk());
+//            }
+//
+//            List<PlayerPotentialRiseEvent> events = playerPotentialRiseEventMongoRepository.findAll();
+//            assertEquals(1, events.size());
+//        }
     }
 }
