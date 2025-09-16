@@ -1,3 +1,4 @@
+import { theme } from '@/libs/material/theme';
 import { Box, useMediaQuery } from '@mui/material';
 
 interface ProgressBarProps {
@@ -5,7 +6,7 @@ interface ProgressBarProps {
 }
 
 const ProgressBar = ({ days }: ProgressBarProps) => {
-    const isXs = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
+    const isXs = useMediaQuery(theme.breakpoints.down('sm'));
     const NUMBER_OF_CELLS = 14;
     const getColorStyle = (days: number): string => {
         if (days <= 4 && days >= 1) {

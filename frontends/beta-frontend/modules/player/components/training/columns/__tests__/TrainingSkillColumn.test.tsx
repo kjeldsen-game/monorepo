@@ -48,12 +48,12 @@ describe("TrainingSkillColumn", () => {
 
     it("renderCell renders PlayerSkillText", () => {
         const { getByTestId } = render(<>{columnDef.renderCell!({ row: mockRow } as any)}</>);
-        expect(getByTestId("player-skill-text")).toBeInTheDocument();
+        expect(getByTestId("player-training-skill-text")).toBeInTheDocument();
     });
 
     it("renderCell calls handleCellClick on click when skill exists", () => {
         const { getByTestId } = render(<>{columnDef.renderCell!({ row: mockRow } as any)}</>);
-        const skillDiv = getByTestId("player-skill-text").parentElement!;
+        const skillDiv = getByTestId("player-training-skill-text").parentElement!;
         fireEvent.click(skillDiv);
 
         expect(mockHandleCellClick).toHaveBeenCalledWith(
