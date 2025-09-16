@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, SxProps, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { ActualSkill } from '@/shared/models/player/Player';
 
 interface PlayerSkillTextProps {
     skills?: ActualSkill;
-    isXsOverride?: boolean;
+    sx?: SxProps;
 }
 
-const PlayerSkillText: React.FC<PlayerSkillTextProps> = ({ skills, isXsOverride }) => {
+const PlayerSkillText: React.FC<PlayerSkillTextProps> = ({ skills, sx }) => {
     if (!skills) return null;
     const theme = useTheme();
     const isXs = useMediaQuery(theme.breakpoints.only('xs'));
@@ -37,6 +37,8 @@ const PlayerSkillText: React.FC<PlayerSkillTextProps> = ({ skills, isXsOverride 
                 textOverflow: 'ellipsis',
                 maxWidth: '100%',
                 flexDirection: useColumn ? 'column' : 'row',
+                ...sx
+
             }}
         >
             <Typography fontWeight="bold">{skills.PlayerSkills.actual}</Typography>

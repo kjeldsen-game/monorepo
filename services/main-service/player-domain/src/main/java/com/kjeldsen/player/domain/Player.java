@@ -7,7 +7,10 @@ import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.generator.SalaryGenerator;
 import java.math.BigDecimal;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
+
+import com.kjeldsen.player.domain.models.training.TrainingEvent;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -53,7 +56,7 @@ public class Player {
     private PitchArea playerOrderDestinationPitchArea;
 
     //    private PlayerTrainingBloomEvent bloom;
-    private PlayerTrainingDeclineEvent decline;
+//    private PlayerTrainingDeclineEvent decline;
     @Builder.Default
     private boolean isFallCliff = false;
     private PlayerCategory category;
@@ -62,8 +65,15 @@ public class Player {
     public void addDeclinePhase(PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
         throwIfNot(Range.between(MIN_DECLINE_PLAYER_AGE, MAX_DECLINE_PLAYER_AGE).contains(age.getYears()), DECLINE_PLAYER_AGE_INVALID_RANGE);
         subtractSkillPoints(playerTrainingDeclineEvent.getSkill(), playerTrainingDeclineEvent.getPointsToSubtract());
-        this.decline = playerTrainingDeclineEvent;
+//        this.decline = playerTrainingDeclineEvent;
     }
+
+    public void addDeclinePhase(TrainingEvent trainingEvent) {
+        throwIfNot(Range.between(MIN_DECLINE_PLAYER_AGE, MAX_DECLINE_PLAYER_AGE).contains(age.getYears()), DECLINE_PLAYER_AGE_INVALID_RANGE);
+        subtractSkillPoints(trainingEvent.getSkill(), trainingEvent.getPoints());
+//        this.decline = trainingEvent;
+    }
+
 
     public Integer getActualSkillPoints(PlayerSkill skill) {
         return getActualSkills().get(skill).getActual();
@@ -73,6 +83,9 @@ public class Player {
         return getActualSkills().get(skill).getPotential();
     }
 
+    public boolean isBloom() {
+        return this.bloomYear != null && Objects.equals(this.bloomYear, this.age.getYears());
+    }
 
     public void addSkillsPoints(PlayerSkill skill, Integer points) {
         PlayerSkills skillPoints = getActualSkills().get(skill);

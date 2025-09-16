@@ -6,28 +6,27 @@ import {
   SignUpRequest,
 } from '../types/requests/authRequests';
 import * as authApi from '../services/authApi';
-import { useError } from '@/shared/contexts/ErrorContext';
-import { useNotification } from '@/shared/contexts/NotificationContext';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { DefaultResponse } from '@/shared/models/Responses';
+import { useSnackbar } from 'notistack';
 
 export function useAuth() {
   const [loading, setLoading] = useState(false);
-  const { setError } = useError();
   const router = useRouter();
-  const { setNotification } = useNotification();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleForgetPassword = async (
     request: ForgetPasswordRequest,
   ): Promise<void> => {
     setLoading(true);
-    setError(null);
     try {
       const response: DefaultResponse = await authApi.forgetPassword(request);
-      setNotification(response.message);
+      enqueueSnackbar(response.message, { variant: 'success' });
     } catch (error: any) {
-      setError(error.message || 'Forget password failed');
+      enqueueSnackbar(error.message || 'Forget password failed', {
+        variant: 'error',
+      });
     } finally {
       setLoading(false);
     }
@@ -37,19 +36,19 @@ export function useAuth() {
     request: PasswordResetRequest,
   ): Promise<void> => {
     setLoading(true);
-    setError(null);
     try {
       const response: DefaultResponse = await authApi.resetPassword(request);
-      setNotification(response.message);
+      enqueueSnackbar(response.message, { variant: 'success' });
     } catch (error: any) {
-      setError(error.message || 'Reset password failed');
+      enqueueSnackbar(error.message || 'Reset password failed', {
+        variant: 'error',
+      });
     } finally {
       setLoading(false);
     }
   };
 
   const handleSignIn = async (request: SignInRequest): Promise<void> => {
-    setError(null);
     setLoading(true);
     return new Promise((resolve, reject) => {
       const { email, password } = request;
@@ -63,8 +62,8 @@ export function useAuth() {
             resolve(res.status);
             router.push('/team');
           } else {
-            setError(res?.error);
-            reject('Invalid credentiasssls');
+            enqueueSnackbar(res?.error, { variant: 'error' });
+            reject('Invalid credentials');
             setLoading(false);
           }
         })
@@ -78,16 +77,15 @@ export function useAuth() {
 
   const handleSignUp = async (request: SignUpRequest): Promise<void> => {
     setLoading(true);
-    setError(null);
     try {
       const response: DefaultResponse = await authApi.signUp(request);
-      setNotification(response.message);
+      enqueueSnackbar(response.message, { variant: 'success' });
       await handleSignIn({
         email: request.email,
         password: request.password,
       });
     } catch (error: any) {
-      setError(error.message || 'Register failed');
+      enqueueSnackbar(error.message || 'Register failed', { variant: 'error' });
       setLoading(false);
     }
   };

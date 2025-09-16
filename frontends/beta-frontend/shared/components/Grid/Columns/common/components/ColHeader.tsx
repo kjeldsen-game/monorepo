@@ -1,13 +1,19 @@
+import { theme } from '@/libs/material/theme';
+import { useMediaQuery } from '@mui/material';
 import { GridAlignment } from '@mui/x-data-grid';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, use } from 'react';
 
 interface ColHeaderProps {
   header: string;
   children?: ReactNode;
   align?: GridAlignment
+  secondaryHeader?: string;
 }
 
-const ColHeader: React.FC<ColHeaderProps> = ({ header, align = "center", children }) => {
+const ColHeader: React.FC<ColHeaderProps> = ({ header, align = "center", children, secondaryHeader }) => {
+
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"))
+
   const paddingStyle = align
     ? {
       paddingLeft: align === 'left' ? '10px' : undefined,

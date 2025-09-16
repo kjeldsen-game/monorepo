@@ -3,6 +3,7 @@ import { Box, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useMatchChallengeData } from 'modules/match/hooks/useMatchChallengeData'
 import PastChallengesColumns from '../columns/PastChallengesColumns'
+import { theme } from '@/libs/material/theme'
 
 
 const PastChallengesTabView = () => {
@@ -17,7 +18,7 @@ const PastChallengesTabView = () => {
     return (
         <Box sx={{ width: '100%' }}>
             <Box paddingY={2} >
-                <Typography fontWeight={'bold'} color={'#555F6C'}>
+                <Typography fontWeight={'bold'} color={theme.palette.quaternary.main}>
                     Past Challenges
                 </Typography>
             </Box>

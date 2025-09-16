@@ -399,19 +399,25 @@ paths:
 ######################## TRAINING START ########################
   /training/{teamId}:
     get:
-      summary: Get historical trainings of the Team
-      operationId: getTeamHistoricalPlayerTrainings
+      summary: Get training events of the team
+      operationId: getTeamTrainingEvents
       tags:
         - training
       parameters:
+        - name: trainingType
+          in: query
+          description: Type of the training
+          required: false
+          schema:
+            $ref: "#/components/schemas/TrainingType"
         - $ref: "#/components/parameters/TeamIdPathParameter"
       responses:
         "200":
-          description: Historical trainings of team returned
+          description: Returned data about team training events
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TeamHistoricalTrainingResponse"
+                $ref: "#/components/schemas/TeamTrainingEventsResponse"
 
   /training/{teamId}/scheduled:
     get:
@@ -430,6 +436,8 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/PlayerScheduledTrainingResponse"
+
+#  /training/{teamId}:
 
   /training/{playerId}:
 #    get:
@@ -463,7 +471,7 @@ paths:
               $ref: "#/components/schemas/SchedulePlayerTrainingRequest"
       responses:
         "200":
-          description: PlayerTrainingScheduled
+          $ref: "#/components/responses/DefaultSuccessResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 ######################## TRAINING END ########################
@@ -1161,6 +1169,51 @@ components:
         actualPoints:
           type: integer
 
+    TrainingModifier:
+      type: string
+      enum:
+        - BLOOM
+        - FALL_OFF_CLIFF
+
+    TrainingType:
+      type: string
+      enum:
+        - PLAYER_TRAINING
+        - POTENTIAL_RISE
+        - DECLINE_TRAINING
+
+    TrainingEventResponse:
+      type: object
+      properties:
+        player:
+          $ref: "#/components/schemas/PlayerResponse"
+        skill:
+          $ref: "#/components/schemas/PlayerSkill"
+        points:
+          type: integer
+        pointsBeforeTraining:
+          type: integer
+        pointsAfterTraining:
+          type: integer
+        trainingType:
+          $ref: "#/components/schemas/TrainingType"
+        modifier:
+          $ref: "#/components/schemas/TrainingModifier"
+        occurredAt:
+          type: string
+        currentDay:
+          type: integer
+
+    TeamTrainingEventsResponse:
+      type: object
+      properties:
+        trainings:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: "#/components/schemas/TrainingEventResponse"
+
     PlayerScheduledTrainingResponse:
       type: object
       properties:
@@ -1170,19 +1223,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/PlayerSkill"
-
-    TeamHistoricalTrainingResponse:
-      type: object
-      properties:
-#        playerId:
-#          type: string
-#          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
-        trainings:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: "#/components/schemas/PlayerTrainingResponse"
 
     PlayerTrainingResponse:
       type: object

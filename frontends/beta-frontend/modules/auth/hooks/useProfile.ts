@@ -8,13 +8,13 @@ import {
 } from '../services/profileApi';
 import { ChangePasswordRequest } from '../types/requests/profileRequests';
 import { useSession } from 'next-auth/react';
+import { useSnackbar } from 'notistack';
 
 const API = '/auth/profile';
 
 export const useProfile = () => {
   const { data: userData } = useSession();
-  const { setError } = useError();
-  const { setNotification } = useNotification();
+  const { enqueueSnackbar } = useSnackbar();
 
   const {
     data,
@@ -30,19 +30,23 @@ export const useProfile = () => {
   ): Promise<void> => {
     try {
       const response = await changePassword(request, userData.accessToken!);
-      setNotification(response.message);
+      enqueueSnackbar(response.message, { variant: 'success' });
     } catch (err: any) {
-      setError(err.message || 'Password update failed');
+      enqueueSnackbar(err.message || 'Password update failed', {
+        variant: 'error',
+      });
     }
   };
 
   const handleChangeAvatar = async (formData: FormData): Promise<void> => {
     try {
       const response = await changeAvatar(formData, userData.accessToken!);
-      setNotification(response.message);
+      enqueueSnackbar(response.message, { variant: 'success' });
       refreshProfile();
     } catch (err: any) {
-      setError(err.message || 'Avatar update failed');
+      enqueueSnackbar(err.message || 'Avatar update failed', {
+        variant: 'error',
+      });
     }
   };
 

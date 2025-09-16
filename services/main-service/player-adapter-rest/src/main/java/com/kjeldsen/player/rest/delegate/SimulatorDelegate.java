@@ -13,7 +13,12 @@ import com.kjeldsen.player.application.usecases.facilities.UpgradeBuildingUseCas
 import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
 import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
 import com.kjeldsen.player.application.usecases.player.PlayerAgingUseCase;
-import com.kjeldsen.player.application.usecases.trainings.*;
+import com.kjeldsen.player.application.usecases.trainings.decline.ProcessDeclineTrainingUseCase;
+import com.kjeldsen.player.application.usecases.trainings.player.ExecutePlayerTrainingUseCase;
+import com.kjeldsen.player.application.usecases.trainings.player.ProcessPlayerTrainingUseCase;
+import com.kjeldsen.player.application.usecases.trainings.player.SchedulePlayerTrainingUseCase;
+import com.kjeldsen.player.application.usecases.trainings.potential.ProcessPotentialRiseUseCase;
+import com.kjeldsen.player.application.usecases.trainings.simulator.ExecutePotentialRiseUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerAge;
 import com.kjeldsen.player.domain.PlayerSkill;
@@ -23,8 +28,8 @@ import com.kjeldsen.player.domain.events.PlayerPotentialRiseEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingDeclineEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingEvent;
 import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
-import com.kjeldsen.player.domain.repositories.PlayerTrainingEventReadRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.*;
+import com.kjeldsen.player.persistence.mongo.repositories.training.player.PlayerTrainingScheduledEventMongoRepository;
 import com.kjeldsen.player.rest.api.SimulatorApiDelegate;
 import com.kjeldsen.player.rest.model.*;
 import lombok.RequiredArgsConstructor;
@@ -59,17 +64,13 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
 
     // TMP repositories for simulation
     private final PlayerMongoRepository playerMongoRepository;
-    private final PlayerTrainingDeclineEventMongoRepository playerTrainingDeclineEventMongoRepository;
-    private final PlayerPotentialRiseEventMongoRepository playerPotentialRiseEventMongoRepository;
     private final PlayerTrainingScheduledEventMongoRepository playerTrainingScheduledEventMongoRepository;
-    private final PlayerTrainingEventReadRepository playerTrainingEventReadRepository;
-    private final PlayerTrainingEventMongoRepository playerTrainingEventMongoRepository;
 
     // Training simulations
     private final ProcessPlayerTrainingUseCase processPlayerTrainingUseCase;
     private final ProcessPotentialRiseUseCase processPotentialRiseUseCase;
     private final ProcessDeclineTrainingUseCase processDeclineTrainingUseCase;
-    private final ExecuteDeclineTrainingUseCase executeDeclineTrainingUseCase;
+//    private final ExecuteDeclineTrainingUseCase executeDeclineTrainingUseCase;
     private final ExecutePotentialRiseUseCase executePotentialRiseUseCase;
     private final ExecutePlayerTrainingUseCase executePlayerTrainingUseCase;
     private final SchedulePlayerTrainingUseCase schedulePlayerTrainingUseCase;
@@ -211,163 +212,164 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
 
     @Override
     public ResponseEntity<List<SimulateDaysResponse>> simulateDays(SimulateDaysRequest simulateDaysRequest) {
-        List<SimulateDaysResponse> response = new ArrayList<>();
-        Team team = getTeamUseCase.get(SecurityUtils.getCurrentUserId());
-        Player playerForSimulation;
-        if (simulateDaysRequest.getCreateCustomPlayer()) {
-            Map<PlayerSkill, PlayerSkills> skills = simulateDaysRequest.getPlayer().getSkills().entrySet()
-                    .stream()
-                    .collect(Collectors.toMap(
-                            entry -> PlayerSkill.valueOf(entry.getKey()),
-                            entry -> PlayerSkills.builder()
-                                    .actual(entry.getValue().getActual())
-                                    .potential(entry.getValue().getPotential())
-                                    .build()));
-
-            playerForSimulation = Player.builder()
-                    .id(Player.PlayerId.generate())
-                    .name(Faker.instance().name().name())
-                    .teamId(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId())
-                    .age(PlayerAge.builder()
-                            .years(simulateDaysRequest.getPlayer().getAge().getYears())
-                            .months(simulateDaysRequest.getPlayer().getAge().getMonths().doubleValue())
-                            .days(simulateDaysRequest.getPlayer().getAge().getDays().doubleValue())
-                            .build())
-                    .actualSkills(skills)
-                    .bloomYear(simulateDaysRequest.getPlayer().getBloomYear())
-                    .build();
-        } else {
-            playerForSimulation = generatePlayersUseCase.generate(1, team.getId()).get(0);
-        }
-        AtomicInteger nextSkillToTrain = new AtomicInteger(2);
-        playerMongoRepository.save(playerForSimulation);
-        schedulePlayerTrainingUseCase.schedule(playerForSimulation.getId(),
-                PlayerSkill.valueOf(simulateDaysRequest.getSkills().get(0).name()));
-        schedulePlayerTrainingUseCase.schedule(playerForSimulation.getId(),
-                PlayerSkill.valueOf(simulateDaysRequest.getSkills().get(1).name()));
-
-        IntStream.rangeClosed(1, simulateDaysRequest.getDays()).forEach(i -> {
-            playerAgingUseCase.playerAging(playerForSimulation);
-
-            if (simulateDaysRequest.getExecuteDeclines()) {
-                if (playerForSimulation.getAge().getYears() >= 27) {
-                    executeDeclineTrainingUseCase.execute(playerForSimulation);
-                }
-            }
-            if (simulateDaysRequest.getExecutePotentialRises()) {
-                if (playerForSimulation.getAge().getYears() < 21) {
-                    executePotentialRiseUseCase.execute(playerForSimulation);
-                }
-            }
-            if (simulateDaysRequest.getExecuteScheduled()) {
-                List<PlayerTrainingScheduledEvent> playerTrainingScheduledEvents = playerTrainingScheduledEventMongoRepository
-                        .findAllWhereStatusIsActive();
-                playerTrainingScheduledEvents = playerTrainingScheduledEvents.stream()
-                        .filter(e -> e.getPlayerId().equals(playerForSimulation.getId()))
-                        .toList();
-                playerTrainingScheduledEvents.forEach(scheduledTraining -> {
-                    Optional<PlayerTrainingEvent> latestPlayerTrainingEvent = playerTrainingEventReadRepository
-                            .findLastByPlayerTrainingEvent(scheduledTraining.getId().value());
-
-                    if (latestPlayerTrainingEvent.isPresent()) {
-                        PlayerTrainingEvent trainingEvent = latestPlayerTrainingEvent.get();
-
-                        if (trainingEvent.getActualPoints() == 100) {
-                            log.info("Training reached the maximum value for actual, choosing another skill {} {}",
-                                    scheduledTraining.getSkill(),
-                                    simulateDaysRequest.getSkills().get(nextSkillToTrain.get()));
-
-                            scheduledTraining.setStatus(PlayerTrainingScheduledEvent.Status.INACTIVE);
-                            playerTrainingScheduledEventMongoRepository.save(scheduledTraining);
-                            schedulePlayerTrainingUseCase.schedule(playerForSimulation.getId(), PlayerSkill
-                                    .valueOf(simulateDaysRequest.getSkills().get(nextSkillToTrain.get()).name()));
-                            nextSkillToTrain.incrementAndGet();
-                            return;
-                        }
-
-                        if (trainingEvent.getPointsAfterTraining() > trainingEvent.getPointsBeforeTraining()) {
-                            // Points increased, the new training is starting from 1 day
-                            log.info("There was already successful training for player {} skill {}, set day to 1!",
-                                    trainingEvent.getPlayerId(), trainingEvent.getSkill());
-                            executePlayerTrainingUseCase.execute(scheduledTraining.getPlayerId(),
-                                    scheduledTraining.getSkill(),
-                                    1, scheduledTraining.getId().value());
-                        } else {
-                            log.info("The previous training was not successful, setting day to {}",
-                                    trainingEvent.getCurrentDay() + 1);
-                            executePlayerTrainingUseCase.execute(scheduledTraining.getPlayerId(),
-                                    scheduledTraining.getSkill(),
-                                    trainingEvent.getCurrentDay() + 1, scheduledTraining.getId().value());
-                        }
-                    } else {
-                        log.info("Training is not present setting the current day directly to 1 {}",
-                                scheduledTraining.getSkill());
-                        executePlayerTrainingUseCase.execute(scheduledTraining.getPlayerId(),
-                                scheduledTraining.getSkill(), 1,
-                                scheduledTraining.getId().value());
-                    }
-                });
-
-            }
-
-        });
-        log.info("Player age after the end {}", playerForSimulation.getAge().getYears());
-
-        List<PlayerTrainingScheduledEvent> playerTrainingScheduledEvents = playerTrainingScheduledEventMongoRepository
-                .findAllByPlayerId(playerForSimulation.getId());
-
-        List<PlayerTrainingEvent> playerTrainingEvents = playerTrainingEventMongoRepository
-                .findAllByPlayerId(playerForSimulation.getId());
-        playerTrainingEvents.stream()
-                .filter(event -> !event.getPointsAfterTraining().equals(event.getPointsBeforeTraining()))
-                .forEach(event -> {
-                    response.add(new SimulateDaysResponse()
-                            .message(event.isBloom() ? "bloom active" : "bloom inactive")
-                            .eventType("training")
-                            .playerName(playerForSimulation.getName())
-                            .date(event.getOccurredAt().toString())
-                            .skill(event.getSkill().name())
-                            .points(event.getPoints())
-                            .pointsBefore(event.getPointsBeforeTraining())
-                            .pointsAfter(event.getPointsAfterTraining())
-                            .potentialPoints(event.getPotentialPoints())
-                            .actualPoints(event.getActualPoints()));
-
-                });
-
-        List<PlayerTrainingDeclineEvent> declineEventList = playerTrainingDeclineEventMongoRepository
-                .findAllByPlayerId(playerForSimulation.getId());
-        declineEventList.stream()
-                .filter(event -> !event.getPointsBeforeTraining().equals(event.getPointsAfterTraining()))
-                .forEach(event ->
-                    response.add(new SimulateDaysResponse()
-                            .message(event.getFallOfCliffActive() ? "fallOfCliff" : "noFall")
-                            .eventType("decline")
-                            .playerName(playerForSimulation.getName())
-                            .date(event.getOccurredAt().toString())
-                            .skill(event.getSkill().name())
-                            .pointsBefore(event.getPointsBeforeTraining())
-                            .pointsAfter(event.getPointsAfterTraining())));
-
-        List<PlayerPotentialRiseEvent> riseEventList = playerPotentialRiseEventMongoRepository
-                .findAllByPlayerId(playerForSimulation.getId());
-        riseEventList.stream()
-                .filter(event -> event.getPointsToRise() != 0)
-                .forEach(event ->
-                    response.add(new SimulateDaysResponse()
-                            .message("")
-                            .eventType("rise")
-                            .playerName(playerForSimulation.getName())
-                            .date(event.getOccurredAt().toString())
-                            .skill(event.getSkillThatRisen().name())
-                            .pointsBefore(event.getPotentialBeforeRaise())
-                            .pointsAfter(event.getPotentialAfterRaise())));
-
-        playerTrainingEventMongoRepository.deleteAll(playerTrainingEvents);
-        playerTrainingScheduledEventMongoRepository.deleteAll(playerTrainingScheduledEvents);
-        playerPotentialRiseEventMongoRepository.deleteAll(riseEventList);
-        playerTrainingDeclineEventMongoRepository.deleteAll(declineEventList);
-        playerMongoRepository.delete(playerForSimulation);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(null);
+//        List<SimulateDaysResponse> response = new ArrayList<>();
+//        Team team = getTeamUseCase.get(SecurityUtils.getCurrentUserId());
+//        Player playerForSimulation;
+//        if (simulateDaysRequest.getCreateCustomPlayer()) {
+//            Map<PlayerSkill, PlayerSkills> skills = simulateDaysRequest.getPlayer().getSkills().entrySet()
+//                    .stream()
+//                    .collect(Collectors.toMap(
+//                            entry -> PlayerSkill.valueOf(entry.getKey()),
+//                            entry -> PlayerSkills.builder()
+//                                    .actual(entry.getValue().getActual())
+//                                    .potential(entry.getValue().getPotential())
+//                                    .build()));
+//
+//            playerForSimulation = Player.builder()
+//                    .id(Player.PlayerId.generate())
+//                    .name(Faker.instance().name().name())
+//                    .teamId(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId())
+//                    .age(PlayerAge.builder()
+//                            .years(simulateDaysRequest.getPlayer().getAge().getYears())
+//                            .months(simulateDaysRequest.getPlayer().getAge().getMonths().doubleValue())
+//                            .days(simulateDaysRequest.getPlayer().getAge().getDays().doubleValue())
+//                            .build())
+//                    .actualSkills(skills)
+//                    .bloomYear(simulateDaysRequest.getPlayer().getBloomYear())
+//                    .build();
+//        } else {
+//            playerForSimulation = generatePlayersUseCase.generate(1, team.getId()).get(0);
+//        }
+//        AtomicInteger nextSkillToTrain = new AtomicInteger(2);
+//        playerMongoRepository.save(playerForSimulation);
+//        schedulePlayerTrainingUseCase.schedule(playerForSimulation.getId(),
+//                PlayerSkill.valueOf(simulateDaysRequest.getSkills().get(0).name()));
+//        schedulePlayerTrainingUseCase.schedule(playerForSimulation.getId(),
+//                PlayerSkill.valueOf(simulateDaysRequest.getSkills().get(1).name()));
+//
+//        IntStream.rangeClosed(1, simulateDaysRequest.getDays()).forEach(i -> {
+//            playerAgingUseCase.playerAging(playerForSimulation);
+//
+//            if (simulateDaysRequest.getExecuteDeclines()) {
+//                if (playerForSimulation.getAge().getYears() >= 27) {
+////                    executeDeclineTrainingUseCase.execute(playerForSimulation);
+//                }
+//            }
+//            if (simulateDaysRequest.getExecutePotentialRises()) {
+//                if (playerForSimulation.getAge().getYears() < 21) {
+//                    executePotentialRiseUseCase.execute(playerForSimulation);
+//                }
+//            }
+//            if (simulateDaysRequest.getExecuteScheduled()) {
+//                List<PlayerTrainingScheduledEvent> playerTrainingScheduledEvents = playerTrainingScheduledEventMongoRepository
+//                        .findAllWhereStatusIsActive();
+//                playerTrainingScheduledEvents = playerTrainingScheduledEvents.stream()
+//                        .filter(e -> e.getPlayerId().equals(playerForSimulation.getId()))
+//                        .toList();
+//                playerTrainingScheduledEvents.forEach(scheduledTraining -> {
+//                    Optional<PlayerTrainingEvent> latestPlayerTrainingEvent = playerTrainingEventReadRepository
+//                            .findLastByPlayerTrainingEvent(scheduledTraining.getId().value());
+//
+//                    if (latestPlayerTrainingEvent.isPresent()) {
+//                        PlayerTrainingEvent trainingEvent = latestPlayerTrainingEvent.get();
+//
+//                        if (trainingEvent.getActualPoints() == 100) {
+//                            log.info("Training reached the maximum value for actual, choosing another skill {} {}",
+//                                    scheduledTraining.getSkill(),
+//                                    simulateDaysRequest.getSkills().get(nextSkillToTrain.get()));
+//
+//                            scheduledTraining.setStatus(PlayerTrainingScheduledEvent.Status.INACTIVE);
+//                            playerTrainingScheduledEventMongoRepository.save(scheduledTraining);
+//                            schedulePlayerTrainingUseCase.schedule(playerForSimulation.getId(), PlayerSkill
+//                                    .valueOf(simulateDaysRequest.getSkills().get(nextSkillToTrain.get()).name()));
+//                            nextSkillToTrain.incrementAndGet();
+//                            return;
+//                        }
+//
+//                        if (trainingEvent.getPointsAfterTraining() > trainingEvent.getPointsBeforeTraining()) {
+//                            // Points increased, the new training is starting from 1 day
+//                            log.info("There was already successful training for player {} skill {}, set day to 1!",
+//                                    trainingEvent.getPlayerId(), trainingEvent.getSkill());
+//                            executePlayerTrainingUseCase.execute(scheduledTraining.getPlayerId(),
+//                                    scheduledTraining.getSkill(),
+//                                    1, scheduledTraining.getId().value());
+//                        } else {
+//                            log.info("The previous training was not successful, setting day to {}",
+//                                    trainingEvent.getCurrentDay() + 1);
+//                            executePlayerTrainingUseCase.execute(scheduledTraining.getPlayerId(),
+//                                    scheduledTraining.getSkill(),
+//                                    trainingEvent.getCurrentDay() + 1, scheduledTraining.getId().value());
+//                        }
+//                    } else {
+//                        log.info("Training is not present setting the current day directly to 1 {}",
+//                                scheduledTraining.getSkill());
+//                        executePlayerTrainingUseCase.execute(scheduledTraining.getPlayerId(),
+//                                scheduledTraining.getSkill(), 1,
+//                                scheduledTraining.getId().value());
+//                    }
+//                });
+//
+//            }
+//
+//        });
+//        log.info("Player age after the end {}", playerForSimulation.getAge().getYears());
+//
+//        List<PlayerTrainingScheduledEvent> playerTrainingScheduledEvents = playerTrainingScheduledEventMongoRepository
+//                .findAllByPlayerId(playerForSimulation.getId());
+//
+//        List<PlayerTrainingEvent> playerTrainingEvents = playerTrainingEventMongoRepository
+//                .findAllByPlayerId(playerForSimulation.getId());
+//        playerTrainingEvents.stream()
+//                .filter(event -> !event.getPointsAfterTraining().equals(event.getPointsBeforeTraining()))
+//                .forEach(event -> {
+//                    response.add(new SimulateDaysResponse()
+//                            .message(event.isBloom() ? "bloom active" : "bloom inactive")
+//                            .eventType("training")
+//                            .playerName(playerForSimulation.getName())
+//                            .date(event.getOccurredAt().toString())
+//                            .skill(event.getSkill().name())
+//                            .points(event.getPoints())
+//                            .pointsBefore(event.getPointsBeforeTraining())
+//                            .pointsAfter(event.getPointsAfterTraining())
+//                            .potentialPoints(event.getPotentialPoints())
+//                            .actualPoints(event.getActualPoints()));
+//
+//                });
+//
+//        List<PlayerTrainingDeclineEvent> declineEventList = playerTrainingDeclineEventMongoRepository
+//                .findAllByPlayerId(playerForSimulation.getId());
+//        declineEventList.stream()
+//                .filter(event -> !event.getPointsBeforeTraining().equals(event.getPointsAfterTraining()))
+//                .forEach(event ->
+//                    response.add(new SimulateDaysResponse()
+//                            .message(event.getFallOfCliffActive() ? "fallOfCliff" : "noFall")
+//                            .eventType("decline")
+//                            .playerName(playerForSimulation.getName())
+//                            .date(event.getOccurredAt().toString())
+//                            .skill(event.getSkill().name())
+//                            .pointsBefore(event.getPointsBeforeTraining())
+//                            .pointsAfter(event.getPointsAfterTraining())));
+//
+//        List<PlayerPotentialRiseEvent> riseEventList = playerPotentialRiseEventMongoRepository
+//                .findAllByPlayerId(playerForSimulation.getId());
+//        riseEventList.stream()
+//                .filter(event -> event.getPointsToRise() != 0)
+//                .forEach(event ->
+//                    response.add(new SimulateDaysResponse()
+//                            .message("")
+//                            .eventType("rise")
+//                            .playerName(playerForSimulation.getName())
+//                            .date(event.getOccurredAt().toString())
+//                            .skill(event.getSkillThatRisen().name())
+//                            .pointsBefore(event.getPotentialBeforeRaise())
+//                            .pointsAfter(event.getPotentialAfterRaise())));
+//
+//        playerTrainingEventMongoRepository.deleteAll(playerTrainingEvents);
+//        playerTrainingScheduledEventMongoRepository.deleteAll(playerTrainingScheduledEvents);
+//        playerPotentialRiseEventMongoRepository.deleteAll(riseEventList);
+//        playerTrainingDeclineEventMongoRepository.deleteAll(declineEventList);
+//        playerMongoRepository.delete(playerForSimulation);
+//        return ResponseEntity.ok(response);
     }
 }

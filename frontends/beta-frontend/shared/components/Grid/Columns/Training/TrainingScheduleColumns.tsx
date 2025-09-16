@@ -6,9 +6,8 @@ import {
   PlayerSkillToShortcut,
 } from '@/shared/models/player/PlayerSkill';
 import ColHeader from '../common/components/ColHeader';
-// import { playerSkillsColumns } from '../PlayerSkillsColumns';
-// import { playerCommonColumns } from '../PlayerCommonColumns';
-import { baseColumnConfig } from '../common/config/ColumnsConfig';
+import { PlayerNameColumn } from '../common/columns/PlayerNameColumn';
+import { PlayerPositionColumn } from '../common/columns/PlayerPositionColumn';
 
 export const trainingScheduleColumns = (
   handleCellClick: (
@@ -71,6 +70,12 @@ export const trainingScheduleColumns = (
   };
 
   const columns: GridColDef[] = [
+    PlayerNameColumn((row) => row.player, "left"),
+    PlayerPositionColumn(
+      (row) => row.player,
+      'preferredPosition',
+      'Pos'
+    ),
     // ...playerCommonColumns(true, false),
     {
       field: 'cs',

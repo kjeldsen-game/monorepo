@@ -5,17 +5,13 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { Box, Typography } from '@mui/material';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 import ColHeader from '../common/components/ColHeader';
-import { rightColumnConfig } from '../common/config/ColumnsConfig';
+import { getColumnConfig } from '../common/config/ColumnsConfig';
 
 export const trainingColumn = () => {
-  const baseColumnConfig = {
-    hideSortIcons: true,
-    headerAlign: 'center' as GridAlignment,
-    align: 'center' as GridAlignment,
-    flex: 1,
-  };
+
 
   const columns: GridColDef[] = [
+
     // ...playerCommonColumns(false, false, true),
     // {
     //   ...baseColumnConfig,
@@ -67,7 +63,7 @@ export const trainingColumn = () => {
     //   flex: 1,
     // },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'cv',
       renderHeader: () => <ColHeader header={'Skill'} />,
       minWidth: 70,
@@ -76,7 +72,7 @@ export const trainingColumn = () => {
       },
     },
     {
-      ...baseColumnConfig,
+      ...getColumnConfig(),
       field: 'dv',
       renderHeader: () => <ColHeader header={'DV'} />,
       minWidth: 70,
@@ -94,7 +90,7 @@ export const trainingColumn = () => {
       },
     },
     {
-      ...rightColumnConfig,
+      ...getColumnConfig('right'),
       field: 'day',
       renderHeader: () => <ColHeader header={'PB'} />,
       minWidth: 70,

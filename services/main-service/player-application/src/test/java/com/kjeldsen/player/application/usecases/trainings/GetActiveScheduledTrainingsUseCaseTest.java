@@ -6,7 +6,7 @@ import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
-import com.kjeldsen.player.domain.repositories.PlayerTrainingScheduledEventReadRepository;
+import com.kjeldsen.player.domain.repositories.training.PlayerTrainingScheduledEventReadRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
