@@ -18,14 +18,10 @@ const StandingsTabView: React.FC<StandingsTabViewProps> = ({ leagueTeams, isLoad
     const memoizedColumnsStadings = useMemo(() => StandingsColumns(), []);
 
     return (<>
-        <Box paddingY={2} >
-            <Typography fontWeight={'bold'} color={'grey'}>
-                League Standings
-            </Typography>
-        </Box>
         <StyledMyTeamDatagrid
-            loading={isLoading}
+            loading={isLoading || !leagueTeams}
             disableColumnMenu={true}
+            hideFooter
             getRowId={(row) => row.name}
             rows={Object.entries(leagueTeams ?? {}).map(([teamId, stats]) => ({
                 ...stats,

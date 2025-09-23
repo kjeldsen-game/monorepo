@@ -27,12 +27,13 @@ export const getTrainings = (
 export const getActiveTrainings = (
   teamId: string | null,
   token: string | null,
+  query: string,
 ): Promise<PlayerScheduledTraningResponse[]> => {
   if (token === null || teamId === null) {
     return undefined;
   }
   return connectorAPI(
-    `${TRAINING_API}/${teamId}/scheduled`,
+    `${TRAINING_API}/${teamId}/scheduled${query}`,
     'GET',
     undefined,
     undefined,

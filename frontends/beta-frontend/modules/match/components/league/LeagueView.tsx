@@ -8,56 +8,31 @@ import StandingsTabView from './tabs/StandingsTabView';
 import CalendarTabView from './tabs/CalendarTabView';
 import { useLeagueApi } from 'modules/match/hooks/useLeagueApi';
 import { useTeamApi } from 'modules/player/hooks/api/useTeamApi';
+import PreAlphaAlert from '@/shared/components/PreAlphaAlert';
+import CustomTabsv2 from '@/shared/components/Tabs/CustomTabsv2';
+import { useTabManager } from '@/shared/hooks/useTabManager';
 
 interface LeagueViewProps {
-    // league: Array<any>;
-    // calendar: Array<any>;
 }
 
-const LeagueView: React.FC<LeagueViewProps> = ({
-    // league,
-    // calendar,
-}: LeagueViewProps) => {
-    const { data: userData, status: sessionStatus } = useSession({
+const LeagueView: React.FC<LeagueViewProps> = ({ }: LeagueViewProps) => {
+    const { } = useSession({
         required: true,
+        onUnauthenticated() {
+            window.location.href = "/auth/signin";
+        }
     });
-    const [selectedTab, setSelectedTab] = useState(0);
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setSelectedTab(newValue);
-    };
+    const { selectedTab, handleTabChange } = useTabManager();
 
     const { data: teamData } = useTeamApi()
     const { data: leagueData, isLoading, matches } = useLeagueApi(teamData?.leagueId);
 
-    console.log(matches)
-
     return (<>
-        <Alert sx={{
-            borderTopLeftRadius: '0px',
-            borderBottomLeftRadius: '0px',
-            mb: '16px', borderLeft: '8px solid #FF3F84', color: '#FF3F84',
-            backgroundColor: '#ffe0ecff',
-            '& .MuiAlert-icon': {
-                color: '#FF3F84',
-            },
-        }} severity="warning">
-            <Typography fontWeight={'bold'}>
-                Beta Testing
-            </Typography>
-            <Typography variant='body1'>
-                Module is in the beta testing.
-            </Typography>
-        </Alert>
+        <PreAlphaAlert />
         <Box sx={{ width: '100%', background: 'white' }} padding={2} borderRadius={2} boxShadow={1}>
             <Box sx={{ width: '100%' }}>
-                <Box>
-                    <CustomTabs selectedTab={selectedTab} handleChange={handleChange}>
-                        <Tab label="Standings" />
-                        <Tab label="Calendar" />
-                    </CustomTabs>
-                </Box>
-
+                <CustomTabsv2 handleTabChange={handleTabChange} selectedTab={selectedTab} tabs={["Standings", "Calendar"]} />
                 <Box>
                     <CustomTabPanel value={selectedTab} index={0}>
                         <StandingsTabView leagueTeams={leagueData?.teams} isLoading={isLoading} />

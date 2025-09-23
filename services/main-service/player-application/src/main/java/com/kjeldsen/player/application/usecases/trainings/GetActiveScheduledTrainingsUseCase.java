@@ -1,6 +1,7 @@
 package com.kjeldsen.player.application.usecases.trainings;
 
 import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.events.PlayerTrainingScheduledEvent;
@@ -25,20 +26,28 @@ public class GetActiveScheduledTrainingsUseCase {
     private final PlayerReadRepository playerReadRepository;
     private final PlayerTrainingScheduledEventReadRepository playerTrainingScheduledEventReadRepository;
 
-    public List<PlayerScheduledTraining> get(Team.TeamId teamId) {
-        List<Player> players = playerReadRepository.findByTeamId(teamId);
+    public List<PlayerScheduledTraining> get(Team.TeamId teamId, PlayerPosition position) {
+
         List<PlayerScheduledTraining> playerScheduled = new ArrayList<>();
-        List<PlayerTrainingScheduledEvent> activeTrainings = playerTrainingScheduledEventReadRepository.findAllActiveScheduledTrainings();
+        List<Player> players = playerReadRepository.findByTeamId(teamId);
+        if (position != null) {
+            players = players.stream()
+                    .filter(p -> p.getPreferredPosition() != null && p.getPreferredPosition().equals(position))
+                    .toList();
+        }
+
+        List<PlayerTrainingScheduledEvent> activeTrainings = playerTrainingScheduledEventReadRepository
+                .findAllActiveScheduledTrainings();
         players.forEach(player -> {
-           List<PlayerTrainingScheduledEvent> playerActiveTrainings = activeTrainings
-                .stream().filter(event -> event.getPlayerId().equals(player.getId()))
-                .sorted(Comparator.comparing(PlayerTrainingScheduledEvent::getOccurredAt))
-                .toList();
+            List<PlayerTrainingScheduledEvent> playerActiveTrainings = activeTrainings
+                    .stream().filter(event -> event.getPlayerId().equals(player.getId()))
+                    .sorted(Comparator.comparing(PlayerTrainingScheduledEvent::getOccurredAt))
+                    .toList();
 
             PlayerScheduledTraining playerScheduledTraining = PlayerScheduledTraining.builder()
-                .player(player)
-                .skills(playerActiveTrainings.stream().map(PlayerTrainingScheduledEvent::getSkill).toList())
-                .build();
+                    .player(player)
+                    .skills(playerActiveTrainings.stream().map(PlayerTrainingScheduledEvent::getSkill).toList())
+                    .build();
 
             playerScheduled.add(playerScheduledTraining);
         });

@@ -6,7 +6,7 @@ import { GridAlignment, GridCellParams, GridColDef } from "@mui/x-data-grid";
 export const TeamNameColumn = (
     getTeamNameValue: (row: any) => string,
     alignment: GridAlignment = 'center',
-    header
+    header: string
 ): GridColDef => {
     return {
         ...getColumnConfig(alignment),

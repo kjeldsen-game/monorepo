@@ -113,6 +113,7 @@ public class PlayerProvider {
             .name(name())
             .age(PlayerAge.generateAgeOfAPlayer(playerCategory))
             .position(positionTendencies.getPosition())
+            .position(positionTendencies.getPosition())
             .status(PlayerStatus.INACTIVE)
             .playerOrder(PlayerOrder.NONE)
             .bloomYear(BloomPhaseGenerator.generateBloomPhaseYear())

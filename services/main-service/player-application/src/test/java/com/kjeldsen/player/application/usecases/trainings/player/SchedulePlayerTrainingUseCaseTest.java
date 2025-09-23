@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -48,22 +49,22 @@ class SchedulePlayerTrainingUseCaseTest {
     }
 
     @Test
-    @DisplayName("Should throw error when skill is already assigned to active training")
+    @DisplayName("Should set training to inactive if it's already set")
     public void should_throw_error_when_skill_is_already_assigned_to_active_training() {
         Player player = TestData.generateTestPlayers(Team.TeamId.generate(), 1).get(0);
         player.setActualSkills(Map.of(PlayerSkill.AERIAL, PlayerSkills.builder().actual(12).potential(20).build()));
         when(mockedPlayerReadRepository.findOneById(player.getId())).thenReturn(Optional.of(player));
 
         PlayerTrainingScheduledEvent event = PlayerTrainingScheduledEvent.builder()
-            .skill(PlayerSkill.AERIAL).playerId(player.getId()).build();
+            .skill(PlayerSkill.AERIAL).status(PlayerTrainingScheduledEvent.Status.ACTIVE)
+            .playerId(player.getId()).build();
 
         when(mockedPlayerTrainingScheduledEventReadRepository.findAllActiveScheduledTrainings()).thenReturn(
             List.of(event));
 
-        assertEquals("Training for the skill is already scheduled.",
-            assertThrows(RuntimeException.class,
-                () -> schedulePlayerTrainingUseCase.schedule(player.getId(), PlayerSkill.AERIAL)
-            ).getMessage());
+        schedulePlayerTrainingUseCase.schedule(player.getId(), PlayerSkill.AERIAL);
+        assertThat(event.getStatus()).isEqualTo(PlayerTrainingScheduledEvent.Status.INACTIVE);
+        verify(mockedPlayerTrainingScheduledEventWriteRepository).save(event);
     }
 
     @Test

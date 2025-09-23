@@ -56,7 +56,9 @@ export const LineupColumns = (
         PlayerPositionColumn(
             (row) => row,
             'position',
-            'Act. Pos'
+            'Act. Pos',
+            'center',
+            true
         ),
         ...((!isXs || isXsPlayers) ?
             [PlayerSkillColumn((row) => row, PlayerSkill.SCORING, PlayerSkill.REFLEXES, isXs),

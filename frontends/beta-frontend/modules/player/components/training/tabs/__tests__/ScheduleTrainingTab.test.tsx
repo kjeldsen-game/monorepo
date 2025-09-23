@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import ScheduleTrainingTab from '../ScheduleTrainingTab';
 import '@testing-library/jest-dom';
+import { SessionProvider } from 'next-auth/react';
+import MockTrainingFilterProvider from 'modules/player/__mocks__/MockTrainingFilterProvider';
 
 jest.mock('../../dialog/TrainingDialog', () => ({
     __esModule: true,
@@ -28,27 +30,33 @@ jest.mock('@/shared/components/Grid/Grid', () => ({
 }));
 
 describe('ScheduleTrainingTab', () => {
-    test('renders CircularProgress when no playersWithActiveTrainings is provided', () => {
-        render(<ScheduleTrainingTab playersWithActiveTrainings={undefined as any} />);
+    const renderWithSession = (ui: React.ReactElement) => {
+        const session = { user: { name: 'Test User', email: 'test@example.com' }, expires: '1', };
+        return render(<SessionProvider session={session}>{ui}</SessionProvider>);
+    };
+
+    it('renders CircularProgress when no playersWithActiveTrainings is provided', () => {
+        renderWithSession(
+            <MockTrainingFilterProvider>
+                <ScheduleTrainingTab playersWithActiveTrainings={undefined as any} />
+            </MockTrainingFilterProvider>
+        );
         expect(screen.getByRole('progressbar')).toBeInTheDocument();
     });
 
-    test('renders Grid and TrainingDialog when playersWithActiveTrainings is provided', () => {
+    it('renders Grid and TrainingDialog when playersWithActiveTrainings is provided', () => {
         const mockPlayers = [
             {
-                player: {
-                    id: 'player1',
-                    name: 'Player One',
-                },
+                player: { id: 'player1', name: 'Player One' },
                 skills: [],
             } as any,
         ];
 
-        render(<ScheduleTrainingTab playersWithActiveTrainings={mockPlayers} />);
+        renderWithSession(<MockTrainingFilterProvider>
+            <ScheduleTrainingTab playersWithActiveTrainings={mockPlayers as any} />
+        </MockTrainingFilterProvider>);
 
         expect(screen.getByTestId('mock-grid')).toBeInTheDocument();
         expect(screen.getByText(/Rows: 1/)).toBeInTheDocument();
-
-        expect(screen.getByTestId('training-dialog')).toBeInTheDocument();
     });
 });

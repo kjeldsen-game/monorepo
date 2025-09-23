@@ -32,15 +32,15 @@ describe('EconomyView', () => {
         render(<EconomyView />);
 
         expect(screen.getByRole('tab', { name: /transactions/i })).toBeInTheDocument();
-        expect(screen.getByRole('tab', { name: /adjustments/i })).toBeInTheDocument();
+        expect(screen.getByRole('tab', { name: /sponsorship/i })).toBeInTheDocument();
         expect(screen.getByRole('tab', { name: /wages/i })).toBeInTheDocument();
 
         expect(screen.getByText(/TransactionsTabView Content/i)).toBeInTheDocument();
     });
 
-    it('switches to Adjustments tab and shows correct placeholder', () => {
+    it('switches to Sponsorship tab and shows correct placeholder', () => {
         render(<EconomyView />);
-        fireEvent.click(screen.getByRole('tab', { name: /adjustments/i }));
+        fireEvent.click(screen.getByRole('tab', { name: /sponsorship/i }));
 
         expect(screen.getByText(/GeneralEconomyTabView Content/i)).toBeInTheDocument();
     });

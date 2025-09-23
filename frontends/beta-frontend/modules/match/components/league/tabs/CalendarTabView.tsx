@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react';
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import { Box, CircularProgress } from '@mui/material';
+import { Box } from '@mui/material';
 import { Match, MatchStatus } from '@/shared/models/match/Match';
 import { CalendarColumns } from '../columns/CalendarColumns';
 import { StyledMyTeamDatagrid } from 'modules/match/utils/ChallengeUtils';
@@ -60,23 +60,6 @@ const CalendarTabView: React.FC<CalendarTabViewProps> = ({ calendar }) => {
             </Box>
 
             <StyledMyTeamDatagrid
-                // sx={{
-                //     '& .MuiDataGrid-columnHeader': {
-                //         padding: 0,
-                //         '&:nth-of-type(3), &:nth-of-type(5)': {
-                //             backgroundColor: '#FF3F840D',
-                //             color: 'black',
-                //             fontWeight: 'bold',
-                //         },
-                //     },
-                //     '& .MuiDataGrid-cell': {
-                //         '&:nth-of-type(3), &:nth-of-type(5)': {
-                //             backgroundColor: '#FF3F840D',
-                //             color: 'black',
-                //             fontWeight: 'bold',
-                //         },
-                //     },
-                // }}
                 disableColumnMenu={true}
                 getRowId={(row) => row.id}
                 rows={filteredMatches}

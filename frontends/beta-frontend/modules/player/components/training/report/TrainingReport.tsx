@@ -18,6 +18,7 @@ const TrainingReport: React.FC<TrainingReportProps> = ({ date, trainings }) => {
             sx={{
                 marginY: '8px',
                 boxShadow: 'none',
+                borderRadius: '8px',
                 border: '2px solid #F3F4F6 !important',
                 "&::before": {
                     display: "none",

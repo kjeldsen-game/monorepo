@@ -66,7 +66,7 @@ export enum PlayerPositionAbbreviation {
 // }
 
 export enum PlayerPositionColorNew {
-  BENCH = '#d0e0e3', // green
+  BENCH = '#0000004D', // green
   CENTRE_BACK = '#d0e0e3', // green
   AERIAL_CENTRE_BACK = '#d0e0e3', // green
   SWEEPER = '#d0e0e3', // green

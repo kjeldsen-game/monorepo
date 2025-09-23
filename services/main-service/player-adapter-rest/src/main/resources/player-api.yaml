@@ -410,6 +410,12 @@ paths:
           required: false
           schema:
             $ref: "#/components/schemas/TrainingType"
+        - name: position
+          in: query
+          description: Player position
+          required: false
+          schema:
+            $ref: "#/components/schemas/PlayerPosition"
         - $ref: "#/components/parameters/TeamIdPathParameter"
       responses:
         "200":
@@ -426,6 +432,12 @@ paths:
       tags:
         - training
       parameters:
+        - name: position
+          in: query
+          description: Player position
+          required: false
+          schema:
+            $ref: "#/components/schemas/PlayerPosition"
         - $ref: "#/components/parameters/TeamIdPathParameter"
       responses:
         "200":

@@ -15,7 +15,6 @@ export const TrainingSkillColumn = (
     secondarySkill: PlayerSkill | undefined,
     handleCellClick: (
         skillToTrain: PlayerSkill | undefined,
-        skillUnderTraining: PlayerSkill | undefined,
         playerIdToTrain: string,
     ) => void,
     isXs?: boolean,
@@ -64,7 +63,6 @@ export const TrainingSkillColumn = (
                         onClick: () =>
                             handleCellClick(
                                 skillKey,
-                                skillUnderTraining.length > 1 ? skillUnderTraining[0] : undefined,
                                 params.row.player.id
                             ),
                     })}

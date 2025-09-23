@@ -5,8 +5,9 @@ import { useSnackbar } from 'notistack';
 import * as trainingApi from 'modules/player/services/trainingApi';
 import { ScheduleTrainingRequest } from 'modules/player/types/TrainingRequests';
 import { TeamTrainingEventsResponse } from 'modules/player/types/TrainingResponses';
+import { PlayerPosition } from '@/shared/models/player/PlayerPosition';
 
-export const useTrainingApi = () => {
+export const useTrainingApi = (position?: PlayerPosition) => {
   const { data: userData } = useSession();
   const { enqueueSnackbar } = useSnackbar();
   const { mutate: mutateActiveTrainings } = useSWRConfig();

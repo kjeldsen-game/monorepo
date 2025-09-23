@@ -3,6 +3,8 @@ import { Box, CircularProgress } from "@mui/material";
 import TrainingReport from "../report/TrainingReport";
 import { TrainingEventResponse } from "modules/player/types/TrainingResponses";
 import { theme } from "@/libs/material/theme";
+import TrainingFilter from "../filter/TrainingFilter";
+import { TrainingFilterProvider, useTrainingFilter } from "modules/player/contexts/TrainingFilterContext";
 
 interface TrainingReportsTabProps {
     trainings: Record<string, TrainingEventResponse[]>;
@@ -10,6 +12,7 @@ interface TrainingReportsTabProps {
 }
 
 const TrainingReportsTab: React.FC<TrainingReportsTabProps> = ({ trainings, loading }) => {
+
     return (
         <>
             {loading || !trainings ? (
@@ -18,6 +21,7 @@ const TrainingReportsTab: React.FC<TrainingReportsTabProps> = ({ trainings, load
                 </Box>
             ) : (
                 <>
+                    <TrainingFilter />
                     {Object.entries(trainings)
                         .sort(([dateA], [dateB]) => {
                             const [dayA, monthA, yearA] = dateA.split("-").map(Number);

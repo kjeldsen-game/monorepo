@@ -44,7 +44,7 @@ class GetActiveScheduledTrainingsUseCaseTest {
         when(playerTrainingScheduledEventReadRepository.findAllActiveScheduledTrainings()).thenReturn(testEvents);
 
         List<GetActiveScheduledTrainingsUseCase.PlayerScheduledTraining> result =
-            getActiveScheduledTrainingsUseCase.get(teamId);
+            getActiveScheduledTrainingsUseCase.get(teamId, null);
 
         assertFalse(result.isEmpty());
         assertEquals(3, result.size());

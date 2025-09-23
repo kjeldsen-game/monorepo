@@ -3,8 +3,9 @@ import useSWR from 'swr';
 import { TEAMS_API } from '../../services/teamApi';
 import * as trainingApi from 'modules/player/services/trainingApi';
 import { PlayerScheduledTraningResponse } from 'modules/player/types/TrainingResponses';
+import { PlayerPosition } from '@/shared/models/player/PlayerPosition';
 
-export const useActiveTrainingApi = () => {
+export const useActiveTrainingApi = (position?: PlayerPosition) => {
   const { data: userData } = useSession();
   const { data, error, isLoading } = useSWR<PlayerScheduledTraningResponse[]>(
     userData?.accessToken
@@ -14,6 +15,7 @@ export const useActiveTrainingApi = () => {
       trainingApi.getActiveTrainings(
         userData?.user.teamId,
         userData?.accessToken,
+        position ? `?position=${position}` : '',
       ),
   );
 

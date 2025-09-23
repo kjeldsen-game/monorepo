@@ -58,7 +58,6 @@ describe("TrainingSkillColumn", () => {
 
         expect(mockHandleCellClick).toHaveBeenCalledWith(
             primarySkill,
-            undefined,
             "player-1"
         );
     });

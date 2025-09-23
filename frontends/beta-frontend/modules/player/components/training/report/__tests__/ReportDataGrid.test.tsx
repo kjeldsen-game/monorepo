@@ -4,19 +4,19 @@ import { TrainingType } from "modules/player/types/TrainingResponses";
 
 const mockTrainings: any[] = [
     {
-        player: { name: "Player A" },
+        player: { name: "Player A", age: { years: '25' } },
         skill: "PASSING",
         pointsAfterTraining: 11,
         trainingType: TrainingType.PLAYER_TRAINING,
     },
     {
-        player: { name: "Player B" },
+        player: { name: "Player B", age: { years: '25' } },
         skill: "SHOOTING",
         pointsAfterTraining: 15,
         trainingType: TrainingType.PLAYER_TRAINING,
     },
     {
-        player: { name: "Player C" },
+        player: { name: "Player C", age: { years: '25' } },
         skill: "DEFENSE",
         pointsAfterTraining: 5,
         trainingType: TrainingType.DECLINE_TRAINING,

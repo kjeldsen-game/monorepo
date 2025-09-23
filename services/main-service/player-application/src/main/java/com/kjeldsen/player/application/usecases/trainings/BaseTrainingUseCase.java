@@ -25,6 +25,7 @@ public abstract class BaseTrainingUseCase {
             .modifier(getTrainingModifier(type, isModifierActive))
             .occurredAt(InstantProvider.now())
             .player(Player.builder()
+                .age(player.getAge())
                 .id(player.getId())
                 .name(player.getName())
                 .preferredPosition(player.getPreferredPosition())
