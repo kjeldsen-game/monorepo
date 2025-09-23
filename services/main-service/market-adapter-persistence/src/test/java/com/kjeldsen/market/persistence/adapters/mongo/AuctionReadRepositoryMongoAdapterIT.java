@@ -10,6 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,10 +22,10 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-// TODO fix
 @DataMongoTest(includeFilters = @ComponentScan.Filter(classes = Component.class))
 @ActiveProfiles("test")
 public class AuctionReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
@@ -35,25 +39,70 @@ public class AuctionReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
     @BeforeEach
     public void setup() {
         auctionMongoRepository.deleteAll();
+        auctionMongoRepository.saveAll(List.of(
+            Auction.builder().id(Auction.AuctionId.of("1"))
+                .status(Auction.AuctionStatus.ACTIVE)
+                .playerId("player1")
+                .averageBid(BigDecimal.ZERO)
+                .bids(List.of())
+                .build(),
+            Auction.builder().id(Auction.AuctionId.of("2"))
+                .status(Auction.AuctionStatus.COMPLETED)
+                .playerId("player43")
+                .averageBid(BigDecimal.ZERO)
+                .bids(List.of())
+                .build(),
+            Auction.builder().id(Auction.AuctionId.of("3"))
+                .status(Auction.AuctionStatus.COMPLETED)
+                .playerId("player43")
+                .averageBid(BigDecimal.ZERO)
+                .bids(List.of())
+                .build()
+            ));
     }
+
 
     @Nested
     @DisplayName("Get should")
     class GetShould {
-        @Test
-        @DisplayName("Return empty list because the status is different")
-        void return_stored_tendency_for_provided_position_when_exist_in_database() {
-            auctionMongoRepository.save(
-                Auction.builder().id(Auction.AuctionId.of("auctionId"))
-                    .averageBid(BigDecimal.TEN).playerId("playerId").status(Auction.AuctionStatus.CANCEL).bids(
-                        List.of(Auction.Bid.builder().build(), Auction.Bid.builder().build()))
-                    .build());
+
+        static Stream<Arguments> auctionStatusAndExpected() {
+            return Stream.of(
+                Arguments.of(Auction.AuctionStatus.ACTIVE, 1),
+                Arguments.of(Auction.AuctionStatus.COMPLETED, 2),
+                Arguments.of(Auction.AuctionStatus.CANCEL, 0)
+            );
+        }
+
+        @ParameterizedTest
+        @MethodSource("auctionStatusAndExpected")
+        @DisplayName("Return list of auctions that are completed")
+        void return_auctions_that_are_completed(Auction.AuctionStatus status, int expected) {
+
+            List<Auction> getAuctions = auctionReadRepository.findAllByQuery(
+                FindAuctionsQuery.builder().auctionStatus(status).build());
+
+            assertThat(getAuctions).hasSize(expected);
+        }
 
 
-            List<Auction> getAuctions = auctionReadRepository.findAllByQuery(FindAuctionsQuery.builder().
-                auctionStatus(Auction.AuctionStatus.COMPLETED).build());
+        static Stream<Arguments> playerIdAndExpectedCount() {
+            return Stream.of(
+                Arguments.of("player1", 1),
+                Arguments.of("player43", 2),
+                Arguments.of("player3", 0)
+            );
+        }
 
-            assertThat(getAuctions).isEmpty();
+        @ParameterizedTest
+        @MethodSource("playerIdAndExpectedCount")
+        @DisplayName("Return auctions of playerId")
+        void return_auctions_of_playerId(String playerId, int expectedCount) {
+
+            List<Auction> getAuctions = auctionReadRepository.findAllByQuery(
+                FindAuctionsQuery.builder().playerId(Player.PlayerId.of(playerId)).build());
+
+            assertThat(getAuctions).hasSize(expectedCount);
         }
     }
 }

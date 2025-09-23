@@ -45,41 +45,44 @@ class TrainingEventReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
         List<TrainingEvent> events = new ArrayList<>();
         for (TrainingEvent.TrainingType type : TrainingEvent.TrainingType.values()) {
             events.add(
-                TrainingEvent.builder()
-                    .type(type)
-                    .modifier(null)
-                    .occurredAt(InstantProvider.now())
-                    .player(Player.builder()
-                        .id(Player.PlayerId.of("id"))
-                        .name("name")
-                        .preferredPosition(PlayerPosition.GOALKEEPER)
-                        .build())
-                    .teamId(Team.TeamId.of("teamId"))
-                    .points(2)
-                    .skill(PlayerSkill.REFLEXES)
-                    .pointsAfterTraining(21)
-                    .pointsBeforeTraining(19)
-                    .build()
-            );
+                    TrainingEvent.builder()
+                            .type(type)
+                            .modifier(null)
+                            .occurredAt(InstantProvider.now())
+                            .player(Player.builder()
+                                    .id(Player.PlayerId.of("id"))
+                                    .name("name")
+                                    .preferredPosition(PlayerPosition.GOALKEEPER)
+                                    .build())
+                            .teamId(Team.TeamId.of("teamId"))
+                            .points(2)
+                            .skill(PlayerSkill.REFLEXES)
+                            .pointsAfterTraining(21)
+                            .pointsBeforeTraining(19)
+                            .build());
         }
         trainingEventMongoRepository.saveAll(events);
-        List<TrainingEvent> results = trainingEventReadRepository.findAllSuccessfulByTeamIdTypeOccurredAt(Team.TeamId.of("teamId"),
-            TrainingEvent.TrainingType.DECLINE_TRAINING, null);
+        List<TrainingEvent> results = trainingEventReadRepository.findAllSuccessfulByTeamIdTypePlayerPositionOccurredAt(
+                Team.TeamId.of("teamId"),
+                TrainingEvent.TrainingType.DECLINE_TRAINING, null, null);
         assertThat(results).hasSize(1);
         assertThat(results.get(0).getType()).isEqualTo(TrainingEvent.TrainingType.DECLINE_TRAINING);
 
-        results = trainingEventReadRepository.findAllSuccessfulByTeamIdTypeOccurredAt(Team.TeamId.of("teamId"),
-            TrainingEvent.TrainingType.POTENTIAL_RISE, null);
+        results = trainingEventReadRepository.findAllSuccessfulByTeamIdTypePlayerPositionOccurredAt(
+                Team.TeamId.of("teamId"),
+                TrainingEvent.TrainingType.POTENTIAL_RISE, null, null);
         assertThat(results).hasSize(1);
         assertThat(results.get(0).getType()).isEqualTo(TrainingEvent.TrainingType.POTENTIAL_RISE);
 
-        results = trainingEventReadRepository.findAllSuccessfulByTeamIdTypeOccurredAt(Team.TeamId.of("teamId"),
-            TrainingEvent.TrainingType.PLAYER_TRAINING, null);
+        results = trainingEventReadRepository.findAllSuccessfulByTeamIdTypePlayerPositionOccurredAt(
+                Team.TeamId.of("teamId"),
+                TrainingEvent.TrainingType.PLAYER_TRAINING, null, null);
         assertThat(results).hasSize(1);
         assertThat(results.get(0).getType()).isEqualTo(TrainingEvent.TrainingType.PLAYER_TRAINING);
 
-        results = trainingEventReadRepository.findAllSuccessfulByTeamIdTypeOccurredAt(Team.TeamId.of("teamId"),
-            null, null);
+        results = trainingEventReadRepository.findAllSuccessfulByTeamIdTypePlayerPositionOccurredAt(
+                Team.TeamId.of("teamId"),
+                null, null, null);
         assertThat(results).hasSize(3);
     }
 
@@ -89,26 +92,26 @@ class TrainingEventReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
         List<TrainingEvent> events = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             events.add(
-                TrainingEvent.builder()
-                    .type(TrainingEvent.TrainingType.DECLINE_TRAINING)
-                    .modifier(null)
-                    .occurredAt(InstantProvider.now().plus(i+1, ChronoUnit.HOURS))
-                    .player(Player.builder()
-                        .id(Player.PlayerId.of("id"))
-                        .name("name")
-                        .preferredPosition(PlayerPosition.GOALKEEPER)
-                        .build())
-                    .teamId(Team.TeamId.of("teamId"))
-                    .points(i+1)
-                    .skill(PlayerSkill.REFLEXES)
-                    .pointsAfterTraining(21)
-                    .pointsBeforeTraining(19)
-                    .build()
-            );
+                    TrainingEvent.builder()
+                            .type(TrainingEvent.TrainingType.DECLINE_TRAINING)
+                            .modifier(null)
+                            .occurredAt(InstantProvider.now().plus(i + 1, ChronoUnit.HOURS))
+                            .player(Player.builder()
+                                    .id(Player.PlayerId.of("id"))
+                                    .name("name")
+                                    .preferredPosition(PlayerPosition.GOALKEEPER)
+                                    .build())
+                            .teamId(Team.TeamId.of("teamId"))
+                            .points(i + 1)
+                            .skill(PlayerSkill.REFLEXES)
+                            .pointsAfterTraining(21)
+                            .pointsBeforeTraining(19)
+                            .build());
         }
         trainingEventMongoRepository.saveAll(events);
-        Optional<TrainingEvent> event = trainingEventReadRepository.findLatestByPlayerIdAndType(Player.PlayerId.of("id"),
-            TrainingEvent.TrainingType.DECLINE_TRAINING);
+        Optional<TrainingEvent> event = trainingEventReadRepository.findLatestByPlayerIdAndType(
+                Player.PlayerId.of("id"),
+                TrainingEvent.TrainingType.DECLINE_TRAINING);
         assertThat(event).isPresent();
         assertThat(event.get().getPoints()).isEqualTo(3);
 
@@ -120,23 +123,22 @@ class TrainingEventReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
         List<TrainingEvent> events = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             events.add(
-                TrainingEvent.builder()
-                    .reference("123")
-                    .type(TrainingEvent.TrainingType.DECLINE_TRAINING)
-                    .modifier(null)
-                    .occurredAt(InstantProvider.now().plus(i+1, ChronoUnit.HOURS))
-                    .player(Player.builder()
-                        .id(Player.PlayerId.of("id"))
-                        .name("name")
-                        .preferredPosition(PlayerPosition.GOALKEEPER)
-                        .build())
-                    .teamId(Team.TeamId.of("teamId"))
-                    .points(i+1)
-                    .skill(PlayerSkill.REFLEXES)
-                    .pointsAfterTraining(21)
-                    .pointsBeforeTraining(19)
-                    .build()
-            );
+                    TrainingEvent.builder()
+                            .reference("123")
+                            .type(TrainingEvent.TrainingType.DECLINE_TRAINING)
+                            .modifier(null)
+                            .occurredAt(InstantProvider.now().plus(i + 1, ChronoUnit.HOURS))
+                            .player(Player.builder()
+                                    .id(Player.PlayerId.of("id"))
+                                    .name("name")
+                                    .preferredPosition(PlayerPosition.GOALKEEPER)
+                                    .build())
+                            .teamId(Team.TeamId.of("teamId"))
+                            .points(i + 1)
+                            .skill(PlayerSkill.REFLEXES)
+                            .pointsAfterTraining(21)
+                            .pointsBeforeTraining(19)
+                            .build());
         }
         trainingEventMongoRepository.saveAll(events);
         Optional<TrainingEvent> event = trainingEventReadRepository.findFirstByReferenceOrderByOccurredAtDesc("123");

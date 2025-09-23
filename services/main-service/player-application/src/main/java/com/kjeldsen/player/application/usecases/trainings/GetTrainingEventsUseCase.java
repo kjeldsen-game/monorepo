@@ -1,5 +1,6 @@
 package com.kjeldsen.player.application.usecases.trainings;
 
+import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.models.training.TrainingEvent;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +26,11 @@ import java.util.stream.Collectors;
 public class GetTrainingEventsUseCase extends BaseTrainingUseCase {
 
     public Map<String, List<TrainingEvent>> get(
-        String teamId, TrainingEvent.TrainingType type, Instant time) {
-        log.info("GetTrainingEventsUseCase for team={} type={} time={}", teamId, type , time);
+        String teamId, TrainingEvent.TrainingType type, Instant time, PlayerPosition position) {
+        log.info("GetTrainingEventsUseCase for team={} type={} time={} position={}", teamId, type , time, position);
 
         List<TrainingEvent> events = trainingEventReadRepository
-            .findAllSuccessfulByTeamIdTypeOccurredAt(Team.TeamId.of(teamId), type, time);
+            .findAllSuccessfulByTeamIdTypePlayerPositionOccurredAt(Team.TeamId.of(teamId), type, time, position);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 

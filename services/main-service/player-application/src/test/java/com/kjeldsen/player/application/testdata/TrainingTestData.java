@@ -1,9 +1,6 @@
 package com.kjeldsen.player.application.testdata;
 
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerSkill;
-import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.*;
 import com.kjeldsen.player.domain.models.training.TrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 
@@ -14,6 +11,7 @@ public class TrainingTestData {
     public static Player getTestPlayerForTrainingEvents() {
         return Player.builder().id(Player.PlayerId.of("playerId")).name("player")
             .teamId(Team.TeamId.of("teamId"))
+            .age(PlayerAge.generateAgeOfAPlayer())
             .preferredPosition(PlayerPosition.GOALKEEPER)
             .build();
     }

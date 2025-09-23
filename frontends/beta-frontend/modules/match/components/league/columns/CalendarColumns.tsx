@@ -6,7 +6,6 @@ import { Box, Typography } from '@mui/material';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import IconLinkButton from '@/shared/components/Common/IconLinkButton';
-import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
 import { DateTimeColumn } from '../../challenge/columns/common/DateTimeColumn';
 
 export const CalendarColumns = (teamId?: string) => {

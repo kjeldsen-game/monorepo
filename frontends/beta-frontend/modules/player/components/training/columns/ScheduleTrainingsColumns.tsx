@@ -14,7 +14,6 @@ import { renderSkillNames } from 'modules/player/utils/TrainingUtils';
 export const ScheduleTrainingsColumns = (
     handleCellClick: (
         skillToTrain: PlayerSkill | undefined,
-        skillUnderTraining: PlayerSkill | undefined,
         playerIdToTrain: string,
     ) => void,
     isXs?: boolean,

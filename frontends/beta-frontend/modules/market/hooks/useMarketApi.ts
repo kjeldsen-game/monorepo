@@ -1,17 +1,14 @@
-import useSWR, { mutate } from 'swr';
-import { useError } from '@/shared/contexts/ErrorContext';
-import { useNotification } from '@/shared/contexts/NotificationContext';
-
+import useSWR from 'swr';
 import { useSession } from 'next-auth/react';
 import { PlaceBidRequest } from '../types/requests';
 import * as marketApi from '../services/marketApi';
 import { AuctionResponse } from '../types/responses';
 import { DefaultResponse } from '@/shared/models/Responses';
+import { useSnackbar } from 'notistack';
 
 export const useMarketApi = (filter: string = '') => {
   const { data: userData } = useSession();
-  const { setError } = useError();
-  const { setNotification } = useNotification();
+  const { enqueueSnackbar } = useSnackbar();
 
   const { data, error, isLoading, mutate } = useSWR<AuctionResponse[]>(
     userData?.accessToken ? marketApi.MARKET_API + filter : null,
@@ -28,10 +25,12 @@ export const useMarketApi = (filter: string = '') => {
         request,
         userData.accessToken!,
       );
-      setNotification(response.message);
+      enqueueSnackbar(response.message, { variant: 'success' });
       mutate();
     } catch (err: any) {
-      setError(err.message || 'Password update failed');
+      enqueueSnackbar(err.message || 'Password update failed', {
+        variant: 'error',
+      });
     }
   };
 

@@ -12,8 +12,6 @@ const Market: NextPage<MarketProps> = ({ }) => {
 
   const { data: auctions } = useMarketApi(filter)
 
-  console.log(auctions)
-
   const handleSetFilter = (filterInput: string) => {
     setFilter(filterInput);
   };

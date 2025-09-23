@@ -10,6 +10,7 @@ export const PlayerAgeColumn = (
     return {
         ...getColumnConfig(alignment),
         field: 'age',
+        maxWidth: 40,
         renderHeader: () => <ColHeader header="Age" align={alignment} />,
         renderCell: (params: GridCellParams) => {
             const player: Player = getPlayerValue(params.row);

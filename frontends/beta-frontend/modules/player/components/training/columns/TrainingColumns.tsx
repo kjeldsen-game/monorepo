@@ -8,6 +8,7 @@ import { PlayerPositionColumn } from '@/shared/components/Grid/Columns/common/co
 import { PlayerSkillToShortcut } from '@/shared/models/player/PlayerSkill';
 import ProgressBar from '../progressBar/ProgressBar';
 import { SkillDeltaColumn } from './SkillDeltaColumn';
+import { PlayerAgeColumn } from '@/shared/components/Grid/Columns/common/columns/PlayerAgeColumn';
 
 
 export const TrainingColumns = (isXs: boolean) => {
@@ -20,6 +21,7 @@ export const TrainingColumns = (isXs: boolean) => {
                 'Pos'
             )
         ] : []),
+        PlayerAgeColumn((row) => row.player, 'center'),
         {
             ...getColumnConfig(),
             field: 'cv',

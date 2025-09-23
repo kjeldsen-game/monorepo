@@ -66,7 +66,6 @@ const MarketView: React.FC<MarketProps> = ({
         />
         <Box
           sx={{
-            marginBottom: '2rem',
             alignItems: 'center',
           }}>
           <MarketFilter setFilter={setFilter} />

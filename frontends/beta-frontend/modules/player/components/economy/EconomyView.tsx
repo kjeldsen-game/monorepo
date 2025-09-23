@@ -26,7 +26,7 @@ const EconomyView: React.FC<EconomyViewProps> = ({
                 <Box>
                     <CustomTabs selectedTab={selectedTab} handleChange={handleChange}>
                         <Tab label="Transactions" />
-                        <Tab label="Adjustments" />
+                        <Tab label="Sponsorship" />
                         <Tab label="Wages" />
                     </CustomTabs>
                 </Box>

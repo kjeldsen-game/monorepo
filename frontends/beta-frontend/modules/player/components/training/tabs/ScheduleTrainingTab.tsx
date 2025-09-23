@@ -1,42 +1,26 @@
 import { theme } from '@/libs/material/theme'
 import Grid from '@/shared/components/Grid/Grid'
-import { Box, CircularProgress, Typography, useMediaQuery } from '@mui/material'
+import { CircularProgress, SelectChangeEvent, useMediaQuery } from '@mui/material'
 import { PlayerScheduledTraningResponse } from 'modules/player/types/TrainingResponses'
 import React, { useMemo, useState } from 'react'
 import { ScheduleTrainingsColumns } from '../columns/ScheduleTrainingsColumns'
 import { PlayerSkill } from '@/shared/models/player/PlayerSkill'
-
-import TrainingDialog from '../dialog/TrainingDialog'
-
+import { useTrainingApi } from 'modules/player/hooks/api/useTrainingApi'
+import { PlayerPosition } from '@/shared/models/player/PlayerPosition'
+import TrainingFilter from '../filter/TrainingFilter'
 interface ScheduleTrainingTabProps {
     playersWithActiveTrainings: PlayerScheduledTraningResponse[]
 }
 
 const ScheduleTrainingTab: React.FC<ScheduleTrainingTabProps> = ({ playersWithActiveTrainings }) => {
-
-    const [open, setOpen] = useState<boolean>(false);
-    const [skillToTrain, setSkillToTraing] = useState<PlayerSkill | undefined>(
-        undefined,
-    );
-    const [skillUnderTraining, setSkillUnderTraining] = useState<
-        PlayerSkill | undefined
-    >(undefined);
-    const [playerToTraing, setPlayerToTrain] = useState<string>('');
-
-    const handleCloseModal = () => {
-        setOpen(false);
-        setPlayerToTrain('');
-    };
+    const [positionFilter, setPositionFilter] = useState<PlayerPosition>();
+    const { handleScheduleTrainingRequest } = useTrainingApi();
 
     const handleSkillCellClick = (
         skillToTrain: PlayerSkill | undefined,
-        skillUnderTraining: PlayerSkill | undefined,
         playerIdToTrain: string,
     ) => {
-        setSkillUnderTraining(skillUnderTraining);
-        setSkillToTraing(skillToTrain);
-        setOpen(true);
-        setPlayerToTrain(playerIdToTrain);
+        handleScheduleTrainingRequest({ skill: skillToTrain }, playerIdToTrain);
     };
 
     const isXs = useMediaQuery(theme.breakpoints.down('sm'));
@@ -45,15 +29,13 @@ const ScheduleTrainingTab: React.FC<ScheduleTrainingTabProps> = ({ playersWithAc
         [isXs],
     );
 
+    const handlePositionChange = (event: SelectChangeEvent) => {
+        setPositionFilter(event.target.value as PlayerPosition);
+    };
+
     return (
         <>
-            <TrainingDialog
-                open={open}
-                handleClose={handleCloseModal}
-                skillToTrain={skillToTrain}
-                skillUnderTraining={skillUnderTraining}
-                playerId={playerToTraing}
-            />
+            <TrainingFilter handlePositionChange={handlePositionChange} positionFilter={positionFilter} />
             {playersWithActiveTrainings ? (
                 <Grid
                     sx={{

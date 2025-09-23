@@ -35,7 +35,7 @@ const Subheader: React.FC<SubheaderProps> = ({ isMenu = true }) => {
                     Welcome to <span style={{ fontWeight: 'bold' }}> KJELDSEN </span>{' '}
                     v.1.24
                 </Typography>
-                {isMenu &&
+                {/* {isMenu &&
                     <Breadcrumbs aria-label="breadcrumb" data-testid="breadcrumbs"
                         sx={{ paddingLeft: '40px' }}>
                         {pathSegments.map((segment, index) => (
@@ -48,7 +48,7 @@ const Subheader: React.FC<SubheaderProps> = ({ isMenu = true }) => {
                             </Box>
                         ))}
                     </Breadcrumbs>
-                }
+                } */}
             </Box>
         </AppBar>
     )

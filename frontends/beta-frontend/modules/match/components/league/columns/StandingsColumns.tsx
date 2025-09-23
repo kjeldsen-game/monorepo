@@ -5,22 +5,12 @@ import { getColumnConfig } from '@/shared/components/Grid/Columns/common/config/
 import { Box } from '@mui/material';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import { LeagueStats } from 'modules/match/types/LeagueResponses';
+import { TeamNameColumn } from '../../columns/TeamNameColumn';
 
 export const StandingsColumns = <T extends LeagueStats>(): GridColDef[] => {
   return [
     BaseTextColumn('Pos', (row: T) => row.position, 'left'),
-    // TODO use common team column
-    {
-      field: 'team',
-      renderHeader: () => <ColHeader header="Team" />,
-      ...getColumnConfig(),
-      renderCell: (params: GridCellParams) => (
-        <ColLink
-          children={params.row.name}
-          urlValue={`/team/${params.row.id}`}
-        />
-      ),
-    },
+    TeamNameColumn((row) => row, 'center', "Team"),
     BaseTextColumn('Wins', (row: T) => row.wins),
     BaseTextColumn('Draws', (row: T) => row.draws),
     BaseTextColumn('Losses', (row: T) => row.losses),

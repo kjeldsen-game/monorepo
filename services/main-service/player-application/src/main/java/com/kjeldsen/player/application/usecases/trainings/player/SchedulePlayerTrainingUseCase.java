@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -43,10 +44,12 @@ public class SchedulePlayerTrainingUseCase {
         List<PlayerTrainingScheduledEvent> activeTrainings = playerTrainingScheduledEventReadRepository.findAllActiveScheduledTrainings()
             .stream().filter(event -> event.getPlayerId().equals(playerId)).toList();
 
-        // Check if the skill in the request is not already set up for the training, if yes throw error or don't modify
-        if (activeTrainings.stream().anyMatch(sk -> sk.getSkill().equals(skill))) {
-            throw new RuntimeException("Training for the skill is already scheduled.");
-        }
+        // Check if the skill in the request is not already set up for the training, if yes deactivate training
+        Optional<PlayerTrainingScheduledEvent> matchingTraining = activeTrainings.stream()
+                .filter(sk -> sk.getSkill().equals(skill))
+                .findFirst();
+        matchingTraining.ifPresent(this::setScheduledTrainingInactive);
+
         // Check the active trainings, if the size is less than 2, we could set it without removing active training
         if (activeTrainings.size() >= 2) {
             log.info("Removing scheduled training for older skill, because there were already 2 trainings assigned to player.");

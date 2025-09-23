@@ -46,21 +46,22 @@ public class TrainingDelegate implements TrainingApiDelegate {
     }
 
     @Override
-    public ResponseEntity<List<PlayerScheduledTrainingResponse>> getScheduledPlayerTrainings(String teamId) {
+    public ResponseEntity<List<PlayerScheduledTrainingResponse>> getScheduledPlayerTrainings(String teamId, PlayerPosition position) {
         // Access denied as the path teamId is different that the teamId from Token
         if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
         List<GetActiveScheduledTrainingsUseCase.PlayerScheduledTraining> playerScheduled =
-            getActiveScheduledTrainingsUseCase.get(Team.TeamId.of(teamId));
+            getActiveScheduledTrainingsUseCase.get(Team.TeamId.of(teamId), PlayerMapper.INSTANCE.playerPositionMap(position));
         return ResponseEntity.ok(TrainingEventMapper.INSTANCE.mapPlayerScheduledTrainingList(playerScheduled));
     }
 
     @Override
-    public ResponseEntity<TeamTrainingEventsResponse> getTeamTrainingEvents(String teamId, TrainingType trainingType) {
+    public ResponseEntity<TeamTrainingEventsResponse> getTeamTrainingEvents(String teamId, TrainingType trainingType, PlayerPosition position) {
         Map<String, List<TrainingEventResponse>> response = TrainingEventMapper.INSTANCE.fromTrainingEventsMap(
-            getTrainingEventsUseCase.get(teamId, TrainingEventMapper.INSTANCE.fromTrainingType(trainingType), null));
+            getTrainingEventsUseCase.get(teamId, TrainingEventMapper.INSTANCE.fromTrainingType(trainingType),
+                null,PlayerMapper.INSTANCE.playerPositionMap(position)));
         return ResponseEntity.ok(new TeamTrainingEventsResponse().trainings(response));
     }
 }

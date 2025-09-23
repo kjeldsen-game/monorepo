@@ -1,10 +1,11 @@
 import { useSession } from 'next-auth/react';
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import { Box, CircularProgress } from '@mui/material';
+import { Box } from '@mui/material';
 import { Match, MatchStatus } from '@/shared/models/match/Match';
 import { CalendarColumns } from '../columns/CalendarColumns';
 import { StyledMyTeamDatagrid } from 'modules/match/utils/ChallengeUtils';
 import CustomSelectInput from '@/shared/components/Common/CustomSelectInput';
+import CalendarFilter from '../filters/CalendarFilter';
 
 interface CalendarTabViewProps {
     calendar: any;
@@ -38,8 +39,11 @@ const CalendarTabView: React.FC<CalendarTabViewProps> = ({ calendar }) => {
 
     return (
         <Box >
-
-            <Box
+            <CalendarFilter
+                filter={filter}
+                handleFilterChange={handleFilterChange}
+            />
+            {/* <Box
                 sx={{
                     marginBottom: '2rem',
                     alignItems: 'center',
@@ -57,26 +61,9 @@ const CalendarTabView: React.FC<CalendarTabViewProps> = ({ calendar }) => {
                         values={MatchStatus}
                     />
                 </Box>
-            </Box>
+            </Box> */}
 
             <StyledMyTeamDatagrid
-                // sx={{
-                //     '& .MuiDataGrid-columnHeader': {
-                //         padding: 0,
-                //         '&:nth-of-type(3), &:nth-of-type(5)': {
-                //             backgroundColor: '#FF3F840D',
-                //             color: 'black',
-                //             fontWeight: 'bold',
-                //         },
-                //     },
-                //     '& .MuiDataGrid-cell': {
-                //         '&:nth-of-type(3), &:nth-of-type(5)': {
-                //             backgroundColor: '#FF3F840D',
-                //             color: 'black',
-                //             fontWeight: 'bold',
-                //         },
-                //     },
-                // }}
                 disableColumnMenu={true}
                 getRowId={(row) => row.id}
                 rows={filteredMatches}

@@ -1,6 +1,7 @@
 package com.kjeldsen.player.persistence.adapters.mongo.training;
 
 import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.PlayerPosition;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.models.training.TrainingEvent;
 import com.kjeldsen.player.domain.repositories.training.TrainingEventReadRepository;
@@ -25,13 +26,17 @@ public class TrainingEventReadRepositoryMongoAdapter implements TrainingEventRea
     private final TrainingEventMongoRepository trainingEventMongoRepository;
 
     @Override
-    public List<TrainingEvent> findAllSuccessfulByTeamIdTypeOccurredAt(Team.TeamId teamId, TrainingEvent.TrainingType type, Instant since) {
+    public List<TrainingEvent> findAllSuccessfulByTeamIdTypePlayerPositionOccurredAt(Team.TeamId teamId, TrainingEvent.TrainingType type, Instant since, PlayerPosition position) {
         Criteria criteria = Criteria.where("teamId").is(teamId);
         Document expr = new Document("$ne", Arrays.asList("$pointsBeforeTraining", "$pointsAfterTraining"));
         criteria = criteria.andOperator(Criteria.where("$expr").is(expr));
 
         if (type != null) {
             criteria = criteria.and("type").is(type);
+        }
+
+        if (position != null) {
+            criteria = criteria.and("player.preferredPosition").is(position);
         }
 
         Query query = new Query(criteria);

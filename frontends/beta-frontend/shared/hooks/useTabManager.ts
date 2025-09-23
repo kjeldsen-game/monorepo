@@ -6,6 +6,7 @@ export const useTabManager = () => {
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
+
   return {
     selectedTab,
     handleTabChange,

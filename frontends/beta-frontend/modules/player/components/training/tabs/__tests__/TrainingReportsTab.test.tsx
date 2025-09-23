@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import TrainingReportsTab from '../TrainingReportsTab';
 import '@testing-library/jest-dom';
+import MockTrainingFilterProvider from 'modules/player/__mocks__/MockTrainingFilterProvider';
 
 jest.mock('../../report/TrainingReport', () => ({
     __esModule: true,
@@ -12,7 +13,9 @@ jest.mock('../../report/TrainingReport', () => ({
 
 describe('TrainingReportsTab', () => {
     test('renders CircularProgress when trainings is undefined', () => {
-        render(<TrainingReportsTab trainings={undefined as any} />);
+        render(<MockTrainingFilterProvider>
+            <TrainingReportsTab trainings={undefined as any} loading={true} />
+        </MockTrainingFilterProvider>);
         expect(screen.getByRole('progressbar')).toBeInTheDocument();
     });
 
@@ -22,7 +25,9 @@ describe('TrainingReportsTab', () => {
             '2025-08-30': [{ playerId: '2', skill: 'PASSING' }],
         } as any;
 
-        render(<TrainingReportsTab trainings={mockTrainings} />);
+        render(<MockTrainingFilterProvider>
+            <TrainingReportsTab trainings={mockTrainings} loading={false} />
+        </MockTrainingFilterProvider>);
 
         const reports = screen.getAllByTestId('training-report');
         expect(reports).toHaveLength(2);
