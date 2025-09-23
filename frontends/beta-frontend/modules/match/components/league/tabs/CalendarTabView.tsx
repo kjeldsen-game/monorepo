@@ -5,6 +5,7 @@ import { Match, MatchStatus } from '@/shared/models/match/Match';
 import { CalendarColumns } from '../columns/CalendarColumns';
 import { StyledMyTeamDatagrid } from 'modules/match/utils/ChallengeUtils';
 import CustomSelectInput from '@/shared/components/Common/CustomSelectInput';
+import CalendarFilter from '../filters/CalendarFilter';
 
 interface CalendarTabViewProps {
     calendar: any;
@@ -38,8 +39,11 @@ const CalendarTabView: React.FC<CalendarTabViewProps> = ({ calendar }) => {
 
     return (
         <Box >
-
-            <Box
+            <CalendarFilter
+                filter={filter}
+                handleFilterChange={handleFilterChange}
+            />
+            {/* <Box
                 sx={{
                     marginBottom: '2rem',
                     alignItems: 'center',
@@ -57,7 +61,7 @@ const CalendarTabView: React.FC<CalendarTabViewProps> = ({ calendar }) => {
                         values={MatchStatus}
                     />
                 </Box>
-            </Box>
+            </Box> */}
 
             <StyledMyTeamDatagrid
                 disableColumnMenu={true}

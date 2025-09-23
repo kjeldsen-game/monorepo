@@ -14,6 +14,18 @@ const LineupFilterButton: React.FC<LineupFilterButtonProps> = ({
     active,
 }) => {
 
+    const filterColors: Record<string, string | undefined> = {
+        GK: '#fff2cc',
+        DEF: '#d0e0e3',
+        MID: '#f4cccc',
+        FW: '#CCDCFC',
+        ALL: '#cdcac2ff',
+        ACTIVE: '#cdcac2ff',
+        BENCH: '#cdcac2ff',
+        INACTIVE: '#cdcac2ff',
+    };
+
+
     const isXs = useMediaQuery(theme.breakpoints.down("sm"))
 
     return (
@@ -24,7 +36,7 @@ const LineupFilterButton: React.FC<LineupFilterButtonProps> = ({
             sx={{
                 marginRight: '4px',
                 fontWeight: 'bold',
-                background: name === active ? 'rgb(245, 203, 77)' : '#FFF2CC',
+                background: filterColors[name],
                 color: 'black',
                 borderRadius: '10px',
                 paddingX: isXs ? 3 : 2,

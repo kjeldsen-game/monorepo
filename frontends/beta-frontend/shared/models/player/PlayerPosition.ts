@@ -43,28 +43,6 @@ export enum PlayerPositionAbbreviation {
   GOALKEEPER = 'GK',
 }
 
-// export enum PlayerPositionColorNew {
-//   CENTRE_BACK = '#a3b3b8', // darker green
-//   AERIAL_CENTRE_BACK = '#a3b3b8', // darker green
-//   SWEEPER = '#a3b3b8', // darker green
-//   LEFT_BACK = '#8b9f91', // darker green3
-//   RIGHT_BACK = '#8b9f91', // darker green3
-//   LEFT_WINGBACK = '#8b9f91', // darker red3
-//   RIGHT_WINGBACK = '#8b9f91', // darker red3
-//   DEFENSIVE_MIDFIELDER = '#e1b3b3', // darker red
-//   CENTRE_MIDFIELDER = '#e1b3b3', // darker red
-//   LEFT_MIDFIELDER = '#d38080', // darker red3
-//   RIGHT_MIDFIELDER = '#d38080', // darker red3
-//   LEFT_WINGER = '#d38080', // darker blue 3
-//   OFFENSIVE_MIDFIELDER = '#b0b8e3', // darker blue
-//   RIGHT_WINGER = '#d38080', // darker blue 3
-//   FORWARD = '#b0b8e3', // darker blue
-//   AERIAL_FORWARD = '#b0b8e3', // darker blue
-//   STRIKER = '#b0b8e3', // darker blue
-//   AERIAL_STRIKER = '#b0b8e3', // darker blue
-//   GOALKEEPER = '#e6cc99', // darker yellow
-// }
-
 export enum PlayerPositionColorNew {
   BENCH = '#0000004D', // green
   CENTRE_BACK = '#d0e0e3', // green
