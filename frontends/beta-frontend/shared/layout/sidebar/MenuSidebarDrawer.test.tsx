@@ -27,7 +27,6 @@ const renderWithTheme = (component: React.ReactElement) => {
 
 describe('MenuSidebarDrawer parameterized routing tests', () => {
     test.each([
-        ['/dashboard', 'Dashboard'],
         ['/team', 'Team'],
         ['/challenge', 'Challenge'],
         ['/challenge/1', 'Challenge'],

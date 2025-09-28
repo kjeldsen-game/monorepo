@@ -1,4 +1,4 @@
-import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material'
+import { Box, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material'
 import { useRouter } from 'next/router';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import Groups2Icon from '@mui/icons-material/Groups2';
@@ -10,6 +10,8 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import Link from 'next/link';
+import CustomButton from '@/shared/components/Common/CustomButton';
+import { LoginOutlined } from '@mui/icons-material';
 
 export const MENU_SIDEBAR_ICONS = {
     inbox: <InboxIcon />,
@@ -37,12 +39,12 @@ const MenuSidebarDrawer = () => {
     const { pathname } = useRouter();
 
     const items: Item[] = [
-        {
-            name: 'Dashboard',
-            icon: 'inbox',
-            to: '/dashboard',
-            selected: pathname === '/dashboard',
-        },
+        // {
+        //     name: 'Dashboard',
+        //     icon: 'inbox',
+        //     to: '/dashboard',
+        //     selected: pathname === '/dashboard',
+        // },
         {
             name: 'Team',
             icon: 'team',
@@ -97,38 +99,59 @@ const MenuSidebarDrawer = () => {
     ];
 
     return (
-        <div>
+        <div style={{ height: 'calc(100% - 30px)' }}>
             <Toolbar />
-            <List>
-                {items.map((item) => (
-                    <ListItem
-                        key={item.name}
-                        disablePadding
-                        sx={{
-                            color: item.selected ? ' #FF3F84' : 'inherit',
-                            backgroundColor: item.selected ? 'white' : 'inherit',
-                            borderLeft: item.selected ? '8px solid #FF3F84' : 'inherit',
-                            boxShadow: '0 2px white',
-                        }}>
-                        <Link
-                            href={item.to}
-                            style={{
-                                width: '100%',
-                                textDecoration: 'none',
-                                color: 'black',
-                            }}>
-                            <ListItemButton>
-                                <ListItemIcon>{MENU_SIDEBAR_ICONS[item.icon]}</ListItemIcon>
-                                <ListItemText>
-                                    {item.name}
-                                    {item.beta ? <sup style={{ color: '#FF3F84', paddingLeft: '4px' }}>Beta</sup> : <></>}
-                                </ListItemText>
-                            </ListItemButton>
-                        </Link>
-                        {item.hasDivider ? <Divider /> : <></>}
-                    </ListItem>
-                ))}
-            </List>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 'calc(100% - 64px)',
+                }}
+            >
+                <List sx={{ flexGrow: 1 }}>
+                    {items.map((item) => (
+                        <ListItem
+                            key={item.name}
+                            disablePadding
+                            sx={{
+                                color: item.selected ? ' #FF3F84' : 'inherit',
+                                backgroundColor: item.selected ? 'white' : 'inherit',
+                                borderLeft: item.selected ? '8px solid #FF3F84' : 'inherit',
+                                boxShadow: '0 2px white',
+                            }}
+                        >
+                            <Link
+                                href={item.to}
+                                style={{
+                                    width: '100%',
+                                    textDecoration: 'none',
+                                    color: 'black',
+                                }}
+                            >
+                                <ListItemButton>
+                                    <ListItemIcon>{MENU_SIDEBAR_ICONS[item.icon]}</ListItemIcon>
+                                    <ListItemText>
+                                        {item.name}
+                                        {item.beta ? (
+                                            <sup style={{ color: '#FF3F84', paddingLeft: '4px' }}>Beta</sup>
+                                        ) : null}
+                                    </ListItemText>
+                                </ListItemButton>
+                            </Link>
+                            {item.hasDivider ? <Divider /> : null}
+                        </ListItem>
+                    ))}
+                </List>
+
+                {/* Fixed bottom button */}
+                <Box sx={{ p: 2, borderTop: '1px solid #eee' }}>
+                    <Link href="/auth/signin" passHref data-testid="signin-button">
+                        <CustomButton fullWidth>
+                            <LoginOutlined sx={{ marginRight: '8px' }} /> Sign In
+                        </CustomButton>
+                    </Link>
+                </Box>
+            </Box>
         </div>
     )
 }

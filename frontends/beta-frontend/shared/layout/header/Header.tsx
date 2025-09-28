@@ -16,6 +16,7 @@ import {
 } from '@mui/icons-material';
 import UserDropdown from './UserDropdown';
 import CustomButton from '@/shared/components/Common/CustomButton';
+import NotificationMenu from '@/shared/components/notification-menu/NotificationMenu';
 
 interface HeaderProps {
     isClosing: boolean;
@@ -87,7 +88,10 @@ const Header: FC<HeaderProps> = ({ isClosing, setMobileOpen, mobileOpen, isMenu 
                     <Box flex={1} display="flex" justifyContent="flex-end" alignItems="center">
                         {isMenu && (
                             status === 'authenticated' && !!data.user ? (
-                                <UserDropdown user={data.user} />
+                                <>
+                                    <NotificationMenu />
+                                    <UserDropdown user={data.user} />
+                                </>
                             ) : (
                                 <Link href="/auth/signin" passHref data-testid="signin-button">
                                     <CustomButton>

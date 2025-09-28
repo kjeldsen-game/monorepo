@@ -1,0 +1,133 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Notification Service API
+
+servers:
+  - url: http://localhost:15001/v1
+
+tags:
+  - name: notifications
+
+paths:
+  ######################## NOTIFICATION START ########################
+  /notifications:
+    get:
+      summary: Get all notifications for specific teams
+      operationId: getAllNotificationByTeamId
+      parameters:
+        - name: teamId
+          in: query
+          description: Id of the team
+          required: true
+          schema:
+            type: string
+      tags:
+        - notifications
+      responses:
+        "200":
+          description: Notifications were retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/NotificationResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /notifications/{notificationId}:
+    put:
+      summary: Mark notification as read
+      operationId: markNotificationAsRead
+      parameters:
+        - name: notificationId
+          in: path
+          description: Id of the notification
+          required: true
+          schema:
+            type: string
+      tags:
+        - notifications
+      responses:
+        "200":
+          $ref: "#/components/responses/DefaultSuccessResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+components:
+  parameters:
+
+    NotificationIdPathParameter:
+      name: teamId
+      in: path
+      description: Id of the team
+      required: true
+      schema:
+        type: string
+
+    TeamIdPathParameter:
+      name: teamId
+      in: path
+      description: Id of the team
+      required: true
+      schema:
+        type: string
+
+  responses:
+    DefaultErrorResponse:
+      description: Unexpected error
+      content:
+        "*/*":
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Error"
+
+    DefaultSuccessResponse:
+      description: "Success response"
+      content:
+        "application/json":
+          schema:
+            $ref: "#/components/schemas/SuccessResponse"
+
+  schemas:
+
+    SuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+
+    NotificationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+          example: This is example notification message
+        isRead:
+          type: boolean
+        payload:
+          type: object
+        type:
+          $ref: "#/components/schemas/NotificationType"
+
+    NotificationType:
+      type: string
+      enum:
+        - AUCTION_BID
+        - MATCH_END
+
+    Error:
+      type: "object"
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

@@ -5,10 +5,10 @@ import com.kjeldsen.domain.EventId;
 import com.kjeldsen.lib.clients.TeamClientApi;
 import com.kjeldsen.lib.events.LeagueEvent;
 import com.kjeldsen.lib.model.team.TeamClient;
+import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.match.domain.clients.TeamClientMatch;
 import com.kjeldsen.match.domain.clients.models.team.TeamDTO;
 import com.kjeldsen.match.domain.entities.League;
-import com.kjeldsen.match.domain.publisher.LeagueEventPublisher;
 import com.kjeldsen.match.domain.repositories.LeagueReadRepository;
 import com.kjeldsen.match.domain.repositories.LeagueWriteRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,13 +28,13 @@ public class AddTeamToLeagueUseCase {
 
     private final LeagueWriteRepository leagueWriteRepository;
     private final LeagueReadRepository leagueReadRepository;
-    private final LeagueEventPublisher leagueEventPublisher;
+    private final GenericEventPublisher leagueEventPublisher;
     private final TeamClientApi teamClientApi;
 
     public void add(String teamId, BigDecimal teamValue) {
         Random random = new Random();
         log.info("AddTeamToLeagueUseCase for teamId={} with teamValue={}", teamId, teamValue );
-        System.out.println(teamId);
+
         // TODO add validation to check if the team don't have already assigned league
         TeamClient teamClient = teamClientApi.getTeam(teamId, null, null).get(0);
 
@@ -69,7 +69,7 @@ public class AddTeamToLeagueUseCase {
         // Save leagueId for the team as well to be able to filter league data
         League leagueSaved = leagueWriteRepository.save(league);
         //team.setLeagueId(leagueSaved.getId().value());
-        leagueEventPublisher.publishLeagueEvent(LeagueEvent.builder()
+        leagueEventPublisher.publishEvent(LeagueEvent.builder()
             .teamId(teamClient.getId()).leagueId(league.getId().value()).build());
     }
 }

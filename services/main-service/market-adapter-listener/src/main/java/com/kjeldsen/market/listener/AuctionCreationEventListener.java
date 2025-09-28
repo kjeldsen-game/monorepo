@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -21,9 +20,8 @@ public class AuctionCreationEventListener {
     @EventListener
     public void handleAuctionEvent(AuctionCreationEvent auctionCreationEvent) {
         log.info("AuctionCreationEvent received: {}", auctionCreationEvent);
-        // Create a auction and store it
-        Auction auction = createAuctionUseCase.create(auctionCreationEvent.getPlayerId(), auctionCreationEvent.getTeamId());
-        // Schedule auction end
+        Auction auction = createAuctionUseCase.create(auctionCreationEvent.getPlayerId(),
+                auctionCreationEvent.getTeamId());
         auctionEndJobScheduler.scheduleAuctionEndJob(auction.getId().value(), auction.getEndedAt());
     }
 }

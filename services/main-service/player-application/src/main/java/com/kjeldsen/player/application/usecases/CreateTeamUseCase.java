@@ -1,12 +1,11 @@
 package com.kjeldsen.player.application.usecases;
 
 import com.kjeldsen.lib.events.TeamCreationEvent;
+import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.TeamModifiers;
-import com.kjeldsen.player.domain.publishers.TeamCreationEventPublisher;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +22,7 @@ public class CreateTeamUseCase {
     private final GeneratePlayersUseCase generatePlayersUseCase;
     private final TeamWriteRepository teamWriteRepository;
     private final PlayerWriteRepository playerWriteRepository;
-    private final TeamCreationEventPublisher teamCreationEventPublisher;
+    private final GenericEventPublisher teamCreationEventPublisher;
 
     public void create(String teamName, Integer numberOfPlayers, String userId) {
         log.info("CreateTeamUseCase name {} with {} players for user {}", teamName, numberOfPlayers, userId);
@@ -81,7 +80,7 @@ public class CreateTeamUseCase {
 
         // Generate team players
         players.forEach(playerWriteRepository::save);
-        teamCreationEventPublisher.publish(TeamCreationEvent.builder()
+        teamCreationEventPublisher.publishEvent(TeamCreationEvent.builder()
             .teamId(team.getId().value()).teamValue(players.stream()
                 .map(Player::getEconomy)
                 .map(Player.Economy::getSalary)

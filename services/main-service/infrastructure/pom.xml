@@ -13,6 +13,10 @@
         <!-- Modules -->
         <dependency>
             <groupId>com.kjeldsen</groupId>
+            <artifactId>notification</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
             <artifactId>auth-adapter-persistence</artifactId>
         </dependency>
         <dependency>
@@ -23,18 +27,10 @@
             <groupId>com.kjeldsen</groupId>
             <artifactId>auth-adapter-authorization</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>auth-adapter-publisher</artifactId>
-        </dependency>
         <!-- Match modules -->
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>match-adapter-listener</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>match-adapter-publisher</artifactId>
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
@@ -52,10 +48,6 @@
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>player-adapter-listener</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>player-adapter-publisher</artifactId>
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
@@ -81,10 +73,6 @@
         <dependency>
             <groupId>com.kjeldsen</groupId>
             <artifactId>market-adapter-listener</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kjeldsen</groupId>
-            <artifactId>market-adapter-publisher</artifactId>
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>

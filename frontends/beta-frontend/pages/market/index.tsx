@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { useState } from 'react';
 import { useMarketApi } from 'modules/market/hooks/useMarketApi';
 import MarketView from 'modules/market/components/MarketView';
+import PreAlphaAlert from '@/shared/components/PreAlphaAlert';
 
 interface MarketProps { }
 
@@ -21,11 +22,14 @@ const Market: NextPage<MarketProps> = ({ }) => {
   };
 
   return (
-    <MarketView
-      setAuction={handleAuction}
-      auctions={auctions}
-      setFilter={handleSetFilter}
-    />
+    <>
+      <PreAlphaAlert />
+      <MarketView
+        setAuction={handleAuction}
+        auctions={auctions}
+        setFilter={handleSetFilter}
+      />
+    </>
   );
 };
 

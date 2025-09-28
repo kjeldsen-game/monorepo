@@ -2,11 +2,11 @@ package com.kjeldsen.market.rest.delegate;
 
 import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.lib.events.AuctionEndEvent;
+import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.market.application.AuctionEndUseCase;
 import com.kjeldsen.market.application.GetMarketAuctionsUseCase;
 import com.kjeldsen.market.application.PlaceBidUseCase;
 import com.kjeldsen.market.domain.Auction;
-import com.kjeldsen.market.domain.publishers.AuctionEndEventPublisher;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.schedulers.AuctionEndJobScheduler;
 import com.kjeldsen.market.rest.api.MarketApiDelegate;
@@ -32,7 +32,7 @@ import java.util.Map;
 public class MarketDelegate implements MarketApiDelegate {
     private final PlaceBidUseCase placeBidUseCase;
     private final AuctionEndUseCase auctionEndUseCase;
-    private final AuctionEndEventPublisher auctionEndEventPublisher;
+    private final GenericEventPublisher auctionEndEventPublisher;
     private final TeamReadRepository teamReadRepository;
     private final AuctionReadRepository auctionReadRepository;
     private final GetMarketAuctionsUseCase getMarketAuctionsUseCase;
@@ -57,7 +57,7 @@ public class MarketDelegate implements MarketApiDelegate {
     @Override
     public ResponseEntity<Void> simulateAuctionEnd(String auctionId) {
         AuctionEndEvent auctionEndEvent = auctionEndUseCase.endAuction(Auction.AuctionId.of(auctionId));
-        auctionEndEventPublisher.publishAuctionEndEvent(auctionEndEvent);
+        auctionEndEventPublisher.publishEvent(auctionEndEvent);
         return ResponseEntity.ok().build();
     }
 

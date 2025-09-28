@@ -3,7 +3,6 @@ package com.kjeldsen.player.application.usecases.player;
 import com.kjeldsen.lib.events.AuctionCreationEvent;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerStatus;
-import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +28,6 @@ public class PlayerSellUseCase {
         playerWriteRepository.save(player);
 
         return AuctionCreationEvent.builder()
-            .playerId(playerId.value()).teamId(player.getTeamId().value()).build();
+                .playerId(playerId.value()).teamId(player.getTeamId().value()).build();
     }
 }
