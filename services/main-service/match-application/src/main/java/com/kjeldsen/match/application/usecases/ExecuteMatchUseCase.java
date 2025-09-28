@@ -2,10 +2,13 @@ package com.kjeldsen.match.application.usecases;
 
 import com.kjeldsen.lib.clients.TeamClientApi;
 import com.kjeldsen.lib.events.MatchEvent;
+import com.kjeldsen.lib.events.NotificationEvent;
 import com.kjeldsen.lib.model.player.PlayerClient;
 import com.kjeldsen.lib.model.team.TeamClient;
+import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.match.application.usecases.league.UpdateLeagueStandingsUseCase;
 import com.kjeldsen.match.domain.Game;
+import com.kjeldsen.match.domain.builders.MatchEndNotificationEventBuilder;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.MatchReport;
 import com.kjeldsen.match.domain.entities.Player;
@@ -14,7 +17,6 @@ import com.kjeldsen.match.domain.exceptions.InvalidMatchStatusException;
 import com.kjeldsen.match.domain.modifers.HorizontalPressure;
 import com.kjeldsen.match.domain.modifers.Tactic;
 import com.kjeldsen.match.domain.modifers.VerticalPressure;
-import com.kjeldsen.match.domain.publisher.MatchEventPublisher;
 import com.kjeldsen.match.domain.repositories.MatchWriteRepository;
 import com.kjeldsen.match.domain.state.GameState;
 import com.kjeldsen.player.domain.*;
@@ -33,7 +35,9 @@ public class ExecuteMatchUseCase {
 
     private final GetMatchAttendanceUseCase getMatchAttendanceUseCase;
     private final MatchWriteRepository matchWriteRepository;
-    private final MatchEventPublisher matchEventPublisher;
+
+    private final GenericEventPublisher eventPublisher;
+
     private final GetMatchUseCase getMatchUseCase;
     private final UpdateLeagueStandingsUseCase updateLeagueStandingsUseCase;
     private final TeamClientApi teamClientApi;
@@ -78,8 +82,16 @@ public class ExecuteMatchUseCase {
             if (m.getLeagueId() != null){
                 updateLeagueStandingsUseCase.update(matchEvent.getLeagueId(), matchEvent.getHomeTeamId(),
                     matchEvent.getAwayTeamId(), matchEvent.getHomeScore(), matchEvent.getAwayScore());
-                matchEventPublisher.publishMatchEvent(matchEvent);
+                eventPublisher.publishEvent(matchEvent);
             }
+
+            // Publish notification about match
+            if (!Objects.equals(m.getHome().getId(), m.getAway().getId())) {
+                eventPublisher.publishEvent(
+                    MatchEndNotificationEventBuilder.build(List.of(m.getHome().getId(), m.getAway().getId()), m.getId())
+                );
+            }
+
         } else {
             throw new InvalidMatchStatusException();
         }

@@ -1,9 +1,9 @@
 package com.kjeldsen.market.quartz;
 
 import com.kjeldsen.lib.events.AuctionEndEvent;
+import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.market.application.AuctionEndUseCase;
 import com.kjeldsen.market.domain.Auction;
-import com.kjeldsen.market.domain.publishers.AuctionEndEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AuctionEndJob implements Job {
 
-    private final AuctionEndEventPublisher auctionEndEventPublisher;
+    private final GenericEventPublisher auctionEndEventPublisher;
     private final AuctionEndUseCase auctionEndUseCase;
 
     @Override
@@ -26,6 +26,6 @@ public class AuctionEndJob implements Job {
             jobExecutionContext.getJobDetail().getJobDataMap().getString("auctionId"));
 
         AuctionEndEvent auctionEndEvent = auctionEndUseCase.endAuction(auctionId);
-        auctionEndEventPublisher.publishAuctionEndEvent(auctionEndEvent);
+        auctionEndEventPublisher.publishEvent(auctionEndEvent);
     }
 }

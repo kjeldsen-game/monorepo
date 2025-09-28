@@ -1,19 +1,18 @@
 package com.kjeldsen.match.application.usecases;
 
 import com.kjeldsen.lib.clients.TeamClientApi;
+import com.kjeldsen.lib.events.MatchEvent;
+import com.kjeldsen.lib.events.NotificationEvent;
 import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.lib.model.team.TeamModifiersClient;
+import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.match.application.usecases.common.BaseClientTest;
 import com.kjeldsen.match.application.usecases.league.UpdateLeagueStandingsUseCase;
 import com.kjeldsen.match.domain.Game;
-import com.kjeldsen.match.domain.clients.TeamClientMatch;
-import com.kjeldsen.match.domain.clients.models.team.TeamDTO;
-import com.kjeldsen.match.domain.clients.models.team.TeamModifiers;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.MatchReport;
 import com.kjeldsen.match.domain.entities.Team;
 import com.kjeldsen.match.domain.exceptions.InvalidMatchStatusException;
-import com.kjeldsen.match.domain.publisher.MatchEventPublisher;
 import com.kjeldsen.match.domain.repositories.MatchWriteRepository;
 import com.kjeldsen.match.domain.state.GameState;
 import com.kjeldsen.match.domain.state.TeamState;
@@ -35,7 +34,7 @@ class ExecuteMatchUseCaseTest extends BaseClientTest {
 
     private final GetMatchAttendanceUseCase mockedGetMatchAttendanceUseCase = mock(GetMatchAttendanceUseCase.class);
     private final MatchWriteRepository mockedMatchWriteRepository = mock(MatchWriteRepository.class);
-    private final MatchEventPublisher mockedMatchEventPublisher = mock(MatchEventPublisher.class);
+    private final GenericEventPublisher mockedMatchEventPublisher = mock(GenericEventPublisher.class);
     private final GetMatchUseCase mockedGetMatchUseCase = mock(GetMatchUseCase.class);
     private final UpdateLeagueStandingsUseCase mockedUpdateLeagueStandingsUseCase = Mockito.mock(UpdateLeagueStandingsUseCase.class);
     private final TeamClientApi mockedTeamClient = Mockito.mock(TeamClientApi.class);
@@ -107,6 +106,8 @@ class ExecuteMatchUseCaseTest extends BaseClientTest {
         }
 
         verify(mockedMatchWriteRepository, times(1)).save(any(Match.class));
-        verify(mockedMatchEventPublisher, times(1)).publishMatchEvent(any());
+        verify(mockedMatchEventPublisher, times(1)).publishEvent(any(MatchEvent.class));
+        verify(mockedMatchEventPublisher, times(1)).publishEvent(any(NotificationEvent.class));
+
     }
 }

@@ -1,10 +1,9 @@
-import { Alert, Box, useMediaQuery } from '@mui/material';
+import { Box, useMediaQuery } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import { theme } from '@/libs/material/theme';
 import MarketFilter from './filter/MarketFilter';
 import AuctionDialog from './dialog/AuctionDialog';
 import { MarketColumns } from './columns/MarketColumns';
-import DashboardLink from '@/shared/components/DashboardLink';
 import { AuctionResponse } from '../types/responses';
 import Grid from '@/shared/components/Grid/Grid';
 
@@ -50,13 +49,6 @@ const MarketView: React.FC<MarketProps> = ({
 
   return (
     <>
-      {/* <DashboardLink children={'Back to Dashboard'} /> */}
-
-      <Alert sx={{ mb: '16px', borderLeft: '8px solid #EF7B2B' }} severity="warning">
-        Please note: the app is not continuously deployed, so auction end times may behave unexpectedly.
-        That said, the bidding system is fully functional and ready for beta testing — you can place bids on players successfully.
-      </Alert>
-
       <Box sx={{ width: '100%', background: 'white' }} padding={2} borderRadius={2} boxShadow={1}>
 
         <AuctionDialog

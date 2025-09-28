@@ -3,12 +3,12 @@ package com.kjeldsen.auth.application.usecases;
 import com.kjeldsen.auth.domain.Role;
 import com.kjeldsen.auth.domain.User;
 import com.kjeldsen.auth.domain.exceptions.BadRequestException;
-import com.kjeldsen.auth.domain.publishers.UserRegisterPublisher;
 import com.kjeldsen.auth.domain.repositories.UserReadRepository;
 import com.kjeldsen.auth.domain.repositories.UserWriteRepository;
 import com.kjeldsen.lib.TeamClientApiImpl;
 import com.kjeldsen.lib.events.UserRegisterEvent;
 import com.kjeldsen.lib.model.team.TeamClient;
+import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -30,7 +30,7 @@ class RegisterUserUseCaseTest {
     private final UserWriteRepository userWriteRepository = Mockito.mock(UserWriteRepository.class);
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
     private final TeamClientApiImpl mockedTeamClientAuth = Mockito.mock(TeamClientApiImpl.class);
-    private final UserRegisterPublisher mockedUserRegisterPublisher = Mockito.mock(UserRegisterPublisher.class);
+    private final GenericEventPublisher mockedUserRegisterPublisher = Mockito.mock(GenericEventPublisher.class);
     private final RegisterUserUseCase registerUserUseCase = new RegisterUserUseCase(
         userReadRepository, userWriteRepository, passwordEncoder, mockedTeamClientAuth, mockedUserRegisterPublisher);
 
@@ -100,6 +100,6 @@ class RegisterUserUseCaseTest {
         }));
 
         verify(mockedUserRegisterPublisher, times(1))
-            .publishUserRegisterEvent(any(UserRegisterEvent.class));
+            .publishEvent(any(UserRegisterEvent.class));
     }
 }

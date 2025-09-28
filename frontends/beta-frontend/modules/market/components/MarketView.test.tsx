@@ -30,19 +30,6 @@ const mockAuctions = [
 ];
 
 describe('MarketView', () => {
-    it('renders warning alert', () => {
-        render(
-            <MarketView
-                auctions={mockAuctions}
-                setFilter={jest.fn()}
-                setAuction={jest.fn()}
-            />
-        );
-
-        expect(
-            screen.getByText(/the app is not continuously deployed/i)
-        ).toBeInTheDocument();
-    });
 
     it('renders grid and auctions', () => {
         render(

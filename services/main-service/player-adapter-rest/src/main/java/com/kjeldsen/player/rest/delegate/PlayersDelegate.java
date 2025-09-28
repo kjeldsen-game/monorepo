@@ -1,6 +1,8 @@
 package com.kjeldsen.player.rest.delegate;
 
 import com.kjeldsen.auth.authorization.SecurityUtils;
+import com.kjeldsen.lib.events.AuctionCreationEvent;
+import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
@@ -8,7 +10,6 @@ import com.kjeldsen.player.application.usecases.player.PlayerSellUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Team.TeamId;
-import com.kjeldsen.player.domain.publishers.AuctionCreationEventPublisher;
 import com.kjeldsen.player.domain.repositories.queries.FindPlayersQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.rest.api.PlayerApiDelegate;
@@ -35,7 +36,8 @@ public class PlayersDelegate implements PlayerApiDelegate {
     private final PlayerReadRepository playerReadRepository;
     private final PlayerSellUseCase playerSellUseCase;
     private final GetTeamUseCase getTeamUseCase;
-    private final AuctionCreationEventPublisher auctionCreationEventPublisher;
+//    private final AuctionCreationEventPublisher auctionCreationEventPublisher;
+    private final GenericEventPublisher auctionCreationEventPublisher;
 
     @Override
     public ResponseEntity<Void> createPlayer(CreatePlayerRequest createPlayerRequest) {
@@ -87,7 +89,7 @@ public class PlayersDelegate implements PlayerApiDelegate {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        auctionCreationEventPublisher.publishAuctionCreationEvent(
+        auctionCreationEventPublisher.publishEvent(
             playerSellUseCase.sell(Player.PlayerId.of(playerId)));
         return ResponseEntity.ok().build();
     }

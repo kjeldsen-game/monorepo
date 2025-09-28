@@ -17,12 +17,10 @@
         <module>player-adapter-rest</module>
         <module>player-application</module>
         <module>player-domain</module>
-        <module>player-adapter-publisher</module>
         <module>player-adapter-quartz</module>
         <module>match-domain</module>
         <module>match-application</module>
         <module>match-adapter-rest</module>
-        <module>match-adapter-publisher</module>
         <module>match-adapter-persistence</module>
         <module>match-adapter-quartz</module>
         <module>match-adapter-listener</module>
@@ -31,11 +29,10 @@
         <module>market-adapter-persistence</module>
         <module>market-adapter-listener</module>
         <module>market-adapter-rest</module>
-        <module>market-adapter-publisher</module>
         <module>market-adapter-quartz</module>
-        <module>auth-adapter-publisher</module>
         <module>lib-pub-sub</module>
         <module>lib-client</module>
+        <module>notification</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -351,11 +348,6 @@
             </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>auth-adapter-publisher</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.kjeldsen</groupId>
                 <artifactId>league-adapter-rest</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -441,6 +433,11 @@
             </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
+                <artifactId>notification</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kjeldsen</groupId>
                 <artifactId>player-application</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -456,17 +453,7 @@
             </dependency>
             <dependency>
                 <groupId>com.kjeldsen</groupId>
-                <artifactId>match-adapter-publisher</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.kjeldsen</groupId>
                 <artifactId>player-adapter-listener</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.kjeldsen</groupId>
-                <artifactId>player-adapter-publisher</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -497,11 +484,6 @@
             <dependency>
                 <groupId>com.kjeldsen</groupId>
                 <artifactId>market-adapter-rest</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.kjeldsen</groupId>
-                <artifactId>market-adapter-publisher</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

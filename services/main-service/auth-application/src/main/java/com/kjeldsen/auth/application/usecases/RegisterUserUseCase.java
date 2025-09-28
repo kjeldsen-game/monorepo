@@ -3,13 +3,13 @@ package com.kjeldsen.auth.application.usecases;
 import com.kjeldsen.auth.domain.Role;
 import com.kjeldsen.auth.domain.User;
 import com.kjeldsen.auth.domain.exceptions.BadRequestException;
-import com.kjeldsen.auth.domain.publishers.UserRegisterPublisher;
 import com.kjeldsen.auth.domain.repositories.UserReadRepository;
 import com.kjeldsen.auth.domain.repositories.UserWriteRepository;
 import com.kjeldsen.auth.domain.utils.PasswordValidator;
 import com.kjeldsen.lib.TeamClientApiImpl;
 import com.kjeldsen.lib.events.UserRegisterEvent;
 import com.kjeldsen.lib.model.team.TeamClient;
+import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -28,7 +28,7 @@ public class RegisterUserUseCase {
     private final UserWriteRepository userWriteRepository;
     private final PasswordEncoder passwordEncoder;
     private final TeamClientApiImpl teamClientApi;
-    private final UserRegisterPublisher userRegisterPublisher;
+    private final GenericEventPublisher userRegisterPublisher;
 
     public void register(String email, String password, String inputTeamName, String confirmPassword) {
         log.info("RegisterUserUseCase for email {} team {} password ****", email, inputTeamName);
@@ -54,7 +54,7 @@ public class RegisterUserUseCase {
         user.setPassword(encodedPassword);
         user.setRoles(Set.of(Role.USER));
         User registered = userWriteRepository.save(user);
-        userRegisterPublisher.publishUserRegisterEvent(
+        userRegisterPublisher.publishEvent(
             UserRegisterEvent.builder()
                 .teamName(inputTeamName)
                 .userId(registered.getId())

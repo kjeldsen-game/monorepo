@@ -1,11 +1,12 @@
 package com.kjeldsen.market.application;
 
+import com.kjeldsen.lib.events.BidEvent;
+import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.exceptions.AuctionNotFoundException;
 import com.kjeldsen.market.domain.exceptions.InsufficientBalanceException;
 import com.kjeldsen.market.domain.exceptions.PlaceBidException;
 import com.kjeldsen.market.domain.exceptions.TeamNotFoundException;
-import com.kjeldsen.market.domain.publishers.BidEventPublisher;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
 import com.kjeldsen.player.domain.Team;
@@ -35,7 +36,7 @@ class PlaceBidUseCaseTest {
     private final AuctionWriteRepository mockedAuctionWriteRepository = Mockito.mock(AuctionWriteRepository.class);
     private final TeamReadRepository mockedTeamReadRepository = Mockito.mock(TeamReadRepository.class);
     private final TeamWriteRepository mockedTeamWriteRepository = Mockito.mock(TeamWriteRepository.class);
-    private final BidEventPublisher mockedBidEventPublisher = Mockito.mock(BidEventPublisher.class);
+    private final GenericEventPublisher mockedBidEventPublisher = Mockito.mock(GenericEventPublisher.class);
     private final PlaceBidUseCase placeBidUseCase = new PlaceBidUseCase(mockedAuctionWriteRepository, mockedAuctionReadRepository
     , mockedTeamReadRepository, mockedTeamWriteRepository, mockedBidEventPublisher);
 

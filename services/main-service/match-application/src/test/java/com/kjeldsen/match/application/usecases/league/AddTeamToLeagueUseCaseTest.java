@@ -3,11 +3,9 @@ package com.kjeldsen.match.application.usecases.league;
 import com.kjeldsen.lib.clients.TeamClientApi;
 import com.kjeldsen.lib.events.LeagueEvent;
 import com.kjeldsen.lib.model.team.TeamClient;
+import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.match.application.usecases.common.BaseClientTest;
-import com.kjeldsen.match.domain.clients.TeamClientMatch;
-import com.kjeldsen.match.domain.clients.models.team.TeamDTO;
 import com.kjeldsen.match.domain.entities.League;
-import com.kjeldsen.match.domain.publisher.LeagueEventPublisher;
 import com.kjeldsen.match.domain.repositories.LeagueReadRepository;
 import com.kjeldsen.match.domain.repositories.LeagueWriteRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +23,7 @@ class AddTeamToLeagueUseCaseTest extends BaseClientTest {
 
     private final LeagueWriteRepository mockedLeagueWriteRepository = Mockito.mock(LeagueWriteRepository.class);
     private final LeagueReadRepository mockedLeagueReadRepository  = Mockito.mock(LeagueReadRepository.class);
-    private final LeagueEventPublisher mockedLeagueEventPublisher = Mockito.mock(LeagueEventPublisher.class);
+    private final GenericEventPublisher mockedLeagueEventPublisher = Mockito.mock(GenericEventPublisher.class);
     private final TeamClientApi mockedTeamClient = Mockito.mock(TeamClientApi.class);
     private final AddTeamToLeagueUseCase addTeamToLeagueUseCase = new AddTeamToLeagueUseCase(
         mockedLeagueWriteRepository, mockedLeagueReadRepository, mockedLeagueEventPublisher, mockedTeamClient);
@@ -45,7 +43,7 @@ class AddTeamToLeagueUseCaseTest extends BaseClientTest {
         verify(mockedLeagueReadRepository, times(1)).findAll();
         verify(mockedLeagueWriteRepository,times(1)).save(any(League.class));
         verify(mockedTeamClient,times(1)).getTeam(any(), any(), any());
-        verify(mockedLeagueEventPublisher, times(1)).publishLeagueEvent(any(LeagueEvent.class));
+        verify(mockedLeagueEventPublisher, times(1)).publishEvent(any(LeagueEvent.class));
     }
 
     @Test
@@ -66,6 +64,6 @@ class AddTeamToLeagueUseCaseTest extends BaseClientTest {
         verify(mockedLeagueReadRepository, times(1)).findAll();
         verify(mockedLeagueWriteRepository,times(1)).save(any(League.class));
         verify(mockedTeamClient,times(1)).getTeam(any(), any(), any());
-        verify(mockedLeagueEventPublisher, times(1)).publishLeagueEvent(any(LeagueEvent.class));
+        verify(mockedLeagueEventPublisher, times(1)).publishEvent(any(LeagueEvent.class));
     }
 }

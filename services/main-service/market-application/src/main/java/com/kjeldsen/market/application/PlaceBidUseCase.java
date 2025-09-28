@@ -1,12 +1,14 @@
 package com.kjeldsen.market.application;
 
 import com.kjeldsen.lib.events.BidEvent;
+import com.kjeldsen.lib.events.NotificationEvent;
+import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.market.domain.Auction;
+import com.kjeldsen.market.domain.builders.PlaceBidNotificationEventBuilder;
 import com.kjeldsen.market.domain.exceptions.AuctionNotFoundException;
 import com.kjeldsen.market.domain.exceptions.InsufficientBalanceException;
 import com.kjeldsen.market.domain.exceptions.PlaceBidException;
 import com.kjeldsen.market.domain.exceptions.TeamNotFoundException;
-import com.kjeldsen.market.domain.publishers.BidEventPublisher;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
 import com.kjeldsen.player.domain.Team;
@@ -23,6 +25,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
+// TODO REFACTOR
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -32,7 +36,8 @@ public class PlaceBidUseCase {
     private final AuctionReadRepository auctionReadRepository;
     private final TeamReadRepository teamReadRepository;
     private final TeamWriteRepository teamWriteRepository;
-    private final BidEventPublisher bidEventPublisher;
+    private final GenericEventPublisher eventPublisher;
+
 
     private static final Integer AUCTION_BID_REDUCE_TIME = 30;
 
@@ -74,6 +79,20 @@ public class PlaceBidUseCase {
         auction.reduceEndedAtBySeconds(AUCTION_BID_REDUCE_TIME);
         auction.setAverageBid(getAverageBid(auction.getBids()));
 
+        List<String> teamIds = auction.getBids().stream()
+            .map(Auction.Bid::getTeamId)
+            .filter(bidTeamId -> {
+                String auctionOwnerId = auction.getTeamId();
+                String currentBidderId = team.getId().value();
+                return !bidTeamId.equals(auctionOwnerId) && !bidTeamId.equals(currentBidderId);
+            })
+            .distinct()
+            .toList();
+
+        eventPublisher.publishEvent(
+            PlaceBidNotificationEventBuilder.build(teamIds, auction.getPlayerId())
+        );
+
         teamWriteRepository.save(team);
         return auctionWriteRepository.save(auction);
     }
@@ -97,8 +116,7 @@ public class PlaceBidUseCase {
         if (team.getEconomy().getBalance().compareTo(bidAmountDiff.abs()) < 0) {
             throw new InsufficientBalanceException();
         }
-        bidEventPublisher.publishBidEndEvent(BidEvent.builder().amount(bidAmountDiff)
+        eventPublisher.publishEvent(BidEvent.builder().amount(bidAmountDiff)
             .teamId(team.getId().value()).build());
-        //team.getEconomy().updateBalance(bidAmountDiff);
     }
 }
