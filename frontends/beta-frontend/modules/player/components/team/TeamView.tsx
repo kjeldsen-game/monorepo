@@ -1,19 +1,22 @@
 import { Team, TeamFormationValiation } from '@/shared/models/player/Team';
-import { Box, Card, Tab, Typography } from '@mui/material';
+import { Box, Card, Tab, Typography, useMediaQuery } from '@mui/material';
 import TeamDataGrid from './datagrids/TeamDatagrid';
 import LineupFilters from './filters/LineupFilters';
 import { useState } from 'react';
 import { getFilteredLineupPlayers } from 'modules/player/utils/LineupUtils';
-import CustomTabs from '@/shared/components/CustomTabs';
+import CustomTabs from '@/shared/components/Tabs/CustomTabs';
 import LineupView from './lineup/LineupView';
 import LineupSpeedDial from './speedDial/LineupSpeedDial';
 import TeamValidationDialog from './dialogs/TeamValidationDialog';
 import { Player } from '@/shared/models/player/Player';
 import { PlayerOrder } from '@/shared/models/player/PlayerOrder';
 import { useLineupManager } from 'modules/player/hooks/logic/useLineupManager';
-import { CustomTabPanel } from '@/shared/components/Tab/CustomTabPanel';
+import { CustomTabPanel } from '@/shared/components/Tabs/CustomTabPanel';
 import TacticsView from './tactics/TacticsView';
 import { TeamPlayerPatchRequest } from 'modules/player/types/Requests';
+import { useModalManager } from '@/shared/hooks/useModalManager';
+import { theme } from '@/libs/material/theme';
+import { useTabManager } from '@/shared/hooks/useTabManager';
 
 interface TeamViewProps {
     team: Team | undefined;
@@ -26,16 +29,14 @@ const TeamView: React.FC<TeamViewProps> = ({
     teamFormation,
     handleUpdateLineup = undefined,
 }) => {
+    const isXs = useMediaQuery(theme.breakpoints.down('sm'));
     const [filter, setFilter] = useState<string>('ALL');
     const [isXsPlayers, setIsXsPlayers] = useState<boolean>(false);
     const [edit, setEdit] = useState<boolean>(false);
     const [openModalValidation, setOpenModalValidation] =
         useState<boolean>(false);
-    const [selectedTab, setSelectedTab] = useState(0);
-
-    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-        setSelectedTab(newValue);
-    };
+    const { open, handleCloseModal, setOpen } = useModalManager();
+    const { handleTabChange, selectedTab } = useTabManager()
 
     const {
         handleEdit,
@@ -56,6 +57,9 @@ const TeamView: React.FC<TeamViewProps> = ({
     };
 
     const handleGridButtonClick = (player: Player) => {
+        if (isXs) {
+            setOpen(true);
+        }
         setActivePlayer(activePlayer ? undefined : player);
     };
 
@@ -67,19 +71,14 @@ const TeamView: React.FC<TeamViewProps> = ({
                 handleClose={() => setOpenModalValidation(false)}
             />
             <Card>
-                <Box
-                    sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}
-                    padding={0}>
-                    <CustomTabs selectedTab={selectedTab} handleChange={handleTabChange}>
-                        <Tab label="Lineup" />
-                        <Tab label="Tactics" />
-                    </CustomTabs>
-                </Box>
-
-                <Box padding={2}>
+                <CustomTabs tabs={["Lineup", "Modifiers"]} selectedTab={selectedTab}
+                    handleChange={handleTabChange} />
+                <Box padding={1}>
                     <Box>
                         <CustomTabPanel value={selectedTab} index={0}>
                             <LineupView
+                                handleCloseModal={handleCloseModal}
+                                open={open}
                                 edit={edit}
                                 players={players}
                                 handleEdit={handleEdit}
@@ -98,7 +97,7 @@ const TeamView: React.FC<TeamViewProps> = ({
 
             <Box
                 sx={{ width: '100%', background: 'white' }}
-                padding={2}
+                padding={1}
                 borderRadius={2}
                 boxShadow={1}
                 mt={2}>

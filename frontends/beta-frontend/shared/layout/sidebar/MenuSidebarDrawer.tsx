@@ -12,6 +12,9 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import Link from 'next/link';
 import CustomButton from '@/shared/components/Common/CustomButton';
 import { LoginOutlined } from '@mui/icons-material';
+import { theme } from '@/libs/material/theme';
+import { useSession } from 'next-auth/react';
+import UserMenu from '@/shared/components/user-menu/UserMenu';
 
 export const MENU_SIDEBAR_ICONS = {
     inbox: <InboxIcon />,
@@ -35,7 +38,7 @@ export interface Item {
 }
 
 const MenuSidebarDrawer = () => {
-
+    const { status, data } = useSession();
     const { pathname } = useRouter();
 
     const items: Item[] = [
@@ -143,13 +146,18 @@ const MenuSidebarDrawer = () => {
                     ))}
                 </List>
 
-                {/* Fixed bottom button */}
                 <Box sx={{ p: 2, borderTop: '1px solid #eee' }}>
-                    <Link href="/auth/signin" passHref data-testid="signin-button">
-                        <CustomButton fullWidth>
-                            <LoginOutlined sx={{ marginRight: '8px' }} /> Sign In
-                        </CustomButton>
-                    </Link>
+
+                    {status === "authenticated" && !!data.user ?
+                        <UserMenu user={data.user} />
+                        :
+                        <Link href="/auth/signin" passHref data-testid="signin-button">
+                            <CustomButton sx={{ background: '#E6E7EB', color: theme.palette.quaternary.main, fontWeight: 'bold', padding: 1 }} fullWidth>
+                                <LoginOutlined sx={{ marginRight: '8px' }} /> Sign In
+                            </CustomButton>
+                        </Link>
+                    }
+
                 </Box>
             </Box>
         </div>

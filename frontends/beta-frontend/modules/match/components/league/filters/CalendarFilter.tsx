@@ -1,7 +1,7 @@
-import BaseFilterAccordion from '@/shared/components/base-filter/BaseFilterAccordion'
 import CustomSelectInput from '@/shared/components/Common/CustomSelectInput'
 import { MatchStatus } from 'modules/match/types/MatchResponses'
 import React from 'react'
+import CustomAccordion from '@/shared/components/custom-accordion/CustomAccordion';
 
 interface CalendarFilterProps {
     filter: string,
@@ -11,14 +11,14 @@ interface CalendarFilterProps {
 const CalendarFilter: React.FC<CalendarFilterProps> = ({ filter, handleFilterChange }) => {
 
     return (
-        <BaseFilterAccordion filter='Calendar'>
+        <CustomAccordion title='Calendar Filter'>
             <CustomSelectInput
                 title={'Status'}
                 onChange={handleFilterChange}
                 value={filter}
                 values={MatchStatus}
             />
-        </BaseFilterAccordion>
+        </CustomAccordion>
     )
 }
 

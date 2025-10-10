@@ -11,13 +11,13 @@ export const StandingsColumns = <T extends LeagueStats>(): GridColDef[] => {
   return [
     BaseTextColumn('Pos', (row: T) => row.position, 'left'),
     TeamNameColumn((row) => row, 'center', "Team"),
-    BaseTextColumn('Wins', (row: T) => row.wins),
-    BaseTextColumn('Draws', (row: T) => row.draws),
-    BaseTextColumn('Losses', (row: T) => row.losses),
-    BaseTextColumn('Games Played', (row: T) => row.gamesPlayed),
+    BaseTextColumn('Wins', (row: T) => row.wins, 'center', undefined, "W"),
+    BaseTextColumn('Draws', (row: T) => row.draws, 'center', undefined, "D"),
+    BaseTextColumn('Losses', (row: T) => row.losses, 'center', undefined, "L"),
+    BaseTextColumn('Games Played', (row: T) => row.gamesPlayed, 'center', undefined, "GP"),
     {
       field: 'score',
-      renderHeader: () => <ColHeader header="Score" />,
+      renderHeader: () => <ColHeader header="Score" secondaryHeader='SC' />,
       ...getColumnConfig(),
       renderCell: (params: GridCellParams<T>) => (
         <Box>
@@ -25,6 +25,6 @@ export const StandingsColumns = <T extends LeagueStats>(): GridColDef[] => {
         </Box>
       ),
     },
-    BaseTextColumn('Points ', (row: T) => row.points, 'right'),
+    BaseTextColumn('Points ', (row: T) => row.points, 'right', undefined, "Pts"),
   ];
 };

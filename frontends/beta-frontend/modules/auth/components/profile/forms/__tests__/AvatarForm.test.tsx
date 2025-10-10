@@ -41,7 +41,7 @@ describe('AvatarForm', () => {
         // There are two buttons, get the outlined one (delete)
         // Using aria-label or better selector if possible; here fallback to role+name
         const buttons = screen.getAllByRole('button');
-        const deleteButton = buttons.find(btn => btn.querySelector('svg'));
+        const deleteButton = buttons?.find(btn => btn.querySelector('svg'));
 
         expect(deleteButton).toBeDefined();
 

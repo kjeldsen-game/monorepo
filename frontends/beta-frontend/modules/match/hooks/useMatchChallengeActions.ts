@@ -1,31 +1,28 @@
 import { useSession } from 'next-auth/react';
 import { useSWRConfig } from 'swr';
-import { useError } from '@/shared/contexts/ErrorContext';
 import { useState } from 'react';
-import { useNotification } from '@/shared/contexts/NotificationContext';
 import * as matchApi from '../services/matchApi';
 import { DefaultResponse } from '@/shared/models/Responses';
+import { useSnackbar } from 'notistack';
 
 export const MATCH_CHALLENGE_API = '/match';
 
 export const useMatchChallengeActions = () => {
   const [loading, setLoading] = useState(false);
   const { data: userData } = useSession();
-  const { setError } = useError();
-  const { setNotification } = useNotification();
+  const {enqueueSnackbar} = useSnackbar();
   const { mutate } = useSWRConfig();
 
   const handleMatchChallengeAction = async (
     action: () => Promise<DefaultResponse>,
   ): Promise<void> => {
     setLoading(true);
-    setError(null);
     try {
       const response = await action();
-      setNotification(response.message);
+      enqueueSnackbar(response.message, { variant: 'success' });
       mutate(MATCH_CHALLENGE_API + userData?.user.teamId + '/challenges');
     } catch (error: any) {
-      setError(error.message || 'Something went wrong');
+      // enqueueSnackbar(error.message || 'Something went wrong');
     } finally {
       setLoading(false);
     }

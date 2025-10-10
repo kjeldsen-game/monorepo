@@ -33,7 +33,7 @@ const GeneralEconomyCard: React.FC<GeneralEconomyCardProps> = ({
   );
 
   function getIndexByType(type: string): number {
-    return pricing.findIndex((item) => item.type === type);
+    return pricing?.findIndex((item) => item.type === type);
   }
 
   const handleRemoveButtonClick = (type: string, value: number) => {
@@ -86,7 +86,7 @@ const GeneralEconomyCard: React.FC<GeneralEconomyCardProps> = ({
                 </Grid>
                 <Grid size={{ lg: 6, sm: 12, xs: 6 }} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Typography fontSize={16} color={'#A4BC10'}>
-                    {balance.toLocaleString(undefined, {
+                    {balance?.toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })}
@@ -108,20 +108,20 @@ const GeneralEconomyCard: React.FC<GeneralEconomyCardProps> = ({
               padding: '10px',
               fontSize: '20px',
             }}>
-            <Grid container>
-              {pricingData.map((price) => {
-                return (
+            {/* <Grid container>
+              {pricingData.length > 0 &&
+                pricingData.map((price) => (
                   <PricingDataItem
-                    key={price.type}
+                    key={price?.type}
                     handleAddButton={handleAddButtonClick}
                     handleRemoveButton={handleRemoveButtonClick}
                     isEdit={editMode}
-                    value={price.value}
-                    title={price.type}
+                    value={price?.value}
+                    title={price?.type}
                   />
-                );
-              })}
-            </Grid>
+                ))
+              }
+            </Grid> */}
           </Box>
         </Box>
         <CustomButton

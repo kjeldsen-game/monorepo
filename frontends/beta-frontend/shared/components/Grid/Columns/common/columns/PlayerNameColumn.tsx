@@ -3,6 +3,7 @@ import { Player } from '@/shared/models/player/Player';
 import ColHeader from '../components/ColHeader';
 import ColLink from '../components/ColLink';
 import { getColumnConfig } from '../config/ColumnsConfig';
+import { formatName, getSurname } from '@/shared/utils/PlayerUtils';
 
 export const PlayerNameColumn = (
     getPlayerValue: (row: any) => Player,
@@ -21,8 +22,8 @@ export const PlayerNameColumn = (
                         : {};
             const player: Player = getPlayerValue(params.row);
             return (
-                <ColLink sx={{ ...paddingStyle }} urlValue={`/player/${player.id}`}>
-                    {player.name}
+                <ColLink sx={{ ...paddingStyle, fontWeight: 'bold' }} urlValue={`/player/${player.id}`}>
+                    {formatName(player.name)}
                 </ColLink>
             );
         },

@@ -16,7 +16,7 @@ public class GetNotificationUseCase {
     private final NotificationReadRepository notificationReadRepository;
 
     public List<Notification> get(String teamId) {
-        log.info("Get notifications by teamId {}", teamId);
+//        log.info("Get notifications by teamId {}", teamId);
         return notificationReadRepository.findByTeamIdAndIsReadOrderByCreatedAtDesc(teamId, false);
     }
 }

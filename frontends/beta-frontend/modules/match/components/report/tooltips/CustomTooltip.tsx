@@ -34,7 +34,7 @@ const CustomTooltip = styled(
       if (!open) {
         hoverTimeout.current = setTimeout(() => {
           setOpen(true);
-        }, 1000);
+        }, 500);
       }
     };
 
@@ -96,9 +96,9 @@ const CustomTooltip = styled(
         arrow>
         <span
           onMouseLeave={() => handleMouseLeave()}
-          onMouseEnter={!clickOpen ? () => handleMouseEnter() : undefined}
-          // onMouseEnter={handleTooltipOpen}
-          // onMouseLeave={handleTooltipClose}
+          onClick={!clickOpen ? () => handleMouseEnter() : undefined}
+        // onMouseEnter={handleTooltipOpen}
+        // onMouseLeave={handleTooltipClose}
         >
           {children}
         </span>
@@ -114,9 +114,9 @@ const CustomTooltip = styled(
     padding: '10px',
   },
   [`&.${tooltipClasses.popper}[data-popper-placement*="bottom"] .${tooltipClasses.tooltip}`]:
-    {
-      marginTop: '6px',
-    },
+  {
+    marginTop: '6px',
+  },
   [`& .${tooltipClasses.arrow}`]: {
     color: '#FF3F84',
     width: '16px',

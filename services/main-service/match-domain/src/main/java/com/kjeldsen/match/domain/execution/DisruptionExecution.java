@@ -70,10 +70,11 @@ public class DisruptionExecution {
         if (total < MAX_TOTAL && lastPlay && !params.getDuelType().equals(DuelType.THROW_IN)) {
             double difference = (double) (MAX_TOTAL - total) / 2;
             int random = RandomGenerator.randomInt(0, 100);
-            log.info("Total value = {} Difference value = {} and succeed = {}", total, difference, random);
+            // If random is less than difference than pass receiver is changed
+            log.info("Total value = {} Difference value = {} and succeed = {}, missed is", total, difference, random);
             // Missed pass
             if (random < difference) {
-
+                log.info("DisruptionExecution was successfull and the reciver of pass is gonna be changed");
                 // Generate new pitch area, receiver and the challenger with adjusted values
                 candidatePitchArea = params.getDestinationPitchArea().getNearbyAreas().get(RandomGenerator.randomInt(0, 1));
 

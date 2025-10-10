@@ -48,7 +48,12 @@ public class SchedulePlayerTrainingUseCase {
         Optional<PlayerTrainingScheduledEvent> matchingTraining = activeTrainings.stream()
                 .filter(sk -> sk.getSkill().equals(skill))
                 .findFirst();
-        matchingTraining.ifPresent(this::setScheduledTrainingInactive);
+
+        if (matchingTraining.isPresent()) {
+            matchingTraining.get().setStatus(PlayerTrainingScheduledEvent.Status.INACTIVE);
+            playerTrainingScheduledEventWriteRepository.save(matchingTraining.get());
+            return;
+        }
 
         // Check the active trainings, if the size is less than 2, we could set it without removing active training
         if (activeTrainings.size() >= 2) {

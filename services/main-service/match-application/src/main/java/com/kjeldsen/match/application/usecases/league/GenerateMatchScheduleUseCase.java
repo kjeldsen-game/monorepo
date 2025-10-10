@@ -23,6 +23,11 @@ public class GenerateMatchScheduleUseCase {
         League league = getLeagueUseCase.get(leagueId);
         List<String> teamIds = league.getTeams().keySet().stream().toList();
 
+        // Check the count of the teams in the league, if its fewer bots have to generated and assigned to the team
+        if (teamIds.size() < 10) {
+
+        }
+
         List<ScheduledMatch> scheduledMatches = new ArrayList<>();
 
             LocalDateTime startDate = LocalDateTime.now();

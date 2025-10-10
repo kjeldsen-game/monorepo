@@ -1,5 +1,4 @@
 import Grid from '@/shared/components/Grid/Grid';
-import { Box, Typography } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import { useMatchChallengeActions } from 'modules/match/hooks/useMatchChallengeActions';
 import { useMatchChallengeData } from 'modules/match/hooks/useMatchChallengeData';
@@ -8,7 +7,8 @@ import { StyledMyTeamDatagrid } from 'modules/match/utils/ChallengeUtils';
 import { useTeamsApi } from 'modules/player/hooks/api/useTeamsApi';
 import CreateChallengesColumns from '../columns/CreateChallengesColumns';
 import PendingChallengesColumns from '../columns/PendingChallengesColumns';
-import { theme } from '@/libs/material/theme';
+import NoDataError from '@/shared/components/Grid/no-data-error/NoDataError';
+import { EventBusyRounded } from '@mui/icons-material';
 
 const GeneralTabView = () => {
     const { data: userData } = useSession();
@@ -28,11 +28,6 @@ const GeneralTabView = () => {
 
     return (
         <>
-            <Box paddingY={2} >
-                <Typography fontWeight={'bold'} color={theme.palette.quaternary.main}>
-                    Pending Challenges
-                </Typography>
-            </Box>
             <Grid
                 loading={isLoading}
                 rows={pendingMatches}
@@ -43,13 +38,18 @@ const GeneralTabView = () => {
                         handleMatchDecline
                     )
                 }
+                slots={{
+                    noRowsOverlay: () => (
+                        <NoDataError
+                            icon={EventBusyRounded}
+                            title="No Pending Matches"
+                            subtitle="Your team has not any incoming challenges yet. Once they do, they'll appear here."
+                        />
+                    )
+                }}
             />
-            <Box paddingY={2} >
-                <Typography fontWeight={'bold'} color={theme.palette.quaternary.main}>
-                    Challenge a team
-                </Typography>
-            </Box>
             <StyledMyTeamDatagrid
+                sx={{ paddingTop: 1 }}
                 loading={isLoading}
                 disableColumnMenu={true}
                 getRowId={(row) => row.id}

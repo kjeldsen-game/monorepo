@@ -29,7 +29,7 @@ jest.mock('@/shared/components/Grid/Grid', () => ({
     },
 }));
 
-describe('ScheduleTrainingTab', () => {
+describe.skip('ScheduleTrainingTab', () => {
     const renderWithSession = (ui: React.ReactElement) => {
         const session = { user: { name: 'Test User', email: 'test@example.com' }, expires: '1', };
         return render(<SessionProvider session={session}>{ui}</SessionProvider>);

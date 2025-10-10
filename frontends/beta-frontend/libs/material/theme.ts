@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles';
-import { red, white } from '@mui/material/colors';
+import { red } from '@mui/material/colors';
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -26,6 +26,7 @@ export const theme = createTheme({
     },
     tertiary: {
       main: '#F3F4F6',
+      light: '#E2E8F0'
     },
     quaternary: {
       main: '#555F6C',

@@ -6,11 +6,11 @@ import { getColumnConfig } from '../config/ColumnsConfig';
 export const PlayerAgeColumn = (
     getPlayerValue: (row: any) => Player,
     alignment: GridAlignment = 'center',
+    isXs?: boolean
 ): GridColDef => {
     return {
         ...getColumnConfig(alignment),
         field: 'age',
-        maxWidth: 40,
         renderHeader: () => <ColHeader header="Age" align={alignment} />,
         renderCell: (params: GridCellParams) => {
             const player: Player = getPlayerValue(params.row);

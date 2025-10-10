@@ -22,7 +22,7 @@ const GeneralEconomyTabView: React.FC<GeneralEconomyTabViewProps> = ({
   prices,
 }: GeneralEconomyTabViewProps) => {
 
-  const [sponsorType, setSponsorType] = useState<IncomePeriodicity>(0);
+  const [sponsorType, setSponsorType] = useState<IncomePeriodicity>();
   const [openBillboard, setOpenBillboard] = useState<boolean>(false);
   const [openSponsor, setOpenSponsor] = useState<boolean>(false);
 

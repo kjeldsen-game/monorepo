@@ -98,6 +98,15 @@ public class GameState {
         return turn == Turn.HOME ? away : home;
     }
 
+    public Optional<List<Play>> getLastNPlays(int numberOfPlays) {
+        if (plays.isEmpty()) return Optional.empty();
+
+        int size = plays.size();
+        int fromIndex = Math.max(size - numberOfPlays, 0);
+
+        return Optional.of(plays.subList(fromIndex, size));
+    }
+
     public Optional<Play> lastPlay() {
         if (plays.isEmpty()) {
             return Optional.empty();

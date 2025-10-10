@@ -14,7 +14,6 @@ function Grid<T>({ rows, columns, sx, ...props }: GridProps<T>) {
         width: '100%',
         '& .super-app .MuiDataGrid-cellContent': {
           color: 'white',
-          padding: '6px',
           fontWeight: '600',
         },
         '& .MuiDataGrid-columnHeader': {
@@ -63,6 +62,7 @@ function Grid<T>({ rows, columns, sx, ...props }: GridProps<T>) {
         pageSizeOptions={[]} // Hides the dropdown choices
         columnHeaderHeight={40}
         sx={{
+          minHeight: rows?.length === 0 && '220px',
           '& .MuiDataGrid-columnHeaders .MuiDataGrid-scrollbarFiller': {
             background: '#F3F4F6'
           },

@@ -37,7 +37,7 @@ const PricingDataItem: React.FC<PricingDataItemProps> = ({
                 variant="body2"
                 sx={{ color: '#A4BC10', paddingY: '5px' }}
                 fontSize={16}>
-                {value.toLocaleString(undefined, {
+                {value?.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
                 })}{' '}

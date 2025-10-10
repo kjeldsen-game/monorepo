@@ -5,10 +5,11 @@ import { getColumnConfig } from '@/shared/components/Grid/Columns/common/config/
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { getArrowColorTrainingDataGrid } from 'modules/player/utils/TrainingUtils';
 
-export const SkillDeltaColumn = (): GridColDef => {
+export const SkillDeltaColumn = (isXs: boolean): GridColDef => {
     return {
         ...getColumnConfig(),
         field: "dv",
+        flex: isXs ? 1.4 : 1,
         renderHeader: () => <ColHeader header={'DV'} />,
         renderCell: (params: GridCellParams) => {
             return (

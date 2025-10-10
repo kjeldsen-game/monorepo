@@ -45,10 +45,10 @@ export const Layout: React.FC<React.PropsWithChildren<Props>> = ({ isMenu = true
                 sx={{
                     mt: { xs: '56px', sm: '47px' },
                     flexGrow: 1,
-                    p: isMenu ? 3 : 0,
+                    p: isMenu ? 1 : 0,
                     width: { sm: `calc(100% - ${DRAWER_WIDTH}px)`, xs: '100%' },
                 }}>
-                <Toolbar />
+                <Toolbar sx={{ mt: -1 }} />
                 <Main>{children}</Main>
             </Box>
         </Box>

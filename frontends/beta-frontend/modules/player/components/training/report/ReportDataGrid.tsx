@@ -25,7 +25,7 @@ const ReportDataGrid: React.FC<ReportDataGridProps> = ({ trainings }) => {
             const rowsOfType = trainings.filter((t) => t.trainingType === type);
             if (rowsOfType.length > 0) {
                 const lastRow = rowsOfType[rowsOfType.length - 1];
-                map.set(type, getRowId(lastRow));
+                map?.set(type, getRowId(lastRow));
             }
         });
 
@@ -45,9 +45,7 @@ const ReportDataGrid: React.FC<ReportDataGridProps> = ({ trainings }) => {
         <StyledDataGrid
             data-testid="training-report-grid"
             sx={{
-                marginTop: '16px',
                 maxHeight: '400px',
-                // minHeight: '400px',
             }}
             loading={false}
             getRowId={getRowId}

@@ -2,12 +2,9 @@ import { useEffect, useState } from 'react';
 import { Box, Tab } from '@mui/material';
 import type { NextPage } from 'next';
 import { Player } from '@/shared/models/player/Player';
-import {
-  filterPlayersByStatus,
-  filterPlayersByTeam,
-} from '@/shared/utils/LineupUtils';
-import { CustomTabPanel } from '@/shared/components/Tab/CustomTabPanel';
-import CustomTabs from '@/shared/components/CustomTabs';
+
+import { CustomTabPanel } from '@/shared/components/Tabs/CustomTabPanel';
+import CustomTabs from '@/shared/components/Tabs/CustomTabs';
 import { useTeamApi } from 'modules/player/hooks/api/useTeamApi';
 import TeamView from 'modules/player/components/team/TeamView';
 import { useMatch } from 'modules/match/hooks/useMatch';
@@ -49,10 +46,7 @@ const Team: NextPage = () => {
         sx={{
           justifyItems: 'center',
         }}>
-        <CustomTabs selectedTab={selectedTab} handleChange={handleTabChange}>
-          <Tab label="Home" />
-          <Tab label="Away" />
-        </CustomTabs>
+        <CustomTabs tabs={["Home, Away"]} selectedTab={selectedTab} handleChange={handleTabChange}/>
       </Box>
       <CustomTabPanel value={selectedTab} index={0}>
         <TeamView

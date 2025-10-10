@@ -28,11 +28,11 @@ jest.mock('./dialogs/TeamValidationDialog', () => ({
     __esModule: true,
     default: () => <div data-testid="TeamValidationDialog" />
 }));
-jest.mock('@/shared/components/CustomTabs', () => ({
+jest.mock('@/shared/components/Tabs/CustomTabs', () => ({
     __esModule: true,
     default: ({ children }: any) => <div data-testid="CustomTabs">{children}</div>
 }));
-jest.mock('@/shared/components/Tab/CustomTabPanel', () => ({
+jest.mock('@/shared/components/Tabs/CustomTabPanel', () => ({
     __esModule: true,
     CustomTabPanel: ({ children }: any) => <div data-testid="CustomTabPanel">{children}</div>
 }));

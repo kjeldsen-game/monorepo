@@ -25,5 +25,5 @@ export const formatName = (name: string): string => {
   const firstInitial = parts[0][0].toUpperCase();
   const lastTwoSurnames = parts.slice(-2).join(' ');
 
-  return `${firstInitial}. ${lastTwoSurnames}`;
+  return `${firstInitial}. ${getSurname(name)}`;
 };

@@ -1,29 +1,64 @@
 import { ModifierDescription } from '@/shared/models/player/TeamModifiers';
-import { Typography } from '@mui/material';
+import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
+import { Box, Typography } from '@mui/material';
+import { ModifierConfig } from 'modules/player/utils/TacticsUtils';
 import React from 'react';
 
 interface PressureDescriptionProps {
-  name: string;
   description?: ModifierDescription;
+  config: ModifierConfig
 }
 
 const PressureDescriptionItem: React.FC<PressureDescriptionProps> = ({
   description,
-  name,
+  config
 }) => {
+
   return (
     <>
-      <>
-        <Typography sx={{ fontWeight: 'bold' }}>{name}</Typography>
+      <Box display={'flex'} padding={1}>
+        <config.Icon sx={{ color: config.main }} />
+        <Typography fontWeight={'bold'} paddingLeft={1}>
+          {convertSnakeCaseToTitleCase(description?.name)}
+        </Typography>
+      </Box>
+      <Box paddingX={2} paddingBottom={1} >
         {description?.effect && (
-          <Typography>Effect: {description.effect}</Typography>
+          <Typography fontSize={'14px'}>
+            <Box component="span" fontWeight="bold">
+              Effect:{' '}
+            </Box>
+            {description?.effect}
+          </Typography>
         )}
+
         {description?.purpose && (
-          <Typography>Purpose: {description.purpose}</Typography>
+          <Typography fontSize={'14px'}>
+            <Box component="span" fontWeight="bold">
+              Purpose:{' '}
+            </Box>
+            {description?.purpose}
+          </Typography>
         )}
-        {description?.pros && <Typography>Pros: {description.pros}</Typography>}
-        {description?.cons && <Typography>Cons: {description.cons}</Typography>}
-      </>
+
+        {description?.cons && (
+          <Typography fontSize={'14px'}>
+            <Box component="span" fontWeight="bold">
+              Cons:{' '}
+            </Box>
+            {description?.cons}
+          </Typography>
+        )}
+
+        {description?.pros && (
+          <Typography fontSize={'14px'}>
+            <Box component="span" fontWeight="bold">
+              Pros:{' '}
+            </Box>
+            {description?.pros}
+          </Typography>
+        )}
+      </Box>
     </>
   );
 };

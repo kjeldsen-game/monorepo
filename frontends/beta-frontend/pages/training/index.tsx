@@ -1,7 +1,6 @@
 import type { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useSession } from 'next-auth/react';
-import PreAlphaAlert from '@/shared/components/PreAlphaAlert';
 import TrainingViewV2 from 'modules/player/components/training/TrainingView';
 
 const Training: NextPage = () => {
@@ -9,7 +8,6 @@ const Training: NextPage = () => {
 
   return (
     <>
-      <PreAlphaAlert />
       <TrainingViewV2 />
     </>
   );

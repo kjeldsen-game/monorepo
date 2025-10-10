@@ -8,7 +8,7 @@ import BaseFilterSection from './BaseFilterSection';
 import CustomButton from '@/shared/components/Common/CustomButton';
 import { useMarketFilterForm } from 'modules/market/hooks/useMarketFilterForm';
 import { createAuctionQueryFilter } from 'modules/market/utils/MarketUtils';
-import BaseFilterAccordion from '@/shared/components/base-filter/BaseFilterAccordion';
+import CustomAccordion from '@/shared/components/custom-accordion/CustomAccordion';
 
 interface MarketFilterProps {
     setFilter: (filter: string) => void;
@@ -24,7 +24,7 @@ const MarketFilter: React.FC<MarketFilterProps> = ({ setFilter }) => {
     };
 
     return (
-        <BaseFilterAccordion filter='Auction'>
+        <CustomAccordion title='Auction Filter'>
             <Grid spacing={1} container>
                 <Grid size={{ md: 9, sm: 12, xs: 12 }}>
                     <BaseFilterSection
@@ -57,7 +57,7 @@ const MarketFilter: React.FC<MarketFilterProps> = ({ setFilter }) => {
                 formValues={formValues.skillRanges}
                 handleInputChange={handleInputChange}
             />
-        </BaseFilterAccordion>
+        </CustomAccordion>
     );
 };
 

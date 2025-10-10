@@ -8,11 +8,13 @@ import { PlayerSkill } from '@/shared/models/player/PlayerSkill'
 import { useTrainingApi } from 'modules/player/hooks/api/useTrainingApi'
 import { PlayerPosition } from '@/shared/models/player/PlayerPosition'
 import TrainingFilter from '../filter/TrainingFilter'
+
 interface ScheduleTrainingTabProps {
     playersWithActiveTrainings: PlayerScheduledTraningResponse[]
+    loading: boolean;
 }
 
-const ScheduleTrainingTab: React.FC<ScheduleTrainingTabProps> = ({ playersWithActiveTrainings }) => {
+const ScheduleTrainingTab: React.FC<ScheduleTrainingTabProps> = ({ playersWithActiveTrainings, loading }) => {
     const [positionFilter, setPositionFilter] = useState<PlayerPosition>();
     const { handleScheduleTrainingRequest } = useTrainingApi();
 
@@ -36,22 +38,18 @@ const ScheduleTrainingTab: React.FC<ScheduleTrainingTabProps> = ({ playersWithAc
     return (
         <>
             <TrainingFilter handlePositionChange={handlePositionChange} positionFilter={positionFilter} />
-            {playersWithActiveTrainings ? (
-                <Grid
-                    sx={{
-                        marginTop: '16px',
-                        maxHeight: '500px',
-                        minHeight: '400px',
-                    }}
-                    hideFooter
-                    loading={false}
-                    getRowId={(row) => `${row.player.id}`}
-                    rows={playersWithActiveTrainings || []}
-                    columns={memoizedColumnsScheduled}
-                />
-            ) : (
-                <CircularProgress />
-            )}
+            <Grid
+                sx={{
+                    marginTop: 1,
+                    maxHeight: '500px',
+                    minHeight: '400px',
+                }}
+                hideFooter
+                loading={loading}
+                getRowId={(row) => `${row.player.id}`}
+                rows={playersWithActiveTrainings || []}
+                columns={memoizedColumnsScheduled}
+            />
         </>
     )
 }

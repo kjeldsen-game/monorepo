@@ -42,8 +42,8 @@ const TeamDataGrid: React.FC<TeamDataGridProps> = ({
         <Grid
             hideFooter
             sx={{
-                maxHeight: '600px',
-                minHeight: '400px',
+                // maxHeight: '600px',
+                minHeight: '200px',
                 '& .super-app-theme--goalkeepers': {
                     boxShadow: 'inset 3px 0 0 0 #fff2cc',
                 },
