@@ -60,7 +60,7 @@ export const updateLineup = (
 ): Promise<DefaultResponse> => {
   const request: TeamPlayerPatchRequest = {
     players: oldPlayers.map((player) => {
-      const updatedPlayer = newPlayers.find(
+      const updatedPlayer = newPlayers?.find(
         (playerValue) => playerValue.id === player.id,
       );
       if (updatedPlayer) {

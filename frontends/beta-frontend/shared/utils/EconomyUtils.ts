@@ -29,6 +29,7 @@ export const filterSponsorsByPeriodicity = (
   sponsors: any[],
   periodicity: IncomePeriodicity,
 ): IncomeMode | null => {
+  if (!sponsors) return null;
   const sponsor = sponsors.find(
     (sponsor) => sponsor.periodicity === periodicity.toUpperCase(),
   );

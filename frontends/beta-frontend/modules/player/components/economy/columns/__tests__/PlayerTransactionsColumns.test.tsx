@@ -16,7 +16,7 @@ describe("playerTransactionsColumns", () => {
     })
 
     it("does not apply color logic to name column", () => {
-        const conceptCol = PlayerTransactionsColumns().find(c => c.field === 'name');
+        const conceptCol = PlayerTransactionsColumns()?.find(c => c.field === 'name');
         const Cell = conceptCol?.renderCell;
 
         const row = {
@@ -43,7 +43,7 @@ describe("playerTransactionsColumns", () => {
     ])(
         'renders %s with correct color when value is %d',
         (field: string, value: number, expectedColor: string) => {
-            const column = PlayerTransactionsColumns().find((c) => c.field === field);
+            const column = PlayerTransactionsColumns()?.find((c) => c.field === field);
             const Cell = column?.renderCell;
 
             if (!Cell) throw new Error(`Missing cell renderer for ${field}`);

@@ -14,7 +14,7 @@ describe('MarketColumns', () => {
         ];
 
         expectedHeaders.forEach((expectedHeaderText) => {
-            const col = columns.find(c => {
+            const col = columns?.find(c => {
                 const headerElement = c.renderHeader?.();
                 return headerElement?.props?.header === expectedHeaderText;
             });
@@ -34,7 +34,7 @@ describe('MarketColumns', () => {
             bidders: 5,
         };
 
-        const actionColumn = columns.find(col => col.field === 'action');
+        const actionColumn = columns?.find(col => col.field === 'action');
         const params = {
             row: auction,
             rowNode: {

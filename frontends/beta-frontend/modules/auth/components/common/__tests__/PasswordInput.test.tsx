@@ -24,7 +24,7 @@ describe('PasswordInput', () => {
 
     const getInputByLabel = (label: RegExp) => {
         const elements = screen.getAllByLabelText(label);
-        const input = elements.find(el => el.tagName.toLowerCase() === 'input');
+        const input = elements?.find(el => el.tagName.toLowerCase() === 'input');
         if (!input) throw new Error(`Input with label ${label} not found`);
         return input as HTMLInputElement;
     };

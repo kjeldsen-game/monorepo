@@ -7,7 +7,7 @@ describe("economyColumns", () => {
     const POSITIVE_COLOR = 'black';
 
     const testNegativeColor = (field: string, value: number) => {
-        const column = EconomyColumns().find(c => c.field === field);
+        const column = EconomyColumns()?.find(c => c.field === field);
         const Cell = column?.renderCell;
         if (!Cell) throw new Error(`Missing cell render for field ${field}`);
 
@@ -24,7 +24,7 @@ describe("economyColumns", () => {
     };
 
     const testPositiveColor = (field: string, value: number) => {
-        const column = EconomyColumns().find(c => c.field === field);
+        const column = EconomyColumns()?.find(c => c.field === field);
         const Cell = column?.renderCell;
         if (!Cell) throw new Error(`Missing cell renderer for ${field}`);
 
@@ -66,7 +66,7 @@ describe("economyColumns", () => {
     });
 
     it("does not apply color logic to concept column", () => {
-        const conceptCol = EconomyColumns().find(c => c.field === 'concept');
+        const conceptCol = EconomyColumns()?.find(c => c.field === 'concept');
         const Cell = conceptCol?.renderCell;
         const row = { context: 'some_value' };
 
@@ -93,7 +93,7 @@ describe("economyColumns", () => {
     ];
 
     it.each(testCases)('should apply correct padding for "%s"', (context) => {
-        const conceptColumn = EconomyColumns().find(col => col.field === 'concept')!;
+        const conceptColumn = EconomyColumns()?.find(col => col.field === 'concept')!;
         const { getByText } = render(
             <>{conceptColumn.renderCell!({ row: { context } } as any)}</>
         );

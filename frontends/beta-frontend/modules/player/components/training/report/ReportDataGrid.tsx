@@ -25,7 +25,7 @@ const ReportDataGrid: React.FC<ReportDataGridProps> = ({ trainings }) => {
             const rowsOfType = trainings.filter((t) => t.trainingType === type);
             if (rowsOfType.length > 0) {
                 const lastRow = rowsOfType[rowsOfType.length - 1];
-                map.set(type, getRowId(lastRow));
+                map?.set(type, getRowId(lastRow));
             }
         });
 
