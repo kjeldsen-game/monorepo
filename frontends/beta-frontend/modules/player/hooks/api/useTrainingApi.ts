@@ -30,9 +30,6 @@ export const useTrainingApi = (position?: PlayerPosition) => {
         request,
         userData?.accessToken,
       );
-      enqueueSnackbar('Training was successfully scheduled', {
-        variant: 'success',
-      });
       mutateActiveTrainings(TEAMS_API + userData?.user?.teamId + 'active');
     } catch (err: any) {
       enqueueSnackbar(err.message);

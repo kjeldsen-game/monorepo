@@ -4,13 +4,12 @@ import { useTeamApi } from 'modules/player/hooks/api/useTeamApi';
 import { Box, Tab, useMediaQuery } from '@mui/material';
 import { theme } from '@/libs/material/theme';
 import { TeamRole } from '@/shared/models/MatchReport';
-import CustomTabs from '@/shared/components/CustomTabs';
-import { CustomTabPanel } from '@/shared/components/Tab/CustomTabPanel';
+import CustomTabs from '@/shared/components/Tabs/CustomTabs';
+import { CustomTabPanel } from '@/shared/components/Tabs/CustomTabPanel';
 import MatchReportStatsV2 from './stats/MatchReportStatsV2';
 import MatchEvents from './matchEvents/MatchEvents';
 import { useState } from 'react';
 import { useEventBuilder } from 'modules/match/hooks/logic/useEventBuilder';
-import PreAlphaAlert from '@/shared/components/PreAlphaAlert';
 
 const MatchReportView = () => {
 
@@ -44,18 +43,10 @@ const MatchReportView = () => {
                     width={'100%'}
                     boxShadow={1}
                     display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                    <CustomTabs selectedTab={selectedTab} handleChange={handleChange}>
-                        <Tab label="Match Stats" />
-                        <Tab label="Match Report" />
-                        <Tab label="Highlights" />
-                    </CustomTabs>
+                    <CustomTabs tabs={["Match Stats", "Match Report", "Highlights"]} selectedTab={selectedTab} handleChange={handleChange} />
 
                     {isXs && selectedTab === 0 &&
-                        <CustomTabs selectedTab={selectedChildTab} handleChange={handleChildChange}>
-                            <Tab label="Match" />
-                            <Tab label="Home Team" />
-                            <Tab label="Away Team" />
-                        </CustomTabs>
+                        <CustomTabs tabs={["Match", "Home Team", "Away Team"]} selectedTab={selectedChildTab} handleChange={handleChildChange} />
                     }
 
                     <CustomTabPanel sx={{ width: '100%' }} value={isXs && selectedTab === 0 ? selectedChildTab : selectedTab} index={0}>

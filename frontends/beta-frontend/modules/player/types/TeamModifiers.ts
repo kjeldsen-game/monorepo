@@ -18,7 +18,6 @@ export enum Tactic {
 }
 
 export enum VerticalPressure {
-  HIGH_PRESSURE = 'HIGH_PRESSURE',
   MID_PRESSURE = 'MID_PRESSURE',
   LOW_PRESSURE = 'LOW_PRESSURE',
   NO_VERTICAL_FOCUS = 'NO_VERTICAL_FOCUS',

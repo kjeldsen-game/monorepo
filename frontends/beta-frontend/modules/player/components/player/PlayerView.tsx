@@ -4,9 +4,9 @@ import { Box, Card, Tab, useMediaQuery } from '@mui/material'
 import { useMemo } from 'react';
 import { PlayerColumns } from './columns/PlayerColumns';
 import { theme } from '@/libs/material/theme';
-import CustomTabs from '@/shared/components/CustomTabs';
+import CustomTabs from '@/shared/components/Tabs/CustomTabs';
 import { useTabManager } from '@/shared/hooks/useTabManager';
-import { CustomTabPanel } from '@/shared/components/Tab/CustomTabPanel';
+import { CustomTabPanel } from '@/shared/components/Tabs/CustomTabPanel';
 import CustomButton from '@/shared/components/Common/CustomButton';
 import { usePlayerApi } from 'modules/player/hooks/api/usePlayerApi';
 import { useRouter } from 'next/router';
@@ -72,11 +72,8 @@ const PlayerView = () => {
                         sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}
                         paddingY={1}
                         position={'relative'}>
-                        <CustomTabs selectedTab={selectedTab} handleChange={handleTabChange}>
-                            <Tab label="Current Season" />
-                            <Tab label="Previous Season" />
-                            <Tab label="Carrer" />
-                        </CustomTabs>
+                        <CustomTabs tabs={["Current Season", "Previous Season", "Career"]}
+                            selectedTab={selectedTab} handleChange={handleTabChange} />
                     </Box>
                     <Box sx={{ width: '100%' }}>
                         <CustomTabPanel value={selectedTab} index={0}>

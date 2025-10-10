@@ -6,7 +6,6 @@ import { Box, Icon, Typography, useMediaQuery } from '@mui/material';
 import { TeamModifiers } from 'modules/player/types/TeamModifiers';
 import ShieldIcon from '@mui/icons-material/Shield';
 import ManIcon from '@mui/icons-material/Man';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import { theme } from '@/libs/material/theme';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';

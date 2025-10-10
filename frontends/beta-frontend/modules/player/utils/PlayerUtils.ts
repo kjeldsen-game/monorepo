@@ -5,5 +5,6 @@ export const filterPlayersByField = <T extends keyof Player>(
   field: T,
   value: Player[T],
 ): Player[] => {
-  return data.filter((player) => player[field] === value);
+  if (data === null || data == undefined) return;
+  return data?.filter((player) => player[field] === value);
 };

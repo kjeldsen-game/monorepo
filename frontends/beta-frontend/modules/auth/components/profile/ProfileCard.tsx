@@ -6,7 +6,7 @@ interface ProfileCardProps extends CardProps {
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ children, sx }) => {
     return (
-        <Card sx={{ padding: '16px', background: 'white', ...sx }}>
+        <Card sx={{ padding: 1, background: 'white', ...sx }}>
             {children}
         </Card>
     )

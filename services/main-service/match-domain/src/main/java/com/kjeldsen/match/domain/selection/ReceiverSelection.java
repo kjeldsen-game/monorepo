@@ -1,5 +1,6 @@
 package com.kjeldsen.match.domain.selection;
 
+import com.kjeldsen.match.domain.entities.Action;
 import com.kjeldsen.match.domain.entities.Play;
 import com.kjeldsen.match.domain.entities.Player;
 import com.kjeldsen.match.domain.execution.DuelParams;
@@ -52,7 +53,6 @@ public class ReceiverSelection {
     // Returns a player to receive the ball based on the current pitch area.
     public static Player select(GameState state, Player initiator) {
         PitchArea ballArea = state.getBallState().getArea();
-
         if (state.getBallState().getArea() == PitchArea.OUT_OF_BOUNDS) {
             log.info("The Ball is out of bound and the new ball owner was selected name = {}", initiator.getName());
             // Create a logic to select someone from the Centre Middle
@@ -70,6 +70,30 @@ public class ReceiverSelection {
                     case POSITIONAL -> {
                         return beforeLastPlay.getDuel().getInitiator();
                     }
+                }
+            }
+        }
+
+        // Check if there was already max 2 passes in possession, if so rank had to go up
+        Optional<List<Play>> lastPlays = state.getLastNPlays(6);
+        if (lastPlays.isPresent()) {
+            List<Play> plays = lastPlays.get();
+            boolean samePossession = plays.stream()
+                .allMatch(play ->
+                    play.getDuel().getInitiator().getTeamRole().name().equals(state.getTurn().name()) &&
+                    !play.getBallState().getArea().equals(PitchArea.OUT_OF_BOUNDS) &&
+                    play.getBallState().getArea().rank() == state.getBallState().getArea().rank()
+                );
+
+            if (samePossession) {
+                // Maximum 2 passes in the same pitchRank, go higher
+                if ( plays.stream().filter(play -> play.getAction().equals(Action.PASS)).count() == 2 ) {
+                    log.info("Maximum 2 passes in the same possession, passing forward to increase pitch rank.");
+                    return switch (ballArea.rank()) {
+                        case BACK -> selectFromMidfield(state, initiator);
+                        case MIDDLE -> selectFromForward(state, initiator);
+                        default -> throw new IllegalStateException("Game cannot be in state where Forward have 2 passes in possession");
+                    };
                 }
             }
         }

@@ -15,7 +15,7 @@ public class PlayerProvider {
     public static final int MAX_SKILL_VALUE = 100;
 
     public static String name() {
-        Faker faker = new Faker();
+        Faker faker = new Faker(new Locale("es"));
         return faker.name().firstName() + " " + faker.name().lastName();
     }
 

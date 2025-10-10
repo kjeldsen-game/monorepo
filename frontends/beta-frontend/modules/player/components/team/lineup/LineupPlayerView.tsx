@@ -10,7 +10,7 @@ interface LineupPlayerViewProps {
 
 const LineupPlayerView: React.FC<LineupPlayerViewProps> = ({ lineup }) => {
     return (
-        <Box display={'flex'} width={{ xs: '100%', sm: 'auto' }} padding={1} flexDirection={{ xs: 'column-reverse', sm: 'row' }} alignItems={'center'}>
+        <Box display={'flex'} width={{ xs: '100%', sm: 'auto' }} padding={1} flexDirection={{ xs: 'column-reverse', sm: 'row' }} mr={{ sm: 2 }} alignItems={'center'}>
             <Grid container mt={{ xs: 1, sm: 0 }} spacing={1} flexDirection={{ xs: 'row', sm: 'column' }}>
                 <LineupButton position={PlayerPosition.GOALKEEPER} player={lineup?.GOALKEEPER} />
             </Grid>

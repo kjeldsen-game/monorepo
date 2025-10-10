@@ -14,7 +14,6 @@ import { useSession } from 'next-auth/react';
 import {
     Login as LoginIcon,
 } from '@mui/icons-material';
-import UserDropdown from './UserDropdown';
 import CustomButton from '@/shared/components/Common/CustomButton';
 import NotificationMenu from '@/shared/components/notification-menu/NotificationMenu';
 
@@ -87,17 +86,10 @@ const Header: FC<HeaderProps> = ({ isClosing, setMobileOpen, mobileOpen, isMenu 
 
                     <Box flex={1} display="flex" justifyContent="flex-end" alignItems="center">
                         {isMenu && (
-                            status === 'authenticated' && !!data.user ? (
+                            status === 'authenticated' && !!data.user && (
                                 <>
                                     <NotificationMenu />
-                                    <UserDropdown user={data.user} />
                                 </>
-                            ) : (
-                                <Link href="/auth/signin" passHref data-testid="signin-button">
-                                    <CustomButton>
-                                        <LoginIcon sx={{ marginRight: '8px', paddingLeft: '0px' }} /> Sign In
-                                    </CustomButton>
-                                </Link>
                             )
                         )}
                     </Box>

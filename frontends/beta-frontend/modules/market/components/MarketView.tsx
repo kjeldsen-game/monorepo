@@ -6,8 +6,11 @@ import AuctionDialog from './dialog/AuctionDialog';
 import { MarketColumns } from './columns/MarketColumns';
 import { AuctionResponse } from '../types/responses';
 import Grid from '@/shared/components/Grid/Grid';
+import NoDataError from '@/shared/components/Grid/no-data-error/NoDataError';
+import { GavelOutlined } from '@mui/icons-material';
 
 interface MarketProps {
+  loading: boolean;
   auctions: AuctionResponse[] | undefined;
   setFilter: (filter: string) => void;
   setAuction: (auctionId: string) => void;
@@ -17,6 +20,7 @@ const MarketView: React.FC<MarketProps> = ({
   auctions,
   setFilter,
   setAuction,
+  loading
 }: MarketProps) => {
   const [activeAuction, setActiveAuction] = useState<AuctionResponse | undefined>(
     undefined,
@@ -49,25 +53,29 @@ const MarketView: React.FC<MarketProps> = ({
 
   return (
     <>
-      <Box sx={{ width: '100%', background: 'white' }} padding={2} borderRadius={2} boxShadow={1}>
+      <Box sx={{ width: '100%', background: 'white' }} padding={1} borderRadius={2} boxShadow={1}>
 
         <AuctionDialog
           auction={activeAuction}
           open={open}
           handleClose={handleCloseModal}
         />
-        <Box
-          sx={{
-            alignItems: 'center',
-          }}>
-          <MarketFilter setFilter={setFilter} />
-        </Box>
+        <MarketFilter setFilter={setFilter} />
         <Grid
-          loading={auctions === undefined || null}
+          loading={loading || !auctions}
           disableColumnMenu={true}
           getRowId={(row) => row.id}
           rows={auctions}
           columns={memoizedColumns}
+          slots={{
+            noRowsOverlay: () => (
+              <NoDataError
+                icon={GavelOutlined}
+                title="No Active Auctions"
+                subtitle="There are currently no active auctions."
+              />
+            )
+          }}
         />
       </Box >
     </>

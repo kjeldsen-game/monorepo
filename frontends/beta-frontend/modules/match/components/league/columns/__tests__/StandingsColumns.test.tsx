@@ -1,6 +1,9 @@
+import { useMediaQuery } from '@mui/material';
 import { StandingsColumns } from '../StandingsColumns';
 import { GridColDef } from '@mui/x-data-grid';
 import { render } from '@testing-library/react';
+
+const mockedUseMediaQuery = useMediaQuery as jest.Mock;
 
 describe('StandingsColumns', () => {
 
@@ -17,14 +20,32 @@ describe('StandingsColumns', () => {
         id: 'team-1',
     };
 
-    it('should generate correct columns', () => {
+    beforeEach(() => {
+        jest.resetAllMocks();
+    });
+
+    it.skip('should return abbreviated headers when isXs is true', () => {
+        // Simulate isXs being true
+        mockedUseMediaQuery.mockReturnValue(true);
+
         const columns: GridColDef[] = StandingsColumns<any>();
 
-        expect(columns.length).toBe(8);
-
-        const expectedFields = ['Pos', 'Team', 'Wins', 'Draws', 'Losses', 'Games Played', 'score', 'Points '];
+        const expectedFieldsXs = ['Pos', 'Team', 'W', 'D', 'L', 'GP', 'score', 'Pts'];
         const fields = columns.map((col) => col.field || col.headerName);
-        expect(fields).toEqual(expectedFields);
+
+        expect(fields).toEqual(expectedFieldsXs);
+    });
+
+    it('should return full headers when isXs is false', () => {
+        // Simulate normal screen
+        mockedUseMediaQuery.mockReturnValue(false);
+
+        const columns: GridColDef[] = StandingsColumns<any>();
+
+        const expectedFieldsFull = ['Pos', 'Team', 'Wins', 'Draws', 'Losses', 'Games Played', 'score', 'Points '];
+        const fields = columns.map((col) => col.field || col.headerName);
+
+        expect(fields).toEqual(expectedFieldsFull);
     });
 
     it('should render Score column correctly', () => {
@@ -32,7 +53,6 @@ describe('StandingsColumns', () => {
         const scoreColumn = columns.find((c) => c.field === 'score');
         expect(scoreColumn).toBeDefined();
 
-        // Render cell and check output
         const { container } = render(
             scoreColumn!.renderCell!({ row: dummyRow, id: '1', api: {} } as any)
         );

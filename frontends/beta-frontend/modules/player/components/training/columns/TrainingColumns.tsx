@@ -33,7 +33,7 @@ export const TrainingColumns = (isXs: boolean) => {
                 </Box>;
             },
         },
-        SkillDeltaColumn(),
+        SkillDeltaColumn(isXs),
         {
             ...getColumnConfig(),
             field: 'modifier',

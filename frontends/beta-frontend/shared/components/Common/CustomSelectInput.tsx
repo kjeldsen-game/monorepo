@@ -9,6 +9,7 @@ import {
     Box,
 } from '@mui/material';
 import { convertSnakeCaseToTitleCase } from '@/shared/utils/StringUtils';
+import { theme } from '@/libs/material/theme';
 
 type CustomSelectInputProps = SelectProps & {
     values: any[] | Record<string, any>;
@@ -37,17 +38,17 @@ const CustomSelectInput: React.FC<CustomSelectInputProps> = ({
             height={'100%'}
             display={'flex'}
             flexDirection={'column'}
-            justifyContent={title ? 'space-between' : 'center  '}
+            justifyContent={title ? 'space-between' : 'center'}
         >
             {title && (
                 <Typography
                     variant="subtitle1"
                     sx={{
-                        marginBottom: '2px',
-                        opacity: '30%',
-                        fontSize: '12px',
-                    }}
-                >
+                        color: theme.palette.quaternary.main,
+                        fontWeight: 'bold',
+                        textTransform: 'uppercase',
+                        fontSize: '10px',
+                    }}>
                     {title}
                 </Typography>
             )}
@@ -59,6 +60,9 @@ const CustomSelectInput: React.FC<CustomSelectInputProps> = ({
                 sx={{
                     backgroundColor: 'white',
                     width: '200px',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                        borderColor: theme.palette.tertiary.l
+                    },
                     '&:hover .MuiOutlinedInput-notchedOutline': {
                         borderColor: '#FF3F84',
                     },

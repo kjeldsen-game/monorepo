@@ -126,6 +126,7 @@ public class Game {
         // that an actual player is present.
         Player receiver = null;
         if (action.requiresReceiver()) {
+            log.info("Selecting receiver for action={} from initiator={}", action, initiator.getName());
             receiver = ReceiverSelection.select(state, initiator);
         }
 
@@ -189,10 +190,6 @@ public class Game {
                     .map(Player::getSimplifiedPlayerData).orElse(null))
             .receiver(Optional.ofNullable(outcome.getParams().getReceiver())
                     .map(Player::getSimplifiedPlayerData).orElse(null))
-
-//            .initiator(initiator)
-//            .receiver(outcome.getParams().getReceiver())
-//            .challenger(outcome.getParams().getChallenger())
             .result(outcome.getResult())
             .pitchArea(outcome.getParams().getState().getBallState().getArea())
             .destinationPitchArea(outcome.getDestinationPitchArea())

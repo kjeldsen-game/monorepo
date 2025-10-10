@@ -127,7 +127,7 @@ export const useLineupBuilder = (players: Player[]) => {
       RIGHT_WINGER: buildSingleSlot(activePlayers, PlayerPosition.RIGHT_WINGER),
       FORWARD: buildTripleSlot(activePlayers, PlayerPosition.FORWARD),
     });
-
+    
     setBench(benchPlayers.length > 0 ? benchPlayers : undefined);
   }, [players]);
 

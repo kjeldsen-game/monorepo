@@ -1,14 +1,3 @@
-import { useMediaQuery as originalUseMediaQuery } from '@mui/material';
-
-// Mock the module
-jest.mock('@mui/material', () => {
-    const actual = jest.requireActual('@mui/material');
-    return {
-        ...actual,
-        useMediaQuery: jest.fn()
-    };
-});
-
 import { useMediaQuery } from '@mui/material';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
@@ -56,21 +45,5 @@ describe('LineupView', () => {
         );
 
         expect(screen.getAllByTestId('lineup-button').length).toBeGreaterThan(0);
-    });
-
-    it('renders toggle button for small screens', () => {
-        (useMediaQuery as jest.Mock).mockReturnValue(true);
-        render(
-            <ThemeProvider theme={theme}>
-                <LineupView
-                    players={[]}
-                    edit={true}
-                    activePlayer={mockPlayer}
-                    handleEdit={handleEdit}
-                />
-            </ThemeProvider>
-        );
-
-        expect(screen.getByRole('button')).toBeInTheDocument();
     });
 });

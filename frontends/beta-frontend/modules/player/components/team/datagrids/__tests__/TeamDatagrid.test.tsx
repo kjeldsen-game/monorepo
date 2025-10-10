@@ -1,7 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import TeamDataGrid from "../TeamDatagrid";
-import { PlayerPosition } from "@/shared/models/player/PlayerPosition";
 import { mockPlayers } from "__mocks__/player";
 
 describe("TeamDataGrid", () => {

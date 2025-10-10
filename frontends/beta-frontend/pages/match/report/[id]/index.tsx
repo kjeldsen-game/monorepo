@@ -1,13 +1,11 @@
 import { useMatchReportRepository } from '@/pages/api/match/useMatchReportRepository';
-import PreAlphaAlert from '@/shared/components/PreAlphaAlert';
-import { Box, CircularProgress } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import MatchReportView from 'modules/match/components/report/MatchReportView';
 import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
 
-// eslint-disable-next-line react/prop-types
 const MatchReport: NextPage = () => {
   const { data } = useSession({ required: true });
 
@@ -24,7 +22,6 @@ const MatchReport: NextPage = () => {
 
   return (
     <>
-      <PreAlphaAlert />
       <MatchReportView />
     </>
   );

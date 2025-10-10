@@ -7,13 +7,14 @@ export function BaseTextColumn<T>(
     header: string,
     getValue: (row: T) => any,
     alignment: GridAlignment = 'center',
-    minWidth?: number
+    minWidth?: number,
+    secondaryHeader?: string
 ): GridColDef {
     return {
         ...getColumnConfig(alignment),
         field: header,
         minWidth: minWidth,
-        renderHeader: () => <ColHeader header={header} align={alignment} />,
+        renderHeader: () => <ColHeader header={header} align={alignment} secondaryHeader={secondaryHeader} />,
         renderCell: (params: GridCellParams<T>) => {
             const justifyContent =
                 alignment === 'left' ? 'flex-start' :

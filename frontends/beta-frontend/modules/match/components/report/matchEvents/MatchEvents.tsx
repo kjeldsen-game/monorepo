@@ -16,7 +16,7 @@ const MatchEvents: React.FC<MatchEventsProps> = ({ possessions }) => {
             width={'100%'}
             height={'550px'}
             sx={{ background: 'white', padding: '20px', overflowY: 'scroll' }}>
-            {possessions.length === 0 ?
+            {possessions?.length === 0 ?
                 <Box>
                     No content to be displayed.
                 </Box>
@@ -34,7 +34,7 @@ const MatchEvents: React.FC<MatchEventsProps> = ({ possessions }) => {
                         }}>
                         MATCH STARTS
                     </Box>
-                    {possessions.map((possesion, index) => (
+                    {possessions?.map((possesion, index) => (
                         <MatchPossesion
                             key={index}
                             possesion={possesion}

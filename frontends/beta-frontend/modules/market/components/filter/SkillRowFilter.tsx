@@ -31,14 +31,14 @@ const SkillRowFilter: React.FC<SkillRowFilterProps> = ({
 }: SkillRowFilterProps) => {
     return (
         <Grid container spacing={1} sx={{ justifyContent: 'space-between' }}>
-            <Grid size={{ md: 12 }}>
+            <Grid size={{ md: 12, sm: 6 }}>
                 <Grid
                     container
                     spacing={1}
                     display="flex"
                     justifyContent={{ xs: 'center', md: 'flex-start' }}>
                     {OFFENSIVE_SKILLS.map((skill: SkillKey) => (
-                        <Grid key={skill} my={0} maxWidth={'120px'}>
+                        <Grid size={4} key={skill} my={0} maxWidth={'120px'}>
                             <Box display={'flex'}>
                                 <MinMaxInput
                                     minMaxFormValues={formValues[skill]}

@@ -45,9 +45,7 @@ const ReportDataGrid: React.FC<ReportDataGridProps> = ({ trainings }) => {
         <StyledDataGrid
             data-testid="training-report-grid"
             sx={{
-                marginTop: '16px',
                 maxHeight: '400px',
-                // minHeight: '400px',
             }}
             loading={false}
             getRowId={getRowId}

@@ -1,5 +1,5 @@
-import CustomTabs from '@/shared/components/CustomTabs'
-import { CustomTabPanel } from '@/shared/components/Tab/CustomTabPanel';
+import CustomTabs from '@/shared/components/Tabs/CustomTabs'
+import { CustomTabPanel } from '@/shared/components/Tabs/CustomTabPanel';
 import { useTrainingApi } from 'modules/player/hooks/api/useTrainingApi';
 import { useActiveTrainingApi } from 'modules/player/hooks/api/useActiveTrainingApi';
 import { useTabManager } from '@/shared/hooks/useTabManager';
@@ -19,7 +19,7 @@ const TrainingView = () => {
     const { selectedTab, handleTabChange } = useTabManager();
     const [positionFilter, setPositionFilter] = useState<PlayerPosition>();
     const { data: trainings, isLoading } = useTrainingApi();
-    const { data: playersWithActiveTrainings } = useActiveTrainingApi(positionFilter);
+    const { data: playersWithActiveTrainings, isLoading: isLoadingActive } = useActiveTrainingApi(positionFilter);
 
     const handlePositionChange = (event) => {
         console.log(positionFilter)
@@ -33,21 +33,14 @@ const TrainingView = () => {
     return (
         <TrainingFilterProvider position={positionFilter} handlePositionChange={handlePositionChange}>
             <Card sx={{ padding: '8px' }} >
-                <Box
-                    sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}
-                    paddingY={1}
-                    position={'relative'}>
-                    <CustomTabs selectedTab={selectedTab} handleChange={handleTabChange}>
-                        <Tab label="Trainings Report" />
-                        <Tab label="Schedule Training" />
-                    </CustomTabs>
-                </Box>
+                <CustomTabs sx={{ paddingBottom: 1 }} tabs={["Training Reports", "Schedule Training"]}
+                    selectedTab={selectedTab} handleChange={handleTabChange} />
                 <Box sx={{ width: '100%' }}>
                     <CustomTabPanel value={selectedTab} index={0}>
                         <TrainingReportsTab trainings={trainings?.trainings} loading={isLoading} />
                     </CustomTabPanel>
                     <CustomTabPanel value={selectedTab} index={1}>
-                        <ScheduleTrainingTab playersWithActiveTrainings={playersWithActiveTrainings} />
+                        <ScheduleTrainingTab loading={isLoadingActive} playersWithActiveTrainings={playersWithActiveTrainings} />
                     </CustomTabPanel>
                 </Box>
             </Card>

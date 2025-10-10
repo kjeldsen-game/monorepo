@@ -27,3 +27,14 @@ export const getArrowColorTrainingDataGrid = (trainingType: TrainingType) => {
       return '#A4BC10';
   }
 };
+
+export function sortDatesDesc([dateA]: [string, unknown], [dateB]: [string, unknown]) {
+  const [dayA, monthA, yearA] = dateA.split('-').map(Number);
+  const [dayB, monthB, yearB] = dateB.split('-').map(Number);
+
+  const parsedA = new Date(yearA, monthA - 1, dayA);
+  const parsedB = new Date(yearB, monthB - 1, dayB);
+
+  return parsedB.getTime() - parsedA.getTime();
+}
+

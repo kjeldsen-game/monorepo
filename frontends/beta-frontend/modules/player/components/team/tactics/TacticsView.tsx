@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import React from 'react';
 import {
     HorizontalPressure,
@@ -9,7 +9,8 @@ import {
 import { getModifierDescription } from '@/shared/utils/TeamModifiersUtils';
 import PressureDescriptionItem from './PressureDescriptionItem';
 import TeamModifiersForm from './TeamModifiersForm';
-
+import ShieldIcon from '@mui/icons-material/Shield';
+import { getModifierConfig } from 'modules/player/utils/TacticsUtils';
 
 type TeamModifierChangeHandler = (
     value: Tactic | VerticalPressure | HorizontalPressure,
@@ -25,66 +26,33 @@ const TacticsView: React.FC<TacticsViewProps> = ({
     teamModifiers,
     handleTeamModifierChange,
 }) => {
-    const tacticDescription = getModifierDescription(teamModifiers?.tactic);
-    const horizontalPressureDescription = getModifierDescription(
-        teamModifiers?.horizontalPressure,
-    );
-    const verticalPressureDescription = getModifierDescription(
-        teamModifiers?.verticalPressure,
-    );
 
     return (
-        <>
-            <Box
-                sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-around',
-                    height: '200px'
-                }}>
-                <TeamModifiersForm
-                    teamModifiers={teamModifiers}
-                    handleModifierChange={handleTeamModifierChange}
-                />
-                <Box
-                    sx={{
-                        width: '100%',
-                        padding: '10px',
-                        overflowY: 'auto',
-                        height: '100%'
-                    }}>
-                    {teamModifiers && (
-                        <Box
-                            sx={{
-                                borderRadius: '8px',
-                                padding: '10px',
-                                maxHeight: '100%',
-                                overflowY: 'auto',
-                                background: 'white',
-                            }}>
-                            <Box
-                                sx={{
-                                    justifyContent: 'space-between',
-                                }}>
+        <Box>
+            <TeamModifiersForm
+                teamModifiers={teamModifiers}
+                handleModifierChange={handleTeamModifierChange}
+            />
+            {teamModifiers && (
+                <Grid container spacing={1} paddingTop={1}>
+                    {(Object.keys(teamModifiers)).reverse().map((key) => {
+                        let modifierConfig = getModifierConfig(key);
+                        return (
+                            <Grid
+                                key={key}
+                                size={{ xs: 12, sm: 4 }}
+                                sx={{ background: modifierConfig.light, borderRadius: 2 }}
+                            >
                                 <PressureDescriptionItem
-                                    name={'Tactic'}
-                                    description={tacticDescription}
+                                    config={modifierConfig}
+                                    description={getModifierDescription(teamModifiers[key])}
                                 />
-
-                                <PressureDescriptionItem
-                                    name={'Horizontal Pressure'}
-                                    description={horizontalPressureDescription}
-                                />
-                                <PressureDescriptionItem
-                                    name={'Vertical Pressure'}
-                                    description={verticalPressureDescription}
-                                />
-                            </Box>
-                        </Box>
-                    )}
-                </Box>
-            </Box >
-        </>
+                            </Grid>
+                        )
+                    })}
+                </Grid>
+            )}
+        </Box >
     );
 };
 

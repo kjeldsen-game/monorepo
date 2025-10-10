@@ -1,5 +1,5 @@
-import CustomTabs from '@/shared/components/CustomTabs';
-import { CustomTabPanel } from '@/shared/components/Tab/CustomTabPanel';
+import CustomTabs from '@/shared/components/Tabs/CustomTabs';
+import { CustomTabPanel } from '@/shared/components/Tabs/CustomTabPanel';
 import { Box, Tab, } from '@mui/material';
 import { useState } from 'react';
 import TransactionsTabView from './tabs/TransactionsTabView';

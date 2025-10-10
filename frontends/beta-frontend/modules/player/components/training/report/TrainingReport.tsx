@@ -3,6 +3,7 @@ import React from 'react'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { TrainingEventResponse } from 'modules/player/types/TrainingResponses';
 import ReportDataGrid from './ReportDataGrid';
+import CustomAccordion from '@/shared/components/custom-accordion/CustomAccordion';
 
 interface TrainingReportProps {
     date: string,
@@ -16,9 +17,12 @@ const TrainingReport: React.FC<TrainingReportProps> = ({ date, trainings }) => {
             key={date}
             defaultExpanded={false}
             sx={{
-                marginY: '8px',
+                '&.Mui-expanded': {
+                    marginY: 1,
+                },
+                marginY: 1,
                 boxShadow: 'none',
-                borderRadius: '8px',
+                borderRadius: 1,
                 border: '2px solid #F3F4F6 !important',
                 "&::before": {
                     display: "none",
@@ -29,7 +33,7 @@ const TrainingReport: React.FC<TrainingReportProps> = ({ date, trainings }) => {
                     Training Report from {date}
                 </Typography>
             </AccordionSummary>
-            <AccordionDetails sx={{ background: 'white' }}>
+            <AccordionDetails sx={{ background: 'white', padding: 1 }}>
                 <ReportDataGrid trainings={trainings} />
             </AccordionDetails>
         </Accordion>
