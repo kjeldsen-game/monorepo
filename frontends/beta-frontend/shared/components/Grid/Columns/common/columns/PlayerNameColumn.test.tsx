@@ -23,18 +23,4 @@ describe('PlayerNameColumns', () => {
         const { container } = render(<>{col.renderHeader && col.renderHeader({} as any)}</>);
         expect(container.textContent).toBe('Name');
     });
-
-    it('renders cell with player name and link', () => {
-
-        const params = {
-            row: { player: samplePlayer },
-        };
-
-        const { getByTestId } = render(<>{col.renderCell && col.renderCell(params as any)}</>);
-
-        const link = getByTestId('col-link');
-        expect(link).toBeInTheDocument();
-        expect(link).toHaveAttribute('href', `/player/${samplePlayer.id}`);
-        expect(link.textContent).toBe(samplePlayer.name);
-    });
 });

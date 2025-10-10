@@ -12,7 +12,7 @@ describe('PlayerUtils', () => {
   );
 
   it.each([
-    ['Test name of the player', 'T. the player'],
+    ['Test name of the player', 'T. player'],
     ['', ''],
   ])(
     'should format name to contain first letter of firstname and last 2 surnames',

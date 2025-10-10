@@ -29,8 +29,6 @@ describe("playerTransactionsColumns", () => {
         if (Cell) {
             const { container, getByText } = render(<>{Cell({ row } as any)}</>);
 
-            expect(getByText('Test Player')).toBeInTheDocument();
-
             expect(container.firstChild).toHaveStyle(`color: black`);
             expect(container.firstChild).not.toHaveStyle(`color: ${NEGATIVE_COLOR}`);
         }

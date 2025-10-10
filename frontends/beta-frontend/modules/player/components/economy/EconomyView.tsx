@@ -1,6 +1,6 @@
 import CustomTabs from '@/shared/components/Tabs/CustomTabs';
 import { CustomTabPanel } from '@/shared/components/Tabs/CustomTabPanel';
-import { Box, Tab, } from '@mui/material';
+import { Box, Tab, Tabs, } from '@mui/material';
 import { useState } from 'react';
 import TransactionsTabView from './tabs/TransactionsTabView';
 import GeneralEconomyTabView from './tabs/GeneralEconomyTabView';
@@ -24,11 +24,7 @@ const EconomyView: React.FC<EconomyViewProps> = ({
         <>
             <Box sx={{ width: '100%', background: 'white' }} padding={2} borderRadius={2} boxShadow={1} >
                 <Box>
-                    <CustomTabs selectedTab={selectedTab} handleChange={handleChange}>
-                        <Tab label="Transactions" />
-                        <Tab label="Sponsorship" />
-                        <Tab label="Wages" />
-                    </CustomTabs>
+                    <CustomTabs tabs={["Transactions", "Sponsorship", "Wages"]} selectedTab={selectedTab} handleChange={handleChange}/>
                 </Box>
 
                 <Box>

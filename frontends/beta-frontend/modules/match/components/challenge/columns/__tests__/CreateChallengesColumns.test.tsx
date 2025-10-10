@@ -6,7 +6,7 @@ jest.mock('@/shared/components/Grid/Columns/common/components/ColHeader', () => 
     <div data-testid="col-header">{props.header}</div>
 ));
 
-jest.mock('../../columns/TeamNameColumn', () => ({
+jest.mock('../../../columns/TeamNameColumn', () => ({
     TeamNameColumn: (getTeamNameValue: any, alignment: any, header: any) => ({
         field: header,
         renderHeader: () => <div data-testid={`teamname-header-${header}`}>{header}</div>,
