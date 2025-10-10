@@ -1,59 +1,56 @@
-# name: Manual Spin Up
+name: Manual Spin Up
 
-# on:
-#   workflow_dispatch:
+on:
+  workflow_dispatch:
 
-# jobs:
-#   terraform:
-#     runs-on: ubuntu-latest
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
 
-#     permissions:
-#       id-token: write   # needed for AWS OIDC auth
-#       contents: read
+    permissions:
+      id-token: write   # needed for AWS OIDC auth
+      contents: read
 
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-#       - name: AWS ECR Configure
-#         uses: aws-actions/configure-aws-credentials@v2
-#         with:
-#             aws-access-key-id: ${{ env.AWS_CICD_ACCESS_KEY }}
-#             aws-secret-access-key: ${{ env.AWS_CICD_SECRET_ACCESS_KEY }}
-#             aws-region: eu-west-1
+      - name: AWS ECR Configure
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+            aws-access-key-id: ${{ env.AWS_CICD_ACCESS_KEY }}
+            aws-secret-access-key: ${{ env.AWS_CICD_SECRET_ACCESS_KEY }}
+            aws-region: eu-west-1
 
-#       - name: Setup Terraform
-#         uses: hashicorp/setup-terraform@v3
-#         with:
-#           terraform_version: 1.8.5
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.8.5
 
-#       # Fetch secrets from AWS Secrets Manager
-#       - name: Fetch secrets
-#         id: fetch-secrets
-#         run: |
-#           # Replace with your secret name from AWS SM
-#           SECRET_JSON=$(aws secretsmanager get-secret-value \
-#             --secret-id my/terraform/vars \
-#             --query SecretString \
-#             --output text)
+      # Fetch secrets from AWS Secrets Manager
+      - name: Fetch secrets
+        id: fetch-secrets
+        run: |
+          # Replace with your secret name from AWS SM
+          SECRET_JSON=$(aws secretsmanager get-secret-value \
+            --secret-id my/terraform/vars \
+            --query SecretString \
+            --output text)
 
-#           echo "$SECRET_JSON" > secrets.json
-#           echo "Secrets pulled."
+          echo "$SECRET_JSON" > secrets.json
+          echo "Secrets pulled."
+          cat secrets.json
+          
+      # Convert secrets JSON → tfvars file
+      - name: Convert secrets to tfvars
+        run: |
+          jq -r 'to_entries | map("\(.key) = \"\(.value)\"") | .[]' secrets.json > values.tfvars
+          echo "Generated values.tfvars:"
+          cat values.tfvars
 
-#       # Convert secrets JSON → tfvars file
-#       # - name: Convert secrets to tfvars
-#       #   run: |
-#       #     # Assuming your AWS secret stores JSON like:
-#       #     # {"db_username":"admin","db_password":"supersecret"}
-#       #     jq -r 'to_entries | map("\(.key)=\"\(.value)\"") | .[]' secrets.json \
-#       #       > values.tfvars
+      # # Terraform Init & Apply
+      # - name: Terraform Init
+      #   run: terraform init
 
-#       #     echo "Generated values.tfvars:"
-#       #     cat values.tfvars
-
-#       # # Terraform Init & Apply
-#       # - name: Terraform Init
-#       #   run: terraform init
-
-#       # - name: Terraform Apply
-#       #   run: terraform apply -auto-approve -var-file="values.tfvars"
+      # - name: Terraform Apply
+      #   run: terraform apply -auto-approve -var-file="values.tfvars"

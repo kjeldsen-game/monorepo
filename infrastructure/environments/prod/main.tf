@@ -97,8 +97,8 @@ data "aws_availability_zones" "available" {
 resource "aws_docdb_cluster" "main" {
   cluster_identifier     = "${var.project}-${var.environment}-docdb"
   engine                 = "docdb"
-  master_username        = var.docdb_master_username
-  master_password        = var.docdb_master_password
+  master_username        = var.docdb_username
+  master_password        = var.docdb_password
   db_subnet_group_name   = aws_docdb_subnet_group.main.name
   vpc_security_group_ids = [aws_security_group.docdb.id]
   skip_final_snapshot    = true # For development. In production, you might want this false
@@ -300,8 +300,8 @@ resource "aws_instance" "ec2" {
       ACTUATOR_SERVER_PORT          = 8081
       MONGO_HOST                    = aws_docdb_cluster.main.endpoint
       MONGO_PORT                    = 27017
-      MONGO_USER                    = var.docdb_master_username
-      MONGO_PASSWORD                = var.docdb_master_password
+      MONGO_USER                    = var.docdb_username
+      MONGO_PASSWORD                = var.docdb_password
       MONGO_DATABASE                = "admin"
       MONGO_OPTIONS                 = "?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false"
       ACCESS_TOKEN_VALIDITY_SECONDS = 86400
