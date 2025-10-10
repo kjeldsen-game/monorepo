@@ -16,13 +16,13 @@ variable "environment" {
   default     = "prod"
 }
 
-variable "docdb_master_username" {
+variable "docdb_username" {
   description = "Master username for DocumentDB"
   type        = string
   sensitive   = true
 }
 
-variable "docdb_master_password" {
+variable "docdb_password" {
   description = "Master password for DocumentDB"
   type        = string
   sensitive   = true
