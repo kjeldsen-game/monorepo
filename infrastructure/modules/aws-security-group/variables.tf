@@ -1,5 +1,5 @@
-variable "security_group_name_prefix" {
-  description = "Security group name prefix"
+variable "name_prefix" {
+  description = "Name prefix"
   type        = string
 }
 

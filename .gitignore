@@ -16,7 +16,8 @@ local-env/.mongo_data
 ### Terraform ###
 # Local .terraform directories
 **/.terraform
-
+**/.terragrunt-cache
+**/.terragrunt.lock.hcl
 # .tfstate files
 *.tfstate
 *.tfstate.*

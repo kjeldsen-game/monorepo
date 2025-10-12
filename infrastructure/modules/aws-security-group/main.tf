@@ -1,5 +1,5 @@
 resource "aws_security_group" "default" {
-  name_prefix = var.security_group_name_prefix
+  name_prefix = var.name_prefix
   vpc_id      = var.vpc_id
 
   # Ingress rules

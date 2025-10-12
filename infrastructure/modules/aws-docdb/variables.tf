@@ -1,3 +1,7 @@
+variable "docdb_identifier" {
+  description = "DocumentDB identifier prefix"
+  type        = string
+}
 variable "environment" {
   description = "Environment name"
   type        = string
@@ -8,12 +12,12 @@ variable "project" {
   type        = string
 }
 
-variable "docdb_master_username" {
+variable "docdb_username" {
   description = "DocumentDB master username"
   type        = string
 }
 
-variable "docdb_master_password" {
+variable "docdb_password" {
   description = "DocumentDB master password"
   type        = string
   sensitive   = true
@@ -38,15 +42,7 @@ variable "instance_count" {
 variable "subnet_ids" {
   type = list(string)
 }
+
 variable "vpc_security_group_ids" {
   type = list(string)
-}
-
-variable "vpc_id" {
-  type = string
-}
-variable "allowed_security_groups" {
-  description = "List of security groups that can connect to DocDB"
-  type        = list(string)
-  default     = []
 }
