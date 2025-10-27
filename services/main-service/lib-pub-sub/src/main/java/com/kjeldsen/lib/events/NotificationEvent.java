@@ -20,6 +20,7 @@ public class NotificationEvent extends Event {
 
     public enum NotificationEventType {
         AUCTION_BID,
-        MATCH_END
+        MATCH_END,
+        LEAGUE_START
     }
 }

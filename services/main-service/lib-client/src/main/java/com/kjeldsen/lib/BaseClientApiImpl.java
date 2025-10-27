@@ -42,5 +42,27 @@ public abstract class BaseClientApiImpl {
             .block();
     }
 
+    protected <Req, Res> Res executePostRequest(
+        String uri,
+        Req requestBody,
+        ParameterizedTypeReference<Res> responseType
+    ) {
+        return webClient.post()
+            .uri(uri)
+            .header("X-Internal-API-Key", "my-secret-key")
+            .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+            .bodyValue(requestBody)
+            .retrieve()
+            .onStatus(HttpStatusCode::is5xxServerError, response ->
+                response.bodyToMono(String.class)
+                    .flatMap(errorBody ->
+                        Mono.error(new RuntimeException("Server error: " + errorBody))
+                    )
+            )
+            .bodyToMono(responseType)
+            .onErrorResume(e -> Mono.empty())
+            .block();
+    }
+
     protected abstract String buildUri(String... params);
 }

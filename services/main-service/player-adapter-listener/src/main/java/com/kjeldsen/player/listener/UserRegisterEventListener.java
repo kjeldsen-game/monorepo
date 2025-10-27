@@ -2,7 +2,7 @@ package com.kjeldsen.player.listener;
 
 
 import com.kjeldsen.lib.events.UserRegisterEvent;
-import com.kjeldsen.player.application.usecases.CreateTeamUseCase;
+import com.kjeldsen.player.application.usecases.team.CreateTeamUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

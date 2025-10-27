@@ -15,6 +15,7 @@ import { NotificationResponse, NotificationType } from "@/shared/@types/response
 import MatchEndNotification from "./notifications/MatchEndNotification";
 import PlayerBidNotification from "./notifications/PlayerBidNotification";
 import { NotificationProps } from "./notifications/common/CommonNotification";
+import LeagueStartNotification from "./notifications/LeagueStartNotification";
 
 interface NotificationMenuProps {
 
@@ -38,6 +39,7 @@ const NotificationMenu: React.FC<NotificationMenuProps> = () => {
     const notificationComponentTypeMap: Record<NotificationType, React.FC<NotificationProps>> = {
         [NotificationType.MATCH_END]: MatchEndNotification,
         [NotificationType.AUCTION_BID]: PlayerBidNotification,
+        [NotificationType.LEAGUE_START]: LeagueStartNotification
     };
 
     return (

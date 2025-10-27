@@ -75,9 +75,13 @@ public class AuthenticationDelegate implements AuthApiDelegate {
 
     @Override
     public ResponseEntity<SuccessResponse> register(@Valid RegisterRequest request) {
+//        for ( int a = 0; a < 10; a++ ) {
+//            registerUserUseCase.register(a+request.getEmail(), request.getPassword(),
+//                request.getTeamName()+a, request.getConfirmPassword());
+//        }
         registerUserUseCase.register(request.getEmail(), request.getPassword(),
             request.getTeamName(), request.getConfirmPassword());
-        return ResponseEntity.ok(new SuccessResponse().message("User registered successfully, logging in...!"));
+        return ResponseEntity.ok(new SuccessResponse().message("User registered successfully!"));
     }
 
     @Override

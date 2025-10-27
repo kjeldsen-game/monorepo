@@ -140,7 +140,6 @@ public class GeneratePlayersUseCase {
             playerWriteRepository.save(player);
             player.negotiateSalary();
         }
-        log.info("PlayerCustomProvider size={}", players.size());
         return players;
     }
 }

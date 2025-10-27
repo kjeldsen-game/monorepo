@@ -37,7 +37,7 @@ spring:
 
 logging:
   level:
-    com.kjeldsen: INFO
+    com.kjeldsen: DEBUG
     root: INFO
 
 springdoc:

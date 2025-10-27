@@ -22,7 +22,7 @@ public class CreateMatchUseCase {
 
 
     public Match create(String homeTeamId, String awayTeamId, LocalDateTime time, String leagueId) {
-        log.info("CreateMatchUseCase for homeTeamId={}, awayTeamId={} time={} leagueId={}", homeTeamId, awayTeamId, time, leagueId);
+//        log.debug("CreateMatchUseCase for homeTeamId={}, awayTeamId={} time={} leagueId={}", homeTeamId, awayTeamId, time, leagueId);
         TeamClient home = teamClientApi.getTeam(homeTeamId, null, null).get(0);
         TeamClient away = teamClientApi.getTeam(awayTeamId, null, null).get(0);
 

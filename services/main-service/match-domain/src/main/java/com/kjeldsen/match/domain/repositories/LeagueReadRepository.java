@@ -9,4 +9,6 @@ public interface LeagueReadRepository {
     Optional<League> findById(League.LeagueId leagueId);
 
     List<League> findAll();
+
+    List<League> findAllByStatus(League.LeagueStatus status);
 }

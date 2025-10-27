@@ -23,8 +23,10 @@ public class League {
     String name;
     Integer tier;
     Instant startedAt;
+    Instant endedAt;
     Integer season;
     Boolean scheduledMatches;
+    LeagueStatus status;
     Map<String, LeagueStats> teams;
 
     public void addTeam(String teamId, LeagueStats stats) {
@@ -45,6 +47,12 @@ public class League {
         }
     }
 
+    public enum LeagueStatus {
+        PRESEASON,
+        ACTIVE,
+        ENDED
+    }
+
     @Getter
     @Setter
     public static class LeagueStats {
@@ -57,6 +65,7 @@ public class League {
         Integer draws = 0;
         Integer goalsScored = 0;
         Integer goalsReceived = 0;
+        boolean isBot;
 
         public void updateGoals(Integer scored, Integer received) {
             updateGoalsScored(scored);

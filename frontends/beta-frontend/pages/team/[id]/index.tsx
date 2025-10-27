@@ -1,6 +1,6 @@
-import { useTeamRepository } from '@/pages/api/team/useTeamRepository';
-import { Player } from '@/shared/models/player/Player';
-import { CircularProgress } from '@mui/material';
+import TeamView from 'modules/player/components/team/TeamView';
+import { useTeamApi } from 'modules/player/hooks/api/useTeamApi';
+import { useTeamValidateApi } from 'modules/player/hooks/api/useTeamValidateApi';
 import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -13,22 +13,15 @@ const Team: NextPage = () => {
     required: true,
   });
 
-  const { data } = useTeamRepository(
-    useRouter().query.id as string,
-    userData?.accessToken,
-  );
-
-  const [teamPlayers, setTeamPlayers] = useState<Player[]>(data?.players ?? []);
-
-  useEffect(() => {
-    setTeamPlayers(data?.players ?? []);
-  }, [data?.players]);
-
-  if (sessionStatus === 'loading' || !data) return <CircularProgress />;
+  const { data: teamValidation } = useTeamValidateApi();
+  const { data } = useTeamApi(useRouter().query.id as string);
 
   return (
     <>
-      <TeamViewNew isEditing={false} team={{ ...data, players: teamPlayers }} />
+      <TeamView
+        teamFormation={teamValidation}
+        team={data}
+      />
     </>
   );
 };

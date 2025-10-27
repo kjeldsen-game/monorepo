@@ -12,6 +12,10 @@
     <dependencies>
         <dependency>
             <groupId>com.kjeldsen</groupId>
+            <artifactId>lib-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
             <artifactId>player-domain</artifactId>
         </dependency>
         <dependency>

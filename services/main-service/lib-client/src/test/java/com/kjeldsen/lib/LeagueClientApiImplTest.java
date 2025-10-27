@@ -1,0 +1,43 @@
+package com.kjeldsen.lib;
+
+import com.kjeldsen.lib.model.league.CreateOrAssignTeamToLeagueRequestClient;
+import com.kjeldsen.lib.model.league.CreateOrAssignTeamToLeagueResponseClient;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.RecordedRequest;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.web.reactive.function.client.WebClient;
+
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class LeagueClientApiImplTest extends BaseClientApiTest{
+
+    private LeagueClientApiImpl leagueClientApi;
+
+    @BeforeEach
+    void initialize() {
+        String baseUrl = String.format("http://localhost:%s", mockWebServer.getPort());
+        leagueClientApi = new LeagueClientApiImpl(WebClient.builder().baseUrl(baseUrl).build());
+    }
+
+    @Test
+    @DisplayName("Should get the Team from the client")
+    void should_get_the_team_from_client() throws Exception {
+        mockWebServer.enqueue(new MockResponse()
+            .setBody("{\"leagueId\": \"12435\"}")
+            .addHeader("Content-Type", "application/json"));
+
+        CreateOrAssignTeamToLeagueResponseClient result = leagueClientApi.
+            assignTeamToLeague(CreateOrAssignTeamToLeagueRequestClient.builder()
+            .teamName("team1")
+            .teamId("teamId")
+            .build());
+
+        RecordedRequest recordedRequest = mockWebServer.takeRequest();
+        assertEquals("POST", recordedRequest.getMethod());
+        assertEquals("/league", recordedRequest.getPath());
+        assertEquals("12435", result.getLeagueId());
+    }
+}
