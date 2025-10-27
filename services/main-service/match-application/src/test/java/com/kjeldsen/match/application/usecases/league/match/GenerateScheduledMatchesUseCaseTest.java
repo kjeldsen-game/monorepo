@@ -3,6 +3,7 @@ package com.kjeldsen.match.application.usecases.league.match;
 import com.kjeldsen.match.domain.entities.ScheduledMatch;
 import com.kjeldsen.match.domain.schedulers.JobQueryService;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,20 +19,17 @@ import static org.mockito.Mockito.*;
 
 class GenerateScheduledMatchesUseCaseTest {
 
-    private static final TriggerBotsCreationUseCase mockedTriggerBotsCreationUseCase = Mockito.mock(TriggerBotsCreationUseCase.class);
+    private final TriggerBotsCreationUseCase mockedTriggerBotsCreationUseCase = Mockito.mock(TriggerBotsCreationUseCase.class);
     private final JobQueryService mockedJobQueryService = Mockito.mock(JobQueryService.class);
     private final GenerateScheduledMatchesUseCase generateScheduledMatchesUseCase = new
         GenerateScheduledMatchesUseCase(mockedTriggerBotsCreationUseCase, mockedJobQueryService);
 
-    @BeforeAll
-    static void setUpBeforeClass() throws Exception {
-        when(mockedTriggerBotsCreationUseCase.trigger("league1")).thenReturn(List.of("1", "2", "3", "4",
-            "5", "6", "7", "8", "9", "10"));
-    }
 
     @Test
     @DisplayName("Should schedule matches when league is not active")
     void shouldScheduleMatches() {
+        when(mockedTriggerBotsCreationUseCase.trigger("league1")).thenReturn(List.of("1", "2", "3", "4",
+            "5", "6", "7", "8", "9", "10"));
         List<ScheduledMatch> matches = generateScheduledMatchesUseCase.generate("league1", false);
         verify(mockedTriggerBotsCreationUseCase, times( 1)).trigger("league1");
         assertEquals(90, matches.size());
@@ -42,6 +40,8 @@ class GenerateScheduledMatchesUseCaseTest {
     @Test
     @DisplayName("Should throw error when job is not present")
     void should_schedule_matches() {
+        when(mockedTriggerBotsCreationUseCase.trigger("league1")).thenReturn(List.of("1", "2", "3", "4",
+            "5", "6", "7", "8", "9", "10"));
         when(mockedJobQueryService.getNextFireTime("leagueEndJob", "league1")).thenReturn(
             Optional.empty()
         );
@@ -53,6 +53,8 @@ class GenerateScheduledMatchesUseCaseTest {
     @Test
     @DisplayName("Should generate matches when league is active")
     void should_generate_matches_when_league_is_active() {
+        when(mockedTriggerBotsCreationUseCase.trigger("league1")).thenReturn(List.of("1", "2", "3", "4",
+            "5", "6", "7", "8", "9", "10"));
         when(mockedJobQueryService.getNextFireTime("leagueEndJob", "league")).thenReturn(
             Optional.of(ZonedDateTime.now().plusDays(12))
         );
