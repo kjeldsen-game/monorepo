@@ -164,7 +164,7 @@ class PlayerApiIT extends AbstractIT {
                 .status(PlayerStatus.INACTIVE)
                 .age(PlayerMapper.INSTANCE.map(examplePlayer.getAge()))
                 .playerOrder(PlayerOrder.NONE)
-                .position(PlayerPosition.fromValue(examplePlayer.getPosition().name()))
+                .preferredPosition(PlayerPosition.fromValue(examplePlayer.getPreferredPosition().name()))
                 .category(com.kjeldsen.player.rest.model.PlayerCategory.fromValue(examplePlayer.getCategory().name()))
                 .actualSkills(examplePlayer.getActualSkills().entrySet().stream()
                     .collect(Collectors.toMap(entry -> entry.getKey().name(), PlayerApiIT::map))

@@ -32,9 +32,8 @@ public class GeneratePlayersUseCase {
                 return PlayerProvider.generate(teamId, positionTendency, playerCategory, 200);
             })
             .map(player -> {
-                Player generatedPlayer = playerWriteRepository.save(player);
-                log.info("Generated player {}", generatedPlayer);
-                return generatedPlayer;
+                //                log.info("Generated player {}", generatedPlayer);
+                return playerWriteRepository.save(player);
             }).toList();
     }
 
