@@ -32,9 +32,8 @@ public class GeneratePlayersUseCase {
                 return PlayerProvider.generate(teamId, positionTendency, playerCategory, 200);
             })
             .map(player -> {
-                Player generatedPlayer = playerWriteRepository.save(player);
-                log.info("Generated player {}", generatedPlayer);
-                return generatedPlayer;
+                //                log.info("Generated player {}", generatedPlayer);
+                return playerWriteRepository.save(player);
             }).toList();
     }
 
@@ -140,7 +139,6 @@ public class GeneratePlayersUseCase {
             playerWriteRepository.save(player);
             player.negotiateSalary();
         }
-        log.info("PlayerCustomProvider size={}", players.size());
         return players;
     }
 }

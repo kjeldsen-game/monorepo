@@ -28,6 +28,7 @@ public class Notification {
 
     public enum NotificationType {
         AUCTION_BID,
-        MATCH_END
+        MATCH_END,
+        LEAGUE_START
     }
 }

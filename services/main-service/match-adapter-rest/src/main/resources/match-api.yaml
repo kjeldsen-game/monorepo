@@ -46,6 +46,37 @@ paths:
                   $ref: "#/components/schemas/LeagueResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
+    put:
+      summary: Schedule leagues
+      operationId: scheduleAllLeagues
+      tags:
+        - league
+      responses:
+        "201":
+          description: League matches were scheduled
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+    post:
+      summary: Create a league or assign team to existing league
+      operationId: createOrAssignTeamToLeague
+      tags:
+        - league
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOrAssignTeamToLeagueRequest"
+      responses:
+        "200":
+          description: Team was successfully assigned to league
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateOrAssignTeamToLeagueResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
 
   /league/{leagueId}:
     get:
@@ -466,6 +497,22 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/LeagueStats'
+
+    CreateOrAssignTeamToLeagueRequest:
+      type: object
+      properties:
+        teamId:
+          type: string
+        teamName:
+          type: string
+        teamValue:
+          type: number
+
+    CreateOrAssignTeamToLeagueResponse:
+      type: object
+      properties:
+        leagueId:
+          type: string
 
     ######################## LEAGUE SCHEMAS END ########################
 

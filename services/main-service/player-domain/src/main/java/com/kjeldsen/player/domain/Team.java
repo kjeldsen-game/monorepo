@@ -25,7 +25,6 @@ public class Team {
     private Map<Integer, LeagueStats> leagueStats;
     private Buildings buildings;
     private String leagueId;
-    boolean isBot;
 
 
     public record TeamId(String value) {

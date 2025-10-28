@@ -29,4 +29,9 @@ public class MatchReadRepositoryMongoAdapter implements MatchReadRepository {
     public List<Match> findMatchesByLeagueId(String leagueId) {
         return matchMongoRepository.findMatchesByLeagueId(leagueId);
     }
+
+    @Override
+    public List<Match> findMatchesByLeagueIdAndTeamIdAndStatus(String teamId, String leagueId, Match.Status status) {
+        return matchMongoRepository.findMatchesByLeagueIdStatusAndTeamId(leagueId, status, teamId);
+    }
 }

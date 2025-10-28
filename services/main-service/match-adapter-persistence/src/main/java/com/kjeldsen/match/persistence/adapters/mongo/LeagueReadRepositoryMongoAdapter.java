@@ -24,4 +24,9 @@ public class LeagueReadRepositoryMongoAdapter implements LeagueReadRepository {
     public List<League> findAll() {
         return leagueMongoRepository.findAll();
     }
+
+    @Override
+    public List<League> findAllByStatus(League.LeagueStatus status) {
+        return leagueMongoRepository.findAllByStatus(status);
+    }
 }

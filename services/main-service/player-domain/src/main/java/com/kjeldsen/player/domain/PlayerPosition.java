@@ -25,36 +25,45 @@ public enum PlayerPosition {
     AERIAL_STRIKER,
     GOALKEEPER;
 
-    public boolean isForward() {
+    public List<PlayerPosition> forwardList() {
         return List.of(
-                PlayerPosition.FORWARD,
-                PlayerPosition.AERIAL_FORWARD,
-                PlayerPosition.STRIKER,
-                PlayerPosition.AERIAL_FORWARD)
-            .contains(this);
+            PlayerPosition.FORWARD,
+            PlayerPosition.AERIAL_FORWARD,
+            PlayerPosition.STRIKER,
+            PlayerPosition.AERIAL_FORWARD);
+    }
+
+    public List<PlayerPosition> midfielderList() {
+        return List.of(
+            PlayerPosition.LEFT_MIDFIELDER,
+            PlayerPosition.RIGHT_MIDFIELDER,
+            PlayerPosition.CENTRE_MIDFIELDER,
+            PlayerPosition.DEFENSIVE_MIDFIELDER,
+            PlayerPosition.OFFENSIVE_MIDFIELDER,
+            PlayerPosition.LEFT_WINGER,
+            PlayerPosition.RIGHT_WINGER,
+            PlayerPosition.LEFT_WINGBACK,
+            PlayerPosition.RIGHT_WINGBACK);
+    }
+
+    public List<PlayerPosition> defenderList() {
+        return List.of(
+            PlayerPosition.SWEEPER,
+            PlayerPosition.LEFT_BACK,
+            PlayerPosition.RIGHT_BACK,
+            PlayerPosition.CENTRE_BACK);
+    }
+
+    public boolean isForward() {
+        return forwardList().contains(this);
     }
 
     public boolean isMidfielder() {
-        return List.of(
-                PlayerPosition.LEFT_MIDFIELDER,
-                PlayerPosition.RIGHT_MIDFIELDER,
-                PlayerPosition.CENTRE_MIDFIELDER,
-                PlayerPosition.DEFENSIVE_MIDFIELDER,
-                PlayerPosition.OFFENSIVE_MIDFIELDER,
-                PlayerPosition.LEFT_WINGER,
-                PlayerPosition.RIGHT_WINGER,
-                PlayerPosition.LEFT_WINGBACK,
-                PlayerPosition.RIGHT_WINGBACK)
-            .contains(this);
+        return midfielderList().contains(this);
     }
 
     public boolean isDefender() {
-        return List.of(
-                PlayerPosition.SWEEPER,
-                PlayerPosition.LEFT_BACK,
-                PlayerPosition.RIGHT_BACK,
-                PlayerPosition.CENTRE_BACK)
-            .contains(this);
+        return defenderList().contains(this);
     }
 
     public boolean isCentral() {

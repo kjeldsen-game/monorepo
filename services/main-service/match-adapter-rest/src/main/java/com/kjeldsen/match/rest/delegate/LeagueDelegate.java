@@ -1,17 +1,26 @@
 package com.kjeldsen.match.rest.delegate;
 
-import com.kjeldsen.match.application.usecases.league.GenerateMatchScheduleUseCase;
+import com.kjeldsen.match.application.usecases.league.match.GenerateAllLeaguesMatchesUseCase;
+import com.kjeldsen.match.application.usecases.league.match.GenerateScheduledMatchesUseCase;
+import com.kjeldsen.match.application.usecases.league.team.AddTeamToLeagueUseCase;
 import com.kjeldsen.match.application.usecases.league.GetLeagueUseCase;
-import com.kjeldsen.match.application.usecases.league.ScheduleLeagueMatchesUseCase;
+import com.kjeldsen.match.application.usecases.league.match.ScheduleLeagueMatchesUseCase;
 import com.kjeldsen.match.domain.entities.League;
+import com.kjeldsen.match.domain.entities.ScheduledMatch;
+import com.kjeldsen.match.domain.schedulers.GenericScheduler;
+import com.kjeldsen.match.quartz.jobs.LeagueEndJob;
 import com.kjeldsen.match.rest.api.LeagueApiDelegate;
 import com.kjeldsen.match.rest.mapper.LeagueMapper;
+import com.kjeldsen.match.rest.model.CreateOrAssignTeamToLeagueRequest;
+import com.kjeldsen.match.rest.model.CreateOrAssignTeamToLeagueResponse;
 import com.kjeldsen.match.rest.model.LeagueResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Component
@@ -20,8 +29,11 @@ import java.util.List;
 public class LeagueDelegate implements LeagueApiDelegate {
 
     private final GetLeagueUseCase getLeagueUseCase;
-    private final GenerateMatchScheduleUseCase generateMatchScheduleUseCase;
+    private final GenerateScheduledMatchesUseCase generateScheduledMatchesUseCase;
+    private final GenerateAllLeaguesMatchesUseCase generateAllLeaguesMatchesUseCase;
     private final ScheduleLeagueMatchesUseCase scheduleLeagueMatchesUseCase;
+    private final AddTeamToLeagueUseCase addTeamToLeagueUseCase;
+    private final GenericScheduler quartzGenericScheduler;
 
     @Override
     public ResponseEntity<LeagueResponse> getLeague(String leagueId) {
@@ -30,11 +42,33 @@ public class LeagueDelegate implements LeagueApiDelegate {
         return ResponseEntity.ok(response);
     }
 
+    @Override
+    public ResponseEntity<Void> scheduleAllLeagues() {
+        generateAllLeaguesMatchesUseCase.generate();
+        quartzGenericScheduler.scheduleJob(LeagueEndJob.class, "leagueEndJob", "league",
+            LocalDateTime.now().plusDays(19).withHour(23).withMinute(59).withSecond(0)
+                .atZone(ZoneId.systemDefault()).toInstant(), null);
+        return ResponseEntity.ok().build();
+    }
+
     // Temporary endpoint to trigger league start by REST API call
     @Override
     public ResponseEntity<Void> scheduleLeague(String leagueId) {
-        List<GenerateMatchScheduleUseCase.ScheduledMatch> scheduled = generateMatchScheduleUseCase.generate(leagueId);
+        List<ScheduledMatch> scheduled = generateScheduledMatchesUseCase.generate(leagueId, false);
+
         scheduleLeagueMatchesUseCase.schedule(scheduled, leagueId);
+
+        quartzGenericScheduler.scheduleJob(LeagueEndJob.class, "leagueEndJob", "league",
+            LocalDateTime.now().plusDays(19).withHour(23).withMinute(59).withSecond(0)
+                .atZone(ZoneId.systemDefault()).toInstant(), null);
+
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<CreateOrAssignTeamToLeagueResponse> createOrAssignTeamToLeague(CreateOrAssignTeamToLeagueRequest createOrAssignTeamToLeagueRequest) {
+        String leagueId = addTeamToLeagueUseCase.add(createOrAssignTeamToLeagueRequest.getTeamId(), createOrAssignTeamToLeagueRequest.getTeamName());
+        CreateOrAssignTeamToLeagueResponse response = new CreateOrAssignTeamToLeagueResponse().leagueId(leagueId);
+        return ResponseEntity.ok(response);
     }
 }

@@ -1,10 +1,7 @@
 package com.kjeldsen.match.application.usecases;
 
-import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.lib.clients.PlayerClientApi;
 import com.kjeldsen.lib.model.player.PlayerClient;
-import com.kjeldsen.match.domain.clients.PlayerClientMatch;
-import com.kjeldsen.match.domain.clients.models.player.PlayerDTO;
 
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.TeamRole;

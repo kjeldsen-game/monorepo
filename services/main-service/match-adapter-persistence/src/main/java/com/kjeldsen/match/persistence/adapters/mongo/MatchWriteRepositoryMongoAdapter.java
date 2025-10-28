@@ -6,6 +6,8 @@ import com.kjeldsen.match.domain.repositories.MatchWriteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class MatchWriteRepositoryMongoAdapter implements MatchWriteRepository {
@@ -15,5 +17,10 @@ public class MatchWriteRepositoryMongoAdapter implements MatchWriteRepository {
     @Override
     public Match save(Match match) {
         return matchMongoRepository.save(match);
+    }
+
+    @Override
+    public List<Match> saveAll(List<Match> matches) {
+        return matchMongoRepository.saveAll(matches);
     }
 }

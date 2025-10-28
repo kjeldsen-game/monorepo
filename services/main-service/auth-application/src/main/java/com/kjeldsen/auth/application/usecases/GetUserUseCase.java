@@ -20,7 +20,7 @@ public class GetUserUseCase {
     private final UserReadRepository userReadRepository;
 
     public User getCurrent() {
-        log.info("GetUserUseCase method getCurrent with id {}" , SecurityUtils.getCurrentUserId());
+//        log.debug("GetUserUseCase method getCurrent with id {}" , SecurityUtils.getCurrentUserId());
         if (SecurityUtils.getCurrentUserId() == null) {
             throw new UnauthorizedException("User is not logged in.");
         } else {
@@ -34,7 +34,7 @@ public class GetUserUseCase {
     }
 
     public User getUserByEmail(String email) {
-        log.info("GetUserUseCase method getUserByEmail with email {}", email);
+//        log.debug("GetUserUseCase method getUserByEmail with email {}", email);
         Optional<User> optUser = userReadRepository.findByEmail(email);
         if (optUser.isPresent()) {
             return optUser.get();
@@ -44,7 +44,7 @@ public class GetUserUseCase {
     }
 
     public User getUserById(String id) {
-        log.info("GetUserUseCase method getUserById with id {}", id);
+//        log.debug("GetUserUseCase method getUserById with id {}", id);
         return userReadRepository.findByUserId(id).orElseThrow(
             () -> new NotFoundException("User not found !"));
     }

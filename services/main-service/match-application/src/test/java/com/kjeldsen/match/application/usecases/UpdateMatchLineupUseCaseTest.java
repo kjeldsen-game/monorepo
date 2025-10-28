@@ -4,8 +4,6 @@ import com.kjeldsen.lib.clients.PlayerClientApi;
 import com.kjeldsen.lib.model.player.PlayerClient;
 import com.kjeldsen.lib.model.player.PlayerSkillsClient;
 import com.kjeldsen.match.application.usecases.common.BaseClientTest;
-import com.kjeldsen.match.domain.clients.PlayerClientMatch;
-import com.kjeldsen.match.domain.clients.models.player.PlayerDTO;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.Team;
 import com.kjeldsen.match.domain.entities.TeamRole;

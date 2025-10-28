@@ -1,7 +1,7 @@
 package com.kjeldsen.match.listener;
 
 import com.kjeldsen.lib.events.TeamCreationEvent;
-import com.kjeldsen.match.application.usecases.league.AddTeamToLeagueUseCase;
+import com.kjeldsen.match.application.usecases.league.team.AddBotTeamsToLeagueUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -12,12 +12,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TeamCreationEventListener {
 
-    private final AddTeamToLeagueUseCase addTeamToLeagueUseCase;
+    private final AddBotTeamsToLeagueUseCase addTeamToLeagueUseCase;
 
     @EventListener
     public void handleTeamCreationEvent(TeamCreationEvent teamCreationEvent) {
         log.info("TeamCreationEventListener received: {}", teamCreationEvent);
-        addTeamToLeagueUseCase.add(teamCreationEvent.getTeamId(), teamCreationEvent.getTeamValue() );
+        if (teamCreationEvent.isBots()) {
+            addTeamToLeagueUseCase.add(teamCreationEvent.getTeams(), teamCreationEvent.getLeagueId() );
+        }
     }
 }
 

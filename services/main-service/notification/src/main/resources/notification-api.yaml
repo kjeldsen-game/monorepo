@@ -119,6 +119,7 @@ components:
       enum:
         - AUCTION_BID
         - MATCH_END
+        - LEAGUE_START
 
     Error:
       type: "object"
