@@ -30,7 +30,7 @@ const PlayerView = () => {
             <Box>
                 <SellPlayerConfirmationDialog open={open} handleClose={handleCloseModal} playerId={data?.id} />
                 <PlayerOnSaleNotification playerId={playerId} />
-                <Card sx={{ marginBottom: 2, padding: 2 }}>
+                <Card sx={{ marginBottom: 2, padding: 2, }}>
                     <PlayerDetails player={data} />
                     <Box mt={1}>
                         <CustomButton

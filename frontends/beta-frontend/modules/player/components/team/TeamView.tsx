@@ -77,6 +77,7 @@ const TeamView: React.FC<TeamViewProps> = ({
                     <Box>
                         <CustomTabPanel value={selectedTab} index={0}>
                             <LineupView
+                                rating={team?.rating}
                                 handleCloseModal={handleCloseModal}
                                 open={open}
                                 edit={edit}

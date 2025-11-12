@@ -1,3 +1,4 @@
+import { Rating } from 'modules/player/types/Player';
 import { Player } from './Player';
 import { TeamModifiers } from './TeamModifiers';
 
@@ -8,6 +9,7 @@ export interface Team {
   economy: TeamEconomy;
   players: Player[];
   teamModifiers: TeamModifiers;
+  rating: Rating
 }
 export interface Cantera {
   score: number;
