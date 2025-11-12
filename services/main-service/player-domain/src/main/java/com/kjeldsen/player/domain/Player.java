@@ -11,10 +11,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.kjeldsen.player.domain.models.training.TrainingEvent;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.apache.commons.lang3.Range;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
@@ -54,19 +51,13 @@ public class Player {
     private Team.TeamId teamId;
     private Integer bloomYear;
     private PitchArea playerOrderDestinationPitchArea;
+    private Rating rating;
 
-    //    private PlayerTrainingBloomEvent bloom;
-//    private PlayerTrainingDeclineEvent decline;
     @Builder.Default
     private boolean isFallCliff = false;
     private PlayerCategory category;
     private Economy economy;
 
-    public void addDeclinePhase(PlayerTrainingDeclineEvent playerTrainingDeclineEvent) {
-        throwIfNot(Range.between(MIN_DECLINE_PLAYER_AGE, MAX_DECLINE_PLAYER_AGE).contains(age.getYears()), DECLINE_PLAYER_AGE_INVALID_RANGE);
-        subtractSkillPoints(playerTrainingDeclineEvent.getSkill(), playerTrainingDeclineEvent.getPointsToSubtract());
-//        this.decline = playerTrainingDeclineEvent;
-    }
 
     public void addDeclinePhase(TrainingEvent trainingEvent) {
         throwIfNot(Range.between(MIN_DECLINE_PLAYER_AGE, MAX_DECLINE_PLAYER_AGE).contains(age.getYears()), DECLINE_PLAYER_AGE_INVALID_RANGE);
@@ -122,5 +113,4 @@ public class Player {
     public static class Economy {
         private BigDecimal salary;
     }
-
 }

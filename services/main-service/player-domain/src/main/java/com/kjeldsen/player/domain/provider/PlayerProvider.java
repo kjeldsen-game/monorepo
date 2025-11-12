@@ -2,6 +2,7 @@ package com.kjeldsen.player.domain.provider;
 
 import com.github.javafaker.Faker;
 import com.kjeldsen.player.domain.*;
+import com.kjeldsen.player.domain.factories.PlayerSkillsFactory;
 import com.kjeldsen.player.domain.generator.BloomPhaseGenerator;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -56,38 +57,36 @@ public class PlayerProvider {
     public static PlayerSkillRelevance getSkillRelevanceBasedOnPositionAndSkill(PlayerPosition position, PlayerSkill skill){
         switch (skill){
             case SCORING: switch (position){
-                case DEFENSIVE_MIDFIELDER, FORWARD, STRIKER: return PlayerSkillRelevance.CORE;
+                case FORWARD, STRIKER: return PlayerSkillRelevance.CORE;
                 case LEFT_WINGER, OFFENSIVE_MIDFIELDER, RIGHT_WINGER, AERIAL_FORWARD, AERIAL_STRIKER: return PlayerSkillRelevance.SECONDARY;
-                case CENTRE_BACK, AERIAL_CENTRE_BACK, SWEEPER, LEFT_BACK, RIGHT_BACK, LEFT_WINGBACK, RIGHT_WINGBACK, CENTRE_MIDFIELDER, LEFT_MIDFIELDER, RIGHT_MIDFIELDER: return PlayerSkillRelevance.RESIDUAL;
+                case DEFENSIVE_MIDFIELDER, CENTRE_BACK, AERIAL_CENTRE_BACK, SWEEPER, LEFT_BACK, RIGHT_BACK, LEFT_WINGBACK, RIGHT_WINGBACK, CENTRE_MIDFIELDER, LEFT_MIDFIELDER, RIGHT_MIDFIELDER: return PlayerSkillRelevance.RESIDUAL;
             }
-            case OFFENSIVE_POSITIONING: switch (position){
-                case DEFENSIVE_MIDFIELDER, OFFENSIVE_MIDFIELDER, LEFT_WINGER, RIGHT_WINGER, FORWARD, STRIKER: return PlayerSkillRelevance.CORE;
+            case OFFENSIVE_POSITIONING, BALL_CONTROL: switch (position){
+                case OFFENSIVE_MIDFIELDER, LEFT_WINGER, RIGHT_WINGER, FORWARD, STRIKER: return PlayerSkillRelevance.CORE;
                 case LEFT_WINGBACK, RIGHT_WINGBACK, CENTRE_MIDFIELDER, LEFT_MIDFIELDER, RIGHT_MIDFIELDER, AERIAL_FORWARD, AERIAL_STRIKER: return PlayerSkillRelevance.SECONDARY;
-                case CENTRE_BACK, AERIAL_CENTRE_BACK, SWEEPER, LEFT_BACK, RIGHT_BACK: return PlayerSkillRelevance.RESIDUAL;
+                case DEFENSIVE_MIDFIELDER, CENTRE_BACK, AERIAL_CENTRE_BACK, SWEEPER, LEFT_BACK, RIGHT_BACK: return PlayerSkillRelevance.RESIDUAL;
             }
-            case BALL_CONTROL: switch (position){
-                case DEFENSIVE_MIDFIELDER, OFFENSIVE_MIDFIELDER, LEFT_WINGER, RIGHT_WINGER, FORWARD, STRIKER: return PlayerSkillRelevance.CORE;
-                case LEFT_WINGBACK, RIGHT_WINGBACK, CENTRE_MIDFIELDER, LEFT_MIDFIELDER, RIGHT_MIDFIELDER, AERIAL_FORWARD, AERIAL_STRIKER: return PlayerSkillRelevance.SECONDARY;
-                case CENTRE_BACK, AERIAL_CENTRE_BACK, SWEEPER, LEFT_BACK, RIGHT_BACK: return PlayerSkillRelevance.RESIDUAL;
-            }
+
             case PASSING: switch (position){
                 case CENTRE_MIDFIELDER, LEFT_MIDFIELDER, RIGHT_MIDFIELDER, LEFT_WINGER, RIGHT_WINGER, OFFENSIVE_MIDFIELDER: return PlayerSkillRelevance.CORE;
-                case LEFT_BACK, RIGHT_BACK, LEFT_WINGBACK, RIGHT_WINGBACK, DEFENSIVE_MIDFIELDER, FORWARD, AERIAL_FORWARD, STRIKER, AERIAL_STRIKER: return PlayerSkillRelevance.SECONDARY;
-                case CENTRE_BACK, AERIAL_CENTRE_BACK, SWEEPER: return PlayerSkillRelevance.RESIDUAL;
+                case CENTRE_BACK,  LEFT_BACK, RIGHT_BACK, LEFT_WINGBACK, RIGHT_WINGBACK, DEFENSIVE_MIDFIELDER, FORWARD, AERIAL_FORWARD, STRIKER, AERIAL_STRIKER: return PlayerSkillRelevance.SECONDARY;
+                case AERIAL_CENTRE_BACK, SWEEPER: return PlayerSkillRelevance.RESIDUAL;
             }
             case AERIAL: switch (position){
-                case AERIAL_CENTRE_BACK, DEFENSIVE_MIDFIELDER, AERIAL_FORWARD, AERIAL_STRIKER: return PlayerSkillRelevance.CORE;
+                case AERIAL_CENTRE_BACK, AERIAL_FORWARD, AERIAL_STRIKER: return PlayerSkillRelevance.CORE;
                 case CENTRE_BACK, SWEEPER, LEFT_BACK, RIGHT_BACK, FORWARD, STRIKER: return PlayerSkillRelevance.SECONDARY;
-                case LEFT_WINGBACK, RIGHT_WINGBACK, CENTRE_MIDFIELDER, LEFT_MIDFIELDER, RIGHT_MIDFIELDER, LEFT_WINGER, OFFENSIVE_MIDFIELDER, RIGHT_WINGER: return PlayerSkillRelevance.RESIDUAL;
+                case DEFENSIVE_MIDFIELDER, LEFT_WINGBACK, RIGHT_WINGBACK, CENTRE_MIDFIELDER, LEFT_MIDFIELDER, RIGHT_MIDFIELDER, LEFT_WINGER, OFFENSIVE_MIDFIELDER, RIGHT_WINGER: return PlayerSkillRelevance.RESIDUAL;
             }
             case CONSTITUTION: switch (position){
                 case CENTRE_BACK, AERIAL_CENTRE_BACK, SWEEPER, LEFT_BACK, RIGHT_BACK, LEFT_WINGBACK, RIGHT_WINGBACK, DEFENSIVE_MIDFIELDER, CENTRE_MIDFIELDER, LEFT_MIDFIELDER, RIGHT_MIDFIELDER, LEFT_WINGER, OFFENSIVE_MIDFIELDER, RIGHT_WINGER, FORWARD, AERIAL_FORWARD, STRIKER, AERIAL_STRIKER: return PlayerSkillRelevance.SECONDARY;
             }
+
             case TACKLING: switch (position){
-                case CENTRE_BACK, SWEEPER, LEFT_BACK, RIGHT_BACK, LEFT_WINGBACK, RIGHT_WINGBACK: return PlayerSkillRelevance.CORE;
+                case DEFENSIVE_MIDFIELDER, CENTRE_BACK, SWEEPER, LEFT_BACK, RIGHT_BACK, LEFT_WINGBACK, RIGHT_WINGBACK: return PlayerSkillRelevance.CORE;
                 case AERIAL_CENTRE_BACK, CENTRE_MIDFIELDER, LEFT_MIDFIELDER, RIGHT_MIDFIELDER: return PlayerSkillRelevance.SECONDARY;
-                case DEFENSIVE_MIDFIELDER, LEFT_WINGER, OFFENSIVE_MIDFIELDER, RIGHT_WINGER, FORWARD, AERIAL_FORWARD, STRIKER, AERIAL_STRIKER: return PlayerSkillRelevance.RESIDUAL;
+                case LEFT_WINGER, OFFENSIVE_MIDFIELDER, RIGHT_WINGER, FORWARD, AERIAL_FORWARD, STRIKER, AERIAL_STRIKER: return PlayerSkillRelevance.RESIDUAL;
             }
+
             case DEFENSIVE_POSITIONING: switch (position){
                 case CENTRE_BACK, SWEEPER, LEFT_BACK, RIGHT_BACK, LEFT_WINGBACK, RIGHT_WINGBACK, DEFENSIVE_MIDFIELDER: return PlayerSkillRelevance.CORE;
                 case AERIAL_CENTRE_BACK, CENTRE_MIDFIELDER, LEFT_MIDFIELDER, RIGHT_MIDFIELDER: return PlayerSkillRelevance.SECONDARY;
@@ -96,11 +95,8 @@ public class PlayerProvider {
             case REFLEXES, GOALKEEPER_POSITIONING: switch (position){
                 case GOALKEEPER: return PlayerSkillRelevance.CORE;
             }
-            case INTERCEPTIONS, ONE_ON_ONE: switch (position){
+            case INTERCEPTIONS, ONE_ON_ONE, CONTROL, ORGANIZATION: switch (position){
                 case GOALKEEPER: return PlayerSkillRelevance.SECONDARY;
-            }
-            case CONTROL, ORGANIZATION: switch (position){
-                case GOALKEEPER: return PlayerSkillRelevance.RESIDUAL;
             }
             throw new IllegalStateException("Unexpected value on the following position: " + position);
         }
@@ -126,15 +122,31 @@ public class PlayerProvider {
         return player;
     }
 
-    public static PlayerSkill randomSkillForSpecificPlayer(Player player) {
-        Map<PlayerSkill, PlayerSkills> skills = player.getActualSkills();
-        List<PlayerSkill> allSkills = skills.keySet().stream().toList();
-        int random = (int) (Math.random() * allSkills.size());
-        return allSkills.get(random);
+    public static Player provide(Team.TeamId teamId, int minAge, int maxAge, PlayerPosition position
+    , double actualRating, double potentialRating) {
+        Player player = Player.builder()
+            .rating(Rating.builder().actual(actualRating).potential(potentialRating).build())
+            .id(Player.PlayerId.generate())
+            .name(name())
+            .age(PlayerAge.generatePlayerAge(minAge, maxAge))
+            .preferredPosition(position)
+            .position(null)
+            .status(PlayerStatus.INACTIVE)
+            .playerOrder(PlayerOrder.NONE)
+            .bloomYear(BloomPhaseGenerator.generateBloomPhaseYear())
+            .actualSkills(position == PlayerPosition.GOALKEEPER ? PlayerSkillsFactory.createGoalkeeperSkills() :
+                PlayerSkillsFactory.createNonGoalkeeperSkills(position))
+            .teamId(teamId)
+            .category(null)
+            .economy(Player.Economy.builder().build())
+            .build();
+        SkillsProvider.provide(player);
+        player.negotiateSalary();
+        return player;
     }
 
-    public static PlayerSkill randomSkillForSpecificPlayer(Optional<Player> player) {
-        Map<PlayerSkill, PlayerSkills> skills = player.get().getActualSkills();
+    public static PlayerSkill randomSkillForSpecificPlayer(Player player) {
+        Map<PlayerSkill, PlayerSkills> skills = player.getActualSkills();
         List<PlayerSkill> allSkills = skills.keySet().stream().toList();
         int random = (int) (Math.random() * allSkills.size());
         return allSkills.get(random);
@@ -174,9 +186,6 @@ public class PlayerProvider {
         return filteredSkills.get(random);
     }
 
-    public static Player generateDefault() {
-        return generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_FORWARD_TENDENCIES, PlayerCategory.JUNIOR, 200);
-    }
 
     public static PlayerPosition position() {
         return PlayerPosition.values()[RandomUtils.nextInt(0, PlayerPosition.values().length)];

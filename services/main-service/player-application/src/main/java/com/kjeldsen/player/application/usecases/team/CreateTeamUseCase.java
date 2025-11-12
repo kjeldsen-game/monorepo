@@ -7,10 +7,14 @@ import com.kjeldsen.lib.model.league.CreateOrAssignTeamToLeagueResponseClient;
 import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
 import com.kjeldsen.player.domain.Player;
+import com.kjeldsen.player.domain.Rating;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.factories.TeamFactory;
+import com.kjeldsen.player.domain.provider.RatingProvider;
+import com.kjeldsen.player.domain.provider.TeamProvider;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
+import com.kjeldsen.player.domain.utils.RatingUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -37,10 +41,13 @@ public class CreateTeamUseCase {
             leagueClientApi.assignTeamToLeague(CreateOrAssignTeamToLeagueRequestClient.builder()
                 .teamId(team.getId().value()).teamName(teamName).build());
 
-        List<Player> players = generatePlayersUseCase.generateCustomPlayers(team.getId());
+//        List<Player> players = generatePlayersUseCase.generateCustomPlayers(team.getId());
 
+        List<Player> players = TeamProvider.provide(team.getId());
+        Rating teamRating = RatingProvider.getTeamRating(players);
         // Generate team players
         players.forEach(playerWriteRepository::save);
+        team.setRating(teamRating);
         team.setLeagueId(response.getLeagueId());
         teamWriteRepository.save(team);
     }

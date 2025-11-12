@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -56,6 +58,14 @@ public class PlayerAge {
                 .months((double) Math.round(month*100)/100)
                 .days((double) Math.round(days*100)/100)
                 .build();
+    }
+
+    public static PlayerAge generatePlayerAge(int minAge, int maxAge) {
+        return PlayerAge.builder()
+            .years(minAge == maxAge ? minAge : ThreadLocalRandom.current().nextInt(minAge, maxAge))
+            .months(ThreadLocalRandom.current().nextDouble(0.0,DAY_KJELDSEN))
+            .days(ThreadLocalRandom.current().nextDouble(0.0,DAY_KJELDSEN))
+            .build();
     }
 
     public static Integer ageGeneration() {

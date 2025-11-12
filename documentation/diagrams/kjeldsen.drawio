@@ -1,0 +1,349 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" version="28.2.7">
+  <diagram name="Page-1" id="IbOI1IXihi2raegDGzCy">
+    <mxGraphModel dx="2524" dy="1102" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="KZTLCqSkAlm145gJzlaa-1" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="-540" y="500" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-4" value="register" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-500" y="530" as="sourcePoint" />
+            <mxPoint x="-440" y="530" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-5" target="KZTLCqSkAlm145gJzlaa-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-9" value="event" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-8">
+          <mxGeometry x="-0.2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-5" value="RegisterUse&lt;div&gt;Case&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-440" y="510" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-7" target="KZTLCqSkAlm145gJzlaa-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-13" value="create" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-11">
+          <mxGeometry x="0.05" y="-3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-7" value="RegisterEvent&lt;div&gt;Listener&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-300" y="510" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-10" target="KZTLCqSkAlm145gJzlaa-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-17" value="assign to league" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-16">
+          <mxGeometry x="0.15" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-10" value="CreateTeam&lt;div&gt;UseCase&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-140" y="510" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-19" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-15" target="KZTLCqSkAlm145gJzlaa-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-21" value="add" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-19">
+          <mxGeometry x="0.1143" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-15" value="CreateOrAssign&lt;div&gt;Api&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-140" y="590" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-18" target="KZTLCqSkAlm145gJzlaa-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-18" value="AddTeamTo&lt;div&gt;League&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-300" y="590" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-22" target="KZTLCqSkAlm145gJzlaa-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-28" value="no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-26">
+          <mxGeometry x="-0.64" y="-3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-22" target="KZTLCqSkAlm145gJzlaa-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-29" value="yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-27">
+          <mxGeometry x="-0.2" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-22" value="Is League&lt;div&gt;Active&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-435" y="570" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-24" value="Filter that where are bots&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-570" y="590" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-32" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-25">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-260" y="700" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-33" value="get&lt;div&gt;preseason&lt;/div&gt;&lt;div&gt;leagues&lt;/div&gt;&lt;div&gt;&amp;lt; 10 teams&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-32">
+          <mxGeometry x="-0.12" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-25" value="AddTeamTo&lt;div&gt;Preseason&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-440" y="680" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-38" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-34" target="KZTLCqSkAlm145gJzlaa-36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-39" value="no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-38">
+          <mxGeometry x="0.28" y="-1" relative="1" as="geometry">
+            <mxPoint x="-16" y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-40" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-34" target="KZTLCqSkAlm145gJzlaa-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-41" value="yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-40">
+          <mxGeometry x="-0.64" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-34" value="Exists?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-260" y="660" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-35" value="Get any of them and assign to it" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-265" y="770" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-36" value="Create new and assign" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-140" y="680" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-42" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-24">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-620" y="590" as="sourcePoint" />
+            <mxPoint x="-640" y="610" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-43" value="filter" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-42">
+          <mxGeometry x="0.0857" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-44" value="Have Spot?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-720" y="570" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-55" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-45" target="KZTLCqSkAlm145gJzlaa-54">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-56" value="get random league" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-55">
+          <mxGeometry x="-0.0222" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-45" value="AddToActive&lt;div&gt;WithSpot&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-810" y="700" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-52" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-46" target="KZTLCqSkAlm145gJzlaa-51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-53" value="create league" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-52">
+          <mxGeometry x="-0.05" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-46" value="AddToActive&lt;div&gt;WithoutSpot&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-630" y="700" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-47" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-44" target="KZTLCqSkAlm145gJzlaa-46">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-620" y="590" as="sourcePoint" />
+            <mxPoint x="-570" y="540" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-680" y="670" />
+              <mxPoint x="-585" y="670" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-48" value="no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-47">
+          <mxGeometry x="0.1172" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-49" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="KZTLCqSkAlm145gJzlaa-45">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-680" y="650" as="sourcePoint" />
+            <mxPoint x="-760" y="710" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-680" y="670" />
+              <mxPoint x="-765" y="670" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-50" value="yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-49">
+          <mxGeometry x="0.1556" y="-3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-58" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-51" target="KZTLCqSkAlm145gJzlaa-57">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-59" value="generate" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-58">
+          <mxGeometry x="0.4" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-51" value="generate scheduled matches" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-630" y="780" width="90" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-64" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-54" target="KZTLCqSkAlm145gJzlaa-63">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-65" value="get random bot" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-64">
+          <mxGeometry x="0.0182" y="-4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-54" value="League w spot" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-810" y="785" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-61" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-57" target="KZTLCqSkAlm145gJzlaa-60">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-62" value="schedule" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-61">
+          <mxGeometry y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-57" value="schedule&lt;div&gt;Matches&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-630" y="860" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-60" value="Matches scheduled" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-630" y="940" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-67" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-63" target="KZTLCqSkAlm145gJzlaa-66">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-69" value="reschedule matches" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-67">
+          <mxGeometry x="0.4" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-63" value="League &amp;amp; bot" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-810" y="860" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-71" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-66" target="KZTLCqSkAlm145gJzlaa-70">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-72" value="save" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-71">
+          <mxGeometry x="0.32" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-66" value="Reschedule league usecase" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-810" y="930" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-70" value="Rescheduled and saved" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-810" y="1000" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-75" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-73" target="KZTLCqSkAlm145gJzlaa-74">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-76" value="generate" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-75">
+          <mxGeometry x="0.2571" y="-1" relative="1" as="geometry">
+            <mxPoint x="-14" y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-73" value="League start trigger API" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-800" y="200" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-78" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-74" target="KZTLCqSkAlm145gJzlaa-77">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-79" value="get all&amp;nbsp;&lt;div&gt;preseason&lt;/div&gt;&lt;div&gt;leagues&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-78">
+          <mxGeometry x="-0.0857" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-74" value="GenerateAll&lt;div&gt;LegueMatches&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-640" y="200" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-81" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-77" target="KZTLCqSkAlm145gJzlaa-80">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-82" value="get single&lt;div&gt;league&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-81">
+          <mxGeometry x="0.0222" y="-4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-77" value="All leagues" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-480" y="200" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-84" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-80" target="KZTLCqSkAlm145gJzlaa-83">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-80" value="generate matches" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-300" y="200" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-88" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-83" target="KZTLCqSkAlm145gJzlaa-87">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-89" value="filter non bot&lt;div&gt;teams&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-88">
+          <mxGeometry x="0.05" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-83" value="schedule matches" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-170" y="200" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-85" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-83">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-50" y="220" as="sourcePoint" />
+            <mxPoint x="-380" y="220" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-40" y="220" />
+              <mxPoint x="-40" y="280" />
+              <mxPoint x="-80" y="280" />
+              <mxPoint x="-380" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-91" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-87" target="KZTLCqSkAlm145gJzlaa-90">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-87" value="non bot teams" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-170" y="120" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-93" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-90" target="KZTLCqSkAlm145gJzlaa-92">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-94" value="send&amp;nbsp;&lt;div&gt;notification&lt;div&gt;about league&lt;/div&gt;&lt;div&gt;start&lt;/div&gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-93">
+          <mxGeometry x="-0.1333" y="-2" relative="1" as="geometry">
+            <mxPoint y="2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-90" value="event publisher" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-300" y="120" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-96" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="KZTLCqSkAlm145gJzlaa-92" target="KZTLCqSkAlm145gJzlaa-95">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-97" value="schedule" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="KZTLCqSkAlm145gJzlaa-96">
+          <mxGeometry x="-0.0571" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-92" value="published" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-480" y="120" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KZTLCqSkAlm145gJzlaa-95" value="Scheduled&amp;nbsp;&lt;div&gt;league end job&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-640" y="120" width="90" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

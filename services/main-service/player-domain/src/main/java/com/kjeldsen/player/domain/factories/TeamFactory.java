@@ -10,8 +10,6 @@ import java.util.Map;
 
 public final class TeamFactory {
 
-    private TeamFactory() {}
-
     public static Team create(String userId, String teamName) {
         Team.TeamId newTeamId = Team.TeamId.generate();
 
