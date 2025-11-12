@@ -11,6 +11,11 @@ export enum PitchArea {
   OUT_OF_BOUNDS = 'OUT_OF_BOUNDS',
 }
 
+export type Rating = {
+  actual: number,
+  potential: number
+}
+
 export const PitchAreaShortcuts: Record<PitchArea, string> = {
   [PitchArea.LEFT_FORWARD]: 'LF',
   [PitchArea.CENTRE_FORWARD]: 'CF',

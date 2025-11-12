@@ -16,32 +16,29 @@ export const PlayerDetails: FC<PlayerDetailsProps> = ({ player }) => {
 
     return (
         <Grid container spacing={0}>
-            <Grid size={{ xs: 12, sm: 3 }}
-                display={'flex'}
-                flex={1}
-                alignItems={'center'}
-                justifyContent={{ xs: 'center', sm: 'start' }}
-                mb={{ xs: 1, sm: 0 }}>
-                <Avatar
-                    sx={{ width: '100px', height: '100px', border: '1px solid #FF3F84' }}
-                    alt="Upload new avatar"
-                    src={false ? `data:image/jpeg;base64,${false}` : undefined} />
-                <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} ml={2}>
-                    <Typography fontSize={20} fontWeight={'bold'}>{player.name}</Typography>
-                    <Typography fontWeight={'bold'}>{player.preferredPosition}</Typography>
-                    <Box display={'flex'}>
-                        <ElderlyIcon /> <Typography>{player.age.years}</Typography>
-                    </Box>
-                    <Box display={'flex'}>
-                        <SkillRelevanceSummary relevance={PlayerSkillRelevance.CORE}>
-                            88
-                        </SkillRelevanceSummary>
-                        <SkillRelevanceSummary relevance={PlayerSkillRelevance.RESIDUAL}>
-                            88
-                        </SkillRelevanceSummary>
-                        <SkillRelevanceSummary relevance={PlayerSkillRelevance.SECONDARY}>
-                            88
-                        </SkillRelevanceSummary>
+            <Grid size={{ xs: 12, sm: 3 }}>
+                <Box display={'flex'} sx={{justifyContent: {xs: 'center', sm: 'normal'}}}>
+                    <Avatar
+                        sx={{ width: '100px', height: '100px', border: '1px solid #FF3F84' }}
+                        alt="Upload new avatar"
+                        src={false ? `data:image/jpeg;base64,${false}` : undefined} />
+                    <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} ml={2}>
+                        <Typography fontSize={20} fontWeight={'bold'}>{player.name}</Typography>
+                        <Typography fontWeight={'bold'}>{player.preferredPosition}</Typography>
+                        <Box display={'flex'}>
+                            <ElderlyIcon /> <Typography>{player.age.years}</Typography>
+                        </Box>
+                        <Box display={'flex'}>
+                            <SkillRelevanceSummary relevance={PlayerSkillRelevance.CORE}>
+                                88
+                            </SkillRelevanceSummary>
+                            <SkillRelevanceSummary relevance={PlayerSkillRelevance.RESIDUAL}>
+                                88
+                            </SkillRelevanceSummary>
+                            <SkillRelevanceSummary relevance={PlayerSkillRelevance.SECONDARY}>
+                                88
+                            </SkillRelevanceSummary>
+                        </Box>
                     </Box>
                 </Box>
             </Grid>

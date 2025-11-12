@@ -13,6 +13,7 @@ import com.kjeldsen.player.application.usecases.facilities.UpgradeBuildingUseCas
 import com.kjeldsen.player.application.usecases.fanbase.FansManagementUsecase;
 import com.kjeldsen.player.application.usecases.fanbase.UpdateLoyaltyUseCase;
 import com.kjeldsen.player.application.usecases.player.PlayerAgingUseCase;
+import com.kjeldsen.player.application.usecases.player.rating.ProcessRatingsUseCase;
 import com.kjeldsen.player.application.usecases.trainings.decline.ProcessDeclineTrainingUseCase;
 import com.kjeldsen.player.application.usecases.trainings.player.ExecutePlayerTrainingUseCase;
 import com.kjeldsen.player.application.usecases.trainings.player.ProcessPlayerTrainingUseCase;
@@ -70,6 +71,7 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final ProcessPlayerTrainingUseCase processPlayerTrainingUseCase;
     private final ProcessPotentialRiseUseCase processPotentialRiseUseCase;
     private final ProcessDeclineTrainingUseCase processDeclineTrainingUseCase;
+
 //    private final ExecuteDeclineTrainingUseCase executeDeclineTrainingUseCase;
     private final ExecutePotentialRiseUseCase executePotentialRiseUseCase;
     private final ExecutePlayerTrainingUseCase executePlayerTrainingUseCase;
@@ -78,6 +80,9 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     // Economy simulations
     private final ResetSponsorIncomeUseCase resetSponsorIncomeUseCase;
     private final ResetBillboardIncomeUseCase resetBillboardIncomeUseCase;
+
+    // Rating simulations
+    private final ProcessRatingsUseCase processRatingsUseCase;
 
     @Override
     public ResponseEntity<Void> registerInvestmentOnCantera(String teamId,
@@ -89,13 +94,9 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
         return ResponseEntity.ok().build();
     }
 
-    private void tes2t() {
-        throw new RuntimeException("Not implemented yet");
-    }
-
     @Override
     public ResponseEntity<SimulateHelloWorld200Response> simulateHelloWorld() {
-        tes2t();
+        processRatingsUseCase.process();
         return ResponseEntity.ok(new SimulateHelloWorld200Response().message("Hello World"));
     }
 

@@ -15,6 +15,8 @@ import { PlayerOrderSpecColumn } from './PlayerOrderSpecColumn';
 import ColHeader from '@/shared/components/Grid/Columns/common/components/ColHeader';
 import CustomIconButton from '@/shared/components/Common/CustomIconButton';
 import { Box } from '@mui/material';
+import { BaseTextColumn } from '@/shared/components/Grid/Columns/common/columns/BaseTextColumn';
+import { RatingColumn } from './RatingColumn';
 
 export const LineupColumns = (
     isEditing: boolean,
@@ -70,8 +72,9 @@ export const LineupColumns = (
             PlayerSkillColumn((row) => row, PlayerSkill.TACKLING, undefined, isXs),
             PlayerSkillColumn((row) => row, PlayerSkill.DEFENSIVE_POSITIONING, undefined, isXs)] : []),
         ...((!isXs || !isXsPlayers) ? [
+            RatingColumn((row) => row.rating , 'center', "Rating"),
             PlayerOrderColumn((row) => row, 'center', handlePlayerOrderChange, 'PO', isEditing),
-            PlayerOrderSpecColumn((row) => row, 'center', handlePlayerOrderSpecChange, 'PO2', isEditing),
+            PlayerOrderSpecColumn((row) => row, 'center', handlePlayerOrderSpecChange, 'PO2', isEditing), 
             {
                 ...getColumnConfig("right"),
                 field: 'action',

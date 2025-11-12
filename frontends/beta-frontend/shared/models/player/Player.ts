@@ -2,7 +2,7 @@ import { PlayerLineupStatus } from './PlayerLineupStatus';
 import { PlayerOrder } from './PlayerOrder';
 import { PlayerPosition } from './PlayerPosition';
 import { TeamRole } from '../MatchReport';
-import { PitchArea } from 'modules/player/types/Player';
+import { PitchArea, Rating } from 'modules/player/types/Player';
 
 export interface Player {
   id: string;
@@ -17,6 +17,7 @@ export interface Player {
   status: PlayerLineupStatus;
   actualSkills: { [key: string]: ActualSkill };
   economy: PlayerEconomy;
+  rating: Rating
 }
 
 export interface PlayerAge {

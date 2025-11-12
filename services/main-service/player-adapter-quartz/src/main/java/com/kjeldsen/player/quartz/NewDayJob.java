@@ -1,5 +1,6 @@
 package com.kjeldsen.player.quartz;
 
+import com.kjeldsen.player.application.usecases.player.rating.ProcessRatingsUseCase;
 import com.kjeldsen.player.application.usecases.trainings.decline.ProcessDeclineTrainingUseCase;
 import com.kjeldsen.player.application.usecases.trainings.player.ProcessPlayerTrainingUseCase;
 import com.kjeldsen.player.application.usecases.trainings.potential.ProcessPotentialRiseUseCase;
@@ -18,6 +19,7 @@ public class NewDayJob implements Job {
     private final ProcessPlayerTrainingUseCase processPlayerTrainingUseCase;
     private final ProcessPotentialRiseUseCase processPotentialRiseUseCase;
     private final ProcessDeclineTrainingUseCase processDeclineTrainingUseCase;
+    private final ProcessRatingsUseCase processRatingsUseCase;
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
@@ -26,5 +28,6 @@ public class NewDayJob implements Job {
         processPlayerTrainingUseCase.process();
         processPotentialRiseUseCase.process();
         processDeclineTrainingUseCase.process();
+//        processRatingsUseCase.process();
     }
 }
