@@ -15,6 +15,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -34,7 +35,7 @@ public class UpdateMatchLineupUseCase {
 
         GetMatchTeamUseCase.MatchAndTeam matchAndTeam = getMatchTeamUseCase.getMatchAndTeam(matchId, teamId);
         log.info("old players={}", matchAndTeam.team().getPlayers());
-        List<PlayerClient> players = playerClientApi.getPlayers(teamId);
+        List<PlayerClient> players = playerClientApi.getPlayers(teamId, new ArrayList<>());
         playerList.forEach(player -> {
             Optional<PlayerClient> matchingPlayerDTO = players.stream()
                 .filter(playerDTO -> playerDTO.getId().equals(player.getId()))
@@ -70,7 +71,7 @@ public class UpdateMatchLineupUseCase {
     public void updateSelf(String teamId, Match match, List<PlayerUpdateDTO> playerList, TeamModifiers teamModifiers) {
         log.info("UpdateMatchLineupUseCase for match={} for the self clone team", match.getId());
 
-        List<PlayerClient> players = playerClientApi.getPlayers(teamId);
+        List<PlayerClient> players = playerClientApi.getPlayers(teamId, new ArrayList<>());
         playerList.forEach(player -> {
             Optional<PlayerClient> matchingPlayerDTO = players.stream()
                 .filter(playerDTO -> playerDTO.getId().equals(player.getId()))

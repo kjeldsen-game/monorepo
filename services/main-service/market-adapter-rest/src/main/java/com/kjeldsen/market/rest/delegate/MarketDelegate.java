@@ -1,7 +1,7 @@
 package com.kjeldsen.market.rest.delegate;
 
 import com.kjeldsen.auth.authorization.SecurityUtils;
-import com.kjeldsen.lib.events.AuctionEndEvent;
+import com.kjeldsen.lib.events.market.AuctionEndEvent;
 import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.market.application.AuctionEndUseCase;
 import com.kjeldsen.market.application.GetMarketAuctionsUseCase;

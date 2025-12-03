@@ -8,6 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,12 +32,12 @@ class PlayerClientApiImplTest extends BaseClientApiTest {
             .setBody(jsonResponse)
             .addHeader("Content-Type", "application/json"));
 
-        List<PlayerClient> result = playerClientApi.getPlayers("d1acbce5-ac43-423a-b402-0abc3941f51b");
+        List<PlayerClient> result = playerClientApi.getPlayers("d1acbce5-ac43-423a-b402-0abc3941f51b", new ArrayList<>());
 
         RecordedRequest recordedRequest = mockWebServer.takeRequest();
         assertEquals("GET", recordedRequest.getMethod());
         assertEquals(3, result.size());
-        assertEquals("/player?teamId=d1acbce5-ac43-423a-b402-0abc3941f51b&size=100", recordedRequest.getPath());
+        assertEquals("/player?teamId=d1acbce5-ac43-423a-b402-0abc3941f51b&size=100&page=0", recordedRequest.getPath());
     }
 
 }

@@ -20,4 +20,6 @@ public interface TeamReadRepository {
     List<Team> findAll();
 
     List<TeamId> findAllTeamIds();
+
+    List<Team> findAllByTeamIds(List<Team.TeamId> teamIds);
 }

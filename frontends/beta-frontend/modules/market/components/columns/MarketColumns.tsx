@@ -12,6 +12,7 @@ import ColHeader from '@/shared/components/Grid/Columns/common/components/ColHea
 import CustomButton from '@/shared/components/Common/CustomButton';
 import { PriceColumn } from './common/PriceColumn';
 import { AuctionResponse } from 'modules/market/types/responses';
+import Countdown from '../Countdown';
 
 export const MarketColumns = (
     handleButtonClick: (auction: AuctionResponse) => void,
@@ -42,6 +43,14 @@ export const MarketColumns = (
             renderCell: (params: GridCellParams) => (
                 <div>{params.row.bidders}</div>
             )
+        },
+        {
+            ...getColumnConfig("center"),
+            field: "countdown",
+            renderHeader: () => <ColHeader header={"Ends In"} />,
+            renderCell: (params: GridCellParams) => (
+                <Countdown endedAt={params.row.endedAt} />
+            ),
         },
         {
             ...getColumnConfig("right"),

@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 
 export const Main: FC<PropsWithChildren> = ({ children }) => {
     return (
-        <Box>
+        <Box sx={{padding: {xs: 1, sm: 2,}}}>
             {children}
         </Box>
     );

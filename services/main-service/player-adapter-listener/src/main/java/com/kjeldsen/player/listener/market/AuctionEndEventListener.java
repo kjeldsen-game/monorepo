@@ -1,6 +1,6 @@
-package com.kjeldsen.player.listener;
+package com.kjeldsen.player.listener.market;
 
-import com.kjeldsen.lib.events.AuctionEndEvent;
+import com.kjeldsen.lib.events.market.AuctionEndEvent;
 import com.kjeldsen.player.application.usecases.player.ProcessPlayerTransferUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
@@ -19,6 +19,8 @@ public class AuctionEndEventListener {
     @EventListener
     public void handleAuctionEndEvent(AuctionEndEvent auctionEndEvent) {
         log.info("AuctionEndEvent received: {}", auctionEndEvent);
+
+        processPlayerTransferUseCase.processMoneyReturn(auctionEndEvent.getBidders());
 
         processPlayerTransferUseCase.process(
             Player.PlayerId.of(auctionEndEvent.getPlayerId()),

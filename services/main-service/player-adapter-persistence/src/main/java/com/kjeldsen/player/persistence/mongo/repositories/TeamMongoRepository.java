@@ -17,4 +17,7 @@ public interface TeamMongoRepository extends MongoRepository<Team, Team.TeamId> 
 
     @Query("{ 'name' : ?0 }")
     Optional<Team> findOneByTeamName(String teamName);
+
+    @Query("{ 'teamId' : { $in: ?0 } }")
+    List<Team> findAllByTeamIds(List<Team.TeamId> teamIds);
 }

@@ -70,7 +70,7 @@ class UpdateMatchLineupUseCaseTest extends BaseClientTest {
                 .build());
         }
 
-        when(mockedPlayerClient.getPlayers("teamId")).thenReturn(dtos);
+        when(mockedPlayerClient.getPlayers("teamId", new ArrayList<>())).thenReturn(dtos);
         updateMatchLineupUseCase.update("matchId", "teamId", players, teamModifiers);
 
         assertTrue(matchAndTeam.team().getSpecificLineup());

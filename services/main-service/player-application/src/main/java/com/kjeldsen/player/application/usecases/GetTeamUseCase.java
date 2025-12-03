@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -22,5 +24,9 @@ public class GetTeamUseCase {
     public Team get(Team.TeamId teamId) {
         return teamReadRepository.findById(teamId).orElseThrow(
             TeamNotFoundException::new);
+    }
+
+    public List<Team> getTeamsByIds(List<Team.TeamId> teamIds) {
+        return teamReadRepository.findAllByTeamIds(teamIds);
     }
 }

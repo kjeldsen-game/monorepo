@@ -56,9 +56,6 @@ function Grid<T>({ rows, columns, sx, ...props }: GridProps<T>) {
 
       }}>
       <DataGrid
-        // style={{
-        //   '--DataGrid-rowWidth': '800px',
-        // }}
         pageSizeOptions={[]} // Hides the dropdown choices
         columnHeaderHeight={40}
         sx={{

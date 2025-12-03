@@ -25,8 +25,8 @@ export const theme = createTheme({
       main: '#FF3F84',
     },
     tertiary: {
-      main: '#F3F4F6',
-      light: '#E2E8F0'
+      main: '#e1e2e4ff',
+      light: '#d4d9dfff'
     },
     quaternary: {
       main: '#555F6C',

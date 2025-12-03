@@ -1,7 +1,8 @@
 package com.kjeldsen.market.application;
 
-import com.kjeldsen.lib.events.BidEvent;
-import com.kjeldsen.lib.events.NotificationEvent;
+import com.kjeldsen.lib.clients.TeamClientApi;
+import com.kjeldsen.lib.events.market.BidEvent;
+import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.builders.PlaceBidNotificationEventBuilder;
@@ -11,10 +12,7 @@ import com.kjeldsen.market.domain.exceptions.PlaceBidException;
 import com.kjeldsen.market.domain.exceptions.TeamNotFoundException;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
-import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.provider.InstantProvider;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
-import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -25,7 +23,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-// TODO REFACTOR
 
 @Component
 @RequiredArgsConstructor
@@ -34,10 +31,8 @@ public class PlaceBidUseCase {
 
     private final AuctionWriteRepository auctionWriteRepository;
     private final AuctionReadRepository auctionReadRepository;
-    private final TeamReadRepository teamReadRepository;
-    private final TeamWriteRepository teamWriteRepository;
     private final GenericEventPublisher eventPublisher;
-
+    private final TeamClientApi teamClientApi;
 
     private static final Integer AUCTION_BID_REDUCE_TIME = 30;
 
@@ -47,20 +42,27 @@ public class PlaceBidUseCase {
         Auction auction = auctionReadRepository.findById(auctionId).orElseThrow(
             AuctionNotFoundException::new);
 
-        Team team = teamReadRepository.findByUserId(userId).orElseThrow(
-            TeamNotFoundException::new);
+        TeamClient team;
+        List<TeamClient> teams = teamClientApi.getTeam(null, null, userId);
+        if (teams.isEmpty()) {
+            throw new TeamNotFoundException();
+        } else {
+            team = teams.get(0);
+        }
 
-        if (Objects.equals(auction.getTeamId(), team.getId().value())) {
+        if (Objects.equals(auction.getTeamId(), team.getId())) {
             throw new PlaceBidException("Cannot place new bid on auction you created!");
         }
 
+        // Retrieve the highest bid of the Team
         Auction.Bid highestBid = auction.getBids().stream()
-            .filter(bid -> bid.getTeamId().equals(team.getId().value()))
+            .filter(bid -> bid.getTeamId().equals(team.getId()))
             .max(Comparator.comparing(Auction.Bid::getAmount))
             .orElse(null);
 
         BigDecimal bidAmountDiff = getDifferenceBetweenBids(amount, highestBid == null ?
             BigDecimal.ZERO : highestBid.getAmount());
+
 
         if (highestBid != null) {
            validateBidAmount(amount, highestBid.getAmount());
@@ -70,7 +72,7 @@ public class PlaceBidUseCase {
            updateTeamBalance(team, bidAmountDiff);
            Auction.Bid bid = Auction.Bid.builder()
            .timestamp(InstantProvider.now())
-           .teamId(team.getId().value())
+           .teamId(team.getId())
            .amount(amount)
            .build();
            auction.getBids().add(bid);
@@ -79,21 +81,22 @@ public class PlaceBidUseCase {
         auction.reduceEndedAtBySeconds(AUCTION_BID_REDUCE_TIME);
         auction.setAverageBid(getAverageBid(auction.getBids()));
 
+        // Filter Teams except the Owner and Current bidder to send a notification about new bid
         List<String> teamIds = auction.getBids().stream()
             .map(Auction.Bid::getTeamId)
             .filter(bidTeamId -> {
                 String auctionOwnerId = auction.getTeamId();
-                String currentBidderId = team.getId().value();
+                String currentBidderId = team.getId();
                 return !bidTeamId.equals(auctionOwnerId) && !bidTeamId.equals(currentBidderId);
             })
             .distinct()
             .toList();
 
-        eventPublisher.publishEvent(
-            PlaceBidNotificationEventBuilder.build(teamIds, auction.getPlayerId())
-        );
-
-        teamWriteRepository.save(team);
+        if (!teamIds.isEmpty()) {
+            eventPublisher.publishEvent(
+                PlaceBidNotificationEventBuilder.build(teamIds, auction.getPlayerId())
+            );
+        }
         return auctionWriteRepository.save(auction);
     }
 
@@ -112,11 +115,11 @@ public class PlaceBidUseCase {
         }
     }
 
-    private void updateTeamBalance(Team team, BigDecimal bidAmountDiff) {
+    private void updateTeamBalance(TeamClient team, BigDecimal bidAmountDiff) {
         if (team.getEconomy().getBalance().compareTo(bidAmountDiff.abs()) < 0) {
             throw new InsufficientBalanceException();
         }
         eventPublisher.publishEvent(BidEvent.builder().amount(bidAmountDiff)
-            .teamId(team.getId().value()).build());
+            .teamId(team.getId()).build());
     }
 }

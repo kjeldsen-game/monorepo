@@ -1,23 +1,16 @@
 package com.kjeldsen.market.application;
 
-import com.kjeldsen.domain.EventId;
-import com.kjeldsen.lib.events.AuctionEndEvent;
+import com.kjeldsen.lib.events.market.AuctionEndEvent;
 import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.exceptions.AuctionNotFoundException;
 import com.kjeldsen.market.domain.exceptions.PlaceBidException;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
-import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
-import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -27,10 +20,8 @@ public class AuctionEndUseCase {
 
     private final AuctionWriteRepository auctionWriteRepository;
     private final AuctionReadRepository auctionReadRepository;
-    private final TeamReadRepository teamReadRepository;
-    private final TeamWriteRepository teamWriteRepository;
 
-    public com.kjeldsen.lib.events.AuctionEndEvent endAuction(Auction.AuctionId auctionId) {
+    public AuctionEndEvent endAuction(Auction.AuctionId auctionId) {
         log.info("AuctionEndUseCase for auction {}", auctionId );
 
         Auction auction = auctionReadRepository.findById(auctionId).orElseThrow(
@@ -40,9 +31,10 @@ public class AuctionEndUseCase {
             .max(Comparator.comparing(Auction.Bid::getAmount)).orElseThrow(
             () -> new PlaceBidException("Auction bid not found!"));
 
+        List<Auction.Bid> bids = new ArrayList<>();
         // Highest bid is from Team that put player on Market -> take him back to the Team
         if (!highestBid.getTeamId().equals(auction.getTeamId())) {
-            returnMoneyToNotWinningTeams(auction.getBids());
+            bids = getHighestBidPerTeam(auction.getBids(), highestBid, auction.getTeamId());
         }
 
         auction.setStatus(Auction.AuctionStatus.COMPLETED);
@@ -53,11 +45,17 @@ public class AuctionEndUseCase {
             .auctionCreator(auction.getTeamId())
             .amount(highestBid.getAmount())
             .playerId(auction.getPlayerId())
+            .bidders(
+                bids.stream()
+                    .collect(Collectors.toMap(
+                        Auction.Bid::getTeamId,
+                        Auction.Bid::getAmount
+                    )))
             .build();
     }
 
-    private void returnMoneyToNotWinningTeams(List<Auction.Bid> bids) {
-        List<Auction.Bid> highestBidsPerTeam =  bids.stream()
+    private List<Auction.Bid> getHighestBidPerTeam(List<Auction.Bid> bids, Auction.Bid highestBid, String creatorTeamId) {
+        return bids.stream()
             .collect(Collectors.groupingBy(
                 Auction.Bid::getTeamId,
                 Collectors.collectingAndThen(
@@ -66,18 +64,12 @@ public class AuctionEndUseCase {
                 )
             ))
             .values().stream()
-            .filter(Objects::nonNull).toList();
-
-        // TODO fix with client calls
-//        for (Auction.Bid bid : highestBidsPerTeam) {
-//            try {
-//                Team team = teamReadRepository.findById(bid.getTeamId()).orElseThrow(
-//                    () -> new RuntimeException("Team not found"));
-//                team.getEconomy().updateBalance(bid.getAmount());
-//                teamWriteRepository.save(team);
-//            } catch (RuntimeException e) {
-//                log.error(e.getMessage());
-//            }
-//        }
+            .filter(Objects::nonNull)
+            .filter(bid -> {
+                var teamId = bid.getTeamId();
+                return !teamId.equals(highestBid.getTeamId()) &&
+                    !teamId.equals(creatorTeamId);
+            })
+            .toList();
     }
 }

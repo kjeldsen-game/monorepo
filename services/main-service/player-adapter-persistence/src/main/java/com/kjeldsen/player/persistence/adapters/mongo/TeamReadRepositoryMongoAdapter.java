@@ -54,4 +54,9 @@ public class TeamReadRepositoryMongoAdapter implements TeamReadRepository {
     public Optional<Team> findByTeamName(String teamName) {
         return teamMongoRepository.findOneByTeamName(teamName);
     }
+
+    @Override
+    public List<Team> findAllByTeamIds(List<TeamId> teamIds) {
+        return teamMongoRepository.findAllByTeamIds(teamIds);
+    }
 }

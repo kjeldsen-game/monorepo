@@ -20,8 +20,9 @@ public class PlayerClientApiImpl extends BaseClientApiImpl implements PlayerClie
     }
 
     @Override
-    public List<PlayerClient> getPlayers(String teamId) {
-        String uri = buildUri(teamId);
+    public List<PlayerClient> getPlayers(String teamId, List<String> playerIds) {
+        String uri = buildUri(teamId, playerIds);
+        log.info("GetPlayers uri = {}", uri);
         return executeRequestFlux(uri, new ParameterizedTypeReference<>() {});
     }
 
@@ -32,5 +33,18 @@ public class PlayerClientApiImpl extends BaseClientApiImpl implements PlayerClie
             .queryParamIfPresent("teamId", params[0] != null ? Optional.of(params[0]) : Optional.empty())
             .queryParam("size", 100)
             .toUriString();
+    }
+
+    protected String buildUri(String teamId, List<String> playerIds) {
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("/player");
+        if (teamId != null) {
+            builder.queryParam("teamId", teamId);
+        }
+        if (playerIds != null && !playerIds.isEmpty()) {
+            playerIds.forEach(id -> builder.queryParam("playerId", id));
+        }
+        builder.queryParam("size", 100);
+        builder.queryParam("page", 0);
+        return builder.toUriString();
     }
 }
