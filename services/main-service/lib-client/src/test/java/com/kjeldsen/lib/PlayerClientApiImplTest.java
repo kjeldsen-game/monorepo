@@ -37,7 +37,7 @@ class PlayerClientApiImplTest extends BaseClientApiTest {
         RecordedRequest recordedRequest = mockWebServer.takeRequest();
         assertEquals("GET", recordedRequest.getMethod());
         assertEquals(3, result.size());
-        assertEquals("/player?teamId=d1acbce5-ac43-423a-b402-0abc3941f51b&size=100", recordedRequest.getPath());
+        assertEquals("/player?teamId=d1acbce5-ac43-423a-b402-0abc3941f51b&size=100&page=0", recordedRequest.getPath());
     }
 
 }
