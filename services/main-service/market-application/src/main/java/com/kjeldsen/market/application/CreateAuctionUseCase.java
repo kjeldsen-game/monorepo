@@ -2,8 +2,6 @@ package com.kjeldsen.market.application;
 
 import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.provider.InstantProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

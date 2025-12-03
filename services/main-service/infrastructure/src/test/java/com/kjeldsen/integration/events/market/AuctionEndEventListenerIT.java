@@ -1,7 +1,7 @@
 package com.kjeldsen.integration.events.market;
 
 import com.kjeldsen.integration.events.AbstractEventIT;
-import com.kjeldsen.lib.events.AuctionEndEvent;
+import com.kjeldsen.lib.events.market.AuctionEndEvent;
 import com.kjeldsen.player.application.usecases.player.ProcessPlayerTransferUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;
@@ -25,7 +25,7 @@ class AuctionEndEventListenerIT extends AbstractEventIT {
     @Test
     @DisplayName("Should handle the AuctionEndEvent and check values")
     void should_handle_AuctionEndEvent_and_check_values() {
-        com.kjeldsen.lib.events.AuctionEndEvent testAuctionEndEvent = AuctionEndEvent.builder()
+        AuctionEndEvent testAuctionEndEvent = AuctionEndEvent.builder()
             .auctionCreator("auctionCreator")
             .auctionWinner("auctionWinner")
             .playerId("playerId")

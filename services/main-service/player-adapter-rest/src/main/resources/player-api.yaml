@@ -226,6 +226,11 @@ paths:
       summary: Get all players
       operationId: getAllPlayers
       parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/PlayerStatus"
         - name: teamId
           in: query
           description: Team Id of players

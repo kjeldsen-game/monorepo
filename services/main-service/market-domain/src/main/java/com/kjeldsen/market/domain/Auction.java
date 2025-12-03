@@ -1,7 +1,6 @@
 package com.kjeldsen.market.domain;
 
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.Team;
+
 import lombok.*;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;

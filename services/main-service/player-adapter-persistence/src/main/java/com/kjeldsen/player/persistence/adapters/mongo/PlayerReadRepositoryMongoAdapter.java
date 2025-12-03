@@ -8,6 +8,7 @@ import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.queries.FilterMarketPlayersQuery;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
@@ -47,9 +49,9 @@ public class PlayerReadRepositoryMongoAdapter implements PlayerReadRepository {
         Example<Player> playerDocumentExample = Example.of(Player.builder()
             .teamId(query.getTeamId() != null ? query.getTeamId() : null)
             .position(query.getPosition() != null ? query.getPosition() : null)
+            .status(query.getStatus() != null ? query.getStatus() : null)
             .build());
         Pageable pageable = PageRequest.of(query.getPage(), query.getSize());
-
         return playerMongoRepository.findAll(playerDocumentExample, pageable).stream().toList();
     }
 

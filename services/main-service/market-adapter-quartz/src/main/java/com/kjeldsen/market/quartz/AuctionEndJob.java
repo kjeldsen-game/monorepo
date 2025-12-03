@@ -1,6 +1,6 @@
 package com.kjeldsen.market.quartz;
 
-import com.kjeldsen.lib.events.AuctionEndEvent;
+import com.kjeldsen.lib.events.market.AuctionEndEvent;
 import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.market.application.AuctionEndUseCase;
 import com.kjeldsen.market.domain.Auction;

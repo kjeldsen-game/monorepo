@@ -2,10 +2,13 @@ import type { NextPage } from 'next';
 import { useState } from 'react';
 import { useMarketApi } from 'modules/market/hooks/useMarketApi';
 import MarketView from 'modules/market/components/MarketView';
+import { getSession, useSession } from 'next-auth/react';
 
 interface MarketProps { }
 
 const Market: NextPage<MarketProps> = ({ }) => {
+  const session = useSession();
+
   const [filter, setFilter] = useState<string>('');
   const [auction, setAuction] = useState<string | undefined>(undefined);
 

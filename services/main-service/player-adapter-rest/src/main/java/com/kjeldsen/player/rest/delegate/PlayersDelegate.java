@@ -15,18 +15,18 @@ import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.rest.api.PlayerApiDelegate;
 import com.kjeldsen.player.rest.mapper.CreatePlayerMapper;
 import com.kjeldsen.player.rest.mapper.PlayerMapper;
-import com.kjeldsen.player.rest.model.CreatePlayerRequest;
-import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
-import com.kjeldsen.player.rest.model.PlayerPosition;
-import com.kjeldsen.player.rest.model.PlayerResponse;
+import com.kjeldsen.player.rest.model.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class PlayersDelegate implements PlayerApiDelegate {
@@ -56,18 +56,23 @@ public class PlayersDelegate implements PlayerApiDelegate {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+
+
     @Override
-    public ResponseEntity<List<PlayerResponse>> getAllPlayers(String teamId, PlayerPosition position, Integer size, Integer page) {
-        if (teamId == null) {
-            Team team = getTeamUseCase.get(SecurityUtils.getCurrentUserId());
-            teamId = team.getId().value();
-        }
+    public ResponseEntity<List<PlayerResponse>> getAllPlayers(PlayerStatus status, String teamId, PlayerPosition position, Integer size, Integer page) {
+//        if (teamId == null) {
+//            Team team = getTeamUseCase.get(SecurityUtils.getCurrentUserId());
+//            teamId = team.getId().value();
+//        }
+
         FindPlayersQuery query = FindPlayersQuery.builder()
             .position(position != null ? com.kjeldsen.player.domain.PlayerPosition.valueOf(position.name()) : null)
             .teamId(TeamId.of(teamId))
+            .status(status != null ? com.kjeldsen.player.domain.PlayerStatus.valueOf(status.name()) : null)
             .size(size)
             .page(page)
             .build();
+
         List<Player> players = playerReadRepository.find(query);
         List<PlayerResponse> response = players.stream().map(PlayerMapper.INSTANCE::playerResponseMap).toList();
         return ResponseEntity.ok(response);

@@ -1,14 +1,12 @@
 package com.kjeldsen.market.application;
 
+import com.kjeldsen.lib.events.market.AuctionEndEvent;
 import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.exceptions.AuctionNotFoundException;
 import com.kjeldsen.market.domain.exceptions.PlaceBidException;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
 import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
-import com.kjeldsen.player.domain.repositories.TeamWriteRepository;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,20 +14,18 @@ import org.mockito.Mockito;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@Disabled
 class AuctionEndUseCaseTest {
 
     private final AuctionWriteRepository mockedAuctionWriteRepository = Mockito.mock(AuctionWriteRepository.class);
     private final AuctionReadRepository mockedAuctionReadRepository = Mockito.mock(AuctionReadRepository.class);
-    private final TeamReadRepository mockedTeamReadRepository = Mockito.mock(TeamReadRepository.class);
-    private final TeamWriteRepository mockedTeamWriteRepository = Mockito.mock(TeamWriteRepository.class);
     private final AuctionEndUseCase auctionEndUseCase = new AuctionEndUseCase(mockedAuctionWriteRepository,
-        mockedAuctionReadRepository, mockedTeamReadRepository, mockedTeamWriteRepository);
+        mockedAuctionReadRepository);
 
     @Test
     @DisplayName("Should throw exception if auction is null")
@@ -58,39 +54,37 @@ class AuctionEndUseCaseTest {
     @Test
     @DisplayName("Should return highest bid amount to every team and update auction")
     void should_return_highest_bid_amount_to_every_team_and_update_auction() {
-        Team.TeamId creatorTeamId = Team.TeamId.generate();
-        Team.TeamId winnerTeamId = Team.TeamId.generate();
-        Team creatorTeam = Team.builder().id(creatorTeamId).economy(
-            Team.Economy.builder().balance(BigDecimal.valueOf(1000)).build()).build();
-        Team winnerTeam = Team.builder().id(winnerTeamId).economy(
-            Team.Economy.builder().balance(BigDecimal.valueOf(1000)).build()).build();
+        String creatorTeamId = "creatorTeamId";
+        String winnerTeamId = "winnerTeamId";
+        String bidderTeamId = "bidderTeamId";
+
         Auction.AuctionId mockedAuctionId = Auction.AuctionId.generate();
         Player.PlayerId mockedPlayerId = Player.PlayerId.generate();
+
         Auction mockedAuction = Auction.builder()
             .id(mockedAuctionId)
-            .teamId(creatorTeamId.value())
+            .teamId(creatorTeamId)
             .status(Auction.AuctionStatus.ACTIVE)
             .playerId(mockedPlayerId.value())
             .bids(List.of(
-                    Auction.Bid.builder().teamId(creatorTeamId.value()).amount(BigDecimal.TEN).build(),
-                    Auction.Bid.builder().teamId(winnerTeamId.value()).amount(BigDecimal.valueOf(11)).build(),
-                    Auction.Bid.builder().teamId(winnerTeamId.value()).amount(BigDecimal.valueOf(100)).build()
+                Auction.Bid.builder().teamId(creatorTeamId).amount(BigDecimal.TEN).build(),
+                Auction.Bid.builder().teamId(winnerTeamId).amount(BigDecimal.valueOf(11)).build(),
+                Auction.Bid.builder().teamId(bidderTeamId).amount(BigDecimal.valueOf(12)).build(),
+                Auction.Bid.builder().teamId(winnerTeamId).amount(BigDecimal.valueOf(100)).build()
             ))
             .build();
 
-        for (Team team : new Team[]{creatorTeam, winnerTeam}) {
-            when(mockedTeamReadRepository.findById(team.getId())).thenReturn(Optional.of(team));
-        }
+
         when(mockedAuctionReadRepository.findById(mockedAuctionId)).thenReturn(Optional.of(mockedAuction));
 
-//        AuctionEndEvent testEvent = auctionEndUseCase.endAuction(mockedAuctionId);
-//        assertEquals(Auction.AuctionStatus.COMPLETED, mockedAuction.getStatus());
-//        assertEquals(BigDecimal.valueOf(100), testEvent.getAmount());
-//        assertEquals(creatorTeamId, testEvent.getAuctionCreator());
-//        assertEquals(winnerTeamId, testEvent.getAuctionWinner());
-//        assertEquals(BigDecimal.valueOf(1010), creatorTeam.getEconomy().getBalance());
-//        assertEquals(BigDecimal.valueOf(1100), winnerTeam.getEconomy().getBalance());
-//        verify(mockedAuctionReadRepository).findById(mockedAuctionId);
-//        verify(mockedAuctionWriteRepository).save(mockedAuction);
+        AuctionEndEvent testEvent = auctionEndUseCase.endAuction(mockedAuctionId);
+        assertEquals(Auction.AuctionStatus.COMPLETED, mockedAuction.getStatus());
+        assertEquals(BigDecimal.valueOf(100), testEvent.getAmount());
+        assertEquals(creatorTeamId, testEvent.getAuctionCreator());
+        assertEquals(winnerTeamId, testEvent.getAuctionWinner());
+        assertEquals(Map.of(bidderTeamId, BigDecimal.valueOf(12)), testEvent.getBidders());
+
+        verify(mockedAuctionReadRepository).findById(mockedAuctionId);
+        verify(mockedAuctionWriteRepository).save(mockedAuction);
     }
 }

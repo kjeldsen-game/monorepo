@@ -1,6 +1,6 @@
-package com.kjeldsen.player.listener;
+package com.kjeldsen.player.listener.market;
 
-import com.kjeldsen.lib.events.BidEvent;
+import com.kjeldsen.lib.events.market.BidEvent;
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.exceptions.InsufficientBalanceException;
@@ -29,10 +29,9 @@ public class BidEventListener {
     }
 
     private void updateTeamBalance(Team team, BigDecimal bidAmountDiff) {
-        if (team.getEconomy().getBalance().compareTo(bidAmountDiff.abs()) < 0) {
-            throw new InsufficientBalanceException();
-        }
+//        if (team.getEconomy().getBalance().compareTo(bidAmountDiff.abs()) < 0) {
+//            throw new InsufficientBalanceException();
+//        }
         team.getEconomy().updateBalance(bidAmountDiff);
     }
-
 }

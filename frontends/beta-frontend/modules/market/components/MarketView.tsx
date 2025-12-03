@@ -62,6 +62,7 @@ const MarketView: React.FC<MarketProps> = ({
         />
         <MarketFilter setFilter={setFilter} />
         <Grid
+          hideFooter
           loading={loading || !auctions}
           disableColumnMenu={true}
           getRowId={(row) => row.id}

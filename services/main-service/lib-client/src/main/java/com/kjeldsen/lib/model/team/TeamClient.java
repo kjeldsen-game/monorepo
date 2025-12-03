@@ -24,4 +24,5 @@ public class TeamClient {
     @JsonDeserialize(using = FansDeserializerClient.class)
     private FansClient fans;
     private List<PlayerClient> players;
+    private EconomyClient economy;
 }

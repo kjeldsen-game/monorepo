@@ -1,5 +1,7 @@
 package com.kjeldsen.market.application;
 
+import com.kjeldsen.lib.clients.PlayerClientApi;
+import com.kjeldsen.lib.model.player.PlayerClient;
 import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.queries.FindAuctionsQuery;
@@ -25,6 +27,7 @@ public class GetMarketAuctionsUseCase {
 
     private final PlayerReadRepository playerReadRepository;
     private final AuctionReadRepository auctionReadRepository;
+    private final PlayerClientApi playerClientApi;
 
     public Map<Auction, Player> getAuctions(Double maxBid, Double minBid, Integer maxAge, Integer minAge,
             PlayerPosition position, String skills, String potentialSkills, String playerId) {
@@ -35,7 +38,12 @@ public class GetMarketAuctionsUseCase {
 
         List<Auction> auctions = auctionReadRepository.findAllByQuery(
                 FindAuctionsQuery.builder().auctionStatus(Auction.AuctionStatus.ACTIVE)
-                        .maxAverageBid(maxBid).minAverageBid(minBid).playerId(Player.PlayerId.of(playerId)).build());
+                        .maxAverageBid(maxBid).minAverageBid(minBid)
+                    .playerId(Player.PlayerId.of(playerId)).build());
+
+//        log.info("PlayerAuctions: {}", auctions.stream().map(Auction::getPlayerId).toList());
+//        List<PlayerClient> ts = playerClientApi.getPlayers(null, auctions.stream().map(Auction::getPlayerId).toList());
+//        log.info("GetMarketAuctionsUseCase getAuctions ts = {}", ts);
 
         List<Player> players = playerReadRepository.filterMarketPlayers(
                 FilterMarketPlayersQuery.builder()

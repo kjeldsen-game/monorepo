@@ -15,6 +15,7 @@ import { LoginOutlined } from '@mui/icons-material';
 import { theme } from '@/libs/material/theme';
 import { useSession } from 'next-auth/react';
 import UserMenu from '@/shared/components/user-menu/UserMenu';
+import { t } from 'i18next';
 
 export const MENU_SIDEBAR_ICONS = {
     inbox: <InboxIcon />,
@@ -41,66 +42,84 @@ const MenuSidebarDrawer = () => {
     const { status, data } = useSession();
     const { pathname } = useRouter();
 
-    const items: Item[] = [
-        // {
-        //     name: 'Dashboard',
-        //     icon: 'inbox',
-        //     to: '/dashboard',
-        //     selected: pathname === '/dashboard',
-        // },
+    const sections = [
         {
-            name: 'Team',
-            icon: 'team',
-            to: '/team',
-            selected: pathname === '/team',
+            items: [
+                {
+                    name: 'Dashboard',
+                    icon: 'inbox',
+                    to: '/dashboard',
+                    selected: pathname === '/dashboard',
+                },
+            ]
         },
         {
-            name: 'Economy',
-            icon: 'economy',
-            to: '/team/economy',
-            hasDivider: false,
-            selected: pathname === '/team/economy',
-            beta: true
+            label: "TEAM MANAGEMENT",
+            items: [
+                {
+                    name: 'Team',
+                    icon: 'team',
+                    to: '/team',
+                    selected: pathname === '/team',
+                },
+                {
+                    name: 'Training',
+                    icon: 'training',
+                    to: '/training',
+                    selected: pathname === '/training',
+                    beta: true
+                }
+            ]
         },
         {
-            name: 'Training',
-            icon: 'training',
-            to: '/training',
-            hasDivider: false,
-            selected: pathname === '/training',
-            beta: true
+            label: "CLUB MANAGEMENT",
+            items: [
+                {
+                    name: 'Economy',
+                    icon: 'economy',
+                    to: '/team/economy',
+                    selected: pathname === '/team/economy',
+                    beta: true
+                },
+                {
+                    name: 'Market',
+                    icon: 'market',
+                    to: '/market',
+                    selected: /^\/market/.test(pathname),
+                    beta: true
+                }
+            ]
         },
         {
-            name: 'Challenge',
-            icon: 'trophy',
-            to: '/challenge',
-            hasDivider: false,
-            selected: /^\/challenge/.test(pathname),
+            label: "COMPETITIONS",
+            items: [
+                {
+                    name: 'Challenge',
+                    icon: 'trophy',
+                    to: '/challenge',
+                    selected: /^\/challenge/.test(pathname)
+                },
+                {
+                    name: 'League',
+                    icon: 'league',
+                    to: '/league',
+                    selected: /^\/league/.test(pathname)
+                },
+
+            ]
         },
         {
-            name: 'Market',
-            icon: 'market',
-            to: '/market',
-            hasDivider: false,
-            selected: /^\/market/.test(pathname),
-            beta: true
-        },
-        {
-            name: 'League',
-            icon: 'league',
-            to: '/league',
-            hasDivider: false,
-            selected: /^\/league/.test(pathname),
-        },
-        {
-            name: 'Simulator',
-            icon: 'simulator',
-            to: '/simulator',
-            hasDivider: false,
-            selected: /^\/simulator/.test(pathname),
+            label: "ADMIN",
+            items: [
+                {
+                    name: 'Simulator',
+                    icon: 'simulator',
+                    to: '/simulator',
+                    selected: /^\/simulator/.test(pathname)
+                }
+            ]
         },
     ];
-
     return (
         <div style={{ height: 'calc(100% - 30px)' }}>
             <Toolbar />
@@ -111,38 +130,66 @@ const MenuSidebarDrawer = () => {
                     height: 'calc(100% - 64px)',
                 }}
             >
-                <List sx={{ flexGrow: 1 }}>
-                    {items.map((item) => (
-                        <ListItem
-                            key={item.name}
-                            disablePadding
-                            sx={{
-                                color: item.selected ? ' #FF3F84' : 'inherit',
-                                backgroundColor: item.selected ? 'white' : 'inherit',
-                                borderLeft: item.selected ? '8px solid #FF3F84' : 'inherit',
-                                boxShadow: '0 2px white',
-                            }}
-                        >
-                            <Link
-                                href={item.to}
-                                style={{
-                                    width: '100%',
-                                    textDecoration: 'none',
-                                    color: 'black',
-                                }}
-                            >
-                                <ListItemButton>
-                                    <ListItemIcon>{MENU_SIDEBAR_ICONS[item.icon]}</ListItemIcon>
-                                    <ListItemText>
-                                        {item.name}
-                                        {item.beta ? (
-                                            <sup style={{ color: '#FF3F84', paddingLeft: '4px' }}>Beta</sup>
-                                        ) : null}
-                                    </ListItemText>
-                                </ListItemButton>
-                            </Link>
-                            {item.hasDivider ? <Divider /> : null}
-                        </ListItem>
+                <List sx={{ flexGrow: 1, padding: 1 }}>
+                    {sections.map((section) => (
+                        <Box key={section.label} sx={{ mt: 1 }}>
+                            <Box sx={{
+                                px: 1,
+                                fontSize: '12px',
+                                color: theme.palette.quaternary.main,
+                                fontWeight: '600'
+                            }}>
+                                {section.label}
+                            </Box>
+
+                            {section.items.map((item) => (
+                                <ListItem
+                                    key={item.name}
+                                    disablePadding
+                                    sx={{
+                                        borderRadius: 2,
+                                        backgroundColor: item.selected ? 'white' : 'inherit',
+                                        borderBottom: item.selected ? '4px solid #FF3F84' : 'inherit',
+                                    }}
+                                >
+                                    <Link
+                                        href={item.to}
+                                        style={{
+                                            width: '100%',
+                                            textDecoration: 'none',
+                                            color: 'black',
+                                        }}
+                                    >
+                                        <ListItemButton
+                                            sx={{
+                                                "&:hover": { borderRadius: 2 }
+                                            }}
+                                        >
+                                            <ListItemIcon
+                                                sx={{
+                                                    color: item.selected ? "black" : theme.palette.quaternary.main,
+                                                    minWidth: 32,
+                                                }}
+                                            >
+                                                {MENU_SIDEBAR_ICONS[item.icon]}
+                                            </ListItemIcon>
+
+                                            <ListItemText
+                                                sx={{
+                                                    color: item.selected ? "black" : theme.palette.quaternary.main
+                                                }}
+                                                primaryTypographyProps={{ fontWeight: 'bold' }}
+                                            >
+                                                {item.name}
+                                                {item.beta && (
+                                                    <sup style={{ color: '#FF3F84', paddingLeft: 4, fontWeight: 'bold' }}>Beta</sup>
+                                                )}
+                                            </ListItemText>
+                                        </ListItemButton>
+                                    </Link>
+                                </ListItem>
+                            ))}
+                        </Box>
                     ))}
                 </List>
 

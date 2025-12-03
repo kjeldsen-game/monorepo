@@ -1,5 +1,6 @@
-package com.kjeldsen.lib.events;
+package com.kjeldsen.lib.events.market;
 
+import com.kjeldsen.lib.events.Event;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
