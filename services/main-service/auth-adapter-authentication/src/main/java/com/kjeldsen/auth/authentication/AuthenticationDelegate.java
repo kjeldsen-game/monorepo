@@ -26,7 +26,6 @@ public class AuthenticationDelegate implements AuthApiDelegate {
     private final GetUserUseCase getUserUseCase;
     private final RegisterUserUseCase registerUserUseCase;
     private final GenerateTokenUseCase generateTokenUseCase;
-    private final TeamClientApi teamClientApi;
     private final UpdateAvatarUseCase updateAvatarUseCase;
     private final GetProfileUseCase getProfileUseCase;
     private final ChangePasswordUseCase changePasswordUseCase;
@@ -63,7 +62,7 @@ public class AuthenticationDelegate implements AuthApiDelegate {
     @Override
     public ResponseEntity<UserDetailsResponse> me() {
         User user = getUserUseCase.getCurrent();
-        UserDetailsResponse details = buildUserDetailsResponse(user);
+        UserDetailsResponse details = new UserDetailsResponse(user.getId(), user.getEmail(), user.getTeamId());
         return ResponseEntity.ok(details);
     }
 
@@ -87,14 +86,7 @@ public class AuthenticationDelegate implements AuthApiDelegate {
     @Override
     public ResponseEntity<TokenResponse> generateToken(TokenRequest tokenRequest) {
         String token = generateTokenUseCase.get(tokenRequest.getEmail(), tokenRequest.getPassword());
+        System.out.println("Generated token: " + token);
         return ResponseEntity.ok(new TokenResponse().accessToken(token));
-    }
-
-    private UserDetailsResponse buildUserDetailsResponse(User user) {
-        List<TeamClient> clientResponse = teamClientApi.getTeam(null, null, user.getId());
-        if (clientResponse.isEmpty()) {
-            throw new NotFoundException("Team not found for user id: " + user.getId());
-        }
-        return new UserDetailsResponse(user.getId(), user.getEmail(), clientResponse.get(0).getId());
     }
 }

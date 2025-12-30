@@ -15,9 +15,9 @@ export const PriceColumn = (
         renderCell: (params: GridCellParams) => {
             const value: string = getValue(params.row);
             return (
-                <Box height={'100%'} fontWeight={'bold'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                <Typography height={'100%'} fontWeight={'bold'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
                     {value || 0} $
-                </Box>
+                </Typography>
             );
         },
     };

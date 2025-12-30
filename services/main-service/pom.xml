@@ -81,7 +81,7 @@
 
         <apache.commons-collections4.version>4.4</apache.commons-collections4.version>
         <javafaker.version>1.0.2</javafaker.version>
-        <testcontainers-bom.version>1.17.6</testcontainers-bom.version>
+        <testcontainers-bom.version>1.19.8</testcontainers-bom.version>
         <snakeyaml.version>2.4</snakeyaml.version>
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
@@ -205,6 +205,11 @@
         </profile>
     </profiles>
     <dependencies>
+        <dependency>
+            <groupId>tools.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>3.0.3</version>
+        </dependency>
         <dependency>
             <groupId>io.mongock</groupId>
             <artifactId>mongock-api</artifactId>

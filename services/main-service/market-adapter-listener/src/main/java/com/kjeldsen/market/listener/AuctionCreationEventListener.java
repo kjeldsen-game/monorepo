@@ -20,8 +20,7 @@ public class AuctionCreationEventListener {
     @EventListener
     public void handleAuctionEvent(AuctionCreationEvent auctionCreationEvent) {
         log.info("AuctionCreationEvent received: {}", auctionCreationEvent);
-        Auction auction = createAuctionUseCase.create(auctionCreationEvent.getPlayerId(),
-                auctionCreationEvent.getTeamId());
+        Auction auction = createAuctionUseCase.create(auctionCreationEvent.getPlayerId(), auctionCreationEvent.getTeamId());
         auctionEndJobScheduler.scheduleAuctionEndJob(auction.getId().value(), auction.getEndedAt());
     }
 }

@@ -7,11 +7,27 @@ import { DefaultResponse } from '@/shared/models/Responses';
 
 export const TEAMS_API = '/team';
 
+export const getTeamsPageable = async (
+  token: string | null,
+  page: number = 0,
+  size: number = 99,
+): Promise<any> => {
+  return connectorAPI<undefined>(
+    `/team/pageable?page=${page}&size=${size}`,
+    'GET',
+    undefined,
+    undefined,
+    token,
+  );
+};
+
 export const getTeams = async (
   token: string | null,
+  page: number = 0,
+  size: number = 99,
 ): Promise<TeamResponse[]> => {
   return connectorAPI<undefined>(
-    `${TEAMS_API}?page=${0}&size=${99}`,
+    `${TEAMS_API}?page=${page}&size=${size}`,
     'GET',
     undefined,
     undefined,

@@ -39,7 +39,7 @@ public class CreateBotTeamsUseCase {
         }
 
         IntStream.range(0, botCount).forEach(index -> {
-            Team team = TeamFactory.create(null, faker.country().name() + " " + faker.team().name());
+            Team team = TeamFactory.create(null, faker.country().name() + " " + faker.team().name(), Team.TeamId.generate().value());
             team.setLeagueId(leagueId);
             teamWriteRepository.save(team);
             List<Player> players = generatePlayersUseCase.generateCustomPlayers(team.getId());

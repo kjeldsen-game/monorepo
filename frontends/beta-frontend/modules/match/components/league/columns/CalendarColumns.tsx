@@ -6,7 +6,7 @@ import { Box, Typography } from '@mui/material';
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import IconLinkButton from '@/shared/components/Common/IconLinkButton';
-import { DateTimeColumn } from '../../challenge/columns/common/DateTimeColumn';
+import { DateTimeColumn } from '@/shared/components/Grid/Columns/DateTimeColumn';
 
 export const CalendarColumns = (teamId?: string) => {
   const getLinkStyle = (isAwayTeam: boolean): React.CSSProperties => ({

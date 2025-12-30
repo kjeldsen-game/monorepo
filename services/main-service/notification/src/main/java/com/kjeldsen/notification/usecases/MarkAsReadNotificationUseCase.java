@@ -17,11 +17,15 @@ public class MarkAsReadNotificationUseCase {
     private final NotificationReadRepository notificationReadRepository;
     private final NotificationWriteRepository notificationWriteRepository;
 
-    public void markAsReadNotification(String notificationId) {
+    public void markAsReadNotification(String notificationId, String teamId) {
         log.info("Marking notification {} as read", notificationId);
         Optional<Notification> notification = Optional.ofNullable(notificationReadRepository
             .findById(notificationId).orElseThrow(RuntimeException::new));
+
         if (notification.isPresent()) {
+            if (!notification.get().getTeamId().equals(teamId)) {
+                throw new IllegalArgumentException();
+            }
             notification.get().setIsRead(true);
             notificationWriteRepository.save(notification.get());
         }

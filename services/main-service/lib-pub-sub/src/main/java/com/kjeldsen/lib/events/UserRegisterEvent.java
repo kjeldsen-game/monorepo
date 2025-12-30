@@ -11,4 +11,5 @@ public class UserRegisterEvent extends Event {
     String teamName;
     Integer numberOfPlayers;
     String userId;
+    String teamId;
 }

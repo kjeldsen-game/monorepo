@@ -1,7 +1,6 @@
 import { GridCellParams, GridColDef } from '@mui/x-data-grid';
 
 import { Box } from '@mui/material';
-import { AuctionMarket } from '@/shared/models/market/Auction';
 import { PlayerNameColumn } from '@/shared/components/Grid/Columns/common/columns/PlayerNameColumn';
 import { PlayerAgeColumn } from '@/shared/components/Grid/Columns/common/columns/PlayerAgeColumn';
 import { PlayerPositionColumn } from '@/shared/components/Grid/Columns/common/columns/PlayerPositionColumn';
@@ -15,17 +14,16 @@ import { AuctionResponse } from 'modules/market/types/responses';
 import Countdown from '../Countdown';
 
 export const MarketColumns = (
-    handleButtonClick: (auction: AuctionResponse) => void,
-    isXs: boolean
+    isXs: boolean,
+    showOnlyPlayer?: boolean,
+    handleButtonClick?: (auction: AuctionResponse) => void,
 ) => {
-    const columns: GridColDef[] = [
+
+    const playerColumns: GridColDef[] = [
         PlayerNameColumn((row) => row.player, 'left'),
         PlayerAgeColumn((row) => row.player),
-        PlayerPositionColumn(
-            (row) => row.player,
-            'preferredPosition',
-            'Pos'
-        ),
+        PlayerPositionColumn((row) => row.player, 'preferredPosition', 'Pos'),
+
         PlayerSkillColumn((row) => row.player, PlayerSkill.SCORING, PlayerSkill.REFLEXES, isXs),
         PlayerSkillColumn((row) => row.player, PlayerSkill.OFFENSIVE_POSITIONING, PlayerSkill.GOALKEEPER_POSITIONING, isXs),
         PlayerSkillColumn((row) => row.player, PlayerSkill.BALL_CONTROL, PlayerSkill.INTERCEPTIONS, isXs),
@@ -34,8 +32,16 @@ export const MarketColumns = (
         PlayerSkillColumn((row) => row.player, PlayerSkill.CONSTITUTION, PlayerSkill.ONE_ON_ONE, isXs),
         PlayerSkillColumn((row) => row.player, PlayerSkill.TACKLING, undefined, isXs),
         PlayerSkillColumn((row) => row.player, PlayerSkill.DEFENSIVE_POSITIONING, undefined, isXs),
+    ];
+    if (showOnlyPlayer) {
+        return playerColumns;
+    }
+    const columns: GridColDef[] = [
+        ...playerColumns,
+
         PriceColumn((row) => row.averageBid, "center", "Average Bid"),
         PriceColumn((row) => row.bid, "center", "My Bid"),
+
         {
             ...getColumnConfig(),
             field: 'totalBids',
@@ -52,6 +58,7 @@ export const MarketColumns = (
                 <Countdown endedAt={params.row.endedAt} />
             ),
         },
+
         {
             ...getColumnConfig("right"),
             field: "action",
@@ -61,11 +68,11 @@ export const MarketColumns = (
                     <CustomButton
                         variant={'outlined'}
                         sx={{ height: '34px', minWidth: '34px', marginRight: '10px' }}
-                        onClick={() => handleButtonClick(params.row)}>
+                        onClick={() => handleButtonClick(params.row)}
+                    >
                         $
                     </CustomButton>
                 </Box>
-
             )
         }
     ];

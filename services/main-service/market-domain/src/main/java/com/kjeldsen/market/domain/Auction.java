@@ -21,7 +21,9 @@ import java.util.UUID;
 public class Auction {
     AuctionId id;
     String playerId;
+    AuctionPlayer player;
     String teamId;
+    String winnerTeamId;
     @Field(targetType = FieldType.DECIMAL128)
     BigDecimal averageBid;
     AuctionStatus status;
@@ -58,7 +60,7 @@ public class Auction {
     @Getter
     public enum AuctionStatus {
         COMPLETED,
-        CANCEL,
+        CANCELED,
         ACTIVE
     }
 }

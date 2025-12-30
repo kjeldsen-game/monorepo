@@ -33,26 +33,30 @@ public class ProcessPlayerTransferUseCase {
         log.info("ProcessPlayerTransferUseCase for player {}, winner {}, creator {}, amount {}", playerId, winner, creator, amount);
 
         Player player = getPlayersUseCase.get(playerId);
+        player.setStatus(PlayerStatus.INACTIVE);
 
-        player.setStatus(PlayerStatus.BENCH);
-        player.setTeamId(winner);
-        createTransactionUseCase.create(winner, amount.negate(), Transaction.TransactionType.PLAYER_PURCHASE);
-        createTransactionUseCase.create(creator, amount, Transaction.TransactionType.PLAYER_SALE);
-
+        if (winner.value() != null) {
+            player.setTeamId(winner);
+            createTransactionUseCase.create(winner, amount.negate(), Transaction.TransactionType.PLAYER_PURCHASE);
+            createTransactionUseCase.create(creator, amount, Transaction.TransactionType.PLAYER_SALE);
+        }
         playerWriteRepository.save(player);
     }
 
     public void processMoneyReturn(Map<String, BigDecimal> bids) {
+        if (bids == null || bids.isEmpty()) {
+            return;
+        }
         List<Team> teams = getTeamUseCase.getTeamsByIds(bids.keySet().stream()
             .map(Team.TeamId::new).collect(Collectors.toList()));
         System.out.println(teams.size());
         for (Team team : teams) {
             try {
                 team.getEconomy().updateBalance(bids.get(team.getName()));
+                team.getEconomy().updateOnHoldBalance(bids.get(team.getName()).negate());
                 teamWriteRepository.save(team);
             } catch (Exception e) {
                 log.error(e.getMessage());
-
             }
         }
     }

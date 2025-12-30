@@ -35,7 +35,23 @@ class MarkAsReadNotificationUseCaseTest {
             .thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class,
-            () -> markAsReadNotificationUseCase.markAsReadNotification("invalidId"));
+            () -> markAsReadNotificationUseCase.markAsReadNotification("invalidId", "teamId"));
+    }
+
+    @Test
+    @DisplayName("Should throw an error when team id does not match")
+    void should_throw_error_when_team_id_does_not_match() {
+        Notification notification =  Notification.builder()
+            .id("validId")
+            .teamId("teamId")
+            .isRead(false)
+            .type(Notification.NotificationType.AUCTION_BID)
+            .build();
+
+        Mockito.when(mockedNotificationReadRepository.findById("validId"))
+            .thenReturn(Optional.of(notification));
+        assertThrows(IllegalArgumentException.class,
+            () -> markAsReadNotificationUseCase.markAsReadNotification("validId", "wrongIt"));
     }
 
     @Test
@@ -48,7 +64,7 @@ class MarkAsReadNotificationUseCaseTest {
             .type(Notification.NotificationType.AUCTION_BID)
             .build();
         Mockito.when(mockedNotificationReadRepository.findById("validId")).thenReturn(Optional.of(notification));
-        markAsReadNotificationUseCase.markAsReadNotification("validId");
+        markAsReadNotificationUseCase.markAsReadNotification("validId", "teamId");
 
         assertThat(notification.getIsRead()).isTrue();
         Mockito.verify(mockedNotificationWriteRepository, Mockito.times(1)).save(notification);

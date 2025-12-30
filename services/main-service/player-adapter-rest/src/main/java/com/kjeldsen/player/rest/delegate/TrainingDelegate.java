@@ -10,12 +10,13 @@ import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 
 import com.kjeldsen.player.rest.api.TrainingApiDelegate;
-import com.kjeldsen.player.rest.mapper.PlayerMapper;
-import com.kjeldsen.player.rest.mapper.TrainingEventMapper;
+import com.kjeldsen.player.rest.mapper.player.PlayerMapper;
+import com.kjeldsen.player.rest.mapper.training.TrainingEventMapper;
 import com.kjeldsen.player.rest.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -46,22 +47,19 @@ public class TrainingDelegate implements TrainingApiDelegate {
     }
 
     @Override
+    @PreAuthorize("@asRole('ADMIN') or @accessAuthorizer.hasAccess(#teamId)")
     public ResponseEntity<List<PlayerScheduledTrainingResponse>> getScheduledPlayerTrainings(String teamId, PlayerPosition position) {
-        // Access denied as the path teamId is different that the teamId from Token
-        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
         List<GetActiveScheduledTrainingsUseCase.PlayerScheduledTraining> playerScheduled =
-            getActiveScheduledTrainingsUseCase.get(Team.TeamId.of(teamId), PlayerMapper.INSTANCE.playerPositionMap(position));
+            getActiveScheduledTrainingsUseCase.get(Team.TeamId.of(teamId), PlayerMapper.INSTANCE.map(position));
         return ResponseEntity.ok(TrainingEventMapper.INSTANCE.mapPlayerScheduledTrainingList(playerScheduled));
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN') or @accessAuthorizer.hasAccess(#teamId)")
     public ResponseEntity<TeamTrainingEventsResponse> getTeamTrainingEvents(String teamId, TrainingType trainingType, PlayerPosition position) {
         Map<String, List<TrainingEventResponse>> response = TrainingEventMapper.INSTANCE.fromTrainingEventsMap(
             getTrainingEventsUseCase.get(teamId, TrainingEventMapper.INSTANCE.fromTrainingType(trainingType),
-                null,PlayerMapper.INSTANCE.playerPositionMap(position)));
+                null,PlayerMapper.INSTANCE.map(position)));
         return ResponseEntity.ok(new TeamTrainingEventsResponse().trainings(response));
     }
 }

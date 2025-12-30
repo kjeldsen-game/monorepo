@@ -1,4 +1,4 @@
-package com.kjeldsen.player.rest.mapper;
+package com.kjeldsen.player.rest.mapper.common;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Team;

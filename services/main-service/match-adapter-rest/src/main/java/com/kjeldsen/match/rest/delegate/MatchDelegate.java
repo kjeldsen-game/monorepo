@@ -52,7 +52,6 @@ public class MatchDelegate implements MatchApiDelegate {
      * creation params).
      */
     /*********************** MATCH TEAM START ***********************/
-
     @Override
     public ResponseEntity<TeamResponse> getMatchTeam(String teamId, String matchId) {
         GetMatchTeamUseCase.MatchAndTeam matchAndTeam = getMatchTeamUseCase.getMatchAndTeam(matchId, teamId);

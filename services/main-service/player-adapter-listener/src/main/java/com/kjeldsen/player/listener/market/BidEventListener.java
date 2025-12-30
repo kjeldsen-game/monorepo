@@ -24,7 +24,8 @@ public class BidEventListener {
     public void handleAuctionEndEvent(BidEvent bidEvent) {
         log.info("BidEvent received: {}", bidEvent);
         Team team = getTeamUseCase.get(Team.TeamId.of(bidEvent.getTeamId()));
-        updateTeamBalance(team, bidEvent.getAmount());
+        team.getEconomy().updateOnHoldBalance(bidEvent.getAmount());
+//        updateTeamBalance(team, bidEvent.getAmount());
         teamWriteRepository.save(team);
     }
 

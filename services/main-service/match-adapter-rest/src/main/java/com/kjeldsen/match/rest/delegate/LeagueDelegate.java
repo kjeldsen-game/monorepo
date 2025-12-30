@@ -1,5 +1,6 @@
 package com.kjeldsen.match.rest.delegate;
 
+import com.kjeldsen.lib.annotations.Internal;
 import com.kjeldsen.match.application.usecases.league.match.GenerateAllLeaguesMatchesUseCase;
 import com.kjeldsen.match.application.usecases.league.match.GenerateScheduledMatchesUseCase;
 import com.kjeldsen.match.application.usecases.league.team.AddTeamToLeagueUseCase;
@@ -17,6 +18,7 @@ import com.kjeldsen.match.rest.model.LeagueResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -43,6 +45,7 @@ public class LeagueDelegate implements LeagueApiDelegate {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> scheduleAllLeagues() {
         generateAllLeaguesMatchesUseCase.generate();
         quartzGenericScheduler.scheduleJob(LeagueEndJob.class, "leagueEndJob", "league",
@@ -53,19 +56,17 @@ public class LeagueDelegate implements LeagueApiDelegate {
 
     // Temporary endpoint to trigger league start by REST API call
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> scheduleLeague(String leagueId) {
-        List<ScheduledMatch> scheduled = generateScheduledMatchesUseCase.generate(leagueId, false);
-
-        scheduleLeagueMatchesUseCase.schedule(scheduled, leagueId);
-
+        scheduleLeagueMatchesUseCase.schedule(generateScheduledMatchesUseCase.generate(leagueId, false), leagueId);
         quartzGenericScheduler.scheduleJob(LeagueEndJob.class, "leagueEndJob", "league",
             LocalDateTime.now().plusDays(19).withHour(23).withMinute(59).withSecond(0)
                 .atZone(ZoneId.systemDefault()).toInstant(), null);
-
         return ResponseEntity.ok().build();
     }
 
     @Override
+    @Internal
     public ResponseEntity<CreateOrAssignTeamToLeagueResponse> createOrAssignTeamToLeague(CreateOrAssignTeamToLeagueRequest createOrAssignTeamToLeagueRequest) {
         String leagueId = addTeamToLeagueUseCase.add(createOrAssignTeamToLeagueRequest.getTeamId(), createOrAssignTeamToLeagueRequest.getTeamName());
         CreateOrAssignTeamToLeagueResponse response = new CreateOrAssignTeamToLeagueResponse().leagueId(leagueId);

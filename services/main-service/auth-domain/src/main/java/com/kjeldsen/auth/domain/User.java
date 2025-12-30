@@ -19,8 +19,8 @@ public class User {
     private String id;
     @Email
     private String email;
-    private String password;
     private String teamId;
+    private String password;
     private Set<Role> roles;
     private byte[] avatar;
 

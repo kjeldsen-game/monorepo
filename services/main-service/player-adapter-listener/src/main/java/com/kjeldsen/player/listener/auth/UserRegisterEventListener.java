@@ -1,4 +1,4 @@
-package com.kjeldsen.player.listener;
+package com.kjeldsen.player.listener.auth;
 
 
 import com.kjeldsen.lib.events.UserRegisterEvent;
@@ -18,6 +18,6 @@ public class UserRegisterEventListener {
     @EventListener
     public void handleRegisterUserEvent(UserRegisterEvent userRegisterEvent) {
         createTeamUseCase.create(userRegisterEvent.getTeamName(), userRegisterEvent.getNumberOfPlayers(),
-            userRegisterEvent.getUserId());
+            userRegisterEvent.getUserId(), userRegisterEvent.getTeamId());
     }
 }

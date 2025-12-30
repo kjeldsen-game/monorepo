@@ -16,6 +16,15 @@ public class SecurityUtils {
         return null;
     }
 
+    public static String getCurrentTeamId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication instanceof final JwtAuthenticationToken jwtAuthenticationToken) {
+            Jwt jwt = jwtAuthenticationToken.getToken();
+            return jwt.getClaimAsString("teamId");
+        }
+        return null;
+    }
+
     public static String getCurrentUserToken() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof final JwtAuthenticationToken jwtAuthenticationToken) {

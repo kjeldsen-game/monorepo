@@ -107,7 +107,7 @@ public class AuthApiIT extends AbstractIT {
             userMongoRepository.save(user);
 
             TokenRequest request = new TokenRequest().email(user.getEmail()).password("password");
-            when(jwtTokenProvider.generateToken(user.getId(),user.getRoles())).thenReturn("exampleToken");
+            when(jwtTokenProvider.generateToken(user.getId(), "", user.getRoles())).thenReturn("exampleToken");
 
             mockMvc.perform(post("/v1/auth/token")
                     .contentType("application/json")
@@ -121,7 +121,6 @@ public class AuthApiIT extends AbstractIT {
     private User saveUser() {
         User user = User.builder().build();
         user.setRoles(Set.of(Role.USER));
-        user.setTeamId("exampleId");
         user.setEmail("test@test.com");
         user.setPassword(passwordEncoder.encode("password"));
         return userMongoRepository.save(user);

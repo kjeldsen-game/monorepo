@@ -1,5 +1,6 @@
 import { DataGrid, DataGridProps, GridColDef } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
+import { theme } from '@/libs/material/theme';
 
 type GridProps<T> = {
   rows: T[];
@@ -67,6 +68,7 @@ function Grid<T>({ rows, columns, sx, ...props }: GridProps<T>) {
             background: '#F3F4F6 !important',
             color: "#555F6C",
             padding: '0px !important',
+            borderBottom: `1px solid ${theme.palette.divider} !important`,
           },
           '& .MuiDataGrid-columnSeparator': {
             display: 'none !important',

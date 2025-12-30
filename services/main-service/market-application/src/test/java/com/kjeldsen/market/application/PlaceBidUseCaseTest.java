@@ -20,6 +20,7 @@ import org.mockito.Mockito;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,6 +69,23 @@ class PlaceBidUseCaseTest {
     }
 
     @Test
+    @DisplayName("Should throw exception if auction already ended")
+    void should_throw_exception_if_auction_already_ended() {
+        Auction.AuctionId mockedAuctionId = Auction.AuctionId.generate();
+        Auction mockedAuction = Mockito.mock(Auction.class);
+        String mockedUserId = UUID.randomUUID().toString();
+        TeamClient mockedTeam = TeamClient.builder().id("teamId").build();
+
+        when(mockedAuctionReadRepository.findById(mockedAuctionId)).thenReturn(Optional.of(mockedAuction));
+        when(mockedAuction.getTeamId()).thenReturn("teamId");
+        when(mockedTeamClientApi.getTeam(null, null, mockedUserId)).thenReturn(List.of(mockedTeam));
+        when(mockedAuction.getEndedAt()).thenReturn(Instant.now().minus(1, ChronoUnit.DAYS));
+        assertThrows(PlaceBidException.class, () -> {
+            placeBidUseCase.placeBid(mockedAuctionId, BigDecimal.ONE, mockedUserId);
+        });
+    }
+
+    @Test
     @DisplayName("Should throw exception if bidding team is auction creator team")
     void should_throw_exception_if_bidding_team_is_auction_creator_team() {
         Auction.AuctionId mockedAuctionId = Auction.AuctionId.generate();
@@ -78,7 +96,7 @@ class PlaceBidUseCaseTest {
         when(mockedAuctionReadRepository.findById(mockedAuctionId)).thenReturn(Optional.of(mockedAuction));
         when(mockedAuction.getTeamId()).thenReturn("teamId");
         when(mockedTeamClientApi.getTeam(null, null, mockedUserId)).thenReturn(List.of(mockedTeam));
-
+        when(mockedAuction.getEndedAt()).thenReturn(Instant.now().plus(1, ChronoUnit.DAYS));
         assertEquals("Cannot place new bid on auction you created!", assertThrows(PlaceBidException.class, () -> {
             placeBidUseCase.placeBid(mockedAuctionId, BigDecimal.ONE, mockedUserId);
         }).getMessage());
@@ -93,6 +111,7 @@ class PlaceBidUseCaseTest {
         String teamId = "teamId";
 
         Auction mockedAuction = Auction.builder()
+            .endedAt(InstantProvider.now().plus(10, ChronoUnit.DAYS))
             .bids(new ArrayList<>(List.of(
                     Auction.Bid.builder().teamId(teamId).amount(BigDecimal.TEN).build()
             ))).build();
@@ -115,6 +134,7 @@ class PlaceBidUseCaseTest {
             EconomyClient.builder().balance(BigDecimal.ZERO).build()).build();
 
         Auction mockedAuction = Auction.builder()
+            .endedAt(InstantProvider.now().plus(10, ChronoUnit.DAYS))
             .bids(new ArrayList<>(List.of(
                 Auction.Bid.builder().teamId(mockedTeamId).amount(BigDecimal.TEN).build()
             ))).build();
@@ -149,9 +169,9 @@ class PlaceBidUseCaseTest {
 
         placeBidUseCase.placeBid(mockedAuctionId, BigDecimal.TEN, mockedUserId);
 
-        assertEquals(1, mockedAuction.getBids().size());
+        assertEquals(2, mockedAuction.getBids().size());
         assertEquals(BigDecimal.TEN, mockedAuction.getBids().get(mockedAuction.getBids().size()-1).getAmount());
-        assertEquals(BigDecimal.valueOf(10.0), mockedAuction.getAverageBid());
+        assertEquals(BigDecimal.valueOf(5.5), mockedAuction.getAverageBid());
         assertEquals("2024-09-10T09:59:30Z", mockedAuction.getEndedAt().toString());
         verify(mockedAuctionWriteRepository).save(mockedAuction);
     }

@@ -4,6 +4,7 @@ export const getRangeLabel = (
   value: number | undefined,
   ranges: DuelResultRange[],
 ) => {
+  // console.log(value)
   if (!value) return { label: 'Unknown', color: '#000000' };
   if (value < ranges[0].min) {
     return { label: ranges[0].label, color: ranges[0].color };

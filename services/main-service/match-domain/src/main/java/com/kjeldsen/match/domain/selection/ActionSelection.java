@@ -25,6 +25,7 @@ public class ActionSelection {
     // actions, based on pitch area and player position, then chooses one randomly.
     public static Action selectAction(GameState state, Player player) {
         List<Action> legalActions = state.legalActions();
+        log.info("Legal actions: {}", legalActions);
         List<Action> actions = filterActions(legalActions, state, player);
         int size = actions.size();
         Action selectedAction = actions.get(new Random().nextInt(size));

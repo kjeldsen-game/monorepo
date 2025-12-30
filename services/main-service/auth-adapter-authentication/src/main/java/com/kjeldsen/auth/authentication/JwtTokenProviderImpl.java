@@ -20,7 +20,7 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
 
     private final SecurityProperties securityProperties;
 
-    public String generateToken(String userId,  Set<Role> roles) {
+    public String generateToken(String userId, String teamId,  Set<Role> roles) {
         try {
             PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(Base64
                 .getDecoder()
@@ -30,6 +30,7 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
             return Jwts.builder()
                 .subject(userId)
                 .claim("roles", roles.stream().map(Role::name).toList())
+                .claim("teamId", teamId)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + securityProperties.getAccessTokenValiditySeconds() * 1000L))
                 .signWith(keyFactory.generatePrivate(spec))
@@ -37,6 +38,10 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
+        return null;
+    }
+
+    public String generateInternalToken() {
         return null;
     }
 }

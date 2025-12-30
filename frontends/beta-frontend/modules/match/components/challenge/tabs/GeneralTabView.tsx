@@ -2,17 +2,31 @@ import Grid from '@/shared/components/Grid/Grid';
 import { useSession } from 'next-auth/react';
 import { useMatchChallengeActions } from 'modules/match/hooks/useMatchChallengeActions';
 import { useMatchChallengeData } from 'modules/match/hooks/useMatchChallengeData';
-import { useMemo } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { StyledMyTeamDatagrid } from 'modules/match/utils/ChallengeUtils';
-import { useTeamsApi } from 'modules/player/hooks/api/useTeamsApi';
 import CreateChallengesColumns from '../columns/CreateChallengesColumns';
 import PendingChallengesColumns from '../columns/PendingChallengesColumns';
 import NoDataError from '@/shared/components/Grid/no-data-error/NoDataError';
 import { EventBusyRounded } from '@mui/icons-material';
+import { usePageableTeamsApi } from 'modules/player/hooks/api/usePageableTeamsApi';
 
 const GeneralTabView = () => {
     const { data: userData } = useSession();
-    const { data } = useTeamsApi();
+    const [paginationModel, setPaginationModel] = useState({
+        page: 0,
+        pageSize: 10,
+    });
+
+    const { data, isLoading: loading } = usePageableTeamsApi(paginationModel.page, paginationModel.pageSize);
+    const rowCountRef = useRef(data?.totalElements || 0);
+
+    const rowCount = useMemo(() => {
+        if (data?.totalElements !== undefined) {
+            rowCountRef.current = data.totalElements;
+        }
+        return rowCountRef.current;
+    }, [data?.totalElements]);
+
 
     const { handleMatchAccept: acceptMatch, handleMatchDecline: declineMatch, handleMatchCreate: createMatch } = useMatchChallengeActions();
     const { pendingMatches, isLoading } = useMatchChallengeData()
@@ -25,6 +39,7 @@ const GeneralTabView = () => {
     const handleMatchDecline = (matchId: string) => {
         declineMatch(matchId);
     };
+
 
     return (
         <>
@@ -48,13 +63,20 @@ const GeneralTabView = () => {
                     )
                 }}
             />
+
+
             <StyledMyTeamDatagrid
-                sx={{ paddingTop: 1 }}
-                loading={isLoading}
+                sx={{ paddingTop: 1, maxHeight: 300 }}
                 disableColumnMenu={true}
+                loading={loading}
                 getRowId={(row) => row.id}
-                rows={data}
+                rowCount={rowCount}
+                paginationMode='server'
+                pagination={true}
+                paginationModel={paginationModel}
+                onPaginationModelChange={setPaginationModel}
                 columns={createChallengesColumns}
+                rows={data?.content}
                 sortModel={[
                     {
                         field: 'position',

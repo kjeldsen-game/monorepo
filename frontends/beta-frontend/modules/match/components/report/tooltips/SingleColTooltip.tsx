@@ -7,15 +7,16 @@ import { DuelStats } from 'modules/match/types/MatchResponses';
 interface SingleColTooltipProps {
   stats: DuelStats;
   children: ReactNode;
+  showAll?: boolean;
 }
 
-const SingleColTooltip = ({ stats, children }: SingleColTooltipProps) => {
+const SingleColTooltip = ({ stats, children, showAll = false }: SingleColTooltipProps) => {
   return (
     <CustomTooltip
       tooltipContent={
         <Box sx={{ color: 'black' }}>
           <Box>
-            <TooltipDataCol stats={stats} />
+            <TooltipDataCol stats={stats} showAll={showAll} />
           </Box>
         </Box>
       }>
