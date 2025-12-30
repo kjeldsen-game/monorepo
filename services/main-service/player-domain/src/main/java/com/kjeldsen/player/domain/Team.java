@@ -27,7 +27,6 @@ public class Team {
     private String leagueId;
     private Rating rating;
 
-
     public record TeamId(String value) {
         public static TeamId generate() {
             return new TeamId(java.util.UUID.randomUUID().toString());
@@ -255,6 +254,8 @@ public class Team {
 
         @Field(targetType = FieldType.DECIMAL128)
         private BigDecimal balance;
+        @Field(targetType = FieldType.DECIMAL128)
+        private BigDecimal onHoldBalance;
         private Map<PricingType, Integer> prices;
         private Map<IncomePeriodicity, IncomeMode> sponsors;
         private BillboardDeal billboardDeal;
@@ -318,6 +319,13 @@ public class Team {
             BillboardIncomeType(int length) {
                 this.seasonLength = length;
             }
+        }
+
+        public void updateOnHoldBalance(BigDecimal amount) {
+            if (onHoldBalance.compareTo(this.balance) > 0) {
+                throw new IllegalArgumentException("On hold balance cannot be greater than total balance");
+            }
+            onHoldBalance = amount;
         }
 
         public void updateBalance(BigDecimal amount) {

@@ -50,8 +50,12 @@ springdoc:
   show-actuator: true
 
 internal:
+  origin: http://localhost:3000
   api:
     key: my-secret-key
+  endpoints:
+    - path: /v1/league
+      method: POST
 
 security:
   oauth2:

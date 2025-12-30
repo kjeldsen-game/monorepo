@@ -8,8 +8,48 @@ servers:
 
 tags:
   - name: market
+  - name: auction
 
 paths:
+  /auction/history:
+    get:
+      summary: Get Auction History
+      operationId: getAuctionHistory
+      tags:
+        - market
+      parameters:
+        - name: teamId
+          in: query
+          description: Team Id
+          required: false
+          schema:
+            type: string
+        - name: size
+          in: query
+          description: Number of teams to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: page
+          in: query
+          description: Page number of the teams to return
+          required: false
+          schema:
+            default: 0
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: List of filtered players
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageableAuctionResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
   /market/auction:
     get:
       summary: Get Auctions
@@ -95,7 +135,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/MarketAuctionResponse"
+                  $ref: "#/components/schemas/AuctionResponse"
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
@@ -179,15 +219,9 @@ components:
         "application/json":
           schema:
             $ref: "#/components/schemas/SuccessResponse"
+
   schemas:
 ################################### Enums ###################################
-
-    SuccessResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          example: "Password was successfully changed."
 
     PlayerSkill:
       type: string
@@ -232,20 +266,12 @@ components:
         - GOALKEEPER
       example: FORWARD
 
-    PlayerSkillRelevance:
-      type: string
-      enum:
-        - CORE
-        - SECONDARY
-        - RESIDUAL
-      example: CORE
-
     AuctionStatus:
       type: string
       enum:
         - COMPLETED
         - ACTIVE
-        - CANCEL
+        - CANCELED
       example: COMPLETED
 
     ################################### Objects ###################################
@@ -266,7 +292,7 @@ components:
           type: number
           example: 3.01
 
-    PlayerSkills:
+    AuctionPlayerSkills:
       type: object
       properties:
         actual:
@@ -281,14 +307,12 @@ components:
           minimum: 0
           maximum: 1000
           example: 30
-        playerSkillRelevance:
-          $ref: "#/components/schemas/PlayerSkillRelevance"
 
     # TODO probably not needed need ot check
     Bid:
       type: object
       properties:
-        teamId:
+        team:
           type: string
           example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
         amount:
@@ -312,64 +336,49 @@ components:
 
     ################################### Responses ###################################
 
-    MarketAuctionResponse:
+    PageableResponse:
       type: object
       properties:
-        id:
-          type: string
-          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
-        player:
-          $ref: "#/components/schemas/MarketPlayerResponse"
-        teamId:
-          type: string
-          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
-        averageBid:
-          type: number
-          example: 50000
-        status:
-          $ref: "#/components/schemas/AuctionStatus"
-        startedAt:
-          type: string
-          example: TODO
-        endedAt:
-          type: string
-          example: TODO
-        bidders:
+        page:
           type: integer
-          example: 2
-        bid:
-          type: number
+          example: 0
+        size:
+          type: integer
+          example: 10
+        totalElements:
+          type: integer
+          example: 100
+        totalPages:
+          type: integer
+          example: 10
 
-    MarketPlayerResponse:
+    SuccessResponse:
       type: object
       properties:
-        id:
+        message:
           type: string
-          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
-        age:
-          $ref: "#/components/schemas/PlayerAge"
-        name:
-          type: string
-          example: John Doe
-        preferredPosition:
-          $ref: "#/components/schemas/PlayerPosition"
-        actualSkills:
-          additionalProperties:
-            type: object
-            properties:
-              PlayerSkills:
-                $ref: "#/components/schemas/PlayerSkills"
+          example: "Password was successfully changed."
 
-    # TODO probably not needed need ot check
+    PageableAuctionResponse:
+      allOf:
+        - $ref: "#/components/schemas/PageableResponse"
+        - type: object
+          properties:
+            winner:
+              type: boolean
+            content:
+              type: array
+              items:
+                $ref: "#/components/schemas/AuctionResponse"
+
     AuctionResponse:
       type: object
       properties:
         id:
           type: string
           example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
-        playerId:
-          type: string
-          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        player:
+          $ref: "#/components/schemas/AuctionPlayerResponse"
         teamId:
           type: string
           example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
@@ -387,7 +396,33 @@ components:
         bids:
           type: array
           items:
-            $ref: "#/components/schemas/Bid"
+              $ref: "#/components/schemas/Bid"
+        bidders:
+          type: integer
+          example: 2
+        bid:
+          type: number
+
+    AuctionPlayerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        age:
+          $ref: "#/components/schemas/PlayerAge"
+        name:
+          type: string
+          example: John Doe
+        preferredPosition:
+          $ref: "#/components/schemas/PlayerPosition"
+        actualSkills:
+          additionalProperties:
+            type: object
+            properties:
+              PlayerSkills:
+                $ref: "#/components/schemas/AuctionPlayerSkills"
+
 
     ################################### Requests ###################################
 

@@ -1,8 +1,9 @@
-package com.kjeldsen.player.rest.mapper;
+package com.kjeldsen.player.rest.mapper.team;
 
 import com.kjeldsen.player.application.usecases.economy.GetPlayerWagesTransactionsUseCase;
 import com.kjeldsen.player.application.usecases.economy.GetTransactionsUseCaseAbstract;
 import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.rest.mapper.common.IdMapper;
 import com.kjeldsen.player.rest.model.BillboardDeal;
 import com.kjeldsen.player.rest.model.PlayerWageTransaction;
 import com.kjeldsen.player.rest.model.Transaction;

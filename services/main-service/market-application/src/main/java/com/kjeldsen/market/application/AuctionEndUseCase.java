@@ -28,23 +28,26 @@ public class AuctionEndUseCase {
             AuctionNotFoundException::new);
 
         Auction.Bid highestBid = auction.getBids().stream()
-            .max(Comparator.comparing(Auction.Bid::getAmount)).orElseThrow(
-            () -> new PlaceBidException("Auction bid not found!"));
+            .max(Comparator.comparing(Auction.Bid::getAmount)).orElse(null);
 
+        log.info("AuctionEndUseCase for auction {}", highestBid );
         List<Auction.Bid> bids = new ArrayList<>();
-        // Highest bid is from Team that put player on Market -> take him back to the Team
-        if (!highestBid.getTeamId().equals(auction.getTeamId())) {
+        if (highestBid == null) {
+            // CANCELED auction - no bids placed
+            auction.setStatus(Auction.AuctionStatus.CANCELED);
+        } else {
+            auction.setStatus(Auction.AuctionStatus.COMPLETED);
             bids = getHighestBidPerTeam(auction.getBids(), highestBid, auction.getTeamId());
+            auction.setWinnerTeamId(auction.getWinnerTeamId());
         }
 
-        auction.setStatus(Auction.AuctionStatus.COMPLETED);
         auctionWriteRepository.save(auction);
 
         return AuctionEndEvent.builder()
-            .auctionWinner(highestBid.getTeamId())
+            .auctionWinner(highestBid == null ? null : highestBid.getTeamId())
             .auctionCreator(auction.getTeamId())
-            .amount(highestBid.getAmount())
-            .playerId(auction.getPlayerId())
+            .amount(highestBid== null ? null : highestBid.getAmount())
+            .playerId(auction.getPlayer().getId())
             .bidders(
                 bids.stream()
                     .collect(Collectors.toMap(

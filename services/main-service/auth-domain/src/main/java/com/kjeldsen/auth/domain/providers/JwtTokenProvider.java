@@ -6,5 +6,5 @@ import java.util.Set;
 
 public interface JwtTokenProvider {
 
-    String generateToken(String userId, Set<Role> roles);
+    String generateToken(String userId, String teamId,  Set<Role> roles);
 }

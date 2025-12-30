@@ -31,10 +31,10 @@ public class CreateTeamUseCase {
     private final PlayerWriteRepository playerWriteRepository;
     private final LeagueClientApi leagueClientApi;
 
-    public void create(String teamName, Integer numberOfPlayers, String userId) {
-        log.debug("CreateTeamUseCase name {} with {} players for user {}", teamName, numberOfPlayers, userId);
+    public void create(String teamName, Integer numberOfPlayers, String userId, String teamId) {
+        log.debug("CreateTeamUseCase name {} with {} players for user {} teamId = {}", teamName, numberOfPlayers, userId, teamId);
 
-        Team team = TeamFactory.create(userId, teamName);
+        Team team = TeamFactory.create(userId, teamName, teamId);
         teamWriteRepository.save(team);
 
         CreateOrAssignTeamToLeagueResponseClient response =

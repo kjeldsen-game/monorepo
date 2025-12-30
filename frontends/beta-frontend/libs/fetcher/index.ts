@@ -20,16 +20,14 @@ export const connector = async <T = any>(
   token?: string,
   headers?: Record<string, string>,
 ) => {
-  if (body instanceof FormData) {
-    for (let pair of body.entries()) {
-      console.log(pair[0], pair[1]);
-    }
-  }
+  // if (body instanceof FormData) {
+  //   for (let pair of body.entries()) {
+  //     console.log(pair[0], pair[1]);
+  //   }
+  // }
 
   const authHeaders = token && { Authorization: `Bearer ${token}` };
-
   const isForm = body instanceof FormData;
-
   const response = await fetch(`${url}`, {
     method: method,
     credentials: creds,

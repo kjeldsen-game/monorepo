@@ -1,7 +1,5 @@
 package com.kjeldsen.player.rest.delegate;
 
-import com.github.javafaker.Faker;
-import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
 import com.kjeldsen.player.application.usecases.GetTeamUseCase;
 import com.kjeldsen.player.application.usecases.cantera.CanteraInvestmentUsecase;
@@ -36,6 +34,7 @@ import com.kjeldsen.player.rest.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -47,6 +46,7 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 @Component
 @Slf4j
+@PreAuthorize("@hasRole('ADMIN')")
 public class SimulatorDelegate implements SimulatorApiDelegate {
     private final CanteraInvestmentUsecase canteraInvestmentUsecase;
     private final EconomyInvestmentUsecase economyInvestmentUsecase;

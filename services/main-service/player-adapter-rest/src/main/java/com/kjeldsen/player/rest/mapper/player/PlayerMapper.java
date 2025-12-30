@@ -1,11 +1,13 @@
-package com.kjeldsen.player.rest.mapper;
+package com.kjeldsen.player.rest.mapper.player;
 
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerPosition;
+import com.kjeldsen.player.rest.mapper.common.IdMapper;
 import com.kjeldsen.player.rest.mapper.common.EnumMapper;
 import com.kjeldsen.player.rest.model.PlayerResponse;
 import com.kjeldsen.player.rest.model.PlayerSkill;
 import com.kjeldsen.player.rest.model.PlayerSkillRelevance;
+import com.kjeldsen.player.rest.model.PlayerStatus;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -19,24 +21,16 @@ public interface PlayerMapper {
 
     PlayerResponse playerResponseMap(Player player);
 
-    default PlayerPosition playerPositionMap(com.kjeldsen.player.rest.model.PlayerPosition position) {
+    default PlayerPosition map(com.kjeldsen.player.rest.model.PlayerPosition position) {
         return EnumMapper.mapEnum(position, PlayerPosition.class);
     }
 
-    default com.kjeldsen.player.rest.model.PlayerPosition playerPositionMap(PlayerPosition position) {
+    default com.kjeldsen.player.rest.model.PlayerPosition map(PlayerPosition position) {
         return EnumMapper.mapEnum(position, com.kjeldsen.player.rest.model.PlayerPosition.class);
     }
 
-    default PlayerSkill mapPlayerSkill(com.kjeldsen.player.domain.PlayerSkill skill) {
-        return EnumMapper.mapEnum(skill, PlayerSkill.class);
-    }
-
-    default com.kjeldsen.player.domain.PlayerSkill mapPlayerSkill(PlayerSkill skill) {
-        return EnumMapper.mapEnum(skill, com.kjeldsen.player.domain.PlayerSkill.class);
-    }
-
-    default PlayerSkill playerSkillMap(String playerSkill) {
-        return PlayerSkill.valueOf(playerSkill);
+    default com.kjeldsen.player.domain.PlayerStatus map(PlayerStatus status) {
+        return EnumMapper.mapEnum(status, com.kjeldsen.player.domain.PlayerStatus.class);
     }
 
     default com.kjeldsen.player.domain.PlayerSkill map(String playerSkill) {

@@ -18,20 +18,23 @@ import com.kjeldsen.player.domain.repositories.queries.FindTeamsQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.TeamReadRepository;
 import com.kjeldsen.player.rest.api.TeamApiDelegate;
-import com.kjeldsen.player.rest.mapper.EconomyMapper;
-import com.kjeldsen.player.rest.mapper.PlayerMapper;
-import com.kjeldsen.player.rest.mapper.TeamFormationValidationMapper;
-import com.kjeldsen.player.rest.mapper.TeamMapper;
+import com.kjeldsen.player.rest.factories.TeamResponseFactory;
+import com.kjeldsen.player.rest.mapper.team.EconomyMapper;
+import com.kjeldsen.player.rest.mapper.player.PlayerMapper;
+import com.kjeldsen.player.rest.mapper.team.TeamFormationValidationMapper;
+import com.kjeldsen.player.rest.mapper.team.TeamMapper;
 import com.kjeldsen.player.rest.model.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import com.kjeldsen.player.rest.model.Transaction;
+import com.kjeldsen.player.rest.providers.ResponseViewProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,14 +61,12 @@ public class TeamDelegate implements TeamApiDelegate {
     private final UpdateTeamPlayersUseCase updateTeamPlayersUseCase;
     private final UpdateTeamModifiersUseCase updateTeamModifiersUseCase;
 
+    private final TeamResponseFactory teamResponseFactory;
+
     /***************************** ECONOMY REST API *****************************/
     @Override
+    @PreAuthorize("hasRole('ADMIN') or @accessAuthorizer.hasAccess(#teamId)")
     public ResponseEntity<SuccessResponse> updatePricing(String teamId, UpdatePricingRequest updatePricingRequest) {
-        // Access denied as the path teamId is different that the teamId from Token
-        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
         updatePricingRequest.getPrices().forEach(price ->
             updateTeamPricingUseCase.update(Team.TeamId.of(teamId), price.getValue(),
                 Team.Economy.PricingType.valueOf(price.getType().name())));
@@ -73,12 +74,8 @@ public class TeamDelegate implements TeamApiDelegate {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN') or @accessAuthorizer.hasAccess(#teamId)")
     public ResponseEntity<SuccessResponse> signBillboard(String teamId, SignBillboardRequest signBillboardRequest) {
-        // Access denied as the path teamId is different that the teamId from Token
-        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
         Team.Economy.BillboardIncomeType mode = Team.Economy.BillboardIncomeType.valueOf(
             signBillboardRequest.getMode().name());
         signBillboardIncomeUseCase.sign(TeamId.of(teamId), mode);
@@ -87,26 +84,20 @@ public class TeamDelegate implements TeamApiDelegate {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN') or @accessAuthorizer.hasAccess(#teamId)")
     public ResponseEntity<SuccessResponse> signSponsor(String teamId, SignSponsorRequest signSponsorRequest) {
-        // Access denied as the path teamId is different that the teamId from Token
-        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
         signSponsorIncomeUseCase.sign(TeamId.of(teamId),
             Team.Economy.IncomePeriodicity.valueOf(signSponsorRequest.getPeriodicity().name()),
             Team.Economy.IncomeMode.valueOf(signSponsorRequest.getMode().name()));
+
         return ResponseEntity.ok(new SuccessResponse().message(String.
             format("Successfully signed billboard of mode %s periodicity %s",
                 signSponsorRequest.getMode().name(), signSponsorRequest.getPeriodicity().name())));
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN') or @accessAuthorizer.hasAccess(#teamId)")
     public ResponseEntity<EconomyResponse> getTeamEconomy(String teamId) {
-        // Access denied as the path teamId is different that the teamId from Token
-        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
         Team team = teamReadRepository.findById(TeamId.of(teamId)).orElseThrow(() -> new RuntimeException("Team not found"));
 
         Map<String, GetTransactionsUseCaseAbstract.TransactionSummary> transactions =
@@ -147,61 +138,18 @@ public class TeamDelegate implements TeamApiDelegate {
     }
 
     @Override
-    public ResponseEntity<List<TeamResponse>> getAllTeams(String name, Integer size, Integer page, String userId) {
-        FindTeamsQuery query = FindTeamsQuery.builder()
-            .name(name)
-            .size(size)
-            .page(page)
-            .userId(userId)
-            .build();
-
-        System.out.println(query.getUserId());
-        List<Team> teams = teamReadRepository.find(query);
-        List<TeamResponse> response = teams.stream().map(TeamMapper.INSTANCE::map).toList();
-        return ResponseEntity.ok(response);
-    }
-
-    @Override
-    public ResponseEntity<TeamResponse> getTeamById(String teamId) {
-        // Different user than the team owner is accessing the team
-        Team team = getTeamUseCase.get(TeamId.of(teamId));
-        TeamResponse response = TeamMapper.INSTANCE.map(team);
-
-        // Hide modifiers
-//        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
-//            response.setTeamModifiers(null);
-//        }
-
-        List<PlayerResponse> players = playerReadRepository.findByTeamId(TeamId.of(teamId))
-            .stream()
-            .map(PlayerMapper.INSTANCE::playerResponseMap)
-            .toList();
-        response.setPlayers(players);
-        return ResponseEntity.ok(response);
-    }
-
-    @Override
+    @PreAuthorize("hasRole('ADMIN') or @accessAuthorizer.hasAccess(#teamId)")
     public ResponseEntity<TeamFormationValidationResponse> validateTeamLineup(String teamId) {
-        // Access denied as the path teamId is different that the teamId from Token
-        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
         ValidateTeamLineupUseCase.TeamFormationValidationResult result = validateTeamLineupUseCase
             .validate(getPlayersUseCase.get(teamId));
-
-        TeamFormationValidationResponse response = TeamFormationValidationMapper.INSTANCE.map(result);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(TeamFormationValidationMapper.INSTANCE.map(result));
     }
 
     @Override
     @Transactional
+    @PreAuthorize("hasRole('ADMIN') or @accessAuthorizer.hasAccess(#teamId)")
     public ResponseEntity<TeamResponse> updateTeamById(String teamId,
         EditTeamRequest editTeamRequest) {
-        // Access denied as the path teamId is different that the teamId from Token
-        if (!Objects.equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId().value(), teamId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
 
         List<EditPlayerRequest> playerUpdates = editTeamRequest.getPlayers();
         List<UpdateTeamPlayersUseCase.PlayerEdit> playerEdits = playerUpdates.stream()
@@ -222,7 +170,50 @@ public class TeamDelegate implements TeamApiDelegate {
         TeamModifiers teamModifiers = TeamMapper.INSTANCE.map(editTeamRequest.getTeamModifiers());
         updateTeamModifiersUseCase.update(teamId, teamModifiers);
         Team team = updateTeamPlayersUseCase.update(playerEdits, teamId);
-        TeamResponse response = TeamMapper.INSTANCE.map(team);
+        TeamResponse response = TeamMapper.INSTANCE.mapToPrivate(team);
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<TeamPageableResponse> getAllTeamsPageable(String name, Integer size, Integer page, String userId) {
+        FindTeamsQuery query = FindTeamsQuery.builder().name(name).size(size)
+            .page(page).userId(userId).build();
+
+        Page<Team> pageResult = teamReadRepository.find(query);
+        return ResponseEntity.ok(new TeamPageableResponse()
+            .content(pageResult.getContent().stream().map(TeamMapper.INSTANCE::map).toList())
+            .number(pageResult.getNumber())
+            .size(pageResult.getSize())
+            .totalElements((int) pageResult.getTotalElements())
+            .totalPages(pageResult.getTotalPages()));
+    }
+
+    @Override
+    public ResponseEntity<List<TeamResponse>> getAllTeams(String name, Integer size, Integer page, String userId) {
+        FindTeamsQuery query = FindTeamsQuery.builder()
+            .name(name)
+            .size(size)
+            .page(page)
+            .userId(userId)
+            .build();
+
+        System.out.println(query.getUserId());
+        Page<Team> teams = teamReadRepository.find(query);
+        List<TeamResponse> response = teams.getContent().stream().map(TeamMapper.INSTANCE::map).toList();
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<TeamResponse> getTeamById(String teamId) {
+        Team team = getTeamUseCase.get(TeamId.of(teamId));
+        TeamResponse response = teamResponseFactory.create(ResponseViewProvider
+            .getView(Objects.requireNonNull(SecurityUtils.getCurrentUserId()), team.getUserId()), team);
+
+        List<PlayerResponse> players = playerReadRepository.findByTeamId(TeamId.of(teamId))
+            .stream()
+            .map(PlayerMapper.INSTANCE::playerResponseMap)
+            .toList();
+        response.setPlayers(players);
         return ResponseEntity.ok(response);
     }
 }

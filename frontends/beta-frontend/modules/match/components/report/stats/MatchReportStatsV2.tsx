@@ -19,9 +19,9 @@ const MatchReportStatsV2: React.FC<MatchReportStatsV2> = ({ homeStats, awayStats
             <MatchStatItem name='Passes' awayValue={awayStats?.passes} homeValue={homeStats?.passes} />
             <MatchStatItem name='Missed Passes' awayValue={awayStats?.missedPasses} homeValue={homeStats?.missedPasses} />
             <MatchStatItem name='Tackles' awayValue={awayStats?.tackles} homeValue={homeStats?.tackles} />
-            <CustomButton sx={{ marginTop: '10px' }} onClick={() => console.log(true)}>
+            {/* <CustomButton sx={{ marginTop: '10px' }} onClick={() => console.log(true)}>
                 Show Stats Table
-            </CustomButton>
+            </CustomButton> */}
         </Box>
     )
 }

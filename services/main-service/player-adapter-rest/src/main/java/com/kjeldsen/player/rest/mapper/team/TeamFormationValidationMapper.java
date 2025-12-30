@@ -1,4 +1,4 @@
-package com.kjeldsen.player.rest.mapper;
+package com.kjeldsen.player.rest.mapper.team;
 
 import com.kjeldsen.player.application.usecases.player.ValidateTeamLineupUseCase;
 import com.kjeldsen.player.rest.model.TeamFormationValidationResponse;

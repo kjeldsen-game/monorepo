@@ -19,7 +19,7 @@ interface MatchReportTeamStatsProps {
 
 const MatchReportTeamStats: React.FC<MatchReportTeamStatsProps> = ({ players, teamModifiers, teamRole }) => {
 
-    console.log('Players in MatchReportTeamStats:', teamModifiers);
+    console.log('Players in MatchReportTeamStats:', players);
     const memoizedColumns = useMemo(() => MatchReportColumns(), [players]);
     const isXs = useMediaQuery(theme.breakpoints.down('sm'));
 

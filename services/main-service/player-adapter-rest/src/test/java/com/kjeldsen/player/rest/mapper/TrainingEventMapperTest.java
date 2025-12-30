@@ -6,6 +6,7 @@ import com.kjeldsen.player.domain.PlayerSkill;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.models.training.TrainingEvent;
 import com.kjeldsen.player.domain.provider.InstantProvider;
+import com.kjeldsen.player.rest.mapper.training.TrainingEventMapper;
 import com.kjeldsen.player.rest.model.PlayerResponse;
 import com.kjeldsen.player.rest.model.TrainingEventResponse;
 import com.kjeldsen.player.rest.model.TrainingType;

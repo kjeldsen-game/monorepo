@@ -1,15 +1,14 @@
-package com.kjeldsen.player.rest.mapper;
+package com.kjeldsen.player.rest.mapper.training;
 
 import com.kjeldsen.player.application.usecases.trainings.GetActiveScheduledTrainingsUseCase;
 import com.kjeldsen.player.domain.models.training.TrainingEvent;
+import com.kjeldsen.player.rest.mapper.common.IdMapper;
 import com.kjeldsen.player.rest.mapper.common.EnumMapper;
 import com.kjeldsen.player.rest.model.*;
-import org.mapstruct.CollectionMappingStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,9 +18,6 @@ public interface TrainingEventMapper {
 
     TrainingEventMapper INSTANCE = Mappers.getMapper(TrainingEventMapper.class);
 
-//    default PlayerSkill fromPlayerSkillDomain(com.kjeldsen.player.domain.PlayerSkill playerSkillDomain) {
-//        return PlayerSkill.valueOf(playerSkillDomain.name());
-//    }
 
     default TrainingType fromDomainTrainingType(TrainingEvent.TrainingType domainTrainingType) {
         return EnumMapper.mapEnum(domainTrainingType, TrainingType.class);

@@ -15,8 +15,9 @@ public class PlayerClient {
     String id;
     String teamId;
     String teamRole;
-
+    PlayerAgeClient age;
     String name;
+    String preferredPosition;
     String position;
     String status;
     @JsonProperty("actualSkills")

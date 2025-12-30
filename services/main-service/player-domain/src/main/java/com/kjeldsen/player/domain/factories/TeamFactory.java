@@ -10,11 +10,9 @@ import java.util.Map;
 
 public final class TeamFactory {
 
-    public static Team create(String userId, String teamName) {
-        Team.TeamId newTeamId = Team.TeamId.generate();
-
+    public static Team create(String userId, String teamName, String teamId) {
         return Team.builder()
-            .id(newTeamId)
+            .id(Team.TeamId.of(teamId))
             .userId(userId)
             .name(teamName)
             .cantera(Team.Cantera.builder()
@@ -29,6 +27,7 @@ public final class TeamFactory {
                 .tactic(TeamModifiers.getRandomValueTeamModifier(TeamModifiers.Tactic.class))
                 .build())
             .economy(Team.Economy.builder()
+                .onHoldBalance(BigDecimal.ZERO)
                 .balance(BigDecimal.valueOf(1_000_000))
                 .prices(new EnumMap<>(Map.of(
                     Team.Economy.PricingType.SEASON_TICKET, 14,

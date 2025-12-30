@@ -56,7 +56,10 @@ export default NextAuth({
   pages: {
     signIn: '/auth/signin',
   },
-  session: { strategy: 'jwt' },
+  session: { 
+    strategy: 'jwt',
+    maxAge: 60 * 60, // 30 days
+   },
   callbacks: {
     // The JWT callback is used to store the access token
     jwt: async ({ token, user }) => {

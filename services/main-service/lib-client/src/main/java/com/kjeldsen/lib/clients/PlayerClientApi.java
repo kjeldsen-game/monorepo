@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface PlayerClientApi {
     List<PlayerClient> getPlayers(String teamId, List<String> playerIds);
+    PlayerClient getPlayer(String playerId);
 }

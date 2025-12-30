@@ -40,9 +40,10 @@ class JwtTokenProviderImplTest {
     @DisplayName("Should generate token")
     void should_generate_token() {
         String userId = "test-user-id";
+        String teamId = "test-team-id";
         Set<Role> roles = Set.of(Role.USER, Role.ADMIN);
 
-        String token = jwtTokenProvider.generateToken(userId, roles);
+        String token = jwtTokenProvider.generateToken(userId, teamId, roles);
         assertNotNull(token);
     }
 }

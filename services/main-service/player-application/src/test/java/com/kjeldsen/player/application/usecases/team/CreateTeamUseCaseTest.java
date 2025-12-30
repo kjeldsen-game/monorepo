@@ -36,6 +36,7 @@ class CreateTeamUseCaseTest {
     @DisplayName("should create new team with generated players")
     void should_create_new_team_with_generated_players() {
         String teamName = "Team Name";
+        String teamId = "teamId";
         int numberOfPlayers = 1;
         String userId = UUID.randomUUID().toString();
         Player player = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES, PlayerCategory.JUNIOR,
@@ -49,7 +50,7 @@ class CreateTeamUseCaseTest {
                 .leagueId("leagueId")
                 .build());
 
-        createTeamUseCase.create(teamName, numberOfPlayers, userId);
+        createTeamUseCase.create(teamName, numberOfPlayers, userId, teamId);
 
         verify(mockedTeamWriteRepository, times(2))
             .save(

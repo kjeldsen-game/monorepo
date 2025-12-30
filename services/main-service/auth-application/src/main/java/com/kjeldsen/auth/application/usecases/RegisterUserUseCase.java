@@ -51,11 +51,14 @@ public class RegisterUserUseCase {
         User user = User.builder().build();
         user.setEmail(email);
         String encodedPassword = passwordEncoder.encode(password);
+        String teamId = java.util.UUID.randomUUID().toString();
         user.setPassword(encodedPassword);
         user.setRoles(Set.of(Role.USER));
+        user.setTeamId(teamId);
         User registered = userWriteRepository.save(user);
         userRegisterPublisher.publishEvent(
             UserRegisterEvent.builder()
+                .teamId(user.getTeamId())
                 .teamName(inputTeamName)
                 .userId(registered.getId())
                 .numberOfPlayers(50)

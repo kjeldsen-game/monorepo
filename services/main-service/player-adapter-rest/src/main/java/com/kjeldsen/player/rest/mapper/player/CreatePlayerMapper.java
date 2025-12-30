@@ -1,4 +1,4 @@
-package com.kjeldsen.player.rest.mapper;
+package com.kjeldsen.player.rest.mapper.player;
 
 import com.kjeldsen.player.application.usecases.CreatePlayerUseCase;
 import com.kjeldsen.player.domain.Player;

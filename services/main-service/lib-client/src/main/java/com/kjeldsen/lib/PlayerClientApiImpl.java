@@ -2,6 +2,7 @@ package com.kjeldsen.lib;
 
 import com.kjeldsen.lib.clients.PlayerClientApi;
 import com.kjeldsen.lib.model.player.PlayerClient;
+import com.kjeldsen.lib.model.team.TeamClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,14 @@ public class PlayerClientApiImpl extends BaseClientApiImpl implements PlayerClie
 
     public PlayerClientApiImpl(WebClient webClient) {
         super(webClient);
+    }
+
+    @Override
+    public PlayerClient getPlayer(String playerId) {
+        return executeRequestMono(
+            UriComponentsBuilder.fromPath("/player/{playerId}")
+                .buildAndExpand(playerId)
+                .toUriString(), new ParameterizedTypeReference<>() {});
     }
 
     @Override
