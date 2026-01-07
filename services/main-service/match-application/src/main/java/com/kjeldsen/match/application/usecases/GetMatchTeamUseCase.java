@@ -16,7 +16,6 @@ public class GetMatchTeamUseCase {
     private final GetMatchUseCase getMatchUseCase;
 
     public MatchAndTeam getMatchAndTeam(String matchId, String teamId) {
-        // log.info("GetMatchTeamUseCase to get MatchAndTeam for teamId={} matchId={}",
         Match match = getMatchUseCase.get(matchId);
 
         if (teamId != null) {

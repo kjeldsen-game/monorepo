@@ -3,11 +3,11 @@ import { getColumnConfig } from '@/shared/components/Grid/Columns/common/config/
 import ColHeader from '@/shared/components/Grid/Columns/common/components/ColHeader';
 import CustomButton from '@/shared/components/Common/CustomButton';
 import { Box } from '@mui/material';
-import { DateTimeColumn } from './common/DateTimeColumn';
 import DoneIcon from '@mui/icons-material/Done';
 import CustomIconButton from '@/shared/components/Common/CustomIconButton';
 import ClearIcon from '@mui/icons-material/Clear';
 import { TeamNameColumn } from '../../columns/TeamNameColumn';
+import { DateTimeColumn } from '@/shared/components/Grid/Columns/DateTimeColumn';
 
 const PendingChallengesColumns = (
     ownTeamId: string,

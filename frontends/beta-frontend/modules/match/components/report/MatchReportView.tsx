@@ -14,8 +14,6 @@ import { useEventBuilder } from 'modules/match/hooks/logic/useEventBuilder';
 const MatchReportView = () => {
 
     const { data } = useMatch();
-    const { data: homeTeam } = useTeamApi(data?.home.id);
-    const { data: awayTeam } = useTeamApi(data?.away.id);
     const isXs = useMediaQuery(theme.breakpoints.down('sm'));
 
     const [selectedTab, setSelectedTab] = useState<number>(0);
@@ -34,7 +32,7 @@ const MatchReportView = () => {
     return (
         <Box display={'flex'}>
             {!isXs &&
-                <MatchReportTeamStats teamRole={TeamRole.HOME} players={homeTeam?.players} teamModifiers={data?.home?.modifiers} />
+                <MatchReportTeamStats teamRole={TeamRole.HOME} players={data?.home?.players} teamModifiers={data?.home?.modifiers} />
             }
             <Box width={!isXs ? '50%' : '100%'} marginX={2}  >
                 <Box sx={{ background: 'white' }} height={'auto'}
@@ -63,17 +61,17 @@ const MatchReportView = () => {
 
                     {isXs && selectedTab === 0 && <>
                         <CustomTabPanel sx={{ width: '100%' }} value={selectedChildTab} index={1}>
-                            <MatchReportTeamStats teamRole={TeamRole.HOME} players={homeTeam?.players} teamModifiers={data?.home?.modifiers} />
+                            <MatchReportTeamStats teamRole={TeamRole.HOME} players={data?.home?.players} teamModifiers={data?.home?.modifiers} />
                         </CustomTabPanel>
                         <CustomTabPanel sx={{ width: '100%' }} value={selectedChildTab} index={2}>
-                            <MatchReportTeamStats teamRole={TeamRole.AWAY} players={awayTeam?.players} teamModifiers={data?.away?.modifiers} />
+                            <MatchReportTeamStats teamRole={TeamRole.AWAY} players={data?.away?.players} teamModifiers={data?.away?.modifiers} />
                         </CustomTabPanel>
                     </>}
                 </Box >
             </Box >
 
             {!isXs &&
-                <MatchReportTeamStats teamRole={TeamRole.AWAY} players={awayTeam?.players} teamModifiers={data?.away?.modifiers} />
+                <MatchReportTeamStats teamRole={TeamRole.AWAY} players={data?.away?.players} teamModifiers={data?.away?.modifiers} />
             }
         </Box>
     )

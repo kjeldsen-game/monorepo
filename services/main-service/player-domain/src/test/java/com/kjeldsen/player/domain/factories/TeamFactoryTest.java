@@ -16,8 +16,9 @@ class TeamFactoryTest {
     void should_create_team_object() {
         String userId = "user123";
         String teamName = "My Team";
+        String teamId = "team123";
 
-        Team team = TeamFactory.create(userId, teamName);
+        Team team = TeamFactory.create(userId, teamName, teamId);
 
         assertThat(team).isNotNull();
         assertThat(team.getId()).isNotNull();

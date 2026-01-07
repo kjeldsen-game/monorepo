@@ -10,12 +10,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.Instant;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
@@ -25,9 +26,10 @@ class ResetPasswordUseCaseTest {
     private final PasswordResetTokenReadRepository mockedPasswordResetTokenReadRepository = Mockito.mock(PasswordResetTokenReadRepository.class);
     private final PasswordResetTokenWriteRepository mockedPasswordResetTokenWriteRepository = Mockito.mock(PasswordResetTokenWriteRepository.class);
     private final UserWriteRepository mockedUserWriteRepository = Mockito.mock(UserWriteRepository.class);
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
     private final ResetPasswordUseCase resetPasswordUseCase = new ResetPasswordUseCase(
         mockedGetUserUseCase, mockedPasswordResetTokenReadRepository, mockedPasswordResetTokenWriteRepository
-        ,mockedUserWriteRepository);
+        ,mockedUserWriteRepository, passwordEncoder);
 
     @Test
     @DisplayName("Should throw and error when token don't exists")
@@ -60,7 +62,8 @@ class ResetPasswordUseCaseTest {
             mockedPasswordResetToken));
         when(mockedGetUserUseCase.getUserById("userId")).thenReturn(testUser);
         resetPasswordUseCase.resetPassword("token", "pass", "pass");
-        assertEquals("pass", testUser.getPassword());
+
+        assertTrue(passwordEncoder.matches("pass", testUser.getPassword()));
 
         verify(mockedPasswordResetTokenWriteRepository, times(1))
             .delete(mockedPasswordResetToken.getToken());

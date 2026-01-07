@@ -1,18 +1,16 @@
 package com.kjeldsen.market.persistence.adapters.mongo;
 
 import com.kjeldsen.market.domain.Auction;
+import com.kjeldsen.market.domain.AuctionPlayer;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.queries.FindAuctionsQuery;
 import com.kjeldsen.market.persistence.common.AbstractMongoDbTest;
 import com.kjeldsen.market.persistence.mongo.repositories.AuctionMongoRepository;
-import com.kjeldsen.player.domain.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
@@ -42,19 +40,19 @@ public class AuctionReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
         auctionMongoRepository.saveAll(List.of(
             Auction.builder().id(Auction.AuctionId.of("1"))
                 .status(Auction.AuctionStatus.ACTIVE)
-                .playerId("player1")
+                .player(AuctionPlayer.builder().id("player1").build())
                 .averageBid(BigDecimal.ZERO)
                 .bids(List.of())
                 .build(),
             Auction.builder().id(Auction.AuctionId.of("2"))
                 .status(Auction.AuctionStatus.COMPLETED)
-                .playerId("player43")
+                .player(AuctionPlayer.builder().id("player43").build())
                 .averageBid(BigDecimal.ZERO)
                 .bids(List.of())
                 .build(),
             Auction.builder().id(Auction.AuctionId.of("3"))
                 .status(Auction.AuctionStatus.COMPLETED)
-                .playerId("player43")
+                .player(AuctionPlayer.builder().id("player43").build())
                 .averageBid(BigDecimal.ZERO)
                 .bids(List.of())
                 .build()
@@ -70,7 +68,7 @@ public class AuctionReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
             return Stream.of(
                 Arguments.of(Auction.AuctionStatus.ACTIVE, 1),
                 Arguments.of(Auction.AuctionStatus.COMPLETED, 2),
-                Arguments.of(Auction.AuctionStatus.CANCEL, 0)
+                Arguments.of(Auction.AuctionStatus.CANCELED, 0)
             );
         }
 
@@ -80,7 +78,7 @@ public class AuctionReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
         void return_auctions_that_are_completed(Auction.AuctionStatus status, int expected) {
 
             List<Auction> getAuctions = auctionReadRepository.findAllByQuery(
-                FindAuctionsQuery.builder().auctionStatus(status).build());
+                FindAuctionsQuery.builder().auctionStatus(List.of(status)).build());
 
             assertThat(getAuctions).hasSize(expected);
         }
@@ -100,7 +98,7 @@ public class AuctionReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
         void return_auctions_of_playerId(String playerId, int expectedCount) {
 
             List<Auction> getAuctions = auctionReadRepository.findAllByQuery(
-                FindAuctionsQuery.builder().playerId(Player.PlayerId.of(playerId)).build());
+                FindAuctionsQuery.builder().playerId(playerId).build());
 
             assertThat(getAuctions).hasSize(expectedCount);
         }

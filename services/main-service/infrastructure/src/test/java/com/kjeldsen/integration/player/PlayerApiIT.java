@@ -10,7 +10,7 @@ import com.kjeldsen.player.domain.repositories.queries.FindPlayersQuery;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import com.kjeldsen.player.domain.repositories.PlayerWriteRepository;
 import com.kjeldsen.player.persistence.mongo.repositories.PlayerMongoRepository;
-import com.kjeldsen.player.rest.mapper.PlayerMapper;
+import com.kjeldsen.player.rest.mapper.player.PlayerMapper;
 import com.kjeldsen.player.rest.model.CreatePlayerRequest;
 import com.kjeldsen.player.rest.model.GeneratePlayersRequest;
 import com.kjeldsen.player.rest.model.PlayerEconomy;

@@ -9,6 +9,7 @@ import com.kjeldsen.lib.TeamClientApiImpl;
 import com.kjeldsen.lib.events.UserRegisterEvent;
 import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.lib.publishers.GenericEventPublisher;
+import com.kjeldsen.player.rest.model.TeamResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -69,8 +70,8 @@ class RegisterUserUseCaseTest {
     void should_throw_error_is_team_name_already_taken() {
         String teamName = "team";
         when(userReadRepository.findByEmail("email@email.com")).thenReturn(Optional.empty());
-        when(mockedTeamClientAuth.getTeam(null, teamName, null))
-            .thenReturn(List.of(TeamClient.builder().name(teamName).build()));
+        when(mockedTeamClientAuth.getTeams( teamName, null))
+            .thenReturn(List.of(new TeamResponse().name(teamName)));
         assertEquals("Team name taken!", assertThrows(BadRequestException.class, () -> {
             registerUserUseCase.register("email@email.com", "password", teamName, "password");
         }).getMessage());
@@ -80,7 +81,7 @@ class RegisterUserUseCaseTest {
     @DisplayName("Should register user")
     void should_register_user() {
         when(userReadRepository.findByEmail("email@email.com")).thenReturn(Optional.empty());
-        when(mockedTeamClientAuth.getTeam(null,"team", null))
+        when(mockedTeamClientAuth.getTeams("team", null))
             .thenReturn(Collections.emptyList());
 
         User savedUser = User.builder().build();

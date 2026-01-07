@@ -10,6 +10,7 @@ import com.kjeldsen.lib.TeamClientApiImpl;
 import com.kjeldsen.lib.events.UserRegisterEvent;
 import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.lib.publishers.GenericEventPublisher;
+import com.kjeldsen.player.rest.model.TeamResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -43,7 +44,7 @@ public class RegisterUserUseCase {
             throw new BadRequestException("Email taken!");
         }
 
-        List<TeamClient> clientResponse = teamClientApi.getTeam(null, inputTeamName, null);
+        List<TeamResponse> clientResponse = teamClientApi.getTeams( inputTeamName, null);
         if (!clientResponse.isEmpty()) {
             throw new BadRequestException("Team name taken!");
         }
@@ -51,11 +52,14 @@ public class RegisterUserUseCase {
         User user = User.builder().build();
         user.setEmail(email);
         String encodedPassword = passwordEncoder.encode(password);
+        String teamId = java.util.UUID.randomUUID().toString();
         user.setPassword(encodedPassword);
         user.setRoles(Set.of(Role.USER));
+        user.setTeamId(teamId);
         User registered = userWriteRepository.save(user);
         userRegisterPublisher.publishEvent(
             UserRegisterEvent.builder()
+                .teamId(user.getTeamId())
                 .teamName(inputTeamName)
                 .userId(registered.getId())
                 .numberOfPlayers(50)

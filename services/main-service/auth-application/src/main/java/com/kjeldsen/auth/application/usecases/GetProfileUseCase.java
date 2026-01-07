@@ -5,6 +5,7 @@ import com.kjeldsen.auth.domain.User;
 import com.kjeldsen.auth.domain.exceptions.NotFoundException;
 import com.kjeldsen.lib.clients.TeamClientApi;
 import com.kjeldsen.lib.model.team.TeamClient;
+import com.kjeldsen.player.rest.model.TeamResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -24,15 +25,13 @@ public class GetProfileUseCase {
         User user = getUserUseCase.getCurrent();
         log.info("GetProfileUseCase for user {}", user.getEmail());
 
-        List<TeamClient> teamClientList = teamClientApi.getTeam(null, null, user.getId());
+        TeamResponse teamResponse = teamClientApi.getTeamById(user.getTeamId());
 
-        if (teamClientList.isEmpty()) {
-            throw new NotFoundException("Team not found for user " + user.getId());
+        if (teamResponse == null) {
+            throw new NotFoundException("Team not found for team " + user.getTeamId());
         }
 
-        TeamClient teamClient = teamClientList.get(0);
-
-        return Profile.builder().email(user.getEmail()).teamName(teamClient.getName())
+        return Profile.builder().email(user.getEmail()).teamName(teamResponse.getName())
             .avatar(user.convertBytesToString()).build();
     }
 }

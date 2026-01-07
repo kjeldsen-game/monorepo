@@ -16,6 +16,11 @@
         </dependency>
         <dependency>
             <groupId>com.kjeldsen</groupId>
+            <artifactId>lib-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kjeldsen</groupId>
             <artifactId>auth-application</artifactId>
         </dependency>
         <dependency>
@@ -61,32 +66,6 @@
     </dependencies>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>
-                                ${project.basedir}/src/main/resources/authentication-api.yaml
-                            </inputSpec>
-                            <addCompileSourceRoot>true</addCompileSourceRoot>
-                            <generatorName>spring</generatorName>
-                            <apiPackage>com.kjeldsen.auth.authentication.api</apiPackage>
-                            <modelPackage>com.kjeldsen.auth.authentication.model</modelPackage>
-                            <configOptions>
-                                <delegatePattern>true</delegatePattern>
-                                <useSpringBoot3>true</useSpringBoot3>
-                            </configOptions>
-                            <generateApiTests>false</generateApiTests>
-                            <generateModelTests>false</generateModelTests>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

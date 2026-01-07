@@ -13,6 +13,15 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.kjeldsen</groupId>
+            <artifactId>lib-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.kjeldsen</groupId>-->
+<!--            <artifactId>auth-adapter-authentication</artifactId>-->
+<!--        </dependency>-->
+        <dependency>
             <groupId>com.monitorjbl</groupId>
             <artifactId>json-view</artifactId>
             <version>1.0.1</version>

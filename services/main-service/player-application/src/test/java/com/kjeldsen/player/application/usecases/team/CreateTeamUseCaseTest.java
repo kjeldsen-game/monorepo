@@ -1,10 +1,9 @@
-package com.kjeldsen.player.application.usecases;
+package com.kjeldsen.player.application.usecases.team;
 
 import com.kjeldsen.lib.clients.LeagueClientApi;
-import com.kjeldsen.lib.model.league.CreateOrAssignTeamToLeagueRequestClient;
-import com.kjeldsen.lib.model.league.CreateOrAssignTeamToLeagueResponseClient;
-import com.kjeldsen.lib.publishers.GenericEventPublisher;
-import com.kjeldsen.player.application.usecases.team.CreateTeamUseCase;
+import com.kjeldsen.match.rest.model.CreateOrAssignTeamToLeagueRequest;
+import com.kjeldsen.match.rest.model.CreateOrAssignTeamToLeagueResponse;
+import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.PlayerCategory;
 import com.kjeldsen.player.domain.PlayerPositionTendency;
@@ -36,6 +35,7 @@ class CreateTeamUseCaseTest {
     @DisplayName("should create new team with generated players")
     void should_create_new_team_with_generated_players() {
         String teamName = "Team Name";
+        String teamId = "teamId";
         int numberOfPlayers = 1;
         String userId = UUID.randomUUID().toString();
         Player player = PlayerProvider.generate(Team.TeamId.generate(), PlayerPositionTendency.DEFAULT_CENTRE_BACK_TENDENCIES, PlayerCategory.JUNIOR,
@@ -44,12 +44,11 @@ class CreateTeamUseCaseTest {
 
         when(mockedGeneratePlayersUseCase.generate(anyInt(), any()))
             .thenReturn(List.of(player));
-        when(mockedLeagueClientApi.assignTeamToLeague(any(CreateOrAssignTeamToLeagueRequestClient.class)))
-            .thenReturn(CreateOrAssignTeamToLeagueResponseClient.builder()
-                .leagueId("leagueId")
-                .build());
+        when(mockedLeagueClientApi.assignTeamToLeague(any(CreateOrAssignTeamToLeagueRequest.class)))
+            .thenReturn(new CreateOrAssignTeamToLeagueResponse()
+                .leagueId("leagueId"));
 
-        createTeamUseCase.create(teamName, numberOfPlayers, userId);
+        createTeamUseCase.create(teamName, numberOfPlayers, userId, teamId);
 
         verify(mockedTeamWriteRepository, times(2))
             .save(

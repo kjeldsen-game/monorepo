@@ -2,17 +2,16 @@ package com.kjeldsen.market.application;
 
 import com.kjeldsen.lib.events.market.AuctionEndEvent;
 import com.kjeldsen.market.domain.Auction;
+import com.kjeldsen.market.domain.AuctionPlayer;
 import com.kjeldsen.market.domain.exceptions.AuctionNotFoundException;
-import com.kjeldsen.market.domain.exceptions.PlaceBidException;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
-import com.kjeldsen.player.domain.Player;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -39,16 +38,15 @@ class AuctionEndUseCaseTest {
     }
 
     @Test
-    @DisplayName("Should throw exception if there are no bids")
+    @DisplayName("Should set CANCELED status if there are no bids")
     void should_throw_exception_if_there_are_no_bids() {
+        AuctionPlayer mockedPlayer = Mockito.mock(AuctionPlayer.class);
         Auction.AuctionId mockedAuctionId = Auction.AuctionId.generate();
-        Auction mockedAuction = Mockito.mock(Auction.class);
-        when(mockedAuction.getBids()).thenReturn(List.of());
+        Auction mockedAuction = Auction.builder().player(mockedPlayer).bids(Collections.emptyList()).build();
+        when(mockedPlayer.getId()).thenReturn("123");
         when(mockedAuctionReadRepository.findById(mockedAuctionId)).thenReturn(Optional.of(mockedAuction));
-
-        assertEquals("Auction bid not found!", assertThrows(PlaceBidException.class, () -> {
-            auctionEndUseCase.endAuction(mockedAuctionId);
-        }).getMessage());
+        auctionEndUseCase.endAuction(mockedAuctionId);
+        assertEquals(Auction.AuctionStatus.CANCELED, mockedAuction.getStatus());
     }
 
     @Test
@@ -59,13 +57,12 @@ class AuctionEndUseCaseTest {
         String bidderTeamId = "bidderTeamId";
 
         Auction.AuctionId mockedAuctionId = Auction.AuctionId.generate();
-        Player.PlayerId mockedPlayerId = Player.PlayerId.generate();
 
         Auction mockedAuction = Auction.builder()
             .id(mockedAuctionId)
             .teamId(creatorTeamId)
             .status(Auction.AuctionStatus.ACTIVE)
-            .playerId(mockedPlayerId.value())
+            .player(AuctionPlayer.builder().id("1234").build())
             .bids(List.of(
                 Auction.Bid.builder().teamId(creatorTeamId).amount(BigDecimal.TEN).build(),
                 Auction.Bid.builder().teamId(winnerTeamId).amount(BigDecimal.valueOf(11)).build(),

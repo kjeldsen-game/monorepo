@@ -157,6 +157,7 @@ public class ReceiverSelection {
                     || (player.getPosition().isMidfielder() && player.getPosition().isOffensive()))
             .toList();
 
+        log.info("Candidates {}", candidates);
         if (candidates.isEmpty()) {
             throw new GameStateException(state, "No players found to receive ball from forward");
         }

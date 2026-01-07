@@ -1,12 +1,12 @@
 package com.kjeldsen.integration.auth;
 
-import com.kjeldsen.auth.authentication.model.RegisterRequest;
-import com.kjeldsen.auth.authentication.model.TokenRequest;
+
 import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.auth.domain.Role;
 import com.kjeldsen.auth.domain.User;
 import com.kjeldsen.auth.domain.providers.JwtTokenProvider;
 import com.kjeldsen.auth.persistence.mongo.repositories.UserMongoRepository;
+import com.kjeldsen.auth.rest.model.*;
 import com.kjeldsen.integration.AbstractIT;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.persistence.mongo.repositories.TeamMongoRepository;
@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.List;
 import java.util.Set;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
@@ -106,8 +105,8 @@ public class AuthApiIT extends AbstractIT {
             User user = saveUser();
             userMongoRepository.save(user);
 
-            TokenRequest request = new TokenRequest().email(user.getEmail()).password("password");
-            when(jwtTokenProvider.generateToken(user.getId(),user.getRoles())).thenReturn("exampleToken");
+            UserTokenRequest request = new UserTokenRequest().email(user.getEmail()).password("password");
+            when(jwtTokenProvider.generateToken(user.getId(), "teamId", user.getRoles())).thenReturn("exampleToken");
 
             mockMvc.perform(post("/v1/auth/token")
                     .contentType("application/json")
@@ -121,8 +120,8 @@ public class AuthApiIT extends AbstractIT {
     private User saveUser() {
         User user = User.builder().build();
         user.setRoles(Set.of(Role.USER));
-        user.setTeamId("exampleId");
         user.setEmail("test@test.com");
+        user.setTeamId("teamId");
         user.setPassword(passwordEncoder.encode("password"));
         return userMongoRepository.save(user);
     }

@@ -114,7 +114,6 @@ public class Game {
     public static GameState nextPlay(GameState state) {
         // At the start of each play a player must have the ball. As long as kick-off is called
         // before the first play this should always be the case.
-//        Player initiator = state.getBallState().getPlayer();
         Player initiator = state.attackingTeam().getPlayerById(state.getBallState().getPlayer().getId());
 
         // Next an action is chosen for the player. Action selection happens in two stages: first

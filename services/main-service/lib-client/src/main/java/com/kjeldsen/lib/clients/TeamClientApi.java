@@ -1,9 +1,11 @@
 package com.kjeldsen.lib.clients;
 
-import com.kjeldsen.lib.model.team.TeamClient;
+import com.kjeldsen.player.rest.model.TeamResponse;
 
 import java.util.List;
 
 public interface TeamClientApi {
-    List<TeamClient> getTeam(String teamId, String teamName, String userId);
+    List<TeamResponse> getTeams(String teamName, String userId);
+
+    TeamResponse getTeamById(String teamId);
 }

@@ -5,6 +5,7 @@ import com.kjeldsen.auth.domain.User;
 import com.kjeldsen.auth.domain.exceptions.NotFoundException;
 import com.kjeldsen.lib.clients.TeamClientApi;
 import com.kjeldsen.lib.model.team.TeamClient;
+import com.kjeldsen.player.rest.model.TeamResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -29,8 +30,9 @@ class GetProfileUseCaseTest {
         User user = Mockito.mock(User.class);
         when(mockedGetUserUseCase.getCurrent()).thenReturn(user);
         when(user.getId()).thenReturn("userId");
+        when(user.getTeamId()).thenReturn("teamId");
         when(user.getEmail()).thenReturn("email");
-        when(mockedTeamClientApi.getTeam(null, null, "userId")).thenReturn(Collections.emptyList());
+        when(mockedTeamClientApi.getTeamById( "teamId")).thenReturn(null);
 
         assertThrows(NotFoundException.class, getProfileUseCase::get);
     }
@@ -38,11 +40,10 @@ class GetProfileUseCaseTest {
     @Test
     @DisplayName("Should return the profile object")
     void should_return_profile_object() {
-        User user = User.builder().id("userId").email("email").avatar("exampleAvatarBytes".getBytes()).build();
+        User user = User.builder().id("userId").email("email").teamId("123").avatar("exampleAvatarBytes".getBytes()).build();
         when(mockedGetUserUseCase.getCurrent()).thenReturn(user);
-        when(mockedTeamClientApi.getTeam(null, null, "userId")).thenReturn(List.of(
-            TeamClient.builder().name("teamName").build()
-        ));
+        when(mockedTeamClientApi.getTeamById("123")).thenReturn(
+            new TeamResponse().name("teamName"));
 
         Profile profile = getProfileUseCase.get();
         assertThat(profile).isNotNull();

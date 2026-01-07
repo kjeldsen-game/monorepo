@@ -3,8 +3,8 @@ import { getColumnConfig } from '@/shared/components/Grid/Columns/common/config/
 import ColHeader from '@/shared/components/Grid/Columns/common/components/ColHeader';
 import CustomButton from '@/shared/components/Common/CustomButton';
 import { Box } from '@mui/material';
-import { DateTimeColumn } from './common/DateTimeColumn';
 import { TeamNameColumn } from '../../columns/TeamNameColumn';
+import { DateTimeColumn } from '@/shared/components/Grid/Columns/DateTimeColumn';
 
 const PastChallengesColumns = (
     onReportSelect: (matchId: string) => void,

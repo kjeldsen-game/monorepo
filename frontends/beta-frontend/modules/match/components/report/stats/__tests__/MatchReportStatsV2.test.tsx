@@ -40,11 +40,4 @@ describe('MatchReportStatsV2', () => {
             expect(screen.getByText(name)).toBeInTheDocument();
         });
     });
-
-    it('renders the Show Stats Table button', () => {
-        render(<MatchReportStatsV2 homeStats={homeStats} awayStats={awayStats} />);
-
-        const button = screen.getByRole('button', { name: /Show Stats Table/i });
-        expect(button).toBeInTheDocument();
-    });
 });

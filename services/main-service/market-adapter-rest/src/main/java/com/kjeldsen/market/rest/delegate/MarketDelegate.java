@@ -1,30 +1,29 @@
 package com.kjeldsen.market.rest.delegate;
 
 import com.kjeldsen.auth.authorization.SecurityUtils;
+import com.kjeldsen.lib.clients.TeamClientApi;
 import com.kjeldsen.lib.events.market.AuctionEndEvent;
+import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.market.application.AuctionEndUseCase;
-import com.kjeldsen.market.application.GetMarketAuctionsUseCase;
+import com.kjeldsen.market.application.GetAuctionUseCase;
 import com.kjeldsen.market.application.PlaceBidUseCase;
 import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
-import com.kjeldsen.market.domain.schedulers.AuctionEndJobScheduler;
 import com.kjeldsen.market.rest.api.MarketApiDelegate;
 import com.kjeldsen.market.rest.mapper.AuctionMapper;
 import com.kjeldsen.market.rest.mapper.PlayerMapper;
 import com.kjeldsen.market.rest.model.*;
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.Team;
-import com.kjeldsen.player.domain.repositories.TeamReadRepository;
+import com.kjeldsen.player.rest.model.TeamResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -33,17 +32,16 @@ public class MarketDelegate implements MarketApiDelegate {
     private final PlaceBidUseCase placeBidUseCase;
     private final AuctionEndUseCase auctionEndUseCase;
     private final GenericEventPublisher auctionEndEventPublisher;
-    private final TeamReadRepository teamReadRepository;
     private final AuctionReadRepository auctionReadRepository;
-    private final GetMarketAuctionsUseCase getMarketAuctionsUseCase;
-    private final AuctionEndJobScheduler auctionEndJobScheduler;
+    private final GetAuctionUseCase getAuctionUseCase;
+    private final TeamClientApi teamClientApi;
 
-    @Override
-    public ResponseEntity<AuctionResponse> getAuctionById(String auctionId) {
-        Auction auction = auctionReadRepository.findById(Auction.AuctionId.of(auctionId)).orElseThrow();
-        AuctionResponse response = AuctionMapper.INSTANCE.auctionResponseMap(auction);
-        return ResponseEntity.ok(response);
-    }
+//    @Override
+//    public ResponseEntity<AuctionResponse> getAuctionById(String auctionId) {
+//        Auction auction = auctionReadRepository.findById(Auction.AuctionId.of(auctionId)).orElseThrow();
+////        AuctionResponse response = AuctionMapper.INSTANCE.auctionResponseMap(auction);
+//        return ResponseEntity.ok(null);
+//    }
 
     @Override
     public ResponseEntity<SuccessResponse> placeAuctionBid(String auctionId, PlaceAuctionBidRequest placeAuctionBidRequest) {
@@ -51,10 +49,12 @@ public class MarketDelegate implements MarketApiDelegate {
         BigDecimal amount = BigDecimal.valueOf(placeAuctionBidRequest.getAmount());
         Auction auction = placeBidUseCase.placeBid(Auction.AuctionId.of(auctionId), amount, currentUseId);
         //auctionEndJobScheduler.rescheduleAuctionEndJob(auctionId, auction.getEndedAt());
-        return ResponseEntity.ok(new SuccessResponse().message(String.format("Successfully placed auction bid of %s $!", amount)));
+        return ResponseEntity.ok(new SuccessResponse()
+            .message(String.format("Successfully placed auction bid of %s $!", amount)));
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> simulateAuctionEnd(String auctionId) {
         AuctionEndEvent auctionEndEvent = auctionEndUseCase.endAuction(Auction.AuctionId.of(auctionId));
         auctionEndEventPublisher.publishEvent(auctionEndEvent);
@@ -63,45 +63,29 @@ public class MarketDelegate implements MarketApiDelegate {
 
 
     @Override
-    public ResponseEntity<List<MarketAuctionResponse>> getAllAuctions(Integer size, Integer page,
+    public ResponseEntity<List<AuctionResponse>> getAllAuctions(Integer size, Integer page,
         PlayerPosition position, String skills, String potentialSkills, Integer minAge, Integer maxAge, Double minBid, Double maxBid,
         String playerId) {
-        String currentUserId = SecurityUtils.getCurrentUserId();
 
-        Team team = teamReadRepository.findByUserId(currentUserId).orElseThrow(
-            () -> new RuntimeException("Team not found"));
+        TeamResponse team = teamClientApi.getTeams( null, SecurityUtils.getCurrentUserId()).get(0);
 
-        Map<Auction, Player> auctionPlayerMap = getMarketAuctionsUseCase.getAuctions(maxBid, minBid, maxAge, minAge,
+        List<Auction> auctions = getAuctionUseCase.getAuctions(maxBid, minBid, maxAge, minAge,
             position != null ? PlayerMapper.INSTANCE.playerPositionMap(position) : null, skills, potentialSkills,
             playerId);
 
-        System.out.println(auctionPlayerMap);
+        List<AuctionResponse> response = auctions.stream()
+            .map(auction -> {
+                AuctionResponse dto = AuctionMapper.INSTANCE.map(auction);
+                dto.setBids(null);
+                dto.setBid(
+                    auction.getBids().stream()
+                        .filter(bid -> bid.getTeamId().equals(team.getId()))
+                        .map(Auction.Bid::getAmount)
+                        .max(BigDecimal::compareTo)
+                        .orElse(BigDecimal.ZERO));
+                return dto;
+            }).toList();
 
-        List<MarketAuctionResponse> marketAuctionResponses = auctionPlayerMap.entrySet().stream()
-            .map(entry -> {
-                Auction auction = entry.getKey();
-                Player player = entry.getValue();
-                MarketPlayerResponse playerResponse = PlayerMapper.INSTANCE.playerResponseMap(player);
-
-
-                // Check
-                Auction.Bid highestBid = auction.getBids().stream()
-                    .filter(bid -> bid.getTeamId().equals(team.getId().value()))
-                    .max(Comparator.comparing(Auction.Bid::getAmount))
-                    .orElse(null);
-
-                return new MarketAuctionResponse().id(
-                        auction.getId().value())
-                    .averageBid(auction.getAverageBid())
-                    .bidders(auction.getBids().size())
-                    .teamId(auction.getTeamId())
-                    .bid(highestBid != null ? highestBid.getAmount() : null)
-                    .endedAt(auction.getEndedAt().toString())
-                    .player(playerResponse);
-            })
-            .toList();
-
-        return ResponseEntity.ok(marketAuctionResponses);
+        return ResponseEntity.ok(response);
     }
-
 }

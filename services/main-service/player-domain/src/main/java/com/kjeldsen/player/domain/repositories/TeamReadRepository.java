@@ -3,6 +3,7 @@ package com.kjeldsen.player.domain.repositories;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.domain.Team.TeamId;
 import com.kjeldsen.player.domain.repositories.queries.FindTeamsQuery;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +16,7 @@ public interface TeamReadRepository {
 
     Optional<Team> findById(Team.TeamId id);
 
-    List<Team> find(FindTeamsQuery query);
+    Page<Team> find(FindTeamsQuery query);
 
     List<Team> findAll();
 

@@ -5,7 +5,7 @@ import com.kjeldsen.match.domain.entities.League;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.persistence.mongo.repositories.LeagueMongoRepository;
 import com.kjeldsen.match.persistence.mongo.repositories.MatchMongoRepository;
-import com.kjeldsen.match.rest.mapper.LeagueMapper;
+import com.kjeldsen.match.rest.mappers.LeagueMapper;
 import com.kjeldsen.match.rest.model.LeagueResponse;
 import com.kjeldsen.player.domain.Team;
 import com.kjeldsen.player.persistence.mongo.repositories.TeamMongoRepository;

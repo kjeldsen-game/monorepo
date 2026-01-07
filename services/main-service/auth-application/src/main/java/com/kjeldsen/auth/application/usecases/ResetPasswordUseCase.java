@@ -9,6 +9,7 @@ import com.kjeldsen.auth.domain.repositories.UserWriteRepository;
 import com.kjeldsen.auth.domain.utils.PasswordValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
@@ -22,9 +23,12 @@ public class ResetPasswordUseCase {
     private final PasswordResetTokenReadRepository passwordResetTokenReadRepository;
     private final PasswordResetTokenWriteRepository passwordResetTokenWriteRepository;
     private final UserWriteRepository userWriteRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
     public void resetPassword(String token, String newPassword, String confirmPassword) {
-        log.info("ResetPasswordUseCase for token=******* newPassword=**********");
+        log.info("ResetPasswordUseCase for token=******* newPassword=********** {} {}", newPassword, confirmPassword);
+
         PasswordResetToken passwordResetToken = passwordResetTokenReadRepository.findByToken(token).orElseThrow(
             () -> new UnauthorizedException("Invalid token!"));
 
@@ -33,9 +37,8 @@ public class ResetPasswordUseCase {
         }
 
         User user = getUserUseCase.getUserById(passwordResetToken.getUserId());
-
         PasswordValidator.validatePassword(newPassword, confirmPassword);
-        user.setPassword(newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
         userWriteRepository.save(user);
         passwordResetTokenWriteRepository.delete(token);
     }

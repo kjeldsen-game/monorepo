@@ -4,8 +4,11 @@ import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.queries.FindAuctionsQuery;
 import com.kjeldsen.market.persistence.mongo.repositories.AuctionMongoRepository;
+import com.kjeldsen.player.domain.Team;
+import com.kjeldsen.player.domain.repositories.queries.FindTeamsQuery;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.Decimal128;
+import org.springframework.data.domain.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -23,10 +26,26 @@ public class AuctionReadRepositoryMongoAdapter implements AuctionReadRepository 
     private final MongoTemplate mongoTemplate;
 
     @Override
+    public Page<Auction> findAllByQueryPaged(FindAuctionsQuery query) {
+        Query q = new Query();
+        q.addCriteria(Criteria.where("status").in(query.getAuctionStatus()));
+        q.addCriteria(new Criteria().orOperator(
+            Criteria.where("teamId").is(query.getTeamId()),
+            Criteria.where("bids").elemMatch(Criteria.where("teamId").is(query.getTeamId()))
+        ));
+        long total = mongoTemplate.count(q, Auction.class);
+        Pageable pageable = PageRequest.of(query.getPage(), query.getSize());
+        q.with(pageable);
+        System.out.println("Total auctions found: " + total);
+        List<Auction> auctions = mongoTemplate.find(q, Auction.class);
+        return new PageImpl<>(auctions, pageable, total);
+    }
+
+    @Override
     public List<Auction> findAllByQuery(FindAuctionsQuery inputQuery) {
         Query query = new Query();
-        if (inputQuery.getPlayerId() != null && inputQuery.getPlayerId().value() != null) {
-            query.addCriteria(Criteria.where("playerId").is(inputQuery.getPlayerId().value()));
+        if (inputQuery.getPlayerId() != null) {
+            query.addCriteria(Criteria.where("player._id").is(inputQuery.getPlayerId()));
         }
 
         if (inputQuery.getMinAverageBid() != null || inputQuery.getMaxAverageBid() != null) {
@@ -43,7 +62,7 @@ public class AuctionReadRepositoryMongoAdapter implements AuctionReadRepository 
         }
 
         if (inputQuery.getAuctionStatus() != null) {
-            query.addCriteria(Criteria.where("status").is(inputQuery.getAuctionStatus()));
+            query.addCriteria(Criteria.where("status").in(inputQuery.getAuctionStatus()));
         }
         return mongoTemplate.find(query, Auction.class);
     }

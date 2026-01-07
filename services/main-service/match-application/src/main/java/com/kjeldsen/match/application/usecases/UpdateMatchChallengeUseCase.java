@@ -17,7 +17,6 @@ public class UpdateMatchChallengeUseCase {
     private final MatchWriteRepository matchWriteRepository;
 
     public Match.Status update(String matchId, Match.Status status) {
-        log.info("UpdateMatchChallengeUseCase for matchId={} status={}", matchId, status);
         Match match = getMatchUseCase.get(matchId);
 
         if (match.getStatus() != Match.Status.PENDING && !match.getAway().getId().equals(match.getHome().getId())) {

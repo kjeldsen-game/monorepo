@@ -13,6 +13,8 @@ interface PlayerOnSaleNotificationProps {
 
 const PlayerOnSaleNotification: React.FC<PlayerOnSaleNotificationProps> = ({ playerId }) => {
 
+    console.log(playerId)
+
     const { open, setOpen, handleCloseModal } = useModalManager();
     const { data } = useMarketApi(`playerId=${playerId}`)
 

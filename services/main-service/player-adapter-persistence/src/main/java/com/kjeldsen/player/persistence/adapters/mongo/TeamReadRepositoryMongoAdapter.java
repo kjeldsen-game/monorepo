@@ -8,11 +8,14 @@ import com.kjeldsen.player.persistence.mongo.repositories.TeamMongoRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class TeamReadRepositoryMongoAdapter implements TeamReadRepository {
@@ -30,14 +33,15 @@ public class TeamReadRepositoryMongoAdapter implements TeamReadRepository {
     }
 
     @Override
-    public List<Team> find(FindTeamsQuery query) {
+    public Page<Team> find(FindTeamsQuery query) {
         Example<Team> teamDocumentExample = Example.of(Team.builder()
             .userId(query.getUserId() != null ? query.getUserId() : null)
             .name(query.getName() != null ? query.getName() : null)
             .build());
         Pageable pageable = PageRequest.of(query.getPage(), query.getSize());
-
-        return teamMongoRepository.findAll(teamDocumentExample, pageable).stream().toList();
+        log.info("Finding teams with page {}", pageable);
+        return teamMongoRepository.findAll(teamDocumentExample, pageable);
+//        return teamMongoRepository.findAll(teamDocumentExample, pageable).stream().toList();
     }
 
     @Override

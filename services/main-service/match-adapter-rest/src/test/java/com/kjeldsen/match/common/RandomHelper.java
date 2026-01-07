@@ -137,10 +137,6 @@ public final class RandomHelper {
             .id(team.getId())
             .players(players)
             .bench(bench)
-            .tactic(tactic)
-            .verticalPressure(vp)
-            .horizontalPressure(hp)
-            .rating(rating)
             .build();
     }
 }

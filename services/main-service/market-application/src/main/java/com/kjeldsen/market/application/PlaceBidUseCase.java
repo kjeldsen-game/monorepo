@@ -13,6 +13,7 @@ import com.kjeldsen.market.domain.exceptions.TeamNotFoundException;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
 import com.kjeldsen.player.domain.provider.InstantProvider;
+import com.kjeldsen.player.rest.model.TeamResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -42,41 +43,39 @@ public class PlaceBidUseCase {
         Auction auction = auctionReadRepository.findById(auctionId).orElseThrow(
             AuctionNotFoundException::new);
 
-        TeamClient team;
-        List<TeamClient> teams = teamClientApi.getTeam(null, null, userId);
+        TeamResponse team;
+        List<TeamResponse> teams = teamClientApi.getTeams( null, userId);
         if (teams.isEmpty()) {
             throw new TeamNotFoundException();
         } else {
             team = teams.get(0);
         }
 
+        if (InstantProvider.now().isAfter(auction.getEndedAt())) {
+            throw new PlaceBidException("Cannot place new bid on ended auction!");
+        }
+
         if (Objects.equals(auction.getTeamId(), team.getId())) {
             throw new PlaceBidException("Cannot place new bid on auction you created!");
         }
 
-        // Retrieve the highest bid of the Team
+        // Retrieve the highest bid of the Team if exists
         Auction.Bid highestBid = auction.getBids().stream()
             .filter(bid -> bid.getTeamId().equals(team.getId()))
             .max(Comparator.comparing(Auction.Bid::getAmount))
             .orElse(null);
 
-        BigDecimal bidAmountDiff = getDifferenceBetweenBids(amount, highestBid == null ?
-            BigDecimal.ZERO : highestBid.getAmount());
-
-
         if (highestBid != null) {
-           validateBidAmount(amount, highestBid.getAmount());
-           updateTeamBalance(team, bidAmountDiff);
-           highestBid.setAmount(highestBid.getAmount().add(bidAmountDiff.abs()));
-       } else {
-           updateTeamBalance(team, bidAmountDiff);
-           Auction.Bid bid = Auction.Bid.builder()
-           .timestamp(InstantProvider.now())
-           .teamId(team.getId())
-           .amount(amount)
-           .build();
-           auction.getBids().add(bid);
-       }
+            validateBidAmount(amount, highestBid.getAmount());
+        }
+        updateTeamBalance(team, amount);
+        Auction.Bid bid = Auction.Bid.builder()
+            .timestamp(InstantProvider.now())
+            .teamId(team.getId())
+            .amount(amount)
+            .build();
+        auction.getBids().add(bid);
+
 
         auction.reduceEndedAtBySeconds(AUCTION_BID_REDUCE_TIME);
         auction.setAverageBid(getAverageBid(auction.getBids()));
@@ -100,10 +99,6 @@ public class PlaceBidUseCase {
         return auctionWriteRepository.save(auction);
     }
 
-    private BigDecimal getDifferenceBetweenBids(BigDecimal newBid, BigDecimal oldBid) {
-        return oldBid.subtract(newBid);
-    }
-
     private BigDecimal getAverageBid(List<Auction.Bid> bids) {
         BigDecimal a = bids.stream().map(Auction.Bid::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
         return a.divide(BigDecimal.valueOf(bids.size()), 1 , RoundingMode.HALF_UP);
@@ -115,11 +110,11 @@ public class PlaceBidUseCase {
         }
     }
 
-    private void updateTeamBalance(TeamClient team, BigDecimal bidAmountDiff) {
-        if (team.getEconomy().getBalance().compareTo(bidAmountDiff.abs()) < 0) {
+    private void updateTeamBalance(TeamResponse team, BigDecimal bidAmount) {
+        if (team.getEconomy().getBalance().compareTo(bidAmount.abs().doubleValue()) < 0) {
             throw new InsufficientBalanceException();
         }
-        eventPublisher.publishEvent(BidEvent.builder().amount(bidAmountDiff)
+        eventPublisher.publishEvent(BidEvent.builder().amount(bidAmount)
             .teamId(team.getId()).build());
     }
 }

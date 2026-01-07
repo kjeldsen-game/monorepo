@@ -3,6 +3,7 @@ package com.kjeldsen.lib;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.mockito.Mockito;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.nio.file.Paths;
 public abstract class BaseClientApiTest {
 
     protected static MockWebServer mockWebServer;
+    protected final InternalClientTokenProvider mockedInternalClientTokenProvider = Mockito.mock(InternalClientTokenProvider.class);
 
     @BeforeAll
     static void setUp() throws IOException {

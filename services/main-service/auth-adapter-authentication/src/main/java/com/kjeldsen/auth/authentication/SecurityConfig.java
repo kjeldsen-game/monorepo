@@ -1,10 +1,12 @@
 package com.kjeldsen.auth.authentication;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authorization.AuthorizationDecision;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -26,9 +28,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Value("${internal.api.key}")
@@ -37,26 +41,27 @@ public class SecurityConfig {
     private final SecurityProperties securityProperties;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain publicSecurityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for stateless APIs
             .authorizeHttpRequests(requests -> requests
+                // Internal without Authentication
+                .requestMatchers("/v1/auth/token-service")
+                .access(((authentication, object) ->
+                    new AuthorizationDecision(internalApiKey.equals(object.getRequest().getHeader("X-Internal-Request")))))
+                // Public without Authentication
                 .requestMatchers("/v1/auth/**", "/swagger-ui/**", "/api-docs/**", "/actuator/**", "/actuator", "/v1/simulator/hello-world")
                 .permitAll()
-                .requestMatchers(this::isValidApiKey) // Bypass JWT for internal API key
-                .permitAll()
+//
+//                .requestMatchers(HttpMethod.POST, "/v1/league")
+//                .access(((authentication, object) ->
+//                    new AuthorizationDecision(internalApiKey.equals(object.getRequest().getHeader("X-Internal-API-Key")))))
                 .anyRequest()
                 .authenticated()
             )
             .oauth2ResourceServer(oauth2 -> oauth2
                 .jwt(jwt -> jwt.decoder(jwtDecoder())));
-
         return http.build();
-    }
-
-    private boolean isValidApiKey(HttpServletRequest request) {
-        String apiKey = request.getHeader("X-Internal-API-Key");
-        return internalApiKey.equals(apiKey);
     }
 
     @Bean
@@ -83,8 +88,7 @@ public class SecurityConfig {
             return roles != null ?
                 roles.stream()
                     .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
-                    .collect(Collectors.toSet()) :
-                Set.of();
+                    .collect(Collectors.toSet()) : Set.of();
         });
         return converter;
     }

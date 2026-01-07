@@ -41,7 +41,7 @@ const PositionMessage = ({
     duel.challengerStats.assistance?.adjusted,
     ASSISTANCE_RANGES,
   );
-
+  console.log(duel.initiatorStats)
   return (
     <>
       {duel.challenger != null ? (
@@ -51,7 +51,7 @@ const PositionMessage = ({
             matchEventSide={initiatorEventSide}
           />
           tried with a
-          <SingleColTooltip stats={duel.initiatorStats}>
+          <SingleColTooltip stats={duel.initiatorStats} showAll={true}>
             <QualityText textColor={initColor}>{initLabel}</QualityText>
           </SingleColTooltip>
           <ActionText>EFFORT</ActionText> to get free,

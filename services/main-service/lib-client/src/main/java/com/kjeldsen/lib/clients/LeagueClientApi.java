@@ -1,8 +1,8 @@
 package com.kjeldsen.lib.clients;
 
-import com.kjeldsen.lib.model.league.CreateOrAssignTeamToLeagueRequestClient;
-import com.kjeldsen.lib.model.league.CreateOrAssignTeamToLeagueResponseClient;
+import com.kjeldsen.match.rest.model.CreateOrAssignTeamToLeagueRequest;
+import com.kjeldsen.match.rest.model.CreateOrAssignTeamToLeagueResponse;
 
 public interface LeagueClientApi {
-    CreateOrAssignTeamToLeagueResponseClient assignTeamToLeague(CreateOrAssignTeamToLeagueRequestClient request);
+    CreateOrAssignTeamToLeagueResponse assignTeamToLeague(CreateOrAssignTeamToLeagueRequest request);
 }

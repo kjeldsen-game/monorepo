@@ -1,11 +1,14 @@
 package com.kjeldsen.auth.application.usecases;
 
+import com.kjeldsen.auth.domain.InternalSecuritySubject;
 import com.kjeldsen.auth.domain.exceptions.BadRequestException;
+import com.kjeldsen.auth.domain.exceptions.ForbiddenException;
 import com.kjeldsen.auth.domain.exceptions.UnauthorizedException;
 import com.kjeldsen.auth.domain.providers.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +16,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 public class GenerateTokenUseCase {
+
+    @Value("${security.oauth2.client-secret}")
+    private String clientSecret;
 
     private final GetUserUseCase getUserUseCase;
     private final PasswordEncoder passwordEncoder;
@@ -22,15 +28,26 @@ public class GenerateTokenUseCase {
         if (!EmailValidator.getInstance().isValid(email)) {
             throw new BadRequestException("Invalid email address format!");
         }
+
         com.kjeldsen.auth.domain.User user;
-        try {
-            user = getUserUseCase.getUserByEmail(email);
-            if (!passwordEncoder.matches(password, user.getPassword())) {
-                throw new UnauthorizedException("Invalid email or password!");
-            }
-            return jwtTokenProvider.generateToken(user.getId(), user.getRoles());
-        } catch (Exception e) {
+        user = getUserUseCase.getUserByEmail(email);
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new UnauthorizedException("Invalid email or password!");
         }
+
+        if (user.getTeamId() == null) {
+            throw new ForbiddenException("TeamId is not present in user!");
+        }
+
+        return jwtTokenProvider.generateToken(user.getId(), user.getTeamId(), user.getRoles());
+    }
+
+    public String getServiceToken(String serviceName, String serviceSecret, String audience) {
+        boolean validService = InternalSecuritySubject.isValid(serviceName);
+        boolean validAudience = InternalSecuritySubject.isValid(audience);
+        if (!validService || !validAudience) {
+            throw new UnauthorizedException("Invalid service credentials!");
+        }
+        return jwtTokenProvider.generateInternalToken(serviceName, audience);
     }
 }

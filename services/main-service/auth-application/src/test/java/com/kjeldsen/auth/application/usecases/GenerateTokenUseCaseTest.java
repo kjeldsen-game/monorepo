@@ -2,6 +2,7 @@ package com.kjeldsen.auth.application.usecases;
 
 import com.kjeldsen.auth.domain.User;
 import com.kjeldsen.auth.domain.exceptions.BadRequestException;
+import com.kjeldsen.auth.domain.exceptions.ForbiddenException;
 import com.kjeldsen.auth.domain.exceptions.UnauthorizedException;
 import com.kjeldsen.auth.domain.providers.JwtTokenProvider;
 import org.junit.jupiter.api.DisplayName;
@@ -50,12 +51,27 @@ class GenerateTokenUseCaseTest {
     }
 
     @Test
+    @DisplayName("Should throw exception when teamId is not present")
+    void should_throw_exception_when_teamId_is_not_present() {
+        String inputPassword = "password";
+        User user = User.builder().build();
+        user.setEmail("email@email.com");
+        user.setId("id");
+        user.setPassword("password");
+        when(mockedGetUserUseCase.getUserByEmail("email@email.com")).thenReturn(user);
+        when(mockedPasswordEncoder.matches(inputPassword, user.getPassword())).thenReturn(true);
+        assertThrows(ForbiddenException.class,
+            () -> generateTokenUseCase.get("email@email.com", "password"));
+    }
+
+    @Test
     @DisplayName("Should return token")
     void should_return_token() {
         User user = User.builder().build();
         user.setPassword("password");
         user.setEmail("email@email.com");
         user.setId("id");
+        user.setTeamId("teamId");
         when(mockedGetUserUseCase.getUserByEmail("email@email.com")).thenReturn(user);
         when(mockedPasswordEncoder.matches("password", user.getPassword())).thenReturn(true);
 

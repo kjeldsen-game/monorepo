@@ -18,6 +18,7 @@ public class SecurityProperties {
     private List<String> publicEndpoints;
     private String publicKey;
     private String privateKey;
+    private String clientSecret;
 
     public String getPublicKey() {
         return sanitizePemPublicKey(publicKey);

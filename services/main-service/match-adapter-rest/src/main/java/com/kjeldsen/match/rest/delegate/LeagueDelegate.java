@@ -6,22 +6,21 @@ import com.kjeldsen.match.application.usecases.league.team.AddTeamToLeagueUseCas
 import com.kjeldsen.match.application.usecases.league.GetLeagueUseCase;
 import com.kjeldsen.match.application.usecases.league.match.ScheduleLeagueMatchesUseCase;
 import com.kjeldsen.match.domain.entities.League;
-import com.kjeldsen.match.domain.entities.ScheduledMatch;
 import com.kjeldsen.match.domain.schedulers.GenericScheduler;
 import com.kjeldsen.match.quartz.jobs.LeagueEndJob;
 import com.kjeldsen.match.rest.api.LeagueApiDelegate;
-import com.kjeldsen.match.rest.mapper.LeagueMapper;
+import com.kjeldsen.match.rest.mappers.LeagueMapper;
 import com.kjeldsen.match.rest.model.CreateOrAssignTeamToLeagueRequest;
 import com.kjeldsen.match.rest.model.CreateOrAssignTeamToLeagueResponse;
 import com.kjeldsen.match.rest.model.LeagueResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -43,6 +42,7 @@ public class LeagueDelegate implements LeagueApiDelegate {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> scheduleAllLeagues() {
         generateAllLeaguesMatchesUseCase.generate();
         quartzGenericScheduler.scheduleJob(LeagueEndJob.class, "leagueEndJob", "league",
@@ -51,17 +51,13 @@ public class LeagueDelegate implements LeagueApiDelegate {
         return ResponseEntity.ok().build();
     }
 
-    // Temporary endpoint to trigger league start by REST API call
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> scheduleLeague(String leagueId) {
-        List<ScheduledMatch> scheduled = generateScheduledMatchesUseCase.generate(leagueId, false);
-
-        scheduleLeagueMatchesUseCase.schedule(scheduled, leagueId);
-
+        scheduleLeagueMatchesUseCase.schedule(generateScheduledMatchesUseCase.generate(leagueId, false), leagueId);
         quartzGenericScheduler.scheduleJob(LeagueEndJob.class, "leagueEndJob", "league",
             LocalDateTime.now().plusDays(19).withHour(23).withMinute(59).withSecond(0)
                 .atZone(ZoneId.systemDefault()).toInstant(), null);
-
         return ResponseEntity.ok().build();
     }
 
