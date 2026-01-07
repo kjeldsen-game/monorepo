@@ -14,9 +14,6 @@ import { useEventBuilder } from 'modules/match/hooks/logic/useEventBuilder';
 const MatchReportView = () => {
 
     const { data } = useMatch();
-    // console.log(data?.home)
-    // const { data: homeTeam } = useTeamApi(data?.home.id);
-    // const { data: awayTeam } = useTeamApi(data?.away.id);
     const isXs = useMediaQuery(theme.breakpoints.down('sm'));
 
     const [selectedTab, setSelectedTab] = useState<number>(0);

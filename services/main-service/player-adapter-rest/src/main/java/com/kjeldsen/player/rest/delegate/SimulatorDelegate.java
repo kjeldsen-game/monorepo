@@ -46,7 +46,7 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 @Component
 @Slf4j
-@PreAuthorize("@hasRole('ADMIN')")
+//@PreAuthorize("hasRole('ADMIN')")
 public class SimulatorDelegate implements SimulatorApiDelegate {
     private final CanteraInvestmentUsecase canteraInvestmentUsecase;
     private final EconomyInvestmentUsecase economyInvestmentUsecase;
@@ -64,7 +64,6 @@ public class SimulatorDelegate implements SimulatorApiDelegate {
     private final GetTeamUseCase getTeamUseCase;
 
     // TMP repositories for simulation
-    private final PlayerMongoRepository playerMongoRepository;
     private final PlayerTrainingScheduledEventMongoRepository playerTrainingScheduledEventMongoRepository;
 
     // Training simulations

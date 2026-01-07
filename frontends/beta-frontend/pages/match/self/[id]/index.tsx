@@ -46,7 +46,7 @@ const Team: NextPage = () => {
         sx={{
           justifyItems: 'center',
         }}>
-        <CustomTabs tabs={["Home, Away"]} selectedTab={selectedTab} handleChange={handleTabChange}/>
+        <CustomTabs tabs={["Home", "Away"]} selectedTab={selectedTab} handleChange={handleTabChange}/>
       </Box>
       <CustomTabPanel value={selectedTab} index={0}>
         <TeamView

@@ -176,6 +176,7 @@ public class TeamDelegate implements TeamApiDelegate {
 
     @Override
     public ResponseEntity<TeamPageableResponse> getAllTeamsPageable(String name, Integer size, Integer page, String userId) {
+        log.info("Get all teams page requested: {}", name);
         FindTeamsQuery query = FindTeamsQuery.builder().name(name).size(size)
             .page(page).userId(userId).build();
 
@@ -197,7 +198,7 @@ public class TeamDelegate implements TeamApiDelegate {
             .userId(userId)
             .build();
 
-        System.out.println(query.getUserId());
+        log.info("Querying teams with: {}", query);
         Page<Team> teams = teamReadRepository.find(query);
         List<TeamResponse> response = teams.getContent().stream().map(TeamMapper.INSTANCE::map).toList();
         return ResponseEntity.ok(response);
@@ -205,6 +206,7 @@ public class TeamDelegate implements TeamApiDelegate {
 
     @Override
     public ResponseEntity<TeamResponse> getTeamById(String teamId) {
+        log.info("Get team by id: {}", teamId);
         Team team = getTeamUseCase.get(TeamId.of(teamId));
         TeamResponse response = teamResponseFactory.create(ResponseViewProvider
             .getView(Objects.requireNonNull(SecurityUtils.getCurrentUserId()), team.getUserId()), team);

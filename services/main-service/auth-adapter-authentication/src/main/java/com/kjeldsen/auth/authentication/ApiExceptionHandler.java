@@ -1,10 +1,10 @@
 package com.kjeldsen.auth.authentication;
 
-import com.kjeldsen.auth.authentication.model.ErrorResponse;
 import com.kjeldsen.auth.domain.exceptions.BadRequestException;
 import com.kjeldsen.auth.domain.exceptions.ForbiddenException;
 import com.kjeldsen.auth.domain.exceptions.NotFoundException;
 import com.kjeldsen.auth.domain.exceptions.UnauthorizedException;
+import com.kjeldsen.auth.rest.model.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

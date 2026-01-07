@@ -13,6 +13,7 @@ import com.kjeldsen.market.domain.exceptions.TeamNotFoundException;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
 import com.kjeldsen.player.domain.provider.InstantProvider;
+import com.kjeldsen.player.rest.model.TeamResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -42,8 +43,8 @@ public class PlaceBidUseCase {
         Auction auction = auctionReadRepository.findById(auctionId).orElseThrow(
             AuctionNotFoundException::new);
 
-        TeamClient team;
-        List<TeamClient> teams = teamClientApi.getTeam(null, null, userId);
+        TeamResponse team;
+        List<TeamResponse> teams = teamClientApi.getTeams( null, userId);
         if (teams.isEmpty()) {
             throw new TeamNotFoundException();
         } else {
@@ -109,8 +110,8 @@ public class PlaceBidUseCase {
         }
     }
 
-    private void updateTeamBalance(TeamClient team, BigDecimal bidAmount) {
-        if (team.getEconomy().getBalance().compareTo(bidAmount.abs()) < 0) {
+    private void updateTeamBalance(TeamResponse team, BigDecimal bidAmount) {
+        if (team.getEconomy().getBalance().compareTo(bidAmount.abs().doubleValue()) < 0) {
             throw new InsufficientBalanceException();
         }
         eventPublisher.publishEvent(BidEvent.builder().amount(bidAmount)

@@ -1,4 +1,4 @@
-package com.kjeldsen.match.rest.mapper;
+package com.kjeldsen.match.rest.mappers;
 
 import com.kjeldsen.match.domain.entities.League;
 import com.kjeldsen.match.rest.model.LeagueResponse;

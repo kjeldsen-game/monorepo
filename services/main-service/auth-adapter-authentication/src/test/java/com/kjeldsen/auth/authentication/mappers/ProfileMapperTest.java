@@ -1,7 +1,7 @@
 package com.kjeldsen.auth.authentication.mappers;
 
-import com.kjeldsen.auth.authentication.model.ProfileResponse;
 import com.kjeldsen.auth.domain.Profile;
+import com.kjeldsen.auth.rest.model.ProfileResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

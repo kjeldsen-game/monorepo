@@ -1,12 +1,10 @@
 package com.kjeldsen.match.domain.state;
 
-import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.Player;
 import com.kjeldsen.match.domain.entities.Team;
 import com.kjeldsen.match.domain.entities.TeamRole;
 import com.kjeldsen.match.domain.entities.duel.DuelRole;
 import com.kjeldsen.match.domain.entities.stats.MatchStats;
-import com.kjeldsen.match.domain.entities.stats.PlayerStats;
 import com.kjeldsen.match.domain.modifers.HorizontalPressure;
 import com.kjeldsen.match.domain.modifers.Tactic;
 import com.kjeldsen.match.domain.modifers.VerticalPressure;
@@ -14,7 +12,6 @@ import lombok.Builder;
 import lombok.Value;
 
 import java.util.List;
-import java.util.Map;
 
 @Value
 @Builder
@@ -48,9 +45,9 @@ public class TeamState {
             .bench(team.getBench())
             .matchStats(MatchStats.init(team.getPlayers()))
             .score(0)
-            .tactic(team.getTactic())
-            .verticalPressure(team.getVerticalPressure())
-            .horizontalPressure(team.getHorizontalPressure())
+            .tactic(team.getModifiers().getTactic())
+            .verticalPressure(team.getModifiers().getVerticalPressure())
+            .horizontalPressure(team.getModifiers().getHorizontalPressure())
             .build();
     }
 

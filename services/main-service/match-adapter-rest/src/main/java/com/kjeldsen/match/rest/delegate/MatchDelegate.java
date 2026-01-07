@@ -7,14 +7,13 @@ import com.kjeldsen.match.domain.entities.Player;
 import com.kjeldsen.match.domain.entities.TeamRole;
 import com.kjeldsen.match.domain.repositories.MatchWriteRepository;
 import com.kjeldsen.match.rest.api.MatchApiDelegate;
-import com.kjeldsen.match.rest.mapper.MatchMapper;
-import com.kjeldsen.match.rest.mapper.TeamMapper;
+import com.kjeldsen.match.rest.mappers.MatchMapper;
+import com.kjeldsen.match.application.mappers.PlayerMapper;
+import com.kjeldsen.match.rest.mappers.TeamMapper;
 import com.kjeldsen.match.rest.model.*;
 import com.kjeldsen.match.domain.utils.JsonUtils;
 import com.kjeldsen.match.domain.validation.TeamFormationValidationResult;
 import com.kjeldsen.match.domain.validation.TeamFormationValidator;
-import com.kjeldsen.player.domain.PlayerPosition;
-import com.kjeldsen.player.domain.PlayerStatus;
 import com.kjeldsen.player.domain.Team.TeamId;
 import com.kjeldsen.player.domain.repositories.PlayerReadRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Slf4j
@@ -62,33 +60,17 @@ public class MatchDelegate implements MatchApiDelegate {
     @Override
     public ResponseEntity<SuccessResponse> updateMatchTeam(String teamId, String matchId,
             EditMatchTeamRequest editMatchTeamRequest) {
-        log.info("Update match team endpoint for teamId: {} matchId: {} self: {}", teamId, matchId, editMatchTeamRequest.getSelf());
-        List<UpdateMatchLineupUseCase.PlayerUpdateDTO> players = editMatchTeamRequest.getPlayers().stream()
-                .map(player -> UpdateMatchLineupUseCase.PlayerUpdateDTO.builder()
-                        .id(player.getId())
-                        .playerOrder(
-                                player.getPlayerOrder() != null
-                                        ? com.kjeldsen.player.domain.PlayerOrder.valueOf(player.getPlayerOrder().name())
-                                        : null)
-                        .position(player.getPosition() != null ? PlayerPosition.valueOf(player.getPosition().name())
-                                : null)
-                        .playerOrderDestinationPitchArea(player.getPlayerOrderDestinationPitchArea() != null
-                                ? com.kjeldsen.player.domain.PitchArea
-                                        .valueOf(player.getPlayerOrderDestinationPitchArea().name())
-                                : null)
-                        .status(PlayerStatus.valueOf(player.getStatus().name()))
-                        .build())
-                .toList();
-        log.info("Players: {}", players);
+        List<Player> players = PlayerMapper.INSTANCE.mapEditPlayerList(editMatchTeamRequest.getPlayers());
         com.kjeldsen.match.domain.modifers.TeamModifiers teamModifiers = TeamMapper.INSTANCE
                 .map(editMatchTeamRequest.getTeamModifiers());
 
         String message;
+
         // Special use case when you're challenging your self
         if (editMatchTeamRequest.getSelf() != null && editMatchTeamRequest.getSelf()) {
             Match match = getMatchUseCase.get(matchId);
             message = "Match team in self challenge was successfully updated!";
-            updateMatchLineupUseCase.updateSelf(teamId, match, players, teamModifiers);
+            updateMatchLineupUseCase.updateSelf(match, players, teamModifiers);
         } else {
             message = "Match team was successfully updated!";
             updateMatchLineupUseCase.update(matchId, teamId, players, teamModifiers);
@@ -163,7 +145,6 @@ public class MatchDelegate implements MatchApiDelegate {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // TODO REWORK TO USE THE SecurityUtils.getCurrentUserId(); instead of
     @Override
     public ResponseEntity<List<MatchResponse>> getAllMatches(String teamId, String leagueId, Integer size,
             Integer page) {
@@ -177,7 +158,6 @@ public class MatchDelegate implements MatchApiDelegate {
 
     @Override
     public ResponseEntity<MatchResponse> getMatch(String matchId) {
-        log.info("getMatchTeam(matchId={})", matchId);
         Match match = getMatchUseCase.get(matchId);
         MatchResponse response = MatchMapper.INSTANCE.map(match);
         return new ResponseEntity<>(response, HttpStatus.OK);

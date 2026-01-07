@@ -10,6 +10,84 @@ tags:
   - name: auth
 paths:
 
+  /auth/register:
+    post:
+      summary: Register
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "201":
+          $ref: "#/components/responses/DefaultSuccessResponse"
+        "400":
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /auth/token:
+    post:
+      summary: "Generate JWT Token"
+      description: "Authenticates a user and provides a JWT token upon successful authentication"
+      operationId: "generateUserToken"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserTokenRequest"
+      responses:
+        "200":
+          description: "Token generated successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+        "401":
+          $ref: "#/components/responses/DefaultErrorResponse"
+        "404":
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /auth/token-service:
+    post:
+      summary: "Generate Service JWT Token"
+      description: "Authenticates a service and provides a JWT token upon successful authentication"
+      operationId: "generateServiceToken"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServiceTokenRequest"
+      responses:
+        "200":
+          description: "Service Token generated successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+        "401":
+          $ref: "#/components/responses/DefaultErrorResponse"
+        "404":
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /auth/me:
+    get:
+      summary: Get currently logged-in user
+      operationId: me
+      responses:
+        "200":
+          description: Logged-in user found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDetailsResponse"
+        "401":
+          $ref: "#/components/responses/DefaultErrorResponse"
+        "404":
+          $ref: "#/components/responses/DefaultErrorResponse"
+
   /auth/reset-password:
     post:
       summary: Reset Password
@@ -88,62 +166,8 @@ paths:
         default:
           $ref: "#/components/responses/DefaultErrorResponse"
 
-  /auth/register:
-    post:
-      summary: Register
-      operationId: register
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RegisterRequest"
-      responses:
-        "201":
-          $ref: "#/components/responses/DefaultSuccessResponse"
-        "400":
-          $ref: "#/components/responses/DefaultErrorResponse"
-
-  /auth/token:
-    post:
-      summary: "Generate JWT Token"
-      description: "Authenticates a user and provides a JWT token upon successful authentication"
-      operationId: "generateToken"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/TokenRequest"
-      responses:
-        "200":
-          description: "Token generated successfully"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TokenResponse"
-        "401":
-          $ref: "#/components/responses/DefaultErrorResponse"
-        "404":
-          $ref: "#/components/responses/DefaultErrorResponse"
-
-  /auth/me:
-    get:
-      summary: Get currently logged-in user
-      operationId: me
-      responses:
-        "200":
-          description: Logged-in user found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserDetailsResponse"
-        "401":
-          $ref: "#/components/responses/DefaultErrorResponse"
-        "404":
-          $ref: "#/components/responses/DefaultErrorResponse"
-
 components:
+
   responses:
 
     DefaultErrorResponse:
@@ -223,8 +247,11 @@ components:
           example: admin@gmail.com
           description: "Email of the user where reset link will be send"
 
-    TokenRequest:
+    UserTokenRequest:
       type: object
+      required:
+        - email
+        - password
       properties:
         email:
           type: string
@@ -233,6 +260,30 @@ components:
           type: string
           format: password
           description: "The password for authentication"
+
+    ServiceTokenRequest:
+      type: object
+      required:
+        - clientName
+        - clientSecret
+        - audience
+      properties:
+        serviceName:
+          type: string
+          description: "The service ID for authentication"
+        clientSecret:
+          type: string
+          description: "The service secret for authentication"
+        audience:
+          type: string
+          description: "The service secret for authentication"
+
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: "JWT token that can be used for authorization"
 
     UpdateAvatarRequest:
       type: object
@@ -244,12 +295,6 @@ components:
           format: binary
           description: The avatar image file (JPEG or PNG)
 
-    TokenResponse:
-      type: object
-      properties:
-        accessToken:
-          type: string
-          description: "JWT token that can be used for authorization"
 
     ProfileResponse:
       type: object

@@ -43,6 +43,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ }) => {
                 label='New Password'
                 control={control}
                 rules={{ required: "New Password is required!" }}
+                sx={{mb: 1}}
             />
             <PasswordInput
                 name="confirmPassword"

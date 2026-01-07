@@ -1,6 +1,7 @@
 package com.kjeldsen.market.persistence.adapters.mongo;
 
 import com.kjeldsen.market.domain.Auction;
+import com.kjeldsen.market.domain.AuctionPlayer;
 import com.kjeldsen.market.domain.repositories.AuctionReadRepository;
 import com.kjeldsen.market.domain.repositories.queries.FindAuctionsQuery;
 import com.kjeldsen.market.persistence.common.AbstractMongoDbTest;
@@ -39,19 +40,19 @@ public class AuctionReadRepositoryMongoAdapterIT extends AbstractMongoDbTest {
         auctionMongoRepository.saveAll(List.of(
             Auction.builder().id(Auction.AuctionId.of("1"))
                 .status(Auction.AuctionStatus.ACTIVE)
-                .playerId("player1")
+                .player(AuctionPlayer.builder().id("player1").build())
                 .averageBid(BigDecimal.ZERO)
                 .bids(List.of())
                 .build(),
             Auction.builder().id(Auction.AuctionId.of("2"))
                 .status(Auction.AuctionStatus.COMPLETED)
-                .playerId("player43")
+                .player(AuctionPlayer.builder().id("player43").build())
                 .averageBid(BigDecimal.ZERO)
                 .bids(List.of())
                 .build(),
             Auction.builder().id(Auction.AuctionId.of("3"))
                 .status(Auction.AuctionStatus.COMPLETED)
-                .playerId("player43")
+                .player(AuctionPlayer.builder().id("player43").build())
                 .averageBid(BigDecimal.ZERO)
                 .bids(List.of())
                 .build()

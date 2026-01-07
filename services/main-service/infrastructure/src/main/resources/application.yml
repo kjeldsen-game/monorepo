@@ -67,6 +67,7 @@ security:
       - /swagger-ui.html
       - /auth/register
       - /auth/token
+    client-secret: 1VncrLeVPX1KUhlU5s/PhpdwioaP+G4wOgzZoT9IDRE=
     public-key: -----BEGIN PUBLIC KEY-----
       MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzErYqgLxRBbRE5YnVV0m
       Q5k8+Oj/uMbKfkyi6AE1MIRVtDlM8xM4KxRWsqOTbLhalB7XwaNGj7jxdZvKhvbb

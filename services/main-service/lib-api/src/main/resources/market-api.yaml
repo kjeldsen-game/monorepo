@@ -1,0 +1,437 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Markets Service API
+
+servers:
+  - url: http://localhost:15001/v1
+
+tags:
+  - name: market
+  - name: auction
+
+paths:
+  /auction/history:
+    get:
+      summary: Get Auction History
+      operationId: getAuctionHistory
+      tags:
+        - market
+      parameters:
+        - name: teamId
+          in: query
+          description: Team Id
+          required: false
+          schema:
+            type: string
+        - name: size
+          in: query
+          description: Number of teams to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: page
+          in: query
+          description: Page number of the teams to return
+          required: false
+          schema:
+            default: 0
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: List of filtered players
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PageableAuctionResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /market/auction:
+    get:
+      summary: Get Auctions
+      operationId: getAllAuctions
+      tags:
+        - market
+      parameters:
+        - name: size
+          in: query
+          description: Number of teams to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: page
+          in: query
+          description: Page number of the teams to return
+          required: false
+          schema:
+            default: 0
+            type: integer
+            format: int32
+        - name: position
+          in: query
+          description: Position of the player
+          required: false
+          schema:
+            $ref: "#/components/schemas/PlayerPosition"
+        - name: skills
+          in: query
+          description: List of player skills with min and max values
+          required: false
+          schema:
+            type: string
+            example: "SCORING:50:100,BALL_CONTROL:50:100"
+        - name: potentialSkill
+          in: query
+          description: List of player potential values for skill min and max values
+          required: false
+          schema:
+            type: string
+            example: "SCORING:50:100,BALL_CONTROL:50:100"
+        - name: minAge
+          in: query
+          description: Minimum age of players
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: maxAge
+          in: query
+          description: Maximum age of players
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: minBid
+          in: query
+          description: Minimum bid amount
+          required: false
+          schema:
+            type: number
+            format: double
+        - name: maxBid
+          in: query
+          description: Maximum bid amount
+          required: false
+          schema:
+            type: number
+            format: double
+        - name: playerId
+          in: query
+          description: PlayerId
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of filtered players
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AuctionResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /market/auction/{auctionId}:
+    get:
+      summary: Get Auction by Id
+      operationId: getAuctionById
+      tags:
+        - market
+      parameters:
+        - $ref: "#/components/parameters/AuctionIdPathParameter"
+      responses:
+        "200":
+          description: Returns the Auction
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuctionResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+    patch:
+      summary: Place a new bid to auction
+      operationId: placeAuctionBid
+      tags:
+        - market
+      parameters:
+        - $ref: "#/components/parameters/AuctionIdPathParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlaceAuctionBidRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/DefaultSuccessResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /market/auction/{auctionId}/end:
+    patch:
+      summary: Auction ended up
+      operationId: simulateAuctionEnd
+      tags:
+        - market
+      parameters:
+        - $ref: "#/components/parameters/AuctionIdPathParameter"
+      responses:
+        "200":
+          description: Auction successfully ended and transfer was performed
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+################################### Components ###################################
+components:
+  ################################### Parameters ###################################
+  parameters:
+    AuctionIdPathParameter:
+      name: auctionId
+      in: path
+      description: Id of the Auction
+      required: true
+      schema:
+        type: string
+
+  ################################### Responses ###################################
+  responses:
+    DefaultErrorResponse:
+      description: Unexpected error
+      content:
+        "*/*":
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Error"
+
+    DefaultSuccessResponse:
+      description: "Success response"
+      content:
+        "application/json":
+          schema:
+            $ref: "#/components/schemas/SuccessResponse"
+
+  schemas:
+################################### Enums ###################################
+
+    PlayerSkill:
+      type: string
+      enum:
+        - SCORING
+        - OFFENSIVE_POSITIONING
+        - BALL_CONTROL
+        - PASSING
+        - AERIAL
+        - CONSTITUTION
+        - TACKLING
+        - DEFENSIVE_POSITIONING
+        - REFLEXES
+        - GOALKEEPER_POSITIONING
+        - INTERCEPTIONS
+        - CONTROL
+        - ORGANIZATION
+        - ONE_ON_ONE
+        - INTERCEPTING
+
+    PlayerPosition:
+      type: string
+      enum:
+        - CENTRE_BACK
+        - AERIAL_CENTRE_BACK
+        - SWEEPER
+        - LEFT_BACK
+        - RIGHT_BACK
+        - LEFT_WINGBACK
+        - RIGHT_WINGBACK
+        - DEFENSIVE_MIDFIELDER
+        - CENTRE_MIDFIELDER
+        - LEFT_MIDFIELDER
+        - RIGHT_MIDFIELDER
+        - LEFT_WINGER
+        - OFFENSIVE_MIDFIELDER
+        - RIGHT_WINGER
+        - FORWARD
+        - AERIAL_FORWARD
+        - STRIKER
+        - AERIAL_STRIKER
+        - GOALKEEPER
+      example: FORWARD
+
+    AuctionStatus:
+      type: string
+      enum:
+        - COMPLETED
+        - ACTIVE
+        - CANCELED
+      example: COMPLETED
+
+    ################################### Objects ###################################
+
+    PlayerAge:
+      type: object
+      properties:
+        years:
+          type: number
+          format: int32
+          minimum: 15
+          maximum: 33
+          example: 20
+        months:
+          type: number
+          example: 1.05
+        days:
+          type: number
+          example: 3.01
+
+    AuctionPlayerSkills:
+      type: object
+      properties:
+        actual:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          example: 5
+        potential:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 1000
+          example: 30
+
+    # TODO probably not needed need ot check
+    Bid:
+      type: object
+      properties:
+        team:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        amount:
+          type: number
+          example: 50000
+        timestamp:
+          type: string
+          example: TODO
+
+    Error:
+      type: "object"
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+    ################################### Responses ###################################
+
+    PageableResponse:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 0
+        size:
+          type: integer
+          example: 10
+        totalElements:
+          type: integer
+          example: 100
+        totalPages:
+          type: integer
+          example: 10
+
+    SuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Password was successfully changed."
+
+    PageableAuctionResponse:
+      allOf:
+        - $ref: "#/components/schemas/PageableResponse"
+        - type: object
+          properties:
+            winner:
+              type: boolean
+            content:
+              type: array
+              items:
+                $ref: "#/components/schemas/AuctionResponse"
+
+    AuctionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        player:
+          $ref: "#/components/schemas/AuctionPlayerResponse"
+        teamId:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        averageBid:
+          type: number
+          example: 50000
+        status:
+          $ref: "#/components/schemas/AuctionStatus"
+        startedAt:
+          type: string
+          example: TODO
+        endedAt:
+          type: string
+          example: TODO
+        bids:
+          type: array
+          items:
+              $ref: "#/components/schemas/Bid"
+        bidders:
+          type: integer
+          example: 2
+        bid:
+          type: number
+
+    AuctionPlayerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        age:
+          $ref: "#/components/schemas/PlayerAge"
+        name:
+          type: string
+          example: John Doe
+        preferredPosition:
+          $ref: "#/components/schemas/PlayerPosition"
+        actualSkills:
+          additionalProperties:
+            type: object
+            properties:
+              PlayerSkills:
+                $ref: "#/components/schemas/AuctionPlayerSkills"
+
+
+    ################################### Requests ###################################
+
+    PlaceAuctionBidRequest:
+      type: object
+      properties:
+        amount:
+          type: integer
+          minimum: 1
+          example: 10000
+      required:
+        - amount

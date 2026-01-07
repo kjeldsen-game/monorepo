@@ -6,6 +6,8 @@ export async function middleware(req: NextRequest) {
 
   const publicPaths = [
     '/auth/signin',
+    '/auth/forget-password',
+    '/auth/reset-password',
     '/auth/signup',
     '/api/auth/',
     '/favicon.ico',

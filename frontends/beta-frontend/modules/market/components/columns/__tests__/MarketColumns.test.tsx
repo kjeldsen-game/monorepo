@@ -4,7 +4,7 @@ import { GridRenderCellParams } from '@mui/x-data-grid';
 
 describe('MarketColumns', () => {
     const mockHandleButtonClick = jest.fn();
-    const columns = MarketColumns(mockHandleButtonClick, false);
+    const columns = MarketColumns(false,false,mockHandleButtonClick);
     it('should render expected column headers', () => {
         const expectedHeaders = [
             'Average Bid',

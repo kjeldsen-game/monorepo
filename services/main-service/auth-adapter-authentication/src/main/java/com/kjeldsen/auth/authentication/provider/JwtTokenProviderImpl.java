@@ -1,5 +1,6 @@
-package com.kjeldsen.auth.authentication;
+package com.kjeldsen.auth.authentication.provider;
 
+import com.kjeldsen.auth.authentication.SecurityProperties;
 import com.kjeldsen.auth.domain.Role;
 import com.kjeldsen.auth.domain.providers.JwtTokenProvider;
 import io.jsonwebtoken.Jwts;
@@ -41,7 +42,24 @@ public class JwtTokenProviderImpl implements JwtTokenProvider {
         return null;
     }
 
-    public String generateInternalToken() {
+    public String generateInternalToken(String serviceName, String audience) {
+        try {
+            PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(Base64
+                .getDecoder()
+                .decode(securityProperties.getPrivateKey()));
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+
+            return Jwts.builder()
+                .subject(serviceName)
+                .claim("type", "internal")
+                .claim("audience", audience)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + 5 * 60 * 1000L))
+                .signWith(keyFactory.generatePrivate(spec))
+                .compact();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
         return null;
     }
 }

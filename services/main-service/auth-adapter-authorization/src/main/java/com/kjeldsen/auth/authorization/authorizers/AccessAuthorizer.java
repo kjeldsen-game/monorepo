@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class AccessAuthorizer {
 
     public boolean hasAccess(String requestedTeamId) {
-        log.info("Checking if team access is authorized for requested team {}", requestedTeamId);
+//        log.info("Checking if team access is authorized for requested team {}", requestedTeamId);
         String currentTeamId = SecurityUtils.getCurrentTeamId();
         return currentTeamId != null && currentTeamId.equals(requestedTeamId);
     }

@@ -33,6 +33,7 @@
         <module>lib-pub-sub</module>
         <module>lib-client</module>
         <module>notification</module>
+        <module>lib-api</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -81,7 +82,7 @@
 
         <apache.commons-collections4.version>4.4</apache.commons-collections4.version>
         <javafaker.version>1.0.2</javafaker.version>
-        <testcontainers-bom.version>1.19.8</testcontainers-bom.version>
+        <testcontainers-bom.version>1.21.3</testcontainers-bom.version>
         <snakeyaml.version>2.4</snakeyaml.version>
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>

@@ -1,0 +1,1885 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Players Service API
+
+servers:
+  - url: http://localhost:15001/v1
+
+tags:
+  - name: team
+  - name: player
+  - name: player-position-tendencies
+  - name: training
+  - name: simulator
+
+paths:
+  ######################## TEAM START ########################
+  /team/pageable:
+    get:
+      summary: Get all teams
+      operationId: getAllTeamsPageable
+      parameters:
+        - name: name
+          in: query
+          description: Name of team
+          required: false
+          schema:
+            type: string
+        - name: size
+          in: query
+          description: Number of teams to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: page
+          in: query
+          description: Page number of the teams to return
+          required: false
+          schema:
+            default: 0
+            type: integer
+            format: int32
+        - name: userId
+          in: query
+          description: String value of user Id
+          required: false
+          schema:
+            type: string
+      tags:
+        - team
+      responses:
+        "200":
+          description: Teams were retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamPageableResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+  /team:
+    get:
+      summary: Get all teams
+      operationId: getAllTeams
+      parameters:
+        - name: name
+          in: query
+          description: Name of team
+          required: false
+          schema:
+            type: string
+        - name: size
+          in: query
+          description: Number of teams to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: page
+          in: query
+          description: Page number of the teams to return
+          required: false
+          schema:
+            default: 0
+            type: integer
+            format: int32
+        - name: userId
+          in: query
+          description: String value of user Id
+          required: false
+          schema:
+            type: string
+      tags:
+        - team
+      responses:
+        "200":
+          description: Teams were retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TeamResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /team/{teamId}:
+    get:
+      summary: Retrieves a team
+      operationId: getTeamById
+      tags:
+        - team
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      responses:
+        "200":
+          description: Returns the team
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+    patch:
+      summary: Edits a team
+      operationId: updateTeamById
+      tags:
+        - team
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditTeamRequest"
+      responses:
+        "200":
+          description: Returns the updated team
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /team/{teamId}/validate:
+    get:
+      summary: Validate lineup and bench players
+      operationId: validateTeamLineup
+      tags:
+        - team
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      responses:
+        "200":
+          description: Returns the validation of the team lineup
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamFormationValidationResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+######################## TEAM ECONOMY START ########################
+
+  /team/{teamId}/economy:
+    get:
+      summary: Get Team Economy
+      operationId: getTeamEconomy
+      tags:
+        - team
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      responses:
+        "200":
+          description: Team Economy is retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EconomyResponse"
+
+  /team/{teamId}/economy/sign-billboard:
+    post:
+      summary: Sign billboard deal
+      operationId: signBillboard
+      tags:
+        - team
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignBillboardRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/DefaultSuccessResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+
+  /team/{teamId}/economy/sign-sponsor:
+    post:
+      summary: Sign Sponsor
+      operationId: signSponsor
+      tags:
+        - team
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignSponsorRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/DefaultSuccessResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /team/{teamId}/economy/update-pricing:
+    post:
+      summary: Update price of team items
+      operationId: updatePricing
+      tags:
+        - team
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePricingRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/DefaultSuccessResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+
+######################## TEAM ECONOMY END ########################
+######################## TEAM END ########################
+
+######################## PLAYER START ########################
+
+  /player:
+    post:
+      summary: Create a player
+      operationId: createPlayer
+      tags:
+        - player
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePlayerRequest"
+      responses:
+        "201":
+          description: Player was created
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+    get:
+      summary: Get all players
+      operationId: getAllPlayers
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/PlayerStatus"
+        - name: teamId
+          in: query
+          description: Team Id of players
+          required: false
+          schema:
+            type: string
+        - name: position
+          in: query
+          description: Position of the player
+          required: false
+          schema:
+            $ref: "#/components/schemas/PlayerPosition"
+        - name: size
+          in: query
+          description: Number of players to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: page
+          in: query
+          description: Page number of the players to return
+          required: false
+          schema:
+            default: 0
+            type: integer
+            format: int32
+      tags:
+        - player
+      responses:
+        "200":
+          description: Players were retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlayerResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /player/{playerId}:
+    get:
+      summary: Retrieves a player
+      operationId: getPlayerById
+      tags:
+        - player
+      parameters:
+        - $ref: "#/components/parameters/PlayerIdPathParameter"
+      responses:
+        "200":
+          description: Returns the player
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlayerResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /player/generate:
+    post:
+      summary: Generate a number of players
+      operationId: generatePlayer
+      tags:
+        - player
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GeneratePlayersRequest"
+      responses:
+        "201":
+          description: Players were generated
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlayerResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /player/{playerId}/sell:
+    put:
+      summary: Put player on the Market
+      operationId: sellPlayer
+      tags:
+        - player
+      parameters:
+        - $ref: "#/components/parameters/PlayerIdPathParameter"
+      responses:
+        "200":
+          description: Player was put on the Market
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+######################## PLAYER END ########################
+
+######################## PLAYER-POSITION-TENDENCIES START ########################
+  /player-position-tendencies:
+    get:
+      summary: Get all player position tendencies
+      operationId: getAllPlayerPositionTendencies
+      tags:
+        - player-position-tendencies
+      responses:
+        "200":
+          description: Player position tendencies were retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlayerPositionTendencyResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /player-position-tendencies/{position}:
+    get:
+      summary: Get the tendency of a position
+      operationId: getPlayerPositionTendency
+      parameters:
+        - name: position
+          in: path
+          description: Position of the player
+          required: true
+          schema:
+            $ref: "#/components/schemas/PlayerPosition"
+      tags:
+        - player-position-tendencies
+      responses:
+        "200":
+          description: Player position tendency was retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlayerPositionTendencyResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+    patch:
+      summary: Update the tendency of a position
+      operationId: updatePlayerPositionTendency
+      tags:
+        - player-position-tendencies
+      parameters:
+        - name: position
+          in: path
+          description: Position of the player
+          required: true
+          schema:
+            $ref: "#/components/schemas/PlayerPosition"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePlayerPositionTendencyRequest"
+      responses:
+        "200":
+          description: Player position tendency was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlayerPositionTendencyResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+######################## PLAYER-POSITION-TENDENCIES END ########################
+
+######################## TRAINING START ########################
+  /training/{teamId}:
+    get:
+      summary: Get training events of the team
+      operationId: getTeamTrainingEvents
+      tags:
+        - training
+      parameters:
+        - name: trainingType
+          in: query
+          description: Type of the training
+          required: false
+          schema:
+            $ref: "#/components/schemas/TrainingType"
+        - name: position
+          in: query
+          description: Player position
+          required: false
+          schema:
+            $ref: "#/components/schemas/PlayerPosition"
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      responses:
+        "200":
+          description: Returned data about team training events
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamTrainingEventsResponse"
+
+  /training/{teamId}/scheduled:
+    get:
+      summary: Get active trainings of the Team
+      operationId: getScheduledPlayerTrainings
+      tags:
+        - training
+      parameters:
+        - name: position
+          in: query
+          description: Player position
+          required: false
+          schema:
+            $ref: "#/components/schemas/PlayerPosition"
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      responses:
+        "200":
+          description: Historical trainings of team returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlayerScheduledTrainingResponse"
+
+#  /training/{teamId}:
+
+  /training/{playerId}:
+#    get:
+#      summary: Get historical training of a player
+#      operationId: getHistoricalTraining
+#      tags:
+#        - training
+#      parameters:
+#        - $ref: "#/components/parameters/PlayerIdPathParameter"
+#      responses:
+#        "200":
+#          description: Training historical returned
+#          content:
+#            application/json:
+#              schema:
+#                $ref: "#/components/schemas/PlayerHistoricalTrainingResponse"
+#        default:
+#          $ref: "#/components/responses/DefaultErrorResponse"
+    post:
+      summary: Schedule training of a player
+      operationId: schedulePlayerTraining
+      tags:
+        - training
+      parameters:
+        - $ref: "#/components/parameters/PlayerIdPathParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SchedulePlayerTrainingRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/DefaultSuccessResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+######################## TRAINING END ########################
+
+######################## SIMULATOR START ########################
+  /simulator/hello-world:
+    get:
+      summary: Test endpoint
+      operationId: simulateHelloWorld
+      tags:
+        - simulator
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Hello world
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/simulate-days:
+    post:
+      summary: Simulate number of days
+      operationId: simulateDays
+      tags:
+        - simulator
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimulateDaysRequest"
+      responses:
+        "201":
+          description: Simulated days executed
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SimulateDaysResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+
+  /simulator/trainings:
+    post:
+      summary: Simulate the execution of trainings
+      operationId: simulatePlayerTrainingsProcess
+      tags:
+        - simulator
+      responses:
+        "200":
+          description: Simulation of process of trainings was successful
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/potential-rises:
+    post:
+      summary: Simulate the execution of potential rises
+      operationId: simulatePotentialRisesProcess
+      tags:
+        - simulator
+      responses:
+        "200":
+          description: Simulation of potential rises process was successful
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/player-declines:
+    post:
+      summary: Simulate the execution of player declines
+      operationId: simulatePlayerDeclinesProcess
+      tags:
+        - simulator
+      responses:
+        "200":
+          description: Simulation player declines process was successful
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/cantera-score/{teamId}:
+    post:
+      summary: Register an investment on the Cantera
+      operationId: registerInvestmentOnCantera
+      tags:
+        - simulator
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterInvestmentOnCanteraRequest"
+      responses:
+        "201":
+          description: Simulated investment on cantera was applied
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/economic-investment/{teamId}:
+    post:
+      summary: Register an economic investment
+      operationId: registerEconomicInvestment
+      tags:
+        - simulator
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterEconomicInvestmentRequest"
+      responses:
+        "201":
+          description: Simulated economic investment
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/salary-payroll/{teamId}:
+    post:
+      summary: Simulates a salary payroll
+      operationId: simulateSalaryPayroll
+      tags:
+        - simulator
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimulateSalaryPayrollRequest"
+      responses:
+        "201":
+          description: Simulated sponsor income
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/salary-increase/{teamId}:
+    post:
+      summary: Simulates a salary increase
+      operationId: simulateSalaryIncrease
+      tags:
+        - simulator
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      responses:
+        "201":
+          description: Simulated sponsor income
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/match-income/{teamId}:
+    post:
+      summary: Simulate a match attendance income payout
+      operationId: simulateMatchIncome
+      tags:
+        - simulator
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimulateMatchIncomeRequest"
+      responses:
+        "200":
+          description: Match attendance income payout simulated
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/update-fans/{teamId}:
+    post:
+      summary: Simulate a fans update
+      operationId: simulateFansUpdate
+      tags:
+        - simulator
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimulateFansUpdateRequest"
+      responses:
+        "200":
+          description: Fans update simulated
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/update-building/{teamId}:
+    post:
+      summary: Simulate building upgrade
+      operationId: simulateBuildingUpgrade
+      tags:
+        - simulator
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimulateBuildingUpgradeRequest"
+      responses:
+        "200":
+          description: Building upgraded
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/building-maintenance-expense/{teamId}:
+    post:
+      summary: Simulate building maintenance expense
+      operationId: simulateBuildingMaintenanceExpense
+      tags:
+        - simulator
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      responses:
+        "200":
+          description: Building upgraded
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/update-loyalty/{teamId}:
+    post:
+      summary: Simulate loyalty update
+      operationId: simulateLoyaltyUpdate
+      tags:
+        - simulator
+      parameters:
+        - $ref: "#/components/parameters/TeamIdPathParameter"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimulateLoyaltyUpdateRequest"
+      responses:
+        "200":
+          description: Billboard income selected
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/reset-sponsor:
+    post:
+      summary: Reset sponsor
+      operationId: simulateResetSponsor
+      tags:
+        - simulator
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimulateSponsorResetRequest"
+      responses:
+        "200":
+          description: Sponsor was reseted
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /simulator/reset-billboard-deal:
+    post:
+      summary: Reset billboard deal
+      operationId: simulateBillboardDealReset
+      tags:
+        - simulator
+      responses:
+        "200":
+          description: Billboard deal was reseted
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+######################## SIMULATOR END ########################
+
+######################## COMPONENTS START ########################
+components:
+  parameters:
+    PlayerIdPathParameter:
+      name: playerId
+      in: path
+      description: Id of the player
+      required: true
+      schema:
+        type: string
+
+    TeamIdPathParameter:
+      name: teamId
+      in: path
+      description: Id of the team
+      required: true
+      schema:
+        type: string
+
+  responses:
+    DefaultErrorResponse:
+      description: Unexpected error
+      content:
+        "*/*":
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Error"
+
+    DefaultSuccessResponse:
+      description: "Success response"
+      content:
+        "application/json":
+          schema:
+            $ref: "#/components/schemas/SuccessResponse"
+
+  schemas:
+
+    PageResponse:
+      type: object
+      properties:
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+        size:
+          type: integer
+        number:
+          type: integer
+
+    TeamPageableResponse:
+      allOf:
+        - $ref: "#/components/schemas/PageResponse"
+        - type: object
+          properties:
+            content:
+              type: array
+              items:
+                $ref: "#/components/schemas/TeamResponse"
+
+    SuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+
+    Tactic:
+      type: string
+      enum:
+        - DOUBLE_TEAM
+        - MAN_ON_MAN
+        - ZONE
+        - COUNTER_ATTACK
+        - POSSESSION_CONTROL
+        - TIKA_TAKA
+        - WING_PLAY
+        - CATENACCIO
+        - ROUTE_ONE
+        - OFFSIDE_TRAP
+
+    VerticalPressure:
+      type: string
+      enum:
+        - MID_PRESSURE
+        - LOW_PRESSURE
+        - NO_VERTICAL_FOCUS
+
+    HorizontalPressure:
+      type: string
+      enum:
+        - SWARM_CENTRE
+        - SWARM_FLANKS
+        - NO_HORIZONTAL_FOCUS
+
+    TeamModifiers:
+      type: object
+      properties:
+        tactic:
+          $ref: "#/components/schemas/Tactic"
+        verticalPressure:
+          $ref: "#/components/schemas/VerticalPressure"
+        horizontalPressure:
+          $ref: "#/components/schemas/HorizontalPressure"
+
+    ######################## TEAM VALIDATION SCHEMAS START ########################
+
+    TeamFormationValidationResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/TeamFormationValidationItem"
+
+    TeamFormationValidationItem:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        message:
+          type: string
+
+    ######################## TEAM VALIDATION START ########################
+
+    ######################## PLAYER SCHEMAS START ########################
+    PlayerStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
+        - BENCH
+        - FOR_SALE
+        - RETIRED
+
+    PlayerSkill:
+      type: string
+      enum:
+        - SCORING
+        - OFFENSIVE_POSITIONING
+        - BALL_CONTROL
+        - PASSING
+        - AERIAL
+        - CONSTITUTION
+        - TACKLING
+        - DEFENSIVE_POSITIONING
+        - REFLEXES
+        - GOALKEEPER_POSITIONING
+        - INTERCEPTIONS
+        - CONTROL
+        - ORGANIZATION
+        - ONE_ON_ONE
+        - INTERCEPTING
+
+    PlayerPosition:
+      type: string
+      enum:
+        - CENTRE_BACK
+        - AERIAL_CENTRE_BACK
+        - SWEEPER
+        - LEFT_BACK
+        - RIGHT_BACK
+        - LEFT_WINGBACK
+        - RIGHT_WINGBACK
+        - DEFENSIVE_MIDFIELDER
+        - CENTRE_MIDFIELDER
+        - LEFT_MIDFIELDER
+        - RIGHT_MIDFIELDER
+        - LEFT_WINGER
+        - OFFENSIVE_MIDFIELDER
+        - RIGHT_WINGER
+        - FORWARD
+        - AERIAL_FORWARD
+        - STRIKER
+        - AERIAL_STRIKER
+        - GOALKEEPER
+      example: FORWARD
+
+    PlayerOrder:
+      type: string
+      enum:
+        - PASS_FORWARD
+        - LONG_SHOT
+        - CHANGE_FLANK
+        - PASS_TO_AREA
+        - DRIBBLE_TO_AREA
+        - WALL_PASS
+        - NONE
+      example: FORWARD
+
+    PlayerSkillRelevance:
+      type: string
+      enum:
+        - CORE
+        - SECONDARY
+        - RESIDUAL
+      example: CORE
+
+    PitchArea:
+      type: string
+      enum:
+        - LEFT_FORWARD
+        - CENTRE_FORWARD
+        - RIGHT_FORWARD
+        - LEFT_MIDFIELD
+        - CENTRE_MIDFIELD
+        - RIGHT_MIDFIELD
+        - LEFT_BACK
+        - CENTRE_BACK
+        - RIGHT_BACK
+        - OUT_OF_BOUNDS
+
+    PlayerTrainingStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
+      example: ACTIVE
+
+    PlayerCategory:
+      type: string
+      enum:
+        - JUNIOR
+        - SENIOR
+      example: JUNIOR
+
+    PlayerSkills:
+      type: object
+      properties:
+        actual:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          example: 5
+        potential:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 1000
+          example: 30
+        playerSkillRelevance:
+          $ref: "#/components/schemas/PlayerSkillRelevance"
+
+    PlayerAge:
+      type: object
+      properties:
+        years:
+          type: integer
+          format: int32
+          minimum: 15
+          maximum: 33
+          example: 20
+        months:
+          type: number
+          example: 1.05
+        days:
+          type: number
+          example: 3.01
+
+    PlayerEconomy:
+      type: object
+      properties:
+        salary:
+          type: number
+          format: double
+          example: 70000
+
+    ######################## PLAYER SCHEMAS END ########################
+
+    ######################## ECONOMY SCHEMAS START ########################
+    TransactionType:
+      type: string
+      enum:
+        - SPONSOR
+        - PLAYER_SALE
+        - PLAYER_PURCHASE
+        - ATTENDANCE
+        - MERCHANDISE
+        - PLAYER_WAGE
+        - BUILDING_UPGRADE
+        - BUILDING_MAINTENANCE
+        - RESTAURANT
+        - BILLBOARDS
+
+    SponsorPeriodicity:
+      type: string
+      enum:
+        - WEEKLY
+        - ANNUAL
+      example: ANNUAL
+
+    SponsorMode:
+      type: string
+      enum:
+        - CONSERVATIVE
+        - MODERATE
+        - AGGRESSIVE
+      example: MODERATE
+
+    PricingType:
+      example: SEASON_TICKET
+      type: string
+      enum:
+        - SEASON_TICKET
+        - DAY_TICKET
+        - MERCHANDISE
+        - RESTAURANT
+
+    BillboardMode:
+      type: string
+      enum:
+        - SHORT
+        - MEDIUM
+        - LONG
+      example: SHORT
+
+    PriceItem:
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/PricingType"
+        value:
+          type: integer
+          format: int32
+    ######################## ECONOMY SCHEMAS END ########################
+
+    ######################## FACILITY SCHEMAS START ########################\
+    Facility:
+      example: STADIUM
+      type: string
+      enum:
+        - TRAINING_CENTER
+        - YOUTH_PITCH
+        - SPORTS_DOCTORS
+        - VIDEO_ROOM
+        - SCOUTS
+        - STADIUM
+    ######################## FACILITY SCHEMAS END ########################
+
+    ######################## FANS SCHEMAS START ########################
+    ImpactType:
+      example: MATCH_WIN
+      type: string
+      enum:
+        - MATCH_WIN
+        - MATCH_LOSS
+        - MATCH_DRAW
+        - SEASON_END
+
+    LoyaltyImpactType:
+      example: MATCH_WIN
+      type: string
+      enum:
+        - MATCH_WIN
+        - MATCH_LOSS
+        - SEASON_END
+        - SEASON_START
+    ######################## FANS SCHEMAS END ########################
+
+    ######################## CANTERA SCHEMAS START ########################
+
+    CanteraInvestment:
+      example: ECONOMY
+      type: string
+      enum:
+        - ECONOMY
+        - TRADITION
+        - BUILDING
+    ######################## CANTERA SCHEMAS END ########################
+
+    ######################## TRAINING SCHEMAS START ########################
+
+    SimulateDaysRequest:
+      type: object
+      properties:
+        days:
+          type: integer
+          example: 5
+          minimum: 1
+        executeScheduled:
+          type: boolean
+          default: true
+        executeDeclines:
+          type: boolean
+          default: true
+        executePotentialRises:
+          type: boolean
+          default: true
+        createCustomPlayer:
+          type: boolean
+          default: false
+        player:
+          $ref: "#/components/schemas/CreatePlayerRequest"
+        skills:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerSkill"
+          example:
+            - SCORING
+            - TACKLING
+            - BALL_CONTROL
+            - PASSING
+            - AERIAL
+            - CONSTITUTION
+            - DEFENSIVE_POSITIONING
+            - REFLEXES
+
+    SimulateDaysResponse:
+      type: object
+      properties:
+        date:
+          type: string
+        skill:
+          type: string
+        playerName:
+          type: string
+        points:
+          type: integer
+        eventType:
+          type: string
+        pointsBefore:
+          type: integer
+        pointsAfter:
+          type: integer
+        message:
+          type: string
+        potentialPoints:
+          type: integer
+        actualPoints:
+          type: integer
+
+    TrainingModifier:
+      type: string
+      enum:
+        - BLOOM
+        - FALL_OFF_CLIFF
+
+    TrainingType:
+      type: string
+      enum:
+        - PLAYER_TRAINING
+        - POTENTIAL_RISE
+        - DECLINE_TRAINING
+
+    TrainingEventResponse:
+      type: object
+      properties:
+        player:
+          $ref: "#/components/schemas/PlayerResponse"
+        skill:
+          $ref: "#/components/schemas/PlayerSkill"
+        points:
+          type: integer
+        pointsBeforeTraining:
+          type: integer
+        pointsAfterTraining:
+          type: integer
+        trainingType:
+          $ref: "#/components/schemas/TrainingType"
+        modifier:
+          $ref: "#/components/schemas/TrainingModifier"
+        occurredAt:
+          type: string
+        currentDay:
+          type: integer
+
+    TeamTrainingEventsResponse:
+      type: object
+      properties:
+        trainings:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: "#/components/schemas/TrainingEventResponse"
+
+    PlayerScheduledTrainingResponse:
+      type: object
+      properties:
+        player:
+          $ref: "#/components/schemas/PlayerResponse"
+        skills:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerSkill"
+
+    PlayerTrainingResponse:
+      type: object
+      properties:
+        player:
+          $ref: "#/components/schemas/PlayerResponse"
+        playerId:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        skill:
+          $ref: "#/components/schemas/PlayerSkill"
+        points:
+          type: integer
+          format: int32
+        actualPoints:
+          type: integer
+          format: int32
+        potentialPoints:
+          type: integer
+          format: int32
+        pointsBeforeTraining:
+          type: integer
+          format: int32
+        pointsAfterTraining:
+          type: integer
+          format: int32
+        currentDay:
+          type: integer
+          format: int32
+
+    SchedulePlayerTrainingRequest:
+      type: object
+      properties:
+        skill:
+          $ref: "#/components/schemas/PlayerSkill"
+
+    ######################## TRAINING SCHEMAS END ########################
+
+    CreatePlayerRequest:
+      type: object
+      properties:
+        points:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 700
+          example: 5
+        age:
+          $ref: "#/components/schemas/PlayerAge"
+        bloomYear:
+          type: integer
+          minimum: 17
+          maximum: 21
+        isFallCliff:
+          type: boolean
+          default: false
+        position:
+          $ref: "#/components/schemas/PlayerPosition"
+        category:
+          $ref: "#/components/schemas/PlayerCategory"
+        skills:
+          type: object
+          additionalProperties:
+            $ref: "#/components/schemas/PlayerSkills"
+          example:
+            SCORING:
+              actual: 20
+              potential: 75
+              playerSkillRelevance: CORE
+            BALL_CONTROL:
+              actual: 25
+              potential: 78
+              playerSkillRelevance: SECONDARY
+            PASSING:
+              actual: 30
+              potential: 72
+              playerSkillRelevance: CORE
+            AERIAL:
+              actual: 15
+              potential: 74
+              playerSkillRelevance: SECONDARY
+            TACKLING:
+              actual: 40
+              potential: 75
+              playerSkillRelevance: CORE
+            DEFENSIVE_POSITIONING:
+              actual: 18
+              potential: 70
+              playerSkillRelevance: SECONDARY
+            REFLEXES:
+              actual: 22
+              potential: 77
+              playerSkillRelevance: SECONDARY
+            INTERCEPTIONS:
+              actual: 28
+              potential: 75
+              playerSkillRelevance: SECONDARY
+
+    GeneratePlayersRequest:
+      type: object
+      properties:
+        numberOfPlayers:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 1000
+          example: 10
+
+    UpdatePlayerPositionTendencyRequest:
+      type: object
+      example:
+        {
+          "SCORING":
+            { "actual": 5, "potential": 50, "playerSkillRelevance": CORE },
+        }
+      additionalProperties:
+        type: object
+        properties:
+          key:
+            $ref: "#/components/schemas/PlayerSkill"
+          value:
+            $ref: "#/components/schemas/PlayerSkills"
+
+    EditTeamRequest:
+      type: object
+      properties:
+        players:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditPlayerRequest"
+        teamModifiers:
+          $ref: "#/components/schemas/TeamModifiers"
+      required:
+        - players
+
+    EditPlayerRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        status:
+          $ref: "#/components/schemas/PlayerStatus"
+        position:
+          $ref: "#/components/schemas/PlayerPosition"
+        playerOrder:
+          $ref: "#/components/schemas/PlayerOrder"
+        playerOrderDestinationPitchArea:
+          $ref: "#/components/schemas/PitchArea"
+
+    TeamResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        name:
+          type: string
+          example: John Doe's Team
+        cantera:
+          $ref: "#/components/schemas/Cantera"
+        economy:
+          $ref: "#/components/schemas/Economy"
+        buildings:
+          $ref: "#/components/schemas/Buildings"
+        fans:
+          $ref: "#/components/schemas/Fans"
+        teamModifiers:
+          $ref: "#/components/schemas/TeamModifiers"
+        leagueId:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        rating:
+          $ref: "#/components/schemas/Rating"
+        players:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerResponse"
+
+    Fans:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/FanTier'
+
+    FanTier:
+      type: object
+      properties:
+        loyalty:
+          type: number
+          description: The loyalty level of the fan tier
+          example: 85
+        totalFans:
+          type: integer
+          description: The number of fans in this tier
+          example: 1000
+
+    Buildings:
+      type: object
+      properties:
+        freeSlots:
+          type: integer
+        stadium:
+          $ref: "#/components/schemas/Stadium"
+
+    Stadium:
+      type: object
+      properties:
+        seats:
+          type: integer
+        level:
+          type: integer
+        maintenanceCost:
+          type: number
+
+    Cantera:
+      type: object
+      properties:
+        score:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          example: 70
+        economyLevel:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          example: 55
+        traditionLevel:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          example: 60
+        buildingsLevel:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          example: 50
+
+    Economy:
+      type: object
+      properties:
+        balance:
+          type: number
+          format: double
+          example: 50000
+
+    BillboardDeal:
+      type: object
+      properties:
+        startSeason:
+          type: integer
+        endSeason:
+          type: integer
+        offer:
+          type: number
+        type:
+          $ref: "#/components/schemas/BillboardMode"
+
+    TransactionSummary:
+      type: object
+      properties:
+        weekSummary:
+          type: number
+        seasonSummary:
+          type: number
+
+    Sponsor:
+      type: object
+      example:
+        [
+          { "periodicity": "ANNUAL", "mode": "CONSERVATIVE" },
+          { "periodicity": "WEEKLY", "mode": "AGGRESSIVE" },
+        ]
+      properties:
+        periodicity:
+          $ref: "#/components/schemas/SponsorPeriodicity"
+        mode:
+          $ref: "#/components/schemas/SponsorMode"
+
+    Pricing:
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/PricingType"
+        value:
+          type: integer
+
+    PlayerWageTransaction:
+      type: object
+      properties:
+        player:
+          $ref: "#/components/schemas/PlayerResponse"
+        transactionSummary:
+          $ref: "#/components/schemas/TransactionSummary"
+
+    Transaction:
+      type: object
+      properties:
+        thisWeekAmount:
+          type: number
+
+        thisSeasonAmount:
+          type: number
+        context:
+          type: string
+
+    EconomyResponse:
+      type: object
+      properties:
+        balance:
+          type: number
+        billboardDeal:
+          $ref: "#/components/schemas/BillboardDeal"
+        sponsor:
+          type: array
+          items:
+            $ref: "#/components/schemas/Sponsor"
+        prices:
+          type: array
+          items:
+            $ref: "#/components/schemas/PriceItem"
+        transactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Transaction"
+        playerWages:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerWageTransaction"
+
+    SignSponsorRequest:
+      type: object
+      properties:
+        mode:
+          $ref: "#/components/schemas/SponsorMode"
+        periodicity:
+          $ref: "#/components/schemas/SponsorPeriodicity"
+
+    TransactionReportResponse:
+      type: object
+      properties:
+        thisWeekAmount:
+          type: number
+        lastWeekAmount:
+          type: number
+        thisSeasonAmount:
+          type: number
+        transactionType:
+          type: string
+
+    Rating:
+      type: object
+      properties:
+        actual:
+          type: number
+        potential:
+          type: number
+
+    PlayerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        age:
+          $ref: "#/components/schemas/PlayerAge"
+        teamId:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        name:
+          type: string
+          example: John Doe
+        position:
+          $ref: "#/components/schemas/PlayerPosition"
+        preferredPosition:
+          $ref: "#/components/schemas/PlayerPosition"
+        playerOrder:
+          $ref: "#/components/schemas/PlayerOrder"
+        playerOrderDestinationPitchArea:
+          $ref: "#/components/schemas/PitchArea"
+        status:
+          $ref: "#/components/schemas/PlayerStatus"
+        category:
+          $ref: "#/components/schemas/PlayerCategory"
+        actualSkills:
+          additionalProperties:
+            type: object
+            properties:
+              PlayerSkills:
+                $ref: "#/components/schemas/PlayerSkills"
+        economy:
+          $ref: "#/components/schemas/PlayerEconomy"
+        rating:
+          $ref: "#/components/schemas/Rating"
+
+    PlayerHistoricalPotentialRiseResponse:
+      type: object
+      properties:
+        playerId:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        potentialRises:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerPotentialRiseResponse"
+
+    PlayerPotentialRiseResponse:
+      type: object
+      properties:
+        playerId:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        skillThatRisen:
+          $ref: "#/components/schemas/PlayerSkill"
+        pointsToRise:
+          type: integer
+          format: int32
+        actualPoints:
+          type: integer
+          format: int32
+        potentialBeforeRaise:
+          type: integer
+          format: int32
+        potentialAfterRaise:
+          type: integer
+          format: int32
+        currentDay:
+          type: integer
+          format: int32
+
+    PlayerDeclineResponse:
+      type: object
+      properties:
+        playerId:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        skill:
+          $ref: "#/components/schemas/PlayerSkill"
+        pointsToSubtract:
+          type: integer
+          format: int32
+        pointsBeforeTraining:
+          type: integer
+          format: int32
+        pointsAfterTraining:
+          type: integer
+          format: int32
+        currentDay:
+          type: integer
+          format: int32
+
+    PlayerPositionTendencyResponse:
+      type: object
+      properties:
+        position:
+          $ref: "#/components/schemas/PlayerPosition"
+        tendencies:
+          type: object
+          example:
+            {
+              "SCORING":
+                { "actual": 5, "potential": 50, "playerSkillRelevance": CORE },
+            }
+          additionalProperties:
+            type: object
+            properties:
+              PlayerSkill:
+                $ref: "#/components/schemas/PlayerSkill"
+              PlayerSkills:
+                $ref: "#/components/schemas/PlayerSkills"
+        default:
+          type: boolean
+
+    RegisterInvestmentOnCanteraRequest:
+      type: object
+      properties:
+        points:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 100
+          example: 6
+        investment:
+          $ref: "#/components/schemas/CanteraInvestment"
+
+    RegisterEconomicInvestmentRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+          minimum: 0
+          example: 1000000
+
+    SimulateSalaryPayrollRequest:
+      type: object
+      properties:
+        weeks:
+          type: integer
+          format: int32
+          example: 5
+
+    SimulateMatchIncomeRequest:
+      type: object
+      properties:
+        homeAttendance:
+          type: integer
+          format: int32
+          example: 2000
+        awayAttendance:
+          type: integer
+          format: int32
+          example: 1000
+
+    SimulateFansUpdateRequest:
+      type: object
+      properties:
+        impactType:
+          $ref: "#/components/schemas/ImpactType"
+      required:
+        - impactType
+
+    UpdatePricingRequest:
+      type: object
+      properties:
+        prices:
+          type: array
+          items:
+            $ref: "#/components/schemas/Pricing"
+
+    SimulateBuildingUpgradeRequest:
+      type: object
+      properties:
+        facility:
+          $ref: "#/components/schemas/Facility"
+      required:
+        - facility
+
+    SignBillboardRequest:
+      type: object
+      example: { "mode": "SHORT" }
+      properties:
+        mode:
+          $ref: "#/components/schemas/BillboardMode"
+
+    SimulateLoyaltyUpdateRequest:
+      type: object
+      example: { "loyaltyImpactType": "MATCH_WIN", "goals": 5 }
+      properties:
+        loyaltyImpactType:
+          $ref: "#/components/schemas/LoyaltyImpactType"
+        goals:
+          type: integer
+          format: int32
+          example: 10
+
+    SimulateSponsorResetRequest:
+      type: object
+      properties:
+        periodicity:
+          $ref: "#/components/schemas/SponsorPeriodicity"
+
+    Error:
+      type: "object"
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

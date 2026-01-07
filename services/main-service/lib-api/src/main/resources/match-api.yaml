@@ -1,0 +1,984 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Match Service API
+
+servers:
+  - url: http://localhost:15001/v1
+
+tags:
+  - name: match
+  - name: league
+
+paths:
+
+  /league:
+    get:
+      summary: Get Leagues
+      operationId: getAllLeagues
+      tags:
+        - league
+      parameters:
+        - name: size
+          in: query
+          description: Number of leagues to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: page
+          in: query
+          description: Page number of the leagues to return
+          required: false
+          schema:
+            default: 0
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: List of filtered players
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LeagueResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+    put:
+      summary: Schedule leagues
+      operationId: scheduleAllLeagues
+      tags:
+        - league
+      responses:
+        "201":
+          description: League matches were scheduled
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+    post:
+      summary: Create a league or assign team to existing league
+      operationId: createOrAssignTeamToLeague
+      tags:
+        - league
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOrAssignTeamToLeagueRequest"
+      responses:
+        "200":
+          description: Team was successfully assigned to league
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateOrAssignTeamToLeagueResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /league/{leagueId}:
+    get:
+      summary: Get league
+      operationId: getLeague
+      tags:
+        - league
+      parameters:
+        - $ref: "#/components/parameters/LeagueIdPathParameter"
+      responses:
+        "200":
+          description: Returns the League
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LeagueResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+    put:
+      summary: Schedule league matches
+      operationId: scheduleLeague
+      tags:
+        - league
+      parameters:
+        - $ref: "#/components/parameters/LeagueIdPathParameter"
+      responses:
+        "201":
+          description: League matches were scheduled
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /match:
+    post:
+      summary: Create a match
+      operationId: createMatch
+      tags:
+        - match
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMatchRequest"
+      responses:
+        "201":
+          $ref: "#/components/responses/DefaultSuccessResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+    get:
+      summary: Get all matches
+      operationId: getAllMatches
+      parameters:
+        - name: teamId
+          in: query
+          description: Team id to filter by
+          required: false
+          schema:
+            type: string
+        - name: leagueId
+          in: query
+          description: League id to filter by
+          required: false
+          schema:
+            type: string
+        - name: size
+          in: query
+          description: Number of matches to return
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: page
+          in: query
+          description: Page number of the matches to return
+          required: false
+          schema:
+            default: 0
+            type: integer
+            format: int32
+      tags:
+        - match
+      responses:
+        "200":
+          description: Players were retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MatchResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /match/{matchId}:
+    get:
+      summary: Get a match
+      operationId: getMatch
+      tags:
+        - match
+      parameters:
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+      responses:
+        "200":
+          description: Match was retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MatchResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+    patch:
+      summary: Edit a match
+      operationId: editMatch
+      tags:
+        - match
+      parameters:
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditMatchRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/DefaultSuccessResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /match/{matchId}/team/{teamId}:
+    get:
+      summary: Get match team
+      operationId: getMatchTeam
+      parameters:
+        - name: teamId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeamResponse"
+
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+    put:
+      summary: Update match team
+      operationId: updateMatchTeam
+      parameters:
+        - name: teamId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditMatchTeamRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/DefaultSuccessResponse"
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /match/{matchId}/teams/{teamId}/players:
+    post:
+      summary: Add player to the lineup
+      operationId: addPlayer
+      parameters:
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+        - name: teamId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditPlayerRequest"
+      responses:
+        "201":
+          description: Player was added
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+    patch:
+      summary: Edit specific player in a lineup
+      operationId: editPlayer
+      tags:
+        - lineup
+      parameters:
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+        - name: teamId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditPlayerRequest"
+      responses:
+        "200":
+          description: Player was edited successfully
+          # Returning the match report as string for testing
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+  /match/{matchId}/teams/{teamId}/players/{playerId}:
+    delete:
+      summary: Delete player from lineup.
+      operationId: deletePlayer
+      tags:
+        - lineup
+      parameters:
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+        - name: teamId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+        - name: playerId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+      responses:
+        "200":
+          description: Player was removed successfully
+        "404":
+          description: Player not found
+
+  /match/{matchId}/teams/{teamId}/validate:
+    get:
+      summary: Validate the formation of a team in a match
+      operationId: validate
+      tags:
+        - lineup
+      parameters:
+        - name: selfChallenge
+          in: query
+          description: Boolean representing if its selfChallenge
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+        - name: teamId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: id
+      responses:
+        "200":
+          description: Team was validated
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          $ref: "#/components/responses/DefaultErrorResponse"
+
+################################### Components ###################################
+components:
+  ################################### Parameters ###################################
+  parameters:
+    LeagueIdPathParameter:
+      name: leagueId
+      in: path
+      description: Id of the league
+      required: true
+      schema:
+        type: string
+
+    MatchIdPathParameter:
+      name: matchId
+      in: path
+      description: Id of the match
+      required: true
+      schema:
+        type: string
+
+  ################################### Responses ###################################
+
+  responses:
+    DefaultErrorResponse:
+      description: Unexpected error
+      content:
+        "*/*":
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Error"
+
+    DefaultSuccessResponse:
+      description: "Success response"
+      content:
+        "application/json":
+          schema:
+            $ref: "#/components/schemas/SuccessResponse"
+
+  schemas:
+
+    SuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+
+    ######################## LEAGUE SCHEMAS START ########################
+    LeagueStats:
+      type: object
+      properties:
+        name:
+          type: string
+        position:
+          type: integer
+        gamesPlayed:
+          type: integer
+          example: 10
+        wins:
+          type: integer
+          example: 6
+        losses:
+          type: integer
+          example: 4
+        draws:
+          type: integer
+          example: 0
+        points:
+          type: integer
+          example: 18
+        goalsScored:
+          type: integer
+        goalsReceived:
+          type: integer
+
+    LeagueResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        name:
+          type: string
+          example: example
+        tier:
+          type: integer
+          format: int32
+        startedAt:
+          type: string
+        season:
+          type: integer
+          format: int32
+        scheduledMatches:
+          type: boolean
+        teams:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/LeagueStats'
+
+    CreateOrAssignTeamToLeagueRequest:
+      type: object
+      properties:
+        teamId:
+          type: string
+        teamName:
+          type: string
+        teamValue:
+          type: number
+
+    CreateOrAssignTeamToLeagueResponse:
+      type: object
+      properties:
+        leagueId:
+          type: string
+
+    ######################## LEAGUE SCHEMAS END ########################
+
+    ######################## TEAM VALIDATION SCHEMAS START ########################
+
+    TeamFormationValidationResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/TeamFormationValidationItem"
+
+    TeamFormationValidationItem:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        message:
+          type: string
+
+    ######################## TEAM VALIDATION START ########################
+
+    Tactic:
+      type: string
+      example: DOUBLE_TEAM
+      enum:
+        - DOUBLE_TEAM
+        - MAN_ON_MAN
+        - ZONE
+        - COUNTER_ATTACK
+        - POSSESSION_CONTROL
+        - TIKA_TAKA
+        - WING_PLAY
+        - CATENACCIO
+        - ROUTE_ONE
+        - OFFSIDE_TRAP
+
+    HorizontalPressure:
+      type: string
+      example: NO_HORIZONTAL_FOCUS
+      enum:
+        - SWARM_CENTRE
+        - SWARM_FLANKS
+        - NO_HORIZONTAL_FOCUS
+
+    VerticalPressure:
+      type: string
+      example: NO_VERTICAL_FOCUS
+      enum:
+        - MID_PRESSURE
+        - LOW_PRESSURE
+        - NO_VERTICAL_FOCUS
+
+    Error:
+      type: "object"
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+
+    CreateMatchRequest:
+      type: object
+      properties:
+        home:
+          type: object
+          properties:
+            id:
+              type: string
+              example: id
+        away:
+          type: object
+          properties:
+            id:
+              type: string
+              example: id
+
+    EditMatchRequest:
+      type: object
+      properties:
+        status:
+          $ref: "#/components/schemas/Status"
+
+    Status:
+      type: string
+      example: ACCEPTED
+      enum:
+        - PENDING
+        - ACCEPTED
+        - REJECTED
+        - SCHEDULED
+        - PLAYED
+
+    EditPlayerRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p
+        status:
+          $ref: "#/components/schemas/PlayerStatus"
+        position:
+          $ref: "#/components/schemas/PlayerPosition"
+        playerOrder:
+          $ref: "#/components/schemas/PlayerOrder"
+        playerOrderDestinationPitchArea:
+          $ref: "#/components/schemas/PitchArea"
+
+    TeamModifiers:
+      type: object
+      properties:
+        tactic:
+          $ref: "#/components/schemas/Tactic"
+        verticalPressure:
+          $ref: "#/components/schemas/VerticalPressure"
+        horizontalPressure:
+          $ref: "#/components/schemas/HorizontalPressure"
+
+    EditMatchTeamRequest:
+      type: object
+      properties:
+        players:
+          type: array
+          items:
+            $ref: "#/components/schemas/EditPlayerRequest"
+        teamModifiers:
+          $ref: "#/components/schemas/TeamModifiers"
+        self:
+          type: boolean
+
+    MatchResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        home:
+          $ref: "#/components/schemas/TeamResponse"
+        away:
+          $ref: "#/components/schemas/TeamResponse"
+        dateTime:
+          type: string
+          format: date-time
+          example: 2020-01-01T00:00:00Z
+        status:
+          $ref: "#/components/schemas/Status"
+        matchReport:
+          $ref: "#/components/schemas/MatchReportResponse"
+
+    TeamResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        modifiers:
+          $ref: "#/components/schemas/Modifiers"
+        players:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerResponse"
+        bench:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayerResponse"
+        specificLineup:
+          type: boolean
+
+    Modifiers:
+      type: object
+      properties:
+        tactic:
+          $ref: "#/components/schemas/Tactic"
+        horizontalPressure:
+          $ref: "#/components/schemas/HorizontalPressure"
+        verticalPressure:
+          $ref: "#/components/schemas/VerticalPressure"
+
+    TeamRole:
+      type: string
+      enum:
+        - HOME
+        - AWAY
+
+    PlayerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        teamId:
+          type: string
+        teamRole:
+          $ref: "#/components/schemas/TeamRole"
+        position:
+          $ref: "#/components/schemas/PlayerPosition"
+        playerOrder:
+          $ref: "#/components/schemas/PlayerOrder"
+        playerOrderDestinationPitchArea:
+          $ref: "#/components/schemas/PitchArea"
+        skills:
+          type: object
+          additionalProperties:
+              type: number
+
+
+    PlayerStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
+        - BENCH
+
+    PlayerOrder:
+      type: string
+      enum:
+        - PASS_FORWARD
+        - LONG_SHOT
+        - CHANGE_FLANK
+        - PASS_TO_AREA
+        - DRIBBLE_TO_AREA
+        - WALL_PASS
+        - NONE
+      example: FORWARD
+
+    PitchArea:
+      type: string
+      enum:
+        - LEFT_FORWARD
+        - CENTRE_FORWARD
+        - RIGHT_FORWARD
+        - LEFT_MIDFIELD
+        - CENTRE_MIDFIELD
+        - RIGHT_MIDFIELD
+        - LEFT_BACK
+        - CENTRE_BACK
+        - RIGHT_BACK
+        - OUT_OF_BOUNDS
+
+    PlayerPosition:
+      type: string
+      example: CENTRE_BACK
+      enum:
+        - CENTRE_BACK
+        - AERIAL_CENTRE_BACK
+        - SWEEPER
+        - LEFT_BACK
+        - RIGHT_BACK
+        - LEFT_WINGBACK
+        - RIGHT_WINGBACK
+        - DEFENSIVE_MIDFIELDER
+        - CENTRE_MIDFIELDER
+        - LEFT_MIDFIELDER
+        - RIGHT_MIDFIELDER
+        - LEFT_WINGER
+        - OFFENSIVE_MIDFIELDER
+        - RIGHT_WINGER
+        - FORWARD
+        - AERIAL_FORWARD
+        - STRIKER
+        - AERIAL_STRIKER
+        - GOALKEEPER
+
+    MatchReportResponse:
+      type: object
+      properties:
+        home:
+          $ref: "#/components/schemas/TeamResponse"
+        away:
+          $ref: "#/components/schemas/TeamResponse"
+        homeScore:
+          type: integer
+        awayScore:
+          type: integer
+        plays:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlayResponse"
+        homeStats:
+          $ref: "#/components/schemas/MatchStatsResponse"
+        awayStats:
+          $ref: "#/components/schemas/MatchStatsResponse"
+
+    PlayerStatsResponse:
+      allOf:
+        - $ref: '#/components/schemas/StatsResponse'
+
+    StatsResponse:
+      type: object
+      properties:
+        shots:
+          type: integer
+        goals:
+          type: integer
+        missed:
+          type: integer
+        passes:
+          type: integer
+        missedPasses:
+          type: integer
+        tackles:
+          type: integer
+        saved:
+          type: integer
+
+    MatchStatsResponse:
+      allOf:
+        - $ref: '#/components/schemas/StatsResponse'
+        - type: object
+          properties:
+            playersStats:
+              type: object
+              additionalProperties:
+                $ref: '#/components/schemas/PlayerStatsResponse'
+
+    PlayResponse:
+      type: object
+      properties:
+        clock:
+          type: integer
+        homeScore:
+          type: integer
+        awayScore:
+          type: integer
+        action:
+          $ref: "#/components/schemas/Action"
+        duel:
+          $ref: "#/components/schemas/DuelResponse"
+        ballState:
+          $ref: "#/components/schemas/BallStateResponse"
+
+    BallStateResponse:
+      type: object
+      properties:
+        height:
+          $ref: '#/components/schemas/BallHeight'
+
+    Action:
+      type: string
+      example: PASS
+      enum:
+        - PASS
+        - POSITION
+        - TACKLE
+        - SHOOT
+        - DRIBBLE
+
+    DuelStats:
+      type: object
+      properties:
+        total:
+          type: integer
+        performance:
+          $ref: "#/components/schemas/PerformanceResponse"
+        assistance:
+          $ref: "#/components/schemas/AssistanceResponse"
+        skillPoints:
+          type: integer
+        carryover:
+          type: integer
+
+    PerformanceResponse:
+      type: object
+      properties:
+        random:
+          type: number
+        previousTotalImpact:
+          type: number
+        total:
+          type: number
+
+    AssistanceResponse:
+      type: object
+      properties:
+        total:
+          type: number
+        adjusted:
+          type: number
+        teamAssistance:
+          type: object
+          additionalProperties:
+            type: number
+        modifiers:
+          type: object
+          additionalProperties:
+            type: number
+        totalModifiers:
+          type: number
+
+    DuelType:
+      type: string
+      enum:
+        - PASSING_LOW
+        - PASSING_HIGH
+        - DRIBBLE
+        - POSITIONAL
+        - BALL_CONTROL
+        - LOW_SHOT
+        - ONE_TO_ONE_SHOT
+        - HEADER_SHOT
+        - LONG_SHOT
+        - THROW_IN
+
+    DuelDisruptionType:
+      type: string
+      enum:
+        - NONE
+        - GOALKEEPER_INTERCEPTION
+        - MISSED_PASS
+        - MISSED_SHOT
+        - GOALKEEPER_FUMBLE
+
+    DuelDisruptionResponse:
+      properties:
+        type:
+          $ref: "#/components/schemas/DuelDisruptionType"
+        destinationPitchArea:
+          $ref: "#/components/schemas/PitchArea"
+        challenger:
+          $ref: "#/components/schemas/PlayerResponse"
+        receiver:
+          $ref: "#/components/schemas/PlayerResponse"
+        difference:
+          type: number
+        random:
+          type: number
+
+    DuelResponse:
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/DuelType"
+        initiator:
+          $ref: "#/components/schemas/PlayerResponse"
+        challenger:
+          $ref: "#/components/schemas/PlayerResponse"
+        receiver:
+          $ref: "#/components/schemas/PlayerResponse"
+        result:
+          $ref: "#/components/schemas/DuelResultResponse"
+        initiatorStats:
+          $ref: "#/components/schemas/DuelStats"
+        challengerStats:
+          $ref: "#/components/schemas/DuelStats"
+        pitchArea:
+          $ref: "#/components/schemas/PitchArea"
+        duelDisruption:
+          $ref: "#/components/schemas/DuelDisruptionResponse"
+
+    BallHeight:
+      type: string
+      enum:
+        - GROUND
+        - LOW
+        - HIGH
+
+    DuelResultResponse:
+      type: string
+      example: WIN
+      enum:
+        - WIN
+        - LOSE

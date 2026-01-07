@@ -6,6 +6,7 @@ import com.kjeldsen.match.domain.entities.Team;
 import com.kjeldsen.match.domain.entities.TeamRole;
 import com.kjeldsen.match.domain.modifers.HorizontalPressure;
 import com.kjeldsen.match.domain.modifers.Tactic;
+import com.kjeldsen.match.domain.modifers.TeamModifiers;
 import com.kjeldsen.match.domain.modifers.VerticalPressure;
 import com.kjeldsen.player.domain.PitchArea;
 import com.kjeldsen.player.domain.PlayerOrder;
@@ -140,7 +141,6 @@ public final class RandomHelper {
             .build();
         List<Player> players = genActivePlayers(team);
         List<Player> bench = genBenchPlayers(team);
-        int rating = genAttributeRating();
 
         Tactic tactic = Tactic.DOUBLE_TEAM;
         VerticalPressure vp = VerticalPressure.MID_PRESSURE;
@@ -155,10 +155,10 @@ public final class RandomHelper {
             .id(team.getId())
             .players(players)
             .bench(bench)
-            .tactic(tactic)
-            .verticalPressure(vp)
-            .horizontalPressure(hp)
-            .rating(rating)
+            .modifiers(TeamModifiers.builder()
+                .tactic(tactic)
+                .verticalPressure(vp)
+                .horizontalPressure(hp).build())
             .build();
     }
 }

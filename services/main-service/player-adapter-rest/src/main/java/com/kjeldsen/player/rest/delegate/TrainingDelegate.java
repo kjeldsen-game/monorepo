@@ -34,7 +34,6 @@ public class TrainingDelegate implements TrainingApiDelegate {
 
     @Override
     public ResponseEntity<SuccessResponse> schedulePlayerTraining(String playerId, SchedulePlayerTrainingRequest schedulePlayerTrainingRequest) {
-        // Access denied as the player is not in your Team
         Optional<Player> optionalPlayer = playerReadRepository.findOneById(Player.PlayerId.of(playerId));
         if (optionalPlayer.isPresent() && !optionalPlayer.get().getTeamId()
             .equals(getTeamUseCase.get(SecurityUtils.getCurrentUserId()).getId())) {
@@ -47,7 +46,7 @@ public class TrainingDelegate implements TrainingApiDelegate {
     }
 
     @Override
-    @PreAuthorize("@asRole('ADMIN') or @accessAuthorizer.hasAccess(#teamId)")
+    @PreAuthorize("hasRole('ADMIN') or @accessAuthorizer.hasAccess(#teamId)")
     public ResponseEntity<List<PlayerScheduledTrainingResponse>> getScheduledPlayerTrainings(String teamId, PlayerPosition position) {
         List<GetActiveScheduledTrainingsUseCase.PlayerScheduledTraining> playerScheduled =
             getActiveScheduledTrainingsUseCase.get(Team.TeamId.of(teamId), PlayerMapper.INSTANCE.map(position));

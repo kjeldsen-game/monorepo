@@ -1,11 +1,11 @@
 package com.kjeldsen.market.application;
 
 import com.kjeldsen.lib.clients.PlayerClientApi;
-import com.kjeldsen.lib.model.player.PlayerClient;
 import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
-import com.kjeldsen.market.utils.AuctionPlayerMapper;
+import com.kjeldsen.market.application.mappers.AuctionPlayerMapper;
 import com.kjeldsen.player.domain.provider.InstantProvider;
+import com.kjeldsen.player.rest.model.PlayerResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -24,7 +24,7 @@ public class CreateAuctionUseCase {
 
     public Auction create(String playerId, String teamId) {
         log.info("CreateAuctionUseCase for player {} team {}", playerId, teamId);
-        PlayerClient player = playerClientApi.getPlayer(playerId);
+        PlayerResponse player = playerClientApi.getPlayer(playerId);
 
         if (player == null) {
             throw new IllegalArgumentException();

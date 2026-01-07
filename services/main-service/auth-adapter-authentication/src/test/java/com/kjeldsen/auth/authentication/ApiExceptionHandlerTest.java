@@ -1,7 +1,7 @@
 package com.kjeldsen.auth.authentication;
 
-import com.kjeldsen.auth.authentication.model.ErrorResponse;
 import com.kjeldsen.auth.domain.exceptions.*;
+import com.kjeldsen.auth.rest.model.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

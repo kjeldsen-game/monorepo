@@ -1,14 +1,12 @@
 package com.kjeldsen.auth.authentication;
 
 import com.kjeldsen.auth.application.usecases.*;
-import com.kjeldsen.auth.authentication.api.AuthApiDelegate;
 import com.kjeldsen.auth.authentication.mappers.ProfileMapper;
-import com.kjeldsen.auth.authentication.model.*;
 import com.kjeldsen.auth.domain.Profile;
 import com.kjeldsen.auth.domain.User;
-import com.kjeldsen.auth.domain.exceptions.NotFoundException;
-import com.kjeldsen.lib.clients.TeamClientApi;
-import com.kjeldsen.lib.model.team.TeamClient;
+
+import com.kjeldsen.auth.rest.api.*;
+import com.kjeldsen.auth.rest.model.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -74,19 +71,22 @@ public class AuthenticationDelegate implements AuthApiDelegate {
 
     @Override
     public ResponseEntity<SuccessResponse> register(@Valid RegisterRequest request) {
-//        for ( int a = 0; a < 10; a++ ) {
-//            registerUserUseCase.register(a+request.getEmail(), request.getPassword(),
-//                request.getTeamName()+a, request.getConfirmPassword());
-//        }
         registerUserUseCase.register(request.getEmail(), request.getPassword(),
             request.getTeamName(), request.getConfirmPassword());
         return ResponseEntity.ok(new SuccessResponse().message("User registered successfully!"));
     }
 
     @Override
-    public ResponseEntity<TokenResponse> generateToken(TokenRequest tokenRequest) {
-        String token = generateTokenUseCase.get(tokenRequest.getEmail(), tokenRequest.getPassword());
-        System.out.println("Generated token: " + token);
+    public ResponseEntity<TokenResponse> generateServiceToken(ServiceTokenRequest serviceTokenRequest) {
+        log.info("Generating service token endpoint");
+        String token = generateTokenUseCase.getServiceToken(serviceTokenRequest.getServiceName(), serviceTokenRequest.getClientSecret(),
+            serviceTokenRequest.getAudience());
         return ResponseEntity.ok(new TokenResponse().accessToken(token));
+    }
+
+    @Override
+    public ResponseEntity<TokenResponse> generateUserToken(UserTokenRequest userTokenRequest) {
+        return ResponseEntity.ok(new TokenResponse().accessToken(
+            generateTokenUseCase.get(userTokenRequest.getEmail(), userTokenRequest.getPassword())));
     }
 }

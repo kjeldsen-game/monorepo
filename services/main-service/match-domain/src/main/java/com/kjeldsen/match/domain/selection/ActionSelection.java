@@ -25,7 +25,7 @@ public class ActionSelection {
     // actions, based on pitch area and player position, then chooses one randomly.
     public static Action selectAction(GameState state, Player player) {
         List<Action> legalActions = state.legalActions();
-        log.info("Legal actions: {}", legalActions);
+        log.info("Legal actions: {} PitchRank {}", legalActions, state.getBallState().getArea());
         List<Action> actions = filterActions(legalActions, state, player);
         int size = actions.size();
         Action selectedAction = actions.get(new Random().nextInt(size));
@@ -55,6 +55,16 @@ public class ActionSelection {
             // Prevents certain players from shooting
             .filter(action -> !(action == Action.SHOOT && shootingProhibited(player, pitchArea)))
             .toList();
+
+        if (state.getLastNPlays(3).isPresent()) {
+            Play play= state.getLastNPlays(3).get().get(0);
+            // Force Forward to shoot if they have passed once in a row
+            if (play.getAction() == Action.PASS && player.getPosition() == PlayerPosition.FORWARD
+                && play.getDuel().getInitiator().getPosition() == PlayerPosition.FORWARD && play.getDuel().getInitiator().getTeamRole() == player.getTeamRole()) {
+                log.info("Forcing FORWARD to SHOOT after PASS");
+                actions = actions.stream().filter(action -> action == Action.SHOOT).toList();
+            }
+        }
 
         // If inside a chained action sequence, chose the only valid action.
         if (state.getChainActionSequence().isActive()) {

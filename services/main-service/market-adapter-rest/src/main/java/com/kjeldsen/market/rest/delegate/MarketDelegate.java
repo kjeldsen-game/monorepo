@@ -14,6 +14,7 @@ import com.kjeldsen.market.rest.api.MarketApiDelegate;
 import com.kjeldsen.market.rest.mapper.AuctionMapper;
 import com.kjeldsen.market.rest.mapper.PlayerMapper;
 import com.kjeldsen.market.rest.model.*;
+import com.kjeldsen.player.rest.model.TeamResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -66,7 +67,7 @@ public class MarketDelegate implements MarketApiDelegate {
         PlayerPosition position, String skills, String potentialSkills, Integer minAge, Integer maxAge, Double minBid, Double maxBid,
         String playerId) {
 
-        TeamClient team = teamClientApi.getTeam(null, null, SecurityUtils.getCurrentUserId()).get(0);
+        TeamResponse team = teamClientApi.getTeams( null, SecurityUtils.getCurrentUserId()).get(0);
 
         List<Auction> auctions = getAuctionUseCase.getAuctions(maxBid, minBid, maxAge, minAge,
             position != null ? PlayerMapper.INSTANCE.playerPositionMap(position) : null, skills, potentialSkills,

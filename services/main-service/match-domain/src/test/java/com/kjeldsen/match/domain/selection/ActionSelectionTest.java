@@ -83,7 +83,6 @@ class ActionSelectionTest {
             .id(home.getId())
             .players(players)
             .bench(bench)
-            .rating(1)
             .build();
 
         Play play = Play.builder()

@@ -1,13 +1,10 @@
 package com.kjeldsen.auth.authentication;
 
-import com.kjeldsen.auth.authorization.InternalRequestsProperties;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -44,18 +41,21 @@ public class SecurityConfig {
     private final SecurityProperties securityProperties;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain publicSecurityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for stateless APIs
             .authorizeHttpRequests(requests -> requests
+                // Internal without Authentication
+                .requestMatchers("/v1/auth/token-service")
+                .access(((authentication, object) ->
+                    new AuthorizationDecision(internalApiKey.equals(object.getRequest().getHeader("X-Internal-Request")))))
+                // Public without Authentication
                 .requestMatchers("/v1/auth/**", "/swagger-ui/**", "/api-docs/**", "/actuator/**", "/actuator", "/v1/simulator/hello-world")
                 .permitAll()
-                .requestMatchers(HttpMethod.POST, "/v1/league")
-                .access(((authentication, object) -> {
-                    var request = object.getRequest();
-                    String apiKey = internalApiKey;
-                    return new AuthorizationDecision(apiKey.equals(request.getHeader("X-Internal-API-Key")));
-                }))
+//
+//                .requestMatchers(HttpMethod.POST, "/v1/league")
+//                .access(((authentication, object) ->
+//                    new AuthorizationDecision(internalApiKey.equals(object.getRequest().getHeader("X-Internal-API-Key")))))
                 .anyRequest()
                 .authenticated()
             )

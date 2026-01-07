@@ -1,10 +1,8 @@
 package com.kjeldsen.market.rest.mapper;
 
-import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.AuctionPlayer;
 import com.kjeldsen.market.rest.model.*;
-import jdk.jfr.Name;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

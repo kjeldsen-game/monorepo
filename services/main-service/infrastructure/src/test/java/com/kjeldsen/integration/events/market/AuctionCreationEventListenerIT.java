@@ -4,6 +4,7 @@ import com.kjeldsen.integration.events.AbstractEventIT;
 import com.kjeldsen.lib.events.AuctionCreationEvent;
 import com.kjeldsen.market.application.CreateAuctionUseCase;
 import com.kjeldsen.market.domain.Auction;
+import com.kjeldsen.market.domain.AuctionPlayer;
 import com.kjeldsen.market.domain.schedulers.AuctionEndJobScheduler;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +32,7 @@ class AuctionCreationEventListenerIT extends AbstractEventIT {
         Auction auction = Auction.builder()
             .id(Auction.AuctionId.of("auctionId"))
             .teamId("teamId")
-            .playerId("playerId")
+            .player(AuctionPlayer.builder().id("playerId").build())
             .build();
 
         when(createAuctionUseCase.create("playerId","teamId")).thenReturn(auction);

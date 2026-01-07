@@ -1,10 +1,8 @@
 package com.kjeldsen.player.application.usecases.team;
 
 import com.kjeldsen.lib.clients.LeagueClientApi;
-import com.kjeldsen.lib.events.TeamCreationEvent;
-import com.kjeldsen.lib.model.league.CreateOrAssignTeamToLeagueRequestClient;
-import com.kjeldsen.lib.model.league.CreateOrAssignTeamToLeagueResponseClient;
-import com.kjeldsen.lib.publishers.GenericEventPublisher;
+import com.kjeldsen.match.rest.model.CreateOrAssignTeamToLeagueRequest;
+import com.kjeldsen.match.rest.model.CreateOrAssignTeamToLeagueResponse;
 import com.kjeldsen.player.application.usecases.GeneratePlayersUseCase;
 import com.kjeldsen.player.domain.Player;
 import com.kjeldsen.player.domain.Rating;
@@ -37,9 +35,9 @@ public class CreateTeamUseCase {
         Team team = TeamFactory.create(userId, teamName, teamId);
         teamWriteRepository.save(team);
 
-        CreateOrAssignTeamToLeagueResponseClient response =
-            leagueClientApi.assignTeamToLeague(CreateOrAssignTeamToLeagueRequestClient.builder()
-                .teamId(team.getId().value()).teamName(teamName).build());
+        CreateOrAssignTeamToLeagueResponse response =
+            leagueClientApi.assignTeamToLeague(new CreateOrAssignTeamToLeagueRequest()
+                .teamId(team.getId().value()).teamName(teamName));
 
 //        List<Player> players = generatePlayersUseCase.generateCustomPlayers(team.getId());
 
