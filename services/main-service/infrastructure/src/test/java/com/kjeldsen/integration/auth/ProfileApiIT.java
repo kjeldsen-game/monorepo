@@ -1,7 +1,7 @@
 package com.kjeldsen.integration.auth;
 
 import com.kjeldsen.auth.authorization.SecurityUtils;
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.User;
 import com.kjeldsen.auth.persistence.mongo.repositories.UserMongoRepository;
 import com.kjeldsen.integration.AbstractIT;
 import com.kjeldsen.player.domain.Team;
@@ -10,10 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.mockito.MockedStatic;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.Mockito.mockStatic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Slf4j
@@ -34,6 +36,22 @@ public class ProfileApiIT extends AbstractIT {
     @Nested
     @DisplayName("HTTP GET to /auth should")
     class HTTPGetToAuthShould {
+
+        @Test
+        void should_update_avatar() throws Exception {
+            User user = User.builder().id("123").teamId("t").email("email@email.com").password("pass").build();
+            userMongoRepository.save(user);
+
+            MockMultipartFile file = new MockMultipartFile(
+                "file", "avatar.jpg", "image/jpeg", "img".getBytes()
+            );
+
+            try(MockedStatic<SecurityUtils> mockedStatic = mockStatic(SecurityUtils.class)) {
+                mockedStatic.when(SecurityUtils::getCurrentUserId).thenReturn(user.getId());
+                mockMvc.perform(multipart("/v1/auth/profile/avatar").file(file)
+                ).andExpect(status().isOk());
+            }
+        }
 
         @Test
         @Disabled

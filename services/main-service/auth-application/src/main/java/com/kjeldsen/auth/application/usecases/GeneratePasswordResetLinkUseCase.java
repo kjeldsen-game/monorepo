@@ -1,8 +1,8 @@
 package com.kjeldsen.auth.application.usecases;
 
 import com.kjeldsen.auth.application.usecases.email.SendEmailUseCase;
-import com.kjeldsen.auth.domain.PasswordResetToken;
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.PasswordResetToken;
+import com.kjeldsen.auth.domain.models.User;
 import com.kjeldsen.auth.domain.repositories.PasswordResetTokenWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

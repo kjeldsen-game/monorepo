@@ -1,7 +1,6 @@
 package com.kjeldsen.match.application.usecases;
 
 import com.kjeldsen.lib.clients.TeamClientApi;
-import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.player.rest.model.TeamResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

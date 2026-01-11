@@ -1,7 +1,7 @@
 package com.kjeldsen.auth.persistence.adapters.mongo;
 
-import com.kjeldsen.auth.domain.Role;
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.Role;
+import com.kjeldsen.auth.domain.models.User;
 import com.kjeldsen.auth.domain.repositories.UserReadRepository;
 import com.kjeldsen.auth.persistence.common.AbstractMongoDbTest;
 import com.kjeldsen.auth.persistence.mongo.repositories.UserMongoRepository;

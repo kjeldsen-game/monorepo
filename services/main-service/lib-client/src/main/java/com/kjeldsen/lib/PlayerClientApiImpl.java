@@ -1,5 +1,6 @@
 package com.kjeldsen.lib;
 
+import com.kjeldsen.lib.auth.InternalClientTokenProvider;
 import com.kjeldsen.lib.clients.PlayerClientApi;
 import com.kjeldsen.lib.clients.base.AuthenticatedClientApiImpl;
 import com.kjeldsen.player.rest.model.PlayerResponse;

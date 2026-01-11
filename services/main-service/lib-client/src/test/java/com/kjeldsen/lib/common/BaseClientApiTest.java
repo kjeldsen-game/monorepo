@@ -1,5 +1,6 @@
-package com.kjeldsen.lib;
+package com.kjeldsen.lib.common;
 
+import com.kjeldsen.lib.auth.InternalClientTokenProvider;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;

@@ -1,5 +1,6 @@
-package com.kjeldsen.integration;
+package com.kjeldsen.integration.config;
 
+import com.kjeldsen.integration.AbstractContainerizedIT;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.testcontainers.containers.MongoDBContainer;

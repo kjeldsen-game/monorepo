@@ -1,6 +1,5 @@
 package com.kjeldsen.match.domain.factories;
 
-import com.kjeldsen.lib.events.MatchEvent;
 import com.kjeldsen.match.domain.entities.Match;
 import com.kjeldsen.match.domain.entities.Team;
 

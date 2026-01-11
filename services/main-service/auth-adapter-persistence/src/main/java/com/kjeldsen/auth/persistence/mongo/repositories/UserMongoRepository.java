@@ -1,6 +1,6 @@
 package com.kjeldsen.auth.persistence.mongo.repositories;
 
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

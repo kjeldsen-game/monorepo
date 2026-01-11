@@ -1,14 +1,13 @@
 package com.kjeldsen.auth.application.usecases;
 
-import com.kjeldsen.auth.domain.PasswordResetToken;
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.PasswordResetToken;
+import com.kjeldsen.auth.domain.models.User;
 import com.kjeldsen.auth.domain.exceptions.UnauthorizedException;
 import com.kjeldsen.auth.domain.repositories.PasswordResetTokenReadRepository;
 import com.kjeldsen.auth.domain.repositories.PasswordResetTokenWriteRepository;
 import com.kjeldsen.auth.domain.repositories.UserWriteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

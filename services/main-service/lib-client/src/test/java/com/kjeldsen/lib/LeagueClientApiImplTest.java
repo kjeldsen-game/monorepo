@@ -1,5 +1,6 @@
 package com.kjeldsen.lib;
 
+import com.kjeldsen.lib.common.BaseClientApiTest;
 import com.kjeldsen.match.rest.model.CreateOrAssignTeamToLeagueRequest;
 import com.kjeldsen.match.rest.model.CreateOrAssignTeamToLeagueResponse;
 import okhttp3.mockwebserver.MockResponse;
@@ -7,13 +8,12 @@ import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.web.reactive.function.client.WebClient;
 
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LeagueClientApiImplTest extends BaseClientApiTest{
+class LeagueClientApiImplTest extends BaseClientApiTest {
 
     private LeagueClientApiImpl leagueClientApi;
 

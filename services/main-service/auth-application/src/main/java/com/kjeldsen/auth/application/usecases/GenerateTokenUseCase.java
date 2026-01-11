@@ -1,9 +1,10 @@
 package com.kjeldsen.auth.application.usecases;
 
-import com.kjeldsen.auth.domain.InternalSecuritySubject;
+import com.kjeldsen.auth.domain.models.InternalSecuritySubject;
 import com.kjeldsen.auth.domain.exceptions.BadRequestException;
 import com.kjeldsen.auth.domain.exceptions.ForbiddenException;
 import com.kjeldsen.auth.domain.exceptions.UnauthorizedException;
+import com.kjeldsen.auth.domain.models.User;
 import com.kjeldsen.auth.domain.providers.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,12 +25,13 @@ public class GenerateTokenUseCase {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
+
     public String get(String email, String password) {
         if (!EmailValidator.getInstance().isValid(email)) {
             throw new BadRequestException("Invalid email address format!");
         }
 
-        com.kjeldsen.auth.domain.User user;
+        User user;
         user = getUserUseCase.getUserByEmail(email);
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new UnauthorizedException("Invalid email or password!");

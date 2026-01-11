@@ -1,13 +1,12 @@
 package com.kjeldsen.auth.application.usecases;
 
-import com.kjeldsen.auth.domain.Role;
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.Role;
+import com.kjeldsen.auth.domain.models.User;
 import com.kjeldsen.auth.domain.exceptions.BadRequestException;
 import com.kjeldsen.auth.domain.repositories.UserReadRepository;
 import com.kjeldsen.auth.domain.repositories.UserWriteRepository;
 import com.kjeldsen.lib.TeamClientApiImpl;
 import com.kjeldsen.lib.events.UserRegisterEvent;
-import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.player.rest.model.TeamResponse;
 import org.junit.jupiter.api.DisplayName;

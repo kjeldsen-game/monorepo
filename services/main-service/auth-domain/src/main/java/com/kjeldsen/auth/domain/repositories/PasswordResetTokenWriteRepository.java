@@ -1,6 +1,6 @@
 package com.kjeldsen.auth.domain.repositories;
 
-import com.kjeldsen.auth.domain.PasswordResetToken;
+import com.kjeldsen.auth.domain.models.PasswordResetToken;
 
 public interface PasswordResetTokenWriteRepository {
 

@@ -2,7 +2,6 @@ package com.kjeldsen.market.application;
 
 import com.kjeldsen.lib.clients.TeamClientApi;
 import com.kjeldsen.lib.events.market.BidEvent;
-import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.builders.PlaceBidNotificationEventBuilder;

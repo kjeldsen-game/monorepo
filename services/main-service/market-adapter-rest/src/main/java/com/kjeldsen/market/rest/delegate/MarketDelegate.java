@@ -3,7 +3,6 @@ package com.kjeldsen.market.rest.delegate;
 import com.kjeldsen.auth.authorization.SecurityUtils;
 import com.kjeldsen.lib.clients.TeamClientApi;
 import com.kjeldsen.lib.events.market.AuctionEndEvent;
-import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.lib.publishers.GenericEventPublisher;
 import com.kjeldsen.market.application.AuctionEndUseCase;
 import com.kjeldsen.market.application.GetAuctionUseCase;

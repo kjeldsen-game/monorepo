@@ -1,17 +1,13 @@
 package com.kjeldsen.auth.application.usecases;
 
-import com.kjeldsen.auth.domain.Profile;
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.Profile;
+import com.kjeldsen.auth.domain.models.User;
 import com.kjeldsen.auth.domain.exceptions.NotFoundException;
 import com.kjeldsen.lib.clients.TeamClientApi;
-import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.player.rest.model.TeamResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.util.Base64;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j

@@ -1,7 +1,7 @@
 package com.kjeldsen.auth.application.usecases;
 
 import com.kjeldsen.auth.authorization.SecurityUtils;
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.User;
 import com.kjeldsen.auth.domain.exceptions.NotFoundException;
 import com.kjeldsen.auth.domain.exceptions.UnauthorizedException;
 import com.kjeldsen.auth.domain.repositories.UserReadRepository;

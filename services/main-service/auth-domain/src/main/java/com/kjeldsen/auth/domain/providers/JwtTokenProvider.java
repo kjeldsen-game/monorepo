@@ -1,6 +1,6 @@
 package com.kjeldsen.auth.domain.providers;
 
-import com.kjeldsen.auth.domain.Role;
+import com.kjeldsen.auth.domain.models.Role;
 
 import java.util.Set;
 

@@ -1,6 +1,6 @@
 package com.kjeldsen.lib.clients.base;
 
-import com.kjeldsen.lib.InternalClientTokenProvider;
+import com.kjeldsen.lib.auth.InternalClientTokenProvider;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.reactive.function.client.WebClient;
 

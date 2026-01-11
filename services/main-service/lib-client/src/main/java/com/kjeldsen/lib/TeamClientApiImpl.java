@@ -1,8 +1,8 @@
 package com.kjeldsen.lib;
 
+import com.kjeldsen.lib.auth.InternalClientTokenProvider;
 import com.kjeldsen.lib.clients.TeamClientApi;
 import com.kjeldsen.lib.clients.base.AuthenticatedClientApiImpl;
-import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.player.rest.model.TeamResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

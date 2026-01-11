@@ -1,5 +1,8 @@
-package com.kjeldsen.auth.domain;
+package com.kjeldsen.auth.domain.models;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public enum InternalSecuritySubject {
     PLAYER,
     TEAM,
@@ -14,6 +17,7 @@ public enum InternalSecuritySubject {
      * @return true if valid, false otherwise
      */
     public static boolean isValid(String value) {
+        log.debug("Validating InternalSecuritySubject: {}", value);
         if (value == null || value.isBlank()) {
             return false;
         }

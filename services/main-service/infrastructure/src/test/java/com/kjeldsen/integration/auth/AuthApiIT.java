@@ -2,8 +2,8 @@ package com.kjeldsen.integration.auth;
 
 
 import com.kjeldsen.auth.authorization.SecurityUtils;
-import com.kjeldsen.auth.domain.Role;
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.Role;
+import com.kjeldsen.auth.domain.models.User;
 import com.kjeldsen.auth.domain.providers.JwtTokenProvider;
 import com.kjeldsen.auth.persistence.mongo.repositories.UserMongoRepository;
 import com.kjeldsen.auth.rest.model.*;
@@ -54,11 +54,9 @@ public class AuthApiIT extends AbstractIT {
             Team team = Team.builder().id(Team.TeamId.of("exampleId")).userId(user.getId()).build();
             teamMongoRepository.save(team);
 
-            String token = "exampleToken";
             try(MockedStatic<SecurityUtils> mockedStatic = mockStatic(SecurityUtils.class)) {
                 mockedStatic.when(SecurityUtils::getCurrentUserId).thenReturn(user.getId());
-                mockMvc.perform(get("/v1/auth/me")
-                    .header("Authorization", "Bearer " + token))
+                mockMvc.perform(get("/v1/auth/me"))
                     .andExpect(status().isOk())
                     .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                     .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(user.getId()));

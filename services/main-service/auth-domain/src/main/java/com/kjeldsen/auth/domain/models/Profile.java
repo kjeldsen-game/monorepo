@@ -1,4 +1,4 @@
-package com.kjeldsen.auth.domain;
+package com.kjeldsen.auth.domain.models;
 
 import jakarta.validation.constraints.Email;
 import lombok.Builder;

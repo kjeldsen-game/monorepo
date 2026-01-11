@@ -2,8 +2,8 @@ package com.kjeldsen.auth.authentication;
 
 import com.kjeldsen.auth.application.usecases.*;
 import com.kjeldsen.auth.authentication.mappers.ProfileMapper;
-import com.kjeldsen.auth.domain.Profile;
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.Profile;
+import com.kjeldsen.auth.domain.models.User;
 
 import com.kjeldsen.auth.rest.api.*;
 import com.kjeldsen.auth.rest.model.*;

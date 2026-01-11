@@ -1,6 +1,6 @@
 package com.kjeldsen.auth.persistence.adapters.mongo;
 
-import com.kjeldsen.auth.domain.PasswordResetToken;
+import com.kjeldsen.auth.domain.models.PasswordResetToken;
 import com.kjeldsen.auth.domain.repositories.PasswordResetTokenReadRepository;
 import com.kjeldsen.auth.persistence.mongo.repositories.PasswordResetTokenRepository;
 import lombok.RequiredArgsConstructor;

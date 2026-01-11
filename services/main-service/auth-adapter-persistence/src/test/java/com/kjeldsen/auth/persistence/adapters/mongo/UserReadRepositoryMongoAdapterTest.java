@@ -1,6 +1,6 @@
 package com.kjeldsen.auth.persistence.adapters.mongo;
 
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.User;
 import com.kjeldsen.auth.persistence.mongo.repositories.UserMongoRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

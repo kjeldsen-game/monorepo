@@ -1,4 +1,4 @@
-package com.kjeldsen.integration;
+package com.kjeldsen.integration.config;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;

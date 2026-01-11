@@ -1,4 +1,4 @@
-package com.kjeldsen.auth.domain;
+package com.kjeldsen.auth.domain.models;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,13 +1,10 @@
-package com.kjeldsen.auth.domain;
+package com.kjeldsen.auth.domain.models;
 
 import jakarta.validation.constraints.Email;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.beans.Encoder;
 import java.util.Base64;
 import java.util.Set;
 

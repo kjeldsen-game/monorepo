@@ -1,7 +1,7 @@
 package com.kjeldsen.auth.authentication.provider;
 
 import com.kjeldsen.auth.authentication.SecurityProperties;
-import com.kjeldsen.auth.domain.Role;
+import com.kjeldsen.auth.domain.models.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,18 +1,8 @@
 package com.kjeldsen.market.application;
 
 import com.kjeldsen.lib.clients.PlayerClientApi;
-import com.kjeldsen.lib.model.player.PlayerClient;
-import com.kjeldsen.market.domain.Auction;
 import com.kjeldsen.market.domain.repositories.AuctionWriteRepository;
-import com.kjeldsen.player.domain.Player;
-import com.kjeldsen.player.domain.Team;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.ArgumentCaptor;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class CreateAuctionUseCaseTest {
 

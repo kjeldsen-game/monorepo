@@ -1,14 +1,10 @@
 package com.kjeldsen.auth.application.usecases;
 
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.User;
 import com.kjeldsen.auth.domain.repositories.UserWriteRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

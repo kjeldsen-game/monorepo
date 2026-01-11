@@ -1,6 +1,19 @@
 spring:
   application:
     name: main-service-test
+  mail:
+    host: localhost
+    port: 3025
+    username: test@local.com
+    password: testpassword
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
+          ssl:
+            enable: false
 
 server:
   port: 43566

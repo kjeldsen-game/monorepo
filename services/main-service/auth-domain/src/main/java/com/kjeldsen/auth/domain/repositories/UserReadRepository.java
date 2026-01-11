@@ -1,6 +1,6 @@
 package com.kjeldsen.auth.domain.repositories;
 
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.User;
 
 import java.util.Optional;
 

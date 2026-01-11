@@ -1,5 +1,6 @@
 package com.kjeldsen.lib;
 
+import com.kjeldsen.lib.auth.InternalClientTokenProvider;
 import com.kjeldsen.lib.clients.LeagueClientApi;
 import com.kjeldsen.lib.clients.base.AuthenticatedClientApiImpl;
 import com.kjeldsen.match.rest.model.CreateOrAssignTeamToLeagueRequest;

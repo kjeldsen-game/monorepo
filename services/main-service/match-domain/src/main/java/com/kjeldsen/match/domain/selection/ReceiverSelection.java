@@ -203,12 +203,29 @@ public class ReceiverSelection {
             .findAny();
     }
 
+    /**
+     * Filter attacking players that are not the player already in possession and are nearby the ball area.
+     */
     private static Stream<Player> nearbyTeammates(GameState state, Player player) {
+
+        List<Player> teammates = state.attackingTeam().getPlayers().stream()
+            .filter(teammate -> !Objects.equals(player.getId(), teammate.getId()))
+            .filter(teammate -> teammateIsNearby(state.getBallState().getArea(), teammate)).toList();
+
+        System.out.println("playerpos  = " + player.getPosition() + " ballstate = " + state.getBallState().getArea());
+        teammates.forEach(teammate -> {
+            System.out.print("name = " + teammate.getName() + " " + "position = " + teammate.getPosition() + "| ");
+        });
+
         return state.attackingTeam().getPlayers().stream()
             .filter(teammate -> !Objects.equals(player.getId(), teammate.getId()))
             .filter(teammate -> teammateIsNearby(state.getBallState().getArea(), teammate));
     }
 
+    /**
+    * Return boolean value indicating if a teammate is nearby the given pitch area. By default if PitchArea is not OUT_OF_BOUNDS,
+    * teammate is nearby if the coverage of his position
+    */
     private static boolean teammateIsNearby(PitchArea playerArea, Player teammate) {
         if (playerArea.equals(PitchArea.OUT_OF_BOUNDS)) {
             return teammate.getPosition().coverage().stream()

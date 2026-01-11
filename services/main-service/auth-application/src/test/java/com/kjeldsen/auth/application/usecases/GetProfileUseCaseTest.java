@@ -1,18 +1,13 @@
 package com.kjeldsen.auth.application.usecases;
 
-import com.kjeldsen.auth.domain.Profile;
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.Profile;
+import com.kjeldsen.auth.domain.models.User;
 import com.kjeldsen.auth.domain.exceptions.NotFoundException;
 import com.kjeldsen.lib.clients.TeamClientApi;
-import com.kjeldsen.lib.model.team.TeamClient;
 import com.kjeldsen.player.rest.model.TeamResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;

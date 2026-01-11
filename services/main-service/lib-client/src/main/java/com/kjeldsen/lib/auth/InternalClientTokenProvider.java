@@ -1,4 +1,4 @@
-package com.kjeldsen.lib;
+package com.kjeldsen.lib.auth;
 
 import com.kjeldsen.auth.rest.model.ServiceTokenRequest;
 import com.kjeldsen.auth.rest.model.TokenResponse;

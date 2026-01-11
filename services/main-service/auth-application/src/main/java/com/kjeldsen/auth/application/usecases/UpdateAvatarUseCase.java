@@ -1,6 +1,6 @@
 package com.kjeldsen.auth.application.usecases;
 
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.User;
 import com.kjeldsen.auth.domain.repositories.UserWriteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

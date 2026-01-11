@@ -1,6 +1,6 @@
 package com.kjeldsen.auth.application.usecases;
 
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.User;
 import com.kjeldsen.auth.domain.exceptions.BadRequestException;
 import com.kjeldsen.auth.domain.exceptions.ForbiddenException;
 import com.kjeldsen.auth.domain.exceptions.UnauthorizedException;

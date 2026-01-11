@@ -1,7 +1,7 @@
 package com.kjeldsen.auth.application.usecases;
 
-import com.kjeldsen.auth.domain.PasswordResetToken;
-import com.kjeldsen.auth.domain.User;
+import com.kjeldsen.auth.domain.models.PasswordResetToken;
+import com.kjeldsen.auth.domain.models.User;
 import com.kjeldsen.auth.domain.exceptions.UnauthorizedException;
 import com.kjeldsen.auth.domain.repositories.PasswordResetTokenReadRepository;
 import com.kjeldsen.auth.domain.repositories.PasswordResetTokenWriteRepository;

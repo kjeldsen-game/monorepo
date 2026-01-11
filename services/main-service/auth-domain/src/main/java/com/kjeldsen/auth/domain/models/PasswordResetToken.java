@@ -1,4 +1,4 @@
-package com.kjeldsen.auth.domain;
+package com.kjeldsen.auth.domain.models;
 
 import lombok.Builder;
 import lombok.Data;
