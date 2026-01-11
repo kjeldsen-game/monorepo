@@ -1,46 +1,34 @@
-# Set up 
+# Set Up
 
-You will need certain steps installed to start the platform.
-
-We need to have:
-- Terminal Git Bush.
-- AWS CLI.
-- Java.
-- Maven.
-- Git.
-- Docker.
-- Mermaid
-- Postman.
-- Visual Studio Code.
-- IntelliJ Idea
+Before starting the platform, you will need to install a few tools and dependencies.
 
 ## Git
-https://git-scm.com/download
-> **IMPORTANT**  We install GitBash too. 
+Download and install Git: https://git-scm.com/download
+> **IMPORTANT:** Make sure to install Git Bash as well.
 
 ## AWS CLI
-https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html
+Installation guide: https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html
 
 ## Java
-https://www.oracle.com/java/technologies/downloads/#java17
+Download Java JDK: https://www.oracle.com/java/technologies/downloads/#java17
 
 ## Maven
-https://maven.apache.org/install.html
- 
-## Docker
-https://www.docker.com/
+Installation guide: https://maven.apache.org/install.html
 
-## Mermaid
-https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid
+## Docker
+Download Docker: https://www.docker.com/
+
+## Mermaid Extension
+VS Code extension: https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid
 
 ## Postman
-https://www.postman.com/downloads/
+Download Postman: https://www.postman.com/downloads/
 
 ## Visual Studio Code
-https://code.visualstudio.com/download
+Download VS Code: https://code.visualstudio.com/download
 
-## IntelliJ Idea
-https://www.jetbrains.com/idea/download/#section=windows
+## IntelliJ IDEA
+Download IntelliJ IDEA: https://www.jetbrains.com/idea/download/#section=windows
 
-For every installation, we need to follow the instructions in ich site.
-When we have everything, we just have to follow [Local Development](LocalDevelopment.md). 
+> For each tool, please follow the installation instructions provided on the respective website.  
+> Once all tools are installed, you can proceed with the [Local Development](Infrastructure.md#local-environment) guide.

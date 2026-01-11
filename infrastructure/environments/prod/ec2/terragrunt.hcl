@@ -1,5 +1,5 @@
 terraform {
-    source = "git::https://github.com/terraform-aws-modules/terraform-aws-ec2-instance.git?ref=v6.0.0"
+    source = "git::https://github.com/terraform-aws-modules/terraform-aws-ec2-instance.git?ref=${local.env_versions.aws_ec2_instance_module}"
 }
 
 locals {
