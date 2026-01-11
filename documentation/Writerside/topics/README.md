@@ -13,7 +13,7 @@ We are using an Event-Sourcing architecture for following key points:
 
 ## CQRS
 The structure of the project follows a CQRS pattern https://martinfowler.com/bliki/CQRS.html
-
+  
 ## Hexagonal Architecture
 The structure of the project follows a hexagonal architecture where domain defines the entities and the business logic and adapters connect to any external piece.
 
