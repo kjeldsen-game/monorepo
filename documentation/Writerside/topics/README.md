@@ -20,3 +20,4 @@ The structure of the project follows a hexagonal architecture where domain defin
 ## Local Development environment
  
 In the folder local-env you can find a project that allows developers to replicate the entire platform quite easy. It is based on Docker Compose and will run up all services and databases needed to work. Read the README of the projects for more information.
+ 
