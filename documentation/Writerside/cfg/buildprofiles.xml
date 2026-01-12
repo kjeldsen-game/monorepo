@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE buildprofiles SYSTEM "https://resources.jetbrains.com/writerside/1.0/build-profiles.dtd">
+<buildprofiles xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/build-profiles.xsd"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <variables>
+        <custom-favicons>Kjeldsen.png</custom-favicons>
+        <header-logo>Kjeldsen.png</header-logo>
+        <primary-color>strawberry</primary-color>
+        <download-page>https://kjeldsengame.com</download-page>
+        <download-title>Play Now!</download-title>
+        <showDownloadButton>true</showDownloadButton>
+    </variables>
+
+    <footer>
+        <copyright>2026 Kjeldsen Game</copyright>
+
+    </footer>
+</buildprofiles>
