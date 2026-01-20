@@ -40,7 +40,7 @@ public class DisruptionExecution {
         Integer diceRoll = RandomGenerator.randomInt(0, 100);
 
         int controlResult = diceRoll - controlSkill;
-        double controlSuccessChance = Math.random();
+        double controlSuccessChance = RandomGenerator.randomDouble(0.0, 1.0);
 
         if (controlSkill < diceRoll) {
             double threshold = 0.0;
@@ -71,7 +71,7 @@ public class DisruptionExecution {
             double difference = (double) (MAX_TOTAL - total) / 2;
             int random = RandomGenerator.randomInt(0, 100);
             // If random is less than difference than pass receiver is changed
-            log.info("Total value = {} Difference value = {} and succeed = {}, missed is", total, difference, random);
+//            log.info("Total value = {} Difference value = {} and succeed = {}, missed is", total, difference, random);
             // Missed pass
             if (random < difference) {
                 log.info("DisruptionExecution was successfull and the reciver of pass is gonna be changed");

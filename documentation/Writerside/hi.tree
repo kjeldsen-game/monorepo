@@ -43,5 +43,27 @@
         <toc-element topic="Player-Reception-Preference.md"/>
         <toc-element topic="Assistance.md"/>
         <toc-element topic="Pitch-Areas-and-Player-Actions.md"/>
+        <toc-element toc-title="Duel Execution">
+            <toc-element toc-title="Utilities &amp; Providers">
+                <toc-element topic="Gaus-Randomizer.md"/>
+                <toc-element topic="Assistance-Provider.md"/>
+            </toc-element>
+
+            <toc-element toc-title="Duel Stats Builder">
+                <toc-element topic="Duel-Stats.md"/>
+                <toc-element topic="Positional-Duel-Stats.md"/>
+            </toc-element>
+            <toc-element toc-title="Duel Disruption">
+                <toc-element topic="Missed-Pass.md"/>
+                <toc-element topic="Missed-Shot.md"/>
+                <toc-element topic="Goalkeeper-Fumble.md"/>
+            </toc-element>
+            <toc-element topic="Shot-Duel.md"/>
+            <toc-element topic="Pass-Duel.md"/>
+            <toc-element topic="Positional-Duel.md"/>
+            <toc-element topic="Ball-Control-Duel.md"/>
+        </toc-element>
     </toc-element>
+
+
 </instance-profile>
