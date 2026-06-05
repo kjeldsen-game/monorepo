@@ -5,6 +5,7 @@ import com.kjeldsen.match.engine.modifers.Tactic;
 import com.kjeldsen.match.engine.modifers.VerticalPressure;
 import com.kjeldsen.match.utils.JsonUtils;
 import java.util.List;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,9 @@ public class Team {
     List<Player> players;
 
     Integer rating;
+
+    // Tier 1 (casuals) → Tier 5 (ultra-loyalists), each key maps to fan count
+    Map<Integer, Integer> fans;
 
     // Modifiers - TODO these need to be passed as part of the match configuration as opposed to
     // being part of the team definition

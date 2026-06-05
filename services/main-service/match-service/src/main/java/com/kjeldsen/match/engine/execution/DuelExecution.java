@@ -241,8 +241,8 @@ public class DuelExecution {
             throw new IllegalArgumentException("Positional duel not allowed here");
         }
 
-        Map<DuelRole, Integer> carryovers = Carryover.getCarryover(state);
-        int carryover = carryovers.get(role);
+        Map<Long, Integer> carryovers = Carryover.getCarryover(state);
+        int carryover = carryovers.getOrDefault(player.getTeamId(), 0);
 
         int total = skillPoints + performance + carryover;
 

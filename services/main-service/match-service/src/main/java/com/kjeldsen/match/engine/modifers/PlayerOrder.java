@@ -8,6 +8,7 @@ import com.kjeldsen.match.engine.entities.PlayerPosition;
 import com.kjeldsen.match.engine.entities.SkillType;
 import com.kjeldsen.match.engine.entities.duel.DuelOrigin;
 import com.kjeldsen.match.engine.execution.DuelParams;
+import com.kjeldsen.match.engine.selection.ChallengerSelection;
 import com.kjeldsen.match.engine.selection.ReceiverSelection;
 import com.kjeldsen.match.engine.state.GameStateException;
 import com.kjeldsen.match.models.Player;
@@ -60,11 +61,19 @@ public enum PlayerOrder {
         if (receiver.isEmpty()) {
             return params;
         }
+        // Use a proper passing challenger instead of carrying over the (possibly null) positional one
+        Player challenger;
+        try {
+            challenger = ChallengerSelection.passingDuelChallenger(params.getState(),
+                params.getState().getBallState().getArea().flipPerspective());
+        } catch (GameStateException e) {
+            return params;
+        }
         return DuelParams.builder()
             .state(params.getState())
             .duelType(Action.PASS.getDuelType())
             .initiator(params.getInitiator())
-            .challenger(params.getChallenger())
+            .challenger(challenger)
             .receiver(receiver.get())
             .origin(DuelOrigin.PLAYER_ORDER)
             .build();
@@ -81,16 +90,26 @@ public enum PlayerOrder {
             .orElseThrow(
                 () -> new GameStateException(params.getState(), "No goalkeeper found"));
 
-        Map<SkillType, Integer> skills = goalkeeper.getSkills();
+        // Build a temporary GK with the long-shot bonus applied only for this duel.
+        // A copy of the skills map is used so the original player is not permanently mutated.
+        Map<SkillType, Integer> boostedSkills = new java.util.HashMap<>(goalkeeper.getSkills());
         int bonus = params.getState().getBallState().getArea().file() == PitchFile.CENTER ? 10 : 25;
-        skills.put(SkillType.REFLEXES, skills.get(SkillType.REFLEXES) + bonus);
-        goalkeeper.setSkills(skills);
+        boostedSkills.put(SkillType.REFLEXES, boostedSkills.get(SkillType.REFLEXES) + bonus);
+
+        Player boostedGoalkeeper = Player.builder()
+            .id(goalkeeper.getId())
+            .name(goalkeeper.getName())
+            .position(goalkeeper.getPosition())
+            .skills(boostedSkills)
+            .playerOrder(goalkeeper.getPlayerOrder())
+            .team(goalkeeper.getTeam())
+            .build();
 
         return DuelParams.builder()
             .state(params.getState())
             .duelType(Action.SHOOT.getDuelType())
             .initiator(params.getInitiator())
-            .challenger(goalkeeper)
+            .challenger(boostedGoalkeeper)
             .origin(DuelOrigin.PLAYER_ORDER)
             .build();
     }
@@ -113,11 +132,19 @@ public enum PlayerOrder {
         if (receiver.isEmpty()) {
             return params;
         }
+        // Use a proper passing challenger instead of carrying over the (possibly null) positional one
+        Player challenger;
+        try {
+            challenger = ChallengerSelection.passingDuelChallenger(params.getState(),
+                params.getState().getBallState().getArea().flipPerspective());
+        } catch (GameStateException e) {
+            return params;
+        }
         return DuelParams.builder()
             .state(params.getState())
             .duelType(Action.PASS.getDuelType())
             .initiator(params.getInitiator())
-            .challenger(params.getChallenger())
+            .challenger(challenger)
             .receiver(receiver.get())
             .origin(DuelOrigin.PLAYER_ORDER)
             .build();

@@ -18,6 +18,19 @@ public class PointsGenerator {
         }
     }
 
+    // When actual >= potential the player is overtraining: probability is halved and both actual
+    // and potential increase on success (see GenerateTrainingUseCase).
+    public static int generatePointsRiseOvertraining(int currentDay) {
+        double probability = probabilityRiseBasedOnCurrentDay(currentDay) / 2.0;
+        double randomProbabilityRise = RandomGenerator.random() * 100;
+
+        if (randomProbabilityRise <= probability) {
+            return generatePoints();
+        } else {
+            return 0;
+        }
+    }
+
     public static double probabilityRiseBasedOnCurrentDay(int currentDay) {
         return switch (currentDay) {
             case 1 -> 2.03;

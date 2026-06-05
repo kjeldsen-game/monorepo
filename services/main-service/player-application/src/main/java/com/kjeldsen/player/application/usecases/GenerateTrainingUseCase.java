@@ -53,10 +53,18 @@ public class GenerateTrainingUseCase {
         if (player.isBloomActive()) {
             handleBloomEvent(player, playerTrainingEvent);
         } else {
-            Integer points = PointsGenerator.generatePointsRise(currentDay);
+            boolean overtraining =
+                player.getActualSkillPoints(playerSkill) >= player.getPotentialSkillPoints(playerSkill);
+            Integer points = overtraining
+                ? PointsGenerator.generatePointsRiseOvertraining(currentDay)
+                : PointsGenerator.generatePointsRise(currentDay);
             playerTrainingEvent.setPoints(points);
             playerTrainingEvent.setActualPoints(player.getActualSkillPoints(playerSkill));
-            player.addSkillsPoints(playerSkill, points);
+            if (overtraining && points > 0) {
+                player.addSkillsAndPotentialPoints(playerSkill, points);
+            } else {
+                player.addSkillsPoints(playerSkill, points);
+            }
             playerTrainingEvent.setPotentialPoints(player.getPotentialSkillPoints(playerSkill));
             playerTrainingEvent.setPointsAfterTraining(player.getActualSkillPoints(playerSkill));
         }

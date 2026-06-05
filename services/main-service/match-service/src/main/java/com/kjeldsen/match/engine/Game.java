@@ -171,16 +171,24 @@ public class Game {
         Duel duel = play.getDuel();
         Player player = Optional.ofNullable(duel.getReceiver()).orElseGet(duel::getInitiator);
 
-        PitchArea currentArea = state.getBallState().getArea();
-
-        PitchArea playerArea;
-        if (play.getDuel().getType().movesBall()) {
-            playerArea = PitchAreaSelection.select(currentArea, player)
-                .orElseThrow(() -> new GameStateException(state, "No pitch area to select from"));
+        // CHANGE_FLANK moves the ball across the pitch to the receiver at the switched area — the
+        // standard PitchAreaSelection cannot handle opposite-flank placement, so modifiers are
+        // checked first (mirroring the same check already present in handleDuelLoss).
+        Optional<BallState> fromModifier = checkModifiers(play);
+        BallState newBallState;
+        if (fromModifier.isPresent()) {
+            newBallState = fromModifier.get();
         } else {
-            playerArea = currentArea;
+            PitchArea currentArea = state.getBallState().getArea();
+            PitchArea playerArea;
+            if (play.getDuel().getType().movesBall()) {
+                playerArea = PitchAreaSelection.select(currentArea, player)
+                    .orElseThrow(() -> new GameStateException(state, "No pitch area to select from"));
+            } else {
+                playerArea = currentArea;
+            }
+            newBallState = new BallState(player, playerArea);
         }
-        BallState newBallState = new BallState(player, playerArea);
 
         return Optional.of(state)
             .map((before) ->

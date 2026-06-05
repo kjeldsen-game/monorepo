@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.kjeldsen.match.engine.entities.MatchResult;
 import com.kjeldsen.match.engine.entities.Play;
+import com.kjeldsen.match.engine.processing.Attendance;
 import com.kjeldsen.match.engine.processing.Ratings;
 import com.kjeldsen.match.engine.state.GameState;
 import java.util.List;
@@ -38,6 +39,8 @@ public class MatchReport {
     Integer homeScore;
     Integer awayScore;
 
+    Integer attendance;
+
     GameStats gameStats; // Illustration of how to add additional information to the report
 
     public MatchReport(
@@ -59,6 +62,7 @@ public class MatchReport {
         }
         Pair<Integer, Integer> ratings = Ratings.eloRatings(homeScore, awayScore, result);
 
+        this.attendance = Attendance.compute(home);
         this.gameStats = new GameStats(ratings.getLeft(), ratings.getRight());
     }
 

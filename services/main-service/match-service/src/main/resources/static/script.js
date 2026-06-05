@@ -32,12 +32,12 @@ $("#generate").click(() => {
     console.log(report)
     let homeTeamId = report.home.id;
     let awayTeamId = report.away.id;
-    let startingTeamId = report.plays[0].initiator.teamId;
+    let startingTeamId = report.plays[0].duel.initiator.teamId;
     console.log("Home team: " + homeTeamId);
     console.log("Away team: " + awayTeamId);
     console.log("Starting team: " + startingTeamId);
     let startingTeam = homeTeamId === startingTeamId ? "home" : "away"
-    let narration = Narration.narrate(report.plays, startingTeamId);
+    let narration = Narration.narrate(report.plays, homeTeamId);
     $("#narration").html(narration);
     $("#match-result").show();
     $("#final-score").html(report.homeScore + " - " + report.awayScore);
@@ -57,12 +57,12 @@ $("#generate").click(() => {
     let report = error["report"];
     let homeTeamId = 1;
     let awayTeamId = 6;
-    let startingTeamId = report.plays[0].initiator.teamId;
+    let startingTeamId = report.plays[0].duel.initiator.teamId;
     console.log("Home team: " + homeTeamId);
     console.log("Away team: " + awayTeamId);
     console.log("Starting team: " + startingTeamId);
     let startingTeam = homeTeamId === startingTeamId ? "home" : "away"
-    let narration = Narration.narrate(report.plays, startingTeamId);
+    let narration = Narration.narrate(report.plays, homeTeamId);
     $("#narration").html(narration);
     $("#match-result").show();
     $("#final-score").html(report.homeScore + " - " + report.awayScore);
@@ -170,13 +170,17 @@ class Teams {
           "DRIBBLE"];
 
     return team.players.map(player => {
-      let positionDropdown = `${positions.map(position => {
-        return `<option>${position}</option>`
-      }).join("")}`;
+      let isGk = player.position === "GOALKEEPER";
+      let positionDropdown = `${positions
+        .filter(position => position !== player.position)
+        .filter(position => isGk || position !== "GOALKEEPER")
+        .map(position => `<option>${position}</option>`)
+        .join("")}`;
 
-      let ordersDropdown = `${orders.map(order => {
-        return `<option>${order}</option>`
-      }).join("")}`;
+      let ordersDropdown = `${orders
+        .filter(order => order !== player.playerOrder)
+        .map(order => `<option>${order}</option>`)
+        .join("")}`;
       return `<tr>
                 <td>${player.name}</td>
                 <td>
@@ -253,17 +257,16 @@ $(document).on('change', '.player-order-select', function () {
 });
 
 class Narration {
-  static narrate(plays, teamPerspective) {
+  static narrate(plays, homeTeamId) {
     return "<div class='play'>"
-        + plays.map(
-            play => Narration.describePlay(play, teamPerspective))
+        + plays.map(play => Narration.describePlay(play, homeTeamId))
         .join("</p><p>")
         + "</div>";
   }
 
-  static areaFromPerspective(play, teamPerspective) {
-    let pitchArea = play.pitchArea;
-    if (play.initiator.teamId !== teamPerspective) {
+  static areaFromPerspective(play, homeTeamId) {
+    let pitchArea = play.duel.pitchArea;
+    if (play.duel.initiator.teamId !== homeTeamId) {
       if (pitchArea.includes("LEFT")) {
         pitchArea = pitchArea.replace("LEFT", "RIGHT");
       } else if (pitchArea.includes("RIGHT")) {
@@ -278,54 +281,65 @@ class Narration {
     return pitchArea;
   }
 
-  static describePlay(play, teamPerspective) {
-    let pitchArea = Narration.areaFromPerspective(play, teamPerspective);
+  static describePlay(play, homeTeamId) {
+    const duel = play.duel;
+    const pitchArea = Narration.areaFromPerspective(play, homeTeamId);
 
-    const meta = Narration.getMeta(play, pitchArea);
-    const initiator = play.initiator;
-    const field = Narration.getField(pitchArea);
+    // Away team leading an offensive action → red; home team or defensive action → blue
+    const offensiveActions = ['PASS', 'SHOOT', 'POSITION'];
+    const isAwayOffense = offensiveActions.includes(play.action)
+        && duel.initiator.teamId !== homeTeamId;
+    const accentColor = isAwayOffense ? 'danger' : 'primary';
+
+    const meta = Narration.getMeta(play, pitchArea, accentColor);
+    const field = Narration.getField(pitchArea, accentColor);
+
+    const initiator = duel.initiator;
     let attempt = `<b>${initiator.name}</b>
-                         <span class="badge bg-secondary">${initiator.position}</span>
-                         ${Narration.describeInitiatorAction(play)}`;
-
-    if (play.receiver != null) {
-      const receiver = play.receiver;
-      attempt += ` to <b>${receiver.name}</b>
-                  <span class="badge bg-secondary">${receiver.position}</span>`;
+                   <span class="badge bg-secondary">${initiator.position}</span>
+                   ${Narration.describeInitiatorAction(play)}`;
+    if (duel.receiver != null) {
+      attempt += ` to <b>${duel.receiver.name}</b>
+                  <span class="badge bg-secondary">${duel.receiver.position}</span>`;
     }
-    const challenger = play.challenger;
-    const response = `Challenger:
-                            <b>${challenger?.name}</b>
-                            <span class="badge bg-secondary">${challenger?.position}</span>
-                            ${Narration.describeChallengerAction(play)}`;
+
+    const challenger = duel.challenger;
+    // For a TACKLE the challenge is the tackle itself; the other player is the ball carrier
+    const challengerLabel = play.action === 'TACKLE' ? 'Ball carrier' : 'Challenger';
+    const response = `${challengerLabel}:
+                      <b>${challenger?.name}</b>
+                      <span class="badge bg-secondary">${challenger?.position}</span>
+                      ${Narration.describeChallengerAction(play)}`;
 
     let outcome;
     if (play.action === "POSITION") {
-      outcome = Narration.describePositionalOutcome(
-          play, initiator, challenger);
+      outcome = Narration.describePositionalOutcome(play, initiator, challenger, accentColor);
     } else {
       outcome = Narration.describeOutcome(play, initiator, challenger);
     }
 
-    const stats = Narration.getDuelStats(play);
+    const stats = Narration.getDuelStats(play, homeTeamId);
+    const assistancePanel = Narration.getAssistancePanel(play, homeTeamId);
+
     return `<p>${meta}</p>
             <div class="row">
-              <div class="col-2"> ${field} </div>
-              <div class="col-8">
+              <div class="col-2">${field}</div>
+              <div class="col-6">
                 <div>
                   <p>${attempt}</p>
                   <p>${response}</p>
-                  <i class="text-primary">${outcome}</i>
+                  <i class="text-${accentColor}">${outcome}</i>
                 </div>
                 <br>
                 <div>${stats}</div>
               </div>
+              <div class="col-4">${assistancePanel}</div>
             </div>`;
   }
 
-  static getMeta(play, pitchArea) {
+  static getMeta(play, pitchArea, accentColor) {
     return `<div class="d-flex justify-content-center">
-              <div class="text-bg-primary text-center play-divider">
+              <div class="text-bg-${accentColor} text-center play-divider">
               <p class="meta">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 16 16">
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
@@ -349,37 +363,39 @@ class Narration {
                   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                   <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                 </svg>
-                ${play.origin}
+                ${play.duel.origin}
               </p>
             </div>
-          </div>`
+          </div>`;
   }
 
-  static getField(field) {
+  static getField(field, accentColor) {
+    const highlightColor = accentColor === 'danger'
+        ? 'rgba(220,53,69,0.68)'
+        : 'rgba(67,148,255,0.68)';
     const areas = {
-      LEFT_FORWARD: 'top: 0; left: 0; width: 33.33%; height: 33.33%;',
+      LEFT_FORWARD:   'top: 0; left: 0; width: 33.33%; height: 33.33%;',
       CENTER_FORWARD: 'top: 0; left: 33.33%; width: 33.33%; height: 33.33%;',
-      RIGHT_FORWARD: 'top: 0; left: 66.66%; width: 33.33%; height: 33.33%;',
-      LEFT_MIDFIELD: 'top: 33.33%; left: 0; width: 33.33%; height: 33.33%;',
-      CENTER_MIDFIELD: 'top: 33.33%; left: 33.33%; width: 33.33%; height: 33.33%;',
+      RIGHT_FORWARD:  'top: 0; left: 66.66%; width: 33.33%; height: 33.33%;',
+      LEFT_MIDFIELD:  'top: 33.33%; left: 0; width: 33.33%; height: 33.33%;',
+      CENTER_MIDFIELD:'top: 33.33%; left: 33.33%; width: 33.33%; height: 33.33%;',
       RIGHT_MIDFIELD: 'top: 33.33%; left: 66.66%; width: 33.33%; height: 33.33%;',
-      LEFT_BACK: 'top: 66.66%; left: 0; width: 33.33%; height: 33.33%;',
-      CENTER_BACK: 'top: 66.66%; left: 33.33%; width: 33.33%; height: 33.33%;',
-      RIGHT_BACK: 'top: 66.66%; left: 66.66%; width: 33.33%; height: 33.33%;',
+      LEFT_BACK:      'top: 66.66%; left: 0; width: 33.33%; height: 33.33%;',
+      CENTER_BACK:    'top: 66.66%; left: 33.33%; width: 33.33%; height: 33.33%;',
+      RIGHT_BACK:     'top: 66.66%; left: 66.66%; width: 33.33%; height: 33.33%;',
     };
     const highlightStyle = areas[field] || '';
     return `
     <div style="position: relative">
       <img alt="field" src="./field.png" style="width: 100%;">
-      <div style="position: absolute; background-color: rgba(67,148,255,0.68); ${highlightStyle}"></div>
-    </div>
-  `;
+      <div style="position: absolute; background-color: ${highlightColor}; ${highlightStyle}"></div>
+    </div>`;
   }
 
   static describeOutcome(play, initiator, challenger) {
     const initiatorName = initiator.name;
     const challengerName = challenger.name;
-    if (play.result === "WIN") {
+    if (play.duel.result === "WIN") {
       switch (play.action) {
         case "PASS":
           return "The pass was successful (interceptions disabled)";
@@ -389,12 +405,11 @@ class Narration {
           return `${initiatorName} scored a goal`;
       }
     }
-
     switch (play.action) {
       case "PASS":
         return `${challengerName} intercepted the ball`;
       case "TACKLE":
-        return `${challengerName} controlled the ball`;
+        return `${challengerName} held on to the ball`;
       case "SHOOT":
         return `${challengerName} saved the ball`;
     }
@@ -402,10 +417,8 @@ class Narration {
 
   static describeInitiatorAction(play) {
     const action = play.action;
-    const denomination =
-        Narration.describePerformance(
-            play.initiatorStats.performance
-            + play.initiatorStats.skillPoints);
+    const denomination = Narration.describePerformance(
+        play.duel.initiatorStats.performance + play.duel.initiatorStats.skillPoints);
     switch (action) {
       case "PASS":
         return `made ${denomination} pass`;
@@ -420,15 +433,13 @@ class Narration {
 
   static describeChallengerAction(play) {
     const action = play.action;
-    const denomination =
-        Narration.describePerformance(
-            play.challengerStats.performance
-            + play.challengerStats.skillPoints);
+    const denomination = Narration.describePerformance(
+        play.duel.challengerStats.performance + play.duel.challengerStats.skillPoints);
     switch (action) {
       case "PASS":
         return `made ${denomination} attempt to intercept the ball`;
       case "TACKLE":
-        return `made ${denomination} dribble`;
+        return `attempted ${denomination} dribble`;
       case "SHOOT":
         return `attempted ${denomination} save`;
       case "POSITION":
@@ -436,245 +447,156 @@ class Narration {
     }
   }
 
-  static getDuelStats(play) {
-    const initiatorStats = play.initiatorStats;
-    const challengerStats = play.challengerStats;
-    return `${Narration.getPlayerStats(
-        play.duelType,
-        play.initiator.name,
-        initiatorStats,
-        play.challenger?.name,
-        challengerStats)}`;
+  // Stats table: home team always on the left, away on the right
+  static getDuelStats(play, homeTeamId) {
+    const duel = play.duel;
+    const initiatorIsHome = duel.initiator.teamId === homeTeamId;
+    const homeStats = initiatorIsHome ? duel.initiatorStats : duel.challengerStats;
+    const awayStats  = initiatorIsHome ? duel.challengerStats : duel.initiatorStats;
+    const homeName  = initiatorIsHome ? duel.initiator.name : duel.challenger?.name;
+    const awayName   = initiatorIsHome ? duel.challenger?.name : duel.initiator.name;
+    return Narration.getPlayerStats(homeName, homeStats, awayName, awayStats);
   }
 
-  static getPlayerStats(
-      duelType,
-      initiatorName,
-      initiatorStats,
-      challengerName,
-      challengerStats) {
-    let stats = "<table class='table table-striped-columns'>";
-    stats += `<tr>
-                <th></th>
-                <th>${initiatorName}</th>
-                <th>${challengerName}</th>
-                </tr>`;
-    if (initiatorStats.skillPoints != null) {
-      stats += `<tr>
-                  <td style="text-align: right">Skill contribution</td>
-                  <td>${initiatorStats.skillPoints}</td>
-                  <td>${challengerStats.skillPoints}</td>
-                </tr>`;
+  static getPlayerStats(homeName, homeStats, awayName, awayStats) {
+    let t = `<table class='table table-striped-columns'>
+               <tr><th></th><th>${homeName ?? '—'}</th><th>${awayName ?? '—'}</th></tr>`;
+    if (homeStats?.skillPoints != null) {
+      t += `<tr>
+              <td style="text-align:right">Skill</td>
+              <td>${homeStats.skillPoints}</td>
+              <td>${awayStats?.skillPoints ?? '—'}</td>
+            </tr>`;
     }
-    if (initiatorStats.performance != null) {
-      stats += `<tr>
-                  <td style="text-align: right">Performance</td>
-                  <td>${initiatorStats.performance}</td>
-                  <td>${challengerStats.performance}</td>
-                </tr>`;
+    if (homeStats?.performance != null) {
+      t += `<tr>
+              <td style="text-align:right">Performance</td>
+              <td>${homeStats.performance}</td>
+              <td>${awayStats?.performance ?? '—'}</td>
+            </tr>`;
     }
-    if (initiatorStats.assistance != null) {
-      let initiatorId = Math.random().toString(36).slice(2, 10)
-      let initiatorTotal =
-          Object.values(initiatorStats.teamAssistance)
-          .reduce((acc, val) => acc + val, 0);
-      let initiatorAssistance =
-          `<div class="modal fade" id="${initiatorId}" tabindex="-1">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Assistance</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ${Object.keys(initiatorStats.teamAssistance).map(key => `
-                              <ul>
-                                <b>${key}</b>            
-                                <span>${initiatorStats.teamAssistance[key]}</span>
-                              </ul>`).join("") + "<hr> <b>Total = </b> "
-          + initiatorTotal}
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
+    if (homeStats?.carryover != null) {
+      t += `<tr>
+              <td style="text-align:right">Carryover</td>
+              <td>${homeStats.carryover}</td>
+              <td>${awayStats?.carryover ?? '—'}</td>
+            </tr>`;
+    }
+    if (homeStats?.total != null) {
+      t += `<tr>
+              <td style="text-align:right"><b>Total</b></td>
+              <td><b>${homeStats.total}</b></td>
+              <td><b>${awayStats?.total ?? '—'}</b></td>
+            </tr>`;
+    }
+    return t + "</table>";
+  }
+
+  // Inline assistance breakdown: per-player contributions, raw sum, DR factor, final value
+  static getAssistancePanel(play, homeTeamId) {
+    const duel = play.duel;
+    if (!duel.initiatorStats?.teamAssistance) return '';
+
+    const initiatorIsHome = duel.initiator.teamId === homeTeamId;
+    const homeStats = initiatorIsHome ? duel.initiatorStats : duel.challengerStats;
+    const awayStats  = initiatorIsHome ? duel.challengerStats : duel.initiatorStats;
+
+    const buildSide = (stats, label) => {
+      if (!stats?.teamAssistance) {
+        return `<div class="mb-2"><strong>${label}</strong><div class="text-muted small">—</div></div>`;
+      }
+      const rawSum = Object.values(stats.teamAssistance).reduce((a, v) => a + v, 0);
+      const after  = stats.assistance ?? rawSum;
+      const lines  = Object.entries(stats.teamAssistance)
+          .map(([name, val]) =>
+              `<div class="d-flex justify-content-between">
+                 <small class="text-truncate me-2">${name}</small>
+                 <small>${val}</small>
+               </div>`)
+          .join('');
+      const drNote = rawSum !== after
+          ? `<span class="text-muted">→ ×DR = </span><b>${after}</b>`
+          : `<b>${after}</b>`;
+      return `<div class="mb-2">
+                <strong>${label}</strong>
+                <div class="ms-1 border-start ps-2">${lines}</div>
+                <div class="mt-1 small">Sum: <b>${rawSum}</b> ${drNote}</div>
+              </div>`;
+    };
+
+    const homeAfter = homeStats?.assistance ?? 0;
+    const awayAfter  = awayStats?.assistance  ?? 0;
+    const resultBadge = homeAfter > awayAfter
+        ? `<span class="badge bg-primary">Local +${homeAfter - awayAfter}</span>`
+        : homeAfter < awayAfter
+          ? `<span class="badge bg-danger">Away +${awayAfter - homeAfter}</span>`
+          : `<span class="badge bg-secondary">Even</span>`;
+
+    return `<div class="card h-100">
+              <div class="card-header py-1 d-flex justify-content-between align-items-center">
+                <span>Assistance</span>${resultBadge}
               </div>
-            </div>
-          </div>`;
-
-      let challengerId = Math.random().toString(36).slice(2, 10)
-      let challengerTotal =
-          Object.values(challengerStats.teamAssistance)
-          .reduce((acc, val) => acc + val, 0);
-      let challengerAssistance =
-          `<div class="modal fade" id="${challengerId}" tabindex="-1">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Assistance</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ${Object.keys(challengerStats.teamAssistance).map(key => `
-                              <ul>
-                                <b>${key}</b>            
-                                <span>${challengerStats.teamAssistance[key]}</span>
-                              </ul>`).join("") + "<hr> <b>Total = </b> "
-          + challengerTotal}
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
+              <div class="card-body py-2 small">
+                ${buildSide(homeStats, 'Local')}
+                ${buildSide(awayStats, 'Away')}
               </div>
-            </div>
-          </div>`;
-
-      stats += `<tr>
-                  <td style="text-align: right">Assistance</td>
-                  <td><u data-bs-toggle="modal" data-bs-target="#${initiatorId}">${initiatorStats.assistance}</u></td>
-                  <td><u data-bs-toggle="modal" data-bs-target="#${challengerId}">${challengerStats.assistance}</u></td>
-                </tr>` + initiatorAssistance + challengerAssistance;
-    }
-    if (initiatorStats.carryover != null) {
-      stats += `<tr>
-                 <td style="text-align: right">Carryover</td>    
-                 <td>${initiatorStats.carryover}</td>
-                 <td>${challengerStats.carryover}</td>
-               </tr>`;
-    }
-    if (initiatorStats.total !== null) {
-      stats += `<tr>
-                  <td style="text-align: right"><b>Total</b></td>    
-                  <td><b>${initiatorStats.total}</b></td>
-                  <td><b>${challengerStats.total}</b></td>
-                </tr>`;
-    }
-    return stats + "</table>"
-
+            </div>`;
   }
 
   static describePosition(positionalDuelPerformance) {
-    if (positionalDuelPerformance <= -21) {
-      return 'very far';
-    }
-    if (positionalDuelPerformance <= -16) {
-      return 'far';
-    }
-    if (positionalDuelPerformance <= -11) {
-      return 'in the vicinity';
-    }
-    if (positionalDuelPerformance <= -6) {
-      return 'close';
-    }
-    if (positionalDuelPerformance <= -1) {
-      return 'almost there';
-    }
-    if (positionalDuelPerformance <= 0) {
-      return 'there';
-    }
-    if (positionalDuelPerformance <= 5) {
-      return 'just about';
-    }
-    if (positionalDuelPerformance <= 10) {
-      return 'near';
-    }
-    if (positionalDuelPerformance <= 15) {
-      return 'within reach';
-    }
-    if (positionalDuelPerformance <= 20) {
-      return 'ready';
-    }
+    if (positionalDuelPerformance <= -21) return 'very far';
+    if (positionalDuelPerformance <= -16) return 'far';
+    if (positionalDuelPerformance <= -11) return 'in the vicinity';
+    if (positionalDuelPerformance <= -6)  return 'close';
+    if (positionalDuelPerformance <= -1)  return 'almost there';
+    if (positionalDuelPerformance <= 0)   return 'there';
+    if (positionalDuelPerformance <= 5)   return 'just about';
+    if (positionalDuelPerformance <= 10)  return 'near';
+    if (positionalDuelPerformance <= 15)  return 'within reach';
+    if (positionalDuelPerformance <= 20)  return 'ready';
     return 'in perfect position';
   }
 
   static describePerformance(performance) {
-    if (performance < 15) {
-      return 'an awful';
-    }
-    if (performance < 30) {
-      return 'a poor';
-    }
-    if (performance < 40) {
-      return 'a weak';
-    }
-    if (performance < 50) {
-      return 'a decent';
-    }
-    if (performance < 60) {
-      return 'a good';
-    }
-    if (performance < 70) {
-      return 'an excellent';
-    }
-    if (performance < 80) {
-      return 'a superb';
-    }
-    if (performance < 90) {
-      return 'a brilliant';
-    }
-    if (performance < 100) {
-      return 'an awesome';
-    }
-    if (performance < 110) {
-      return 'a masterful';
-    }
+    if (performance < 15)  return 'an awful';
+    if (performance < 30)  return 'a poor';
+    if (performance < 40)  return 'a weak';
+    if (performance < 50)  return 'a decent';
+    if (performance < 60)  return 'a good';
+    if (performance < 80)  return 'an excellent';
+    if (performance < 90)  return 'a superb';
+    if (performance < 100) return 'a brilliant';
+    if (performance < 110) return 'an awesome';
+    if (performance < 120) return 'a masterful';
     return 'an unbelievable';
   }
 
   static describeAssistance(assistance) {
-    if (assistance <= 4) {
-      return 'awful';
-    }
-    if (assistance <= 9) {
-      return 'poor';
-    }
-    if (assistance <= 14) {
-      return 'weak';
-    }
-    if (assistance <= 19) {
-      return 'decent';
-    }
-    if (assistance <= 24) {
-      return 'good';
-    }
-    if (assistance <= 25) {
-      return 'excellent';
-    }
-    if (assistance <= 30) {
-      return 'superb';
-    }
-    if (assistance <= 35) {
-      return 'brilliant';
-    }
-    if (assistance <= 40) {
-      return 'awesome';
-    }
-    if (assistance <= 45) {
-      return 'masterful';
-    }
+    if (assistance <= 4)  return 'awful';
+    if (assistance <= 9)  return 'poor';
+    if (assistance <= 14) return 'weak';
+    if (assistance <= 19) return 'decent';
+    if (assistance <= 24) return 'good';
+    if (assistance <= 25) return 'excellent';
+    if (assistance <= 30) return 'superb';
+    if (assistance <= 35) return 'brilliant';
+    if (assistance <= 40) return 'awesome';
+    if (assistance <= 45) return 'masterful';
     return 'unbelievable';
   }
 
-  static describePositionalOutcome(play, initiator, challenger) {
-
-    let initiatorAssistance =
-        Narration.describeAssistance(play.initiatorStats.assistance);
-    let challengerAssistance =
-        Narration.describeAssistance(play.challengerStats.assistance);
-
-    let initiatorOutcome =
-        `<b>${initiator.name}</b> had <i>${initiatorAssistance}</i> spacing help`;
-
-    let challengerOutcome =
-        `<b>${challenger?.name}</b> received <i>${challengerAssistance}</i> defensive support`;
-
-    let difference =
-        play.initiatorStats.total - play.challengerStats.total;
-    let position = Narration.describePosition(-difference);
-    let won = difference > 0;
-    let outcome = won
+  static describePositionalOutcome(play, initiator, challenger, accentColor) {
+    const initiatorAssistance = Narration.describeAssistance(play.duel.initiatorStats.assistance);
+    const challengerAssistance = Narration.describeAssistance(play.duel.challengerStats.assistance);
+    const initiatorOutcome = `<b>${initiator.name}</b> had <i>${initiatorAssistance}</i> spacing help`;
+    const challengerOutcome = `<b>${challenger?.name}</b> received <i>${challengerAssistance}</i> defensive support`;
+    const difference = play.duel.initiatorStats.total - play.duel.challengerStats.total;
+    const position = Narration.describePosition(-difference);
+    const won = difference > 0;
+    const outcome = won
         ? `<p>${initiator.name} won, ${challenger?.name} was ${position}`
         : `<p>${initiator.name} lost, ${challenger?.name} was ${position}`;
-    return `<div class="text-primary">
+    return `<div class="text-${accentColor}">
               <p>${initiatorOutcome}</p>
               <p>${challengerOutcome}</p>
               <i>${outcome}</i>
@@ -923,9 +845,12 @@ $("#generate-new-team").click(() => {
   }
   $.ajax(`/teams`, request)
   .done(function (data) {
+    me = {id: 1, name: "Home Manager", team: data};
+    let homeRows = Teams.getTeamRows(data);
+    $("#home-rows").html(homeRows);
     $("#response-message")
     .addClass("alert-success").removeClass("alert-danger").show();
-    $("#response-message-text").html("Team created")
+    $("#response-message-text").html("Team created — go to Play to start a match")
 
   })
   .fail(function (data) {

@@ -117,6 +117,13 @@ public class Player {
         skillPoints.setActual(Math.min(MAX_SKILL_VALUE, skillPoints.getActual() + points));
     }
 
+    // Overtraining path: both actual and potential rise together so the ceiling keeps moving.
+    public void addSkillsAndPotentialPoints(PlayerSkill skill, Integer points) {
+        PlayerSkills skillPoints = actualSkills.get(skill);
+        skillPoints.setActual(Math.min(MAX_SKILL_VALUE, skillPoints.getActual() + points));
+        skillPoints.setPotential(Math.min(MAX_SKILL_VALUE, skillPoints.getPotential() + points));
+    }
+
 
     private void subtractSkillPoints(PlayerSkill skill, Integer points) {
         PlayerSkills skillPoints = actualSkills.get(skill);

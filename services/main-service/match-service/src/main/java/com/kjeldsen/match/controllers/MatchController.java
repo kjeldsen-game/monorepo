@@ -21,11 +21,15 @@ public class MatchController {
 
     @PostMapping(value = "/matches", produces = "application/json")
     public ResponseEntity<?> create(@RequestBody Match matchParams) {
-        // TODO - teams need to be read from mongo
-        Team home = teamRepository.findById(matchParams.getHome().getId())
-            .orElseThrow(() -> new ValidationException("Home team not found"));
+        // Home team: use ID from request if present, otherwise fall back to the current user's team
+        Long homeId = (matchParams.getHome() != null && matchParams.getHome().getId() != null)
+            ? matchParams.getHome().getId()
+            : UserController.currentHomeTeamId.get();
+        Team home = teamRepository.findById(homeId)
+            .orElseThrow(() -> new ValidationException(
+                "Home team not found — please create your team first"));
 
-        Team away = teamRepository.findById(matchParams.getHome().getId())
+        Team away = teamRepository.findById(matchParams.getAway().getId())
             .orElseThrow(() -> new ValidationException("Away team not found"));
 
         // TODO - modifiers here

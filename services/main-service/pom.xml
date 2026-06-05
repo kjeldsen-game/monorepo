@@ -56,7 +56,7 @@
         <spring-data-mongodb.version>3.4.3</spring-data-mongodb.version>
         <spring-data-commons.version>2.7.3</spring-data-commons.version>
         <spring-boot-starter-tomcat.version>2.7.4</spring-boot-starter-tomcat.version>
-        <assertj-core.version>3.23.1</assertj-core.version>
+        <assertj-core.version>3.27.7</assertj-core.version>
         <junit-custom.version>5.9.2</junit-custom.version>
         <testcontainers-bom.version>1.17.6</testcontainers-bom.version>
         <javafaker.version>1.0.2</javafaker.version>
@@ -74,9 +74,9 @@
         <apache.commons-lang3.version>3.12.0</apache.commons-lang3.version>
         <apache.commons-collections4.version>4.4</apache.commons-collections4.version>
         <javafaker.version>1.0.2</javafaker.version>
-        <assertj-core.version>3.23.1</assertj-core.version>
+        <assertj-core.version>3.27.7</assertj-core.version>
         <testcontainers-bom.version>1.17.6</testcontainers-bom.version>
-        <snakeyaml.version>1.33</snakeyaml.version>
+        <snakeyaml.version>2.2</snakeyaml.version>
         <jaxb.version>2.3.1</jaxb.version>
         <jaxb-core.version>2.3.0.1</jaxb-core.version>
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>

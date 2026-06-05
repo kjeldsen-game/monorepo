@@ -112,7 +112,7 @@ public class Assistance {
         HorizontalPressure horizontal = teamState.getHorizontalPressure();
         double verticalModifier = vertical.defensiveAssistanceModifier(area);
         double horizontalModifier = horizontal.defensiveAssistanceModifier(area);
-        return verticalModifier + horizontalModifier;
+        return verticalModifier * horizontalModifier;
     }
 
     // Factor by which assistance is multiplied by for the attacking player

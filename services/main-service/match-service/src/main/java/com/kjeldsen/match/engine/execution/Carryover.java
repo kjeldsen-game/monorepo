@@ -1,8 +1,8 @@
 package com.kjeldsen.match.engine.execution;
 
 import com.kjeldsen.match.engine.entities.Play;
-import com.kjeldsen.match.engine.entities.duel.DuelRole;
 import com.kjeldsen.match.engine.state.GameState;
+import com.kjeldsen.match.models.Player;
 import java.util.Map;
 
 public class Carryover {
@@ -14,35 +14,26 @@ public class Carryover {
     public static final int CARRYOVER_LIMIT = Assistance.MAX_ASSISTANCE / 2;
 
     // Carryover from the previous duel is half of the difference of the total duel points of the
-    // two players. The carryover value is given to the winner of the (previous) duel and
-    // contributes to the (current) duel. This is capped at half of the maximum assistance.
-    public static Map<DuelRole, Integer> getCarryover(GameState state) {
+    // two players, capped at CARRYOVER_LIMIT. The carryover value is keyed by the winning team's
+    // ID so it is correctly attributed even when players change roles between duels (e.g. a
+    // player who was CHALLENGER in the positional duel becomes INITIATOR in the tackle that
+    // follows).
+    public static Map<Long, Integer> getCarryover(GameState state) {
         return state.lastPlay()
             .map(Play::getDuel)
             .map(duel -> {
                 int initiatorTotal = duel.getInitiatorStats().getTotal();
                 int challengerTotal = duel.getChallengerStats().getTotal();
                 int diff = Math.abs(initiatorTotal - challengerTotal);
-                int carryover = diff / 2;
+                int carryover = Math.min(diff / 2, CARRYOVER_LIMIT);
 
-                DuelRole winner =
-                    initiatorTotal > challengerTotal
-                        ? DuelRole.INITIATOR
-                        : DuelRole.CHALLENGER;
-                DuelRole loser =
-                    (winner == DuelRole.INITIATOR)
-                        ? DuelRole.CHALLENGER
-                        : DuelRole.INITIATOR;
+                Player winner =
+                    (duel.getChallenger() == null || initiatorTotal >= challengerTotal)
+                        ? duel.getInitiator()
+                        : duel.getChallenger();
 
-                // TODO limiting carryover
-                return Map.of(
-                    winner, carryover,
-                    loser, 0
-                );
+                return Map.of(winner.getTeamId(), carryover);
             })
-            .orElseGet(() -> Map.of(
-                DuelRole.INITIATOR, 0,
-                DuelRole.CHALLENGER, 0
-            ));
+            .orElseGet(Map::of);
     }
 }
