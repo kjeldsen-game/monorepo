@@ -117,6 +117,15 @@ public class Game {
             receiver = ReceiverSelection.select(state, initiator);
         }
 
+        // In a ball control duel the attacker is the initiator (dribbling) and the defender is the
+        // challenger (tackling). The player with the ball at this point is the defender who won the
+        // preceding positional duel, so we swap the roles before building the duel params.
+        if (duelType == DuelType.BALL_CONTROL) {
+            Player temp = initiator;
+            initiator = challenger;
+            challenger = temp;
+        }
+
         // Duel parameters may be amended by tactics, player orders and other modifiers.
         DuelParams params = DuelParams.builder()
             .state(state)
@@ -132,13 +141,22 @@ public class Game {
         // the duel here.
         DuelDTO outcome = DuelExecution.executeDuel(params);
 
+        PitchArea ballArea = outcome.getParams().getState().getBallState().getArea();
+        PitchArea receiverArea = null;
+        if (outcome.getParams().getDuelType() == DuelType.PASSING
+            && outcome.getParams().getReceiver() != null) {
+            receiverArea = PitchAreaSelection.select(ballArea, outcome.getParams().getReceiver())
+                .orElse(null);
+        }
+
         Duel duel = Duel.builder()
             .type(outcome.getParams().getDuelType())
             .initiator(initiator)
             .receiver(outcome.getParams().getReceiver())
             .challenger(outcome.getParams().getChallenger())
             .result(outcome.getResult())
-            .pitchArea(outcome.getParams().getState().getBallState().getArea())
+            .pitchArea(ballArea)
+            .receiverArea(receiverArea)
             .initiatorStats(outcome.getInitiatorStats())
             .challengerStats(outcome.getChallengerStats())
             .origin(outcome.getOrigin())
@@ -153,15 +171,26 @@ public class Game {
 
         log.info("Play complete:\n{}", play);
 
+        // Use the duel type stored on the play (post-PlayerOrder) rather than the original action,
+        // since a player order can transform e.g. a BALL_CONTROL duel into a PASS duel.
+        DuelType resolvedType = play.getDuel().getType();
         return switch (outcome.getResult()) {
             case WIN -> {
-                if (action == Action.SHOOT) {
+                if (resolvedType == DuelType.SHOT) {
                     yield handleGoal(state, play);
+                } else if (resolvedType == DuelType.BALL_CONTROL) {
+                    yield handleBallControlDuelWin(state, play);
                 } else {
                     yield handleDuelWin(state, play);
                 }
             }
-            case LOSE -> handleDuelLoss(state, play);
+            case LOSE -> {
+                if (resolvedType == DuelType.BALL_CONTROL) {
+                    yield handleBallControlDuelLose(state, play);
+                } else {
+                    yield handleDuelLoss(state, play);
+                }
+            }
         };
     }
 
@@ -230,6 +259,45 @@ public class Game {
             .map((before) ->
                 GameState.builder()
                     .turn(before.getTurn() == Turn.HOME ? Turn.AWAY : Turn.HOME)
+                    .clock(before.getClock() + play.getAction().getDuration())
+                    .home(before.getHome())
+                    .away(before.getAway())
+                    .ballState(newBallState)
+                    .plays(GameState.concatPlay(before.getPlays(), play))
+                    .build())
+            .orElseThrow();
+    }
+
+    // Attacker dribbled past the defender: possession switches to the attacker's team.
+    // The pitch perspective is flipped since the ball changes hands between teams.
+    private static GameState handleBallControlDuelWin(GameState state, Play play) {
+        PitchArea area = state.getBallState().getArea().flipPerspective();
+        BallState newBallState = new BallState(play.getDuel().getInitiator(), area);
+
+        return Optional.of(state)
+            .map((before) ->
+                GameState.builder()
+                    .turn(before.getTurn() == Turn.HOME ? Turn.AWAY : Turn.HOME)
+                    .clock(before.getClock() + play.getAction().getDuration())
+                    .home(before.getHome())
+                    .away(before.getAway())
+                    .ballState(newBallState)
+                    .plays(GameState.concatPlay(before.getPlays(), play))
+                    .build())
+            .orElseThrow();
+    }
+
+    // Defender tackled the ball carrier: the defending team retains possession and the turn does
+    // not change since they were already the active team.
+    private static GameState handleBallControlDuelLose(GameState state, Play play) {
+        BallState newBallState = new BallState(
+            play.getDuel().getChallenger(),
+            state.getBallState().getArea());
+
+        return Optional.of(state)
+            .map((before) ->
+                GameState.builder()
+                    .turn(before.getTurn())
                     .clock(before.getClock() + play.getAction().getDuration())
                     .home(before.getHome())
                     .away(before.getAway())

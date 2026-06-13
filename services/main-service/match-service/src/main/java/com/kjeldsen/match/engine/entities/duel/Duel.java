@@ -14,6 +14,8 @@ public class Duel {
     // The location of the duel on the pitch is determined by the location of the ball when the
     // duel was initiated.
     PitchArea pitchArea;
+    // For passing duels, the area the ball is travelling to (the receiver's landing zone).
+    PitchArea receiverArea;
     // The player who started the duel (the attacking player) is called the 'initiator' to avoid
     // confusion with the player position 'attacker'.
     Player initiator;

@@ -44,10 +44,10 @@ public class ChallengerSelection {
                 () -> new GameStateException(state, "No players found to intercept the ball"));
     }
 
-    // Returns a player from the defending team to challenge the player in a ball control duel.
+    // Returns the attacker from the preceding positional duel to act as the defender's challenger
+    // in a ball control duel. The roles are swapped in Game.nextPlay() so that the attacker becomes
+    // the initiator (dribbling) and this player becomes the challenger (tackling).
     public static Player ballControlDuelChallenger(GameState state) {
-        // The ball control duel happens directly after a positional duel is lost, so the challenger
-        // here is the player that started and lost the positional duel
         return state.lastPlay()
             .map(play -> play.getDuel().getInitiator())
             .orElseThrow(

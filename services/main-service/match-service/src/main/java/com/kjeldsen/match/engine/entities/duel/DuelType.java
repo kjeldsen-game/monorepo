@@ -59,14 +59,14 @@ public enum DuelType {
             return switch (this) {
                 case PASSING -> SkillType.PASSING;
                 case POSITIONAL -> SkillType.OFFENSIVE_POSITIONING;
-                case BALL_CONTROL -> SkillType.TACKLING;
+                case BALL_CONTROL -> SkillType.BALL_CONTROL;
                 case SHOT -> SkillType.SCORING;
             };
         } else {
             return switch (this) {
                 case PASSING -> SkillType.INTERCEPTING;
                 case POSITIONAL -> SkillType.DEFENSIVE_POSITIONING;
-                case BALL_CONTROL -> SkillType.BALL_CONTROL;
+                case BALL_CONTROL -> SkillType.TACKLING;
                 case SHOT -> SkillType.REFLEXES;
             };
 

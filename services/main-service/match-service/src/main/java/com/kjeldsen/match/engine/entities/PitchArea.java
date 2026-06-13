@@ -99,6 +99,20 @@ public enum PitchArea {
         };
     }
 
+    public String displayName() {
+        return switch (this) {
+            case LEFT_FORWARD -> "Left Wing";
+            case CENTER_FORWARD -> "Box";
+            case RIGHT_FORWARD -> "Right Wing";
+            case LEFT_MIDFIELD -> "Left Mid";
+            case CENTER_MIDFIELD -> "Midfield";
+            case RIGHT_MIDFIELD -> "Right Mid";
+            case LEFT_BACK -> "Left Flank";
+            case CENTER_BACK -> "Own Box";
+            case RIGHT_BACK -> "Right Flank";
+        };
+    }
+
     public PitchArea switchFile() {
         return switch (this) {
             case LEFT_FORWARD -> RIGHT_FORWARD;
