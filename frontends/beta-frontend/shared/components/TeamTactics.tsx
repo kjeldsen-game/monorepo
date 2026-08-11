@@ -6,7 +6,11 @@ import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { Typography } from '@mui/material'
 
-export default function PlayerTactics() {
+type TeamTacticsProps = {
+  players?: { id: number; name: string }[]
+}
+
+export default function TeamTactics({ players = [] }: TeamTacticsProps) {
   const [captain, setCaptain] = React.useState('')
   const [cornerTacker, setCornerTacker] = React.useState('')
   const [freeKickTacker, setFreeKickTacker] = React.useState('')
@@ -20,6 +24,12 @@ export default function PlayerTactics() {
   const handleChangeFreeKick = (event: SelectChangeEvent) => {
     setFreeKickTacker(event.target.value as string)
   }
+
+  const options = players.map((p) => (
+    <MenuItem key={p.id} value={p.name}>
+      {p.name}
+    </MenuItem>
+  ))
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 120, marginLeft: '3rem' }}>
@@ -36,9 +46,7 @@ export default function PlayerTactics() {
           autoWidth
           onChange={handleChangeCaptain}
           sx={{ marginBottom: '1rem' }}>
-          <MenuItem value={'Milagrito Sanabria'}>Milagrito Sanabria</MenuItem>
-          <MenuItem value={'Nino Bravo'}>Nino Bravo</MenuItem>
-          <MenuItem value={'Jesucristo Marrero'}>Jesucristo Marrero</MenuItem>
+          {options}
         </Select>
       </FormControl>
       <FormControl sx={{ minWidth: 180 }} size="small">
@@ -51,9 +59,7 @@ export default function PlayerTactics() {
           autoWidth
           onChange={handleChangeCorner}
           sx={{ marginBottom: '1rem' }}>
-          <MenuItem value={'Milagrito Sanabria'}>Milagrito Sanabria</MenuItem>
-          <MenuItem value={'Nino Bravo'}>Nino Bravo</MenuItem>
-          <MenuItem value={'Jesucristo Marrero'}>Jesucristo Marrero</MenuItem>
+          {options}
         </Select>
       </FormControl>
       <FormControl sx={{ minWidth: 180 }} size="small">
@@ -65,9 +71,7 @@ export default function PlayerTactics() {
           value={freeKickTacker}
           label="Free Kick"
           onChange={handleChangeFreeKick}>
-          <MenuItem value={'Milagrito Sanabria'}>Milagrito Sanabria</MenuItem>
-          <MenuItem value={'Nino Bravo'}>Nino Bravo</MenuItem>
-          <MenuItem value={'Jesucristo Marrero'}>Jesucristo Marrero</MenuItem>
+          {options}
         </Select>
       </FormControl>
     </Box>

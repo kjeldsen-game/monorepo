@@ -3,21 +3,28 @@ import { Box, Button, Typography } from '@mui/material'
 import Grid from '@/shared/components/Grid/Grid'
 import { sampleRows, sampleColumns } from '@/shared/components/Grid/PlayerGrid'
 import PlayerDetails from '@/shared/components/PlayerDetails'
-import { PlayerStats } from '@/data/SamplePlayer'
+import { SampleSquad } from '@/data/SampleSquad'
 import { useRouter } from 'next/router'
-import { connectorAPI } from '@/libs/fetcher'
-import useSWR from 'swr'
 
 const Player: NextPage = () => {
-  let player = {} as PlayerStats
+  const router = useRouter()
+  const { id } = router.query
 
-  const router = useRouter();
-  const {id} = router.query;
-
-  const { data, error, isLoading } = useSWR(`/player/${id}`, connectorAPI)
-  if (error) return <div>failed to load</div>
-  if (isLoading) return <div>loading...</div>
-  if (data) player = data
+  const squadPlayer = SampleSquad.find((p) => String(p.id) === id) || SampleSquad[0]
+  const player = {
+    name: squadPlayer.name,
+    position: squadPlayer.position,
+    age: squadPlayer.age,
+    actualSkills: {
+      DEFENSE_POSITION: squadPlayer.actualSkills.DEFENSE_POSITION.PlayerSkills.actual,
+      BALL_CONTROL: squadPlayer.actualSkills.BALL_CONTROL.PlayerSkills.actual,
+      SCORE: squadPlayer.actualSkills.SCORE.PlayerSkills.actual,
+      PASSING: squadPlayer.actualSkills.PASSING.PlayerSkills.actual,
+      OFFENSIVE_POSITION: squadPlayer.actualSkills.OFFENSIVE_POSITION.PlayerSkills.actual,
+      TACKLING: squadPlayer.actualSkills.TACKLING.PlayerSkills.actual,
+      CO: squadPlayer.actualSkills.CO.PlayerSkills.actual,
+    },
+  }
 
   return (
     <>
