@@ -29,7 +29,6 @@ public interface PlayerMapper {
     default com.kjeldsen.player.rest.model.PlayerSkills map(com.kjeldsen.player.domain.PlayerSkills playerSkills) {
         com.kjeldsen.player.rest.model.PlayerSkills var1 = new com.kjeldsen.player.rest.model.PlayerSkills();
         var1.setActual(playerSkills.getActual());
-        var1.setPotential(playerSkills.getPotential());
         return var1;
     }
 }

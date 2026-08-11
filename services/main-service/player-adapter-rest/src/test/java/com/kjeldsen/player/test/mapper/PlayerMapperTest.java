@@ -14,6 +14,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class PlayerMapperTest {
 
@@ -25,14 +26,15 @@ class PlayerMapperTest {
         Integer playerAge = PlayerProvider.age();
         String playerName = PlayerProvider.name();
 
+        // potential is non-zero to verify only actual is mapped (potential must NOT appear in response)
         Player player = Player.builder()
             .id(playerId)
             .name(playerName)
             .age(playerAge)
             .position(PlayerPosition.FORWARD)
             .actualSkills(Map.of(
-                PlayerSkill.SCORE, new PlayerSkills(10, 0),
-                PlayerSkill.PASSING, new PlayerSkills(20, 0)
+                PlayerSkill.SCORE, new PlayerSkills(10, 45),
+                PlayerSkill.PASSING, new PlayerSkills(20, 60)
             ))
             .build();
 
@@ -40,6 +42,7 @@ class PlayerMapperTest {
 
         assertEquals(playerId.value(), playerResponse.getId());
         assertEquals(10, playerResponse.getActualSkills().get("SCORE").getPlayerSkills().getActual());
+        assertNull(playerResponse.getActualSkills().get("SCORE").getPlayerSkills().getPotential());
         assertEquals(player.getName(), playerResponse.getName());
         assertEquals(player.getAge(), playerResponse.getAge());
         assertEquals(PlayerPosition.FORWARD.toString(), playerResponse.getPosition().toString());

@@ -25,6 +25,14 @@ public class TeamController {
 
     private final TeamRepository teamRepository;
 
+    // Called by game page to load an existing team by ID
+    @GetMapping("/teams/{id}")
+    public ResponseEntity<Team> findById(@PathVariable Long id) {
+        Team team = teamRepository.findById(id)
+            .orElseThrow(() -> new ValidationException("Team not found"));
+        return ResponseEntity.ok(team);
+    }
+
     // Called by "New Opponent" button
     @GetMapping("/teams/random")
     public ResponseEntity<Team> random() {
@@ -58,6 +66,7 @@ public class TeamController {
             .id(team.getId())
             .players(team.getPlayers())
             .rating(team.getRating())
+            .fans(team.getFans())
             .tactic(Tactic.valueOf(body.get("tactic")))
             .verticalPressure(VerticalPressure.valueOf(body.get("verticalPressure")))
             .horizontalPressure(HorizontalPressure.valueOf(body.get("horizontalPressure")))

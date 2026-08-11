@@ -139,7 +139,7 @@ $("#game-page-link").click(() => {
   $.get("/users/me", user => {
     me = user;
 
-    $.get(`/team/${me.team.id}`, team => {
+    $.get(`/teams/${me.team.id}`, team => {
       let homeRows = Teams.getTeamRows(team)
       $("#home-rows").html(homeRows);
       // Modifiers
