@@ -10,3 +10,5 @@
 local-env/default/volume
 local-env/nocode/volume
 local-env/aws/volume
+### Maven build output ###
+target/
