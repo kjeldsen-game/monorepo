@@ -13,7 +13,7 @@ import Link from 'next/link';
 import CustomButton from '@/shared/components/Common/CustomButton';
 import { LoginOutlined } from '@mui/icons-material';
 import { theme } from '@/libs/material/theme';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import UserMenu from '@/shared/components/user-menu/UserMenu';
 import { t } from 'i18next';
 

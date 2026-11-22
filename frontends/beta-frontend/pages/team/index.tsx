@@ -1,17 +1,17 @@
 import type { NextPage } from 'next';
-import { useSession } from 'next-auth/react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import TeamView from 'modules/player/components/team/TeamView';
-import { useTeamApi } from 'modules/player/hooks/api/useTeamApi';
-import { useTeamValidateApi } from 'modules/player/hooks/api/useTeamValidateApi';
+import teamFixture from 'modules/player/__fixtures__/team.fixture.json';
+import { lineupValidationTrueMock } from 'modules/player/__fixtures__/lineupValidation.fixture';
+import { withMockRating } from 'modules/player/__fixtures__/withMockRating';
+import { Team as TeamModel } from '@/shared/models/player/Team';
 
 const Team: NextPage = () => {
-  const { } = useSession({
-    required: true,
-  });
-
-  const { data: teamValidation } = useTeamValidateApi();
-  const { data } = useTeamApi();
+  const teamValidation = lineupValidationTrueMock;
+  const data = {
+    ...teamFixture,
+    players: withMockRating(teamFixture.players),
+  } as unknown as TeamModel;
 
   return (
     <>

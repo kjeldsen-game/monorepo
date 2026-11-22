@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import * as notificationApi from '../services/notificationApi';
 import { useSnackbar } from 'notistack';
 import { NotificationResponse } from '../@types/responses';

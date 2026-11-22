@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { Box } from '@mui/material';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import EconomyView from 'modules/player/components/economy/EconomyView';
 
 const Economy: NextPage = () => {

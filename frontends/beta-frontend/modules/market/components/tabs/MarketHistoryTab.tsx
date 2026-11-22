@@ -9,7 +9,7 @@ import { theme } from '@/libs/material/theme'
 import HistoryDialog from '../dialog/HistoryDialog'
 import { useModalManager } from '@/shared/hooks/useModalManager'
 import { set } from 'react-hook-form'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/shared/mocks/fakeNextAuth'
 
 const MarketHistoryTab = () => {
   const {data: userData} = useSession();

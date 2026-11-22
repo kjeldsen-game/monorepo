@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import useSWR, { useSWRConfig } from 'swr';
 import * as playerApi from '../../services/playerApi';
 import { useSnackbar } from 'notistack';

@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import useSWR from 'swr';
 import { TEAMS_API } from '../../services/teamApi';
 import * as trainingApi from 'modules/player/services/trainingApi';

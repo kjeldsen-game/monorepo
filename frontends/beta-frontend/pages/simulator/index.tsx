@@ -13,7 +13,7 @@ import { PlayerSkill } from '@/shared/models/player/PlayerSkill';
 import { PlayerPosition } from '@/shared/models/player/PlayerPosition';
 import { PlayerCategory } from '@/shared/models/player/PlayerCategory';
 import { connectorAPI } from '@/libs/fetcher';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import MarketButton from '@/shared/components/Market/MarketButton';
 const Simulator = () => {
   const { data: userData } = useSession({ required: true });

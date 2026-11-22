@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import TeamView from './TeamView';
 import { Team, TeamFormationValiation } from '@/shared/models/player/Team';
 import { Player } from '@/shared/models/player/Player';
-import { SessionProvider } from 'next-auth/react';
+import { SessionProvider } from '@/shared/mocks/fakeNextAuth';
 
 jest.mock('./lineup/LineupView', () => ({
     __esModule: true,

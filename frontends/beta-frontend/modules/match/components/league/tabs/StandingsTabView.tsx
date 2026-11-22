@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import React, { useMemo } from 'react';
 import { StandingsColumns } from '../columns/StandingsColumns';
 import { StyledMyTeamDatagrid } from 'modules/match/utils/ChallengeUtils';

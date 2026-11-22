@@ -7,7 +7,7 @@ import {
 import EconomyCard from './EconomyCard';
 import SellIcon from '@mui/icons-material/Sell';
 import { useEconomyRepository } from '@/pages/api/economy/useEconomyRepository';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import PricingDataItem from '../items/PricingDataItem';
 import CustomButton from '@/shared/components/Common/CustomButton';
 

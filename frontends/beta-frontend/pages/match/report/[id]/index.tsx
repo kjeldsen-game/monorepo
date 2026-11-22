@@ -2,7 +2,7 @@ import { useMatchReportRepository } from '@/pages/api/match/useMatchReportReposi
 import { CircularProgress } from '@mui/material';
 import MatchReportView from 'modules/match/components/report/MatchReportView';
 import type { NextPage } from 'next';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
 

@@ -6,7 +6,7 @@ import {
   SignUpRequest,
 } from '../types/requests/authRequests';
 import * as authApi from '../services/authApi';
-import { signIn } from 'next-auth/react';
+import { signIn } from '@/shared/mocks/fakeNextAuth';
 import { useRouter } from 'next/router';
 import { DefaultResponse } from '@/shared/models/Responses';
 import { useSnackbar } from 'notistack';

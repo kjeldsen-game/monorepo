@@ -1,31 +1,34 @@
 import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import { Player } from '@/shared/models/player/Player';
+import { Team as TeamModel } from '@/shared/models/player/Team';
 import TeamView from 'modules/player/components/team/TeamView';
-import { useTeamApi } from 'modules/player/hooks/api/useTeamApi';
-import { useTeamValidateApi } from 'modules/player/hooks/api/useTeamValidateApi';
-import { useMatchTeamApi } from 'modules/match/hooks/useMatchTeamApi';
+import teamFixture from 'modules/player/__fixtures__/team.fixture.json';
+import { lineupValidationTrueMock } from 'modules/player/__fixtures__/lineupValidation.fixture';
+import { withMockRating } from 'modules/player/__fixtures__/withMockRating';
 import { mergePlayers } from 'modules/player/utils/LineupUtils';
 
 const Team: NextPage = () => {
-
-  const { data: team } = useTeamApi();
-  const { data: teamValidation, mutate: refetchMatchFormation } = useTeamValidateApi();
-  const { data: matchTeam, handleUpdateMatchTeamByTeamIdAndMatchId, mutate: refetch } = useMatchTeamApi(false);
+  const team = {
+    ...teamFixture,
+    players: withMockRating(teamFixture.players),
+  } as unknown as TeamModel;
+  const teamValidation = lineupValidationTrueMock;
+  const matchTeam = undefined;
 
   const [teamPlayers, setTeamPlayers] = useState<Player[]>(team?.players ?? []);
 
   useEffect(() => {
     mergePlayers(team, matchTeam, setTeamPlayers);
-  }, [team?.players, matchTeam?.players, matchTeam?.bench]);
+  }, [team?.players]);
 
   return (
     <TeamView
-      handleUpdateLineup={async (request) => { await handleUpdateMatchTeamByTeamIdAndMatchId(request); refetch(); refetchMatchFormation() }}
+      handleUpdateLineup={async () => undefined}
       team={{
         ...team,
         players: teamPlayers,
-        teamModifiers: matchTeam?.modifiers || team?.teamModifiers,
+        teamModifiers: team?.teamModifiers,
       }}
       teamFormation={teamValidation}
     />

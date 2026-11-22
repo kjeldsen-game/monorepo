@@ -5,7 +5,7 @@ import { AppProps } from 'next/app';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import { SessionProvider } from 'next-auth/react';
+import { SessionProvider } from '@/shared/mocks/fakeNextAuth';
 import { Session } from 'next-auth';
 import { createEmotionCache } from '@/libs/emotion/cache';
 import { theme } from '@/libs/material/theme';

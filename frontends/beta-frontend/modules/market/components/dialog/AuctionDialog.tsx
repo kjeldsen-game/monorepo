@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogTitle, Typography } from '@mui/material'
 import React from 'react'
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import AuctionData from './AuctionData';
 import AuctionBidForm from './AuctionBidForm';
 import { AuctionResponse } from 'modules/market/types/responses';

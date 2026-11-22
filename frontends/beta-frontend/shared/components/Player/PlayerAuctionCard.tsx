@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Grow, Typography } from '@mui/material';
 import LocalAtmOutlined from '@mui/icons-material/LocalAtmOutlined';
 import MarketButton from '../Market/MarketButton';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 
 interface PlayerAuctionCardProps {
   auction: any;

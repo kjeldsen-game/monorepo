@@ -10,7 +10,7 @@ import { FC } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import {
     Login as LoginIcon,
 } from '@mui/icons-material';

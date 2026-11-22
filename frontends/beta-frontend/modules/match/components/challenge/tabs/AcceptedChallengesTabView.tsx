@@ -1,6 +1,6 @@
 import Grid from '@/shared/components/Grid/Grid'
 import { Box } from '@mui/material'
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import { useMatchChallengeData } from 'modules/match/hooks/useMatchChallengeData';
 import { useMatchChallengeActions } from 'modules/match/hooks/useMatchChallengeActions';
 import { useMemo } from 'react';

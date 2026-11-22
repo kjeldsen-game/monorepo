@@ -5,7 +5,7 @@ import { AuctionBidLogColumns } from '../columns/AuctionBidLogColumns';
 import Grid from '@/shared/components/Grid/Grid';
 import { MarketColumns } from '../columns/MarketColumns';
 import { theme } from '@/libs/material/theme';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import LiveBidFeed from './LiveBidFeed';
 import { DataGrid } from '@mui/x-data-grid';
 

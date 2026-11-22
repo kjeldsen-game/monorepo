@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import TrainingViewV2 from 'modules/player/components/training/TrainingView';
 
 const Training: NextPage = () => {

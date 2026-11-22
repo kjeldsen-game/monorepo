@@ -2,7 +2,7 @@ import TeamView from 'modules/player/components/team/TeamView';
 import { useTeamApi } from 'modules/player/hooks/api/useTeamApi';
 import { useTeamValidateApi } from 'modules/player/hooks/api/useTeamValidateApi';
 import type { NextPage } from 'next';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';

@@ -1,5 +1,5 @@
 import Grid from '@/shared/components/Grid/Grid';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import { useMatchChallengeActions } from 'modules/match/hooks/useMatchChallengeActions';
 import { useMatchChallengeData } from 'modules/match/hooks/useMatchChallengeData';
 import { useMemo, useRef, useState } from 'react';

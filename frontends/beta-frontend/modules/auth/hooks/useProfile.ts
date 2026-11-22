@@ -7,7 +7,7 @@ import {
   getProfile,
 } from '../services/profileApi';
 import { ChangePasswordRequest } from '../types/requests/profileRequests';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import { useSnackbar } from 'notistack';
 
 const API = '/auth/profile';

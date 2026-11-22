@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import { PlaceBidRequest } from '../types/requests';
 import * as marketApi from '../services/marketApi';
 import { AuctionResponse } from '../types/responses';

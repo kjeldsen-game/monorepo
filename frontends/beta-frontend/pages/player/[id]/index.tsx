@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import PlayerView from 'modules/player/components/player/PlayerView';
 
 const Player: NextPage = () => {

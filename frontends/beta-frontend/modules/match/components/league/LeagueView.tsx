@@ -1,7 +1,7 @@
 
 import { CustomTabPanel } from '@/shared/components/Tabs/CustomTabPanel';
 import { Box } from '@mui/material';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import StandingsTabView from './tabs/StandingsTabView';
 import CalendarTabView from './tabs/CalendarTabView';
 import { useLeagueApi } from 'modules/match/hooks/useLeagueApi';

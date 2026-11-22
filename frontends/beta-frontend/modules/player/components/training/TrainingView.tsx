@@ -11,7 +11,7 @@ import { PlayerPosition } from '@/shared/models/player/PlayerPosition';
 import { TrainingFilterProvider } from 'modules/player/contexts/TrainingFilterContext';
 import { useSWRConfig } from 'swr';
 import { TEAMS_API } from 'modules/player/services/teamApi';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 
 const TrainingView = () => {
     const { data: userData } = useSession();

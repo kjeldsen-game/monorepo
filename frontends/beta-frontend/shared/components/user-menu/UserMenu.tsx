@@ -1,6 +1,6 @@
 import { Avatar, Box, ListItemIcon, ListItemText, Menu, MenuItem, Typography } from '@mui/material';
 import { User } from 'next-auth';
-import { signOut } from 'next-auth/react';
+import { signOut } from '@/shared/mocks/fakeNextAuth';
 import React, { FC } from 'react'
 import {
     AccountCircle as AccountCircleIcon,

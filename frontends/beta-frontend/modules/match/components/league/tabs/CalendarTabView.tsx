@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { Box } from '@mui/material';
 import { Match } from '@/shared/models/match/Match';

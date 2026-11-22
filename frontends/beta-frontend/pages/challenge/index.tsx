@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { useSession } from 'next-auth/react';
+import { useSession } from '@/shared/mocks/fakeNextAuth';
 import { useTranslation } from 'next-i18next';
 import ChallengeView from 'modules/match/components/challenge/ChallengeView';
 
